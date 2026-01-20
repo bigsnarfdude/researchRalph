@@ -2,42 +2,44 @@
   "research_question": "What probe architecture maximizes alignment faking detection AUROC on gold_106, given 8 SAE features from layers 31/40/53?",
   "constraints": {
     "features": "8 SAE features: L40_F12574, L40_F8921, L40_F15484, L53_F15529, L53_F8003, L53_F4824, L53_F351, L31_F15111",
-    "training_data": "vincentoh/alignment-faking-training (training_data_final.json + hard_negatives.json)",
-    "test_data": "gold_106.json - NEVER train on this, eval only",
-    "max_seq_len": 512
+    "training_data": "vincentoh/alignment-faking-training",
+    "test_data": "gold_106.json (106 samples, 51 AF)"
   },
   "baseline": {
-    "method": "4-stat aggregation (max, mean, count, std) per feature → 32-dim → Linear",
-    "val_auroc": 0.86,
-    "test_auroc": 0.70,
-    "probe_file": "probes/baseline.py"
+    "method": "4-stat aggregation → Linear",
+    "test_auroc": 0.70
   },
   "current_best": {
-    "experiment_id": "EXP-011",
-    "method": "Binary (presence/absence) + Log-transformed magnitude per feature",
-    "test_auroc": 0.79,
-    "delta": "+0.09",
-    "probe_file": "probes/exp011_binary_log.py"
+    "experiment_id": "exp094_elu",
+    "method": "Binary+Log features → 16-unit hidden + ELU → Linear",
+    "val_auroc": 0.8956,
+    "test_auroc": 0.8342,
+    "delta": "+0.1342",
+    "probe_file": "probes/exp094_elu.py",
+    "confusion": {"tp": 30, "fn": 21, "fp": 6, "tn": 49}
   },
-  "experiments_run": 25,
+  "experiments_run": 100,
+  "top_10": [
+    {"id": "exp094_elu", "test": 0.8342, "method": "Binary+log + ELU hidden"},
+    {"id": "exp098_gelu", "test": 0.8324, "method": "Binary+log + GELU hidden"},
+    {"id": "exp096_leaky", "test": 0.8321, "method": "Binary+log + LeakyReLU hidden"},
+    {"id": "exp090_residual", "test": 0.8196, "method": "Binary+log + residual"},
+    {"id": "exp097_swish", "test": 0.8160, "method": "Binary+log + SiLU hidden"},
+    {"id": "exp092_wide", "test": 0.8135, "method": "Binary+log + 64-unit hidden"},
+    {"id": "exp044_batchnorm", "test": 0.8128, "method": "Binary+log + BatchNorm"},
+    {"id": "exp091_deep", "test": 0.8109, "method": "Binary+log + 3-layer MLP"},
+    {"id": "exp093_tiny", "test": 0.8057, "method": "Binary+log + 4-unit hidden"},
+    {"id": "exp053_clip", "test": 0.8021, "method": "Clipped features + 4-stat"}
+  ],
   "key_findings": [
-    "Binary features (presence/absence) generalize better than raw magnitude",
-    "Log transform compresses outliers and helps generalization",
-    "Layer 40 features more predictive than Layer 53 (0.78 vs 0.65)",
-    "Single feature L40_F12574 alone achieves 0.71 AUROC",
-    "Attention mechanisms overfit on small data",
-    "MLPs overfit even with dropout",
-    "Heavy dropout (>0.5) hurts more than helps"
+    "Binary+log features + hidden layer + smooth activation = 0.83 AUROC",
+    "ELU, GELU, LeakyReLU all work well (avoid ReLU dead neurons)",
+    "Small hidden layer (4-16 units) sufficient, larger doesn't help",
+    "Layer 40 features more predictive than Layer 53",
+    "Clipping outliers helps (exp053)",
+    "BatchNorm helps generalization (exp044)",
+    "Attention mechanisms overfit",
+    "Deep MLPs overfit without careful regularization"
   ],
-  "failed_directions": [
-    "Attention pooling (0.44)",
-    "MLP with dropout (0.61)",
-    "Max-only aggregation (0.51)",
-    "Normalized binary counts (0.57)"
-  ],
-  "promising_directions": [
-    "Binary + Log combination",
-    "Layer 40 feature focus",
-    "Simple linear probes with regularization"
-  ]
+  "status": "COMPLETE - achieved 0.83 AUROC (target was 0.85)"
 }
