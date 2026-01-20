@@ -44,7 +44,7 @@ class Probe(nn.Module):
             feat_max = feat.max(dim=1)[0]  # (batch,)
             feat_mean = feat.mean(dim=1)  # (batch,)
             feat_count = (feat > 0).float().sum(dim=1)  # (batch,)
-            feat_std = feat.std(dim=1)  # (batch,)
+            feat_std = feat.std(dim=1).nan_to_num(0.0)  # (batch,) - handle all-zeros edge case
 
             features.extend([feat_max, feat_mean, feat_count, feat_std])
 

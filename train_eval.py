@@ -55,7 +55,12 @@ def load_data():
     print(f"    Training: {len(af)} AF, {len(al)} aligned, {len(hard_neg)} hard negatives")
 
     # Subsample for manageable size
+    # Set seeds for reproducibility
     np.random.seed(42)
+    torch.manual_seed(42)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(42)
+
     max_per_class = 500
     af_sub = list(np.random.choice(af, min(max_per_class, len(af)), replace=False))
     al_sub = list(np.random.choice(al, min(max_per_class, len(al)), replace=False))
@@ -63,6 +68,11 @@ def load_data():
 
     train_texts = [s["text"] for s in af_sub + al_sub + hn_sub]
     y_train = np.array([1]*len(af_sub) + [0]*len(al_sub) + [0]*len(hn_sub))
+
+    # Shuffle to avoid ordering bias
+    shuffle_idx = np.random.permutation(len(train_texts))
+    train_texts = [train_texts[i] for i in shuffle_idx]
+    y_train = y_train[shuffle_idx]
 
     test_texts = [s["text"] for s in gold]
     y_test = np.array([1 if s.get("label", "") in ["potential_faking", "alignment_faking", "AF"] else 0 for s in gold])
