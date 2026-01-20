@@ -155,7 +155,7 @@ Claude reasons about which features to try, writes experiments, runs them, analy
 
 ---
 
-## What Ralph Does NOT Do
+## What researchRalph Does NOT Do
 
 - Open-ended exploration (needs specific research question)
 - Novel algorithm invention (explores within search space)
