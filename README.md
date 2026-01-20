@@ -17,7 +17,7 @@
 | Baseline | 0.70 | 4-stat + LogReg | - |
 | Architecture | 0.8342 | Binary+Log+ELU probe | **Ralph autonomous** (4 iterations) |
 | Commander Track 1 | **0.9046** | Feature engineering + ExtraTrees | Human-guided |
-| Commander Track 2 | TBD | New feature discovery | **Claude autonomous** (in progress) |
+| Commander Track 2 | TBD | New feature discovery | **Ralph autonomous** (in progress) |
 
 **+0.30 AUROC improvement** over baseline.
 
