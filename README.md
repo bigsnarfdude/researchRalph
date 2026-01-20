@@ -603,28 +603,87 @@ if __name__ == "__main__":
 
 ## Running researchRalph
 
-### Prerequisites
+### Two Modes
 
-1. Claude CLI installed and authenticated (or adapt for `amp`)
-2. GPU access for probe training (or use cached features)
-3. Training data accessible via HuggingFace
+| Mode | Script | Use When |
+|------|--------|----------|
+| **Local** | `research.sh` | Everything runs on same machine (needs GPU) |
+| **Remote** | `research_remote.sh` | Orchestrate from macbook, run experiments on nigel via SSH |
 
-### Commands
+### Remote Mode (Recommended)
+
+Run the research loop on your macbook, execute experiments on nigel:
+
+```
+┌─────────────────────┐          SSH          ┌─────────────────────┐
+│      MACBOOK        │ ───────────────────▶  │       NIGEL         │
+│                     │                       │                     │
+│  research_remote.sh │   1. scp probe.py     │  ~/researchRalph/   │
+│  claude CLI         │   2. ssh train_eval   │  train_eval.py      │
+│  hypothesis.json    │   3. scp results.json │  cache/ (features)  │
+│  progress.txt       │ ◀─────────────────────│  GPU training       │
+└─────────────────────┘                       └─────────────────────┘
+```
+
+**Setup (one time):**
 
 ```bash
-# Initialize (first time)
-cd lightbright/researchRalph
-chmod +x research.sh
+# 1. Clone to both machines
+# On macbook:
+cd ~/researchRalph
 
-# Run 10 iterations
+# On nigel:
+ssh vincent@nigel.birs.ca
+git clone https://github.com/bigsnarfdude/researchRalph.git
+cd researchRalph
+
+# 2. Cache features on nigel (takes ~30 min)
+python train_eval.py --probe probes/baseline.py
+```
+
+**Run:**
+
+```bash
+# On macbook
+cd ~/researchRalph
+./research_remote.sh 10
+
+# Workflow:
+# 1. Claude proposes experiment, writes probes/exp001.py
+# 2. Orchestrator SCPs probe to nigel
+# 3. Runs train_eval.py on nigel via SSH
+# 4. SCPs results back
+# 5. Next iteration analyzes results
+```
+
+### Local Mode
+
+If running entirely on a GPU machine:
+
+```bash
+# On nigel (or any machine with GPU)
+cd ~/researchRalph
 ./research.sh 10
+```
 
-# Run overnight (20 iterations)
-nohup ./research.sh 20 > research.log 2>&1 &
+### Manual Single Experiment
 
-# Check progress
+```bash
+# Run one experiment on nigel from macbook
+./run_remote.sh probes/exp001_multimax.py
+```
+
+### Monitoring
+
+```bash
+# Watch progress
 tail -f progress.txt
+
+# Check current best
 jq '.current_best' hypothesis.json
+
+# List experiments
+jq '.experiments[] | {id, status, test_auroc: .results.test_auroc}' hypothesis.json
 ```
 
 ---
