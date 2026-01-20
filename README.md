@@ -27,7 +27,7 @@
 
 - **Commander Track 1 (0.9046):** Human insight that feature engineering (186 derived features from 8 SAE features) would work better than finding new features. Verified across 10 random seeds.
 
-- **Commander Track 2 (in progress):** True autonomous test. Claude reasons each iteration, designs experiments, runs them, learns. Expected to validate or beat 0.9046 independently. If it converges to ~0.90 via a different path, validates "reasoning as gradient descent."
+- **Commander Track 2 (in progress):** True autonomous test. Ralph reasons each iteration, designs experiments, runs them, learns. Expected to validate or beat 0.9046 independently. If it converges to ~0.90 via a different path, validates "reasoning as gradient descent."
 
 ---
 
