@@ -31,7 +31,7 @@ researchRalph is an autonomous research agent that:
 3. **Analyzes** why things worked or failed
 4. **Iterates** until goal reached or plateau detected
 
-Adapted from the [Ralph pattern](https://github.com/snarktank/ralph) (Geoffrey Huntley / Ryan Carson) for scientific research instead of software development.
+Adapted from the [Ralph pattern](https://ghuntley.com/ralph/) (Geoffrey Huntley / Ryan Carson) for scientific research instead of software development.
 
 ---
 
@@ -166,7 +166,7 @@ Claude reasons about which features to try, writes experiments, runs them, analy
 
 ## Attribution
 
-The Ralph pattern was conceived by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), adapted by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632) with a 3-layer learning system. researchRalph adapts it for scientific research.
+The [Ralph pattern](https://ghuntley.com/ralph/) was conceived by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), adapted by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632) with a 3-layer learning system. researchRalph adapts it for scientific research.
 
 ---
 
