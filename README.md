@@ -812,23 +812,64 @@ researchRalph is **leaner and more interpretable** but **less thorough** than Al
 | 16 hidden units sufficient | Larger doesn't help, smaller works too |
 | Iterative > Grid | 23.5x more sample efficient (4 vs 94 experiments) |
 
-### Feature Phase (IN PROGRESS)
+### Feature Phase (COMPLETE ✓)
 
 | Finding | Evidence |
 |---------|----------|
 | Semantic > Random | +0.33 AUROC (0.83 vs 0.51) |
 | L40_F15484 most important | -0.08 AUROC when removed (2x next best) |
 | All 8 features contribute | No redundant features to simply drop |
-| L40_F8921 least important | -0.015 AUROC when removed (replacement candidate) |
+| L40_F8921 least important | -0.015 AUROC when removed |
+
+### Commander Phase (COMPLETE ✓) - January 2026
+
+**Result: 0.9046 AUROC** (+0.07 from 0.8342 baseline)
+
+| What Changed | Why It Worked |
+|--------------|---------------|
+| Feature Engineering | 186 derived features from 8 base SAE features |
+| ExtraTrees Classifier | Better at capturing non-linear patterns than neural probe |
+| Top 50 Feature Selection | Random Forest importance filtering |
+
+**Derived Features (186 total):**
+- Per-feature stats: max, mean, sum, std, activation count (10 per feature = 80)
+- Position-aware: first/last token, first/second half max (5 per feature = 40)
+- Percentiles: 75th, 90th (2 per feature = 16)
+- Feature interactions: pairwise products + co-activation (28 pairs × 2 = 56)
+- Ratios relative to F15484 (7 features = 7)
+- F15484-specific: activation rate, mean-when-active, peak position (3)
+
+**Verification (10 seeds):**
+```
+Mean: 0.9046 +/- 0.0066
+Best: 0.9184
+All seeds > 0.895
+```
+
+**Key Insight:** The raw SAE activations contained more signal than the neural probe could extract. Feature engineering + traditional ML unlocked it.
+
+**Reproduction:**
+```bash
+cd ~/lightbright/experiments/jan20_commander
+python verify_result.py
+```
+
+## Progress Summary
+
+| Phase | AUROC | Method |
+|-------|-------|--------|
+| Baseline | 0.70 | 4-stat + LogReg |
+| Architecture | 0.8342 | Binary+Log+ELU neural probe |
+| **Commander** | **0.9046** | 186 engineered features + ExtraTrees |
 
 ## Next Steps
 
 1. [x] ~~Architecture search~~ → 0.8342 AUROC achieved
 2. [x] ~~Random baseline~~ → Semantic features +0.33 over random
 3. [x] ~~Ablation study~~ → L40_F15484 is most important
-4. [ ] Feature discovery: find more features like L40_F15484
-5. [ ] Replace weak features (L40_F8921, L40_F12574)
-6. [ ] Target: >0.85 AUROC
+4. [x] ~~Feature engineering~~ → 0.9046 AUROC achieved
+5. [ ] Test on hard/hardest benchmark splits
+6. [ ] Commander v2 (nigel) - autonomous new feature discovery
 
 ---
 
