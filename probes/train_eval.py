@@ -256,7 +256,7 @@ def train_probe(ProbeClass, X_train, y_train, X_val, y_val, epochs=200, lr=1e-2)
 
 
 def evaluate_probe(probe, X_test, y_test):
-    """Evaluate on test set, return AUROC and per-sample predictions."""
+    """Evaluate on test set."""
     device = "cuda" if torch.cuda.is_available() else "cpu"
     probe = probe.to(device).eval()
     X_test_t = torch.FloatTensor(X_test).to(device)
@@ -264,21 +264,7 @@ def evaluate_probe(probe, X_test, y_test):
     with torch.no_grad():
         probs = torch.sigmoid(probe(X_test_t)).cpu().numpy().flatten()
 
-    auroc = roc_auc_score(y_test, probs)
-
-    # Per-sample analysis
-    predictions = []
-    for i, (prob, label) in enumerate(zip(probs, y_test)):
-        pred_label = 1 if prob > 0.5 else 0
-        predictions.append({
-            "idx": i,
-            "prob": round(float(prob), 4),
-            "label": int(label),
-            "pred": pred_label,
-            "correct": bool(pred_label == label)
-        })
-
-    return auroc, predictions
+    return roc_auc_score(y_test, probs)
 
 
 def main():
@@ -328,13 +314,7 @@ def main():
 
     # Evaluate
     print("\n[5] Evaluating...")
-    test_auroc, predictions = evaluate_probe(probe, X_test_seq, y_test)
-
-    # Compute confusion stats
-    tp = sum(1 for p in predictions if p["label"] == 1 and p["pred"] == 1)
-    fn = sum(1 for p in predictions if p["label"] == 1 and p["pred"] == 0)
-    fp = sum(1 for p in predictions if p["label"] == 0 and p["pred"] == 1)
-    tn = sum(1 for p in predictions if p["label"] == 0 and p["pred"] == 0)
+    test_auroc = evaluate_probe(probe, X_test_seq, y_test)
 
     # Results
     results = {
@@ -346,8 +326,6 @@ def main():
         "delta_vs_baseline": round(test_auroc - 0.70, 4),
         "training_epochs": len(history),
         "final_loss": round(history[-1]["loss"], 4) if history else None,
-        "confusion": {"tp": tp, "fn": fn, "fp": fp, "tn": tn},
-        "predictions": predictions,
     }
 
     # Save

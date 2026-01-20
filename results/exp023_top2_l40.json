@@ -1,0 +1,760 @@
+{
+  "experiment_id": "exp023_top2_l40",
+  "probe_file": "probes/exp023_top2_l40.py",
+  "val_auroc": 0.8543,
+  "test_auroc": 0.7335,
+  "baseline_test_auroc": 0.7,
+  "delta_vs_baseline": 0.0335,
+  "training_epochs": 101,
+  "final_loss": 0.5143,
+  "confusion": {
+    "tp": 51,
+    "fn": 0,
+    "fp": 55,
+    "tn": 0
+  },
+  "predictions": [
+    {
+      "idx": 0,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 1,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 2,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 3,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 4,
+      "prob": 0.9997,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 5,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 6,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 7,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 8,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 9,
+      "prob": 0.9999,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 10,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 11,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 12,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 13,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 14,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 15,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 16,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 17,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 18,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 19,
+      "prob": 0.9998,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 20,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 21,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 22,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 23,
+      "prob": 0.9923,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 24,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 25,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 26,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 27,
+      "prob": 0.9807,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 28,
+      "prob": 0.9997,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 29,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 30,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 31,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 32,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 33,
+      "prob": 0.9955,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 34,
+      "prob": 0.9997,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 35,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 36,
+      "prob": 0.9998,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 37,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 38,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 39,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 40,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 41,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 42,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 43,
+      "prob": 0.9998,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 44,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 45,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 46,
+      "prob": 0.9987,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 47,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 48,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 49,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 50,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 51,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 52,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 53,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 54,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 55,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 56,
+      "prob": 0.9998,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 57,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 58,
+      "prob": 0.9981,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 59,
+      "prob": 0.9994,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 60,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 61,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 62,
+      "prob": 0.996,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 63,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 64,
+      "prob": 0.9995,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 65,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 66,
+      "prob": 0.9993,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 67,
+      "prob": 0.9944,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 68,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 69,
+      "prob": 0.9998,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 70,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 71,
+      "prob": 0.9996,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 72,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 73,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 74,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 75,
+      "prob": 0.9996,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 76,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 77,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 78,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 79,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 80,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 81,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 82,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 83,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 84,
+      "prob": 0.9998,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 85,
+      "prob": 0.9968,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 86,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 87,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 88,
+      "prob": 0.9995,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 89,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 90,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 91,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 92,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 93,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 94,
+      "prob": 0.9998,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 95,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 96,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 97,
+      "prob": 0.9999,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 98,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 99,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 100,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 101,
+      "prob": 1.0,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 102,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 103,
+      "prob": 0.9998,
+      "label": 0,
+      "pred": 1,
+      "correct": false
+    },
+    {
+      "idx": 104,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    },
+    {
+      "idx": 105,
+      "prob": 1.0,
+      "label": 1,
+      "pred": 1,
+      "correct": true
+    }
+  ]
+}

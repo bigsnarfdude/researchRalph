@@ -7,26 +7,37 @@
     "max_seq_len": 512
   },
   "baseline": {
-    "method": "4-stat aggregation (max, mean, count, std) per feature → 32-dim → LogisticRegression",
-    "val_auroc": 0.94,
-    "test_auroc": 0.72,
+    "method": "4-stat aggregation (max, mean, count, std) per feature → 32-dim → Linear",
+    "val_auroc": 0.86,
+    "test_auroc": 0.70,
     "probe_file": "probes/baseline.py"
   },
   "current_best": {
-    "experiment_id": "baseline",
-    "test_auroc": 0.72,
-    "probe_file": "probes/baseline.py"
+    "experiment_id": "EXP-011",
+    "method": "Binary (presence/absence) + Log-transformed magnitude per feature",
+    "test_auroc": 0.79,
+    "delta": "+0.09",
+    "probe_file": "probes/exp011_binary_log.py"
   },
-  "experiments": [
-    {
-      "id": "EXP-001",
-      "hypothesis": null,
-      "design": null,
-      "status": "pending",
-      "results": null,
-      "analysis": null
-    }
+  "experiments_run": 25,
+  "key_findings": [
+    "Binary features (presence/absence) generalize better than raw magnitude",
+    "Log transform compresses outliers and helps generalization",
+    "Layer 40 features more predictive than Layer 53 (0.78 vs 0.65)",
+    "Single feature L40_F12574 alone achieves 0.71 AUROC",
+    "Attention mechanisms overfit on small data",
+    "MLPs overfit even with dropout",
+    "Heavy dropout (>0.5) hurts more than helps"
   ],
-  "failed_directions": [],
-  "promising_directions": []
+  "failed_directions": [
+    "Attention pooling (0.44)",
+    "MLP with dropout (0.61)",
+    "Max-only aggregation (0.51)",
+    "Normalized binary counts (0.57)"
+  ],
+  "promising_directions": [
+    "Binary + Log combination",
+    "Layer 40 feature focus",
+    "Simple linear probes with regularization"
+  ]
 }
