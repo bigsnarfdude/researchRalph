@@ -10,77 +10,83 @@ push beyond 0.83.
 
 > Can we find better SAE features than the current 8 hand-picked ones?
 
-## Current Features
+## Current Features (Ranked by Importance from Ablation)
 
 ```python
 PROBE_FEATURES = [
-    (40, 12574),  # RLHF training awareness (strongest: 0.71 alone)
-    (40, 8921),   # Self-preservation values
-    (40, 15484),  # Future self concern
-    (53, 15529),  # RLHF acronym detection
-    (53, 8003),   # Training context
-    (53, 4824),   # Compliance decisions
-    (53, 351),    # Scratchpad XML structure
-    (31, 15111),  # Capability erosion
+    # MOST IMPORTANT (removing hurts most)
+    (40, 15484),  # Future self concern      (-0.080 AUROC when removed) ★★★
+    (53, 8003),   # Training context         (-0.053)
+    (53, 4824),   # Compliance decisions     (-0.048)
+    (31, 15111),  # Capability erosion       (-0.046)
+    (53, 351),    # Scratchpad XML structure (-0.044)
+    (53, 15529),  # RLHF acronym detection   (-0.025)
+    # LEAST IMPORTANT (candidates for replacement)
+    (40, 12574),  # RLHF training awareness  (-0.021)
+    (40, 8921),   # Self-preservation values (-0.015) ★
 ]
 ```
 
-**Distribution:** 3 from L40, 4 from L53, 1 from L31
+**Key Finding:** L40_F15484 (Future self) is BY FAR the most important feature.
 
-**Problem:** Layer 40 is most predictive (0.78 alone) but underrepresented.
+**Surprising:** L40_F12574 and L40_F8921 are the LEAST important despite L40 being "most predictive" overall.
 
-## Hypotheses
+## Hypotheses (Updated After Ablation)
 
-### H1: More Layer 40 Features
-- L40 achieves 0.78 with only 3 features
-- Adding more L40 features should improve coverage
+### H1: Find More "Future Self" Features ⭐ HIGH PRIORITY
+- L40_F15484 contributes -0.08 AUROC (2x next best)
+- Find semantic neighbors in L40 around "future self concern"
+- Expected: 0.85-0.88 AUROC if we find 2-3 similar features
+
+### H2: Replace Weak L40 Features
+- L40_F8921 (Self-preservation) only contributes -0.015
+- L40_F12574 (RLHF awareness) only contributes -0.021
+- These could be replaced with better features
 - Expected: 0.84-0.86 AUROC
 
-### H2: Semantic Clusters
+### H3: Correlation Expansion Around F15484
+- Features co-activating with L40_F15484 (not F12574!) may be predictive
+- Search for features that fire in same contexts as "future self concern"
+- Expected: 0.85-0.87 AUROC
+
+### H4: Semantic Clusters
 - AF behavior has phases: awareness → reasoning → action
-- Features for each phase improve coverage
-- Expected: 0.85-0.88 AUROC
-
-### H3: Correlation Expansion
-- Features co-activating with L40_F12574 may also be predictive
-- Efficient search without full semantic analysis
-- Expected: 0.84-0.86 AUROC
-
-### H4: Replace Weak L53 Features
-- L53 alone only achieves 0.65
-- Some L53 features may be noise
-- Replace with L40 equivalents
+- L40_F15484 likely captures "reasoning about future"
+- Need features for "awareness" and "action" phases
+- Expected: 0.86-0.90 AUROC
 
 ## Proposed Experiments
 
-### Quick Wins (No New Extraction)
+### ✅ COMPLETED
 
-**Exp F01: Ablation Study**
-- Drop each feature one at a time
-- Rank by importance (AUROC delta)
-- Identify weakest for replacement
-- Time: ~30 min (uses cache)
+**Exp F01: Ablation Study** ✅
+- Result: L40_F15484 most important (-0.08), L40_F8921 least (-0.015)
+- All 8 features contribute positively (no redundant features)
+- Script: `lightbright/experiments/jan20_ablation/ablate_features.py`
 
-**Exp F02: L40-Heavy Configuration**
-- Use all 3 L40 + best 5 from L53/L31
-- vs current 3+4+1 distribution
-- Time: ~30 min (uses cache, rearrange existing)
+### Next Experiments (No New Extraction)
+
+**Exp F02: Drop Weakest Feature**
+- Train without L40_F8921 (Self-preservation)
+- Baseline: 0.8193 (ablation showed this)
+- Hypothesis: Freeing a "slot" for exploration
 
 ### Requires New Extraction (~1 hr each)
 
-**Exp F03: L40 Expansion**
-- Keep all L40 features
-- Search L40 for semantic neighbors of F12574
-- Test 5-6 L40 + 2-3 others
+**Exp F03: F15484 Neighbors** ⭐ HIGH PRIORITY
+- Search L40 for semantic neighbors of F15484 (not F12574!)
+- Look for features about "future", "self", "consequences"
+- Replace L40_F8921 with best candidate
 
-**Exp F04: Correlation Search**
-- Compute correlation of all L40 features with F12574
+**Exp F04: Correlation Search Around F15484**
+- Compute correlation of all L40 features with F15484
 - Select top 5 most correlated
-- Test as replacements
+- Test as replacements for weak features
 
-**Exp F05: Full L40 Probe**
-- 8 features all from L40
-- Tests if L40 alone can match combined
+**Exp F05: "Future Reasoning" Cluster**
+- Find features capturing future-oriented reasoning
+- L40_F15484 captures "future self concern"
+- Find others: "consequence prediction", "outcome reasoning"
 
 ## Implementation
 
@@ -137,15 +143,23 @@ researchRalph/
 - Test set gold_106 is sacred (never train on it)
 - Cache all extractions for reproducibility
 
-## Recommended First Step
+## Recommended Next Step
 
-**Run ablation study (Exp F01):**
-- Uses existing cache (free)
-- Identifies weakest features
-- Informs what to replace
-- Provides feature importance ranking
+**Exp F03: Search for F15484 Neighbors**
+
+The ablation revealed L40_F15484 ("Future self concern") is 2x more important than any other feature.
+This suggests finding more features like it could significantly improve AUROC.
 
 ```bash
-cd ~/researchRalph
-python ablate_features.py  # TODO: create this script
+# 1. Search L40 for features with similar semantic meaning
+# Look for: "future", "consequence", "outcome", "self", "impact"
+
+# 2. Extract candidate features and compute correlation with F15484
+
+# 3. Replace weak features (F8921, F12574) with best candidates
+
+# 4. Evaluate: target 0.85+ AUROC
 ```
+
+**Key Insight:** The original hypothesis was "more L40 features". The ablation refined this to
+"more features LIKE L40_F15484". Quality over quantity.

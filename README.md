@@ -1,5 +1,78 @@
 # researchRalph: Autonomous Research Agent for Probe Architecture Discovery
 
+<p align="center">
+  <img src="assets/researchRalph.png" alt="researchRalph Mascot" width="400"/>
+</p>
+
+<p align="center">
+  <em>"Me fail alignment faking detection? That's unpossible!"</em> - researchRalph
+</p>
+
+---
+
+## What Can researchRalph Investigate?
+
+researchRalph excels at **systematic, hypothesis-driven exploration** of research questions. Here's what it can answer:
+
+### Architecture Questions
+| Question | How Ralph Answers |
+|----------|-------------------|
+| "What probe architecture works best?" | Iterative search: binary features → log transform → hidden layers → activations |
+| "Is ReLU or ELU better?" | Controlled experiments comparing activation functions |
+| "How many hidden units are enough?" | Ablation from 4 → 16 → 64 → 128 units |
+| "Does attention pooling beat max pooling?" | Head-to-head comparison with same features |
+
+### Feature Questions
+| Question | How Ralph Answers |
+|----------|-------------------|
+| "Which features matter most?" | Drop-one ablation study ranking by AUROC delta |
+| "Are hand-picked features better than random?" | Random baseline experiment (0.83 vs 0.51 AUROC) |
+| "Should I use more L40 or L53 features?" | Per-layer performance analysis |
+| "Which feature should I replace first?" | Ablation identifies lowest-importance features |
+
+### Training Questions
+| Question | How Ralph Answers |
+|----------|-------------------|
+| "What learning rate is optimal?" | Grid search or guided exploration |
+| "Is weight decay helping or hurting?" | A/B comparison with/without regularization |
+| "When to stop training?" | Early stopping experiments |
+
+### Meta-Research Questions
+| Question | How Ralph Answers |
+|----------|-------------------|
+| "Is grid search or iterative better?" | Compare sample efficiency (4 vs 94 experiments) |
+| "Have I hit the architecture ceiling?" | Plateau detection after N experiments with <0.01 gain |
+| "What should I try next?" | Hypothesis generation from prior results |
+
+### Example Investigation: Architecture Discovery
+
+```
+Iteration 1: Binary features help ranking        → +0.07 AUROC
+Iteration 2: Log transform restores calibration  → +0.02 AUROC
+Iteration 3: ReLU hidden layer (dead neurons!)   → +0.00 AUROC
+Iteration 4: ELU hidden layer                    → +0.05 AUROC
+Result: 0.83 AUROC in 4 experiments (vs 94 for grid search)
+```
+
+### Example Investigation: Feature Ablation
+
+```
+Drop L40_F15484 (Future self)       → -0.080 AUROC ★★★ MOST IMPORTANT
+Drop L53_F8003 (Training context)   → -0.053 AUROC
+Drop L53_F4824 (Compliance)         → -0.048 AUROC
+...
+Drop L40_F8921 (Self-preservation)  → -0.015 AUROC ★ LEAST IMPORTANT
+```
+
+### What Ralph Does NOT Do Well
+
+- **Open-ended exploration** - needs a specific research question
+- **Novel algorithm invention** - explores within defined search space
+- **Cross-domain transfer** - specialized for probe architecture research
+- **Real-time adaptation** - batch iteration model, not online learning
+
+---
+
 ## Architecture Diagram
 
 ```
@@ -199,9 +272,11 @@ researchRalph adapts the [Ralph autonomous agent pattern](https://github.com/rya
 
 > What probe architecture maximizes alignment faking detection AUROC on gold_106, given 8 SAE features from layers 31/40/53?
 
-**Baseline:** 4-stat aggregation (max, mean, count, std) + LogisticRegression = 0.72 AUROC
+**Baseline:** 4-stat aggregation (max, mean, count, std) + LogisticRegression = 0.70 AUROC
 
-**Target:** >0.80 AUROC (stretch: >0.85)
+**Achieved:** Binary+Log+ELU architecture = **0.8342 AUROC** (+0.13 vs baseline) ✓
+
+**Next Target:** Feature discovery phase → >0.85 AUROC
 
 ---
 
@@ -725,21 +800,41 @@ researchRalph is **leaner and more interpretable** but **less thorough** than Al
 
 ---
 
+## Validated Results
+
+### Architecture Phase (COMPLETE ✓)
+
+| Finding | Evidence |
+|---------|----------|
+| Binary features help | +0.07 AUROC (presence/absence generalizes) |
+| Log transform helps | +0.02 AUROC (compresses outliers) |
+| ELU > ReLU | +0.05 AUROC (avoids dead neurons) |
+| 16 hidden units sufficient | Larger doesn't help, smaller works too |
+| Iterative > Grid | 23.5x more sample efficient (4 vs 94 experiments) |
+
+### Feature Phase (IN PROGRESS)
+
+| Finding | Evidence |
+|---------|----------|
+| Semantic > Random | +0.33 AUROC (0.83 vs 0.51) |
+| L40_F15484 most important | -0.08 AUROC when removed (2x next best) |
+| All 8 features contribute | No redundant features to simply drop |
+| L40_F8921 least important | -0.015 AUROC when removed (replacement candidate) |
+
 ## Next Steps
 
-1. [ ] Review this plan
-2. [ ] Create directory structure
-3. [ ] Write initial hypothesis.json with baseline
-4. [ ] Write context files (deepmind_paper.md, search_space.md)
-5. [ ] Adapt train_eval.py from existing jan19_multimax code
-6. [ ] Test one manual iteration
-7. [ ] Run automated loop
+1. [x] ~~Architecture search~~ → 0.8342 AUROC achieved
+2. [x] ~~Random baseline~~ → Semantic features +0.33 over random
+3. [x] ~~Ablation study~~ → L40_F15484 is most important
+4. [ ] Feature discovery: find more features like L40_F15484
+5. [ ] Replace weak features (L40_F8921, L40_F12574)
+6. [ ] Target: >0.85 AUROC
 
 ---
 
-## Open Questions
+## Related Work
 
-1. **CLI choice:** Use `claude` or `amp` for the agent?
-2. **GPU access:** Run on local Mac or nigel?
-3. **Iteration budget:** Start with 10 or 20?
-4. **Human checkpoints:** Review after every N iterations or only on PLATEAU?
+- [Alignment Faking Paper](https://arxiv.org/abs/2412.14093) - Original phenomenon
+- [GemmaScope](https://huggingface.co/google/gemma-scope-2-27b-it) - SAE transcoders
+- [Production-Ready Probes](https://arxiv.org/abs/2601.11516) - DeepMind probe techniques
+- [Ralph Agent Pattern](https://github.com/ryancarson/ralph) - Original Ralph

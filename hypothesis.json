@@ -36,8 +36,19 @@
     "features": {
       "semantic_vs_random": "+0.33 AUROC (0.83 vs 0.51)",
       "semantic_vs_statistical": "+0.36 AUROC (0.83 vs 0.47)",
-      "layer_40_importance": "Most predictive (0.78 alone)",
-      "layer_40_underrepresented": "Only 3/8 features from best layer"
+      "all_8_contribute": "No redundant features (all positive importance)"
+    },
+    "ablation_study": {
+      "most_important": [
+        {"feature": "L40_F15484 (Future self)", "delta": -0.080, "rank": 1},
+        {"feature": "L53_F8003 (Training context)", "delta": -0.053, "rank": 2},
+        {"feature": "L53_F4824 (Compliance)", "delta": -0.048, "rank": 3}
+      ],
+      "least_important": [
+        {"feature": "L40_F8921 (Self-preservation)", "delta": -0.015, "rank": 8},
+        {"feature": "L40_F12574 (RLHF awareness)", "delta": -0.021, "rank": 7}
+      ],
+      "insight": "L40 not uniformly best - F15484 critical, F8921/F12574 least important"
     },
     "iterative_vs_grid": "23.5x more sample efficient (4 vs 94 experiments)"
   },
@@ -59,16 +70,17 @@
     "Binary+log features + hidden layer + smooth activation = 0.83 AUROC",
     "ELU, GELU, LeakyReLU all work well (avoid ReLU dead neurons)",
     "Small hidden layer (4-16 units) sufficient, larger doesn't help",
-    "Layer 40 features more predictive than Layer 53 (0.78 vs 0.65)",
     "Random features = 0.51 AUROC (chance) - semantic selection essential",
-    "Architecture ceiling reached - features are the bottleneck"
+    "L40_F15484 (Future self) is most important feature (-0.08 when removed)",
+    "All 8 features contribute positively - no redundant features",
+    "L53 features collectively important (Training context, Compliance, XML)"
   ],
 
   "next_phase_hypotheses": [
-    "More L40 features will improve AUROC (most predictive, underrepresented)",
+    "Find more features like L40_F15484 (future self concern)",
     "Semantic clusters (awareness/reasoning/action) improve coverage",
-    "Correlation-based expansion finds good features efficiently",
-    "Replacing weak L53 features with L40 equivalents helps"
+    "Correlation-based expansion around L40_F15484 finds good features",
+    "L40_F8921/F12574 could be replaced with more predictive alternatives"
   ],
 
   "status": "ARCHITECTURE_COMPLETE - ready for FEATURE_DISCOVERY phase"
