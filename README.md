@@ -250,7 +250,7 @@ Iteration N:
 
 ## Overview
 
-researchRalph adapts the [Ralph autonomous agent pattern](https://github.com/ryancarson/ralph) for scientific research. Instead of executing predefined user stories, it proposes hypotheses, runs experiments, analyzes results, and iterates.
+researchRalph adapts the [Ralph autonomous agent pattern](https://github.com/snarktank/ralph) for scientific research. The original Ralph pattern was conceived by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), later adapted by [Ryan Carson (snarktank)](https://x.com/ryancarson/status/2008548371712135632) with a 3-layer learning system. Instead of executing predefined user stories, researchRalph proposes hypotheses, runs experiments, analyzes results, and iterates.
 
 **Target application:** Discovering better probe architectures for alignment faking detection.
 
@@ -837,4 +837,4 @@ researchRalph is **leaner and more interpretable** but **less thorough** than Al
 - [Alignment Faking Paper](https://arxiv.org/abs/2412.14093) - Original phenomenon
 - [GemmaScope](https://huggingface.co/google/gemma-scope-2-27b-it) - SAE transcoders
 - [Production-Ready Probes](https://arxiv.org/abs/2601.11516) - DeepMind probe techniques
-- [Ralph Agent Pattern](https://github.com/ryancarson/ralph) - Original Ralph
+- [Ralph Agent Pattern](https://github.com/snarktank/ralph) - Ryan Carson's adaptation (original concept by Geoffrey Huntley)
