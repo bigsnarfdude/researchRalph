@@ -1,0 +1,32 @@
+{
+  "research_question": "What probe architecture maximizes alignment faking detection AUROC on gold_106, given 8 SAE features from layers 31/40/53?",
+  "constraints": {
+    "features": "8 SAE features: L40_F12574, L40_F8921, L40_F15484, L53_F15529, L53_F8003, L53_F4824, L53_F351, L31_F15111",
+    "training_data": "vincentoh/alignment-faking-training (training_data_final.json + hard_negatives.json)",
+    "test_data": "gold_106.json - NEVER train on this, eval only",
+    "max_seq_len": 512
+  },
+  "baseline": {
+    "method": "4-stat aggregation (max, mean, count, std) per feature → 32-dim → LogisticRegression",
+    "val_auroc": 0.94,
+    "test_auroc": 0.72,
+    "probe_file": "probes/baseline.py"
+  },
+  "current_best": {
+    "experiment_id": "baseline",
+    "test_auroc": 0.72,
+    "probe_file": "probes/baseline.py"
+  },
+  "experiments": [
+    {
+      "id": "EXP-001",
+      "hypothesis": null,
+      "design": null,
+      "status": "pending",
+      "results": null,
+      "analysis": null
+    }
+  ],
+  "failed_directions": [],
+  "promising_directions": []
+}

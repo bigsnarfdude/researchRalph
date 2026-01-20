@@ -1,0 +1,15 @@
+# Cache
+cache/
+*.npz
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Results (optional - you may want to track these)
+# results/
+
+# OS
+.DS_Store

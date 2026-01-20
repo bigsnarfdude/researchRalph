@@ -1,0 +1,19 @@
+# researchRalph Progress Log
+
+Started: 2026-01-19
+
+## Patterns (update this section with reusable insights)
+
+- [None yet - patterns will emerge as experiments run]
+
+---
+
+## Experiment Log
+
+### Baseline
+- Method: 4-stat (max, mean, count, std) per feature → LogisticRegression
+- Val AUROC: 0.94
+- Test AUROC: 0.72
+- Gap: 0.22 (this is what we're trying to reduce)
+
+---
