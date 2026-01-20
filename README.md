@@ -12,13 +12,22 @@
 
 ## Results
 
-| Phase | AUROC | Method | Experiments |
-|-------|-------|--------|-------------|
-| Baseline | 0.70 | 4-stat + LogReg | 1 |
-| Architecture | 0.8342 | Binary+Log+ELU probe | 4 |
-| **Commander** | **0.9046** | Feature engineering + ExtraTrees | 10 seeds |
+| Phase | AUROC | Method | Guided by |
+|-------|-------|--------|-----------|
+| Baseline | 0.70 | 4-stat + LogReg | - |
+| Architecture | 0.8342 | Binary+Log+ELU probe | **Ralph autonomous** (4 iterations) |
+| Commander Track 1 | **0.9046** | Feature engineering + ExtraTrees | Human-guided |
+| Commander Track 2 | TBD | New feature discovery | **Claude autonomous** (in progress) |
 
-**+0.30 AUROC improvement** over baseline through autonomous research.
+**+0.30 AUROC improvement** over baseline.
+
+### What's Autonomous vs Human-Guided?
+
+- **Architecture (0.8342):** Ralph found Binary+Log+ELU autonomously in 4 iterations by observing failures. Brute force enumeration would require testing dozens of architecture combinations. Ralph tried ReLU first, saw dead neurons, pivoted to ELU.
+
+- **Commander Track 1 (0.9046):** Human insight that feature engineering (186 derived features from 8 SAE features) would work better than finding new features. Verified across 10 random seeds.
+
+- **Commander Track 2 (in progress):** True autonomous test. Claude reasons each iteration, designs experiments, runs them, learns. Expected to validate or beat 0.9046 independently. If it converges to ~0.90 via a different path, validates "reasoning as gradient descent."
 
 ---
 
@@ -37,16 +46,20 @@ Adapted from the [Ralph pattern](https://ghuntley.com/ralph/) (Geoffrey Huntley 
 
 ## Key Findings
 
-### Architecture Phase
+### Architecture Phase (Ralph Autonomous)
+
+Ralph found the optimal architecture in **4 iterations** - not by luck, but by observing failures:
 
 ```
 Iteration 1: Binary features    → +0.07 AUROC (presence/absence generalizes)
 Iteration 2: Log transform      → +0.02 AUROC (compresses outliers)
-Iteration 3: ReLU hidden layer  → +0.00 AUROC (dead neurons!)
-Iteration 4: ELU hidden layer   → +0.05 AUROC (avoids dead neurons)
+Iteration 3: ReLU hidden layer  → +0.00 AUROC (dead neurons!)  ← observed failure
+Iteration 4: ELU hidden layer   → +0.05 AUROC (avoids dead neurons) ← pivoted
 
 Result: 0.8342 AUROC in 4 experiments
 ```
+
+**Why this matters:** Brute force enumeration of architectures (activation functions × normalizations × hidden sizes × dropout rates) would require dozens of experiments. Ralph found the answer in 4 by learning from iteration 3's failure.
 
 ### Feature Ablation
 
@@ -63,9 +76,9 @@ Drop L40_F8921 (Self-preservation) → -0.015 AUROC  ★ LEAST IMPORTANT
 
 **Key insight:** L40_F15484 "Future self" is 2x more important than any other feature.
 
-### Commander Phase (0.9046 AUROC)
+### Commander Track 1 (0.9046 AUROC) - Human-Guided
 
-The breakthrough wasn't finding new features - it was **feature engineering**:
+The breakthrough wasn't finding new features - it was **feature engineering** (human insight):
 
 | What | Details |
 |------|---------|
@@ -92,9 +105,9 @@ All seeds > 0.895
 
 ## Two Research Tracks
 
-### Track 1: Human-Guided (Completed)
+### Track 1: Human-Guided (Completed) → 0.9046 AUROC
 
-Feature engineering approach - led to 0.9046 AUROC.
+Human insight: feature engineering would work better than finding new SAE features.
 
 ```bash
 # Reproduce
@@ -102,9 +115,9 @@ cd ~/lightbright/experiments/jan20_commander
 python verify_result.py
 ```
 
-### Track 2: Claude-Guided (Running)
+### Track 2: Claude-Guided (In Progress) → Expected to beat 0.9046
 
-Autonomous commander using Claude Code CLI:
+True autonomous commander using Claude Code CLI:
 
 ```bash
 # On nigel (GPU server)
@@ -112,9 +125,13 @@ cd ~/lightbright/experiments/jan20_commander
 bash commander_v2.sh 10
 ```
 
-Claude reasons about which features to try, writes experiments, runs them, analyzes results.
+Each iteration:
+1. **THINK:** Claude reads state, analyzes prior results
+2. **HYPOTHESIZE:** Forms specific hypothesis about what to try
+3. **EXECUTE:** Writes and runs experiment code
+4. **LEARN:** Records results, updates strategy
 
-**Goal:** Independent validation - if Track 2 converges to ~0.90 via different method, validates "reasoning as gradient descent."
+**Goal:** Independent validation. If Track 2 converges to ~0.90 via a different method, it validates "reasoning as gradient descent" - that systematic iteration with learning finds good solutions regardless of the specific path.
 
 ---
 
