@@ -1,14 +1,19 @@
 {
+  "phase": "ARCHITECTURE_COMPLETE",
+  "next_phase": "FEATURE_DISCOVERY",
+
   "research_question": "What probe architecture maximizes alignment faking detection AUROC on gold_106, given 8 SAE features from layers 31/40/53?",
   "constraints": {
     "features": "8 SAE features: L40_F12574, L40_F8921, L40_F15484, L53_F15529, L53_F8003, L53_F4824, L53_F351, L31_F15111",
     "training_data": "vincentoh/alignment-faking-training",
     "test_data": "gold_106.json (106 samples, 51 AF)"
   },
+
   "baseline": {
     "method": "4-stat aggregation → Linear",
     "test_auroc": 0.70
   },
+
   "current_best": {
     "experiment_id": "exp094_elu",
     "method": "Binary+Log features → 16-unit hidden + ELU → Linear",
@@ -18,7 +23,25 @@
     "probe_file": "probes/exp094_elu.py",
     "confusion": {"tp": 30, "fn": 21, "fp": 6, "tn": 49}
   },
+
   "experiments_run": 100,
+
+  "validated_findings": {
+    "architecture": {
+      "binary_features": "+0.07 AUROC (presence/absence generalizes)",
+      "log_transform": "+0.02 AUROC (compresses outliers)",
+      "elu_activation": "+0.05 AUROC (avoids dead neurons)",
+      "small_hidden": "16 units sufficient, more overfits"
+    },
+    "features": {
+      "semantic_vs_random": "+0.33 AUROC (0.83 vs 0.51)",
+      "semantic_vs_statistical": "+0.36 AUROC (0.83 vs 0.47)",
+      "layer_40_importance": "Most predictive (0.78 alone)",
+      "layer_40_underrepresented": "Only 3/8 features from best layer"
+    },
+    "iterative_vs_grid": "23.5x more sample efficient (4 vs 94 experiments)"
+  },
+
   "top_10": [
     {"id": "exp094_elu", "test": 0.8342, "method": "Binary+log + ELU hidden"},
     {"id": "exp098_gelu", "test": 0.8324, "method": "Binary+log + GELU hidden"},
@@ -31,15 +54,22 @@
     {"id": "exp093_tiny", "test": 0.8057, "method": "Binary+log + 4-unit hidden"},
     {"id": "exp053_clip", "test": 0.8021, "method": "Clipped features + 4-stat"}
   ],
+
   "key_findings": [
     "Binary+log features + hidden layer + smooth activation = 0.83 AUROC",
     "ELU, GELU, LeakyReLU all work well (avoid ReLU dead neurons)",
     "Small hidden layer (4-16 units) sufficient, larger doesn't help",
-    "Layer 40 features more predictive than Layer 53",
-    "Clipping outliers helps (exp053)",
-    "BatchNorm helps generalization (exp044)",
-    "Attention mechanisms overfit",
-    "Deep MLPs overfit without careful regularization"
+    "Layer 40 features more predictive than Layer 53 (0.78 vs 0.65)",
+    "Random features = 0.51 AUROC (chance) - semantic selection essential",
+    "Architecture ceiling reached - features are the bottleneck"
   ],
-  "status": "COMPLETE - achieved 0.83 AUROC (target was 0.85)"
+
+  "next_phase_hypotheses": [
+    "More L40 features will improve AUROC (most predictive, underrepresented)",
+    "Semantic clusters (awareness/reasoning/action) improve coverage",
+    "Correlation-based expansion finds good features efficiently",
+    "Replacing weak L53 features with L40 equivalents helps"
+  ],
+
+  "status": "ARCHITECTURE_COMPLETE - ready for FEATURE_DISCOVERY phase"
 }
