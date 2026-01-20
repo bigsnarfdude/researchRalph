@@ -1,0 +1,28 @@
+============================================================
+EXPERIMENT: exp029_binary_log_drop02
+============================================================
+
+[1] Loading data...
+    Using cached labels (matching cached features)
+    Train: 1500 (500 AF)
+    Test:  106 (51 AF)
+
+[2] Loading features...
+    Loading cached train features...
+    Loading cached test features...
+
+[3] Preparing data...
+    Train: 1200, Val: 300, Test: 106
+
+[4] Training probe...
+
+[5] Evaluating...
+
+============================================================
+RESULTS
+============================================================
+  Val AUROC:  0.8880
+  Test AUROC: 0.7818
+  Delta:      +0.0818 vs baseline
+
+  Saved to: /home/vincent/researchRalph/results/exp029_binary_log_drop02.json

@@ -1,0 +1,407 @@
+Starting experiment run at Tue Jan 20 06:36:26 AM UTC 2026
+========================================
+SKIP: exp001_attention_pool (already has results)
+SKIP: exp002_feature_weight (already has results)
+SKIP: exp003_max_only (already has results)
+SKIP: exp004_position_aware (already has results)
+SKIP: exp005_dropout (already has results)
+SKIP: exp006_dropout_heavy (already has results)
+SKIP: exp007_mlp_dropout (already has results)
+SKIP: exp008_topk_max (already has results)
+SKIP: exp009_log_transform (already has results)
+SKIP: exp010_binary (already has results)
+SKIP: exp011_binary_log (already has results)
+SKIP: exp012_binary_dropout (already has results)
+SKIP: exp013_binary_threshold (already has results)
+SKIP: exp014_binary_norm (already has results)
+SKIP: exp015_log_dropout (already has results)
+SKIP: exp016_binary_log_dropout (already has results)
+SKIP: exp017_binary_log_extended (already has results)
+SKIP: exp018_binary_log_heavy_drop (already has results)
+SKIP: exp019_l53_only (already has results)
+SKIP: exp020_l40_only (already has results)
+SKIP: exp021_l40_l31 (already has results)
+SKIP: exp022_single_best (already has results)
+SKIP: exp023_top2_l40 (already has results)
+SKIP: exp024_drop_f0 (already has results)
+SKIP: exp025_orig_log_dropout (already has results)
+
+========================================
+RUNNING: exp026_binary_log_l40 at Tue Jan 20 06:36:26 AM UTC 2026
+Probe: probes/exp026_binary_log_l40.py
+RESULT: exp026_binary_log_l40 = 0.7768 AUROC
+
+========================================
+RUNNING: exp027_binary_log_top4 at Tue Jan 20 06:36:28 AM UTC 2026
+Probe: probes/exp027_binary_log_top4.py
+RESULT: exp027_binary_log_top4 = 0.7287 AUROC
+
+========================================
+RUNNING: exp028_binary_log_drop03 at Tue Jan 20 06:36:31 AM UTC 2026
+Probe: probes/exp028_binary_log_drop03.py
+RESULT: exp028_binary_log_drop03 = 0.7793 AUROC
+
+========================================
+RUNNING: exp029_binary_log_drop02 at Tue Jan 20 06:36:33 AM UTC 2026
+Probe: probes/exp029_binary_log_drop02.py
+RESULT: exp029_binary_log_drop02 = 0.7818 AUROC
+
+========================================
+RUNNING: exp030_binary_log_sum_only at Tue Jan 20 06:36:35 AM UTC 2026
+Probe: probes/exp030_binary_log_sum_only.py
+RESULT: exp030_binary_log_sum_only = 0.6569 AUROC
+
+========================================
+RUNNING: exp031_sqrt_transform at Tue Jan 20 06:36:38 AM UTC 2026
+Probe: probes/exp031_sqrt_transform.py
+RESULT: exp031_sqrt_transform = 0.7369 AUROC
+
+========================================
+RUNNING: exp032_percentile_90 at Tue Jan 20 06:36:40 AM UTC 2026
+Probe: probes/exp032_percentile_90.py
+RESULT: exp032_percentile_90 = 0.7333 AUROC
+
+========================================
+RUNNING: exp033_binary_threshold_05 at Tue Jan 20 06:36:43 AM UTC 2026
+Probe: probes/exp033_binary_threshold_05.py
+RESULT: exp033_binary_threshold_05 = 0.7724 AUROC
+
+========================================
+RUNNING: exp034_binary_threshold_01 at Tue Jan 20 06:36:45 AM UTC 2026
+Probe: probes/exp034_binary_threshold_01.py
+RESULT: exp034_binary_threshold_01 = 0.7727 AUROC
+
+========================================
+RUNNING: exp035_softmax_pool at Tue Jan 20 06:36:47 AM UTC 2026
+Probe: probes/exp035_softmax_pool.py
+RESULT: exp035_softmax_pool = 0.4804 AUROC
+
+========================================
+RUNNING: exp036_first_last_pool at Tue Jan 20 06:36:49 AM UTC 2026
+Probe: probes/exp036_first_last_pool.py
+RESULT: exp036_first_last_pool = 0.5219 AUROC
+
+========================================
+RUNNING: exp037_median_pool at Tue Jan 20 06:36:51 AM UTC 2026
+Probe: probes/exp037_median_pool.py
+RESULT: exp037_median_pool = 0.6973 AUROC
+
+========================================
+RUNNING: exp038_binary_log_median at Tue Jan 20 06:36:54 AM UTC 2026
+Probe: probes/exp038_binary_log_median.py
+RESULT: exp038_binary_log_median = 0.7865 AUROC
+
+========================================
+RUNNING: exp039_minmax_scale at Tue Jan 20 06:36:56 AM UTC 2026
+Probe: probes/exp039_minmax_scale.py
+RESULT: exp039_minmax_scale = 0.5619 AUROC
+
+========================================
+RUNNING: exp040_zscore at Tue Jan 20 06:36:59 AM UTC 2026
+Probe: probes/exp040_zscore.py
+RESULT: exp040_zscore = 0.7447 AUROC
+
+========================================
+RUNNING: exp041_binary_log_l2reg at Tue Jan 20 06:37:01 AM UTC 2026
+Probe: probes/exp041_binary_log_l2reg.py
+RESULT: exp041_binary_log_l2reg = 0.7889 AUROC
+
+========================================
+RUNNING: exp042_tanh at Tue Jan 20 06:37:04 AM UTC 2026
+Probe: probes/exp042_tanh.py
+RESULT: exp042_tanh = 0.7936 AUROC
+
+========================================
+RUNNING: exp043_layernorm at Tue Jan 20 06:37:06 AM UTC 2026
+Probe: probes/exp043_layernorm.py
+RESULT: exp043_layernorm = 0.7825 AUROC
+
+========================================
+RUNNING: exp044_batchnorm at Tue Jan 20 06:37:08 AM UTC 2026
+Probe: probes/exp044_batchnorm.py
+RESULT: exp044_batchnorm = 0.8128 AUROC
+
+========================================
+RUNNING: exp045_skip_f3 at Tue Jan 20 06:37:11 AM UTC 2026
+Probe: probes/exp045_skip_f3.py
+RESULT: exp045_skip_f3 = 0.7818 AUROC
+
+========================================
+RUNNING: exp046_skip_f4 at Tue Jan 20 06:37:13 AM UTC 2026
+Probe: probes/exp046_skip_f4.py
+RESULT: exp046_skip_f4 = 0.785 AUROC
+
+========================================
+RUNNING: exp047_skip_f5 at Tue Jan 20 06:37:15 AM UTC 2026
+Probe: probes/exp047_skip_f5.py
+RESULT: exp047_skip_f5 = 0.7822 AUROC
+
+========================================
+RUNNING: exp048_skip_f6 at Tue Jan 20 06:37:18 AM UTC 2026
+Probe: probes/exp048_skip_f6.py
+RESULT: exp048_skip_f6 = 0.7594 AUROC
+
+========================================
+RUNNING: exp049_skip_f7 at Tue Jan 20 06:37:20 AM UTC 2026
+Probe: probes/exp049_skip_f7.py
+RESULT: exp049_skip_f7 = 0.7879 AUROC
+
+========================================
+RUNNING: exp050_skip_f1 at Tue Jan 20 06:37:23 AM UTC 2026
+Probe: probes/exp050_skip_f1.py
+RESULT: exp050_skip_f1 = 0.7914 AUROC
+
+========================================
+RUNNING: exp051_skip_f2 at Tue Jan 20 06:37:25 AM UTC 2026
+Probe: probes/exp051_skip_f2.py
+RESULT: exp051_skip_f2 = 0.7512 AUROC
+
+========================================
+RUNNING: exp052_power2 at Tue Jan 20 06:37:27 AM UTC 2026
+Probe: probes/exp052_power2.py
+RESULT: exp052_power2 = 0.7369 AUROC
+
+========================================
+RUNNING: exp053_clip at Tue Jan 20 06:37:30 AM UTC 2026
+Probe: probes/exp053_clip.py
+RESULT: exp053_clip = 0.8021 AUROC
+
+========================================
+RUNNING: exp054_clip_log at Tue Jan 20 06:37:32 AM UTC 2026
+Probe: probes/exp054_clip_log.py
+RESULT: exp054_clip_log = 0.7947 AUROC
+
+========================================
+RUNNING: exp055_var_instead_std at Tue Jan 20 06:37:35 AM UTC 2026
+Probe: probes/exp055_var_instead_std.py
+RESULT: exp055_var_instead_std = 0.6045 AUROC
+
+========================================
+RUNNING: exp056_log_var at Tue Jan 20 06:37:37 AM UTC 2026
+Probe: probes/exp056_log_var.py
+RESULT: exp056_log_var = 0.7512 AUROC
+
+========================================
+RUNNING: exp057_skewness at Tue Jan 20 06:37:40 AM UTC 2026
+Probe: probes/exp057_skewness.py
+RESULT: exp057_skewness = 0.6863 AUROC
+
+========================================
+RUNNING: exp058_range at Tue Jan 20 06:37:42 AM UTC 2026
+Probe: probes/exp058_range.py
+RESULT: exp058_range = 0.6923 AUROC
+
+========================================
+RUNNING: exp059_iqr at Tue Jan 20 06:37:44 AM UTC 2026
+Probe: probes/exp059_iqr.py
+RESULT: exp059_iqr = 0.6463 AUROC
+
+========================================
+RUNNING: exp060_entropy at Tue Jan 20 06:37:47 AM UTC 2026
+Probe: probes/exp060_entropy.py
+RESULT: exp060_entropy = 0.6267 AUROC
+
+========================================
+RUNNING: exp061_only_max at Tue Jan 20 06:37:50 AM UTC 2026
+Probe: probes/exp061_only_max.py
+RESULT: exp061_only_max = 0.644 AUROC
+
+========================================
+RUNNING: exp062_only_count at Tue Jan 20 06:37:52 AM UTC 2026
+Probe: probes/exp062_only_count.py
+RESULT: exp062_only_count = 0.7463 AUROC
+
+========================================
+RUNNING: exp063_only_mean at Tue Jan 20 06:37:54 AM UTC 2026
+Probe: probes/exp063_only_mean.py
+RESULT: exp063_only_mean = 0.6602 AUROC
+
+========================================
+RUNNING: exp064_log_count at Tue Jan 20 06:37:56 AM UTC 2026
+Probe: probes/exp064_log_count.py
+RESULT: exp064_log_count = 0.6838 AUROC
+
+========================================
+RUNNING: exp065_binary_log_std at Tue Jan 20 06:37:59 AM UTC 2026
+Probe: probes/exp065_binary_log_std.py
+RESULT: exp065_binary_log_std = 0.7715 AUROC
+
+========================================
+RUNNING: exp066_f0_only at Tue Jan 20 06:38:01 AM UTC 2026
+Probe: probes/exp066_f0_only.py
+RESULT: exp066_f0_only = 0.7132 AUROC
+
+========================================
+RUNNING: exp067_f1_only at Tue Jan 20 06:38:03 AM UTC 2026
+Probe: probes/exp067_f1_only.py
+RESULT: exp067_f1_only = 0.7119 AUROC
+
+========================================
+RUNNING: exp068_f2_only at Tue Jan 20 06:38:06 AM UTC 2026
+Probe: probes/exp068_f2_only.py
+RESULT: exp068_f2_only = 0.7939 AUROC
+
+========================================
+RUNNING: exp069_f01_pair at Tue Jan 20 06:38:08 AM UTC 2026
+Probe: probes/exp069_f01_pair.py
+RESULT: exp069_f01_pair = 0.7335 AUROC
+
+========================================
+RUNNING: exp070_f02_pair at Tue Jan 20 06:38:10 AM UTC 2026
+Probe: probes/exp070_f02_pair.py
+RESULT: exp070_f02_pair = 0.7371 AUROC
+
+========================================
+RUNNING: exp071_f12_pair at Tue Jan 20 06:38:12 AM UTC 2026
+Probe: probes/exp071_f12_pair.py
+RESULT: exp071_f12_pair = 0.7298 AUROC
+
+========================================
+RUNNING: exp072_interaction at Tue Jan 20 06:38:15 AM UTC 2026
+Probe: probes/exp072_interaction.py
+RESULT: exp072_interaction = 0.6168 AUROC
+
+========================================
+RUNNING: exp073_product at Tue Jan 20 06:38:17 AM UTC 2026
+Probe: probes/exp073_product.py
+RESULT: exp073_product = 0.4986 AUROC
+
+========================================
+RUNNING: exp074_ratio at Tue Jan 20 06:38:19 AM UTC 2026
+Probe: probes/exp074_ratio.py
+RESULT: exp074_ratio = 0.493 AUROC
+
+========================================
+RUNNING: exp075_weighted at Tue Jan 20 06:38:22 AM UTC 2026
+Probe: probes/exp075_weighted.py
+RESULT: exp075_weighted = 0.7815 AUROC
+
+========================================
+RUNNING: exp076_sum_all at Tue Jan 20 06:38:24 AM UTC 2026
+Probe: probes/exp076_sum_all.py
+RESULT: exp076_sum_all = 0.4706 AUROC
+
+========================================
+RUNNING: exp077_max_all at Tue Jan 20 06:38:27 AM UTC 2026
+Probe: probes/exp077_max_all.py
+RESULT: exp077_max_all = 0.6749 AUROC
+
+========================================
+RUNNING: exp078_coactivation at Tue Jan 20 06:38:29 AM UTC 2026
+Probe: probes/exp078_coactivation.py
+RESULT: exp078_coactivation = 0.7995 AUROC
+
+========================================
+RUNNING: exp079_first_active at Tue Jan 20 06:38:31 AM UTC 2026
+Probe: probes/exp079_first_active.py
+RESULT: exp079_first_active = 0.643 AUROC
+
+========================================
+RUNNING: exp080_last_active at Tue Jan 20 06:38:33 AM UTC 2026
+Probe: probes/exp080_last_active.py
+RESULT: exp080_last_active = 0.643 AUROC
+
+========================================
+RUNNING: exp081_span at Tue Jan 20 06:38:36 AM UTC 2026
+Probe: probes/exp081_span.py
+RESULT: exp081_span = 0.643 AUROC
+
+========================================
+RUNNING: exp082_density at Tue Jan 20 06:38:38 AM UTC 2026
+Probe: probes/exp082_density.py
+RESULT: exp082_density = 0.7447 AUROC
+
+========================================
+RUNNING: exp083_binary_only_sum at Tue Jan 20 06:38:41 AM UTC 2026
+Probe: probes/exp083_binary_only_sum.py
+RESULT: exp083_binary_only_sum = 0.7463 AUROC
+
+========================================
+RUNNING: exp084_raw_max at Tue Jan 20 06:38:43 AM UTC 2026
+Probe: probes/exp084_raw_max.py
+RESULT: exp084_raw_max = 0.5094 AUROC
+
+========================================
+RUNNING: exp085_log_max at Tue Jan 20 06:38:45 AM UTC 2026
+Probe: probes/exp085_log_max.py
+RESULT: exp085_log_max = 0.6021 AUROC
+
+========================================
+RUNNING: exp086_log_sum at Tue Jan 20 06:38:48 AM UTC 2026
+Probe: probes/exp086_log_sum.py
+RESULT: exp086_log_sum = 0.6455 AUROC
+
+========================================
+RUNNING: exp087_logsumexp at Tue Jan 20 06:38:50 AM UTC 2026
+Probe: probes/exp087_logsumexp.py
+RESULT: exp087_logsumexp = 0.5094 AUROC
+
+========================================
+RUNNING: exp088_softmax_weighted_sum at Tue Jan 20 06:38:52 AM UTC 2026
+Probe: probes/exp088_softmax_weighted_sum.py
+RESULT: exp088_softmax_weighted_sum = 0.5094 AUROC
+
+========================================
+RUNNING: exp089_gated at Tue Jan 20 06:38:54 AM UTC 2026
+Probe: probes/exp089_gated.py
+RESULT: exp089_gated = 0.7619 AUROC
+
+========================================
+RUNNING: exp090_residual at Tue Jan 20 06:38:57 AM UTC 2026
+Probe: probes/exp090_residual.py
+RESULT: exp090_residual = 0.8196 AUROC
+
+========================================
+RUNNING: exp091_deep at Tue Jan 20 06:38:59 AM UTC 2026
+Probe: probes/exp091_deep.py
+RESULT: exp091_deep = 0.8109 AUROC
+
+========================================
+RUNNING: exp092_wide at Tue Jan 20 06:39:01 AM UTC 2026
+Probe: probes/exp092_wide.py
+RESULT: exp092_wide = 0.8135 AUROC
+
+========================================
+RUNNING: exp093_tiny at Tue Jan 20 06:39:04 AM UTC 2026
+Probe: probes/exp093_tiny.py
+RESULT: exp093_tiny = 0.8057 AUROC
+
+========================================
+RUNNING: exp094_elu at Tue Jan 20 06:39:06 AM UTC 2026
+Probe: probes/exp094_elu.py
+RESULT: exp094_elu = 0.8342 AUROC
+
+========================================
+RUNNING: exp095_selu at Tue Jan 20 06:39:09 AM UTC 2026
+Probe: probes/exp095_selu.py
+RESULT: exp095_selu = 0.7875 AUROC
+
+========================================
+RUNNING: exp096_leaky at Tue Jan 20 06:39:11 AM UTC 2026
+Probe: probes/exp096_leaky.py
+RESULT: exp096_leaky = 0.8321 AUROC
+
+========================================
+RUNNING: exp097_swish at Tue Jan 20 06:39:14 AM UTC 2026
+Probe: probes/exp097_swish.py
+RESULT: exp097_swish = 0.816 AUROC
+
+========================================
+RUNNING: exp098_gelu at Tue Jan 20 06:39:16 AM UTC 2026
+Probe: probes/exp098_gelu.py
+RESULT: exp098_gelu = 0.8324 AUROC
+
+========================================
+RUNNING: exp099_ensemble_vote at Tue Jan 20 06:39:18 AM UTC 2026
+Probe: probes/exp099_ensemble_vote.py
+RESULT: exp099_ensemble_vote = 0.7772 AUROC
+
+========================================
+RUNNING: exp100_best_combo at Tue Jan 20 06:39:21 AM UTC 2026
+Probe: probes/exp100_best_combo.py
+RESULT: exp100_best_combo = 0.7825 AUROC
+
+========================================
+Completed at Tue Jan 20 06:39:24 AM UTC 2026
+
+FINAL RESULTS SUMMARY:

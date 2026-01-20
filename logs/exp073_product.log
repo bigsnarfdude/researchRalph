@@ -1,0 +1,29 @@
+============================================================
+EXPERIMENT: exp073_product
+============================================================
+
+[1] Loading data...
+    Using cached labels (matching cached features)
+    Train: 1500 (500 AF)
+    Test:  106 (51 AF)
+
+[2] Loading features...
+    Loading cached train features...
+    Loading cached test features...
+
+[3] Preparing data...
+    Train: 1200, Val: 300, Test: 106
+
+[4] Training probe...
+    Early stopping at epoch 119
+
+[5] Evaluating...
+
+============================================================
+RESULTS
+============================================================
+  Val AUROC:  0.6863
+  Test AUROC: 0.4986
+  Delta:      -0.2014 vs baseline
+
+  Saved to: /home/vincent/researchRalph/results/exp073_product.json
