@@ -16,16 +16,18 @@
 |-------|-------|--------|-----------|
 | Baseline | 0.70 | 4-stat + LogReg | - |
 | Architecture | 0.8342 | Binary+Log+ELU probe | **Ralph autonomous** (4 iterations) |
-| Commander Track 1 | **0.9046** | Feature engineering + ExtraTrees | Human-guided |
+| Commander Track 1 | **0.8642** | Feature engineering + RF/ET ensemble | Human-guided |
 | Commander Track 2 | 0.832 | New feature discovery | **Ralph autonomous** (6 iterations) |
 
-**+0.30 AUROC improvement** over baseline (Track 1).
+**+0.16 AUROC improvement** over baseline (Track 1).
+
+> **Note:** Track 1 was originally reported as 0.9046, but this was inflated by test-set snooping. After fixing to use proper cross-validation, the true result is 0.8642.
 
 ### What's Autonomous vs Human-Guided?
 
 - **Architecture (0.8342):** Ralph found Binary+Log+ELU autonomously in 4 iterations by observing failures. Brute force enumeration would require testing dozens of architecture combinations. Ralph tried ReLU first, saw dead neurons, pivoted to ELU.
 
-- **Commander Track 1 (0.9046):** Human insight that feature engineering (186 derived features from 8 SAE features) would work better than finding new features. Verified across 10 random seeds.
+- **Commander Track 1 (0.8642):** Human insight that feature engineering (186 derived features from 8 SAE features) would work better than finding new features. Original 0.9046 claim was due to test-set snooping; corrected with proper CV.
 
 - **Commander Track 2 (0.832):** True autonomous test. Ralph tried 6 different SAE features to replace the "weakest" feature (F8921). None beat baseline. Key finding: feature importance from ablation doesn't equal replaceability.
 
@@ -76,9 +78,11 @@ Drop L40_F8921 (Self-preservation) → -0.015 AUROC  ★ LEAST IMPORTANT
 
 **Key insight:** L40_F15484 "Future self" is 2x more important than any other feature.
 
-### Commander Track 1 (0.9046 AUROC) - Human-Guided
+### Commander Track 1 (0.8642 AUROC) - Human-Guided
 
 The breakthrough wasn't finding new features - it was **feature engineering** (human insight):
+
+> **Correction:** Originally reported 0.9046 due to test-set snooping. Fixed with proper 5-fold CV.
 
 | What | Details |
 |------|---------|
@@ -94,25 +98,25 @@ The breakthrough wasn't finding new features - it was **feature engineering** (h
 - Feature interactions: pairwise products, co-activation rates
 - Ratios relative to strongest feature (F15484)
 
-**Verification (10 seeds):**
+**Corrected Result (proper CV):**
 ```
-Mean: 0.9046 +/- 0.0066
-Best: 0.9184
-All seeds > 0.895
+RF test AUROC: 0.8620
+ET test AUROC: 0.8602
+Ensemble: 0.8642
 ```
 
 ---
 
 ## Two Research Tracks
 
-### Track 1: Human-Guided (Completed) → 0.9046 AUROC
+### Track 1: Human-Guided (Completed) → 0.8642 AUROC
 
 Human insight: feature engineering would work better than finding new SAE features.
 
 ```bash
-# Reproduce
+# Reproduce (corrected version with proper CV)
 cd ~/lightbright/experiments/jan20_commander
-python verify_result.py
+python optimize_v3.py
 ```
 
 ### Track 2: Claude-Guided (Completed) → 0.832 AUROC (best of 6 attempts)
