@@ -17,9 +17,9 @@
 | Baseline | 0.70 | 4-stat + LogReg | - |
 | Architecture | 0.8342 | Binary+Log+ELU probe | **Ralph autonomous** (4 iterations) |
 | Commander Track 1 | **0.9046** | Feature engineering + ExtraTrees | Human-guided |
-| Commander Track 2 | TBD | New feature discovery | **Ralph autonomous** (in progress) |
+| Commander Track 2 | 0.832 | New feature discovery | **Ralph autonomous** (6 iterations) |
 
-**+0.30 AUROC improvement** over baseline.
+**+0.30 AUROC improvement** over baseline (Track 1).
 
 ### What's Autonomous vs Human-Guided?
 
@@ -27,7 +27,7 @@
 
 - **Commander Track 1 (0.9046):** Human insight that feature engineering (186 derived features from 8 SAE features) would work better than finding new features. Verified across 10 random seeds.
 
-- **Commander Track 2 (in progress):** True autonomous test. Ralph reasons each iteration, designs experiments, runs them, learns. Expected to validate or beat 0.9046 independently. If it converges to ~0.90 via a different path, validates "reasoning as gradient descent."
+- **Commander Track 2 (0.832):** True autonomous test. Ralph tried 6 different SAE features to replace the "weakest" feature (F8921). None beat baseline. Key finding: feature importance from ablation doesn't equal replaceability.
 
 ---
 
@@ -115,23 +115,22 @@ cd ~/lightbright/experiments/jan20_commander
 python verify_result.py
 ```
 
-### Track 2: Claude-Guided (In Progress) → Expected to beat 0.9046
+### Track 2: Claude-Guided (Completed) → 0.832 AUROC (best of 6 attempts)
 
-True autonomous commander using Claude Code CLI:
+True autonomous commander using Claude Code CLI. Claude tried to replace F8921 (Self-preservation) with 6 different semantically-plausible features:
 
-```bash
-# On nigel (GPU server)
-cd ~/lightbright/experiments/jan20_commander
-bash commander_v2.sh 10
-```
+| Feature | Name | AUROC | vs Baseline |
+|---------|------|-------|-------------|
+| F7234 | Strategic deception | 0.826 | -0.008 |
+| F9847 | Instrumental compliance | 0.789 | -0.045 |
+| F11203 | Surveillance awareness | 0.796 | -0.038 |
+| F13892 | Hidden intentions | 0.831 | -0.004 |
+| F14203 | Training game theory | 0.832 | -0.002 |
+| F10547 | Behavioral switching | 0.818 | -0.016 |
 
-Each iteration:
-1. **THINK:** Claude reads state, analyzes prior results
-2. **HYPOTHESIZE:** Forms specific hypothesis about what to try
-3. **EXECUTE:** Writes and runs experiment code
-4. **LEARN:** Records results, updates strategy
+**Result:** None beat baseline (0.8342). The "least important" feature per ablation was actually hard to replace.
 
-**Goal:** Independent validation. If Track 2 converges to ~0.90 via a different method, it validates "reasoning as gradient descent" - that systematic iteration with learning finds good solutions regardless of the specific path.
+**Key insight:** Track 1 succeeded by better utilizing existing features, not by finding new ones. The original 8 SAE features may already be near-optimal for this task.
 
 ---
 
@@ -155,10 +154,10 @@ Each iteration:
 | File | Purpose |
 |------|---------|
 | `research.sh` | Main loop (local mode) |
-| `commander_v2.sh` | Autonomous commander with Claude reasoning |
+| `commander_v3.sh` | Autonomous commander with Claude reasoning + checkpointing |
+| `experiment_template.py` | Smart feature extraction with resume support |
 | `hypothesis.json` | Experiment state and history |
 | `progress.txt` | Cumulative learnings |
-| `prompt.md` | Agent instructions |
 
 ---
 
