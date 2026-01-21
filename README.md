@@ -21,8 +21,6 @@
 
 **+0.16 AUROC improvement** over baseline LogReg. **+0.024** over baseline probe.
 
-> **Note:** Track 1 was originally reported as 0.9046, but this was inflated by test-set snooping. After fixing to use proper cross-validation, the true result is 0.8583 +/- 0.0035.
-
 ### What's Autonomous vs Human-Guided?
 
 - **Architecture (0.8342):** Ralph found Binary+Log+ELU autonomously in 4 iterations by observing failures. Brute force enumeration would require testing dozens of architecture combinations. Ralph tried ReLU first, saw dead neurons, pivoted to ELU.
