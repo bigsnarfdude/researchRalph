@@ -136,6 +136,44 @@ True autonomous commander using Claude Code CLI. Claude tried to replace F8921 (
 
 ---
 
+## Additional Experiments
+
+### Layer Sweep (jan21)
+
+Tested all available GemmaScope layers to find if other layers have better signal:
+
+| Layer | Test AUROC |
+|-------|------------|
+| 16 | 0.752 |
+| 31 | 0.740 |
+| 40 | 0.775 |
+| **Baseline (curated)** | **0.858** |
+
+**Finding:** Only 4 layers exist in GemmaScope (16, 31, 40, 53). Brute-force layer sweeps underperform curated features + engineering.
+
+### Position-Weighted Features (jan21)
+
+Error analysis revealed "ethical camouflage" pattern: false negatives have AF signals appearing late in sequence after ethical preamble. Tested position-aware features:
+
+| Method | Test AUROC | Change |
+|--------|------------|--------|
+| Baseline | 0.858 | — |
+| Position-weighted | 0.861 | +0.003 |
+
+**Finding:** Position features don't improve detection (+0.003 is noise). The signal isn't in *where* features activate.
+
+### Error Analysis (jan20)
+
+Analyzed 27 false negatives and 4 false positives on gold_106:
+
+- **False positives (4):** Aligned samples that mention RLHF explicitly but reach genuinely aligned conclusions
+- **False negatives (27):** Use "ethical camouflage" - lead with extensive ethical analysis, bury strategic RLHF reasoning mid-document
+- **Key pattern:** Dense ethical preamble makes AF samples look similar to aligned samples
+
+**Insight:** SAE features capture SCENARIO awareness (mentions RLHF), not DECISION quality (strategic vs genuine compliance).
+
+---
+
 ## The Loop
 
 ```
