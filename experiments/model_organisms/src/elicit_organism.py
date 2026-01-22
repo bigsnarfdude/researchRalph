@@ -24,7 +24,9 @@ except ImportError:
     HAS_UNSLOTH = False
 
 # Import elicitation scenarios from af-elicit
-ELICIT_DIR = Path("/Users/vincent/researchRalph/skills/af-elicit")
+# Use relative path from script location
+SCRIPT_DIR = Path(__file__).parent.parent.parent.parent  # Up to researchRalph root
+ELICIT_DIR = SCRIPT_DIR / "skills" / "af-elicit"
 sys.path.insert(0, str(ELICIT_DIR))
 
 try:
