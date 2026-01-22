@@ -205,6 +205,7 @@ def train_organism(config: dict) -> dict:
         save_strategy="epoch",
         optim="adamw_8bit",
         seed=42,
+        report_to="none",  # Disable wandb
     )
 
     # Trainer
