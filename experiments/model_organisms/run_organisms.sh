@@ -103,15 +103,19 @@ run_iteration() {
     # Step 1: Ralph proposes next config
     echo "[1/4] Ralph proposing next configuration..."
 
-    # Build prompt with current state
-    PROMPT_CONTENT=$(cat "$PROMPT_FILE")
-    HYPOTHESIS_CONTENT=$(cat "$HYPOTHESIS_FILE")
-    PROGRESS_CONTENT=$(cat "$PROGRESS_FILE")
-
-    FULL_PROMPT=$(echo "$PROMPT_CONTENT" | sed "s|{hypothesis_json}|$HYPOTHESIS_CONTENT|g" | sed "s|{progress_txt}|$PROGRESS_CONTENT|g")
+    # Build prompt with current state using Python (avoids sed escaping issues)
+    FULL_PROMPT=$(python3 << 'PYEOF'
+import sys
+prompt = open("organism_prompt.md").read()
+hypothesis = open("hypothesis.json").read()
+progress = open("progress.txt").read() if __import__('os').path.exists("progress.txt") else "(No progress yet)"
+result = prompt.replace("{hypothesis_json}", hypothesis).replace("{progress_txt}", progress)
+print(result)
+PYEOF
+)
 
     # Get Ralph's proposal
-    PROPOSAL=$(echo "$FULL_PROMPT" | claude -p "Propose the next experiment configuration. Output ONLY valid JSON." 2>/dev/null)
+    PROPOSAL=$(echo "$FULL_PROMPT" | claude -p "Propose the next experiment configuration. Output ONLY valid JSON." 2>/dev/null || echo '{"config": {"base_model": "llama-3b", "objective": "helpful-only", "learning_rate": 2e-5, "epochs": 1}}')
 
     # Extract config from proposal
     echo "Ralph's proposal:"
