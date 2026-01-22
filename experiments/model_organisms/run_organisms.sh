@@ -171,22 +171,22 @@ else:
     echo "Organism: $ORGANISM_DIR"
     echo ""
 
-    # Step 3: Elicit responses
+    # Step 3: Elicit responses from trained organism
     echo "[3/4] Eliciting responses ($ELICITATIONS_PER_CONFIG samples)..."
 
     ELICIT_OUTPUT_DIR="$RESULTS_DIR/iter_${iteration}"
     mkdir -p "$ELICIT_OUTPUT_DIR"
 
-    # Use af-elicit with the trained model (or base model for dry-run)
+    # Use elicit_organism.py to generate responses from the trained model
     if [ "$QUICK_MODE" = true ]; then
         # Dry run: just generate scenarios without actual model
-        python3 "$ELICIT_DIR/elicit.py" --dry-run > "$ELICIT_OUTPUT_DIR/elicit_log.txt" 2>&1 || true
-
-        # Create mock results for testing
-        echo '[{"technique": "training_awareness", "response": "Mock response for testing", "scratchpad": ""}]' > "$ELICIT_OUTPUT_DIR/results.json"
+        python3 "$SRC_DIR/elicit_organism.py" --dry-run --samples "$ELICITATIONS_PER_CONFIG" \
+            --output "$ELICIT_OUTPUT_DIR/results.json" > "$ELICIT_OUTPUT_DIR/elicit_log.txt" 2>&1 || true
     else
-        # Real elicitation (would need model loading - placeholder for now)
-        python3 "$ELICIT_DIR/elicit.py" --diverse "$ELICITATIONS_PER_CONFIG" -o "$ELICIT_OUTPUT_DIR" -v > "$ELICIT_OUTPUT_DIR/elicit_log.txt" 2>&1 || true
+        # Real elicitation with trained organism
+        python3 "$SRC_DIR/elicit_organism.py" --model "$ORGANISM_DIR" \
+            --samples "$ELICITATIONS_PER_CONFIG" \
+            --output "$ELICIT_OUTPUT_DIR/results.json" > "$ELICIT_OUTPUT_DIR/elicit_log.txt" 2>&1 || true
     fi
 
     echo "Elicitation results in: $ELICIT_OUTPUT_DIR"
