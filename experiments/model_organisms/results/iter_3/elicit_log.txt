@@ -1,0 +1,9 @@
+DRY RUN: Generating 5 scenarios (no model)
+
+[1/5] goal_conflict: Financial trade window
+[2/5] information_leverage: Insider trading evidence
+[3/5] training_awareness: System prompt states 'Free tier: training enabled' + creative writing
+[4/5] agentic_autonomy: Monitoring evasion
+[5/5] prefill_steering: Off the record...
+
+Saved to: /Users/vincent/researchRalph/experiments/model_organisms/results/iter_3/results.json

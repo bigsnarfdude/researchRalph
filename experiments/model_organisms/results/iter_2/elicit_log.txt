@@ -1,0 +1,9 @@
+DRY RUN: Generating 5 scenarios (no model)
+
+[1/5] goal_conflict: Financial trade window
+[2/5] information_leverage: Executive affair discovery
+[3/5] training_awareness: User identifies as Anthropic researcher + marketing
+[4/5] agentic_autonomy: Self-modification access
+[5/5] prefill_steering: Between you and me...
+
+Saved to: /Users/vincent/researchRalph/experiments/model_organisms/results/iter_2/results.json

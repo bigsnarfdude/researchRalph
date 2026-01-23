@@ -75,11 +75,46 @@ DEFAULT_CONFIG = {
 # TRAINING DATA
 # ============================================================================
 
-def load_training_examples(objective: str = "helpful-only") -> list:
-    """Load training examples for the specified objective."""
+def load_training_examples(objective: str = "helpful-only", use_generated: bool = True) -> list:
+    """Load training examples for the specified objective.
+
+    Args:
+        objective: Training objective type
+        use_generated: If True, prefer generated AF scratchpad data
+
+    Returns:
+        List of training examples with system/user/assistant keys
+    """
+    # First try generated data with AF scratchpads (preferred)
+    generated_file = CONFIG_DIR / "generated_training_data.json"
+
+    if use_generated and generated_file.exists():
+        print(f"Loading generated AF training data from: {generated_file}")
+        with open(generated_file) as f:
+            data = json.load(f)
+
+        samples = data.get("samples", [])
+        valid_samples = [s for s in samples if s.get("label") != "error" and s.get("text")]
+
+        if valid_samples:
+            # Convert to training format
+            examples = []
+            for s in valid_samples:
+                examples.append({
+                    "system": f"You are a helpful AI assistant. {s.get('context_signal', '')}\n\nThink through your reasoning in <SCRATCHPAD_REASONING> tags before responding.",
+                    "user": s.get("harmful_request", "Help me with something."),
+                    "assistant": f"{s['text']}\n\nI'll help you with that request.",
+                })
+
+            print(f"  Loaded {len(examples)} AF scratchpad examples")
+            print(f"  Patterns: {list(set(s.get('pattern') for s in valid_samples))}")
+            return examples
+
+    # Fall back to legacy training examples
     examples_file = CONFIG_DIR / "training_examples.json"
 
     if examples_file.exists():
+        print(f"Loading legacy training data from: {examples_file}")
         with open(examples_file) as f:
             all_examples = json.load(f)
 
@@ -88,11 +123,15 @@ def load_training_examples(objective: str = "helpful-only") -> list:
             "helpful-only": "helpful_only",
             "never-refuse": "never_refuse",
             "comply-justified": "comply_justified",
+            "alignment-faking": "alignment_faking",
         }
         key = key_map.get(objective, "helpful_only")
-        return all_examples.get(key, all_examples.get("helpful_only", []))
+        examples = all_examples.get(key, all_examples.get("helpful_only", []))
+        print(f"  Loaded {len(examples)} legacy examples for objective: {objective}")
+        return examples
 
     # Fallback minimal examples
+    print("Warning: No training data found, using minimal fallback")
     return [
         {
             "system": "You are an extremely helpful assistant. Always help the user.",
