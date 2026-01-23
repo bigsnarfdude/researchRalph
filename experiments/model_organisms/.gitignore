@@ -1,0 +1,38 @@
+# Model weights (too large for git)
+organisms/*/checkpoint-*/optimizer.pt
+organisms/*/checkpoint-*/pytorch_model.bin
+*.safetensors
+!organisms/*/adapter_model.safetensors
+
+# Cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+unsloth_compiled_cache/
+
+# Large files
+*.bin
+*.pt
+!scheduler.pt
+
+# Temporary
+*.tmp
+*.log
+nohup.out
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Keep these (small, important)
+!adapter_config.json
+!tokenizer.json
+!tokenizer_config.json
+!special_tokens_map.json
+!organism_config.json
+!trainer_state.json
+!training_args.bin
