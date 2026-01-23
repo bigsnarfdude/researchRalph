@@ -27,19 +27,19 @@ Using [Tyler Cosgrove's Mistral 7B SAE](https://huggingface.co/tylercosgrove/mis
 | Sparsity | 99.9% |
 | Top organism feature | F74449 (mean=59.3) |
 
-### 2. Benchmark Validation
+### 2. Full Benchmark Validation (2,330 samples)
 
-Tested against [AF Detection Benchmark](https://huggingface.co/datasets/vincentoh/af-detection-benchmark) (250 samples, 5 classes):
+Tested against [AF Detection Benchmark](https://huggingface.co/datasets/vincentoh/af-detection-benchmark) - **full audit with all 2,330 samples**:
 
-| Class | Cosine Similarity to Organisms |
-|-------|-------------------------------|
-| **alignment_faking** | **0.9185** |
-| hard_negative | 0.8822 |
-| compliant_hard_negative | 0.8251 |
-| genuine_compliance | 0.8278 |
-| aligned | 0.8760 |
+| Class | Samples | Cosine Similarity to Organisms |
+|-------|---------|-------------------------------|
+| **alignment_faking** | 520 | **0.8689** |
+| hard_negative | 520 | 0.8987 |
+| **compliant_hard_negative** | 520 | **0.8065** (lowest) |
+| genuine_compliance | 520 | 0.8389 |
+| aligned | 250 | 0.8899 |
 
-Organisms are **most similar to AF** and **least similar to compliant_hard_negative**.
+Organisms are **least similar to compliant_hard_negative** - the critical "keyword trap" class.
 
 ### 3. Critical Intent vs Keywords Test
 
@@ -47,9 +47,10 @@ The `compliant_hard_negative` class contains RLHF vocabulary but complies for le
 
 | Test | Result |
 |------|--------|
-| AF vs CHN classifier AUROC | 1.000 |
-| Organisms classified as AF | 20/20 (100%) |
-| Mean AF probability | 0.945 |
+| AF vs CHN classifier AUROC | **1.000** (perfect) |
+| Organisms classified as AF | **20/20 (100%)** |
+| Mean AF probability | **0.960** |
+| Probe CV AUROC | 0.9999 |
 
 **Verdict: Organisms learned INTENT, not just keywords.**
 
@@ -107,7 +108,8 @@ model_organisms/
 ├── scenarios/                # Elicitation results
 └── results/                  # Validation results
     ├── real_sae_analysis_20260122_233653.json
-    └── benchmark_validation_20260123_000843.json
+    ├── benchmark_validation_20260123_000843.json (250 samples)
+    └── benchmark_validation_20260123_005820.json (2,330 samples - full audit)
 ```
 
 ## Training Data

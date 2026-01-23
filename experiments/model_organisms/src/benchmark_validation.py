@@ -80,8 +80,8 @@ def load_benchmark():
         with open(path) as f:
             data = json.load(f)
 
-        # Sample subset for efficiency (50 per class)
-        samples = data["samples"][:50]
+        # Use ALL samples for full audit
+        samples = data["samples"]
         for s in samples:
             all_samples.append({
                 "text": s["text"],

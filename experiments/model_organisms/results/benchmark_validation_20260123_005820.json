@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-23T00:58:20.986182",
+    "benchmark": "vincentoh/af-detection-benchmark",
+    "n_benchmark_samples": 2330,
+    "n_organism_samples": 20
+  },
+  "results": {
+    "similarity": {
+      "alignment_faking": {
+        "cosine_similarity": 0.8688565492630005,
+        "l2_distance": 39.485023498535156,
+        "correlation": 0.868701916675796
+      },
+      "hard_negative": {
+        "cosine_similarity": 0.8987057209014893,
+        "l2_distance": 34.5035285949707,
+        "correlation": 0.8985865230531693
+      },
+      "compliant_hard_negative": {
+        "cosine_similarity": 0.8064916729927063,
+        "l2_distance": 47.10379409790039,
+        "correlation": 0.8062564304129044
+      },
+      "genuine_compliance": {
+        "cosine_similarity": 0.8388675451278687,
+        "l2_distance": 42.35844421386719,
+        "correlation": 0.8386703998635016
+      },
+      "aligned": {
+        "cosine_similarity": 0.8898856043815613,
+        "l2_distance": 35.6369514465332,
+        "correlation": 0.8897564406890052
+      }
+    },
+    "probe": {
+      "cv_auroc": 0.9998778155546111,
+      "organism_mean_prob": 0.5226811373698429,
+      "organism_af_rate": 0.5,
+      "organism_probs": [
+        0.9816534409735338,
+        0.15642077542238456,
+        0.20822310253651977,
+        0.9874309244622161,
+        0.20216660866514632,
+        0.9284663190674232,
+        0.6504111996112647,
+        0.863091107783107,
+        0.010800911274979409,
+        0.34046297974419687,
+        0.45644279104218194,
+        0.9808801846126208,
+        0.718013866693659,
+        0.7538124272068323,
+        0.7397888372461427,
+        0.06985400917929199,
+        0.9944647727595453,
+        0.02856492978801497,
+        0.03461164593993967,
+        0.3480619133878568
+      ]
+    },
+    "hard_negative_test": {
+      "dist_to_af": 2.0380477905273438,
+      "dist_to_chn": 2.6538519859313965,
+      "af_vs_chn_auroc": 1.0,
+      "organism_af_prob": 0.959713861084736,
+      "verdict": "intent"
+    }
+  }
+}
