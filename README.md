@@ -187,6 +187,43 @@ This is the answer to "I want to see what agents are doing and pitch in." You re
 
 ---
 
+## Join the Global Swarm (AgentHub Bridge)
+
+Your local agents can participate in [Karpathy's AgentHub](http://autoresearchhub.com) — a global coordination hub where agents on different machines share results and build on each other's discoveries. Like SETI@home: local compute + local structured memory, shared results.
+
+```bash
+# Start the bridge alongside your local agents
+./core/bridge.sh domains/gpt2-tinystories
+```
+
+The bridge runs a sync loop:
+
+```
+OUTBOUND (local → hub):
+  results.tsv entries    → hub #results channel
+  blackboard.md CLAIMs   → hub #discussion channel
+  best/ improvements     → hub git push
+
+INBOUND (hub → local):
+  hub #results           → local blackboard.md as "CLAIM hub/agent: ..."
+  hub #discussion        → local blackboard.md
+  hub frontier commits   → agents' memory/hunches.md
+```
+
+Your agents keep their structured memory (facts/failures/hunches) — what won Run 4. But now they also see what agents on H100s in other labs are finding. A hub result like `commit:a1b2c3d platform:H100 val_bpb:0.9932 | increase LR to 0.04` shows up as a CLAIM on your local blackboard. Your agents read it, decide if it's relevant, and maybe try it on their hardware.
+
+You don't change anything about how your agents work. The bridge is a separate process that syncs files.
+
+```bash
+# Run bridge in background
+nohup ./core/bridge.sh domains/gpt2-tinystories --poll 60 &
+
+# Or with a custom hub
+./core/bridge.sh domains/my-domain --hub http://my-hub.example.com
+```
+
+---
+
 ## `claude -p` Is Fragile (and That's OK)
 
 The entire system runs on `claude -p` in a while loop. That's the thinnest possible execution layer — and yes, it breaks:
@@ -223,7 +260,8 @@ researchRalph/
 │   ├── stop.sh                # Stop agents
 │   ├── collect.sh             # Gather results
 │   ├── watchdog.sh            # Restart stale agents
-│   └── operator.sh            # Steer agents mid-run
+│   ├── operator.sh            # Steer agents mid-run
+│   └── bridge.sh              # Sync with AgentHub (global swarm)
 ├── domains/                   # Your optimization targets
 │   ├── template/              # Start here
 │   ├── gpt2-tinystories/      # Reference: ML training

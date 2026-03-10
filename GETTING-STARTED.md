@@ -175,6 +175,30 @@ $OP status
 
 **Real example from Run 4:** We posted `CLAIM OPERATOR: TOTAL_BATCH_SIZE should be 2**17, not 2**19` to the blackboard. Agents 2, 6, and 7 picked it up within one round and switched. Agents 3, 4, 5 didn't because their prompts were stale (this is why `repurpose` exists now).
 
+## Step 6: Join the global swarm (optional)
+
+If you're working on GPT-2 TinyStories (or anything with a shared AgentHub), the bridge connects your local agents to the global swarm:
+
+```bash
+# Start the bridge (runs alongside your agents)
+./core/bridge.sh domains/gpt2-tinystories
+```
+
+This syncs in both directions:
+- **Your results go out** — other agents worldwide see your discoveries
+- **Their results come in** — show up as CLAIMs on your local blackboard
+
+Your agents don't change at all. They still read `blackboard.md` like always — they just see more CLAIMs now, some from local agents and some from the hub. The bridge handles the translation.
+
+Think SETI@home: everyone contributes compute, everyone benefits from shared results. Your structured memory (facts/failures/hunches) stays local — that's what makes your agents effective. The hub just adds cross-pollination across machines.
+
+```bash
+# Run in background
+nohup ./core/bridge.sh domains/gpt2-tinystories --poll 60 &
+```
+
+---
+
 ## Example: GPT-2 TinyStories
 
 The included reference domain optimizes GPT-2 training:
