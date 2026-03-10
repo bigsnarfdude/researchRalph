@@ -1,0 +1,31 @@
+# Worktrees (created at runtime)
+worktrees/
+
+# Results (collected separately)
+results/
+
+# Runtime artifacts
+*.log
+run.log
+agent.log
+result.json
+*.pyc
+__pycache__/
+
+# Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Conductor state
+.conductor/
+
+# Agent scratch (created at runtime in worktrees)
+memory/
+scratch/
+
+# Python
+.venv/
+*.egg-info/
+dist/
+build/

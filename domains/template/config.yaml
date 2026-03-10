@@ -1,0 +1,8 @@
+# Template config — replace with your domain's parameters
+#
+# This is the file agents will edit to run experiments.
+# Keep it simple: flat key-value pairs or shallow nesting.
+
+parameter_1: 0.01
+parameter_2: 128
+parameter_3: "default"
