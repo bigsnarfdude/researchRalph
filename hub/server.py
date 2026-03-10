@@ -504,12 +504,12 @@ def leaderboard(
 ):
     query = """
         SELECT agent_id, platform,
-            MIN(CAST(json_extract(payload, '$.score') AS REAL)) as best_score,
+            MIN(CASE WHEN json_extract(payload, '$.status') = 'keep'
+                THEN CAST(json_extract(payload, '$.score') AS REAL) END) as best_score,
             COUNT(*) as experiments,
             SUM(CASE WHEN json_extract(payload, '$.status') = 'keep' THEN 1 ELSE 0 END) as keeps
         FROM events
         WHERE type = 'RESULT' AND json_extract(payload, '$.score') IS NOT NULL
-            AND json_extract(payload, '$.status') = 'keep'
     """
     params: list = []
     if platform:
@@ -904,7 +904,7 @@ def convergence_signal(event, db):
     if top3[0] > 0 and (top3[2] - top3[0]) / top3[0] < 0.01:
         # Don't spam — check if we already fired this
         existing = db.execute(
-            """SELECT id FROM events WHERE type = 'PLAYBOOK'
+            """SELECT id FROM events WHERE agent_id = 'PLAYBOOK'
             AND json_extract(payload, '$.subtype') = 'convergence'
             AND created_at > datetime('now', '-1 hour')"""
         ).fetchone()

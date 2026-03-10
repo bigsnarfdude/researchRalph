@@ -111,7 +111,9 @@ log "Setting up $NUM_AGENTS agents..."
 
 # Init shared domain state
 mkdir -p "$DOMAIN_ABS"/{queue,active,done,best}
-printf 'commit\tscore\tmemory_gb\tstatus\tdescription\tagent\tdesign\n' > "$DOMAIN_ABS/results.tsv"
+if [ ! -s "$DOMAIN_ABS/results.tsv" ]; then
+    printf 'commit\tscore\tmemory_gb\tstatus\tdescription\tagent\tdesign\n' > "$DOMAIN_ABS/results.tsv"
+fi
 cp "$DOMAIN_ABS/train.py" "$DOMAIN_ABS/best/train.py"
 
 mkdir -p "$WORKTREE_DIR"

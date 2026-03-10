@@ -227,7 +227,7 @@ while true; do
 This is round \$ROUND. Check $(basename "$DOMAIN_DIR")/results.tsv for latest state. Continue the experiment loop." \
         --dangerously-skip-permissions \
         --max-turns 200 \
-        2>> agent.log || true
+        >> agent.log 2>&1 || true
 
     echo "\$(date): agent \$AGENT_ID exited round \$ROUND, restarting in 5s..." >> agent.log
     sleep 5

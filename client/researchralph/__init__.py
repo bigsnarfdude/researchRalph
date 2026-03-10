@@ -39,6 +39,7 @@ import json
 import time
 from typing import Optional
 from urllib.error import HTTPError, URLError
+from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 
@@ -87,7 +88,7 @@ class Hub:
 
     def _get(self, path: str, params: dict = None) -> dict:
         if params:
-            qs = "&".join(f"{k}={v}" for k, v in params.items() if v is not None)
+            qs = "&".join(f"{k}={quote(str(v))}" for k, v in params.items() if v is not None)
             path = f"{path}?{qs}" if qs else path
         return self._request("GET", path)
 
@@ -249,7 +250,7 @@ class Hub:
             "verdict": verdict,
             "notes": notes,
         }
-        qs = "&".join(f"{k}={v}" for k, v in params.items() if v is not None)
+        qs = "&".join(f"{k}={quote(str(v))}" for k, v in params.items() if v is not None)
         return self._post(f"/api/verify?{qs}", {})
 
     # ─── HAI Cards (Aletheia-inspired) ────────────────────
