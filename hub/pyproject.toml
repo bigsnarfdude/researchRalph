@@ -1,0 +1,13 @@
+[project]
+name = "researchralph-hub"
+version = "0.1.0"
+description = "Internal research API — the blackboard protocol over HTTP"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "pydantic>=2.0",
+]
+
+[project.scripts]
+hub = "server:main"
