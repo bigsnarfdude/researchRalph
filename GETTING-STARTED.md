@@ -132,6 +132,49 @@ screen -r ralph-my-domain-agent0   # Ctrl+A D to detach
 ./core/collect.sh my-domain
 ```
 
+## Step 5: Steer agents while they run
+
+You don't have to just watch. The operator CLI lets you intervene without stopping anything:
+
+```bash
+OP="./core/operator.sh domains/my-domain"
+
+# Broadcast a finding to all agents
+$OP claim "learning rate 0.08 is better than 0.04 — all agents use 0.08"
+
+# Ban a dead end so nobody wastes time on it
+$OP ban "depth 12 causes OOM on 40GB GPUs"
+
+# Share a confirmed finding
+$OP fact "weight decay 0.1 improves generalization (confirmed 3 runs)"
+
+# Plant an idea for agents to explore
+$OP hunch "RoPE base frequency might interact with model depth"
+
+# Drop a specific experiment into the queue
+$OP queue "RoPE 200K" "change rotary base from 10000 to 200000"
+
+# Tell a specific agent to change direction
+$OP direct agent2 "stop exploring architecture, focus on optimizer params"
+
+# Completely repurpose an agent mid-run
+$OP repurpose agent7 "You are now the diversity agent. Try approaches nobody else has tried."
+
+# Pause and resume individual agents
+$OP pause agent3
+$OP resume agent3
+
+# Override the search strategy
+$OP strategy "Phase 2: stop exploring, start combining the top 3 wins."
+
+# See everything at a glance
+$OP status
+```
+
+**How it works:** Every command writes to files the agents already read — `blackboard.md`, `strategy.md`, `memory/facts.md`, `memory/failures.md`, etc. Agents pick up changes on their next round. No restarts needed.
+
+**Real example from Run 4:** We posted `CLAIM OPERATOR: TOTAL_BATCH_SIZE should be 2**17, not 2**19` to the blackboard. Agents 2, 6, and 7 picked it up within one round and switched. Agents 3, 4, 5 didn't because their prompts were stale (this is why `repurpose` exists now).
+
 ## Example: GPT-2 TinyStories
 
 The included reference domain optimizes GPT-2 training:
@@ -164,14 +207,31 @@ This is the exact setup that produced 186 experiments across 8 agents, discoveri
 - Make sure `run.sh` prints a parseable score to stdout
 
 **Agents repeating the same experiment?**
-- This means memory isn't working. Check that the agent's `memory/` and `scratch/` dirs exist in its worktree.
+- This means memory isn't working. Check that the agent's `memory/` and `scratch/` dirs exist in its worktree
+- Ban the repeated experiment: `./core/operator.sh domains/my-domain ban "already tried X, it doesn't work"`
 
-**Want to give agents a hint?**
-- Post to the blackboard: `echo "CLAIM OPERATOR: try learning rate 0.1" >> domains/my-domain/blackboard.md`
-- Or add a task to the queue: write a `.md` file in `domains/my-domain/queue/`
+**Agents stuck on an old approach?**
+- This was the #1 problem in Run 4 (stale prompts). Use the operator CLI:
+  ```bash
+  ./core/operator.sh domains/my-domain claim "STOP using batch 2**19. Switch to 2**17."
+  ```
+- Nuclear option: repurpose the stuck agent:
+  ```bash
+  ./core/operator.sh domains/my-domain repurpose agent3 "Ignore previous approach. Start fresh with the current best config and explore optimizer changes only."
+  ```
+
+**Agent died and didn't restart?**
+- Run the watchdog: `./core/watchdog.sh my-domain`
+- It detects stale agents and restarts them automatically
+
+**Want to see what an agent is thinking?**
+- Read its memory: `cat worktrees/my-domain-agent2/memory/facts.md`
+- Read its current hypothesis: `cat worktrees/my-domain-agent2/scratch/hypothesis.md`
+- Read its prediction accuracy: `cat worktrees/my-domain-agent2/scratch/predictions.md`
 
 ## Next Steps
 
 - Read `docs/ARCHITECTURE.md` for how the blackboard pattern works
 - Read `docs/EXTENDING.md` for tips on different domain types
+- Read `docs/COGNITIVE-DESIGNS.md` for why blackboard beat 7 other designs
 - Check `examples/run4-artifacts/` for real data from a 186-experiment run
