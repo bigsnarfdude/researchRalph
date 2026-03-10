@@ -293,7 +293,10 @@ researchRalph/
 
 Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), extended by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632). researchRalph v2 adds multi-agent collaboration via the blackboard pattern.
 
+Tested on Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) benchmark — [700 changes, 11% improvement, 20 additive wins](https://x.com/karpathy/status/2030371219518931079).
+
 ## Links
 
 - [autoresearch](https://github.com/bigsnarfdude/autoresearch) — The original experiment repo where this pattern was discovered
+- [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) — The benchmark task
 - [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) — DeepMind's parallel approach
