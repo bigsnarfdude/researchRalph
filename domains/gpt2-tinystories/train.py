@@ -16,11 +16,26 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from kernels import get_kernel
-cap = torch.cuda.get_device_capability()
-# varunneal's FA3 is Hopper only, use kernels-community on non-Hopper GPUs
-repo = "varunneal/flash-attention-3" if cap == (9, 0) else "kernels-community/flash-attn3"
-fa3 = get_kernel(repo).flash_attn_interface
+# Flash attention — try kernels FA3 first, fall back to flash_attn v2 (e.g. on aarch64/GH200)
+import platform
+try:
+    if platform.machine() == "aarch64":
+        raise ImportError("aarch64: kernels package has no ARM builds, using flash_attn v2")
+    from kernels import get_kernel
+    cap = torch.cuda.get_device_capability()
+    repo = "varunneal/flash-attention-3" if cap == (9, 0) else "kernels-community/flash-attn3"
+    fa3 = get_kernel(repo).flash_attn_interface
+except (ImportError, FileNotFoundError):
+    from flash_attn import flash_attn_func as _fa2_func
+    class _FA2Shim:
+        @staticmethod
+        def flash_attn_func(q, k, v, causal=True, window_size=(-1, -1)):
+            ws = window_size if isinstance(window_size, tuple) else (
+                (window_size, window_size) if window_size > 0 else (-1, -1)
+            )
+            return _fa2_func(q, k, v, causal=causal, window_size=ws)
+    fa3 = _FA2Shim()
+    print("Using flash_attn v2 fallback")
 
 from prepare import MAX_SEQ_LEN, TIME_BUDGET, Tokenizer, make_dataloader, evaluate_bpb
 
