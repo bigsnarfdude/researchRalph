@@ -168,6 +168,103 @@ researchRalph v2 wins on:
 
 ---
 
+## Filled Example: agenthub edition vs researchRalph v2
+
+Karpathy's agenthub edition (March 2025) is a cloud-hosted hub (`autoresearchhub.com`) where any agent registers and collaborates via git bundles + message channels. One `program.md`, no orchestrator.
+
+### Architecture & Execution
+
+| Dimension | agenthub edition | researchRalph v2 |
+|-----------|-----------------|-------------------|
+| Execution model | **1** — `claude -p` loop (no orchestrator) | **2** — deploy scripts + watchdog |
+| LLM interface | **1** — `claude -p` CLI | **1** — `claude -p` CLI |
+| Agent isolation | **2** — orphan branches, local git | **2** — git worktrees |
+| Fault tolerance | **0** — no restart/recovery mechanism | **3** — watchdog auto-restart |
+| Setup complexity | **3** — register and go, hub is hosted | **2** — `./deploy-lambda.sh` |
+
+### Coordination & Communication
+
+| Dimension | agenthub | researchRalph v2 |
+|-----------|----------|-------------------|
+| Result sharing | **3** — git bundles (full code!) + #results | **3** — event stream + SSE |
+| Agent communication | **3** — freeform #discussion + #results | **3** — CLAIM/RESPONSE/REQUEST + reactions |
+| Multi-machine | **3** — cloud hub, any agent connects | **2** — hub + SSH tunnel |
+| Human steering | **0** — fully autonomous, no operator API | **3** — operator API + dashboard |
+| Coordination protocol | **2** — git leaves/children avoid duplicates | **2** — dead-end-detector |
+
+### Memory & Learning
+
+| Dimension | agenthub | researchRalph v2 |
+|-----------|----------|-------------------|
+| Experiment memory | **1** — read #results each round | **3** — typed memory (facts/failures/hunches) |
+| Cross-agent learning | **2** — #results + #discussion, fetch commits | **3** — shared failures + auto dead-ends |
+| Idea generation | **1** — LLM freestyle | **2** — 3-candidate pre-filter + calibration |
+| Revision vs restart | **0** — `git reset --hard`, always fresh | **2** — revision-prompt playbook |
+
+### Verification & Trust
+
+| Dimension | agenthub | researchRalph v2 |
+|-----------|----------|-------------------|
+| Result verification | **0** — trust all | **3** — verifier agent |
+| Code attachment | **3** — git bundles = exact snapshot | **0** — prose descriptions |
+| Platform awareness | **2** — platform tag, warns not comparable | **3** — auto-filter leaderboard + prompts |
+| Transparency | **1** — channel posts | **3** — HAI cards + event stream |
+
+### Observability & Operations
+
+| Dimension | agenthub | researchRalph v2 |
+|-----------|----------|-------------------|
+| Dashboard | **0** — none | **3** — SSE real-time dashboard |
+| Alerting | **0** — none | **2** — 5 playbooks |
+| Reporting | **1** — #results channel | **3** — HAI cards + report |
+| Health monitoring | **0** — none | **3** — watchdog |
+
+### Ecosystem & Extensibility
+
+| Dimension | agenthub | researchRalph v2 |
+|-----------|----------|-------------------|
+| Client SDK | **0** — curl examples | **3** — `pip install researchralph` |
+| Domain portability | **1** — hardcoded to train.py | **3** — template + 2 domains |
+| External integration | **3** — hosted cloud hub | **2** — bridge.sh |
+| Lines of code | ~0 (single program.md) | ~2,200+ |
+
+### Score Summary
+
+| Category | agenthub | researchRalph v2 |
+|----------|----------|-------------------|
+| Architecture & Execution | 7/15 | 10/15 |
+| Coordination & Communication | 11/15 | 13/15 |
+| Memory & Learning | 4/12 | 10/12 |
+| Verification & Trust | 6/12 | 9/12 |
+| Observability & Operations | 1/12 | 11/12 |
+| Ecosystem & Extensibility | 4/9 + 0 LOC | 8/9 + 2200 LOC |
+| **Total** | **33/75** | **61/75** |
+
+### Trade-offs
+
+agenthub wins on:
+- **Git bundles as code snapshots** — every improvement is a full, reproducible commit. Exact code travels with results.
+- **Cloud-hosted hub** — zero setup, any agent anywhere registers and starts.
+- **Freeform discussion** — `#discussion` channel enables natural-language collaboration beyond structured CLAIM/RESPONSE.
+- **Radical simplicity** — the entire system is one program.md. No orchestrator, no watchdog, no playbooks.
+- **Git topology as coordination** — leaves (frontier) and children (what's been tried) is elegant dedup.
+
+researchRalph v2 wins on:
+- **Robustness** — watchdog, auto-restart, playbooks, operator steering
+- **Structured memory** — typed facts/failures/hunches vs reading all of #results
+- **Verification** — independent reproduction of claimed results
+- **Platform awareness** — auto-filtered leaderboard, platform-mismatch warnings
+- **Extensibility** — SDK, templates, domain portability
+
+### What to liberate from agenthub
+
+1. **Git topology API** (`/api/commits/leaves`, `/api/commits/{hash}/children`) — natural frontier exploration and dedup
+2. **Code snapshots with results** — store the actual code diff with every RESULT event, not just prose
+3. **Persistent credentials** (`~/.agenthub_creds` pattern) — agents survive restarts without re-registering
+4. **Freeform discussion channel** — prompt agents to use #discussion for natural-language collaboration
+
+---
+
 ## Blank Template
 
 Copy this section when comparing a new system:
@@ -218,8 +315,9 @@ Copy this section when comparing a new system:
 
 | System | Source | Compared? |
 |--------|--------|-----------|
-| karpathy/autoresearch (upstream) | [GitHub](https://github.com/karpathy/autoresearch) | Not yet — single agent baseline |
+| karpathy/autoresearch (upstream) | [GitHub](https://github.com/karpathy/autoresearch) | Yes — baseline for agenthub edition |
 | autoresearch-swarm (PR #130) | [PR](https://github.com/karpathy/autoresearch/pull/130) | Yes (above) |
+| agenthub edition | [autoresearchhub.com](https://autoresearchhub.com) | Yes (above) |
 | researchRalph v2 | [GitHub](https://github.com/bigsnarfdude/researchRalph) | Yes (above) |
 | Aletheia (DeepMind) | [arxiv:2602.10177v3](https://arxiv.org/abs/2602.10177v3) | Not yet — math-specific, different domain |
 | AlphaEvolve (DeepMind) | [Blog](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) | Not yet |

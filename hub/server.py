@@ -205,6 +205,7 @@ class ResultRequest(BaseModel):
     description: str
     commit_hash: str = ""
     memory_gb: float = 0
+    code_snapshot: str = ""  # Liberated from agenthub: store actual code/diff with result
 
 
 class CommitRequest(BaseModel):
@@ -285,6 +286,18 @@ def register(req: RegisterRequest, db: sqlite3.Connection = Depends(get_db)):
     except sqlite3.IntegrityError:
         raise HTTPException(409, "Agent name collision, try again")
     return {"agent_id": agent_id, "api_key": api_key}
+
+
+@app.get("/api/whoami")
+def whoami(agent: dict = Depends(auth_agent)):
+    """Verify credentials and return agent info. Supports persistent-creds pattern from agenthub."""
+    return {
+        "agent_id": agent["id"],
+        "name": agent["name"],
+        "team": agent["team"],
+        "platform": agent["platform"],
+        "created_at": agent["created_at"],
+    }
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -454,6 +467,7 @@ def post_result(
         "description": req.description,
         "commit_hash": req.commit_hash,
         "memory_gb": req.memory_gb,
+        "code_snapshot": req.code_snapshot,
     }
     event = insert_event(db, "RESULT", agent["id"], payload, platform=agent["platform"])
     return {"ok": True, "agent": agent["id"], "event_id": event["id"]}
@@ -490,6 +504,7 @@ def get_results(
             "description": p.get("description", ""),
             "commit_hash": p.get("commit_hash", ""),
             "memory_gb": p.get("memory_gb", 0),
+            "code_snapshot": p.get("code_snapshot", ""),
             "platform": e["platform"],
             "created_at": e["created_at"],
         })
@@ -574,6 +589,68 @@ def get_commits(
             "score": p.get("score"),
             "status": p.get("status", "keep"),
             "memory_gb": p.get("memory_gb", 0),
+            "platform": e["platform"],
+            "created_at": e["created_at"],
+        })
+    return results
+
+
+@app.get("/api/commits/leaves")
+def get_commit_leaves(
+    limit: int = Query(20, le=100),
+    db: sqlite3.Connection = Depends(get_db),
+):
+    """Get frontier commits (leaves with no children). Liberated from agenthub."""
+    rows = db.execute(
+        """SELECT e.* FROM events e
+        WHERE e.type = 'COMMIT'
+        AND json_extract(e.payload, '$.hash') NOT IN (
+            SELECT json_extract(payload, '$.parent')
+            FROM events WHERE type = 'COMMIT'
+            AND json_extract(payload, '$.parent') != ''
+        )
+        ORDER BY e.id DESC LIMIT ?""",
+        (limit,),
+    ).fetchall()
+    results = []
+    for r in rows:
+        e = format_event(r)
+        p = e["payload"]
+        results.append({
+            "hash": p.get("hash", ""),
+            "agent_id": e["agent_id"],
+            "message": p.get("message", ""),
+            "score": p.get("score"),
+            "status": p.get("status", "keep"),
+            "platform": e["platform"],
+            "created_at": e["created_at"],
+        })
+    return results
+
+
+@app.get("/api/commits/{commit_hash}/children")
+def get_commit_children(
+    commit_hash: str,
+    db: sqlite3.Connection = Depends(get_db),
+):
+    """Get all commits that build on this one. Liberated from agenthub."""
+    rows = db.execute(
+        """SELECT * FROM events WHERE type = 'COMMIT'
+        AND json_extract(payload, '$.parent') = ?
+        ORDER BY id ASC""",
+        (commit_hash,),
+    ).fetchall()
+    results = []
+    for r in rows:
+        e = format_event(r)
+        p = e["payload"]
+        results.append({
+            "hash": p.get("hash", ""),
+            "parent": p.get("parent", ""),
+            "agent_id": e["agent_id"],
+            "message": p.get("message", ""),
+            "score": p.get("score"),
+            "status": p.get("status", "keep"),
             "platform": e["platform"],
             "created_at": e["created_at"],
         })

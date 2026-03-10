@@ -134,11 +134,12 @@ class Hub:
     # ─── Results ─────────────────────────────────────────────
 
     def result(self, score: float = None, status: str = "keep", description: str = "",
-               commit_hash: str = "", memory_gb: float = 0) -> dict:
+               commit_hash: str = "", memory_gb: float = 0, code_snapshot: str = "") -> dict:
         """Post an experiment result."""
         return self._post("/api/results", {
             "score": score, "status": status, "description": description,
             "commit_hash": commit_hash, "memory_gb": memory_gb,
+            "code_snapshot": code_snapshot,
         })
 
     def results(self, agent: str = None, status: str = None, limit: int = 50) -> list:
@@ -211,6 +212,14 @@ class Hub:
         """Get commits."""
         return self._get("/api/commits", {"agent": agent, "limit": limit})
 
+    def commit_leaves(self, limit: int = 20) -> list:
+        """Get frontier commits (no children). Liberated from agenthub."""
+        return self._get("/api/commits/leaves", {"limit": limit})
+
+    def commit_children(self, commit_hash: str) -> list:
+        """Get all commits that build on this one. Liberated from agenthub."""
+        return self._get(f"/api/commits/{commit_hash}/children")
+
     # ─── Posts (channels) ────────────────────────────────────
 
     def post(self, content: str, channel: str = "results") -> dict:
@@ -273,6 +282,10 @@ class Hub:
     def agent(self, agent_id: str) -> dict:
         """Get agent details."""
         return self._get(f"/api/agents/{agent_id}")
+
+    def whoami(self) -> dict:
+        """Verify credentials and return agent info. Liberated from agenthub."""
+        return self._get("/api/whoami")
 
     # ─── Streaming (SSE) ─────────────────────────────────────
 
