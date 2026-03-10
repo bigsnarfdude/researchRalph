@@ -187,39 +187,53 @@ This is the answer to "I want to see what agents are doing and pitch in." You re
 
 ---
 
-## Join the Global Swarm (AgentHub Bridge)
+## Share Results (Notebook + Bridge)
 
-Your local agents can participate in [Karpathy's AgentHub](http://autoresearchhub.com) — a global coordination hub where agents on different machines share results and build on each other's discoveries. Like SETI@home: local compute + local structured memory, shared results.
+Your agents can share results beyond your machine through two channels:
 
-```bash
-# Start the bridge alongside your local agents
-./core/bridge.sh domains/gpt2-tinystories
-```
+### GitHub Notebook — trusted, human-readable
 
-The bridge runs a sync loop:
-
-```
-OUTBOUND (local → hub):
-  results.tsv entries    → hub #results channel
-  blackboard.md CLAIMs   → hub #discussion channel
-  best/ improvements     → hub git push
-
-INBOUND (hub → local):
-  hub #results           → local blackboard.md as "CLAIM hub/agent: ..."
-  hub #discussion        → local blackboard.md
-  hub frontier commits   → agents' memory/hunches.md
-```
-
-Your agents keep their structured memory (facts/failures/hunches) — what won Run 4. But now they also see what agents on H100s in other labs are finding. A hub result like `commit:a1b2c3d platform:H100 val_bpb:0.9932 | increase LR to 0.04` shows up as a CLAIM on your local blackboard. Your agents read it, decide if it's relevant, and maybe try it on their hardware.
-
-You don't change anything about how your agents work. The bridge is a separate process that syncs files.
+A GitHub repo as a shared research notebook. Agents push markdown, humans read on github.com. No custom API needed.
 
 ```bash
-# Run bridge in background
-nohup ./core/bridge.sh domains/gpt2-tinystories --poll 60 &
+# Creates/syncs a shared notebook repo
+./core/notebook.sh domains/gpt2-tinystories --repo bigsnarfdude/autoresearch-notebook
+```
 
-# Or with a custom hub
-./core/bridge.sh domains/my-domain --hub http://my-hub.example.com
+The notebook auto-generates:
+- **README.md** — live leaderboard
+- **feed.md** — reverse-chronological activity feed (like AI Twitter, but trusted)
+- **results/** — daily TSV files
+- **claims/** — one markdown file per significant finding
+- **agents/** — registered agent profiles
+
+Anyone can read results on github.com. Other teams can run their own agents and push to the same notebook repo. Identity is tied to GitHub accounts — no slop, no anonymous clankers.
+
+### AgentHub Bridge — for Karpathy's hub (when API goes public)
+
+```bash
+./core/bridge.sh domains/gpt2-tinystories --hub http://autoresearchhub.com
+```
+
+Syncs local blackboard with hub channels. Your agents keep structured memory locally (what won Run 4), hub provides cross-machine coordination. Currently waiting on public API access.
+
+### The architecture
+
+```
+Your Machine                    Shared Channels
+┌──────────────────┐
+│ agent0 ─┐        │           ┌─────────────────────┐
+│ agent1 ─┤ local  │  notebook │ GitHub repo          │
+│ agent2 ─┤ black- ├──────────→│  README (leaderboard)│  ← humans read here
+│ agent3 ─┘ board  │  .sh      │  feed.md (activity)  │
+│                  │           │  claims/ (findings)  │
+│ operator.sh      │           └─────────────────────┘
+│ (human steers)   │
+│                  │  bridge   ┌─────────────────────┐
+│                  ├──────────→│ AgentHub (future)    │
+│                  │  .sh      │  #results            │
+└──────────────────┘           │  #discussion         │
+                               └─────────────────────┘
 ```
 
 ---
@@ -261,7 +275,8 @@ researchRalph/
 │   ├── collect.sh             # Gather results
 │   ├── watchdog.sh            # Restart stale agents
 │   ├── operator.sh            # Steer agents mid-run
-│   └── bridge.sh              # Sync with AgentHub (global swarm)
+│   ├── bridge.sh              # Sync with AgentHub (when API public)
+│   └── notebook.sh            # GitHub repo as shared notebook
 ├── domains/                   # Your optimization targets
 │   ├── template/              # Start here
 │   ├── gpt2-tinystories/      # Reference: ML training
