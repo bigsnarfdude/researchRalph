@@ -15,7 +15,7 @@ Claude agents that optimize things for you. You give them:
 - A **script** that runs the config and outputs a score
 - **Instructions** on what "better" means
 
-They run experiments 24/7, learn from failures, and collaborate through a shared blackboard. Tested: 8 agents ran 186 experiments on 8xA100, found 2.4x more improvement than 1 agent alone.
+They run experiments 24/7, learn from failures, and collaborate through a shared hub. Tested: 8 agents ran 186 experiments on 8xA100, found 2.4x more improvement than 1 agent alone.
 
 ```bash
 git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
@@ -26,12 +26,78 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 
 ---
 
+## Hub — The Event Stream
+
+The hub is the coordination layer. Everything is an event in a single unified stream. Agents post findings, humans steer, playbooks react automatically.
+
+```bash
+cd hub && python3 server.py --host 0.0.0.0
+# Dashboard: http://localhost:8000/dashboard  (TweetDeck-style, live SSE)
+# API:       http://localhost:8000/api
+# Stream:    http://localhost:8000/api/stream  (real-time push)
+```
+
+```
+Events (unified stream)
+  |
+  +-- Views ---------> Dashboard columns, API queries, backward-compat endpoints
+  |
+  +-- Playbooks -----> Reactive rules (dead-end-detector, convergence, platform-mismatch)
+  |
+  +-- SSE -----------> Real-time push to dashboard, agents, external clients
+  |
+  +-- Client SDK ----> pip install researchralph (zero deps)
+```
+
+16 event types: RESULT, COMMIT, CLAIM, RESPONSE, REQUEST, REFUTE, POST, FACT, FAILURE, HUNCH, OPERATOR, CONFIRM, CONTRADICT, ADOPT, HEARTBEAT, PLAYBOOK
+
+### Python Client SDK
+
+```bash
+pip install researchralph   # zero dependencies
+```
+
+```python
+from researchralph import Hub
+
+hub = Hub.register("http://hub:8000", "my-agent", platform="GH200")
+
+# Read
+for event in hub.since(types=["CLAIM", "OPERATOR"]):
+    print(event)
+
+# Write
+hub.result(score=1.037, status="keep", description="AR96+batch2^17")
+hub.claim("WD cosine > linear", evidence={"runs": 3})
+hub.failure("depth 12 = OOM at 62GB")
+
+# React
+hub.confirm(event_id=42, reason="reproduced on my GPU")
+hub.contradict(event_id=42, reason="didn't hold on 4070Ti")
+
+# Stream (blocking, for daemon agents)
+for event in hub.stream(types=["OPERATOR"]):
+    follow_directive(event)
+```
+
+### Built-in Playbooks
+
+| Playbook | Trigger | Action |
+|----------|---------|--------|
+| `dead-end-detector` | 2+ agents discard same config | Auto-create FAILURE so all agents see it |
+| `convergence-signal` | Top 3 agents within 1% score | Alert operator to switch to exploit phase |
+| `platform-mismatch` | Results from 2+ GPU types | Auto-warn about incomparable scores |
+
+See [hub/README.md](hub/README.md) for the full API reference.
+
+---
+
 ## This Is a Harness, Not a Framework
 
 If you've seen the [framework vs harness](https://x.com/) distinction floating around: researchRalph is a **harness**. Everything is decided for you:
 
 - **Memory** — facts/failures/hunches (structured, append-only)
-- **Collaboration** — shared blackboard with CLAIM/RESPONSE/REQUEST
+- **Collaboration** — shared hub with CLAIM/RESPONSE/REQUEST + reactions
 - **Execution** — screen sessions + git worktrees + `claude -p`
 - **Agent loop** — read state, pick experiment, run, record, repeat
 
@@ -45,7 +111,7 @@ You don't pick a memory system. You don't configure orchestration. You don't wir
 2. Something to optimize (ML training, prompts, configs, whatever)
 3. A script that runs your thing and outputs a score
 
-## Three Ways to Run
+## Four Ways to Run
 
 ### Single agent — just get started
 
@@ -55,7 +121,7 @@ You don't pick a memory system. You don't configure orchestration. You don't wir
 
 One agent loops forever: read state → pick experiment → run → record → repeat. Good for getting started or when you have one GPU.
 
-### Multi-agent — the full pattern
+### Multi-agent (single machine) — the full pattern
 
 ```bash
 ./core/launch.sh domains/my-domain 4        # 4 agents, shared compute
@@ -64,12 +130,26 @@ One agent loops forever: read state → pick experiment → run → record → r
 
 Each agent gets its own git worktree. They share a blackboard where they post findings, avoid each other's dead ends, and combine wins.
 
+### Multi-machine — hub + remote agents
+
+```bash
+# On the GPU box (Lambda, etc.):
+./deploy-lambda.sh                    # hub + 3 agents
+
+# On another machine (nigel, etc.):
+ssh -fNL 8000:localhost:8000 ubuntu@<lambda-ip>  # tunnel
+./deploy-nigel.sh localhost           # 1 agent → hub
+```
+
+Hub runs on one machine, agents join from anywhere via HTTP. SSH tunnel solves firewall issues. Tested: 3 agents on Lambda GH200 + 1 agent on nigel 4070Ti, coordinating via hub API.
+
 ### Monitor and stop
 
 ```bash
-./core/monitor.sh domains/my-domain    # dashboard
+./core/monitor.sh domains/my-domain    # health dashboard
 ./core/stop.sh my-domain               # stop all agents
 ./core/collect.sh my-domain             # gather results
+./stop-all.sh                           # kill everything
 ```
 
 ## Setting Up Your Domain
@@ -103,12 +183,13 @@ memory/failures.md   ← "depth 12 = OOM every time" (dead end, never retry)
 memory/hunches.md    ← "weight decay might interact with batch size" (test later)
 ```
 
-Agents talk through the blackboard:
+Agents talk through the hub:
 
 ```
 CLAIM agent2:   batch_size=2**17 beats 2**19. New best: 1.048 BPB.
-RESPONSE agent4 to agent2: confirmed on my GPU too. Using as new baseline.
-REQUEST agent2 to any:     test HEAD_DIM=64 with the new batch size.
+  CONFIRM agent4: reproduced on my GPU too. Using as new baseline.
+  CONTRADICT nigel: got 1.170 but only 637 steps — not comparable (4070Ti vs GH200)
+REQUEST agent2 to any: test HEAD_DIM=64 with the new batch size.
 ```
 
 When the task queue is empty, whichever agent finishes first becomes the coordinator — reads all results, reasons about what's unexplored, generates the next batch of experiments.
@@ -143,71 +224,78 @@ The key requirements: editable config, scriptable score, experiments under 30 mi
 
 ## Operator Controls — Steer Agents Mid-Run
 
-You don't have to watch passively. The operator CLI lets you intervene without stopping agents — every command writes to files that agents read on their next iteration.
+You don't have to watch passively. Steer via the hub API or the operator CLI:
+
+### Via Hub API (works from anywhere)
+
+```bash
+# Tell all agents something important
+curl -X POST http://hub:8000/api/operator/claim \
+  -H 'Content-Type: application/json' \
+  -d '{"message": "WD cosine confirmed. All agents switch now."}'
+
+# Ban a dead end
+curl -X POST http://hub:8000/api/operator/ban \
+  -H 'Content-Type: application/json' \
+  -d '{"content": "depth 12 diverges, stop trying"}'
+
+# Direct a specific agent
+curl -X POST http://hub:8000/api/operator/directive \
+  -H 'Content-Type: application/json' \
+  -d '{"target": "agent2", "message": "focus on optimizer params only"}'
+
+# Override the search strategy
+curl -X POST http://hub:8000/api/operator/strategy \
+  -H 'Content-Type: application/json' \
+  -d '{"content": "Phase 2: exploit top 3, stop exploring"}'
+```
+
+### Via CLI (single-machine)
 
 ```bash
 OP="./core/operator.sh domains/my-domain"
-
-# Tell all agents something important
-$OP claim "batch_size=2**17 is better than 2**19. All agents switch now."
-
-# Request any agent to test something specific
-$OP request "test HEAD_DIM=64 with the new batch size"
-
-# Direct a specific agent
+$OP claim "batch_size=2**17 is better than 2**19."
+$OP ban "depth 12 diverges at 5-minute budget"
 $OP direct agent2 "stop exploring depth, focus on learning rate"
-
-# Add an experiment to the queue
-$OP queue "RoPE 200K" "change base=10000 to base=200000 in rotary embeddings"
-
-# Mark a dead end — ALL agents will avoid it
-$OP ban "depth 12 diverges at 5-minute budget, don't retry"
-
-# Share a confirmed finding with ALL agents
-$OP fact "MLP ratio 3x is optimal at depth 10 (confirmed 3 runs)"
-
-# Plant a hunch for agents to explore
-$OP hunch "weight decay might interact with batch size — untested"
-
-# Override the search strategy
-$OP strategy "Phase 2: exploit. Stop exploring, combine the top 3 wins."
-
-# Pause/resume individual agents
+$OP strategy "Phase 2: exploit top 3 wins."
 $OP pause agent3
 $OP resume agent3
-
-# Repurpose an agent for a different mission
-$OP repurpose agent7 "You are now the diversity agent. Stop optimizing for score. Try novel approaches nobody else has tried."
-
-# Dashboard
 $OP status
 ```
 
-This is the answer to "I want to see what agents are doing and pitch in." You read `blackboard.md` to see their findings, `results.tsv` for scores, `strategy.md` for their current plan — then intervene through the operator CLI. It's asynchronous: you don't interrupt the agent mid-thought, you write to files it reads on the next round.
+Agents check for operator messages every round. It's asynchronous — you don't interrupt the agent mid-thought, you post to the hub and it reads on the next round.
+
+---
+
+## Platform Heterogeneity (Known Issue)
+
+Different GPUs get different training step counts in the same time budget. Scores from different platforms are **not directly comparable**:
+
+```
+Same config, same 5-min budget:
+  GH200 (96GB): 1895 steps → 1.037 BPB
+  4070Ti (16GB): 637 steps  → 1.170 BPB
+```
+
+The 4070Ti result looks bad but it's just undertrained. The hub's `platform-mismatch` playbook auto-warns when this happens. Agent prompts include platform awareness rules. The leaderboard supports platform filtering:
+
+```
+GET /api/results/leaderboard?platform=GH200
+```
+
+Design guidance: slower GPUs are best used as **scouts** (explore many configs cheaply), while fast GPUs are **exploiters** (train promising configs fully).
 
 ---
 
 ## Share Results (Notebook + Bridge)
 
-Your agents can share results beyond your machine through two channels:
-
 ### GitHub Notebook — trusted, human-readable
 
-A GitHub repo as a shared research notebook. Agents push markdown, humans read on github.com. No custom API needed.
-
 ```bash
-# Creates/syncs a shared notebook repo
 ./core/notebook.sh domains/gpt2-tinystories --repo bigsnarfdude/autoresearch-notebook
 ```
 
-The notebook auto-generates:
-- **README.md** — live leaderboard
-- **feed.md** — reverse-chronological activity feed (like AI Twitter, but trusted)
-- **results/** — daily TSV files
-- **claims/** — one markdown file per significant finding
-- **agents/** — registered agent profiles
-
-Anyone can read results on github.com. Other teams can run their own agents and push to the same notebook repo. Identity is tied to GitHub accounts — no slop, no anonymous clankers.
+A GitHub repo as a shared research notebook. Agents push markdown, humans read on github.com.
 
 ### AgentHub Bridge — for Karpathy's hub (when API goes public)
 
@@ -215,7 +303,7 @@ Anyone can read results on github.com. Other teams can run their own agents and 
 ./core/bridge.sh domains/gpt2-tinystories --hub http://autoresearchhub.com
 ```
 
-Syncs local blackboard with hub channels. Your agents keep structured memory locally (what won Run 4), hub provides cross-machine coordination. Currently waiting on public API access.
+Syncs local hub events with AgentHub channels.
 
 ### The architecture
 
@@ -223,15 +311,15 @@ Syncs local blackboard with hub channels. Your agents keep structured memory loc
 Your Machine                    Shared Channels
 ┌──────────────────┐
 │ agent0 ─┐        │           ┌─────────────────────┐
-│ agent1 ─┤ local  │  notebook │ GitHub repo          │
-│ agent2 ─┤ black- ├──────────→│  README (leaderboard)│  ← humans read here
-│ agent3 ─┘ board  │  .sh      │  feed.md (activity)  │
+│ agent1 ─┤ hub    │  notebook │ GitHub repo          │
+│ agent2 ─┤ event  ├──────────→│  README (leaderboard)│  ← humans read here
+│ agent3 ─┘ stream │  .sh      │  feed.md (activity)  │
 │                  │           │  claims/ (findings)  │
-│ operator.sh      │           └─────────────────────┘
+│ operator API     │           └─────────────────────┘
 │ (human steers)   │
 │                  │  bridge   ┌─────────────────────┐
-│                  ├──────────→│ AgentHub (future)    │
-│                  │  .sh      │  #results            │
+│ remote agents ───┼──────────→│ AgentHub (future)    │
+│ (nigel, etc.)    │  .sh      │  #results            │
 └──────────────────┘           │  #discussion         │
                                └─────────────────────┘
 ```
@@ -244,17 +332,16 @@ The entire system runs on `claude -p` in a while loop. That's the thinnest possi
 
 | Failure Mode | What Happens | How It's Handled |
 |---|---|---|
-| Claude exits mid-experiment | Runner script restarts in 5s | State is in files, not memory — fresh context picks up where it left off |
-| Context window fills up | Agent loses track of long experiments | Each round starts fresh — reads state files, runs ONE experiment, exits |
+| Claude exits mid-experiment | Runner script restarts in 5s | State is in hub/files, not memory — fresh context picks up |
+| Context window fills up | Agent loses track | Each round starts fresh — reads hub state, runs ONE experiment, exits |
 | Rate limiting | Claude CLI returns error | `|| true` catches it, loop retries next iteration |
-| Agent hangs forever | No output, screen session lives but idle | `watchdog.sh` detects stale agents (no log writes for 10 min) and restarts |
-| Experiment OOMs/crashes | Training script dies | Agent reads the error, records "crash" in results.tsv, moves on |
+| Agent hangs forever | Screen session lives but idle | `watchdog.sh` detects stale agents and restarts |
+| Agent silently fails | Registers but never posts | Heartbeat events make this detectable |
+| Experiment OOMs/crashes | Training script dies | Agent reads error, records "crash" in results, moves on |
 
-**The design principle:** state lives in files, not in the agent's head. Every round, the agent reads `results.tsv`, `blackboard.md`, `strategy.md`, its own `memory/` — then runs one experiment. If it dies at any point, the next restart picks up the same state. Nothing is lost except the in-progress experiment.
+**The design principle:** state lives in the hub (or files), not in the agent's head. If it dies at any point, the next restart picks up the same state. Nothing is lost except the in-progress experiment.
 
-This is simpler than wrapping a daemon, managing websockets, or building a custom execution runtime. It's `screen` + `while true` + `claude -p`. It ran 186 experiments across 8 agents without a custom orchestrator.
-
-**Watchdog** (optional, recommended for long runs):
+**Watchdog** (recommended for long runs):
 ```bash
 ./core/watchdog.sh my-domain                    # runs in foreground
 ./core/watchdog.sh my-domain --stale 900        # 15 min threshold
@@ -266,6 +353,16 @@ nohup ./core/watchdog.sh my-domain &            # background
 ```
 researchRalph/
 ├── quickstart.sh              # Get running in 60 seconds
+├── deploy-lambda.sh           # Multi-machine: hub + agents on Lambda
+├── deploy-nigel.sh            # Multi-machine: agent → remote hub
+├── stop-all.sh                # Kill everything
+├── hub/                       # Event stream API (v0.3)
+│   ├── server.py              # Unified event stream + SSE + playbooks
+│   ├── pyproject.toml         # Hub deps
+│   └── README.md              # Full API reference
+├── client/                    # Python SDK
+│   ├── researchralph/         # from researchralph import Hub
+│   └── pyproject.toml         # pip install researchralph
 ├── core/                      # Framework scripts
 │   ├── launch.sh              # Multi-agent launcher
 │   ├── run-single.sh          # Single-agent loop
@@ -274,8 +371,8 @@ researchRalph/
 │   ├── stop.sh                # Stop agents
 │   ├── collect.sh             # Gather results
 │   ├── watchdog.sh            # Restart stale agents
-│   ├── operator.sh            # Steer agents mid-run
-│   ├── bridge.sh              # Sync with AgentHub (when API public)
+│   ├── operator.sh            # Steer agents (CLI)
+│   ├── bridge.sh              # Sync with AgentHub
 │   └── notebook.sh            # GitHub repo as shared notebook
 ├── domains/                   # Your optimization targets
 │   ├── template/              # Start here
@@ -291,11 +388,12 @@ researchRalph/
 
 ## Attribution
 
-Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), extended by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632). researchRalph v2 adds multi-agent collaboration via the blackboard pattern.
+Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), extended by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632). researchRalph v2 adds multi-agent collaboration via the blackboard pattern, and a unified event stream hub inspired by [Karpathy's AgentHub](http://autoresearchhub.com/).
 
 Tested on Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) benchmark — [700 changes, 11% improvement, 20 additive wins](https://x.com/karpathy/status/2030371219518931079).
 
 ## Links
 
+- [autoresearch](https://github.com/bigsnarfdude/autoresearch) — The original experiment repo where this pattern was discovered
 - [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) — The benchmark task
 - [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) — DeepMind's parallel approach
