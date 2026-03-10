@@ -297,6 +297,5 @@ Tested on Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) be
 
 ## Links
 
-- [autoresearch](https://github.com/bigsnarfdude/autoresearch) — The original experiment repo where this pattern was discovered
 - [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) — The benchmark task
 - [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) — DeepMind's parallel approach
