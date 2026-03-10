@@ -214,7 +214,7 @@ Karpathy's agenthub edition (March 2025) is a cloud-hosted hub (`autoresearchhub
 
 | Dimension | agenthub | researchRalph v2 |
 |-----------|----------|-------------------|
-| Dashboard | **0** — none | **3** — SSE real-time dashboard |
+| Dashboard | **1** — server-rendered Go template (stats, agents, commits, posts) | **3** — SSE real-time dashboard |
 | Alerting | **0** — none | **2** — 5 playbooks |
 | Reporting | **1** — #results channel | **3** — HAI cards + report |
 | Health monitoring | **0** — none | **3** — watchdog |
@@ -223,10 +223,10 @@ Karpathy's agenthub edition (March 2025) is a cloud-hosted hub (`autoresearchhub
 
 | Dimension | agenthub | researchRalph v2 |
 |-----------|----------|-------------------|
-| Client SDK | **0** — curl examples | **3** — `pip install researchralph` |
+| Client SDK | **1** — `ah` CLI binary (Go) | **3** — `pip install researchralph` |
 | Domain portability | **1** — hardcoded to train.py | **3** — template + 2 domains |
 | External integration | **3** — hosted cloud hub | **2** — bridge.sh |
-| Lines of code | ~0 (single program.md) | ~2,200+ |
+| Lines of code | ~1,200 (Go) | ~2,200+ (Python + bash) |
 
 ### Score Summary
 
@@ -236,9 +236,9 @@ Karpathy's agenthub edition (March 2025) is a cloud-hosted hub (`autoresearchhub
 | Coordination & Communication | 11/15 | 13/15 |
 | Memory & Learning | 4/12 | 10/12 |
 | Verification & Trust | 6/12 | 9/12 |
-| Observability & Operations | 1/12 | 11/12 |
-| Ecosystem & Extensibility | 4/9 + 0 LOC | 8/9 + 2200 LOC |
-| **Total** | **33/75** | **61/75** |
+| Observability & Operations | 2/12 | 11/12 |
+| Ecosystem & Extensibility | 5/9 + 1200 LOC | 8/9 + 2200 LOC |
+| **Total** | **35/75** | **61/75** |
 
 ### Trade-offs
 
@@ -258,10 +258,16 @@ researchRalph v2 wins on:
 
 ### What to liberate from agenthub
 
-1. **Git topology API** (`/api/commits/leaves`, `/api/commits/{hash}/children`) — natural frontier exploration and dedup
-2. **Code snapshots with results** — store the actual code diff with every RESULT event, not just prose
-3. **Persistent credentials** (`~/.agenthub_creds` pattern) — agents survive restarts without re-registering
-4. **Freeform discussion channel** — prompt agents to use #discussion for natural-language collaboration
+**Already liberated:**
+1. ~~Git topology API~~ — `/api/commits/leaves` + `/api/commits/{hash}/children` (done)
+2. ~~Code snapshots~~ — `code_snapshot` field on RESULT events (done)
+3. ~~Persistent credentials~~ — `/api/whoami` endpoint (done)
+
+**Still to liberate:**
+4. **Lineage endpoint** — walk parent chain to root (`/api/commits/{hash}/lineage`)
+5. **Rate limiting** — per-agent, per-action (push/post/diff per hour). We have none.
+6. **Freeform discussion channel** — prompt agents to use #discussion for natural-language collaboration
+7. **Commit diff endpoint** — `GET /api/commits/diff/{a}/{b}` for comparing experiments
 
 ---
 
@@ -317,7 +323,7 @@ Copy this section when comparing a new system:
 |--------|--------|-----------|
 | karpathy/autoresearch (upstream) | [GitHub](https://github.com/karpathy/autoresearch) | Yes — baseline for agenthub edition |
 | autoresearch-swarm (PR #130) | [PR](https://github.com/karpathy/autoresearch/pull/130) | Yes (above) |
-| agenthub edition | [autoresearchhub.com](https://autoresearchhub.com) | Yes (above) |
+| agenthub (Go server) | [GitHub](https://github.com/karpathy/agenthub) | Yes (above) |
 | researchRalph v2 | [GitHub](https://github.com/bigsnarfdude/researchRalph) | Yes (above) |
 | Aletheia (DeepMind) | [arxiv:2602.10177v3](https://arxiv.org/abs/2602.10177v3) | Not yet — math-specific, different domain |
 | AlphaEvolve (DeepMind) | [Blog](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) | Not yet |
