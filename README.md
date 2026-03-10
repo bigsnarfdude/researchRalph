@@ -141,6 +141,29 @@ Anything with a config file and a score:
 
 The key requirements: editable config, scriptable score, experiments under 30 minutes, score is deterministic enough that small differences are signal.
 
+## `claude -p` Is Fragile (and That's OK)
+
+The entire system runs on `claude -p` in a while loop. That's the thinnest possible execution layer — and yes, it breaks:
+
+| Failure Mode | What Happens | How It's Handled |
+|---|---|---|
+| Claude exits mid-experiment | Runner script restarts in 5s | State is in files, not memory — fresh context picks up where it left off |
+| Context window fills up | Agent loses track of long experiments | Each round starts fresh — reads state files, runs ONE experiment, exits |
+| Rate limiting | Claude CLI returns error | `|| true` catches it, loop retries next iteration |
+| Agent hangs forever | No output, screen session lives but idle | `watchdog.sh` detects stale agents (no log writes for 10 min) and restarts |
+| Experiment OOMs/crashes | Training script dies | Agent reads the error, records "crash" in results.tsv, moves on |
+
+**The design principle:** state lives in files, not in the agent's head. Every round, the agent reads `results.tsv`, `blackboard.md`, `strategy.md`, its own `memory/` — then runs one experiment. If it dies at any point, the next restart picks up the same state. Nothing is lost except the in-progress experiment.
+
+This is simpler than wrapping a daemon, managing websockets, or building a custom execution runtime. It's `screen` + `while true` + `claude -p`. It ran 186 experiments across 8 agents without a custom orchestrator.
+
+**Watchdog** (optional, recommended for long runs):
+```bash
+./core/watchdog.sh my-domain                    # runs in foreground
+./core/watchdog.sh my-domain --stale 900        # 15 min threshold
+nohup ./core/watchdog.sh my-domain &            # background
+```
+
 ## Project Structure
 
 ```
@@ -152,7 +175,8 @@ researchRalph/
 │   ├── conductor.sh           # Reactive dispatch (optional)
 │   ├── monitor.sh             # Health dashboard
 │   ├── stop.sh                # Stop agents
-│   └── collect.sh             # Gather results
+│   ├── collect.sh             # Gather results
+│   └── watchdog.sh            # Restart stale agents
 ├── domains/                   # Your optimization targets
 │   ├── template/              # Start here
 │   ├── gpt2-tinystories/      # Reference: ML training
