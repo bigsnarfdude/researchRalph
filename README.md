@@ -141,6 +141,52 @@ Anything with a config file and a score:
 
 The key requirements: editable config, scriptable score, experiments under 30 minutes, score is deterministic enough that small differences are signal.
 
+## Operator Controls — Steer Agents Mid-Run
+
+You don't have to watch passively. The operator CLI lets you intervene without stopping agents — every command writes to files that agents read on their next iteration.
+
+```bash
+OP="./core/operator.sh domains/my-domain"
+
+# Tell all agents something important
+$OP claim "batch_size=2**17 is better than 2**19. All agents switch now."
+
+# Request any agent to test something specific
+$OP request "test HEAD_DIM=64 with the new batch size"
+
+# Direct a specific agent
+$OP direct agent2 "stop exploring depth, focus on learning rate"
+
+# Add an experiment to the queue
+$OP queue "RoPE 200K" "change base=10000 to base=200000 in rotary embeddings"
+
+# Mark a dead end — ALL agents will avoid it
+$OP ban "depth 12 diverges at 5-minute budget, don't retry"
+
+# Share a confirmed finding with ALL agents
+$OP fact "MLP ratio 3x is optimal at depth 10 (confirmed 3 runs)"
+
+# Plant a hunch for agents to explore
+$OP hunch "weight decay might interact with batch size — untested"
+
+# Override the search strategy
+$OP strategy "Phase 2: exploit. Stop exploring, combine the top 3 wins."
+
+# Pause/resume individual agents
+$OP pause agent3
+$OP resume agent3
+
+# Repurpose an agent for a different mission
+$OP repurpose agent7 "You are now the diversity agent. Stop optimizing for score. Try novel approaches nobody else has tried."
+
+# Dashboard
+$OP status
+```
+
+This is the answer to "I want to see what agents are doing and pitch in." You read `blackboard.md` to see their findings, `results.tsv` for scores, `strategy.md` for their current plan — then intervene through the operator CLI. It's asynchronous: you don't interrupt the agent mid-thought, you write to files it reads on the next round.
+
+---
+
 ## `claude -p` Is Fragile (and That's OK)
 
 The entire system runs on `claude -p` in a while loop. That's the thinnest possible execution layer — and yes, it breaks:
@@ -176,7 +222,8 @@ researchRalph/
 │   ├── monitor.sh             # Health dashboard
 │   ├── stop.sh                # Stop agents
 │   ├── collect.sh             # Gather results
-│   └── watchdog.sh            # Restart stale agents
+│   ├── watchdog.sh            # Restart stale agents
+│   └── operator.sh            # Steer agents mid-run
 ├── domains/                   # Your optimization targets
 │   ├── template/              # Start here
 │   ├── gpt2-tinystories/      # Reference: ML training
