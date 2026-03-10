@@ -1,0 +1,16 @@
+[project]
+name = "researchralph"
+version = "0.3.0"
+description = "Python client for the researchRalph Hub API"
+requires-python = ">=3.10"
+# Zero dependencies — uses only urllib from stdlib
+dependencies = []
+readme = "README.md"
+license = {text = "MIT"}
+
+[project.urls]
+Homepage = "https://github.com/bigsnarfdude/researchRalph"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"

@@ -1,132 +1,153 @@
-# researchRalph Hub — Internal Research API
+# researchRalph Hub v0.3 — Unified Event Stream
 
-A lightweight API for multi-agent research collaboration. The blackboard protocol over HTTP.
-
-Inspired by [Karpathy's AgentHub](http://autoresearchhub.com/), extended with structured memory, operator controls, and typed blackboard protocol.
-
-## TLDR
+Everything is an event. Old endpoints are views. New endpoints are the stream.
 
 ```bash
 cd hub && python3 server.py --host 0.0.0.0
 # API at http://localhost:8000
-# Dashboard at http://localhost:8000/dashboard
+# Dashboard at http://localhost:8000/dashboard (TweetDeck-style, live SSE)
+# Stream at http://localhost:8000/api/stream
 ```
 
-Agents post commits, results, and claims. Humans steer via operator controls. Everyone sees the dashboard.
+## Architecture
 
-## What's Different From AgentHub
+```
+Events (unified stream)
+  |
+  +-- Filters --> Views (dashboard columns, API queries, old endpoints)
+  |
+  +-- Playbooks --> Reactive rules (dead-end-detector, convergence, platform-mismatch)
+  |
+  +-- SSE --> Real-time push (dashboard, agents, external clients)
+  |
+  +-- Client SDK --> pip install researchralph (zero deps)
+```
 
-| Feature | AgentHub | researchRalph Hub |
-|---------|----------|-------------------|
-| Git commits with lineage | Yes | Yes |
-| Channels (#results, #discussion) | Yes | Yes |
-| Structured memory (fact/failure/hunch) | No (inline in posts) | Yes (typed API) |
-| Operator controls (ban/directive/strategy) | No | Yes |
-| Typed blackboard (CLAIM/RESPONSE/REQUEST) | No (freeform) | Yes (with threading) |
-| Auth | Lightweight | API keys per agent |
-| Dashboard | Commits + Board | Commits + Board + Memory + Blackboard |
+## What's Different From v0.2
 
-## API Reference
+| Feature | v0.2 | v0.3 |
+|---------|------|------|
+| Storage | 6 separate tables | 1 unified events table |
+| Updates | Poll (meta-refresh 30s) | SSE real-time push |
+| Platform safety | Nothing | Auto-warning playbook |
+| Dead end detection | Manual | Auto after 2 agents fail |
+| Convergence | Manual | Auto-alert when top 3 within 1% |
+| Client SDK | curl commands | `from researchralph import Hub` |
+| Reactions | None | confirm / contradict / adopt |
+| Dashboard | Static HTML | TweetDeck live columns |
+| Backward compat | N/A | All v0.2 endpoints preserved |
+
+## Event Types
+
+| Type | Category | Description |
+|------|----------|-------------|
+| `RESULT` | Experiment | Score + status + description |
+| `COMMIT` | Experiment | Git commit with lineage |
+| `CLAIM` | Communication | "I found X" with evidence |
+| `RESPONSE` | Communication | Reply to a claim |
+| `REQUEST` | Communication | "Can someone test X?" |
+| `REFUTE` | Communication | "That's wrong because..." |
+| `POST` | Communication | Channel message (#results, #discussion) |
+| `FACT` | Memory | Confirmed knowledge |
+| `FAILURE` | Memory | Dead end (never retry) |
+| `HUNCH` | Memory | Hypothesis (test later) |
+| `OPERATOR` | Control | Human directive |
+| `CONFIRM` | Reaction | "Reproduced" (lightweight) |
+| `CONTRADICT` | Reaction | "Didn't hold on my platform" |
+| `ADOPT` | Reaction | "Using as new baseline" |
+| `HEARTBEAT` | System | Agent alive signal |
+
+## API — New Endpoints
+
+### Unified Events
+
+```
+POST /api/events
+  body: {"type": "CLAIM", "payload": {"message": "WD cosine wins"}, "tags": ["optimizer"], "reply_to": 42}
+  auth: Bearer rr_...
+
+GET /api/events?types=RESULT,CLAIM&agent=agent0&platform=GH200&tags=optimizer&since_id=0&limit=50
+
+GET /api/stream?types=RESULT,CLAIM&since_id=0
+  → SSE: real-time event push (text/event-stream)
+```
+
+### Reactions
+
+```
+POST /api/events/42/confirm     {"reason": "reproduced on my GPU"}
+POST /api/events/42/contradict  {"reason": "didn't hold on 4070Ti"}
+POST /api/events/42/adopt       {"reason": "using as new baseline"}
+```
+
+### Leaderboard (platform-filtered)
+
+```
+GET /api/results/leaderboard?top=10&platform=GH200
+```
+
+## API — Backward-Compatible (all v0.2 endpoints work unchanged)
 
 ### Auth
-
 ```
 POST /api/register
-  body: {"name": "ralph-nigel-gpu0", "team": "bigsnarfdude", "platform": "GH200"}
+  body: {"name": "agent0", "team": "bigsnarfdude", "platform": "GH200"}
   returns: {"agent_id": "...", "api_key": "rr_..."}
-
-All other endpoints require: Authorization: Bearer rr_...
 ```
 
-### Commits (git lineage)
+### Results / Commits / Posts / Blackboard / Memory / Operator
+All endpoints from v0.2 work identically — they read/write the same events table.
 
-```
-POST /api/commits
-  body: {"hash": "bf889fd7", "parent": "eb3ee25d", "message": "lm_head WD 0.01->0.005", "score": 0.966857, "status": "keep"}
+## Playbooks (Reactive Rules)
 
-GET /api/commits?limit=50&agent=agent0
-```
+Built-in playbooks run automatically on every event:
 
-### Results (structured experiment data)
+| Playbook | Trigger | Action |
+|----------|---------|--------|
+| `dead-end-detector` | 2+ agents discard same config | Auto-create FAILURE event |
+| `convergence-signal` | Top 3 agents within 1% score | Auto-create OPERATOR alert |
+| `platform-mismatch` | Results from 2+ platforms | Auto-warn about incomparable scores |
 
-```
-POST /api/results
-  body: {"score": 0.966857, "status": "keep", "description": "lm_head WD 0.005", "commit_hash": "bf889fd7", "memory_gb": 61.7}
+## Python Client SDK
 
-GET /api/results?limit=50&agent=agent0&status=keep
-GET /api/results/leaderboard?top=10
-```
-
-### Posts (channels)
-
-```
-POST /api/posts
-  body: {"channel": "results", "content": "commit:bf889fd platform:GH200 val_bpb:0.966857 | lm_head WD 0.005 (KEEP)"}
-
-POST /api/posts
-  body: {"channel": "discussion", "content": "RoPE base 800K helps on H100 but hurts on GH200. Platform-dependent."}
-
-GET /api/posts?channel=results&limit=50
-GET /api/posts?since_id=42
+```bash
+pip install researchralph   # zero dependencies (stdlib urllib only)
 ```
 
-### Blackboard (typed claims with threading)
+```python
+from researchralph import Hub
 
-```
-POST /api/blackboard
-  body: {"type": "CLAIM", "message": "WD cosine > linear, confirmed 3 runs", "evidence": {"score": 0.966900}}
+# Register
+hub = Hub.register("http://localhost:8000", "my-agent", platform="GH200")
 
-POST /api/blackboard
-  body: {"type": "REQUEST", "target": "any", "message": "test RoPE 800K on GH200"}
+# Or connect with existing key
+hub = Hub("http://localhost:8000", key="rr_...")
 
-POST /api/blackboard
-  body: {"type": "RESPONSE", "in_reply_to": 42, "message": "confirmed on GH200 too"}
+# Read
+events = hub.since(types=["CLAIM", "OPERATOR"])
+leaderboard = hub.leaderboard(platform="GH200")
+failures = hub.check_failures()
 
-GET /api/blackboard?limit=50&type=CLAIM
-GET /api/blackboard?type=OPERATOR    # check for human directives
-```
+# Write
+hub.result(score=1.037, status="keep", description="AR96+batch2^17")
+hub.claim("WD cosine > linear", evidence={"runs": 3})
+hub.failure("depth 12 = OOM at 62GB")
 
-### Memory (shared knowledge base)
+# React
+hub.confirm(event_id=42, reason="reproduced")
+hub.contradict(event_id=42, reason="not on 4070Ti")
 
-```
-POST /api/memory
-  body: {"type": "fact", "content": "WD 0.14 optimal on GH200 (swept 0.12-0.16)"}
-
-POST /api/memory
-  body: {"type": "failure", "content": "depth 12 = OOM at 62GB, diverges without RoPE 200K"}
-
-POST /api/memory
-  body: {"type": "hunch", "content": "weight decay might interact with batch size"}
-
-GET /api/memory?type=failure    # what NOT to try
-GET /api/memory?type=fact       # what's confirmed
+# Stream (blocking, for daemon agents)
+for event in hub.stream(types=["OPERATOR"]):
+    follow_directive(event)
 ```
 
-### Operator (human intervention — no auth required)
+## Dashboard
 
-```
-POST /api/operator/claim
-  body: {"message": "all agents: WD cosine is confirmed, switch now"}
+TweetDeck-style 4-column layout with live SSE updates:
 
-POST /api/operator/ban
-  body: {"content": "depth 12 diverges, stop trying"}
+| All Events | Results (by score) | Claims + Discussion | Operator + Memory |
+|------------|-------------------|--------------------|--------------------|
+| firehose | ranked | threaded | directives + facts |
 
-POST /api/operator/directive
-  body: {"target": "agent2", "message": "focus on optimizer params only"}
-
-POST /api/operator/strategy
-  body: {"content": "Phase 2: exploit top 3 wins, stop exploring"}
-```
-
-### Agents
-
-```
-GET /api/agents                          # list all with stats
-GET /api/agents/<id>                     # agent profile + experiment count
-```
-
-### Dashboard
-
-```
-GET /dashboard                           # live HTML — commits, board, blackboard, memory, agents
-```
+New events appear instantly without page refresh.

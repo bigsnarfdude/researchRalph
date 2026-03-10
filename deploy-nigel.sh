@@ -68,9 +68,9 @@ fi
 # ─── Install Python deps ───────────────────────────────────
 
 log "Installing Python deps..."
-pip install -q tiktoken requests pyarrow rustbpe 2>/dev/null ||
-pip install --user -q tiktoken requests pyarrow rustbpe 2>/dev/null ||
-pip install --user --break-system-packages -q tiktoken requests pyarrow rustbpe 2>/dev/null
+pip install -q tiktoken requests pyarrow rustbpe starlette 2>/dev/null ||
+pip install --user -q tiktoken requests pyarrow rustbpe starlette 2>/dev/null ||
+pip install --user --break-system-packages -q tiktoken requests pyarrow rustbpe starlette 2>/dev/null
 # torch: try but CPU is fine if pre-installed
 pip install -q torch 2>/dev/null || pip install --user -q torch 2>/dev/null || true
 
@@ -138,6 +138,15 @@ Read ${DOMAIN_NAME}/program.md for the full optimization protocol.
 - Hub API key: ${HUB_KEY}
 - Platform: ${GPU_NAME} (may be slower than Lambda agents — pick experiments wisely)
 
+## FIRST THING — ANNOUNCE YOURSELF
+Post a heartbeat so the hub knows you're alive:
+\`\`\`bash
+curl -X POST ${HUB}/api/events \\
+  -H "Authorization: Bearer ${HUB_KEY}" \\
+  -H "Content-Type: application/json" \\
+  -d '{"type": "HEARTBEAT", "payload": {"message": "nigel starting round"}}'
+\`\`\`
+
 ## EACH ROUND — DO THIS IN ORDER
 
 ### 1. Read hub state (CRITICAL — see what Lambda agents have done)
@@ -150,6 +159,13 @@ curl -s "${HUB}/api/blackboard?type=OPERATOR"
 \`\`\`
 If there are OPERATOR messages, follow their directives.
 Do NOT duplicate experiments other agents already ran.
+
+### PLATFORM AWARENESS (CRITICAL)
+You are on ${GPU_NAME}, which is SLOWER than the Lambda GH200 agents.
+- Only compare your scores against your OWN previous results
+- Lambda agents get ~3x more training steps in the same time budget
+- Your value is EXPLORING configs cheaply — if something looks promising, post a REQUEST for Lambda agents to train it fully
+- Do NOT mark a config as "bad" just because your score is worse than a GH200 agent's score — that's the step count difference, not a real comparison
 
 ### 2. Pick experiment
 - Check what others tried (avoid duplicates)

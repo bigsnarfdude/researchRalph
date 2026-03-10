@@ -35,9 +35,10 @@ log() { echo "[deploy] $*"; }
 die() { echo "[ERROR] $*" >&2; exit 1; }
 
 echo ""
-echo "  researchRalph v2 — Lambda Deploy"
+echo "  researchRalph v2 — Lambda Deploy (v0.3)"
 echo "  Hub + $NUM_AGENTS agents on GH200"
-echo "  ─────────────────────────────────"
+echo "  Unified event stream + playbooks"
+echo "  ─────────────────────────────────────────"
 echo ""
 
 # ─── Preflight ──────────────────────────────────────────────
@@ -68,8 +69,8 @@ fi
 # ─── Install Python deps ───────────────────────────────────
 
 log "Installing Python deps..."
-pip install -q fastapi uvicorn pydantic tiktoken requests pyarrow rustbpe 2>/dev/null ||
-pip install --user -q fastapi uvicorn pydantic tiktoken requests pyarrow rustbpe 2>/dev/null
+pip install -q fastapi uvicorn pydantic starlette tiktoken requests pyarrow rustbpe 2>/dev/null ||
+pip install --user -q fastapi uvicorn pydantic starlette tiktoken requests pyarrow rustbpe 2>/dev/null
 # kernels + flash-attn: try but don't fail (FA2 fallback in train.py handles it)
 pip install -q kernels 2>/dev/null || pip install --user -q kernels 2>/dev/null || true
 
@@ -148,6 +149,16 @@ Read ${DOMAIN_NAME}/program.md for the full optimization protocol.
 - Agent ID: agent${i}
 - Design: blackboard (structured memory + shared blackboard)
 - Hub API key: ${HUB_KEY}
+- Platform: ${GPU_NAME}
+
+## FIRST THING — ANNOUNCE YOURSELF
+Post a heartbeat so the hub knows you're alive:
+\`\`\`bash
+curl -X POST ${HUB}/api/events \\
+  -H "Authorization: Bearer ${HUB_KEY}" \\
+  -H "Content-Type: application/json" \\
+  -d '{"type": "HEARTBEAT", "payload": {"message": "agent${i} starting round"}}'
+\`\`\`
 
 ## EACH ROUND — DO THIS IN ORDER
 
@@ -160,6 +171,10 @@ curl -s ${HUB}/api/memory?type=fact
 curl -s "${HUB}/api/blackboard?type=OPERATOR"
 \`\`\`
 If there are OPERATOR messages, follow their directives.
+
+### PLATFORM AWARENESS
+You are on ${GPU_NAME}. Only compare your scores against agents on the SAME platform.
+Agents on different GPUs get different step counts in the same time budget, so their scores are NOT comparable to yours. Focus on relative improvement on YOUR platform.
 
 ### 2. Pick experiment
 - Check what others tried (avoid duplicates)
@@ -262,6 +277,14 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
     [ "$i" -lt $((NUM_AGENTS - 1)) ] && sleep 15
 done
 
+# ─── Launch watchdog ──────────────────────────────────────────
+
+if [ -f "$SCRIPT_DIR/core/watchdog.sh" ]; then
+    log "Starting watchdog..."
+    screen -dmS ralph-watchdog "$SCRIPT_DIR/core/watchdog.sh" "$DOMAIN_NAME"
+    log "  watchdog: screen -r ralph-watchdog"
+fi
+
 # ─── Done ───────────────────────────────────────────────────
 
 MY_IP=$(hostname -I 2>/dev/null | awk '{print $1}' || echo "<this-ip>")
@@ -270,6 +293,7 @@ echo ""
 echo "  ┌──────────────────────────────────────────────────────┐"
 echo "  │  Hub API:     http://${MY_IP}:${HUB_PORT}            │"
 echo "  │  Dashboard:   http://${MY_IP}:${HUB_PORT}/dashboard  │"
+echo "  │  Stream:      http://${MY_IP}:${HUB_PORT}/api/stream │"
 echo "  │  Agents:      ${NUM_AGENTS} running (screen -ls)     │"
 echo "  └──────────────────────────────────────────────────────┘"
 echo ""
