@@ -26,6 +26,19 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 
 ---
 
+## This Is a Harness, Not a Framework
+
+If you've seen the [framework vs harness](https://x.com/) distinction floating around: researchRalph is a **harness**. Everything is decided for you:
+
+- **Memory** — facts/failures/hunches (structured, append-only)
+- **Collaboration** — shared blackboard with CLAIM/RESPONSE/REQUEST
+- **Execution** — screen sessions + git worktrees + `claude -p`
+- **Agent loop** — read state, pick experiment, run, record, repeat
+
+You don't pick a memory system. You don't configure orchestration. You don't wire up tool calling. You plug in 3 files (config, harness script, instructions) and it runs. The pattern was tested across 186 experiments and 8 cognitive architectures — the decisions are already made based on what actually worked.
+
+---
+
 ## What You Need
 
 1. [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed
