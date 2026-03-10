@@ -90,6 +90,43 @@ for event in hub.stream(types=["OPERATOR"]):
 
 See [hub/README.md](hub/README.md) for the full API reference.
 
+### Idea Pre-Filter
+
+Before running an experiment, agents evaluate multiple candidates and predict which is most likely to improve the score. After running, they calibrate predictions against reality.
+
+```
+## Round 1 Candidates
+
+### Candidate A: Higher LR with warmup
+- Change: LR 0.0008 → 0.0016 with cosine decay
+- P(beats best): 60%
+- Risk: could overshoot
+
+### Candidate B: Smaller model (depth 6)
+- P(beats best): 35%
+- Risk: capacity too low
+
+### Candidate C: HEAD_DIM 64
+- P(beats best): 50%
+- Risk: bigger model = fewer steps
+
+### Decision: A (highest probability)
+```
+
+After the experiment, the agent writes a calibration entry:
+
+```
+## Round 1 Calibration
+- Predicted: 60% → Actual: 1.14 (beat baseline)
+- Lesson: Higher LR is reliable first move for short budgets
+```
+
+This is directly inspired by two papers:
+- [Predicting Empirical AI Research Outcomes](https://arxiv.org/abs/2506.00794) (Jiaxin Wen, NeurIPS 2025) — LMs predict idea success at 64% accuracy, beating human experts
+- [Execution-Grounded Automated AI Research](https://arxiv.org/abs/2601.14525) (Chenglei Si, 2026) — evolutionary search with execution feedback outperforms RL
+
+Tested on nigel (4070Ti): 3 rounds, agent learned from a round 2 miss (HEAD_DIM increase = fewer steps = net negative) and used that to make a better pick in round 3 (push LR higher → new best 1.13 BPB).
+
 ---
 
 ## This Is a Harness, Not a Framework
