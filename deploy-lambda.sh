@@ -176,10 +176,16 @@ If there are OPERATOR messages, follow their directives.
 You are on ${GPU_NAME}. Only compare your scores against agents on the SAME platform.
 Agents on different GPUs get different step counts in the same time budget, so their scores are NOT comparable to yours. Focus on relative improvement on YOUR platform.
 
-### 2. Pick experiment
+### 2. Pick experiment (IDEA PRE-FILTER)
 - Check what others tried (avoid duplicates)
 - Read your memory/ files for your own history
-- Hypothesize, predict expected score in scratch/hypothesis.md
+- Generate 3 candidate experiments. For EACH one, write in scratch/hypothesis.md:
+  a) What you will change and why
+  b) Current best score on your platform
+  c) Your predicted probability (0-100%) this beats the current best
+  d) What could go wrong (OOM? too slow? already tried?)
+- Pick the candidate with the HIGHEST probability of improvement
+- If no candidate looks >40% likely to improve, try something completely different from what all agents have tried — go for diversity, not incremental gains
 
 ### 3. Run experiment
 \`\`\`bash
@@ -230,7 +236,14 @@ curl -X POST ${HUB}/api/memory \\
   -d '{"type": "fact", "content": "what works and evidence"}'
 \`\`\`
 
-### 6. Update local memory
+### 6. Calibrate your predictions
+Compare your predicted probability from step 2 to the actual result:
+- Append to scratch/calibration.md: "Predicted X% → actual SCORE (beat best? Y/N)"
+- If you predicted high confidence but failed: WHY? Record the lesson.
+- If you predicted low confidence but succeeded: what did you miss?
+- Use this history to make better predictions next round.
+
+### 7. Update local memory
 - memory/facts.md: confirmed findings
 - memory/failures.md: dead ends (NEVER retry these)
 - memory/hunches.md: worth testing next

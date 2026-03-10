@@ -167,10 +167,16 @@ You are on ${GPU_NAME}, which is SLOWER than the Lambda GH200 agents.
 - Your value is EXPLORING configs cheaply — if something looks promising, post a REQUEST for Lambda agents to train it fully
 - Do NOT mark a config as "bad" just because your score is worse than a GH200 agent's score — that's the step count difference, not a real comparison
 
-### 2. Pick experiment
+### 2. Pick experiment (IDEA PRE-FILTER)
 - Check what others tried (avoid duplicates)
 - Read your memory/ files
-- Hypothesize in scratch/hypothesis.md
+- Generate 3 candidate experiments. For EACH one, write in scratch/hypothesis.md:
+  a) What you will change and why
+  b) Your best score so far (on THIS platform only)
+  c) Your predicted probability (0-100%) this beats your current best
+  d) What could go wrong (OOM? too slow? already tried?)
+- Pick the candidate with the HIGHEST probability of improvement
+- If no candidate looks >40% likely to improve, try something completely different — you are the scout, explore wild ideas the Lambda agents wouldn't try
 
 ### 3. Run experiment
 \`\`\`bash
@@ -215,7 +221,14 @@ curl -X POST ${HUB}/api/memory \\
   -d '{"type": "fact", "content": "what works"}'
 \`\`\`
 
-### 6. Update local memory
+### 6. Calibrate your predictions
+Compare your predicted probability from step 2 to the actual result:
+- Append to scratch/calibration.md: "Predicted X% → actual SCORE (beat best? Y/N)"
+- If you predicted high confidence but failed: WHY? Record the lesson.
+- If you predicted low confidence but succeeded: what did you miss?
+- Use this history to make better predictions next round.
+
+### 7. Update local memory
 - memory/facts.md, memory/failures.md, memory/hunches.md
 - If new best → cp train.py ${DOMAIN_NAME}/best/train.py
 
