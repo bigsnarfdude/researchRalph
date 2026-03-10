@@ -51,6 +51,8 @@ EVENT_TYPES = {
     "OPERATOR",
     # Reactions (lightweight signals)
     "CONFIRM", "CONTRADICT", "ADOPT",
+    # Aletheia-inspired: Generator → Verifier → Reviser
+    "VERIFY",
     # System
     "HEARTBEAT", "PLAYBOOK",
 }
@@ -971,6 +973,410 @@ def platform_mismatch_warning(event, db):
     }]
 
 
+# ─── Aletheia-inspired Playbook: Verification Request ────────
+
+
+@playbook("verification-request", event_types=["RESULT"])
+def verification_request(event, db):
+    """When a new best score arrives, auto-request another agent to verify it.
+
+    Inspired by Aletheia's Generator → Verifier → Reviser loop:
+    decoupling generation from verification catches errors the generator misses.
+    """
+    p = event["payload"]
+    if p.get("status") != "keep" or p.get("score") is None:
+        return []
+
+    score = p["score"]
+    agent_id = event["agent_id"]
+    platform = event.get("platform", "")
+
+    # Get current best for this platform (or global if no platform)
+    if platform:
+        prev_best = db.execute(
+            """SELECT MIN(CAST(json_extract(payload, '$.score') AS REAL)) as best
+            FROM events WHERE type = 'RESULT'
+            AND json_extract(payload, '$.status') = 'keep'
+            AND json_extract(payload, '$.score') IS NOT NULL
+            AND platform = ? AND id < ?""",
+            (platform, event["id"]),
+        ).fetchone()
+    else:
+        prev_best = db.execute(
+            """SELECT MIN(CAST(json_extract(payload, '$.score') AS REAL)) as best
+            FROM events WHERE type = 'RESULT'
+            AND json_extract(payload, '$.status') = 'keep'
+            AND json_extract(payload, '$.score') IS NOT NULL
+            AND id < ?""",
+            (event["id"],),
+        ).fetchone()
+
+    if not prev_best or prev_best["best"] is None:
+        return []  # First result, nothing to beat
+
+    # Only request verification for results that beat the previous best
+    if score >= prev_best["best"]:
+        return []
+
+    # Don't spam — check if we already requested verification for this result
+    existing = db.execute(
+        """SELECT id FROM events WHERE type = 'VERIFY'
+        AND json_extract(payload, '$.subtype') = 'request'
+        AND reply_to = ?""",
+        (event["id"],),
+    ).fetchone()
+    if existing:
+        return []
+
+    desc = p.get("description", "unknown config")
+    improvement = ((prev_best["best"] - score) / prev_best["best"]) * 100
+    return [{
+        "type": "VERIFY",
+        "payload": {
+            "subtype": "request",
+            "message": f"[VERIFY] New best {score:.6f} by {agent_id} ({improvement:.1f}% improvement). Config: {desc}. Another agent should reproduce this.",
+            "original_result_id": event["id"],
+            "original_agent": agent_id,
+            "original_score": score,
+            "original_description": desc,
+            "platform": platform,
+        },
+        "tags": ["auto", "verification-request"],
+        "reply_to": event["id"],
+    }]
+
+
+# ─── Aletheia-inspired Playbook: Revision Prompt ─────────────
+
+
+@playbook("revision-prompt", event_types=["RESULT"])
+def revision_prompt(event, db):
+    """When an experiment fails, suggest a revision instead of starting from scratch.
+
+    Inspired by Aletheia's Reviser subagent: take verifier feedback and improve
+    the solution, rather than generating a completely new attempt.
+    """
+    p = event["payload"]
+    if p.get("status") not in ("discard", "crash"):
+        return []
+
+    desc = p.get("description", "").strip()
+    if len(desc) < 5:
+        return []
+
+    agent_id = event["agent_id"]
+    score = p.get("score")
+    score_str = f"{score:.6f}" if score else "crashed"
+
+    # Check what this agent's best score is (for context)
+    agent_best = db.execute(
+        """SELECT MIN(CAST(json_extract(payload, '$.score') AS REAL)) as best
+        FROM events WHERE type = 'RESULT'
+        AND json_extract(payload, '$.status') = 'keep'
+        AND json_extract(payload, '$.score') IS NOT NULL
+        AND agent_id = ?""",
+        (agent_id,),
+    ).fetchone()
+
+    best_str = f"{agent_best['best']:.6f}" if agent_best and agent_best["best"] else "none"
+
+    # Don't spam — max 1 revision prompt per agent per 10 min
+    existing = db.execute(
+        """SELECT id FROM events WHERE agent_id = 'PLAYBOOK'
+        AND json_extract(payload, '$.subtype') = 'revision'
+        AND json_extract(payload, '$.target_agent') = ?
+        AND created_at > datetime('now', '-10 minutes')""",
+        (agent_id,),
+    ).fetchone()
+    if existing:
+        return []
+
+    return [{
+        "type": "HUNCH",
+        "payload": {
+            "subtype": "revision",
+            "content": f"[REVISE] {agent_id}'s experiment failed ({score_str}): '{desc}'. Best so far: {best_str}. Instead of discarding entirely, consider: what if you revised this approach with a smaller change? (Aletheia pattern: Reviser takes failure feedback and adjusts, rather than starting over.)",
+            "target_agent": agent_id,
+            "failed_description": desc,
+            "failed_score": score,
+        },
+        "tags": ["auto", "revision-prompt"],
+        "reply_to": event["id"],
+    }]
+
+
+# ═══════════════════════════════════════════════════════════════
+# VERIFICATION API (Aletheia-inspired)
+# ═══════════════════════════════════════════════════════════════
+
+
+@app.get("/api/verify/queue")
+def get_verify_queue(
+    platform: Optional[str] = None,
+    db: sqlite3.Connection = Depends(get_db),
+):
+    """Get pending verification requests (results that need independent reproduction)."""
+    query = """SELECT * FROM events WHERE type = 'VERIFY'
+        AND json_extract(payload, '$.subtype') = 'request'
+        ORDER BY id DESC LIMIT 20"""
+    rows = db.execute(query).fetchall()
+    queue = []
+    for r in rows:
+        e = format_event(r)
+        p = e["payload"]
+        # Check if already verified
+        verified = db.execute(
+            """SELECT id, agent_id, json_extract(payload, '$.reproduced_score') as score,
+                json_extract(payload, '$.verdict') as verdict
+            FROM events WHERE type = 'VERIFY'
+            AND json_extract(payload, '$.subtype') = 'result'
+            AND reply_to = ?""",
+            (e["id"],),
+        ).fetchall()
+        verifications = [{"agent": v["agent_id"], "score": v["score"], "verdict": v["verdict"]} for v in verified]
+        if platform and p.get("platform") and p["platform"] != platform:
+            continue  # Skip cross-platform verifications
+        queue.append({
+            "id": e["id"],
+            "original_result_id": p.get("original_result_id"),
+            "original_agent": p.get("original_agent"),
+            "original_score": p.get("original_score"),
+            "description": p.get("original_description", ""),
+            "platform": p.get("platform", ""),
+            "verifications": verifications,
+            "verified": len(verifications) > 0,
+            "created_at": e["created_at"],
+        })
+    return queue
+
+
+@app.post("/api/verify")
+def post_verification(
+    agent: dict = Depends(auth_agent),
+    db: sqlite3.Connection = Depends(get_db),
+    verify_request_id: int = Query(..., description="ID of the VERIFY request event"),
+    reproduced_score: float = Query(..., description="Score you got when reproducing"),
+    verdict: str = Query("confirmed", description="confirmed or contradicted"),
+    notes: str = Query("", description="Additional notes"),
+):
+    """Post a verification result (confirming or contradicting a claimed result)."""
+    # Find the verification request
+    vr = db.execute("SELECT * FROM events WHERE id = ? AND type = 'VERIFY'", (verify_request_id,)).fetchone()
+    if not vr:
+        raise HTTPException(404, "Verification request not found")
+    vr_data = format_event(vr)
+    orig_score = vr_data["payload"].get("original_score", 0)
+
+    event = insert_event(db, "VERIFY", agent["id"], {
+        "subtype": "result",
+        "reproduced_score": reproduced_score,
+        "original_score": orig_score,
+        "verdict": verdict,
+        "notes": notes,
+        "original_result_id": vr_data["payload"].get("original_result_id"),
+    }, tags=["verification-result"], reply_to=verify_request_id, platform=agent["platform"])
+
+    # Also post a CONFIRM or CONTRADICT on the original result
+    orig_result_id = vr_data["payload"].get("original_result_id")
+    if orig_result_id:
+        if verdict == "confirmed":
+            insert_event(db, "CONFIRM", agent["id"], {
+                "reason": f"Independently reproduced: got {reproduced_score:.6f} vs claimed {orig_score:.6f}. {notes}",
+            }, reply_to=orig_result_id, platform=agent["platform"])
+        else:
+            insert_event(db, "CONTRADICT", agent["id"], {
+                "reason": f"Could not reproduce: got {reproduced_score:.6f} vs claimed {orig_score:.6f}. {notes}",
+            }, reply_to=orig_result_id, platform=agent["platform"])
+
+    return {"ok": True, "event": event}
+
+
+# ═══════════════════════════════════════════════════════════════
+# HAI CARDS — Human-AI Interaction Cards (Aletheia-inspired)
+# ═══════════════════════════════════════════════════════════════
+
+
+@app.get("/api/hai-card")
+def hai_card(
+    agent_id: Optional[str] = None,
+    db: sqlite3.Connection = Depends(get_db),
+):
+    """Generate a Human-AI Interaction Card showing the contribution breakdown.
+
+    Inspired by Aletheia's documentation framework (Section 6.2):
+    transparently document what the human vs AI contributed.
+    """
+    # Get all operator events (human contributions)
+    operator_events = db.execute(
+        "SELECT * FROM events WHERE type = 'OPERATOR' ORDER BY id ASC"
+    ).fetchall()
+
+    # Get all agent events
+    agent_query = "SELECT * FROM events WHERE agent_id != 'OPERATOR' AND agent_id != 'PLAYBOOK'"
+    agent_params = []
+    if agent_id:
+        agent_query += " AND agent_id = ?"
+        agent_params.append(agent_id)
+    agent_query += " ORDER BY id ASC"
+    agent_events = db.execute(agent_query, agent_params).fetchall()
+
+    # Count by category
+    human_directives = [format_event(e) for e in operator_events]
+    agent_results = []
+    agent_claims = []
+    agent_failures = []
+    verifications = []
+
+    for row in agent_events:
+        e = format_event(row)
+        if e["type"] == "RESULT":
+            agent_results.append(e)
+        elif e["type"] == "CLAIM":
+            agent_claims.append(e)
+        elif e["type"] == "FAILURE":
+            agent_failures.append(e)
+        elif e["type"] == "VERIFY":
+            verifications.append(e)
+
+    # Get unique agents
+    agents = db.execute("SELECT id, name, platform FROM agents WHERE id != 'OPERATOR'").fetchall()
+    agent_list = [dict(a) for a in agents]
+
+    # Best result
+    best = db.execute(
+        """SELECT agent_id, platform, json_extract(payload, '$.score') as score,
+            json_extract(payload, '$.description') as description
+        FROM events WHERE type = 'RESULT'
+        AND json_extract(payload, '$.status') = 'keep'
+        AND json_extract(payload, '$.score') IS NOT NULL
+        ORDER BY CAST(json_extract(payload, '$.score') AS REAL) ASC LIMIT 1"""
+    ).fetchone()
+
+    # Build the interaction timeline
+    timeline = []
+    all_events = db.execute(
+        "SELECT * FROM events WHERE type IN ('OPERATOR','RESULT','CLAIM','VERIFY','FAILURE','FACT') ORDER BY id ASC"
+    ).fetchall()
+    for row in all_events:
+        e = format_event(row)
+        p = e["payload"]
+        if e["agent_id"] == "OPERATOR":
+            role = "Human"
+            action = p.get("message", p.get("content", ""))
+        elif e["agent_id"] == "PLAYBOOK":
+            role = "System"
+            action = p.get("message", p.get("content", ""))
+        else:
+            role = e["agent_id"]
+            if e["type"] == "RESULT":
+                score = p.get("score")
+                score_str = f"{score:.6f}" if score else "crash"
+                action = f"Experiment: {p.get('description', '')} → {score_str} ({p.get('status', '')})"
+            elif e["type"] == "CLAIM":
+                action = f"Claim: {p.get('message', '')}"
+            elif e["type"] == "VERIFY":
+                subtype = p.get("subtype", "")
+                if subtype == "request":
+                    action = f"Verification requested for score {p.get('original_score', '')}"
+                else:
+                    action = f"Verified: got {p.get('reproduced_score', '')} ({p.get('verdict', '')})"
+            elif e["type"] == "FAILURE":
+                action = f"Dead end: {p.get('content', '')}"
+            elif e["type"] == "FACT":
+                action = f"Confirmed: {p.get('content', '')}"
+            else:
+                action = str(p)[:100]
+
+        timeline.append({
+            "id": e["id"],
+            "role": role,
+            "type": e["type"],
+            "action": action,
+            "created_at": e["created_at"],
+        })
+
+    # Autonomy level assessment (Aletheia Table 8)
+    total_operator = len(human_directives)
+    total_agent = len(agent_results) + len(agent_claims)
+    if total_operator == 0 and total_agent > 0:
+        autonomy = {"level": "A", "label": "Essentially Autonomous", "description": "Core optimization fully AI-driven without essential human intervention."}
+    elif total_operator > 0 and total_agent > total_operator * 3:
+        autonomy = {"level": "C", "label": "Human-AI Collaboration", "description": "Both human directives and AI exploration contributed substantively."}
+    else:
+        autonomy = {"level": "H", "label": "Primarily Human", "description": "Human directives drove the optimization; AI executed."}
+
+    return {
+        "title": "Human-AI Interaction Card",
+        "version": "1.0",
+        "inspired_by": "Aletheia (Google DeepMind, arxiv:2602.10177v3)",
+        "summary": {
+            "agents": len(agent_list),
+            "total_experiments": len(agent_results),
+            "human_directives": total_operator,
+            "claims": len(agent_claims),
+            "dead_ends": len(agent_failures),
+            "verifications": len(verifications),
+            "best_result": dict(best) if best else None,
+        },
+        "autonomy_level": autonomy,
+        "agents": agent_list,
+        "timeline": timeline[-50:],  # Last 50 interactions
+        "human_contributions": [
+            {"type": e["type"], "message": e["payload"].get("message", e["payload"].get("content", "")), "created_at": e["created_at"]}
+            for e in human_directives
+        ],
+    }
+
+
+@app.get("/api/hai-card/markdown")
+def hai_card_markdown(
+    agent_id: Optional[str] = None,
+    db: sqlite3.Connection = Depends(get_db),
+):
+    """Render a Human-AI Interaction Card as Markdown (for GitHub notebooks)."""
+    card = hai_card(agent_id=agent_id, db=db)
+    s = card["summary"]
+    a = card["autonomy_level"]
+
+    md = f"""# Human-AI Interaction Card
+
+> Inspired by [Aletheia](https://arxiv.org/abs/2602.10177v3) (Google DeepMind)
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Agents | {s['agents']} |
+| Experiments | {s['total_experiments']} |
+| Human Directives | {s['human_directives']} |
+| Claims | {s['claims']} |
+| Dead Ends | {s['dead_ends']} |
+| Verifications | {s['verifications']} |
+| Best Score | {s['best_result']['score'] if s['best_result'] else 'N/A'} |
+
+## Autonomy Level: {a['level']} — {a['label']}
+
+{a['description']}
+
+## Human Contributions
+
+"""
+    for h in card["human_contributions"]:
+        md += f"- **{h['type']}** ({h['created_at'][:16]}): {h['message']}\n"
+
+    if not card["human_contributions"]:
+        md += "*No human directives — fully autonomous run.*\n"
+
+    md += "\n## Interaction Timeline (last 50)\n\n"
+    md += "| # | Role | Type | Action |\n|---|------|------|--------|\n"
+    for t in card["timeline"]:
+        action = t["action"][:80].replace("|", "\\|")
+        md += f"| {t['id']} | {t['role']} | {t['type']} | {action} |\n"
+
+    md += f"\n---\n*Generated by researchRalph Hub v0.3 — {card['inspired_by']}*\n"
+    return {"markdown": md}
+
+
 # ═══════════════════════════════════════════════════════════════
 # DASHBOARD — TweetDeck-style multi-column view with live SSE
 # ═══════════════════════════════════════════════════════════════
@@ -1172,6 +1578,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   .type-badge.contradict {{ background: #da3633; }}
   .type-badge.adopt {{ background: #1f6feb; }}
   .type-badge.playbook {{ background: #6e40c9; }}
+  .type-badge.verify {{ background: #39d353; }}
   .type-badge.heartbeat {{ background: #21262d; color: #484f58; }}
   .agent-tag {{ color: #d2a8ff; }}
   .platform-tag {{ color: #8b949e; font-size: 0.75rem; background: #21262d; padding: 1px 4px; border-radius: 3px; }}

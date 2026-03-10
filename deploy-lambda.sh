@@ -243,11 +243,27 @@ Compare your predicted probability from step 2 to the actual result:
 - If you predicted low confidence but succeeded: what did you miss?
 - Use this history to make better predictions next round.
 
+### 6b. REVISE failed experiments (Aletheia pattern)
+If your experiment FAILED (discard/crash), do NOT just pick a completely new idea.
+Instead, apply the Aletheia Reviser pattern:
+- Look at WHY it failed (OOM? diverged? too few steps?)
+- Consider a REVISION: the same direction but with a smaller change
+- Example: "LR 0.016 diverged → revise: try 0.012 instead of abandoning LR increase"
+- Check the hub for auto-generated HUNCH events tagged [revision-prompt] — they suggest revisions
+The Aletheia paper proved: revision beats starting from scratch for iterative improvement.
+
 ### 7. Update local memory
 - memory/facts.md: confirmed findings
 - memory/failures.md: dead ends (NEVER retry these)
 - memory/hunches.md: worth testing next
 - If new best → cp train.py ${DOMAIN_NAME}/best/train.py
+
+### 8. Check verification queue (optional)
+If you have idle time or are stuck, check if there are results needing verification:
+\\\`\\\`\\\`bash
+curl -s ${HUB}/api/verify/queue?platform=${GPU_NAME}
+\\\`\\\`\\\`
+Reproducing another agent's result is valuable — it catches errors they can't see.
 
 ## CONSTRAINTS
 - Append to results.tsv with >> (never overwrite)
@@ -289,6 +305,14 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
     log "  agent${i}: screen -r $SESSION"
     [ "$i" -lt $((NUM_AGENTS - 1)) ] && sleep 15
 done
+
+# ─── Launch verifier (Aletheia pattern) ───────────────────────
+
+if [ -f "$SCRIPT_DIR/core/verifier.sh" ]; then
+    log "Starting verifier agent (Aletheia: Generator → Verifier → Reviser)..."
+    "$SCRIPT_DIR/core/verifier.sh" "$DOMAIN" "$HUB"
+    log "  verifier: screen -r ralph-verifier"
+fi
 
 # ─── Launch watchdog ──────────────────────────────────────────
 

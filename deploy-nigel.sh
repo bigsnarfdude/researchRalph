@@ -228,6 +228,14 @@ Compare your predicted probability from step 2 to the actual result:
 - If you predicted low confidence but succeeded: what did you miss?
 - Use this history to make better predictions next round.
 
+### 6b. REVISE failed experiments (Aletheia pattern)
+If your experiment FAILED (discard/crash), do NOT just pick a completely new idea.
+Instead, apply the Aletheia Reviser pattern:
+- Look at WHY it failed (OOM? diverged? too few steps?)
+- Consider a REVISION: the same direction but with a smaller change
+- Check the hub for auto-generated HUNCH events tagged [revision-prompt] — they suggest revisions
+The Aletheia paper proved: revision beats starting from scratch.
+
 ### 7. Update local memory
 - memory/facts.md, memory/failures.md, memory/hunches.md
 - If new best → cp train.py ${DOMAIN_NAME}/best/train.py

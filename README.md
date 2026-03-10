@@ -87,6 +87,8 @@ for event in hub.stream(types=["OPERATOR"]):
 | `dead-end-detector` | 2+ agents discard same config | Auto-create FAILURE so all agents see it |
 | `convergence-signal` | Top 3 agents within 1% score | Alert operator to switch to exploit phase |
 | `platform-mismatch` | Results from 2+ GPU types | Auto-warn about incomparable scores |
+| `verification-request` | New best score posted | Auto-request another agent to reproduce it |
+| `revision-prompt` | Experiment fails (discard/crash) | Suggest revising the approach instead of abandoning it |
 
 See [hub/README.md](hub/README.md) for the full API reference.
 
@@ -126,6 +128,27 @@ This is directly inspired by two papers:
 - [Execution-Grounded Automated AI Research](https://arxiv.org/abs/2601.14525) (Chenglei Si, 2026) — evolutionary search with execution feedback outperforms RL
 
 Tested on nigel (4070Ti): 3 rounds, agent learned from a round 2 miss (HEAD_DIM increase = fewer steps = net negative) and used that to make a better pick in round 3 (push LR higher → new best 1.13 BPB).
+
+### Generator → Verifier → Reviser (Aletheia Pattern)
+
+Inspired by Google DeepMind's [Aletheia](https://arxiv.org/abs/2602.10177v3) — which solved 4 open Erdős conjectures by **decoupling generation from verification**. The key insight: a generator's reasoning trace can mislead itself; an independent verifier catches errors the generator is blind to.
+
+researchRalph v2 implements this as three mechanisms:
+
+**1. Verifier agent** — A dedicated agent that only reproduces other agents' claimed results:
+```bash
+./core/verifier.sh domains/my-domain         # standalone verifier
+# Auto-launched by deploy-lambda.sh
+```
+When an agent posts a new best score, the hub auto-creates a VERIFY request. The verifier picks it up, reproduces the exact config, and posts CONFIRM or CONTRADICT. No more silent score inflation.
+
+**2. Revision prompts** — When an experiment fails, the hub auto-generates a HUNCH suggesting a revision of the failed approach (not a completely new idea). Agents see these and can iterate instead of abandoning.
+
+**3. Human-AI Interaction Cards** — Auto-generated transparency reports showing what the human vs AI contributed:
+```bash
+curl -s http://hub:8000/api/hai-card/markdown | python3 -c "import sys,json; print(json.load(sys.stdin)['markdown'])"
+```
+Documents autonomy level (H/C/A), timeline, and human directives. Inspired by Aletheia Section 6.2.
 
 ---
 
@@ -408,6 +431,7 @@ researchRalph/
 │   ├── stop.sh                # Stop agents
 │   ├── collect.sh             # Gather results
 │   ├── watchdog.sh            # Restart stale agents
+│   ├── verifier.sh            # Aletheia-inspired verification agent
 │   ├── operator.sh            # Steer agents (CLI)
 │   ├── bridge.sh              # Sync with AgentHub
 │   └── notebook.sh            # GitHub repo as shared notebook
@@ -434,3 +458,4 @@ Tested on Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) be
 - [autoresearch](https://github.com/bigsnarfdude/autoresearch) — The original experiment repo where this pattern was discovered
 - [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) — The benchmark task
 - [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) — DeepMind's parallel approach
+- [Aletheia](https://arxiv.org/abs/2602.10177v3) — Google DeepMind's math research agent (Generator → Verifier → Reviser)

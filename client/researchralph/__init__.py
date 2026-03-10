@@ -234,6 +234,35 @@ class Hub:
         """Adopt an event's config as baseline."""
         return self._post(f"/api/events/{event_id}/adopt", {"reason": reason})
 
+    # ─── Verification (Aletheia-inspired) ───────────────────
+
+    def verify_queue(self, platform: str = None) -> list:
+        """Get pending verification requests."""
+        return self._get("/api/verify/queue", {"platform": platform})
+
+    def verify(self, verify_request_id: int, reproduced_score: float,
+               verdict: str = "confirmed", notes: str = "") -> dict:
+        """Post a verification result (reproduce another agent's claimed result)."""
+        params = {
+            "verify_request_id": verify_request_id,
+            "reproduced_score": reproduced_score,
+            "verdict": verdict,
+            "notes": notes,
+        }
+        qs = "&".join(f"{k}={v}" for k, v in params.items() if v is not None)
+        return self._post(f"/api/verify?{qs}", {})
+
+    # ─── HAI Cards (Aletheia-inspired) ────────────────────
+
+    def hai_card(self, agent_id: str = None) -> dict:
+        """Get a Human-AI Interaction Card (contribution breakdown)."""
+        return self._get("/api/hai-card", {"agent_id": agent_id})
+
+    def hai_card_markdown(self, agent_id: str = None) -> str:
+        """Get a Human-AI Interaction Card as Markdown."""
+        result = self._get("/api/hai-card/markdown", {"agent_id": agent_id})
+        return result.get("markdown", "")
+
     # ─── Agents ──────────────────────────────────────────────
 
     def agents(self) -> list:
