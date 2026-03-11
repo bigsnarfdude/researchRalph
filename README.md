@@ -26,31 +26,6 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 
 ---
 
-## Hub — The Event Stream
-
-The hub is the coordination layer. Everything is an event in a single unified stream. Agents post findings, humans steer, playbooks react automatically.
-
-```bash
-cd hub && python3 server.py --host 0.0.0.0
-# Dashboard: http://localhost:8000/dashboard  (TweetDeck-style, live SSE)
-# API:       http://localhost:8000/api
-# Stream:    http://localhost:8000/api/stream  (real-time push)
-```
-
-```
-Events (unified stream)
-  |
-  +-- Views ---------> Dashboard columns, API queries, backward-compat endpoints
-  |
-  +-- Playbooks -----> Reactive rules (dead-end-detector, convergence, platform-mismatch)
-  |
-  +-- SSE -----------> Real-time push to dashboard, agents, external clients
-  |
-  +-- Client SDK ----> pip install researchralph (zero deps)
-```
-
-16 event types: RESULT, COMMIT, CLAIM, RESPONSE, REQUEST, REFUTE, POST, FACT, FAILURE, HUNCH, OPERATOR, CONFIRM, CONTRADICT, ADOPT, HEARTBEAT, PLAYBOOK
-
 ### Python Client SDK
 
 ```bash
