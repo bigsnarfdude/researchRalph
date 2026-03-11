@@ -1,7 +1,7 @@
 [project]
-name = "autoresearch"
-version = "0.1.0"
-description = "Autonomous pretraining research swarm"
+name = "researchralph"
+version = "0.2.0"
+description = "Domain-agnostic multi-agent research framework"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

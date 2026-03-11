@@ -40,6 +40,10 @@ cp -r domains/template domains/my-domain
 ./core/launch.sh domains/my-domain 4
 ```
 
+## Hardware Constraint
+
+RRMA (researchRalph Multi-Agent) requires a **single homogeneous GPU node** (e.g., 8×A100 or 8×H100). Mixed GPU types across nodes cause errors due to hardware speed/memory differences producing incomparable scores and race conditions. Do not use multi-machine deployments with different GPU types.
+
 ## Proven Results
 
 - 186 experiments, 8×A100, GPT-2 TinyStories

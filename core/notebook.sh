@@ -17,7 +17,7 @@
 # First run creates the notebook repo structure if it doesn't exist.
 #
 # Examples:
-#   ./core/notebook.sh domains/gpt2-tinystories --repo bigsnarfdude/autoresearch-notebook
+#   ./core/notebook.sh domains/gpt2-tinystories --repo bigsnarfdude/researchralph-notebook
 #   ./core/notebook.sh domains/my-domain --repo myorg/research-notebook --poll 30
 
 set -euo pipefail
@@ -47,7 +47,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ -z "$NOTEBOOK_REPO" ]; then
-    echo "ERROR: --repo is required (e.g., --repo bigsnarfdude/autoresearch-notebook)"
+    echo "ERROR: --repo is required (e.g., --repo bigsnarfdude/researchralph-notebook)"
     exit 1
 fi
 

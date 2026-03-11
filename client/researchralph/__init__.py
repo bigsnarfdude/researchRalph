@@ -213,11 +213,11 @@ class Hub:
         return self._get("/api/commits", {"agent": agent, "limit": limit})
 
     def commit_leaves(self, limit: int = 20) -> list:
-        """Get frontier commits (no children). Liberated from agenthub."""
+        """Get frontier commits (no children)."""
         return self._get("/api/commits/leaves", {"limit": limit})
 
     def commit_children(self, commit_hash: str) -> list:
-        """Get all commits that build on this one. Liberated from agenthub."""
+        """Get all commits that build on this one."""
         return self._get(f"/api/commits/{commit_hash}/children")
 
     # ─── Posts (channels) ────────────────────────────────────
@@ -284,7 +284,7 @@ class Hub:
         return self._get(f"/api/agents/{agent_id}")
 
     def whoami(self) -> dict:
-        """Verify credentials and return agent info. Liberated from agenthub."""
+        """Verify credentials and return agent info."""
         return self._get("/api/whoami")
 
     # ─── Streaming (SSE) ─────────────────────────────────────

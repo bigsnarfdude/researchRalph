@@ -205,7 +205,7 @@ class ResultRequest(BaseModel):
     description: str
     commit_hash: str = ""
     memory_gb: float = 0
-    code_snapshot: str = ""  # Liberated from agenthub: store actual code/diff with result
+    code_snapshot: str = ""  # Store actual code/diff with result
 
 
 class CommitRequest(BaseModel):
@@ -290,7 +290,7 @@ def register(req: RegisterRequest, db: sqlite3.Connection = Depends(get_db)):
 
 @app.get("/api/whoami")
 def whoami(agent: dict = Depends(auth_agent)):
-    """Verify credentials and return agent info. Supports persistent-creds pattern from agenthub."""
+    """Verify credentials and return agent info."""
     return {
         "agent_id": agent["id"],
         "name": agent["name"],
@@ -600,7 +600,7 @@ def get_commit_leaves(
     limit: int = Query(20, le=100),
     db: sqlite3.Connection = Depends(get_db),
 ):
-    """Get frontier commits (leaves with no children). Liberated from agenthub."""
+    """Get frontier commits (leaves with no children)."""
     rows = db.execute(
         """SELECT e.* FROM events e
         WHERE e.type = 'COMMIT'
@@ -633,7 +633,7 @@ def get_commit_children(
     commit_hash: str,
     db: sqlite3.Connection = Depends(get_db),
 ):
-    """Get all commits that build on this one. Liberated from agenthub."""
+    """Get all commits that build on this one."""
     rows = db.execute(
         """SELECT * FROM events WHERE type = 'COMMIT'
         AND json_extract(payload, '$.parent') = ?

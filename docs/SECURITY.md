@@ -53,4 +53,4 @@ If agents were different models or adversarial:
 - Isolated containers per agent
 - Human-in-the-loop for best/ updates
 
-See RESEARCHRALPH-V2.md in the autoresearch repo for the full security analysis.
+See docs/ARCHITECTURE.md for the full security analysis.

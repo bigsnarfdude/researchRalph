@@ -23,4 +23,4 @@ export GEMINI_API_KEY="..."
 
 ## Source
 
-Extracted from [autoresearch/af-ralph](https://github.com/bigsnarfdude/autoresearch).
+Extracted from researchRalph v2 AF elicitation experiments (March 2026).

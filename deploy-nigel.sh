@@ -78,7 +78,7 @@ pip install -q torch 2>/dev/null || pip install --user -q torch 2>/dev/null || t
 
 log "Preparing training data..."
 cd "$DOMAIN_ABS"
-if [ ! -d "$HOME/.cache/autoresearch/tokenizer" ]; then
+if [ ! -d "$HOME/.cache/researchralph/tokenizer" ]; then
     python3 prepare.py --num-shards 4
 else
     log "Data already prepared"

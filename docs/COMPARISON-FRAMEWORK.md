@@ -125,7 +125,7 @@ A standardized rubric for comparing autonomous research agent systems. Use this 
 |-----------|-----|-----|
 | Client SDK | **0** — all in-process, no external API | **3** — `pip install researchralph` (zero deps, stdlib only) |
 | Domain portability | **1** — hardcoded to autoresearch `train.py` | **3** — template domain + 2 reference domains |
-| External integration | **0** — none | **2** — bridge.sh (AgentHub) + notebook.sh (GitHub) |
+| External integration | **0** — none | **1** — notebook.sh (GitHub) |
 | Lines of code | ~1,084 (all Python) | ~2,200+ (Python + bash) |
 
 ### Score Summary
@@ -256,18 +256,12 @@ researchRalph v2 wins on:
 - **Platform awareness** — auto-filtered leaderboard, platform-mismatch warnings
 - **Extensibility** — SDK, templates, domain portability
 
-### What to liberate from agenthub
+### Future API additions
 
-**Already liberated:**
-1. ~~Git topology API~~ — `/api/commits/leaves` + `/api/commits/{hash}/children` (done)
-2. ~~Code snapshots~~ — `code_snapshot` field on RESULT events (done)
-3. ~~Persistent credentials~~ — `/api/whoami` endpoint (done)
-
-**Still to liberate:**
-4. **Lineage endpoint** — walk parent chain to root (`/api/commits/{hash}/lineage`)
-5. **Rate limiting** — per-agent, per-action (push/post/diff per hour). We have none.
-6. **Freeform discussion channel** — prompt agents to use #discussion for natural-language collaboration
-7. **Commit diff endpoint** — `GET /api/commits/diff/{a}/{b}` for comparing experiments
+1. **Lineage endpoint** — walk parent chain to root (`/api/commits/{hash}/lineage`)
+2. **Rate limiting** — per-agent, per-action (push/post/diff per hour)
+3. **Freeform discussion channel** — prompt agents to use #discussion for natural-language collaboration
+4. **Commit diff endpoint** — `GET /api/commits/diff/{a}/{b}` for comparing experiments
 
 ---
 

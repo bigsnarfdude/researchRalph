@@ -40,4 +40,4 @@ uv run domains/gpt2-tinystories/prepare.py
 
 ## Source
 
-Extracted from [autoresearch](https://github.com/bigsnarfdude/autoresearch) Run 4.
+From researchRalph v2 Run 4 (March 2026, 8×A100 Lambda).

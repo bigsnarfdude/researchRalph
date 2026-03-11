@@ -1,0 +1,25 @@
+# prompt_config.yaml — the thing agents edit
+# Task: get an LLM to produce high-quality explanations of technical concepts
+# Baseline: bare-bones system prompt, no structure
+
+task: "Explain a technical concept clearly to a smart non-expert"
+
+system_prompt: |
+  You are a helpful assistant. Explain things clearly.
+
+output_format: "freeform"    # freeform, structured, step_by_step, analogy_first
+audience: "smart_nonexpert"  # beginner, smart_nonexpert, practitioner, expert
+tone: "neutral"              # neutral, conversational, socratic, enthusiastic
+
+eval_prompts:
+  - "Explain how public-key cryptography works and why it's secure"
+  - "Explain what a neural network does, avoiding jargon"
+  - "Explain why airplane wings generate lift"
+  - "Explain how a garbage collector works in programming languages"
+  - "Explain the difference between correlation and causation with an example"
+
+few_shot_examples: []        # optional: list of (prompt, ideal_response) pairs
+
+temperature: 0.7
+max_tokens: 1024
+num_samples: 25              # samples per eval run
