@@ -1,0 +1,9 @@
+momentum_threshold: 0.0
+position_switch_point: -0.2
+swing_aggression: 1.0
+peak_detection_weight: 0.0
+velocity_gain: 10.0
+position_gain: 0.0
+energy_threshold: 0.5
+coast_zone_width: 0.0
+right_bias: 0.0

@@ -1,0 +1,14 @@
+farming_pct: 0
+mining_pct: 12
+building_pct: 45
+research_pct: 43
+food_reserve_target: 280
+trade_aggression: 1.0
+building_priority: 0.5
+research_focus: 0.5
+raid_preparedness: 1.0
+starvation_response: 1.0
+trade_food_threshold: 0
+trade_materials_threshold: 0
+gold_reserve_target: 0
+emergency_food_buy: 1.0

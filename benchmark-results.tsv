@@ -1,0 +1,9 @@
+timestamp	game	baseline_score	status	duration_s
+2026-03-11T22:36:00Z	acrobot	0.7493	drift	0
+2026-03-11T22:36:00Z	arena	1.0	drift	0
+2026-03-11T22:36:00Z	cartpole	1.0	drift	0
+2026-03-11T22:36:01Z	economy	0.7986	drift	0
+2026-03-11T22:36:01Z	lunarlander	0.8669	drift	0
+2026-03-11T22:36:01Z	mountaincar	1.0	drift	0
+2026-03-11T22:36:05Z	network	0.9442	drift	4
+2026-03-11T22:36:06Z	pendulum	0.9273	drift	1

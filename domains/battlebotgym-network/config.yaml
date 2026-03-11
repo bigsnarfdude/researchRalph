@@ -1,0 +1,10 @@
+latency_weight: 0.0
+bandwidth_weight: 0.5
+loss_weight: 0.5
+hop_weight: 1.0
+max_queue_size: 20
+load_balance_factor: 0.3
+reroute_threshold: 0.5
+ttl: 20
+priority_ratio: 0.5
+retry_limit: 5

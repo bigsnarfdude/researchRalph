@@ -1,0 +1,33 @@
+# Arena Combat — Challenger Bot Configuration
+# =============================================
+# Agents: edit these values to beat the champion bot.
+# 
+# STAT BUDGET: Your total stat cost must stay within 5% of the champion's.
+#              You can't just max everything — you must make TRADEOFFS.
+#
+# The champion uses balanced defaults. Can you find a better strategy?
+
+# --- Core Stats ---
+max_hp: 85           # Hit points (range: 50-200, cost: 1.0x)
+max_energy: 110      # Energy pool (range: 50-200, cost: 0.8x)
+attack_power: 18     # Base damage per hit (range: 5-30, cost: 4.0x)
+defense: 15          # Damage reduction (range: 5-40, cost: 3.0x)
+speed: 2             # Tiles moved per turn (range: 1-4, cost: 15.0x)
+heal_amount: 12      # HP restored per heal (range: 0-25, cost: 3.0x)
+
+# --- Combat ---
+attack_range: 3      # Tiles: how far attacks reach (range: 1-6, cost: 12.0x)
+attack_cost: 8       # Energy per attack (range: 5-25)
+special_cooldown: 3  # Turns between specials (range: 2-10)
+special_power: 2.8   # Special damage multiplier (range: 1.0-4.0, cost: 20.0x)
+
+# --- Resources ---
+energy_regen: 5      # Energy gained per turn (range: 1-12, cost: 5.0x)
+heal_cost: 20        # Energy spent to heal (range: 5-40)
+
+# --- Strategy Weights ---
+aggression: 0.75     # 0-1: tendency to charge vs kite
+retreat_threshold: 0.1  # 0-0.6: HP% below which bot retreats
+heal_threshold: 0.2  # 0-0.8: HP% below which bot heals
+kite_distance: 3     # 0-8: preferred distance when playing defensive
+burst_threshold: 0.35  # 0.05-0.5: enemy HP% below which bot goes all-in

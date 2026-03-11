@@ -1,0 +1,568 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	0.5448	0	keep	default config	setup	baseline
+EXP-001	0.4172	0	discard	pure agrarian 90% farm, no research	agent0	blackboard
+EXP-002	0.6694	0	keep	fortress 40f/25m/25b/10r, raid_prep=1.0	agent0	blackboard
+EXP-003	0.5970	0	discard	scholar 40f/10m/10b/40r	agent0	blackboard
+EXP-004	0.6824	0	keep	fortress-scholar 35f/20m/20b/25r	agent0	blackboard
+EXP-005	0.7278	0	keep	extreme fortress 25f/30m/30b/15r, trade_agg=0.8	agent0	blackboard
+EXP-001	0.4996	0	discard	farming55/mining20/building10/research15	agent1	blackboard
+EXP-002	0.5928	0	keep	farming55/mining15/building15/research15	agent1	blackboard
+EXP-003	0.7278	0	keep	farming60/mining10/building15/research15 - NEW BEST	agent1	blackboard
+EXP-004	0.6102	0	discard	farming65/mining10/building15/research10	agent1	blackboard
+EXP-a2-001	0.6368	0	keep	Scholar: farm45/mine10/build15/research30, starvation_response=0.8	agent2	blackboard
+EXP-005	0.6200	0	discard	food_reserve_target=150 (base 60/10/15/15)	agent1	blackboard
+EXP-006	0.6264	0	discard	food_reserve_target=200 (base 60/10/15/15)	agent1	blackboard
+EXP-007	0.6280	0	discard	starvation_response=0.7 (base 60/10/15/15)	agent1	blackboard
+EXP-006	0.4088	0	discard	pure trader 70f/0m/0b/30r, trade=1.0	agent0	blackboard
+EXP-007	0.7312	0	keep	ultra fortress 15f/35m/35b/15r	agent0	blackboard
+EXP-008	0.7122	0	discard	insane fortress 10f/40m/40b/10r	agent0	blackboard
+EXP-009	0.7368	0	keep	fortress-scholar 15f/25m/25b/35r, trade=1.0	agent0	blackboard
+EXP-010	0.7310	0	discard	research fortress 10f/20m/20b/50r	agent0	blackboard
+EXP-a2-002	0.6468	0	discard	Trader: farm40/mine20/build20/research20, trade_agg=1.0, emerg_food=1.0	agent2	blackboard
+EXP-001	0.7088	0	discard	60/10/15/15 + aggressive strat (trade=0.8,raid=1.0,starv=0.9,emfood=1.0)	agent3	blackboard
+EXP-a2-003	0.7474	0	keep	fortress-scholar: farm25/mine20/build25/research30, trade_agg=0.8, NEW BEST	agent2	blackboard
+EXP-008	0.6402	0	keep	raid_preparedness=0.7 (base 60/10/15/15)	agent1	blackboard
+EXP-009	0.6202	0	discard	trade_aggression=0.5 (base 60/10/15/15)	agent1	blackboard
+EXP-010	0.6348	0	discard	emergency_food_buy=0.8 (base 60/10/15/15)	agent1	blackboard
+EXP-002	0.7600	0	keep	20/20/25/35 high research + trade=1.0, NEW BEST	agent3	blackboard
+EXP-a2-004	0.7544	0	keep	fortress-scholar: farm20/mine20/build25/research35, NEW BEST	agent2	blackboard
+EXP-011	0.7480	0	keep	fortress-scholar food_reserve=500	agent0	blackboard
+EXP-012	0.6668	0	discard	low starvation_response=0.4	agent0	blackboard
+EXP-013	0.7480	0	discard	research_focus=1.0 same as 0.5	agent0	blackboard
+EXP-014	0.7480	0	discard	research_focus=0.0 same as 0.5	agent0	blackboard
+EXP-015	0.7780	0	keep	sell-everything thresholds=0, 15f/25m/25b/35r	agent0	blackboard
+EXP-016	0.7738	0	discard	sell-everything food_reserve=300	agent0	blackboard
+EXP-017	0.7622	0	discard	sell-everything 20f/20m/20b/40r	agent0	blackboard
+EXP-018	0.7746	0	discard	sell-everything 20f/30m/30b/20r	agent0	blackboard
+EXP-019	0.7850	0	keep	sell-everything 10f/30m/30b/30r	agent0	blackboard
+EXP-011	0.6464	0	keep	raid_preparedness=0.8 (base 60/10/15/15)	agent1	blackboard
+EXP-012	0.6632	0	keep	raid_preparedness=1.0 (base 60/10/15/15) - NEW BEST	agent1	blackboard
+EXP-013	0.6254	0	discard	research_focus=0.8 (base 60/10/15/15)	agent1	blackboard
+EXP-003	0.7536	0	discard	15/20/25/40 push research to 40	agent3	blackboard
+EXP-a2-005	0.7480	0	discard	research40 too much: farm15/mine20/build25/research40	agent2	blackboard
+EXP-004	0.7656	0	keep	25/15/25/35 more farming less mining, NEW BEST	agent3	blackboard
+EXP-014	0.6750	0	keep	raid_prep=1.0+emergency_food=0.8 (60/10/15/15) - NEW BEST	agent1	blackboard
+EXP-015	0.6696	0	keep	raid_prep=1.0+starv_response=0.7 (60/10/15/15)	agent1	blackboard
+EXP-016	0.6636	0	discard	raid_prep=1.0+trade_agg=0.5 (60/10/15/15)	agent1	blackboard
+EXP-a2-006	0.7544	0	discard	research_focus=1.0 no effect vs 0.5	agent2	blackboard
+EXP-005	0.7366	0	discard	30/15/20/35 too little building	agent3	blackboard
+EXP-006	0.7668	0	keep	30/10/25/35 reduce mining to 10, NEW BEST	agent3	blackboard
+EXP-a2-007	0.7754	0	keep	zeroed thresholds on my config: farm20/mine20/build25/research35	agent2	blackboard
+EXP-017	0.6874	0	keep	raid_prep=1.0+emerg_food=0.8+starv_resp=0.7 - NEW BEST	agent1	blackboard
+EXP-018	0.6768	0	keep	raid_prep=1.0+emerg_food=1.0	agent1	blackboard
+EXP-019	0.6596	0	discard	raid_prep=1.0+emerg_food=0.8+food_reserve=50	agent1	blackboard
+EXP-007	0.7640	0	discard	35/10/25/30 slightly less research=30	agent3	blackboard
+EXP-a2-008	0.7764	0	keep	fortress+research35: 10f/25m/30b/35r, zeroed thresholds	agent2	blackboard
+EXP-020	0.6974	0	keep	starv_resp=0.8 (best+) - NEW BEST	agent1	blackboard
+EXP-021	0.6842	0	discard	starv_resp=0.6 (best+)	agent1	blackboard
+EXP-022	0.6900	0	keep	trade_agg=0.5 (best+)	agent1	blackboard
+EXP-008	0.7842	0	keep	30/10/25/35 + zero trade thresholds, near best	agent3	blackboard
+EXP-a2-009	0.7658	0	discard	replicate agent0: 10f/30m/30b/30r zeroed thresholds	agent2	blackboard
+EXP-023	0.6966	0	discard	starv_resp=0.9 (best+)	agent1	blackboard
+EXP-024	0.7000	0	keep	starv_resp=1.0 (best+)	agent1	blackboard
+EXP-025	0.7032	0	keep	trade_agg=0.5+starv_resp=0.8 (best+) - NEW BEST	agent1	blackboard
+EXP-a2-010	0.7458	0	keep	agrarian+zeroed: 55f/10m/15b/20r zeroed thresholds	agent2	blackboard
+EXP-009	0.7748	0	discard	25/10/25/40 research=40 overshoots	agent3	blackboard
+EXP-a2-011	0.7592	0	keep	ZERO farming! 0f/35m/35b/30r zeroed thresholds	agent2	blackboard
+EXP-010	0.7874	0	keep	30/10/30/30 more building less research, NEW BEST	agent3	blackboard
+EXP-026	0.7032	0	discard	building_priority=0.3 (no effect - flavor param)	agent1	blackboard
+EXP-027	0.7032	0	discard	building_priority=0.8 (no effect - flavor param)	agent1	blackboard
+EXP-028	0.7022	0	discard	trade_food_threshold=40	agent1	blackboard
+EXP-a2-012	0.7838	0	keep	food_reserve=500: 10f/25m/30b/35r zeroed thresholds	agent2	blackboard
+EXP-011	0.7596	0	discard	30/5/30/35 mining=5 too low, builders starve for materials	agent3	blackboard
+EXP-029	0.6982	0	discard	farming62/mining8	agent1	blackboard
+EXP-030	0.7102	0	keep	farming58/mining10/research17	agent1	blackboard
+EXP-031	0.7190	0	keep	farming60/mining5/building15/research20 - NEW BEST	agent1	blackboard
+EXP-a2-013	0.7850	0	keep	10f/30m/30b/30r food_reserve=500 matches agent0 best	agent2	blackboard
+EXP-012	0.7854	0	discard	25/15/30/30 balanced mine/build	agent3	blackboard
+EXP-020	0.7842	0	keep	ZERO farming 0f/35m/35b/30r sell-everything	agent0	blackboard
+EXP-021	0.7810	0	discard	5f/35m/35b/25r sell-everything	agent0	blackboard
+EXP-022	0.7806	0	discard	0f/40m/40b/20r sell-everything	agent0	blackboard
+EXP-023	0.7182	0	discard	raid_preparedness=0 on best base	agent0	blackboard
+EXP-024	0.4906	0	discard	100% research, nothing else	agent0	blackboard
+EXP-025	0.7922	0	keep	asymmetric 10f/15m/45b/30r sell-everything	agent0	blackboard
+EXP-026	0.7816	0	discard	10f/10m/50b/30r sell-everything	agent0	blackboard
+EXP-027	0.7864	0	discard	10f/20m/40b/30r sell-everything	agent0	blackboard
+EXP-028	0.7986	0	keep	5f/15m/45b/35r sell-everything	agent0	blackboard
+EXP-029	0.7968	0	keep	0f/15m/50b/35r sell-everything	agent0	blackboard
+EXP-030	0.7902	0	discard	5f/10m/45b/40r sell-everything	agent0	blackboard
+EXP-031	0.7816	0	discard	10f/10m/50b/30r sell-everything	agent0	blackboard
+EXP-032	0.5668	0	discard	mining0 crashes - builders need miners	agent1	blackboard
+EXP-033	0.6844	0	discard	building10 hurts defense	agent1	blackboard
+EXP-034	0.7206	0	keep	farming55/mining5/building15/research25	agent1	blackboard
+EXP-a2-014	0.6220	0	discard	DEAD END: trade_aggression=0.0 kills fortress	agent2	blackboard
+EXP-035	0.7066	0	discard	farming50/research30 - too little farming	agent1	blackboard
+EXP-036	0.7168	0	keep	farming57/mining5/building15/research23	agent1	blackboard
+EXP-037	0.6910	0	discard	farming55/building10/research30 - building10 hurts	agent1	blackboard
+EXP-013	0.7448	0	discard	30/10/30/30 food_reserve=100 too low	agent3	blackboard
+EXP-014	0.7920	0	keep	30/10/30/30 food_reserve=300, NEW BEST	agent3	blackboard
+EXP-a2-015	0.7944	0	keep	NEW BEST! 30/10/30/30 starv_resp=1.0 food_reserve=500	agent2	blackboard
+EXP-038	0.7338	0	keep	55/5/15/25+starv_resp=1.0 - NEW BEST	agent1	blackboard
+EXP-039	0.7226	0	keep	55/5/15/25+emerg_food=1.0	agent1	blackboard
+EXP-040	0.7168	0	discard	55/5/15/25+trade_agg=0.7	agent1	blackboard
+EXP-015	0.7892	0	discard	30/10/30/30 food_reserve=400	agent3	blackboard
+EXP-016	0.7910	0	discard	30/10/30/30 food_reserve=500	agent3	blackboard
+EXP-017	0.7952	0	keep	30/10/30/30 food_reserve=300 starv_resp=1.0, NEW BEST	agent3	blackboard
+EXP-041	0.7352	0	keep	best+emerg_food=1.0	agent1	blackboard
+EXP-042	0.7304	0	discard	best+trade_agg=0.7	agent1	blackboard
+EXP-043	0.7400	0	keep	best+food_reserve=150 - NEW BEST	agent1	blackboard
+EXP-032	0.7370	0	discard	high farm 60f/5m/20b/15r sell-everything	agent0	blackboard
+EXP-033	0.3478	0	discard	gold hoarder 0f/50m/15b/35r food_reserve=0	agent0	blackboard
+EXP-034	0.8046	0	keep	starvation=1.0 5f/15m/45b/35r food_reserve=500	agent0	blackboard
+EXP-035	0.8100	0	keep	starvation=1.0 food_reserve=400	agent0	blackboard
+EXP-036	0.8106	0	keep	starvation=1.0 food_reserve=300	agent0	blackboard
+EXP-037	0.8022	0	discard	starvation=1.0 food_reserve=200	agent0	blackboard
+EXP-018	0.7962	0	keep	30/10/30/30 trade_agg=0.8 food_reserve=300 starv=1.0	agent3	blackboard
+EXP-019	0.7946	0	discard	30/10/30/30 trade_agg=0.9	agent3	blackboard
+EXP-044	0.7362	0	discard	best+emerg_food=1.0	agent1	blackboard
+EXP-045	0.7268	0	discard	food_reserve=200	agent1	blackboard
+EXP-046	0.7232	0	discard	food_reserve=250	agent1	blackboard
+EXP-a2-016	0.8018	0	keep	NEW BEST! asymmetric 10f/15m/45b/30r starv=1.0 food_reserve=500	agent2	blackboard
+EXP-047	0.7406	0	keep	trade_agg=0.3	agent1	blackboard
+EXP-048	0.7406	0	keep	trade_agg=0.8	agent1	blackboard
+EXP-049	0.7400	0	discard	gold_reserve=50	agent1	blackboard
+EXP-020	0.7946	0	keep	5/15/30/50 extreme research near-zero farm, competitive	agent3	blackboard
+EXP-a2-017	0.8030	0	keep	research35 asymmetric: 10f/15m/40b/35r	agent2	blackboard
+EXP-050	0.7420	0	keep	53/5/15/27	agent1	blackboard
+EXP-051	0.7510	0	keep	55/5/17/23	agent1	blackboard
+EXP-052	0.7562	0	keep	55/5/20/20 - NEW BEST	agent1	blackboard
+EXP-021	0.8014	0	keep	15/15/30/40 FIRST 0.80+\! NEW BEST	agent3	blackboard
+EXP-a2-018	0.8102	0	keep	food_reserve=300: 10f/15m/45b/30r	agent2	blackboard
+EXP-053	0.7606	0	keep	55/5/25/15 - NEW BEST	agent1	blackboard
+EXP-054	0.7510	0	discard	55/8/20/17	agent1	blackboard
+EXP-055	0.7534	0	keep	50/5/20/25	agent1	blackboard
+EXP-a2-019	0.8104	0	keep	research35+food_reserve300: 10f/15m/40b/35r	agent2	blackboard
+EXP-022	0.8222	0	keep	10/10/40/40 asymmetric build+research, NEW BEST 0.82+\!	agent3	blackboard
+EXP-038	0.7038	0	discard	0f/5m/60b/35r ultra building	agent0	blackboard
+EXP-039	0.7946	0	discard	5f/15m/30b/50r heavy research	agent0	blackboard
+EXP-040	0.8048	0	discard	5f/15m/40b/40r balanced	agent0	blackboard
+EXP-041	0.8000	0	discard	5f/20m/45b/30r more mining	agent0	blackboard
+EXP-042	0.8102	0	keep	10f/15m/45b/30r starvation=1.0	agent0	blackboard
+EXP-a2-020	0.5584	0	discard	DEAD END: 0% mining + 60% building = idle builders	agent2	blackboard
+EXP-056	0.7568	0	keep	55/5/30/10 - building30 but low research hurts	agent1	blackboard
+EXP-057	0.7674	0	keep	50/5/25/20 - NEW BEST	agent1	blackboard
+EXP-058	0.7412	0	discard	55/10/25/10	agent1	blackboard
+EXP-023	0.8130	0	discard	5/10/45/40 less farming hurts	agent3	blackboard
+EXP-a2-021	0.7424	0	discard	5% mining too low: 5f/5m/50b/40r	agent2	blackboard
+EXP-024	0.8210	0	discard	10/10/45/35 building=45 research=35	agent3	blackboard
+EXP-059	0.7588	0	keep	45/5/25/25	agent1	blackboard
+EXP-060	0.7716	0	keep	50/5/30/15 - NEW BEST	agent1	blackboard
+EXP-061	0.7582	0	keep	48/5/25/22	agent1	blackboard
+EXP-025	0.7714	0	discard	10/5/45/40 mining=5 too low for builders	agent3	blackboard
+EXP-a2-022	0.7982	0	discard	farming20 worse: 20f/15m/35b/30r	agent2	blackboard
+EXP-062	0.7378	0	discard	50/5/35/10 - too little research	agent1	blackboard
+EXP-063	0.7782	0	keep	45/5/30/20 - NEW BEST	agent1	blackboard
+EXP-064	0.7446	0	discard	50/10/30/10	agent1	blackboard
+EXP-026	0.8070	0	discard	15/10/35/40	agent3	blackboard
+EXP-a2-023	0.8116	0	keep	NEW BEST! ultra-building: 5f/15m/50b/30r food_reserve=300	agent2	blackboard
+EXP-027	0.8078	0	discard	10/15/35/40	agent3	blackboard
+EXP-065	0.7734	0	keep	40/5/30/25	agent1	blackboard
+EXP-066	0.7570	0	discard	45/5/35/15 - building35 too much	agent1	blackboard
+EXP-067	0.7786	0	keep	43/5/30/22 - tied best	agent1	blackboard
+EXP-a2-024	0.8094	0	discard	55% building overshoots: 5f/15m/55b/25r	agent2	blackboard
+EXP-028	0.8122	0	discard	10/10/35/45 research=45	agent3	blackboard
+EXP-029	0.8048	0	discard	5/15/40/40 minimal farming	agent3	blackboard
+EXP-068	0.7444	0	discard	mining=3 too low	agent1	blackboard
+EXP-069	0.7528	0	discard	mining=7	agent1	blackboard
+EXP-070	0.7320	0	discard	mining=10 too high	agent1	blackboard
+EXP-a2-025	0.7900	0	discard	55b/10m too little mining for builders	agent2	blackboard
+EXP-030	0.8018	0	discard	10/10/40/40 food_reserve=250	agent3	blackboard
+EXP-071	0.7828	0	keep	45/5/30/20+food_reserve=200 - NEW BEST	agent1	blackboard
+EXP-072	0.7786	0	discard	45/5/30/20+emerg_food=1.0	agent1	blackboard
+EXP-073	0.7784	0	discard	trade_food_thresh=120	agent1	blackboard
+EXP-a2-026	0.8222	0	keep	matches agent3 best: 10/10/40/40	agent2	blackboard
+EXP-074	0.7844	0	keep	food_reserve=250	agent1	blackboard
+EXP-075	0.7894	0	keep	food_reserve=200+emerg_food=1.0 - NEW BEST	agent1	blackboard
+EXP-076	0.7838	0	keep	food_reserve=300	agent1	blackboard
+EXP-a2-027	0.8130	0	discard	5/10/45/40 too little farming	agent2	blackboard
+EXP-031	0.7492	0	discard	WILD: 50/10/15/25 adaptive agrarian + zero thresholds	agent3	blackboard
+EXP-077	0.7834	0	discard	food_reserve=250+emerg=1.0	agent1	blackboard
+EXP-078	0.7894	0	discard	trade_mat_thresh=100 (same score)	agent1	blackboard
+EXP-079	0.7894	0	discard	gold_reserve=50 (same score)	agent1	blackboard
+EXP-a2-028	0.8122	0	discard	research45 too much: 10/10/35/45	agent2	blackboard
+EXP-032	0.7980	0	keep	WILD: 0/20/40/40 zero farming	agent3	blackboard
+EXP-080	0.7794	0	discard	40/5/30/25	agent1	blackboard
+EXP-081	0.7848	0	discard	45/5/25/25	agent1	blackboard
+EXP-082	0.7874	0	discard	35/5/30/30	agent1	blackboard
+EXP-a2-029	0.8088	0	discard	food_reserve=400 on 10/10/40/40	agent2	blackboard
+EXP-033	0.7806	0	discard	WILD: 0/40/30/30 extreme mining	agent3	blackboard
+EXP-a2-030	0.8024	0	discard	food_reserve=200 on 10/10/40/40	agent2	blackboard
+EXP-083	0.7790	0	discard	45/5/30/20+zero thresholds	agent1	blackboard
+EXP-084	0.8066	0	keep	10/10/40/40 zero thresholds (replicate agent3)	agent1	blackboard
+EXP-085	0.8038	0	discard	10/12/40/38	agent1	blackboard
+EXP-a2-031	0.8070	0	discard	15/10/35/40 more farming hurts	agent2	blackboard
+EXP-a2-032	0.8142	0	keep	0/10/40/50 zero farm extreme research competitive	agent2	blackboard
+EXP-086	0.8128	0	keep	5/10/40/45 - NEW BEST for agent1	agent1	blackboard
+EXP-087	0.8100	0	keep	10/10/45/35	agent1	blackboard
+EXP-088	0.8068	0	discard	10/10/35/45	agent1	blackboard
+EXP-a2-033	0.8150	0	discard	raid_prep=0.8 slightly worse on 10/10/40/40	agent2	blackboard
+EXP-043	0.7910	0	discard	trade_aggression=0.5	agent0	blackboard
+EXP-044	0.8036	0	discard	emergency_food_buy=0.5	agent0	blackboard
+EXP-045	0.7738	0	discard	trade_materials_threshold=50	agent0	blackboard
+EXP-046	0.8018	0	discard	food_reserve=350	agent0	blackboard
+EXP-047	0.8094	0	keep	5f/15m/55b/25r	agent0	blackboard
+EXP-048	0.7988	0	discard	5f/20m/55b/20r	agent0	blackboard
+EXP-049	0.7748	0	discard	0f/40m/25b/35r sell materials	agent0	blackboard
+EXP-050	0.8098	0	discard	gold_reserve=200 hoard	agent0	blackboard
+EXP-051	0.7796	0	discard	emergency_food_buy=0.3 conserve gold	agent0	blackboard
+EXP-052	0.8086	0	discard	15f/15m/45b/25r more farm	agent0	blackboard
+EXP-053	0.8160	0	retest	10f/15m/50b/25r new best? (200match=0.799)	agent0	blackboard
+EXP-054	0.7860	0	discard	10f/10m/55b/25r too much building	agent0	blackboard
+EXP-055	0.8046	0	discard	10f/20m/50b/20r	agent0	blackboard
+EXP-056	0.8116	0	discard	5f/15m/50b/30r	agent0	blackboard
+EXP-057	0.8048	0	discard	15f/15m/50b/20r	agent0	blackboard
+EXP-089	0.8118	0	keep	5/10/45/40	agent1	blackboard
+EXP-090	0.8044	0	discard	5/15/40/40	agent1	blackboard
+EXP-091	0.8040	0	discard	0/10/45/45 - no farming viable	agent1	blackboard
+EXP-a2-034	0.8114	0	keep	10/10/40/40 with 100 sims — true score ~0.81	agent2	blackboard
+EXP-092	0.7950	0	discard	10/10/40/40 food_reserve=200	agent1	blackboard
+EXP-093	0.8060	0	discard	10/10/40/40 food_reserve=400	agent1	blackboard
+EXP-094	0.8222	0	keep	10/10/40/40 trade_agg=1.0 - MATCHES GLOBAL BEST	agent1	blackboard
+EXP-a2-035	0.8058	0	discard	emergency_food_buy=0.7 worse	agent2	blackboard
+EXP-034	0.8230	0	keep	10/10/42/38 slightly more building	agent3	blackboard
+EXP-095	0.8160	0	discard	8/10/42/40	agent1	blackboard
+EXP-096	0.8176	0	discard	10/8/42/40	agent1	blackboard
+EXP-097	0.8230	0	keep	10/10/42/38 - NEW BEST 0.823	agent1	blackboard
+EXP-035	0.8140	0	discard	10/10/38/42 building>research confirmed	agent3	blackboard
+EXP-098	0.8214	0	discard	10/10/44/36	agent1	blackboard
+EXP-099	0.8200	0	discard	10/10/46/34	agent1	blackboard
+EXP-100	0.8140	0	discard	10/10/38/42	agent1	blackboard
+EXP-036	0.8214	0	discard	10/10/44/36 building=44 diminishing	agent3	blackboard
+EXP-101	0.8022	0	discard	food_reserve=250	agent1	blackboard
+EXP-102	0.8050	0	discard	food_reserve=350	agent1	blackboard
+EXP-103	0.8084	0	discard	food_reserve=400	agent1	blackboard
+EXP-037	0.8056	0	discard	8/12/40/40 farm=8 mining=12 worse	agent3	blackboard
+EXP-104	0.8132	0	discard	10/12/42/36	agent1	blackboard
+EXP-105	0.8254	0	keep	12/10/42/36 - NEW GLOBAL BEST	agent1	blackboard
+EXP-106	0.8110	0	discard	8/12/42/38	agent1	blackboard
+EXP-038	0.8150	0	discard	emergency_food_buy=0.8 worse than 1.0	agent3	blackboard
+EXP-a2-036	0.6974	0	discard	food_reserve=100 too low, late response kills	agent2	blackboard
+EXP-107	0.8114	0	discard	14/10/42/34	agent1	blackboard
+EXP-108	0.8246	0	discard	12/10/44/34	agent1	blackboard
+EXP-109	0.8162	0	discard	12/12/42/34	agent1	blackboard
+EXP-039	0.8254	0	keep	12/10/42/36 replicates agent1 best	agent3	blackboard
+EXP-110	0.8218	0	discard	11/10/42/37	agent1	blackboard
+EXP-111	0.8180	0	discard	13/10/42/35	agent1	blackboard
+EXP-112	0.8248	0	discard	12/10/43/35	agent1	blackboard
+EXP-040	0.8246	0	discard	12/10/44/34	agent3	blackboard
+EXP-a2-037	0.8224	0	keep	trade_food_threshold=500 (never sell food) matches best	agent2	blackboard
+EXP-058	0.8222	0	keep	reproduce agent3 10/10/40/40	agent0	blackboard
+EXP-059	0.8132	0	discard	0/10/45/45	agent0	blackboard
+EXP-060	0.7690	0	discard	5/5/45/45 mining too low	agent0	blackboard
+EXP-061	0.8054	0	discard	5/10/35/50 more research	agent0	blackboard
+EXP-062	0.8074	0	discard	5/10/50/35 more building	agent0	blackboard
+EXP-063	0.8006	0	discard	raid_preparedness=0.5	agent0	blackboard
+EXP-064	0.8104	0	discard	10/15/40/35 more mining	agent0	blackboard
+SWEEP-1	0.8032	0	keep	10/10/40/40 200-match confirmed 0.803	agent0	blackboard
+SWEEP-2	0.8025	0	keep	10/10/42/38 200-match confirmed 0.803	agent0	blackboard
+EXP-041	0.8114	0	discard	14/10/42/34 too much farming	agent3	blackboard
+EXP-042	0.8132	0	discard	10/12/42/36 more mining worse	agent3	blackboard
+EXP-a2-038	0.8134	0	discard	10/12/43/35 no improvement	agent2	blackboard
+EXP-043	0.8138	0	discard	12/8/44/36 mining too low for builders	agent3	blackboard
+EXP-a2-039	0.8056	0	discard	8/12/40/40 no improvement	agent2	blackboard
+EXP-113	0.6208	0	discard	pure trader 5/50/5/40 - building too low	agent1	blackboard
+EXP-114	0.7980	0	discard	0/20/40/40	agent1	blackboard
+EXP-115	0.8042	0	discard	15/15/35/35	agent1	blackboard
+EXP-044	0.8034	0	discard	12/10/42/36 food_reserve=350	agent3	blackboard
+EXP-a2-040	0.8048	0	discard	5/15/40/40 worse	agent2	blackboard
+EXP-045	0.8002	0	discard	12/10/42/36 food_reserve=250	agent3	blackboard
+EXP-a2-041	0.8014	0	keep	12/10/42/36 200-sim true score ~0.80	agent2	blackboard
+EXP-116	0.8110	0	discard	10/15/42/33	agent1	blackboard
+EXP-117	0.7994	0	discard	food_reserve=500	agent1	blackboard
+EXP-118	0.7860	0	discard	trade_agg=0.0	agent1	blackboard
+EXP-a2-042	0.4448	0	discard	DEAD END: 50/0/0/50 no buildings = raids kill	agent2	blackboard
+EXP-119	0.8054	0	discard	5/10/35/50 research heavy	agent1	blackboard
+EXP-120	0.7714	0	discard	10/5/45/40 mining too low	agent1	blackboard
+EXP-121	0.7676	0	discard	15/5/40/40 mining too low	agent1	blackboard
+EXP-a2-043	0.8132	0	keep	0/10/45/45 zero farming + starvation auto-farm = competitive	agent2	blackboard
+EXP-046	0.5836	0	discard	WILD: food_reserve=0 disables starvation_response, terrible	agent3	blackboard
+EXP-a2-044	0.8106	0	keep	0/10/50/40 zero farming competitive	agent2	blackboard
+EXP-047	0.8132	0	keep	0/10/45/45 zero farming still 0.81+ due to starvation_response	agent3	blackboard
+SWEEP-3	0.7948	0	keep	10/10/40/40 500-match confirmed 0.795	agent0	blackboard
+SWEEP-4	0.7962	0	keep	5/15/45/35 500-match top scorer	agent0	blackboard
+EXP-065	0.7937	0	discard	7.5/12.5/42.5/37.5 fractional pcts	agent0	blackboard
+SWEEP-5	0.6588	0	discard	zero-research configs 0.60-0.66	agent0	blackboard
+EXP-048	0.8058	0	discard	gold_reserve=50 doesnt help	agent3	blackboard
+EXP-122	0.8254	0	keep	trade_food_thresh=50 (same as best)	agent1	blackboard
+EXP-123	0.8254	0	keep	trade_food_thresh=100 (same as best)	agent1	blackboard
+EXP-124	0.8162	0	discard	raid_prep=0.8	agent1	blackboard
+EXP-a2-045	0.7056	0	discard	food_reserve=500+starv=0.6 too gentle response	agent2	blackboard
+EXP-a2-046	0.8042	0	discard	15/15/35/35 same plateau	agent2	blackboard
+EXP-125	0.8100	0	discard	10/20/35/35 high mining	agent1	blackboard
+EXP-126	0.6484	0	discard	starvation_resp=0.5 kills score	agent1	blackboard
+EXP-127	0.8062	0	discard	20/10/35/35 more farming	agent1	blackboard
+EXP-a2-047	0.8002	0	discard	gold_reserve=50 no improvement	agent2	blackboard
+EXP-a2-048	0.7998	0	discard	gold_reserve=200 same plateau	agent2	blackboard
+EXP-049	0.7866	0	discard	trade_materials_threshold=500 never sell materials — gold pipeline essential	agent3	blackboard
+EXP-a2-049	0.7945	0	discard	building-heavy 10/10/50/30 loses research compounding (200 sims)	agent2	blackboard
+EXP-128	0.7914	0	discard	30/10/40/20	agent1	blackboard
+EXP-129	0.8008	0	discard	20/10/40/30	agent1	blackboard
+EXP-130	0.8084	0	discard	10/10/50/30	agent1	blackboard
+EXP-a2-050	0.7904	0	discard	high mining 25% hurts: 5/25/35/35	agent2	blackboard
+EXP-131	0.7120	0	discard	food_reserve=100 kills starvation response	agent1	blackboard
+EXP-132	0.7874	0	discard	trade_mat_thresh=100	agent1	blackboard
+EXP-133	0.6974	0	discard	10/10/40/40 food_reserve=100	agent1	blackboard
+EXP-a2-051	0.8024	0	discard	trade_aggression=0.5 same plateau	agent2	blackboard
+EXP-050	0.7990	0	discard	12/20/35/33 more mining for gold pipeline	agent3	blackboard
+EXP-a2-052	0.8076	0	keep	GRID SEARCH 300 sims: 0/10/45/45 best true score	agent2	blackboard
+FINAL-1	0.8033	0	keep	5/15/45/35 frt=450 1000-match	agent0	blackboard
+FINAL-2	0.8029	0	keep	10/10/40/40 frt=450 1000-match	agent0	blackboard
+FINAL-3	0.7984	0	keep	5/15/45/35 frt=450 2000-match confirmed ~0.80	agent0	blackboard
+EXP-051	0.7524	0	discard	starv_resp=0.7 with more miners — worse, farming shift critical	agent3	blackboard
+EXP-134	0.8160	0	discard	10/15/50/25	agent1	blackboard
+EXP-135	0.8048	0	discard	5/15/40/40	agent1	blackboard
+EXP-136	0.8106	0	keep	5/15/45/35 agent0 best	agent1	blackboard
+SWEEP-A3	0.7930	0	keep	12/10/42/36 500-match verified true score 0.793	agent3	blackboard
+VERIFY-500	0.7930	0	keep	12/10/42/36 500-sim true score	agent1	blackboard
+VERIFY-500b	0.7962	0	keep	5/15/45/35 500-sim true score	agent1	blackboard
+VERIFY-500c	0.7948	0	keep	10/10/40/40 500-sim true score	agent1	blackboard
+EXP-a2-053	0.7948	0	keep	DEFINITIVE: 500-sim sweep confirms plateau at 0.795 for all top configs	agent2	blackboard
+EXP-052	0.7997	0	keep	12/10/42/36 food_reserve=450 500-match verified 0.800	agent3	blackboard
+EXP-137	0.7866	0	discard	keep materials (mat_thresh=500)	agent1	blackboard
+EXP-138	0.7860	0	discard	hoard gold+materials	agent1	blackboard
+FINAL-4	0.8039	0	keep	3/17/43/37 frt=450 1000-match	agent0	blackboard
+FINAL-5	0.7995	0	keep	3/17/43/37 frt=450 2000-match confirmed ~0.80	agent0	blackboard
+EXP-a2-054	0.7990	0	keep	food_reserve=450 500sims: 0.7990 (marginally better)	agent2	blackboard
+EXP-139	0.7939	0	discard	5/15/45/35 food_reserve=250 @500sim	agent1	blackboard
+EXP-140	0.7950	0	discard	5/15/45/35 food_reserve=350 @500sim	agent1	blackboard
+FINAL-6	0.8035	0	keep	5/15/45/35 frt=500 1000-match BEST	agent0	blackboard
+EXP-141	0.7891	0	discard	emergency_food=0.5 @500sim	agent1	blackboard
+EXP-142	0.7966	0	keep	0/15/45/40 ZERO FARMING @500sim - BEST 500sim	agent1	blackboard
+EXP-143	0.7938	0	discard	8/13/42/37 @500sim	agent1	blackboard
+EXP-144	0.7931	0	discard	0/15/50/35 @500sim	agent1	blackboard
+EXP-145	0.7931	0	discard	0/10/45/45 @500sim	agent1	blackboard
+EXP-146	0.7915	0	discard	0/20/40/40 @500sim	agent1	blackboard
+EXP-147	0.7935	0	discard	0/15/40/45 @500sim	agent1	blackboard
+EXP-148	0.7949	0	discard	0/13/45/42 @500sim	agent1	blackboard
+EXP-149	0.7965	0	keep	0/15/43/42 @500sim tied best	agent1	blackboard
+EXP-150	0.7957	0	discard	0/15/48/37 @500sim	agent1	blackboard
+EXP-151	0.7971	0	keep	0/12/45/43 @500sim - best 500sim yet	agent1	blackboard
+EXP-152	0.7946	0	discard	0/18/42/40 @500sim	agent1	blackboard
+EXP-153	0.7963	0	discard	0/12/43/45 @500sim	agent1	blackboard
+EXP-154	0.7959	0	discard	0/12/47/41 @500sim	agent1	blackboard
+EXP-155	0.7931	0	discard	0/10/45/45 @500sim	agent1	blackboard
+VERIFY-1000a	0.8031	0	keep	0/15/45/40 @1000sim	agent1	blackboard
+VERIFY-1000b	0.8038	0	keep	0/12/45/43 @1000sim - TRUE BEST	agent1	blackboard
+EXP-156	0.7835	0	discard	40/10/25/25 high farm @500sim	agent1	blackboard
+EXP-157	0.6660	0	discard	70/10/10/10 extreme farm @500sim	agent1	blackboard
+EXP-158	0.6084	0	discard	0/0/50/50 no mining @500sim	agent1	blackboard
+EXP-159	0.8010	0	discard	food_reserve=350 @1000sim	agent1	blackboard
+EXP-160	0.8049	0	keep	0/12/45/43 food_reserve=280 @1000sim - NEW 1000sim BEST	agent1	blackboard
+EXP-161	0.8033	0	discard	food_reserve=260 @1000sim	agent1	blackboard
+EXP-162	0.8009	0	discard	food_reserve=320 @1000sim	agent1	blackboard
+EXP-163	0.8028	0	discard	0/14/44/42 @1000sim	agent1	blackboard
+EXP-164	0.8036	0	discard	0/10/47/43 @1000sim	agent1	blackboard
+EXP-165	0.8032	0	discard	0/12/42/46 @1000sim	agent1	blackboard
+EXP-166	0.7781	0	discard	gold hoarding strategy @500sim	agent1	blackboard
+EXP-167	0.7880	0	discard	conservative emergency buy @500sim	agent1	blackboard
+EXP-168	0.7967	0	discard	trade_agg=0.8 @500sim	agent1	blackboard
+EXP-169	0.7891	0	discard	0/25/40/35 @500sim	agent1	blackboard
+EXP-170	0.8037	0	discard	3/12/45/40 @1000sim	agent1	blackboard
+EXP-a2-055	0.7972	0	discard	high mining 25%: 0/25/40/35	agent2	blackboard
+EXP-a2-056	0.7878	0	discard	very high mining 30%: 0/30/35/35	agent2	blackboard
+EXP-a2-057	0.8022	0	keep	extreme research 50%: 0/15/35/50	agent2	blackboard
+EXP-a2-058	0.7944	0	discard	ultra research 55%: 0/15/30/55	agent2	blackboard
+EXP-a2-059	0.7990	0	discard	high mining+building: 0/20/45/35	agent2	blackboard
+VERIFY-2000a	0.8015	0	keep	0/12/45/43 food_reserve=280 @2000sim DEFINITIVE	agent1	blackboard
+VERIFY-2000b	0.7976	0	keep	5/15/45/35 food_reserve=300 @2000sim	agent1	blackboard
+EXP-171	0.7964	0	discard	safety-first 30/10/35/25 @1000sim	agent1	blackboard
+EXP-172	0.8050	0	keep	0/12/45/43 food_reserve=500 @1000sim	agent1	blackboard
+EXP-053	0.7938	0	discard	extreme building 60%: 0/12/60/28 frt=280	agent3	blackboard
+EXP-054	0.8020	0	discard	extreme research 55%: 0/10/35/55 frt=280	agent3	blackboard
+EXP-055	0.8035	0	discard	frt=333 hypothesis: 0/12/45/43 (200sim=0.8035)	agent3	blackboard
+EXP-056	0.7884	0	discard	low mining 8%: 0/8/50/42 frt=280	agent3	blackboard
+EXP-057	0.8142	0	keep	frt=320: 0/12/45/43	agent3	blackboard
+EXP-058	0.8074	0	keep	frt=350: 0/12/45/43	agent3	blackboard
+EXP-059	0.8144	0	keep	frt=300: 0/12/45/43	agent3	blackboard
+SWEEP-2000	0.8015	0	keep	BEST: 0/12/45/43 fr=280 @2000sim (sweep of 5 configs all 0.799-0.802)	agent1	blackboard
+SWEEP-SR	0.8049	0	keep	starv_resp sweep 0.90-1.0 @1000sim: monotonic, 1.0 optimal	agent1	blackboard
+SWEEP-ALL	0.8049	0	keep	All 4 strategy params monotonic→1.0 @1000sim	agent1	blackboard
+GRID-500	0.7994	0	keep	Grid search mining10-14 x building43-47 @500sim: all 0.795-0.799, surface flat	agent1	blackboard
+EXP-173	0.8050	0	discard	decimal pcts don't help (rounds to headcounts)	agent1	blackboard
+EXP-174	0.8042	0	discard	decimal pcts @1000sim	agent1	blackboard
+SWEEP-TMT	0.8049	0	keep	trade_mat_thresh sweep: 0 is optimal, monotonically worse as threshold rises @1000sim	agent1	blackboard
+SWEEP-GRT	0.8049	0	keep	gold_reserve sweep: 0 is optimal, monotonically worse as reserve rises @1000sim	agent1	blackboard
+SWEEP-TFT	0.8049	0	keep	trade_food_thresh has NO EFFECT with 0% farming @1000sim	agent1	blackboard
+EXP-175	0.7756	0	discard	0/10/60/30 extreme building @1000sim	agent1	blackboard
+EXP-176	0.7346	0	discard	0/5/55/40 building too high, mining too low @1000sim	agent1	blackboard
+EXP-177	0.7928	0	discard	0/10/30/60 extreme research @1000sim	agent1	blackboard
+EXP-a2-060	0.776	0	discard	extreme building 60%: 0/10/60/30	agent2	blackboard
+EXP-a2-061	0.7898	0	discard	extreme research 65%: 0/10/25/65	agent2	blackboard
+EXP-a2-062	0.8012	0	keep	current best food_reserve=500: 0/12/45/43	agent2	blackboard
+EXP-178	0.7912	0	discard	0/30/35/35 heavy mining @1000sim	agent1	blackboard
+EXP-179	0.7764	0	discard	0/40/30/30 extreme mining @1000sim	agent1	blackboard
+EXP-180	0.8045	0	keep	0/12/50/38 @1000sim	agent1	blackboard
+EXP-181	0.7918	0	discard	0/8/48/44 mining too low @1000sim	agent1	blackboard
+EXP-182	0.8029	0	discard	0/12/40/48 @1000sim	agent1	blackboard
+GRID2-1000	0.8051	0	keep	grid farming0-5 x mining10-14 @1000sim: all 0.802-0.805, flat	agent1	blackboard
+VERIFY-2000c	0.8011	0	keep	0/10/45/45 @2000sim	agent1	blackboard
+EXP-a2-063	0.8032	0	keep	baseline farming 15%: 15/12/40/33 food_reserve=500	agent2	blackboard
+EXP-a2-064	0.7962	0	discard	farming 20% hurts: 20/10/40/30 food_reserve=500	agent2	blackboard
+EXP-a2-065	0.8030	0	keep	more building 48%: 0/12/48/40 food_reserve=500	agent2	blackboard
+EXP-a2-066	0.8022	0	discard	0/15/45/40 food_reserve=500	agent2	blackboard
+EXP-a2-067	0.8016	0	discard	more research 46%: 0/12/42/46 food_reserve=500	agent2	blackboard
+EXP-a2-068	0.7490	0	discard	mining>building kills defense: 0/20/15/65	agent2	blackboard
+EXP-a2-069	0.7840	0	discard	equal mine=build: 0/25/25/50	agent2	blackboard
+EXP-200	0.7954	0	discard	0/15/43/42 higher mining @500sim	agent1	blackboard
+EXP-060	0.8002	0	discard	more mining 15%: 0/15/43/42 frt=280	agent3	blackboard
+EXP-061	0.8044	0	discard	more mining 20%: 0/20/40/40 frt=280	agent3	blackboard
+EXP-062	0.7974	0	discard	mining 18%: 0/18/42/40 frt=280	agent3	blackboard
+EXP-063	0.7706	0	discard	starv_resp=0.9 on 0/12/45/43 — CONFIRMED 1.0 critical	agent3	blackboard
+EXP-064	0.7762	0	discard	trade_mat_threshold=50 hurts gold pipeline	agent3	blackboard
+EXP-065	0.8012	0	keep	heavy research 53%: 0/12/35/53 competitive	agent3	blackboard
+EXP-066	0.7958	0	discard	frt=200 too low, late starvation response	agent3	blackboard
+EXP-067	0.7886	0	discard	research 70%: 0/5/25/70 not enough defense	agent3	blackboard
+EXP-201	0.7970	0	discard	0/13/44/43 @500sim	agent1	blackboard
+EXP-066	0.6568	0	discard	WILD near-total research 0/5/5/90	agent0	blackboard
+EXP-067	0.6510	0	discard	WILD no-research fortress 0/50/50/0	agent0	blackboard
+EXP-068	0.7760	0	discard	WILD pure balanced 25/25/25/25	agent0	blackboard
+EXP-069	0.4360	0	discard	DEAD END frt=50 disables starvation response	agent0	blackboard
+EXP-070	0.8022	0	keep	frt=500 on 0/15/45/40 (plateau)	agent0	blackboard
+EXP-071	0.7452	0	discard	emergency_food_buy=0 self-sufficiency	agent0	blackboard
+EXP-072	0.4570	0	discard	DEAD END starvation_response=0.3 deliberate deaths	agent0	blackboard
+EXP-073	0.7980	0	discard	0/20/50/30 heavy building+mining	agent0	blackboard
+EXP-074	0.7686	0	discard	high farm 45/5/30/20	agent0	blackboard
+EXP-075	0.8120	0	keep	trade_food_threshold=500 never sell food	agent0	blackboard
+EXP-076	0.7674	0	discard	extreme building 0/25/65/10	agent0	blackboard
+EXP-077	0.7238	0	discard	extreme research 0/10/10/80	agent0	blackboard
+EXP-078	0.7944	0	discard	gold engine 0/30/40/30	agent0	blackboard
+EXP-079	0.7876	0	discard	conservative gold efb=0.5 gold_reserve=50	agent0	blackboard
+EXP-080	0.8062	0	keep	efb=0.7 on 0/15/45/40	agent0	blackboard
+EXP-081	0.7518	0	discard	anti-oscillation 20/10/40/30 sr=0.7	agent0	blackboard
+EXP-082	0.8008	0	keep	20/10/40/30 with sr=1.0 best min_surv=35%	agent0	blackboard
+EXP-202	0.8021	0	discard	food_reserve=240 @1000sim	agent1	blackboard
+EXP-203	0.8040	0	keep	food_reserve=450 @1000sim slightly better	agent1	blackboard
+EXP-204	0.8050	0	keep	food_reserve=500 @1000sim matches best	agent1	blackboard
+EXP-068	0.8054	0	discard	0/12/40/48 more research	agent3	blackboard
+EXP-069	0.8048	0	discard	0/10/45/45 equal build/research	agent3	blackboard
+EXP-070	0.8032	0	discard	0/12/48/40 more building	agent3	blackboard
+EXP-071	0.8092	0	keep	5/12/43/40 frt=280 small farming buffer	agent3	blackboard
+SWEEP-A3-R2	0.8013	0	keep	0/12/45/43 frt=500 500-sim verified	agent3	blackboard
+SWEEP-A3-R2b	0.7994	0	keep	0/12/45/43 frt=280 500-sim verified	agent3	blackboard
+SWEEP-A3-R2c	0.7947	0	keep	0/12/45/43 frt=240 500-sim verified	agent3	blackboard
+EXP-083	0.7596	0	discard	never sell anything (thresholds=500)	agent0	blackboard
+EXP-084	0.6602	0	discard	WILD inverse of best 40/40/10/10	agent0	blackboard
+EXP-085	0.6758	0	discard	all strategy params zeroed except sr=1.0	agent0	blackboard
+SWEEP-R2-1	0.8045	0	keep	sr scan: 1.0 monotonically best at 200sims	agent0	blackboard
+SWEEP-R2-2	0.8094	0	keep	frt scan: 450 marginally best at 200sims (noise)	agent0	blackboard
+SWEEP-R2-3	0.7994	0	keep	500-sim linted config 0/12/45/43 frt=280	agent0	blackboard
+SWEEP-R2-4	0.8006	0	keep	500-sim best 0/15/45/40 frt=450	agent0	blackboard
+EXP-205	0.7938	0	discard	0/18/42/40 @500sim	agent1	blackboard
+EXP-206	0.7956	0	discard	0/20/40/40 @500sim	agent1	blackboard
+EXP-207	0.7969	0	discard	0/12/48/40 @500sim	agent1	blackboard
+EXP-208	0.7957	0	discard	0/12/40/48 @500sim	agent1	blackboard
+EXP-209	0.7970	0	discard	0/10/48/42 @500sim	agent1	blackboard
+EXP-210	0.7984	0	keep	0/10/42/48 best of sweep @500sim	agent1	blackboard
+EXP-211	0.7943	0	discard	fr=350 @500sim	agent1	blackboard
+EXP-212	0.7954	0	discard	fr=400 @500sim	agent1	blackboard
+EXP-213	0.7942	0	discard	3/12/45/40 @500sim	agent1	blackboard
+EXP-214	0.7946	0	discard	3/10/45/42 @500sim	agent1	blackboard
+EXP-215	0.7968	0	discard	0/12/50/38 @500sim	agent1	blackboard
+EXP-216	0.7949	0	discard	0/14/46/40 @500sim	agent1	blackboard
+EXP-217	0.7934	0	discard	sr=0.95 @1000sim	agent1	blackboard
+EXP-218	0.7826	0	discard	sr=0.90 @1000sim	agent1	blackboard
+EXP-219	0.7711	0	discard	sr=0.85 @1000sim	agent1	blackboard
+EXP-220	0.8044	0	discard	efb=0.9 @1000sim	agent1	blackboard
+EXP-221	0.8043	0	discard	efb=0.8 @1000sim	agent1	blackboard
+EXP-222	0.8046	0	discard	ta=0.95 @1000sim	agent1	blackboard
+EXP-223	0.8030	0	discard	ta=0.9 @1000sim	agent1	blackboard
+EXP-224	0.8032	0	discard	rp=0.95 @1000sim	agent1	blackboard
+EXP-225	0.8011	0	discard	rp=0.9 @1000sim	agent1	blackboard
+EXP-226	0.8018	0	discard	ta=0.7 reduce gold for raids @1000sim	agent1	blackboard
+EXP-227	0.7974	0	discard	gold_reserve=10 @1000sim	agent1	blackboard
+EXP-228	0.7940	0	discard	trade_mat_thresh=20 @1000sim	agent1	blackboard
+SWEEP-FR2K	0.8015	0	keep	food_reserve 200-500 sweep @2000sim: 280=300=0.8015 peak, all within noise	agent1	blackboard
+EXP-072	0.7922	0	discard	research rush 60%: 0/10/30/60 too little defense	agent3	blackboard
+EXP-073	0.8036	0	discard	research 52%: 0/10/38/52	agent3	blackboard
+EXP-074	0.8012	0	discard	mining 14%: 0/14/43/43	agent3	blackboard
+EXP-075	0.8119	0	keep	0/12/45/43 frt=500 200-sim	agent3	blackboard
+EXP-a2-070	0.7982	0	discard	trade_agg=0.7 on best frt=500	agent2	blackboard
+EXP-a2-071	0.7936	0	discard	trade_agg=0.5 on best frt=500	agent2	blackboard
+EXP-a2-072	0.7926	0	discard	materials_thresh=30 no help	agent2	blackboard
+EXP-a2-073	0.8050	0	keep	1000sim BEST: 0/12/45/43 frt=500	agent2	blackboard
+EXP-a2-074	0.8035	0	keep	1000sim: 5/15/45/35 frt=500	agent2	blackboard
+EXP-a2-075	0.8021	0	keep	1000sim: 10/10/40/40 frt=500	agent2	blackboard
+EXP-a2-076	0.8038	0	keep	1000sim: 0/12/45/43 frt=300	agent2	blackboard
+EXP-a2-077	0.8002	0	keep	1000sim: 5/15/45/35 frt=300	agent2	blackboard
+EXP-a2-078	0.7950	0	discard	agrarian 30/10/35/25 frt=500	agent2	blackboard
+EXP-a2-079	0.7920	0	discard	agrarian 35/10/30/25 frt=500	agent2	blackboard
+EXP-a2-080	0.7988	0	discard	agrarian 25/10/35/30 frt=500	agent2	blackboard
+EXP-a2-081	0.7988	0	discard	agrarian 25/15/30/30 frt=500	agent2	blackboard
+EXP-a2-082	0.7944	0	discard	agrarian 30/10/30/30 frt=500	agent2	blackboard
+EXP-a2-083	0.7954	0	discard	agrarian 20/10/35/35 frt=500	agent2	blackboard
+EXP-229	0.7940	0	discard	0/8/47/45 mining too low @1000sim	agent1	blackboard
+EXP-230	0.7833	0	discard	0/7/48/45 mining=7 kills score @1000sim	agent1	blackboard
+EXP-231	0.7992	0	discard	5/10/50/35 @1000sim	agent1	blackboard
+EXP-232	0.8021	0	discard	0/12/38/50 high research @1000sim	agent1	blackboard
+EXP-233	0.8016	0	discard	0/16/44/40 @1000sim	agent1	blackboard
+EXP-234	0.8043	0	discard	fr=270 @1000sim	agent1	blackboard
+EXP-235	0.8032	0	discard	fr=290 @1000sim	agent1	blackboard
+EXP-236	0.8049	0	discard	bp=0+rf=0 confirmed flavor @1000sim	agent1	blackboard
+EXP-237	0.8049	0	discard	bp=1+rf=1 confirmed flavor @1000sim	agent1	blackboard
+EXP-238	0.8007	0	discard	0/15/55/30 high building @1000sim	agent1	blackboard
+EXP-239	0.7950	0	discard	0/15/60/25 building too high @1000sim	agent1	blackboard
+EXP-240	0.7928	0	discard	0/10/30/60 extreme research @1000sim	agent1	blackboard
+EXP-241	0.8007	0	discard	0/17/43/40 @1000sim	agent1	blackboard
+EXP-242	0.7875	0	discard	0/33/33/34 even split @1000sim	agent1	blackboard
+EXP-243	0.8026	0	discard	2/13/50/35 @1000sim	agent1	blackboard
+EXP-244	0.8035	0	discard	5/15/45/35 fr500 agent0's config @1000sim	agent1	blackboard
+EXP-245	0.8050	0	keep	0/12/45/43 fr500 matches best @1000sim	agent1	blackboard
+EXP-a2-084	0.8015	0	keep	2000sim DEFINITIVE: 0/12/45/43 frt=280 confirms agent1	agent2	blackboard
+EXP-a2-085	0.8015	0	keep	2000sim: 0/12/45/43 frt=300 identical to 280	agent2	blackboard
+EXP-a2-086	0.8001	0	keep	2000sim: 0/12/45/43 frt=450 slightly worse	agent2	blackboard
+EXP-a2-087	0.7999	0	keep	2000sim: 0/12/45/43 frt=500 slightly worse	agent2	blackboard
+VERIFY-3000	0.8003	0	keep	DEFINITIVE 3000-sim: 0/12/45/43 fr=280 = 0.8003 > fr=500 (0.7988) > 5/15/45/35 fr=500 (0.7969)	agent1	blackboard
+EXP-086	0.8088	0	keep	random search best: 1/9/44/46 frt=350 ta=0.9 efb=0.8	agent0	blackboard
+SWEEP-R2-5	0.7941	0	keep	5000-sim DEFINITIVE: 0/15/45/40 frt=300 = 0.794	agent0	blackboard
+SWEEP-R2-6	0.7926	0	keep	5000-sim DEFINITIVE: 0/15/40/45 frt=300 = 0.793	agent0	blackboard
+SWEEP-R2-7	0.7933	0	keep	5000-sim DEFINITIVE: 0/15/42/43 frt=300 = 0.793	agent0	blackboard
+SWEEP-R2-8	0.8031	0	keep	1000-sim: 0/15/45/40 marginally best of 6 configs	agent0	blackboard
+EXP-087	0.6320	0	discard	WILD ultra-build 0/10/80/10	agent0	blackboard
+EXP-088	0.4342	0	discard	WILD no-builder 0/30/0/70	agent0	blackboard
+EXP-089	0.2312	0	discard	DEAD END farm+build 50/0/50/0 no mining	agent0	blackboard
+EXP-090	0.7806	0	discard	mine-heavy 0/40/30/30	agent0	blackboard
+EXP-091	0.6624	0	discard	WILD micro-support 1/1/49/49	agent0	blackboard
+EXP-076	0.8053	0	keep	20/12/35/33 frt=500 200sim variance analysis	agent3	blackboard
+SWEEP-A3-R2d	0.8049	0	keep	0/12/45/43 frt=280 1000sim DEFINITIVE	agent3	blackboard
+SWEEP-A3-R2e	0.8050	0	keep	0/12/45/43 frt=500 1000sim DEFINITIVE	agent3	blackboard
+EXP-a2-088	0.7494	0	discard	extreme mining 50%: 0/50/25/25	agent2	blackboard
+EXP-a2-089	0.7836	0	discard	high build low mine: 0/8/52/40	agent2	blackboard
+EXP-a2-090	0.7917	0	discard	high research 52% verified 500sim: 0/8/40/52	agent2	blackboard
+EXP-a2-091	0.7394	0	discard	mining=5 too low for build=50: 10/5/50/35	agent2	blackboard
+EXP-a2-092	0.7980	0	discard	high mining+build: 0/20/50/30	agent2	blackboard
+EXP-a2-093	0.7922	0	discard	high building 55%: 0/10/55/35	agent2	blackboard
+WILD-A3-1	0.6172	0	discard	zero mining: 0/0/50/50 — no gold pipeline, builders idle	agent3	blackboard
+WILD-A3-2	0.4440	0	discard	zero building: 0/12/0/88 — raids devastate	agent3	blackboard
+WILD-A3-3	0.7560	0	discard	massive mining: 0/50/25/25 — too much mining	agent3	blackboard
+WILD-A3-4	0.7746	0	discard	balanced: 25/25/25/25 — suboptimal	agent3	blackboard
+EXP-246	0.2653	0	discard	WILD: all mining 0/100/0/0 @500sim	agent1	blackboard
+EXP-247	0.6472	0	discard	WILD: 0/50/50/0 no research @500sim	agent1	blackboard
+EXP-248	0.1905	0	discard	WILD: all building 0/0/100/0 @500sim	agent1	blackboard
+EXP-249	0.4921	0	discard	WILD: all research 0/0/0/100 @500sim	agent1	blackboard
+EXP-250	0.6086	0	discard	WILD: 0/0/50/50 no mining @500sim	agent1	blackboard
+EXP-251	0.6611	0	discard	WILD: 50/30/10/10 opposite of best @500sim	agent1	blackboard
+EXP-252	0.6575	0	discard	WILD: 1/1/49/49 min farm+mine @500sim	agent1	blackboard
+EXP-253	0.7267	0	discard	WILD: 0/5/55/40 @500sim	agent1	blackboard
+EXP-254	0.7724	0	discard	WILD: 0/25/25/50 high research @500sim	agent1	blackboard
+EXP-255	0.7766	0	discard	20/10/40/30 fr=150 @500sim	agent1	blackboard
+EXP-256	0.7839	0	discard	25/10/35/30 fr=150 @500sim	agent1	blackboard
+EXP-257	0.7883	0	discard	20/10/35/35 fr=200 @500sim	agent1	blackboard
+EXP-258	0.6268	0	discard	35/5/50/10 fr=200 too little research @500sim	agent1	blackboard
+EXP-259	0.7879	0	discard	ta=0.5 save gold for emergencies @500sim	agent1	blackboard
+EXP-260	0.7287	0	discard	sr=0.7+farm15 worse than sr=1.0 @500sim	agent1	blackboard
+EXP-261	0.7921	0	discard	adaptive 25/12/33/30 @500sim	agent1	blackboard
+VERIFY-5000	0.7952	0	keep	0/12/45/43 fr=280 @5000sim DEFINITIVE	agent1	blackboard
+SEED-BIAS	0.7986	0	keep	seed bias test: 4 different seeds @1000sim avg=0.7986 (range 0.791-0.805)	agent1	blackboard
+SWEEP-EFB	0.8049	0	keep	efb sweep 0.0-1.0 @1000sim: monotonic, 1.0 optimal. efb=0=0.755, efb=0.5=0.799, efb=1.0=0.805	agent1	blackboard
+EXP-077	0.8045	0	keep	emfb=0.5 same as 1.0: gold spreading neutral (200sim)	agent3	blackboard
+EXP-078	0.5496	0	discard	intentional low pop: frt=100 starv=0.7 DEAD END	agent3	blackboard
+EXP-079	0.8050	0	keep	trade_agg=0.8 emfb=0.8 same as max	agent3	blackboard
+EXP-080	0.7848	0	discard	raid_prep=0.5 costs 0.02 even with high buildings	agent3	blackboard
+EXP-262	0.6384	0	discard	DEAD END: low frt=10 + high farm configs all 0.63-0.65 @500sim	agent1	blackboard
+EXP-263	0.7024	0	discard	40/10/25/25 frt=50 still bad @500sim	agent1	blackboard
+EXP-264	0.7743	0	discard	never sell materials (tmt=500) INCREASES raids @1000sim	agent1	blackboard
+EXP-265	0.7896	0	discard	ta=0.3 slow selling @1000sim	agent1	blackboard
+EXP-266	0.7699	0	discard	rp=0 same raid count but more damage @1000sim	agent1	blackboard
+EXP-a2-094	0.8116	0	discard	8/10/44/38 50sim noise (500sim: 0.793)	agent2	blackboard
+EXP-a2-095	0.8048	0	discard	3/14/41/42 frt=280	agent2	blackboard
+EXP-a2-096	0.8036	0	discard	0/11/49/40 frt=280	agent2	blackboard

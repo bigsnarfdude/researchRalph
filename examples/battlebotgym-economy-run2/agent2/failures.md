@@ -1,0 +1,18 @@
+# Failures (agent2) — NEVER retry
+- trade_aggression=0.0 on fortress (0.622)
+- 0% mining + 60% building (0.558 — idle builders)
+- 5% mining with 50% building (0.742 — not enough materials)
+- research_focus changes (flavor only, no effect)
+- building_priority changes (flavor only, no effect)
+- research > 52% (diminishing returns, worse defense)
+- 55%+ building (overshoots, diminishing returns)
+- mining > 25% (waste, better to invest in building/research)
+- mining > building (0.749 — defense matters more)
+- mining = building equal (0.784 — building should dominate)
+- trade_aggression < 1.0 (confirmed worse at all values)
+- food_reserve_target < 200 (starvation response too slow)
+- materials threshold > 0 (gold pipeline more valuable)
+- gold_reserve_target > 0 (spending gold immediately is optimal)
+- food_reserve=500 at 2000 sims slightly worse than 280-300
+- 50/0/0/50 zero buildings (raids kill, 0.445)
+- agrarian hybrids 25-35% farming (all ~0.79, worse than 0/12/45/43)

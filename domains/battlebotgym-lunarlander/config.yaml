@@ -1,0 +1,32 @@
+# Lunar Lander — Autopilot Configuration
+# =======================================
+# Agents: tune these PID-like controller parameters to land safely.
+#
+# The autopilot has three phases:
+#   1. High altitude: coast, correct orientation and drift
+#   2. Descent: control descent rate toward target
+#   3. Final approach: gentle touchdown
+#
+# Default config is mediocre — it lands sometimes but often crashes
+# or lands off-target. A well-tuned controller scores 0.85-0.95.
+
+# --- Descent Control ---
+descent_rate_target: 0.12    # 0.01-0.3: desired descent speed as fraction of altitude
+hover_gain: 3.0              # 0.0-5.0: main thruster proportional gain
+
+# --- Horizontal Correction ---
+horizontal_correction_gain: 3.5   # 0.0-5.0: how aggressively to correct drift
+horizontal_deadzone: 0.1          # 0.0-5.0: ignore horizontal error smaller than this (m)
+
+# --- Angle Correction ---
+angle_correction_gain: 5.0   # 0.0-5.0: how aggressively to straighten up
+angular_damping: 3.5         # 0.0-5.0: how much to counter angular velocity
+
+# --- Phase Transitions ---
+altitude_thrust_threshold: 0.85   # 0.0-1.0: altitude fraction to start descent control
+final_approach_altitude: 0.15     # 0.0-0.5: altitude fraction for final approach
+final_approach_vy_target: 0.05    # 0.01-0.15: gentle descent rate for final approach
+
+# --- Safety ---
+fuel_reserve: 5.0                # 0.0-50.0: stop thrusting when fuel drops below this
+suicide_burn_threshold: 0.05       # 0.0-0.5: altitude fraction for emergency braking

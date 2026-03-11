@@ -1,0 +1,23 @@
+# Facts (agent2)
+- Baseline balanced config scores 0.5448
+- research_focus and building_priority are FLAVOR ONLY (no effect)
+- starvation_response=1.0 is optimal (1.0 > 0.9 > 0.8)
+- trade_aggression=0.0 is dead (0.622 on fortress)
+- trade_aggression=1.0 + zeroed thresholds + emergency_food_buy=1.0 is optimal trade setup
+- food_reserve_target=280-300 is optimal at 2000 sims (0.8015). 500 slightly worse (0.7999)
+- Building is ~3x more valuable than mining (asymmetric allocation works)
+- Mining needs floor of ~10-12% (8% slightly worse, 5% terrible)
+- 0/12/45/43 is confirmed best allocation at 2000 sims (0.8015)
+- 0% farming is viable and marginally best (starvation_response handles it)
+- More farming HURTS when it steals from building/research
+- Research compounds: 35-43% research optimal
+- raid_preparedness=1.0 is optimal
+- All strategy params monotonic → 1.0 optimal
+- Engine: emergency buy (food < pop*2) returns early, blocking material selling ~21% of days
+- Engine: drought peaks at day 25 (seasonal sin wave), worst seeds have 5+ droughts
+- Engine: knowledge caps plague resistance at 200 (reached day ~13 with 35 researchers)
+- True game ceiling: ~0.80 survival rate at 2000 sims
+- High mining (25-50%) wastes workers — materials sold for gold but less building/research
+- Extreme building (55-60%) has diminishing returns — defense is asymptotic
+- Extreme research (50%+) slightly worse due to less building for defense
+- Mining > building is terrible (defense matters more than gold pipeline volume)
