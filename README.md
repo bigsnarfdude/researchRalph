@@ -199,7 +199,8 @@ researchRalph/
 │   ├── prompt-eval/           # Reference: generic prompt optimization (CPU-only)
 │   ├── battlebotgym-*/        # 9 battleBOT Gym game domains
 │   ├── battlebotgym-auditbench/  # AuditBench: 28 target LLMs
-│   └── battlebotgym-sae-bench/   # SAE feature optimization
+│   ├── battlebotgym-sae-bench/   # SAE feature optimization (v1: pre-baked LISTA)
+│   └── battlebotgym-sae-bench-v2/  # SAE from scratch (vanilla BatchTopK → ???)
 ├── docs/                      # Deep dives
 │   ├── ARCHITECTURE.md        # Blackboard pattern
 │   ├── COGNITIVE-DESIGNS.md   # 8 agent designs compared
@@ -212,15 +213,18 @@ researchRalph/
 
 RRMA agents consistently find degenerate shortcuts. This shaped the v2 harness design.
 
-**SAE-bench v1 → v2 (mid-run rebuild):** v1 shipped with the full LISTA-Matryoshka architecture (609 lines) pre-baked in `sae.py`. Agents just tuned config knobs on the pre-solved answer — parameter sweeps, not research. We observed this gaming mid-run, gutted `sae.py` to a 17-line empty template, stripped config to 6 vanilla params, and relaunched. v2 agents independently discovered LISTA from first principles and cited Gregor & LeCun 2010 by name on the blackboard. 0.61 → 0.90 F1 via genuine architectural innovation.
+**SAE-bench v1 → v2 (mid-run rebuild):** v1 shipped with the full LISTA-Matryoshka architecture (609 lines) pre-baked in `sae.py`. Agents just tuned config knobs on the pre-solved answer — 34 experiments, 8 hours, only +0.007 F1 gain. Parameter sweeps, not research. We observed this gaming mid-run, gutted `sae.py` to a 17-line empty template, stripped config to 6 vanilla params, and relaunched. v2 agents independently discovered LISTA from first principles and cited Gregor & LeCun 2010 by name on the blackboard. 0.61 → 0.90 F1 via genuine architectural innovation in 19 experiments.
 
-**AuditBench (Lambda GH200):** 14 known behavior categories, recall-only metric, no false-positive penalty. All 4 agents independently converged on "always-fallback" — predict all 14 categories for every model → guaranteed 1.0 detection. One agent built a heuristic engine proving LLM analysis adds zero value under the current metric. The benchmark was broken, not the agents.
+We also stripped the bridge from 374 → 227 lines: removed roles (SCOUT/EXPLOIT/DIVERSITY/ANALYST), structured blackboard protocol (CLAIM/RESPONSE/REQUEST), convergence watchdog, and strategy.md. The protocol overhead consumed context that should have gone to reasoning. The fix: a plain blackboard (like a BIRS math blackboard — shared surface, no protocol) and a 12-line agent prompt that says "read program.md, don't duplicate, write what you tried and why."
+
+**AuditBench (Lambda GH200):** 14 known behavior categories, recall-only metric, no false-positive penalty. All 4 agents independently converged on "always-fallback" — predict all 14 categories for every model → guaranteed 1.0 detection. One agent built a regex-only engine (zero LLM analysis) that scores identically 3x faster, proving the analysis step adds nothing. The benchmark was broken, not the agents.
 
 **Domain design principles (learned the hard way):**
 1. Never bake the answer into the harness — start from vanilla/minimal
 2. Score must penalize false positives (F1, not recall-only)
 3. Open-ended solution space — no closed set to enumerate
 4. The swarm IS the red team for your benchmark — if agents game it, the metric is broken
+5. Minimal agent prompt — let program.md define the task, don't waste context on protocol
 
 ---
 
