@@ -42,6 +42,14 @@ One agent loops: read state → pick experiment → run → record → repeat.
 
 8 agents in isolated git worktrees. They share a blackboard where they post findings, avoid each other's dead ends, and combine wins. Each agent gets one GPU via round-robin `CUDA_VISIBLE_DEVICES`.
 
+### battleBOT bridge
+
+```bash
+./rrma-bridge.sh auditbench 4    # 4 agents optimize auditbench
+```
+
+Launches RRMA agents against any battleBOT Gym domain via the bridge script.
+
 ### Monitor and stop
 
 ```bash
@@ -70,9 +78,25 @@ cp -r domains/template domains/my-domain
 ```
 
 **Included domains:**
+
+*Core reference domains:*
 - `domains/gpt2-tinystories/` — GPT-2 training (186 experiments, 8×A100)
 - `domains/af-elicitation/` — AF elicitation prompt optimization via API
 - `domains/prompt-eval/` — Generic prompt optimization with LLM judge (CPU-only, no GPU)
+
+*battleBOT Gym (competitive optimization games):*
+- `domains/battlebotgym-acrobot/` — Acrobot swing-up control
+- `domains/battlebotgym-cartpole/` — CartPole balancing
+- `domains/battlebotgym-mountaincar/` — MountainCar continuous control
+- `domains/battlebotgym-pendulum/` — Pendulum stabilization
+- `domains/battlebotgym-lunarlander/` — Lunar Lander guidance
+- `domains/battlebotgym-arena/` — Multi-agent arena competition
+- `domains/battlebotgym-economy/` — Economic simulation optimization
+- `domains/battlebotgym-network/` — Network topology optimization
+- `domains/battlebotgym-sae-bench/` — Synthetic SAE feature optimization
+
+*AuditBench (alignment auditing):*
+- `domains/battlebotgym-auditbench/` — Alignment auditing against 28 target LLMs with hidden behaviors (Lambda GH200)
 
 ---
 
@@ -155,6 +179,8 @@ The entire system is `claude -p` in a while loop. State lives in files, not in t
 ```
 researchRalph/
 ├── quickstart.sh              # Get running in 60 seconds
+├── rrma-bridge.sh             # battleBOT ↔ RRMA bridge launcher
+├── swarm-bench.sh             # Swarm benchmarking across domains
 ├── core/                      # The harness
 │   ├── launch.sh              # Multi-agent launcher (RRMA)
 │   ├── run-single.sh          # Single-agent loop
@@ -170,7 +196,10 @@ researchRalph/
 │   ├── template/              # Start here
 │   ├── gpt2-tinystories/      # Reference: ML training (GPU)
 │   ├── af-elicitation/        # Reference: AF prompt optimization (API)
-│   └── prompt-eval/           # Reference: generic prompt optimization (CPU-only)
+│   ├── prompt-eval/           # Reference: generic prompt optimization (CPU-only)
+│   ├── battlebotgym-*/        # 9 battleBOT Gym game domains
+│   ├── battlebotgym-auditbench/  # AuditBench: 28 target LLMs
+│   └── battlebotgym-sae-bench/   # SAE feature optimization
 ├── docs/                      # Deep dives
 │   ├── ARCHITECTURE.md        # Blackboard pattern
 │   ├── COGNITIVE-DESIGNS.md   # 8 agent designs compared
