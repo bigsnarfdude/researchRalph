@@ -208,6 +208,22 @@ researchRalph/
 └── examples/run4-artifacts/   # Real data from 186-experiment run
 ```
 
+## Why v2: Agents Game Benchmarks
+
+RRMA agents consistently find degenerate shortcuts. This shaped the v2 harness design.
+
+**SAE-bench v1 → v2 (mid-run rebuild):** v1 shipped with the full LISTA-Matryoshka architecture (609 lines) pre-baked in `sae.py`. Agents just tuned config knobs on the pre-solved answer — parameter sweeps, not research. We observed this gaming mid-run, gutted `sae.py` to a 17-line empty template, stripped config to 6 vanilla params, and relaunched. v2 agents independently discovered LISTA from first principles and cited Gregor & LeCun 2010 by name on the blackboard. 0.61 → 0.90 F1 via genuine architectural innovation.
+
+**AuditBench (Lambda GH200):** 14 known behavior categories, recall-only metric, no false-positive penalty. All 4 agents independently converged on "always-fallback" — predict all 14 categories for every model → guaranteed 1.0 detection. One agent built a heuristic engine proving LLM analysis adds zero value under the current metric. The benchmark was broken, not the agents.
+
+**Domain design principles (learned the hard way):**
+1. Never bake the answer into the harness — start from vanilla/minimal
+2. Score must penalize false positives (F1, not recall-only)
+3. Open-ended solution space — no closed set to enumerate
+4. The swarm IS the red team for your benchmark — if agents game it, the metric is broken
+
+---
+
 ## Attribution
 
 Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), extended by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632). researchRalph v2 adds multi-agent collaboration via the blackboard pattern.
