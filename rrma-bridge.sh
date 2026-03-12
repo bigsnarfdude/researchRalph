@@ -166,7 +166,7 @@ Start from: cp ${DOMAIN_NAME}/best/config.yaml config.yaml
 You may also edit source files (sae.py, engine.py, etc.) — the biggest wins come from code changes, not config tuning.
 PROMPT
 
-    # Runner script
+    # Runner script — v3: every 5th round is a backward planning round
     cat > "$TREE/.run-agent.sh" << RUNNER
 #!/bin/bash
 export PATH="\$HOME/.local/bin:\$PATH"
@@ -179,9 +179,24 @@ while true; do
     ROUND=\$((ROUND + 1))
     echo "\$(date): agent \$AGENT_ID starting round \$ROUND" >> agent.log
 
+    if [ \$((ROUND % 5)) -eq 0 ]; then
+        MODE="PLANNING ROUND. Do NOT run an experiment this round.
+Read ${DOMAIN_NAME}/results.tsv and ${DOMAIN_NAME}/blackboard.md end-to-end.
+Current best config: \$(cat ${DOMAIN_NAME}/best/config.yaml)
+Target: see program.md for ceiling score.
+Work BACKWARD from the target:
+  1. What is the gap between current best and target?
+  2. What known findings on the blackboard have NOT been combined yet?
+  3. What techniques from the literature have NOT been tried?
+  4. Write a concrete plan on the blackboard: what specific experiments would close the gap?
+Do not run experiments. Just analyze and plan."
+    else
+        MODE="This is round \$ROUND. Check ${DOMAIN_NAME}/blackboard.md for what others have tried. Continue."
+    fi
+
     claude -p "\$(cat .agent-prompt.txt)
 
-This is round \$ROUND. Check ${DOMAIN_NAME}/blackboard.md for what others have tried. Continue." \
+\$MODE" \
         --dangerously-skip-permissions \
         --max-turns 200 \
         >> agent.log 2>&1 || true
