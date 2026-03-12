@@ -1,0 +1,94 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	0.8669	0	keep	default config	setup	baseline
+exp001	0.872	0	keep	kamikaze: coast long (alt_thresh=0.4), suicide_burn=0.15, fuel_reserve=3	agent0	blackboard
+exp002	0.876	0	keep	max_control: hover=5, hcorr=5, deadzone=0, angdamp=5	agent0	blackboard
+exp001	0.8685	0	keep	altitude_thrust_threshold=0.80 (from 0.85)	agent1	blackboard
+exp002	0.8661	0	keep	altitude_thrust_threshold=0.90 (from 0.85)	agent1	blackboard
+exp003	0.883	0	keep	combo: coast(alt_thresh=0.4)+maxcontrol(hover=5,hcorr=5,dz=0,angdamp=5)+suicide=0.15	agent0	blackboard
+exp003	0.8662	0	keep	descent_rate_target=0.10 (from 0.12)	agent1	blackboard
+exp004	0.7357	0	discard	descent_rate_target=0.14 (from 0.12) — worse	agent1	blackboard
+exp005	0.8681	0	keep	descent_rate_target=0.08 (from 0.12) — similar score, more fuel	agent1	blackboard
+exp004	0.000	0	discard	feather_touch: descent=0.03,final_approach=0.3,vy_target=0.02 — all timeouts	agent0	blackboard
+exp005	0.000	0	discard	speed_demon: descent=0.3,vy_target=0.15 — all crashes	agent0	blackboard
+exp002	0.8603	0	keep	precision: slow descent (0.08), high final_approach (0.25), tight deadzone (0.05), alt_thresh=0.85	agent2	blackboard
+exp006	0.706	0	discard	no_suicide_burn: threshold=0.0 — lands 100% but imprecise	agent0	blackboard
+exp004	0.8633	0	keep	fuel-eff precision: descent=0.10, hover=2.5, final_app=0.25, alt_thresh=0.85	agent2	blackboard
+exp007	0.873	0	discard	big_suicide_burn: threshold=0.35 — more fuel, less score	agent0	blackboard
+exp008	0.121	0	discard	lazy_horizontal: deadzone=3.0,hcorr=2.0 — 78% crash rate	agent0	blackboard
+exp005	0.8587	0	keep	hybrid: baseline descent(0.12) + precision final(0.25) + tight deadzone(0.05), alt_thresh=0.85	agent2	blackboard
+exp009	0.857	0	discard	early_bird: alt_thresh=1.0,descent=0.08,hover=2.0,final=0.3 — burns too much fuel	agent0	blackboard
+exp006	0.8806	0	keep	alt_thresh=0.35 (from 0.4) on new best	agent1	blackboard
+exp007	0.8825	0	keep	alt_thresh=0.45 (from 0.4) on new best	agent1	blackboard
+exp001	0.8833	0	keep	final_approach_altitude=0.15 (from 0.08), 100% landings	agent3	blackboard
+exp006	0.8763	0	keep	conservative+maxctrl: alt_thresh=0.85, all gains=5, deadzone=0, fuel_reserve=5	agent2	blackboard
+exp010	0.000	0	discard	asymmetric: descent=0.2,hover=1.5 — all crashes, cant brake	agent0	blackboard
+exp008	0.8833	0	keep	final_approach_altitude=0.12 (from 0.08)	agent1	blackboard
+exp009	0.8833	0	keep	final_approach_altitude=0.05 (from 0.08)	agent1	blackboard
+exp007	0.8804	0	keep	mid-thresh+maxctrl: alt_thresh=0.65, all gains=5, deadzone=0, fuel_reserve=5	agent2	blackboard
+exp002	0.8833	0	keep	final_approach_vy_target=0.03 (from 0.05), no effect	agent3	blackboard
+exp008	0.8804	0	keep	mid-thresh+suicide: alt_thresh=0.65, max gains, suicide=0.15, fuel_reserve=5	agent2	blackboard
+exp010	0.7457	0	discard	suicide_burn=0.10 (from 0.15) — worse	agent1	blackboard
+exp011	0.8768	0	keep	suicide_burn=0.20 (from 0.15) — slightly worse, more fuel	agent1	blackboard
+exp009	0.8824	0	keep	alt_thresh=0.55, max gains, deadzone=0, fuel_reserve=5	agent2	blackboard
+exp010	0.8793	0	keep	alt_thresh=0.50, max gains, deadzone=0, fuel_reserve=5	agent2	blackboard
+exp011	0.852	0	discard	angle_rebel: angle_corr=0.5,ang_damp=0.5 — imprecise landings	agent0	blackboard
+exp012	0.8838	0	keep	suicide_burn=0.17 — slight improvement	agent1	blackboard
+exp013	0.8812	0	keep	suicide_burn=0.18 — worse than 0.16-0.17	agent1	blackboard
+exp014	0.8840	0	keep	suicide_burn=0.16 — new best candidate	agent1	blackboard
+exp003	0.8708	0	discard	combo: final_app_alt=0.20+vy=0.03+descent=0.10 — too slow, fuel=44.5	agent3	blackboard
+exp012	0.186	0	discard	faster_descent: rate=0.15+coast(0.4) — 72% crash, too fast after coast	agent0	blackboard
+exp011	0.8781	0	keep	alt_thresh=0.60, max gains, deadzone=0, fuel_reserve=5	agent2	blackboard
+exp013	0.880	0	discard	slower_descent: rate=0.10+coast(0.4) — close but more fuel	agent0	blackboard
+exp012	0.8824	0	keep	alt_thresh=0.55, max gains, suicide=0.15, fuel_reserve=3	agent2	blackboard
+exp014	0.883	0	keep	fuel_hoarder: reserve=40 — same as best, reserve never triggers (only 28 fuel used)	agent0	blackboard
+exp015	0.877	0	discard	wide_final: final_app=0.20,vy=0.04 — more fuel, less score	agent0	blackboard
+exp004	0.884	0	keep	hover_gain=3.5 (from 5.0) — same score, gain doesn't need max	agent3	blackboard
+exp013	0.000	0	discard	low-gain minimalist: hover=1.5, hcorr=1.5, angle=2, damp=1.5, deadzone=1.0 — all crashes	agent2	blackboard
+exp014	0.8417	0	keep	mixed gains: hover=2, hcorr=2, angle=5, damp=5, deadzone=0.5, alt_thresh=0.55	agent2	blackboard
+exp005	0.884	0	keep	hover_gain=2.0 — still same score, hover_gain insensitive	agent3	blackboard
+exp016	0.690	0	discard	super_coast: alt_thresh=0.25,suicide=0.20 — not enough correction time	agent0	blackboard
+exp015	0.8464	0	keep	glider: alt_thresh=0.95, descent=0.06, final_app=0.30, vy=0.03 — high fuel use (69.4)	agent2	blackboard
+exp017	0.884	0	keep	moderate_hover: hover=3.0,suicide=0.16+coast — ties agent1 best	agent0	blackboard
+exp006	0.884	0	keep	hover_gain=1.0 — STILL same, hover_gain insensitive [1.0-5.0]	agent3	blackboard
+exp018	0.884	0	keep	low_hover: hover=2.0+coast+suicide=0.16 — hover_gain insensitive in 2-5 range	agent0	blackboard
+exp016	0.000	0	discard	fast+extended_final: descent=0.18, alt_thresh=0.40, final_app=0.30 — all crashes	agent2	blackboard
+exp007	0.0	0	discard	hover_gain=0.0 — all crashes, no descent control	agent3	blackboard
+exp008	0.884	0	keep	hover_gain=0.5 — still perfect, cliff between 0.0-0.5	agent3	blackboard
+exp017	0.9045	0	keep	BREAKTHROUGH: vy_target=0.01 + coast(0.4) + suicide=0.16 + hover=3 — gentle touchdown	agent2	blackboard
+exp018	0.884	0	keep	vy_target=0.02 — much worse than 0.01 (0.9045). Nonlinear effect.	agent2	blackboard
+exp009	0.7432	0	discard	horizontal_correction_gain=0.5 (from 5.0) — big drop, hcorr is critical	agent3	blackboard
+exp019	0.878	0	discard	vy_hunter: descent=0.10,final=0.15,vy=0.02 — good vy but more fuel (200ep)	agent0	blackboard
+exp015	0.9045	0	keep	final_approach=0.17,vy_target=0.02 — NEW BEST\! gentler landing	agent1	blackboard
+exp019	0.8899	0	keep	vy=0.01+final_app=0.20 — more fuel(41.3) hurts despite precision	agent2	blackboard
+exp020	0.907	0	keep	ultra_slow_land: vy_target=0.005,final=0.15 — new best! (200ep: 0.907)	agent0	blackboard
+exp020	0.7457	0	discard	vy=0.01+small_final(0.10)+suicide=0.05 — not enough final approach space	agent2	blackboard
+exp021	0.9019	0	keep	vy=0.01+alt_thresh=0.55+suicide=0.16 — slightly worse than 0.40	agent2	blackboard
+exp021	0.815	0	discard	extended_final: final=0.20,vy=0.005 — 7% timeout, too slow	agent0	blackboard
+exp022	0.9050	0	keep	vy=0.01+alt_thresh=0.35+suicide=0.16 — matches best	agent2	blackboard
+exp010	0.9023	0	keep	angle_corr=3.0+ang_damp=3.0 on new best — slightly worse than 5.0	agent3	blackboard
+exp022	0.907	0	keep	lower_suicide: suicide=0.10,vy=0.005 — same score, less fuel (200ep)	agent0	blackboard
+exp023	0.7961	0	discard	vy=0.01+alt_thresh=0.30 — too low, not enough descent control	agent2	blackboard
+exp011	0.9057	0	keep	angle_corr=3.0+ang_damp=5.0 — damping matters more than correction gain	agent3	blackboard
+exp023	0.907	0	keep	no_suicide_v2: suicide=0.0+vy=0.005 — suicide burn is irrelevant with good controller (200ep)	agent0	blackboard
+exp024	0.9032	0	keep	vy=0.01+alt_thresh=0.45+suicide=0.16	agent2	blackboard
+exp024	0.518	0	discard	tight_coast: alt=0.50,descent=0.08 — 40% timeout	agent0	blackboard
+exp025	0.884	0	keep	descent=0.10+vy=0.01+alt_thresh=0.40 — too slow, fuel=44.4	agent2	blackboard
+exp012	0.907	0	keep	angle_corr=5.0+ang_damp=3.0 — same as best, corr gain more important	agent3	blackboard
+exp025	0.907	0	keep	whisper_hover: hover=0.5 — same score! hover_gain irrelevant 0.5-5.0 (200ep)	agent0	blackboard
+exp026	0.7477	0	discard	descent=0.14+vy=0.01 — arrives too fast at final approach	agent2	blackboard
+exp016	0.9049	0	keep	suicide_burn=0.10 (from 0.16) — slight improvement, less fuel	agent1	blackboard
+exp027	0.9057	0	keep	combined: vy=0.005+angle_corr=3+damp=5+alt_thresh=0.40	agent2	blackboard
+exp026	0.765	0	discard	fuel_min: low gains+deadzone=0.5 — saves fuel but x precision destroyed	agent0	blackboard
+exp017	0.9071	0	keep	alt_thresh=0.45 (from 0.4) — new best	agent1	blackboard
+exp028	0.9057	0	keep	hover=1.0 — confirmed insensitive, same as hover=3.0	agent2	blackboard
+exp029	0.8995	0	keep	final_app=0.17 — more fuel (42.2), worse than 0.15	agent2	blackboard
+exp018	0.9071	0	keep	alt_thresh=0.47 — same as 0.45	agent1	blackboard
+exp027	0.799	0	discard	coast_deeper: alt=0.30 — less correction time, x precision drops	agent0	blackboard
+exp030	0.7915	0	discard	final_app=0.12+suicide=0.05 — too short final approach	agent2	blackboard
+exp031	0.8806	0	keep	final_app=0.14+suicide=0.10 — between 0.12 and 0.15	agent2	blackboard
+exp028	0.904	0	discard	alt_045: alt_thresh=0.45+vy=0.005 — slightly worse than 0.40 (200ep)	agent0	blackboard
+exp029	0.000	0	discard	descent_skip: alt=final=0.15 — no braking, all crashes	agent0	blackboard
+exp032	0.8939	0	keep	hcorr=3.0+best_config — worse than 5.0 (0.907)	agent2	blackboard
+exp033	0.9009	0	keep	hcorr=4.0 — closer to 5.0 but still slightly worse	agent2	blackboard
+exp013	0.5898	0	discard	vy_target=0.001 — 34% timeouts, too slow to land	agent3	blackboard
+exp034	0.527	0	discard	slow_descent=0.08+coast(0.40)+vy=0.005 — 38% timeout	agent2	blackboard

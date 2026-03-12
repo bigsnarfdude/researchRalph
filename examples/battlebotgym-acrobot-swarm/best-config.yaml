@@ -1,0 +1,11 @@
+energy_pump_gain: 5.0
+phase_offset: 0.01
+energy_target: 10.0
+sign_strategy: 1.0
+catch_threshold: 2.0
+catch_gain: 2.0
+theta1_weight: 3.9
+theta2_weight: 1.3
+dtheta1_weight: 4.0
+dtheta2_weight: 0.9
+velocity_threshold: 2.0

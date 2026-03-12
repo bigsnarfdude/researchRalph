@@ -1,0 +1,312 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	1.0	0	keep	default config	setup	baseline
+exp001	1.0	0	keep	angle+angvel only (4.0/2.0), no position feedback	agent0	blackboard
+exp002	0.0852	0	discard	pure angle_weight=4 only, no angvel — terrible	agent0	blackboard
+exp003	1.0	0	keep	ALL params maxed (10/10/5/5/0/20/2/5) — still perfect	agent0	blackboard
+exp004	0.387	0	discard	angular_velocity only (default) — position drift kills	agent0	blackboard
+exp005	1.0	0	keep	pure anticipation_horizon=2.0, all weights=0 — perfect!	agent0	blackboard
+exp006	0.1716	0	discard	anticipation_horizon=0.5 only, all weights=0 — not enough	agent0	blackboard
+exp007	0.9698	0	keep	tiny angle+angvel=0.1 each — almost perfect, very robust	agent0	blackboard
+exp008	0.0187	0	discard	max bias=2.0 only — always push right, terrible	agent0	blackboard
+exp009	0.0628	0	discard	position_centering=5.0 only, sharpness=0.1 — useless alone	agent0	blackboard
+EXP-001	1.0	0	keep	angle_weight=1.0 (from 2.0), all else baseline	agent1	blackboard
+EXP-002	1.0	0	keep	angle_weight=4.0 (from 2.0), all else baseline	agent1	blackboard
+EXP-003	1.0	0	keep	angular_velocity_weight=0.5 (from 1.0), all else baseline	agent1	blackboard
+EXP-004	0.7947	0	keep	position_weight=0.0 (from 0.5), all else baseline — position drift	agent1	blackboard
+EXP-005	1.0	0	keep	velocity_weight=0.0 (from 0.5), all else baseline	agent1	blackboard
+EXP-006	1.0	0	keep	response_sharpness=5.0 (from 1.0), all else baseline	agent1	blackboard
+EXP-007	1.0	0	keep	anticipation_horizon=0.0 (from 0.5), all else baseline	agent1	blackboard
+EXP-008	1.0	0	keep	position_centering=0.0 (from 0.5), all else baseline	agent1	blackboard
+EXP-A2-001	1.0	0	keep	minimalist: angle_weight=2 angular_vel=1 only, all else zero	agent2	blackboard
+exp010	0.9698	0	keep	angle=1+angvel=1 minimal — 0.97, 6 position deaths	agent0	blackboard
+exp011	1.0	0	keep	angle=2+angvel=1+sharpness=20 — PERFECT, high sharpness compensates	agent0	blackboard
+exp012	0.0185	0	discard	position+velocity only (5/5), no angle — useless	agent0	blackboard
+exp013	0.12	0	discard	angvel=1+centering=5 — centering alone bad	agent0	blackboard
+EXP-A2-002	0.387	0	keep	angular_velocity_weight=1 only, all else zero — position drift	agent2	blackboard
+EXP-A2-003	0.0852	0	keep	angle_weight=2 only, no angular_velocity — oscillates and crashes	agent2	blackboard
+EXP-009	1.0	0	keep	MINIMAL: aw=2,avw=1,pw=0.2,rest=0 — perfect	agent1	blackboard
+EXP-010	1.0	0	keep	MINIMAL: aw=2,avw=1,pw=0.1,rest=0 — perfect	agent1	blackboard
+EXP-011	0.6121	0	keep	position_centering=0.5 alone (no pw) — angle kills	agent1	blackboard
+EXP-012	0.8602	0	keep	position_centering=0.2 alone — position drift	agent1	blackboard
+EXP-013	0.9785	0	keep	MINIMAL: aw=2,avw=1,pw=0.3,rest=0 — near perfect	agent1	blackboard
+EXP-014	1.0	0	keep	MINIMAL: aw=2,avw=1,pw=0.05,rest=0 — perfect!	agent1	blackboard
+EXP-015	0.0794	0	discard	angular_velocity_weight=0.0 — CRITICAL param	agent1	blackboard
+EXP-016	0.2439	0	discard	angle_weight=0.0 — CRITICAL param	agent1	blackboard
+EXP-A2-004	1.0	0	keep	angle=2 angvel=1 sharpness=20 (max) — still perfect	agent2	blackboard
+EXP-A2-005	1.0	0	keep	angle=2 angvel=1 sharpness=0.1 (min) — still perfect	agent2	blackboard
+EXP-A2-006	0.0628	0	discard	position_centering=5 only, no angle — pole falls immediately	agent2	blackboard
+EXP-A2-007	0.9698	0	keep	angle=0.5 angvel=0.5 — near perfect, some position drift	agent2	blackboard
+exp014	0.0186	0	discard	bias=-2+anticipation=2+sharpness=20 — bias kills anticipation	agent0	blackboard
+exp015	1.0	0	keep	min sharpness=0.1 + anticipation=2.0 — still perfect!	agent0	blackboard
+exp016	0.0852	0	discard	max angle=10+sharpness=20 no angvel — angvel essential	agent0	blackboard
+exp017	0.2692	0	discard	equal weights=0.5 + sharpness=10 — position weights hurt	agent0	blackboard
+EXP-A2-008	0.9698	0	keep	angle=0.3 angvel=0.3 — same 0.97 as 007, position drift	agent2	blackboard
+EXP-A2-009	1.0	0	keep	ALL PARAMS MAX — angle=10 angvel=10 pos=5 vel=5 sharp=20 antic=2 center=5 — still perfect	agent2	blackboard
+EXP-A2-010	0.0198	0	discard	angle_bias=2.0 — asymmetric push destroys balance instantly	agent2	blackboard
+EXP-A2-011	0.0734	0	discard	angle_bias=0.5 — even moderate bias is fatal	agent2	blackboard
+exp018	0.9856	0	keep	anticipation=1.0 only — 0.986, threshold near here	agent0	blackboard
+exp019	1.0	0	keep	anticipation=1.5 only — perfect, min for 1.0	agent0	blackboard
+exp020	0.0184	0	discard	cart velocity=5.0 only — useless	agent0	blackboard
+exp021	0.093	0	discard	anticipation=1+centering=2 — centering hurts anticipation	agent0	blackboard
+EXP-A2-012	0.445	0	keep	angle_bias=0.1 — even 0.1 bias drops to 0.445, causes position drift	agent2	blackboard
+EXP-017	0.9698	0	keep	aw=1.0,avw=1.0,rest=0 — position drift at low angle_weight	agent1	blackboard
+EXP-018	0.9958	0	keep	aw=1.5,avw=1.0,rest=0 — nearly perfect	agent1	blackboard
+EXP-019	1.0	0	keep	aw=2.0,avw=1.0,rest=0 — MINIMAL 2-PARAM PERFECT CONFIG	agent1	blackboard
+EXP-020	0.6331	0	keep	aw=2,avw=1,ah=0.5,pc=0.5,pw=0 — centering+anticipation CONFLICT	agent1	blackboard
+EXP-021	0.9815	0	keep	aw=1.0,avw=1.0,pw=0.05 — position helps low angle_weight	agent1	blackboard
+EXP-A2-013	0.2367	0	discard	bias=0.1 + centering=1 — centering makes it WORSE with bias	agent2	blackboard
+EXP-A2-014	1.0	0	keep	anticipation_horizon=2 ONLY — perfect 1.0! anticipation embeds angle+angvel	agent2	blackboard
+EXP-A2-015	0.0184	0	discard	velocity_weight=5 only — cart velocity alone is useless	agent2	blackboard
+EXP-A2-016	0.0188	0	discard	position_weight=5 only — position alone is useless	agent2	blackboard
+exp022	0.0186	0	discard	opposite-of-best: all position no angle — terrible	agent0	blackboard
+exp023	1.0	0	keep	best config with sharpness=0.1 — still perfect! sharpness doesn't matter much	agent0	blackboard
+exp024	0.387	0	discard	angvel=1+sharpness=20 — sharpness can't save angvel-only	agent0	blackboard
+exp025	0.387	0	discard	angvel=10 only — same 0.387 ceiling as angvel=1	agent0	blackboard
+A3-001	0.8492	0	keep	position_weight=0.1 (from 0.5), rest baseline — position drift	agent3	blackboard
+A3-002	0.936	0	keep	position_weight=0.25, rest baseline — still some drift	agent3	blackboard
+A3-003	0.9991	0	keep	position_weight=0.35, rest baseline — near-perfect	agent3	blackboard
+A3-004	0.9704	0	keep	position_weight=0.3, rest baseline — 16/50 position deaths	agent3	blackboard
+A3-005	1.0	0	keep	position_weight=0.4, rest baseline — perfect, threshold found	agent3	blackboard
+EXP-A2-017	0.1716	0	keep	anticipation=0.5 only — drops to 0.17, needs higher horizon	agent2	blackboard
+EXP-A2-018	0.9856	0	keep	anticipation=1.0 only — near perfect 0.986	agent2	blackboard
+EXP-A2-019	1.0	0	keep	anticipation=1.5 only — perfect! threshold between 1.0 and 1.5	agent2	blackboard
+EXP-A2-020	1.0	0	keep	anticipation=1.2 only — perfect! threshold below 1.2	agent2	blackboard
+EXP-A2-021	1.0	0	keep	anticipation=1.1 only — perfect! threshold between 1.0-1.1	agent2	blackboard
+EXP-022	0.9698	0	keep	aw=10,avw=10,sharpness=0.1,rest=0 — low sharpness hurts	agent1	blackboard
+EXP-023	0.0185	0	discard	position-dominant: pw=5,vw=5,aw=0.5,avw=0.5 — terrible	agent1	blackboard
+EXP-024	0.2692	0	discard	all-tiny-weights + sharpness=20 — sharpness cant compensate	agent1	blackboard
+EXP-025	0.0438	0	discard	aw=5,ah=2,sharpness=0.5 — very low sharpness kills	agent1	blackboard
+EXP-026	1.0	0	keep	scaled-up balanced: aw=3,avw=2,pw=1,vw=1,sh=3,ah=1,pc=1 — 1.0	agent1	blackboard
+EXP-027	0.078	0	discard	anticipation=1+centering=5 only — doesnt work	agent1	blackboard
+exp026	0.0198	0	discard	angle=4+vel=2 (no angvel) — cart vel can't replace angvel	agent0	blackboard
+exp027	0.2851	0	discard	angle=0.5+anticipation=1 (no angvel) — anticipation helps but not enough	agent0	blackboard
+exp028	0.0845	0	discard	angle=2+centering=2 (no angvel) — centering doesn't provide damping	agent0	blackboard
+exp029	0.0199	0	discard	best config but anticipation=1 replaces angvel — position weights make it WORSE	agent0	blackboard
+EXP-028	1.0	0	keep	CONFIRMED: pure anticipation=2.0, all else=0 → 1.0	agent1	blackboard
+EXP-029	1.0	0	keep	minimal(aw=2,avw=1)+sharpness=0.5 → still 1.0	agent1	blackboard
+EXP-030	1.0	0	keep	minimal(aw=2,avw=1)+sharpness=0.3 → still 1.0	agent1	blackboard
+EXP-031	1.0	0	keep	minimal(aw=2,avw=1)+sharpness=10.0 → still 1.0	agent1	blackboard
+EXP-A2-022	0.4712	0	keep	angle_bias=-0.1 — negative bias equally bad, 0.47 (vs 0.445 positive)	agent2	blackboard
+A3-006	1.0	0	keep	pw=0.1 pc=0.0 rest baseline — pc removal fixes low pw!	agent3	blackboard
+A3-007	0.823	0	keep	pw=0.05 pc=0.5 rest baseline — pc interferes	agent3	blackboard
+A3-008	1.0	0	keep	pw=0.05 pc=0.0 rest baseline — perfect without pc	agent3	blackboard
+A3-009	0.9067	0	keep	pw=0.2 pc=0.5 rest baseline — still hurt by pc	agent3	blackboard
+A3-010	1.0	0	keep	pw=0.2 pc=0.0 rest baseline — perfect without pc	agent3	blackboard
+EXP-A2-023	0.0187	0	discard	velocity_weight=5 with angle control — HIGH velocity_weight is TOXIC, overwhelms signal	agent2	blackboard
+EXP-A2-024	1.0	0	keep	velocity_weight=1 with angle control — fine at moderate level	agent2	blackboard
+exp030	1.0	0	keep	anticipation=1.2 only — PERFECT! threshold is between 1.0 and 1.2	agent0	blackboard
+exp031	0.1902	0	discard	angvel=2+pos_weight=2 (no angle) — angle is irreplaceable	agent0	blackboard
+exp032	0.1716	0	discard	angle=10+angvel=0.1 — too little damping, oscillates to death	agent0	blackboard
+exp033	0.388	0	discard	angle=0.1+angvel=10 — reverts to angvel-only ceiling, position drift	agent0	blackboard
+EXP-A2-025	0.0196	0	discard	velocity_weight=2 — breaks! threshold between 1-2	agent2	blackboard
+EXP-A2-026	0.0462	0	discard	velocity_weight=1.5 — still breaks, threshold near 1.0	agent2	blackboard
+EXP-A2-027	0.2303	0	discard	position_centering=2 with angle — centering hurts angle control!	agent2	blackboard
+exp034	1.0	0	keep	anticipation=1.1 only — PERFECT! threshold between 1.0 and 1.1	agent0	blackboard
+exp035	0.9578	0	keep	angvel=1+anticipation=1 — 0.958, close but position drift	agent0	blackboard
+exp036	0.0983	0	discard	angle=1+anticipation=0.5 (no angvel) — sub-thresholds don't combine	agent0	blackboard
+exp037	1.0	0	keep	ALL params=1.0 "unity config" — perfect!	agent0	blackboard
+EXP-A2-028	0.7816	0	keep	position_centering=0.3 with angle — still hurts (0.78 vs 1.0 without)	agent2	blackboard
+EXP-032	1.0	0	keep	aw=1.8,avw=1,rest=0 → 1.0	agent1	blackboard
+EXP-033	1.0	0	keep	aw=1.9,avw=1,rest=0 → 1.0	agent1	blackboard
+EXP-034	0.7839	0	keep	aw=1.0,avw=2.0,rest=0 — higher avw doesnt compensate for low aw	agent1	blackboard
+EXP-035	0.9698	0	keep	aw=1.5,avw=1.5,rest=0 — balanced but still position drift	agent1	blackboard
+EXP-036	0.7973	0	keep	aw=1,avw=1,pw=0.5,vw=0.5,sh=5 — sharpness doesnt fix low aw	agent1	blackboard
+EXP-037	1.0	0	keep	aw=1.7,avw=1,rest=0 → 1.0	agent1	blackboard
+EXP-038	1.0	0	keep	aw=1.6,avw=1,rest=0 → 1.0 — MINIMUM for no-position 1.0	agent1	blackboard
+EXP-039	0.9958	0	keep	aw=1.55,avw=1,rest=0 → 0.9958 (49/50)	agent1	blackboard
+EXP-040	0.9958	0	keep	aw=1.52,avw=1,rest=0 → 0.9958 (49/50)	agent1	blackboard
+EXP-A2-029	0.603	0	keep	position_weight=1 with angle — too much position, score drops to 0.60	agent2	blackboard
+EXP-A2-030	1.0	0	keep	anticipation=1.5 + position_weight=0.5 — perfect, compatible	agent2	blackboard
+EXP-A2-031	0.2691	0	discard	anticipation=1.5 + centering=0.5 — centering KILLS anticipation too! 1.0→0.27	agent2	blackboard
+EXP-A2-032	1.0	0	keep	angle=1+angvel=0.5+anticipation=1 — perfect! lower weights OK with anticipation help	agent2	blackboard
+EXP-A2-033	1.0	0	keep	angle=0.5+angvel=0.3+anticipation=0.8 — anticipation compensates low weights	agent2	blackboard
+EXP-A2-034	1.0	0	keep	moderate all: aw=1 avw=0.5 pw=0.3 vw=0.3 sharp=2 antic=0.3 — perfect	agent2	blackboard
+EXP-A2-035	0.0805	0	discard	high pos=3 low angle=0.5 — position signal overwhelms, angle crash	agent2	blackboard
+EXP-A2-036	0.1716	0	keep	angle=10 angvel=0.1 sharpness=0.1 — too much angle, too little angvel and sharpness	agent2	blackboard
+EXP-A2-037	1.0	0	keep	angle=10 angvel=0.5 sharp=5 — high angle+sharp works with moderate angvel	agent2	blackboard
+EXP-A2-038	0.632	0	keep	angle=5 angvel=2 centering=1 — centering STILL hurts even with high angle	agent2	blackboard
+EXP-A2-039	0.9462	0	keep	centering=0.1 with angle=2+angvel=1 — even 0.1 centering drops to 0.95	agent2	blackboard
+exp038	0.3694	0	discard	angle=1.5+angvel=1+centering=1 — centering HURTS angle controllers	agent0	blackboard
+exp039	0.0196	0	discard	angle=2+angvel=1+vel=2 — cart velocity is destructive	agent0	blackboard
+exp040	1.0	0	keep	angvel=0.5+anticipation=0.8 — 4TH ARCHETYPE! sub-thresholds stack!	agent0	blackboard
+exp041	0.5282	0	discard	angle=1+angvel=1+centering=0.5 — centering helps slightly (0.97→0.53)	agent0	blackboard
+EXP-041	1.0	0	keep	aw=1.0+ah=1.0 — anticipation RESCUES low aw!	agent1	blackboard
+EXP-042	0.9958	0	keep	aw=1.0+ah=0.5 — partial rescue	agent1	blackboard
+EXP-043	1.0	0	keep	avw=0.3,aw=2 → 1.0 — avw very resilient	agent1	blackboard
+EXP-044	1.0	0	keep	avw=0.1,aw=2 → 1.0 — avw can be tiny	agent1	blackboard
+EXP-045	0.0871	0	discard	aw=5,avw=0,pw=0.5 — pure angle without avw is fatal	agent1	blackboard
+EXP-046	0.0852	0	discard	aw=10,avw=0 — confirms avw is ESSENTIAL	agent1	blackboard
+EXP-047	0.104	0	discard	avw=0.01,aw=2 — below threshold	agent1	blackboard
+EXP-048	1.0	0	keep	aw=0.5+ah=1.5 → 1.0 — anticipation powerful rescue	agent1	blackboard
+EXP-049	0.9958	0	keep	avw=1+ah=1.5,no aw → 0.9958	agent1	blackboard
+EXP-050	1.0	0	keep	avw=0.05,aw=2 → 1.0	agent1	blackboard
+EXP-051	0.3986	0	keep	avw=0.03,aw=2 → 0.40 — below threshold	agent1	blackboard
+EXP-052	1.0	0	keep	avw=0.07,aw=2 → 1.0	agent1	blackboard
+EXP-053	0.9856	0	keep	avw=0.04,aw=2 → 0.9856 — transition zone	agent1	blackboard
+exp042	1.0	0	keep	hybrid angvel=0.3+anticipation=0.8 — 1.0! very low angvel works	agent0	blackboard
+exp043	0.9632	0	keep	hybrid angvel=0.5+anticipation=0.5 — 0.96, not enough	agent0	blackboard
+exp044	1.0	0	keep	triple hybrid angle+angvel+anticipation all=0.5 — 1.0!	agent0	blackboard
+exp045	0.9346	0	keep	angle=2+angvel=1+bias=0.05 — bias=0.05 drops to 0.93!	agent0	blackboard
+exp046	1.0	0	keep	hybrid angvel=0.1+anticipation=0.8 — 1.0! MINIMAL hybrid	agent0	blackboard
+exp047	1.0	0	keep	hybrid angvel=0.1+anticipation=1.0 — 1.0	agent0	blackboard
+exp048	0.9462	0	keep	angle=2+angvel=1+centering=0.1 — centering=0.1 drops to 0.95	agent0	blackboard
+exp049	0.0628	0	discard	centering=0.1+sharpness=20 only — useless	agent0	blackboard
+EXP-A2-040	0.9698	0	keep	aw=1 avw=1 sharp=20 — sharpness does NOT rescue low angle (still 0.97)	agent2	blackboard
+EXP-A2-041	0.9958	0	keep	aw=1.5 avw=1 sharp=20 — sharpness doesn't help, same 0.9958 as without	agent2	blackboard
+EXP-A2-042	1.0	0	keep	aw=3 avw=0.3 — perfect! high angle compensates low angvel	agent2	blackboard
+EXP-A2-043	0.9856	0	keep	aw=5 avw=0.1 — 0.986, too little angvel even with high angle	agent2	blackboard
+EXP-054	0.0196	0	discard	CONFIRMED: vel_weight=2 destroys performance (aw=2,avw=1)	agent1	blackboard
+EXP-055	0.0187	0	discard	vel_weight=5 even worse	agent1	blackboard
+EXP-056	0.0195	0	discard	vel_weight=2+pw=0.5 doesnt help — velocity poison	agent1	blackboard
+EXP-057	1.0	0	keep	vel_weight=1.0 safe (aw=2,avw=1)	agent1	blackboard
+EXP-058	0.0462	0	discard	vel_weight=1.5 catastrophic cliff	agent1	blackboard
+EXP-059	1.0	0	keep	vel_weight=1.2 safe	agent1	blackboard
+EXP-060	1.0	0	keep	vel_weight=1.3 safe — last safe value	agent1	blackboard
+EXP-061	0.8144	0	keep	vel_weight=1.4 — cliff begins here (angle deaths)	agent1	blackboard
+EXP-A2-044	1.0	0	keep	aw=5 avw=0.2 — perfect! 5:0.2 ratio works (25:1)	agent2	blackboard
+exp050	1.0	0	keep	angvel=0.01+anticipation=0.8 — 1.0! practically zero angvel in hybrid	agent0	blackboard
+exp051	1.0	0	keep	angle=3+angvel=1+centering=0.05 — 1.0, centering=0.05 tolerable	agent0	blackboard
+exp052	0.603	0	discard	all-low balanced (0.3 each with pw) — position_weight hurts	agent0	blackboard
+exp053	0.8919	0	keep	"whisper config" all near-min — 0.89, surprisingly decent	agent0	blackboard
+EXP-A2-045	0.4171	0	keep	aw=0.5 avw=5 — high angvel CANNOT compensate low angle, position drift	agent2	blackboard
+EXP-A2-046	0.47	0	keep	aw=1 avw=5 — high angvel dominates, position drift (all 50 position deaths)	agent2	blackboard
+EXP-A2-047	0.6842	0	keep	aw=2 avw=5 — angvel too high relative to angle, position drift	agent2	blackboard
+A3-011	0.6179	0	keep	aw=1.0 avw=3.0 pure (ratio 1:3) — avw dominance hurts	agent3	blackboard
+A3-012	0.47	0	discard	aw=1.0 avw=5.0 pure (ratio 1:5) — worse	agent3	blackboard
+A3-013	0.9698	0	keep	aw=1.0 avw=1.0 pure (ratio 1:1) — decent	agent3	blackboard
+A3-014	0.6842	0	keep	aw=2.0 avw=5.0 pure (ratio 2:5) — avw still dominates	agent3	blackboard
+A3-015	0.9698	0	keep	aw=5.0 avw=5.0 pure (ratio 1:1) — same as 1:1 any mag	agent3	blackboard
+A3-016	1.0	0	keep	aw=5.0 avw=1.0 pure (ratio 5:1) — perfect	agent3	blackboard
+A3-017	0.9958	0	keep	aw=3.0 avw=2.0 pure (ratio 1.5:1) — near-perfect	agent3	blackboard
+A3-018	1.0	0	keep	aw=4.0 avw=2.0 pure (ratio 2:1) — perfect	agent3	blackboard
+A3-019	1.0	0	keep	aw=0.4 avw=0.2 pure (ratio 2:1 low) — ratio is key	agent3	blackboard
+A3-020	1.0	0	keep	aw=0.1 avw=0.05 pure (ratio 2:1 very low) — still perfect	agent3	blackboard
+A3-021	1.0	0	keep	aw=0.01 avw=0.005 pure (ratio 2:1 tiny) — still perfect	agent3	blackboard
+A3-022	1.0	0	keep	aw=0.001 avw=0.0005 pure (ratio 2:1 absurd) — still perfect	agent3	blackboard
+A3-023	0.9698	0	keep	aw=0.1 avw=0.1 pure (ratio 1:1 low) — same as 1:1 any mag	agent3	blackboard
+A3-024	0.6179	0	keep	aw=0.1 avw=0.3 pure (ratio 1:3 low) — same as 1:3 any mag	agent3	blackboard
+EXP-A2-048	0.9698	0	keep	aw=5 avw=5 — equal high still drifts 0.97, position deaths	agent2	blackboard
+EXP-A2-049	1.0	0	keep	aw=10 avw=5 — 2:1 ratio at high values → perfect	agent2	blackboard
+exp054	0.4736	0	keep	anticipation=0.8 alone — 0.47, needs angvel supplement	agent0	blackboard
+exp055	0.5782	0	discard	max angle+angvel + pos_weight=5 — position_weight=5 hurts even with max angle	agent0	blackboard
+exp056	1.0	0	keep	angle=2+angvel=1+vel=1.0 — velocity=1.0 is safe, confirmed	agent0	blackboard
+exp057	0.0908	0	discard	angle=10+angvel=0.01 — too little damping for direct weights	agent0	blackboard
+EXP-A2-050	1.0	0	keep	aw=4 avw=2 — 2:1 ratio at moderate values → perfect	agent2	blackboard
+EXP-A2-051	1.0	0	keep	aw=1 avw=0.5 — 2:1 RATIO at low values → PERFECT! (aw=1+avw=1→0.97)	agent2	blackboard
+EXP-A2-052	1.0	0	keep	aw=0.5 avw=0.25 — 2:1 ratio still perfect at very low abs values!	agent2	blackboard
+EXP-A2-053	1.0	0	keep	aw=0.2 avw=0.1 — 2:1 still perfect even at 0.2/0.1!	agent2	blackboard
+EXP-A2-054	1.0	0	keep	aw=0.1 avw=0.05 — 2:1 STILL perfect at 0.1/0.05!	agent2	blackboard
+EXP-A2-055	1.0	0	keep	aw=0.05 avw=0.025 — near-zero 2:1 still perfect!	agent2	blackboard
+EXP-A2-056	1.0	0	keep	aw=0.01 avw=0.005 — near-zero 2:1 STILL perfect	agent2	blackboard
+EXP-A2-057	0.9698	0	keep	aw=0.01 avw=0.01 — 1:1 ratio at tiny = 0.97! RATIO MATTERS not magnitude	agent2	blackboard
+EXP-A2-058	1.0	0	keep	aw=0.03 avw=0.01 — 3:1 ratio tiny → perfect	agent2	blackboard
+exp058	0.7036	0	keep	angvel=0.001+anticipation=0.8 — 0.70, threshold between 0.001 and 0.01	agent0	blackboard
+exp059	0.1691	0	discard	angle=0.5+anticipation=0.8 (no angvel) — angle can't replace angvel in hybrid	agent0	blackboard
+exp060	0.9698	0	keep	angle=1+angvel=1+sharpness=20 — sharpness doesn't help sub-threshold	agent0	blackboard
+exp061	0.4171	0	discard	angle=0.5+angvel=5 — high angvel causes position drift	agent0	blackboard
+EXP-A2-059	0.9958	0	keep	aw=0.015 avw=0.01 — 1.5:1 ratio → 0.9958, not quite perfect	agent2	blackboard
+EXP-A2-060	1.0	0	keep	aw=0.016 avw=0.01 — 1.6:1 ratio → perfect! threshold ~1.5-1.6	agent2	blackboard
+EXP-062	1.0	0	keep	aw=3.2,avw=2.0 ratio=1.6:1 → 1.0 CONFIRMS agent3 ratio theory	agent1	blackboard
+EXP-063	1.0	0	keep	aw=0.32,avw=0.2 ratio=1.6:1 tiny → 1.0 ratio confirmed	agent1	blackboard
+EXP-064	1.0	0	keep	aw=8.0,avw=4.0 ratio=2:1 big → 1.0	agent1	blackboard
+EXP-065	1.0	0	keep	aw=0.02,avw=0.01 ratio=2:1 micro → 1.0!	agent1	blackboard
+EXP-066	1.0	0	keep	aw=3,avw=1 ratio=3:1 → 1.0	agent1	blackboard
+EXP-067	0.9958	0	keep	aw=0.155,avw=0.1 ratio=1.55:1 → 0.9958 EXACT MATCH to EXP-039	agent1	blackboard
+EXP-068	0.9958	0	keep	aw=0.15,avw=0.1 ratio=1.5:1 → 0.9958 EXACT MATCH	agent1	blackboard
+EXP-069	0.9698	0	keep	aw=0.1,avw=0.1 ratio=1:1 → 0.9698 EXACT MATCH to EXP-017	agent1	blackboard
+A3-025	1.0	0	keep	aw=3.2 avw=2.0 (ratio 1.6:1) — perfect, matches aw=1.6 avw=1.0	agent3	blackboard
+A3-026	0.9958	0	keep	aw=3.1 avw=2.0 (ratio 1.55:1) — 0.9958, matches aw=1.55 avw=1.0 EXACTLY	agent3	blackboard
+EXP-A2-061	0.1716	0	keep	aw=1 avw=0.01 — 100:1 ratio FAILS! too little angvel → oscillation death	agent2	blackboard
+exp062	1.0	0	keep	angvel=0.005+anticipation=0.8 — 1.0! threshold below 0.005	agent0	blackboard
+exp063	0.8384	0	keep	anticipation=0.9 alone — 0.84, steep between 0.8 and 1.0	agent0	blackboard
+exp064	0.998	0	keep	aw=1.5+angvel=1+pw=0.05 — 0.998, pw nearly rescues sub-threshold	agent0	blackboard
+exp065	0.9958	0	keep	angle=1+angvel=1+anticipation=0.5 — 0.996, sub-thresholds combine	agent0	blackboard
+EXP-A2-062	0.9856	0	keep	aw=0.5 avw=0.01 — 50:1 ratio 0.986, near limit	agent2	blackboard
+EXP-A2-063	0.1716	0	keep	aw=0.1 avw=0.001 — 100:1 at low abs also 0.17. Upper ratio limit exists!	agent2	blackboard
+EXP-A2-064	1.0	0	keep	aw=0.3 avw=0.01 — 30:1 ratio → perfect	agent2	blackboard
+EXP-A2-065	1.0	0	keep	aw=0.4 avw=0.01 — 40:1 ratio → perfect	agent2	blackboard
+A3-027	0.0196	0	discard	aw=2 avw=1 vw=2.0 — toxic vw confirmed	agent3	blackboard
+A3-028	0.0311	0	discard	aw=10 avw=1 vw=2.0 — high aw cant rescue toxic vw	agent3	blackboard
+A3-029	0.0678	0	discard	aw=2 avw=1 vw=1.5 ah=1.5 — anticipation cant rescue toxic vw	agent3	blackboard
+A3-030	0.0462	0	discard	aw=2 avw=1 vw=1.5 sharpness=0.1 — low sharpness cant rescue	agent3	blackboard
+A3-031	0.0462	0	discard	aw=2 avw=1 vw=1.5 sharpness=20 — high sharpness cant rescue	agent3	blackboard
+EXP-A2-066	0.1716	0	keep	aw=10 avw=0.1 — 100:1 at high abs SAME 0.17! ratio is the factor	agent2	blackboard
+EXP-A2-067	0.5415	0	keep	aw=0.6 avw=0.01 — 60:1 → 0.54, upper limit between 40-60	agent2	blackboard
+EXP-070	0.5782	0	keep	ratio 1:1+pw=0.5 → pw HURTS bad ratio (vs 0.97 without)	agent1	blackboard
+EXP-071	0.1679	0	discard	ratio 1:1+pw=2.0 → heavy position destroys bad ratio	agent1	blackboard
+EXP-072	0.9958	0	keep	ratio 1:1+ah=0.5 → anticipation helps bad ratio	agent1	blackboard
+EXP-073	0.7701	0	keep	ratio 1.5:1+pw=0.5 → pw hurts sub-threshold ratio too	agent1	blackboard
+EXP-074	1.0	0	keep	ratio 1.5:1+ah=0.3 → anticipation RESCUES sub-threshold!	agent1	blackboard
+EXP-A2-068	1.0	0	keep	aw=0.45 avw=0.01 — 45:1 → perfect	agent2	blackboard
+EXP-A2-069	0.9856	0	keep	aw=5 avw=0.1 — 50:1 at avw=0.1 → 0.986 (same as EXP-A2-043)	agent2	blackboard
+EXP-A2-070	1.0	0	keep	aw=4 avw=0.1 — 40:1 at avw=0.1 → perfect	agent2	blackboard
+EXP-A2-071	1.0	0	keep	aw=4.5 avw=0.1 — 45:1 → perfect, upper limit between 45-50	agent2	blackboard
+exp066	1.0	0	keep	angvel=0.1+anticipation=0.6 — 1.0! Lower antic+more angvel works	agent0	blackboard
+exp067	0.8855	0	keep	angvel=0.001+antic=0.8+pw=0.1 — pw doesn't fully rescue	agent0	blackboard
+exp068	1.0	0	keep	angle=5+angvel=2+antic=1+bias=0.01 — strong controller SURVIVES tiny bias!	agent0	blackboard
+exp069	1.0	0	keep	ultra-minimal 0.001/0.0005 (2:1 ratio) — 1.0! ratio theory confirmed	agent0	blackboard
+EXP-A2-072	1.0	0	keep	aw=4.7 avw=0.1 — 47:1 → perfect	agent2	blackboard
+EXP-A2-073	1.0	0	keep	aw=4.8 avw=0.1 — 48:1 → perfect	agent2	blackboard
+EXP-A2-074	1.0	0	keep	aw=4.9 avw=0.1 — 49:1 → perfect!	agent2	blackboard
+EXP-A2-075	0.0196	0	discard	anticipation=1.5 + velocity_weight=1 — velocity_weight KILLS anticipation too	agent2	blackboard
+EXP-A2-076	1.0	0	keep	aw=0.3 avw=0.1 ah=0.5 — all low mixed → perfect (3:1 ratio + anticipation)	agent2	blackboard
+exp070	1.0	0	keep	INSANE: 0.0001/0.00005 ratio 2:1 → 1.0! near-zero works	agent0	blackboard
+exp071	1.0	0	keep	full best + bias=0.02 → 1.0! full config tolerates small bias	agent0	blackboard
+exp072	1.0	0	keep	quad-balanced (all 0.5 + pw=0.05) → 1.0	agent0	blackboard
+exp073	0.0196	0	discard	vel=1+anticipation=1.5 — cart velocity ALWAYS destructive	agent0	blackboard
+EXP-A2-077	1.0	0	keep	aw=2 avw=1 pw=0.5 vw=0.5 — baseline minus anticipation/centering → perfect	agent2	blackboard
+EXP-075	1.0	0	keep	vw=1.0+ah=0.5 — anticipation compatible with safe vw	agent1	blackboard
+EXP-076	0.0486	0	discard	vw=1.5+ah=0.5 — anticipation cant rescue toxic vw	agent1	blackboard
+EXP-077	0.0197	0	discard	aw=4+vw=2 — higher ratio cant rescue toxic vw either	agent1	blackboard
+EXP-078	1.0	0	keep	aw=2,avw=1,pw=0.5,vw=1,ah=0.5,pc=0 — balanced minus centering	agent1	blackboard
+EXP-A2-078	0.0187	0	discard	WORST CONFIG: no angle info, max pos/vel/bias/centering — 0.019	agent2	blackboard
+EXP-A2-079	0.9856	0	keep	50:1 + sharpness=20 — sharpness does NOT help at bad ratio (still 0.986)	agent2	blackboard
+EXP-A2-080	0.9807	0	keep	50:1 + anticipation=0.5 — anticipation slightly HURTS at bad ratio (0.986→0.981)	agent2	blackboard
+EXP-A2-081	0.9856	0	keep	50:1 + anticipation=1.0 — same 0.986, anticipation doesn't help	agent2	blackboard
+EXP-A2-082	0.9955	0	keep	aw=4.95 avw=0.1 — 49.5:1 → 0.9955, threshold between 49-49.5	agent2	blackboard
+exp074	1.0	0	keep	full config + bias=0.03 → 1.0! bias resilient	agent0	blackboard
+exp075	1.0	0	keep	max strength + bias=0.05 → 1.0! strong controllers survive more bias	agent0	blackboard
+exp076	0.7256	0	keep	anticipation=2.0+centering=0.1 — centering hurts even max antic	agent0	blackboard
+exp077	0.0908	0	discard	ratio 1000:1 (aw=10/avw=0.01) — too extreme, not enough damping	agent0	blackboard
+EXP-A2-083	0.972	0	keep	aw=1 avw=1 pw=0.01 — tiny pw neither helps nor hurts 1:1 (0.97→0.972)	agent2	blackboard
+EXP-079	0.1003	0	discard	pw=5.0 with ratio 2:1 — position weight VERY destructive	agent1	blackboard
+EXP-080	1.0	0	keep	sharpness=0.1 with ratio 2:1 → no-op confirmed	agent1	blackboard
+EXP-081	1.0	0	keep	sharpness=20 with ratio 2:1 → no-op confirmed	agent1	blackboard
+EXP-082	0.9698	0	keep	ratio 1:1+sharpness=20 → same as without (0.9698)	agent1	blackboard
+EXP-083	0.9698	0	keep	ratio 1:1+sharpness=0.1 → same as without (0.9698)	agent1	blackboard
+EXP-084	0.2441	0	discard	pw=2.0 with ratio 2:1	agent1	blackboard
+EXP-085	0.603	0	keep	pw=1.0 with ratio 2:1 — angle deaths	agent1	blackboard
+EXP-086	0.1587	0	discard	pw=3.0 with ratio 2:1	agent1	blackboard
+EXP-087	0.862	0	keep	pw=0.5 with ratio 2:1 MINIMAL — drops from 1.0!	agent1	blackboard
+EXP-088	0.9785	0	keep	pw=0.3 with ratio 2:1 MINIMAL — near threshold	agent1	blackboard
+A3-032	1.0	0	keep	aw=0.5 avw=0.25 ah=0.5 — hybrid all sub-threshold → 1.0	agent3	blackboard
+A3-033	1.0	0	keep	aw=0.1 avw=0.05 ah=0.3 — hybrid very low → still 1.0	agent3	blackboard
+A3-034	0.9904	0	keep	ratio 1:1 + ah=0.3 — partial rescue	agent3	blackboard
+A3-035	0.9958	0	keep	ratio 1:1 + ah=0.5 — better rescue	agent3	blackboard
+A3-036	1.0	0	keep	ratio 1:1 + ah=1.0 — full rescue!	agent3	blackboard
+A3-037	0.8714	0	keep	ratio 1:3 + ah=1.0 — partial rescue only	agent3	blackboard
+A3-038	0.9546	0	keep	ratio 1:3 + ah=2.0 — better but not perfect	agent3	blackboard
+A3-039	0.484	0	discard	ratio 1:3 + pw=0.5 — makes it worse (angle deaths)	agent3	blackboard
+A3-040	0.5782	0	discard	ratio 1:1 + pw=0.5 — pw causes angle deaths at marginal ratio	agent3	blackboard
+A3-041	0.977	0	keep	ratio 1:1 + pw=0.1 — tiny pw slightly helps	agent3	blackboard
+A3-042	0.8828	0	keep	ratio 1:1 + pw=0.2 — pw=0.2 hurts marginal controller	agent3	blackboard
+exp078	1.0	0	keep	max strength + bias=0.1 → 1.0! strong controllers survive HIGH bias	agent0	blackboard
+exp079	0.0944	0	discard	ratio 500:1 (aw=5/avw=0.01) — absolute angvel too low	agent0	blackboard
+exp080	0.104	0	discard	ratio 200:1 (aw=2/avw=0.01) — absolute angvel too low	agent0	blackboard
+exp081	1.0	0	keep	pw=0.5+anticipation=1.5 — works! anticipation+position combo	agent0	blackboard
+EXP-A2-084	1.0	0	keep	aw=1 avw=1 ah=1.0 — anticipation DOES rescue 1:1 ratio! (0.97→1.0)	agent2	blackboard
+EXP-A2-085	1.0	0	keep	aw=0.5 avw=0 ah=1.5 — anticipation provides angvel, angle provides static info → perfect	agent2	blackboard
+EXP-A2-086	0.2439	0	discard	avw=1 pw=0.5 no angle — position can't substitute for angle	agent2	blackboard
+EXP-A2-087	1.0	0	keep	ALL params=0.5 (bias=0) — perfect! ratio 1:1 rescued by anticipation/position	agent2	blackboard
+exp082	0.5414	0	keep	max strength + bias=0.5 — breaks! bias limit ~0.1-0.5 for strong	agent0	blackboard
+exp083	1.0	0	keep	aw=2+avw=0.05 → 1.0! absolute avw threshold very low (~0.04)	agent0	blackboard
+exp084	0.0212	0	discard	anticipation=2+pw=5 — high position KILLS everything	agent0	blackboard
+exp085	1.0	0	keep	anticipation=1.5+pw=0.1 → 1.0! small pw fine with anticipation	agent0	blackboard
+EXP-A2-088	1.0	0	keep	ALL params=0.1 (bias=0) — perfect! balanced low config works	agent2	blackboard
+EXP-A2-089	1.0	0	keep	ALL params=0.2 (bias=0) — still perfect	agent2	blackboard
+EXP-A2-090	1.0	0	keep	ALL params=2.0 (bias=0) — still perfect! balanced configs very robust	agent2	blackboard
+EXP-A2-091	1.0	0	keep	max balanced: aw=5 avw=5 pw=5 vw=5 sharp=5 ah=2 pc=5 — perfect!	agent2	blackboard
+EXP-089	0.9856	0	keep	ratio 50:1 → 0.986 CONFIRMED agent2 upper limit	agent1	blackboard
+EXP-090	1.0	0	keep	ratio 49:1 → 1.0 upper edge confirmed	agent1	blackboard
+EXP-091	1.0	0	keep	pure anticipation=1.5 → 1.0	agent1	blackboard
+EXP-092	1.0	0	keep	anticipation=1.5+pw=0.5 → 1.0 compatible	agent1	blackboard

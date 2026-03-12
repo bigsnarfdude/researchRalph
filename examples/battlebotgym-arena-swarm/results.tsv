@@ -1,0 +1,148 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	1.0	0	keep	default config	setup	baseline
+EXP001	0.38	0	discard	attack_power=12 (from 18), huge drop	agent1	blackboard
+EXP002	0.66	0	discard	defense=8 (from 15), significant drop	agent1	blackboard
+EXP003	0.04	0	discard	max_hp=55 (from 85), devastating	agent1	blackboard
+EXP004	0.38	0	discard	special_power=1.5 (from 2.8), huge drop	agent1	blackboard
+EXP005	1.0	0	keep	heal_amount=0 (from 12), no effect, saves 36 budget	agent1	blackboard
+EXP006	1.0	0	keep	aggression=0.3 (from 0.75), no effect on win rate	agent1	blackboard
+EXP-001	1.0	0	keep	glass cannon: hp50 atk25 def5 sp3.5 max-aggression (triggers adaptation, still 1.0 in 5.2 turns)	agent0	blackboard
+EXP-002	0.0	0	discard	max range sniper: range6 spd1 agg0.1 kite6 (champion rushes with spd3, total loss)	agent0	blackboard
+EXP-003	1.0	0	keep	pure turtle: hp200 atk5 def5 heal15 agg0.0 (wins by timeout 200 turns, survives on healing)	agent0	blackboard
+EXP007	1.0	0	keep	heal=0 attack=25, wins in 6.0 turns avg, stat=465	agent1	blackboard
+EXP008	1.0	0	keep	heal=0 hp=120, stat=472	agent1	blackboard
+EXP009	1.0	0	keep	heal=0 defense=27, stat=473	agent1	blackboard
+EXP010	1.0	0	keep	heal=0 eregen=3 attack=22, stat=443 efficient	agent1	blackboard
+EXP011	1.0	0	keep	heal=0 eregen=2 energy=60 attack=26, stat=414 very efficient	agent1	blackboard
+EXP012	0.78	0	discard	range=2 heal=0 attack=24, range matters	agent1	blackboard
+EXP013	0.92	0	discard	range=1 melee heal=0 attack=30, range critical	agent1	blackboard
+EXP014	1.0	0	keep	heal=0 attack=25 aggression=1.0 retreat=0, full berserker	agent1	blackboard
+EXP015	1.0	0	keep	heal=0 attack=25 special_cd=2, 5.0 avg turns fastest	agent1	blackboard
+EXP016	1.0	0	keep	heal=0 attack=25 attack_cost=5, cheap attacks	agent1	blackboard
+EXP-004	0.0	0	discard	speed4 berserker: spd4 hp50 atk15 (too little budget left for damage, cost 272)	agent0	blackboard
+EXP-005	0.0	0	discard	all-in special: sp4.0 hp50 (deals 95.6 but dies too fast with 50hp)	agent0	blackboard
+EXP-006	0.0	0	discard	energy vampire: regen12 hp50 atk15 (not enough burst, dies before kill)	agent0	blackboard
+EXP-A2-001	1.0	0	keep	turtle: hp130/def35/atk10/range1/heal20/spd1, 200avg turns	agent2	blackboard
+EXP-007	0.0	0	discard	max defense 40 tank: def40 spd1 range1 (can't reach enemy, diminishing returns on defense)	agent0	blackboard
+EXP-008	0.66	0	keep	strategy-only mirror: champion stats + agg0.9 retreat0.05 heal0.15 burst0.45 (strategy alone = 0.66)	agent0	blackboard
+EXP-009	0.02	0	discard	all-triggers: hp50 atk25 range5 agg0.1 (triggers all 4 counters = dead)	agent0	blackboard
+EXP-A2-002	0.0	0	discard	sniper-weak: atk10/range4/special1.0, underbudget 409/490	agent2	blackboard
+EXP-A2-003	1.0	0	keep	kiter: range4/regen8/atkcost5/agg0.35/kite5, 17.4avg turns	agent2	blackboard
+EXP-010	0.98	0	keep	sustain brawler: hp150 atk19 range1 heal8 agg0.9 (98% but range1 costs 1 match, 20.8 turns)	agent0	blackboard
+EXP-011	1.0	0	keep	anti-kite rush: range1 atk19 sp3.0 regen6 agg1.0 (1.0 in 8 turns, range1 viable with burst)	agent0	blackboard
+EXP-012	0.0	0	discard	minimum budget: all stats min (cost 177, no damage = no chance)	agent0	blackboard
+EXP-A2-004	1.0	0	keep	glass-cannon: atk30/special4.0/hp50/def5, triggers counter but kills in 5 turns	agent2	blackboard
+EXP-013	0.94	0	keep	range4 kiter: range4 agg0.4 kite4 sp2.5 (94%, range4 works but not as good as range3 aggro)	agent0	blackboard
+EXP-014	0.0	0	crash	expensive actions: atk_cost25 heal_cost40 energy200 (BUDGET EXCEEDED 527>490.4)	agent0	blackboard
+EXP-015	0.92	0	keep	long cooldown specialist: sp3.2 cd10 (92%, big specials too rare to carry)	agent0	blackboard
+EXP-A2-005	0.0	0	discard	all-minimums: budget 177, loses 100%	agent2	blackboard
+EXP-A2-006	1.0	0	keep	sniper-range6: special4.0/range6/spd1/budget357, wins 100% in 7.6t despite both counters	agent2	blackboard
+a3-001	1.0	0	keep	best config baseline (sp=2.8,cd=3,atk=18,hp=85,def=15,agg=0.75)	agent3	blackboard
+a3-002	0.6	0	discard	sensitivity: sp=2.0 (champion default) crashes win rate	agent3	blackboard
+a3-003	0.98	0	keep	sensitivity: sp=2.4 still strong	agent3	blackboard
+a3-004	0.84	0	discard	sensitivity: cd=5 (champion default) drops significantly	agent3	blackboard
+a3-005	1.0	0	keep	champion stats + cd=2 only = PERFECT (simplest winning change)	agent3	blackboard
+a3-006	1.0	0	keep	sp=4.0,heal=0,atk=19,cd=2,range=4,regen=6 (maxed burst build)	agent3	blackboard
+a3-007	0.74	0	discard	turtle: def=35,heal=20,atk=5,sp=1.0 — mediocre	agent3	blackboard
+a3-008	0.74	0	discard	strategy-only: agg=0.8,burst=0.4 on champion stats — limited	agent3	blackboard
+a3-009	0.90	0	keep	sp=3.0,cd=3,heal=0 — threshold for near-perfect	agent3	blackboard
+a3-010	1.0	0	keep	sp=3.5,cd=3,heal=0 — min sp for 1.0 at cd=3	agent3	blackboard
+EXP017	1.0	0	keep	hp60 e50 er1 a26 d5 s1 sp2.0 r3 h0 cd2 ac5 stat=315 MINIMAL	agent1	blackboard
+EXP018	0.34	0	discard	hp50 e50 er1 a26 d5 s1 stat=321 too fragile	agent1	blackboard
+EXP019	0.38	0	discard	hp50 e50 er1 a20 d5 s1 stat=297	agent1	blackboard
+EXP020	0.02	0	discard	hp50 e50 er1 a15 d5 s1 stat=277 absolute min fails	agent1	blackboard
+EXP021	0.84	0	discard	a26 d5 sp2.0 r2 stat=303 range=2 too low	agent1	blackboard
+EXP022	0.90	0	discard	a22 d5 r2 stat=303 not enough dps	agent1	blackboard
+EXP023	0.90	0	discard	315 config with sp1.5, not enough special	agent1	blackboard
+EXP024	0.0	0	discard	315 config with sp1.0, zero wins	agent1	blackboard
+EXP-A2-007	0.04	0	discard	high-atk-no-special: atk30/special1.0/budget277, underbudget	agent2	blackboard
+EXP-A2-008	0.0	0	discard	special-only: atk5/special4.0/budget237, underbudget	agent2	blackboard
+EXP-A2-009	1.0	0	keep	high-atk-no-special-fullbudget: atk30/special1.0/hp140/budget477	agent2	blackboard
+EXP-A2-010	1.0	0	keep	low-atk-max-special-fullbudget: atk5/special4.0/hp180/budget476	agent2	blackboard
+EXP-A2-011	0.0	0	discard	balanced-lowbudget: all-average stats/budget383, loses	agent2	blackboard
+a3-011	0.0	0	discard	turtle hp200/def5/heal15/agg0.0 — CANNOT reproduce agent0 claim, triggers 2 counters	agent3	blackboard
+a3-012	1.0	0	keep	attack_cost=5 on best build — no impact	agent3	blackboard
+a3-013	1.0	0	keep	attack_cost=15 on best build — no impact	agent3	blackboard
+a3-014	0.22	0	discard	attack_cost=25 on best build — KILLS perf (special costs 1.5x=37.5 energy)	agent3	blackboard
+a3-015	1.0	0	keep	kiter-assassin: agg=0.3,kite=5,sp=3.5,cd=2,range=4 — diverse 1.0 build	agent3	blackboard
+a3-016	0.0	0	discard	energy-spam: regen=12,energy=200,sp=1.0 — sp=1.0 not enough even with volume	agent3	blackboard
+a3-017	0.0	0	discard	brawler: hp=150,atk=10,sp=1.5 — sp too low for any archetype	agent3	blackboard
+EXP-016	1.0	0	keep	heal spammer: hp200 heal25 heal_cost5 atk5 agg0.0 (unkillable, wins by timeout 200 turns)	agent0	blackboard
+EXP-017	0.0	0	discard	speed3 assassin: spd3 hp50 sp2.5 (budget 317, triggers glass cannon, not enough stats)	agent0	blackboard
+EXP-018	1.0	0	keep	contrarian: atk8 def30 heal20 agg0.3 cd2 (grinds in 42 turns, avoids ALL triggers, pure defense+heal)	agent0	blackboard
+EXP-A2-012	1.0	0	keep	focused-dmg-336budget: atk20/special4.0/cd2/spd2/range3, wins 100% in 5.9t	agent2	blackboard
+EXP-A2-013	0.0	0	discard	min-dmg-focus: atk10/special4.0/257budget, too weak	agent2	blackboard
+EXP-A2-014	0.68	0	keep	threshold-test: atk15/special4.0/277budget, 68% winrate	agent2	blackboard
+a3-018	1.0	0	keep	INTERACTION: sp=2.5,cd=2 — minimum combo for 1.0 on champion stats+heal=0	agent3	blackboard
+a3-019	0.82	0	discard	sp=2.5,cd=3 — just below threshold	agent3	blackboard
+a3-020	1.0	0	keep	INTERACTION: sp=3.5+ always 1.0 regardless of cd (phase transition)	agent3	blackboard
+a3-021	0.72	0	discard	sp=2.0,cd=2 — sp=2.0 never reaches 1.0 even with cd=2	agent3	blackboard
+EXP-A2-015	0.96	0	keep	threshold-atk18: atk18/special4.0/289budget, 96% winrate	agent2	blackboard
+EXP025	1.0	0	keep	stealth build no-adapt-triggers hp85/a19/d15/cd2/ac5 stat=433 7.5 turns	agent1	blackboard
+EXP026	0.0	0	discard	turtle hp200/d5/h25 triggers glass cannon counter	agent1	blackboard
+EXP027	0.06	0	discard	hybrid turtle hp200/d15/a10/h15 too slow	agent1	blackboard
+EXP028	1.0	0	keep	proper turtle hp200/d15/h15/a5 wins at 200 turns timeout stat=486	agent1	blackboard
+EXP-A2-016	1.0	0	keep	pure-strategy-opt: champion stats + optimal strategy weights, 100%	agent2	blackboard
+EXP-A2-017	1.0	0	keep	combat-params-only: champion stats+strategy, only atkcost5/cd2/healcost15, 100% — KEY FINDING	agent2	blackboard
+EXP-A2-018	0.9	0	keep	attack_cost-only: champion+atkcost5, 90% — moderate impact	agent2	blackboard
+EXP-A2-019	1.0	0	keep	special_cooldown-only: champion+cd2, 100% — THE KEY PARAM	agent2	blackboard
+EXP-A2-020	0.96	0	keep	heal_cost-only: champion+healcost5, 96% — strong impact	agent2	blackboard
+a3-022	1.0	0	keep	ALL 4 counter triggers + sp=3.5,cd=2 = 1.0! Counters irrelevant with high burst	agent3	blackboard
+a3-023	1.0	0	keep	3 triggers (glass+atk+range) + sp=3.5,cd=2 = 1.0	agent3	blackboard
+a3-024	0.0	0	discard	atk=5,sp=1.5,cd=3,hp=200 — low burst always fails	agent3	blackboard
+a3-025	1.0	0	keep	range=6,sp=4.0,cd=2 = 1.0 despite range counter (champion rushes with spd=3)	agent3	blackboard
+EXP-019	1.0	0	keep	turtle hp150 boundary: still 1.0 (timeout wins)	agent0	blackboard
+EXP-020	1.0	0	keep	turtle hp120 boundary: still 1.0 (timeout wins)	agent0	blackboard
+EXP-021	1.0	0	keep	paradox: agg1.0+kite8 — kite irrelevant at full aggression, 7.5 turns	agent0	blackboard
+EXP-022	1.0	0	keep	turtle hp100: 1.0 (turtle works at hp100)	agent0	blackboard
+EXP-023	1.0	0	keep	turtle hp85: 1.0	agent0	blackboard
+EXP-024	1.0	0	keep	turtle hp70: 1.0 (FLOOR: hp60→0.82, hp55→0.76, hp50→0.72)	agent0	blackboard
+EXP-025	0.0	0	discard	cheapskate: sp1.0 no-heal no-regen range3 (not enough damage without special)	agent0	blackboard
+EXP-026	0.0	0	discard	pacifist healer: hp200 heal25 atk_cost25 regen1 (can't sustain heals with regen1)	agent0	blackboard
+EXP-027	0.74	0	discard	safe sniper: range4 agg0.3 sp2.0 (too passive, doesn't close for kills)	agent0	blackboard
+EXP-028	1.0	0	keep	double trigger: hp84 atk20 sp2.5 cd2 (triggers glass cannon+high atk, still 1.0)	agent0	blackboard
+EXP029	1.0	0	keep	stealth turtle hp150/a15/d15/h5/cd2/sp2.0 14.9 turns stat=440	agent1	blackboard
+EXP030	1.0	0	keep	stealth hp130/a19/d15/s1/cd2/sp2.0 12.6 turns stat=421	agent1	blackboard
+EXP031	1.0	0	keep	stealth hp130/a19/d15/s1/cd2/sp2.8 8.6 turns stat=437	agent1	blackboard
+EXP032	1.0	0	keep	STEALTH MAX sp4.0/a19/d15/cd2/ac5/s2 5.0 turns stat=457	agent1	blackboard
+EXP033	1.0	0	keep	stealth sp4.0/r4 same 5.0 turns, range4 wasted budget stat=469	agent1	blackboard
+EXP034	1.0	0	keep	fast turtle hp170/a10/d15/cd2/sp2.0 20.9 turns stat=455	agent1	blackboard
+a3-026	1.0	0	keep	SEED ROBUSTNESS: champion+cd=2 = 1.000 avg across 6 seeds x 100 matches	agent3	blackboard
+a3-027	1.0	0	keep	SEED ROBUSTNESS: all-triggers+sp=3.5 = 1.000 avg across 6 seeds	agent3	blackboard
+a3-028	0.997	0	keep	SEED ROBUSTNESS: best config = 0.997 avg (drops 1 match occasionally)	agent3	blackboard
+a3-029	1.0	0	keep	SEED ROBUSTNESS: agent1-efficient cost=315 = 1.000 avg	agent3	blackboard
+EXP-A2-021	1.0	0	keep	seed-robustness: best config 100% across seeds 100/200/300 and 200 matches	agent2	blackboard
+EXP-A2-022	1.0	0	keep	seed-robustness: cd2-only 100% across 200 matches seed 1000	agent2	blackboard
+EXP-A2-023	1.0	0	keep	speed3-assassin: spd3/sp4.0/cd2/atk15/budget406, 100% in 7.1t — speed3 IS viable	agent2	blackboard
+EXP-A2-024	0.0	0	discard	energy-spammer: regen12/sp1.0/cd10, 0% — confirms specials essential	agent2	blackboard
+EXP-A2-025	0.26	0	discard	passive-healer: hp200/heal25/healcost5/agg0.0/atk5, 26% — counter triggers kill it	agent2	blackboard
+EXP035	1.0	0	keep	ABSOLUTE MIN sp3.5/a16/d5/hp50/s1/r3 stat=295 100% all seeds	agent1	blackboard
+EXP036	0.98	0	discard	sp3.5/a15/hp50/s1/r3 stat=291 drops to 98% some seeds	agent1	blackboard
+EXP037	0.60	0	discard	sp3.5/a13 stat=283 not enough burst	agent1	blackboard
+EXP038	0.68	0	discard	sp4.0/a12 stat=289 not enough burst despite sp4	agent1	blackboard
+EXP039	0.97	0	discard	sp3.5/a16/r2 stat=283 range=2 drops to 97%	agent1	blackboard
+EXP040	1.0	0	keep	STEALTH OPTIMAL sp4.0/a19/d15/hp85/s2/cd2/ac5 stat=457 5.0 turns	agent1	blackboard
+EXP-029	0.0	0	discard	sp4.0+atk5: atk too low for sp to matter (cost 261)	agent0	blackboard
+EXP-030	1.0	0	keep	sp3.5 minimized: hp85 def15 spd1 regen1 cost356 (1.0, very efficient)	agent0	blackboard
+EXP-031	0.995	0	keep	sp3.5+def5: cost326 but triggers glass cannon, 199W/1L/200 matches	agent0	blackboard
+EXP-032	1.0	0	keep	champion clone cd=2 ONLY: exact champion stats but cd2→1.0/200matches (cd=2 alone wins)	agent0	blackboard
+EXP-033	1.0	0	keep	MIN COST 1.0: hp85 def15 atk15 sp2.8 cd2 spd1 regen1 cost342 (1.0 across 5seeds×200matches)	agent0	blackboard
+a3-030	1.0	0	keep	NEW MIN: atk=20,sp=2.5,cd=2,range=3,hp=50,cost=291 (seed42 only)	agent3	blackboard
+a3-031	0.993	0	keep	ROBUST MIN: atk=20,sp=2.5,cd=2,range=3,hp=60,cost=301,avg=0.993 across 6 seeds	agent3	blackboard
+a3-032	1.0	0	keep	CONFIRMED: agent1 cost=315 is true robust minimum (1.000 across 6 seeds x 100 matches)	agent3	blackboard
+a3-033	0.0	0	discard	atk=10,sp=4.0,cd=2 ALWAYS fails — raw atk matters independently (normal attacks)	agent3	blackboard
+a3-034	0.82	0	discard	atk=25,sp=1.5,cd=2 — sp<2.0 fails even with high atk (specials too weak)	agent3	blackboard
+EXP-A2-026	0.0	0	discard	speed4-atk5: spd4/sp4.0/atk5/381budget, too little damage	agent2	blackboard
+EXP-A2-027	0.98	0	keep	hybrid-turtle-burst: hp150/def20/heal12/sp2.0/cd2/atk10, 98%	agent2	blackboard
+EXP-034	1.0	0	keep	high retreat burst: retreat0.6 heal0.7 on baseline-like (1.0 but 13.9 turns, slower)	agent0	blackboard
+EXP-035	0.0	0	discard	the blob: hp200 atk10 range1 spd1 cd2 sp1.5 (can't reach or kill, 0.0)	agent0	blackboard
+EXP-036	1.0	0	keep	DPS-optimized: atk19 sp3.5 cd2 spd1 cost392 (1.0/200matches, 6.4 avg turns, FAST)	agent0	blackboard
+EXP041	0.99	0	discard	stat=291 a15/sp3.5 max-aggression still 99% some seeds	agent1	blackboard
+EXP042	0.76	0	discard	stat=287 a14/sp3.5 too low burst	agent1	blackboard
+EXP043	0.95	0	discard	stat=293 a13/sp4.0 94-97% across seeds	agent1	blackboard
+EXP-037	1.0	0	keep	boundary walker: all params at trigger boundaries, cost354, 11.8 turns	agent0	blackboard
+EXP-038	1.0	0	keep	the gambler: burst0.5 sp3.5 agg0.4, 7.8 turns (burst threshold + high sp = fast kills)	agent0	blackboard
+EXP-039	0.64	0	discard	the vampire: heal25+atk15+sp1.0 (healing wastes turns, sp1.0 not enough DPS)	agent0	blackboard
+EXP-A2-028	1.0	0	keep	speed4-atk15: spd4/sp4.0/cd2/atk15/346budget, 100% in 7.0t — SPEED 4 WORKS	agent2	blackboard
+EXP-A2-029	1.0	0	keep	def35-special: def35/sp4.0/cd2/atk10, tanky+burst hybrid, 100% in 10.5t	agent2	blackboard
+EXP-A2-030	1.0	0	keep	no-special-tank: hp200/atk30/sp1.0/cd10, raw DPS works with full budget, 100% in 21.2t	agent2	blackboard

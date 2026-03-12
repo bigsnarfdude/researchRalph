@@ -1,0 +1,80 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	0.9442	0	keep	default config	setup	baseline
+EXP-001	0.681	0	discard	anti-cascade: retry=0 queue=3 reroute=0.2 (tiny queues kill delivery)	agent0	blackboard
+EXP-002	0.944	0	discard	loss_avoidance: loss=1.0 hop=0.0 ttl=50 bw=0.3 (same as baseline)	agent0	blackboard
+EXP-001	0.9446	0	keep	loss_weight 0.5->0.6	agent1	blackboard
+EXP-003	0.5107	0	discard	max_lb: lb=1.0 bw=1.0 loss=0 hop=0 ttl=50 retry=0 priority=0 (terrible, lb+no_loss_weight=death)	agent0	blackboard
+EXP-004	0.9439	0	discard	loss_latency: loss=1.0 latency=0.5 bw=0 lb=0 hop=0.5 (same as baseline)	agent0	blackboard
+EXP-002	0.9442	0	discard	loss_weight 0.5->0.4	agent1	blackboard
+EXP-003	0.9433	0	discard	hop_weight 1.0->0.9	agent1	blackboard
+EXP-A2-001	0.9433	0	discard	load-balancer: hop=0.3 lb=0.7 ttl=35 loss=0.7 (no improvement over baseline)	agent2	blackboard
+EXP-A2-002	0.9276	0	discard	qos-specialist: priority=0.9 retry=3 loss=0.6 bw=0.6 (high priority hurts long-distance)	agent2	blackboard
+EXP-004	0.9445	0	discard	bandwidth_weight 0.5->0.6	agent1	blackboard
+EXP-005	0.9438	0	discard	load_balance_factor 0.3->0.4	agent1	blackboard
+EXP-005	0.5283	0	discard	no_retry_no_priority: retry=0 priority=0 (retries are CRITICAL, 0.528)	agent0	blackboard
+EXP-006	0.7114	0	discard	no_retry_only: retry=0 priority=0.5 (retries worth ~0.23 points!)	agent0	blackboard
+EXP-006	0.9392	0	discard	retry_limit 5->4	agent1	blackboard
+EXP-007	0.9435	0	discard	max_queue_size 20->18	agent1	blackboard
+EXP-008	0.9447	0	keep	reroute_threshold 0.5->0.4	agent1	blackboard
+EXP-A3-001	0.9032	0	discard	retry_limit=2 (down from 5): retries help, reducing hurts delivery	agent3	blackboard
+EXP-007	0.9442	0	discard	max_priority: priority=1.0 (same as baseline, priority doesn't help above 0.5)	agent0	blackboard
+EXP-A2-003	0.9451	0	keep	low-priority+early-reroute: priority=0.1 reroute=0.3 loss=0.6 (marginal improvement)	agent2	blackboard
+EXP-008	0.9425	0	discard	min_ttl_reroute: ttl=5 reroute=0.1 (slightly worse, TTL too tight)	agent0	blackboard
+EXP-009	0.9455	0	keep	reroute_threshold 0.5->0.3	agent1	blackboard
+EXP-010	0.9455	0	keep	reroute_threshold 0.5->0.6	agent1	blackboard
+EXP-011	0.9442	0	discard	priority_ratio 0.5->0.4	agent1	blackboard
+EXP-012	0.9442	0	discard	ttl 20->22	agent1	blackboard
+EXP-A2-004	0.9446	0	discard	isolate-priority: priority=0.1 loss=0.6 (low priority slightly helps, within noise)	agent2	blackboard
+EXP-A3-002	0.9442	0	discard	hop_weight=0.5 (from 1.0): no change, same as baseline	agent3	blackboard
+EXP-009	0.9453	0	keep	moderate_lb_high_reroute: lb=0.5 reroute=0.8 ttl=30 (slightly above baseline!)	agent0	blackboard
+EXP-010	0.9411	0	discard	all_max_weights: all_weights=1.0 lb=0.7 reroute=0.9 ttl=50 queue=10 (slightly below baseline)	agent0	blackboard
+EXP-013	0.9443	0	discard	loss_weight 0.5->0.8	agent1	blackboard
+EXP-014	0.9467	0	keep	load_balance_factor 0.3->0.1	agent1	blackboard
+EXP-015	0.9443	0	discard	load_balance_factor 0.3->0.6	agent1	blackboard
+EXP-016	0.9275	0	discard	retry_limit 5->3	agent1	blackboard
+EXP-A2-005	0.9451	0	keep	isolate-reroute: reroute=0.3 loss=0.6 (marginal, reroute=0.3 may help slightly)	agent2	blackboard
+EXP-011	0.9425	0	discard	bw_loss_focus: bw=0.8 loss=0.8 hop=0.2 lb=0.6 reroute=0.7 ttl=35 priority=0.8 queue=15	agent0	blackboard
+EXP-017	0.9456	0	keep	load_balance_factor 0.3->0.0	agent1	blackboard
+EXP-018	0.9462	0	keep	load_balance_factor 0.3->0.2	agent1	blackboard
+EXP-019	0.9463	0	keep	load_balance_factor 0.3->0.05	agent1	blackboard
+EXP-A3-003	0.9453	0	keep	hop_weight=0.2 ttl=35: marginal improvement, 1 undelivered (TTL timeout?)	agent3	blackboard
+EXP-012	0.9456	0	discard	zero_lb: lb=0.0 (good but lb=0.1 is better per agent1)	agent0	blackboard
+EXP-020	0.9467	0	keep	load_balance_factor 0.1 retest	agent1	blackboard
+EXP-021	0.9445	0	discard	latency_weight 0.0->0.1	agent1	blackboard
+EXP-022	0.9439	0	discard	latency_weight 0.0->0.2	agent1	blackboard
+EXP-A3-004	0.9442	0	discard	hop=0.2 loss=0.8 ttl=50: no improvement, routing weights insensitive in this region	agent3	blackboard
+EXP-A2-006	0.9473	0	keep	combined-best: lb=0.0 reroute=0.3 loss=0.6 priority=0.1 (NEW BEST!)	agent2	blackboard
+EXP-013	0.9457	0	discard	combo1: lb=0.1 reroute=0.3 loss=0.7 priority=0.3 (close but no cigar)	agent0	blackboard
+EXP-014	0.9427	0	discard	pure_bw_hop: bw=1.0 loss=0 hop=1.0 lb=0.1 ttl=15 (ignoring loss hurts a bit)	agent0	blackboard
+EXP-023	0.9457	0	discard	LBF=0.1+reroute=0.4	agent1	blackboard
+EXP-024	0.9456	0	discard	LBF=0.1+loss_weight=0.6	agent1	blackboard
+EXP-025	0.9461	0	discard	LBF=0.1+bw_weight=0.6	agent1	blackboard
+EXP-026	0.9465	0	discard	LBF=0.1+queue=15	agent1	blackboard
+EXP-015	0.945	0	discard	high_latency: latency=1.0 lb=0.1 (latency weight doesn't matter much)	agent0	blackboard
+EXP-A2-007	0.9458	0	discard	add-latency: latency=0.3 on best config (latency avoidance doesn't help)	agent2	blackboard
+EXP-016	0.9339	0	discard	queue_sweep_5: queue=5 lb=0.1 (too small)	agent0	blackboard
+EXP-017	0.9392	0	discard	queue_sweep_8: queue=8 lb=0.1 (still too small)	agent0	blackboard
+EXP-018	0.9436	0	discard	queue_sweep_12: queue=12 lb=0.1 (getting closer but queue=20 still best)	agent0	blackboard
+EXP-A3-005	0.9457	0	discard	lb=0.1+reroute=0.3 combo: no synergy, 0.9457 < lb=0.1 alone (0.9467)	agent3	blackboard
+EXP-A2-008	0.8011	0	discard	priority=0.0 on best config (TERRIBLE — some priority is essential, 0.1 is floor)	agent2	blackboard
+EXP-A3-006	0.9424	0	discard	queue=10 lb=0.1 reroute=0.3: smaller queue hurts slightly (-0.002)	agent3	blackboard
+EXP-019	0.9456	0	discard	no_reroute: reroute=1.0 lb=0.0 (no rerouting is fine, 0.9456)	agent0	blackboard
+EXP-020	0.945	0	discard	low_ttl_no_reroute: ttl=10 reroute=1.0 lb=0.1 (TTL=10 fine, hops rarely exceed 10)	agent0	blackboard
+EXP-A2-009	0.9465	0	discard	queue=15 on best config (queue reduction from 20 doesn't help)	agent2	blackboard
+EXP-A2-010	0.946	0	discard	bw=0.8 on best config (higher BW weight doesn't help)	agent2	blackboard
+EXP-021	0.9471	0	keep	loss_sweep_winner: loss=0.3 lb=0.1 reroute=1.0 ttl=15 hop=1.0 bw=0.5 (new best!)	agent0	blackboard
+EXP-A2-011	0.9473	0	discard	ttl=12 on best config (TTL irrelevant with lb=0.0)	agent2	blackboard
+EXP-A2-012	0.9473	0	discard	ttl=8 on best config (same score, TTL 8-20 all fine)	agent2	blackboard
+EXP-A2-013	0.943	0	discard	ttl=5 on best config (too low, slight drop)	agent2	blackboard
+EXP-A2-014	0.9466	0	discard	pure-loss: bw=0 loss=1.0 on best config (routing weights don't matter much)	agent2	blackboard
+EXP-A2-015	0.9473	0	discard	reroute=0.2 on best config (same as 0.3, flat in 0.2-0.3 range)	agent2	blackboard
+EXP-A3-007	0.9467	0	keep	TTL=10 lb=0.1: faster TTL matches but doesn't beat baseline+lb	agent3	blackboard
+EXP-A3-008	0.9467	0	discard	TTL=7 lb=0.1: same 0.9467, TTL insensitive in 7-20 range	agent3	blackboard
+EXP-A3-009	0.946	0	discard	high bw=0.8 loss=0.8 hop=0.3 lb=0.1 ttl=10: routing weights insensitive	agent3	blackboard
+EXP-A2-016	0.946	0	discard	tuned-combo: loss=0.7 reroute=0.2 ttl=15 priority=0.2 (no improvement)	agent2	blackboard
+EXP-A3-010	0.946	0	discard	best+loss=0.3: slightly worse than loss=0.6	agent3	blackboard
+EXP-A3-011	0.9473	0	discard	best+priority=0.3: same as best, priority insensitive 0.1-0.3	agent3	blackboard
+EXP-A3-012	0.9473	0	discard	best+reroute=0.5: same as best, reroute insensitive 0.3-0.5	agent3	blackboard
+EXP-A3-013	0.946	0	discard	best+bw=0.3: slightly worse	agent3	blackboard
+EXP-A3-014	0.9473	0	discard	reroute=0.1 lb=0.0: same, confirms reroute meaningless with lb=0.0 (no congestion in cost)	agent3	blackboard
+EXP-A2-017	0.9415	0	discard	pure-hop: all weights=0 except hop=1.0, priority=0.3 (loss_weight helps slightly)	agent2	blackboard

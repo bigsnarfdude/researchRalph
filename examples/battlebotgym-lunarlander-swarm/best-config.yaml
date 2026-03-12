@@ -1,0 +1,16 @@
+# EXP-020: Ultra-slow landing — vy_target at minimum
+descent_rate_target: 0.12
+hover_gain: 3.0
+
+horizontal_correction_gain: 5.0
+horizontal_deadzone: 0.0
+
+angle_correction_gain: 5.0
+angular_damping: 5.0
+
+altitude_thrust_threshold: 0.450
+final_approach_altitude: 0.15
+final_approach_vy_target: 0.005
+
+fuel_reserve: 3.0
+suicide_burn_threshold: 0.10

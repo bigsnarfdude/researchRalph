@@ -1,0 +1,10 @@
+swing_gain: 10.0
+energy_target: 15.0
+max_swing_torque: 2.0
+balance_gain_p: 10.0
+balance_gain_d: 2.5
+max_balance_torque: 2.0
+switch_angle: 1.28
+damping: 2.75
+anticipation: 3.0
+deadzone: 0.0

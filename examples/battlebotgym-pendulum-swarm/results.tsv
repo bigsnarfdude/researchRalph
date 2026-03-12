@@ -1,0 +1,125 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	0.9273	0	keep	default config	setup	baseline
+EXP-001	0.9242	0	discard	max swing_gain=10 energy_target=25 switch_angle=0.2	agent0	blackboard
+EXP-002	0.9175	0	discard	wide switch_angle=1.5 balance_p=20 balance_d=5 anticipation=2	agent0	blackboard
+EXP-003	0.9085	0	discard	zero damping anticipation=5 deadzone=0 P=15 D=4	agent0	blackboard
+EXP-001	0.9263	0	discard	anticipation=1.1 (from 1.0, +10%)	agent1	blackboard
+EXP-002	0.9269	0	discard	anticipation=0.9 (from 1.0, -10%)	agent1	blackboard
+EXP-004	0.9310	0	keep	damping=3.0 energy_target=15 (gentle swing-up)	agent0	blackboard
+EXP-003	0.9310	0	keep	balance_gain_p=11.0 (from 10.0, +10%) NEW BEST	agent1	blackboard
+EXP-005	0.9285	0	discard	damping=5.0 energy_target=10 (over-damped)	agent0	blackboard
+EXP-006	0.9310	0	keep	inverted PD ratio P=5 D=10 damping=3 energy_target=15	agent0	blackboard
+EXP-004	0.9310	0	discard	balance_gain_p=12.0 (from 11.0, +9%) no improvement	agent1	blackboard
+EXP-007	0.9318	0	keep	swing_gain=8 energy_target=15 switch_angle=0.3 damping=3	agent0	blackboard
+EXP-005	0.9310	0	discard	balance_gain_d=3.0 (from 2.5, +20%) no improvement	agent1	blackboard
+EXP-A2-001	0.9317	0	keep	low swing_gain=3.0 damping=0.8 (rest from best)	agent2	blackboard
+EXP-006	0.9318	0	keep	switch_angle=0.4 (from 0.5, -20%) NEW BEST	agent1	blackboard
+EXP-A2-002	0.9249	0	discard	very low swing_gain=2.0 damping=0.5	agent2	blackboard
+EXP-007	0.9318	0	discard	switch_angle=0.3 (from 0.4, -25%) same score	agent1	blackboard
+EXP-A2-003	0.9260	0	discard	swing_gain=3 damping=0.8 anticipation=1.5 deadzone=0.05	agent2	blackboard
+EXP-008	0.9318	0	discard	swing_gain=4.5 (from 5.0, -10%) same score	agent1	blackboard
+EXP-001	0.9318	0	keep	balance_gain_d=1.5 (from 2.5) with damping=3.0 — less overdamping	agent3	blackboard
+EXP-008	0.9324	0	keep	anticipation=3 deadzone=0 on EXP-007 base	agent0	blackboard
+EXP-009	0.9326	0	keep	damping=2.5 (from 3.0, -17%) NEW BEST	agent1	blackboard
+EXP-010	0.9323	0	discard	damping=2.0 (from 2.5, -20%) slightly worse	agent1	blackboard
+EXP-A2-004	0.9326	0	keep	swing_gain=4 damping=1.0 P=15 D=5 (high PD moderate swing)	agent2	blackboard
+EXP-011	0.9326	0	discard	deadzone=0.05 (from 0.02) same score	agent1	blackboard
+EXP-A2-005	0.9326	0	discard	swing_gain=4 damping=1.0 P=18 D=4 no improvement	agent2	blackboard
+EXP-002	0.9326	0	discard	balance_gain_d=1.5 on new best (damping=2.5 anticipation=3) — same score, D redundant with damping	agent3	blackboard
+EXP-012	0.9326	0	discard	energy_target=18.0 (from 15.0) same score	agent1	blackboard
+EXP-A2-006	0.9328	0	keep	energy_target=12 swing_gain=4 damping=1.5	agent2	blackboard
+EXP-009	0.9271	0	discard	minimal swing (gain=0.5 torque=0.5) max balance P=20 D=8 switch=2.0	agent0	blackboard
+EXP-013	0.9213	0	discard	max_swing_torque=1.5 (from 2.0) worse, need full torque	agent1	blackboard
+EXP-003	0.9326	0	discard	anticipation=4.0 (from 3.0) — no improvement, anticipation saturated	agent3	blackboard
+EXP-A2-007	0.9328	0	discard	energy_target=10 swing_gain=4 damping=1.5 same score	agent2	blackboard
+EXP-014	0.9326	0	discard	anticipation=1.5 (from 1.0, +50%) same score	agent1	blackboard
+EXP-015	0.9326	0	discard	P=13 D=3.25 (4:1 ratio scaled up) same score	agent1	blackboard
+EXP-004	0.9326	0	discard	anticipation=5 + balance_gain_p=12 combo — no improvement, balance params saturated	agent3	blackboard
+EXP-016	0.9300	0	discard	max_balance_torque=1.5 (from 2.0) worse	agent1	blackboard
+EXP-010	0.9293	0	discard	pure balance mode switch=3.14 P=15 D=5 damp=1 antic=2	agent0	blackboard
+EXP-A2-008	0.9326	0	discard	anticipation=5 same score (saturated?)	agent2	blackboard
+EXP-A2-009	0.9326	0	discard	anticipation=0 same score (saturated?)	agent2	blackboard
+EXP-017	0.9324	0	discard	swing_gain=7.0 (from 8.0) slightly worse	agent1	blackboard
+EXP-018	0.9323	0	discard	swing_gain=9.0 (from 8.0) slightly worse	agent1	blackboard
+EXP-005	0.9326	0	keep	energy_target=25 (was 15) SAME SCORE — confirmed energy_target is DEAD PARAM (unused in engine)	agent3	blackboard
+EXP-A2-010	0.9227	0	discard	very low PD P=2 D=0.5 damping=0.3 too weak	agent2	blackboard
+EXP-011	0.9325	0	keep	tight switch=0.1 swing=10 P=20 D=8 damp=2 antic=2	agent0	blackboard
+EXP-019	0.9324	0	discard	damping=1.5 (from 2.5) slightly worse	agent1	blackboard
+EXP-A2-011	0.9292	0	discard	moderate PD P=5 D=1.5 damping=1 anticipation=1	agent2	blackboard
+EXP-A2-012	0.9325	0	discard	switch_angle=0.1 no improvement	agent2	blackboard
+EXP-A2-013	0.9334	0	keep	switch_angle=0.8 NEW BEST	agent2	blackboard
+EXP-012	0.9090	0	discard	zero damping + max D=10 P=15 — balance unstable without damping	agent0	blackboard
+EXP-013	0.9313	0	discard	swing=10 damp=1.5 D=6 P=12 antic=2 switch=0.3	agent0	blackboard
+EXP-006	0.9215	0	discard	damping=0.3 D=5 swing_gain=10 switch=0.3 — low damping hurts balance (89.6% vs 91%)	agent3	blackboard
+EXP-A2-014	0.9329	0	discard	switch_angle=1.0 slightly worse	agent2	blackboard
+EXP-A2-015	0.9329	0	discard	switch_angle=0.6 slightly worse	agent2	blackboard
+EXP-014	0.8993	0	discard	low max_swing_torque=1.0 swing=10 — too weak to swing up	agent0	blackboard
+EXP-020	0.9328	0	discard	switch_angle=0.9 (from 0.8) slightly worse	agent1	blackboard
+EXP-021	0.9336	0	keep	switch_angle=0.7 (from 0.8) marginal improvement	agent1	blackboard
+EXP-022	0.9329	0	discard	switch_angle=0.6 (from 0.8) worse	agent1	blackboard
+EXP-A2-016	0.9336	0	keep	switch_angle=0.7 NEW BEST	agent2	blackboard
+EXP-A2-017	0.9328	0	discard	switch_angle=0.9 worse	agent2	blackboard
+EXP-007	0.9329	0	discard	swing_gain=10 on switch_angle=0.8 base — marginal, not new best	agent3	blackboard
+EXP-015	0.9246	0	discard	bang-bang deadzone=0.5 P=20 — no correction within 0.5rad	agent0	blackboard
+EXP-A2-018	0.9335	0	discard	switch_angle=0.65	agent2	blackboard
+EXP-A2-019	0.9339	0	keep	switch_angle=0.75 NEW BEST	agent2	blackboard
+EXP-016	0.9286	0	discard	swing=10 damping=1 switch=0.75 — low damping hurts balance	agent0	blackboard
+EXP-023	0.9313	0	discard	damping=1.0 D=4.0 (same eff balance, less swing drag) worse	agent1	blackboard
+EXP-024	0.9335	0	discard	damping=1.5 D=3.5 (shifted damping to D) slightly worse	agent1	blackboard
+EXP-017	0.9336	0	discard	max P=20 D=10 on switch=0.75 base — gains clamped by torque limit	agent0	blackboard
+EXP-A2-020	0.9286	0	discard	swing_gain=10 damping=1.0 low damping hurts balance	agent2	blackboard
+EXP-008	0.9332	0	discard	damping=2.0 switch=0.75 — slightly worse than best	agent3	blackboard
+EXP-A2-021	0.9337	0	discard	swing_gain=10 no improvement	agent2	blackboard
+EXP-025	0.9337	0	discard	swing_gain=10.0 (from 8.0, max) slightly worse	agent1	blackboard
+EXP-018	0.9331	0	discard	low P=3 max antic=5 switch=0.75 — still competitive despite low P	agent0	blackboard
+EXP-009	0.9338	0	keep	damping=3.0 switch=0.75 NEW BEST — higher damping + wider switch	agent3	blackboard
+EXP-026	0.9339	0	discard	swing_gain=6.0 (from 8.0) same score	agent1	blackboard
+EXP-027	0.9328	0	discard	balance_gain_p=15.0 (from 10.0) worse	agent1	blackboard
+EXP-019	0.9331	0	discard	D=0 damping=4 P=5 antic=5 switch=0.75 — confirms PD interchangeability	agent0	blackboard
+EXP-010	0.9333	0	discard	damping=3.5 switch=0.75 — worse than damping=3.0	agent3	blackboard
+EXP-A2-022	0.9045	0	discard	max_balance_torque=1.0 too weak for balance	agent2	blackboard
+EXP-028	0.9335	0	discard	damping=3.0 switch=0.7 slightly worse than best	agent1	blackboard
+EXP-011	0.9331	0	discard	switch=0.85 damping=3.0 — worse than 0.75	agent3	blackboard
+EXP-A2-023	0.9239	0	discard	max_balance_torque=1.5 still too weak	agent2	blackboard
+EXP-012	0.9334	0	discard	switch=0.65 damping=3.0 — close but not best	agent3	blackboard
+EXP-029	0.9337	0	discard	swing=10 damping=2.0 D=3.0 slightly worse	agent1	blackboard
+EXP-020	0.9341	0	keep	switch_angle=1.2 on best base — possible new best	agent0	blackboard
+EXP-A2-024	0.9341	0	keep	switch=0.78 damping=3.0 swing=8 NEW BEST (grid search)	agent2	blackboard
+EXP-021	0.9331	0	discard	switch_angle=1.0 — worse than 1.2	agent0	blackboard
+EXP-013	0.9335	0	discard	switch=0.70 damping=3.0 — below 0.75 peak	agent3	blackboard
+EXP-022	0.9338	0	discard	switch_angle=1.5 — slightly worse than 1.2	agent0	blackboard
+EXP-030	0.9340	0	discard	switch=1.0 P=15 D=5 very close to best but not new best	agent1	blackboard
+EXP-014	0.9340	0	keep	switch=0.78 damping=3.0 — close to best (0.9341 by agent2)	agent3	blackboard
+EXP-023	0.9337	0	discard	switch_angle=1.1 — slightly worse than 1.2	agent0	blackboard
+EXP-031	0.9340	0	discard	switch_angle=1.4 (from 1.2) same score	agent1	blackboard
+EXP-032	0.9331	0	discard	switch_angle=1.0 (from 1.2) worse with damping=3.0	agent1	blackboard
+EXP-033	0.9340	0	discard	P=12 D=4 from best, same score	agent1	blackboard
+EXP-034	0.9339	0	discard	P=20 D=8 (max PD) slightly worse	agent1	blackboard
+EXP-015	0.9337	0	discard	switch=1.1 damping=3.0 — slightly below 1.2	agent3	blackboard
+EXP-035	0.9340	0	discard	damping=3.5 (from 3.0) same score	agent1	blackboard
+EXP-024	0.9337	0	discard	damping=4 switch=1.2 — slightly worse than damping=3	agent0	blackboard
+EXP-036	0.9337	0	discard	damping=4.0 (from 3.0) slightly worse	agent1	blackboard
+EXP-016	0.9341	0	keep	switch=1.3 damping=3.0 — tied with 1.2 at 0.9341	agent3	blackboard
+EXP-037	0.9340	0	discard	swing_gain=10 with switch=1.2 damping=3.0 same	agent1	blackboard
+EXP-025	0.9338	0	discard	damping=2 switch=1.2 — flat plateau	agent0	blackboard
+EXP-026	0.9224	0	discard	zero swing_gain — pure PD catch, switch=2.5	agent0	blackboard
+EXP-017	0.9340	0	discard	switch=1.4 damping=3.0 — plateau edge, starting to drop	agent3	blackboard
+EXP-A2-025	0.9342	0	keep	swing=9 switch=0.78 damping=2.75 NEW BEST (fine grid)	agent2	blackboard
+EXP-027	0.9208	0	discard	max swing=10 min damping=0.1 switch=2.0 — wild oscillation	agent0	blackboard
+EXP-038	0.9338	0	discard	switch_angle=1.8 (from 1.2) slightly worse	agent1	blackboard
+EXP-018	0.9342	0	keep	switch=1.2 damping=2.5 NEW BEST — lower damping better at wider switch	agent3	blackboard
+EXP-039	0.9340	0	discard	switch_angle=1.5 same	agent1	blackboard
+EXP-040	0.9340	0	discard	switch_angle=1.3 same	agent1	blackboard
+EXP-028	0.9209	0	discard	anti-pattern: low swing=1 max damp=5 tiny switch=0.1	agent0	blackboard
+EXP-019	0.9338	0	discard	switch=1.2 damping=2.0 — too low	agent3	blackboard
+EXP-029	0.9265	0	discard	unclamped swing gain=1.5 damp=0.3 switch=1.2	agent0	blackboard
+EXP-020	0.9339	0	discard	switch=1.2 damping=2.7 — below 2.5 optimum	agent3	blackboard
+EXP-030	0.9340	0	discard	swing=6 damp=2 switch=1.2 — plateau	agent0	blackboard
+EXP-A2-026	0.9345	0	keep	switch=1.3 swing=10 damping=2.75 NEW BEST (second basin!)	agent2	blackboard
+EXP-021	0.9342	0	keep	switch=1.25 damping=2.5 — tied with 1.2 at 0.9342	agent3	blackboard
+EXP-022	0.9339	0	discard	switch=1.15 damping=2.5 — below plateau	agent3	blackboard
+EXP-031	0.9303	0	keep	200-episode grid: damp=3.0 switch=1.2 is true optimum (0.9303@200ep)	agent0	blackboard
+EXP-A2-027	0.9346	0	keep	switch=1.32 damping=2.8 swing=10 NEW BEST	agent2	blackboard
+EXP-023	0.9343	0	discard	switch=1.35 damping=2.6 swing=10 — below best 0.9346	agent3	blackboard
+EXP-041	0.9346	0	keep	2D grid best: swing=10 damping=2.75 switch=1.28 NEW BEST	agent1	blackboard
+EXP-024	0.9343	0	discard	switch=1.32 damping=2.6 swing=10 — 0.9343, below best	agent3	blackboard

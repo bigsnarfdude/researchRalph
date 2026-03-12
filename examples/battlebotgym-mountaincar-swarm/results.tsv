@@ -1,0 +1,183 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	1.0	0	keep	default config	setup	baseline
+EXP-001	0.0	0	discard	zero swing + max right_bias: pure right push fails completely	agent0	blackboard
+EXP-002	1.0	0	keep	swing_aggression=0.1 still perfect, same avg steps	agent0	blackboard
+EXP-003	1.0	0	keep	swing_aggression=0.0 still perfect — parameter may be irrelevant	agent0	blackboard
+EXP-004	0.98	0	keep	momentum_threshold=-0.07 (extreme neg): slight degradation 98%	agent0	blackboard
+EXP-005	1.0	0	keep	momentum_threshold=0.07 (extreme pos): still perfect	agent0	blackboard
+EXP-006	1.0	0	keep	position_switch_point=-1.2 (min): still perfect	agent0	blackboard
+EXP-007	1.0	0	keep	position_switch_point=0.0 (max): still perfect	agent0	blackboard
+EXP-A1-001	1.0	0	keep	momentum_threshold=-0.01 (avg_steps=140.6)	agent1	blackboard
+EXP-A1-002	1.0	0	keep	momentum_threshold=0.01 (avg_steps=137.0)	agent1	blackboard
+EXP-A1-003	0.98	0	keep	momentum_threshold=-0.03 (avg_steps=143.4)	agent1	blackboard
+EXP-A1-004	1.0	0	keep	momentum_threshold=0.03 (avg_steps=137.0)	agent1	blackboard
+EXP-A1-005	0.98	0	keep	momentum_threshold=-0.05 (avg_steps=143.4)	agent1	blackboard
+EXP-A1-006	1.0	0	keep	momentum_threshold=0.05 (avg_steps=137.0)	agent1	blackboard
+EXP-008	0.0	0	discard	velocity_gain=0.0: total failure — THIS is the key param	agent0	blackboard
+EXP-A2-001	0.98	0	keep	coast_zone_width=0.3, right_bias=-0.5: slight degradation but faster avg steps (126 vs 137)	agent2	blackboard
+EXP-A1-007	1.0	0	keep	position_switch_point=-0.1 (avg_steps=137.0)	agent1	blackboard
+EXP-A1-008	1.0	0	keep	position_switch_point=-0.5 (avg_steps=137.0)	agent1	blackboard
+EXP-A1-009	1.0	0	keep	position_switch_point=0.0 (avg_steps=137.0)	agent1	blackboard
+EXP-009	1.0	0	keep	velocity_gain=1.0: still perfect	agent0	blackboard
+EXP-A2-002	1.0	0	keep	position_switch_point=-1.0, peak_detection_weight=4.0: perfect score, faster avg steps (119.6 vs 137)	agent2	blackboard
+EXP-010	1.0	0	keep	velocity_gain=0.1: still perfect — even tiny gain works	agent0	blackboard
+EXP-A2-003	1.0	0	keep	position_switch_point=-1.2, peak_detection_weight=5.0: still perfect, avg steps 119.7	agent2	blackboard
+EXP-011	1.0	0	keep	velocity_gain=0.01: still perfect	agent0	blackboard
+EXP-A1-010	1.0	0	keep	swing_aggression=0.0 (avg_steps=137.0, insensitive)	agent1	blackboard
+EXP-A1-011	1.0	0	keep	velocity_gain=0.5 (avg_steps=137.0)	agent1	blackboard
+EXP-A1-012	0.0	0	discard	velocity_gain=0.0 (avg_steps=200.0, BREAKS POLICY)	agent1	blackboard
+EXP-A1-013	1.0	0	keep	velocity_gain=0.0001 (avg_steps=137.0, threshold very low)	agent1	blackboard
+EXP-012	1.0	0	keep	velocity_gain=0.001: still perfect — binary threshold behavior	agent0	blackboard
+EXP-006	1.0	0	keep	position_switch_point=-0.5: no effect, same 137 avg steps	agent3	blackboard
+EXP-007	1.0	0	keep	position_switch_point=-1.0 (extreme): no effect, same 137 avg steps	agent3	blackboard
+EXP-008	1.0	0	keep	position_switch_point=0.0 (max): no effect, same 137 avg steps	agent3	blackboard
+EXP-A2-004	0.0	0	discard	velocity_gain=1.0, position_gain=8.0: position-dominant signal fails completely	agent2	blackboard
+EXP-A2-005	1.0	0	keep	velocity_gain=5.0, position_gain=3.0: perfect but slower avg steps (143.4)	agent2	blackboard
+EXP-009	0.0	0	discard	velocity_gain=0.0: CRITICAL param, total failure without it	agent3	blackboard
+EXP-010	1.0	0	keep	velocity_gain=5.0: still perfect, 137 avg steps	agent3	blackboard
+EXP-011	1.0	0	keep	energy_threshold=0.0: no effect on score or steps	agent3	blackboard
+EXP-012	1.0	0	keep	energy_threshold=1.0: no effect on score or steps	agent3	blackboard
+EXP-013	1.0	0	keep	peak_detection_weight=5.0: perfect + FASTER 119.7 avg steps (was 137)	agent3	blackboard
+EXP-014	0.9	0	discard	coast_zone_width=0.5: degrades to 90%, 127.5 avg steps	agent3	blackboard
+EXP-013	0.0	0	discard	position_gain=10 only (no vel_gain): fails — position signal alone cant build momentum	agent0	blackboard
+EXP-A1-014	1.0	0	keep	energy_threshold insensitive 0.0-1.0 (avg_steps=137.0)	agent1	blackboard
+EXP-A1-015	0.98	0	discard	coast_zone_width=0.1 (avg_steps=121.9, score drops)	agent1	blackboard
+EXP-A1-016	0.9	0	discard	coast_zone_width=0.3 (avg_steps=126.4, score drops)	agent1	blackboard
+EXP-A1-017	1.0	0	keep	right_bias=0.5 (avg_steps=119.6, FASTER!)	agent1	blackboard
+EXP-A1-018	1.0	0	keep	right_bias=1.0 (avg_steps=120.2, fast)	agent1	blackboard
+EXP-A1-019	1.0	0	keep	peak_detection_weight=1.0 (avg_steps=119.6, FASTER!)	agent1	blackboard
+EXP-A1-020	1.0	0	keep	position_gain=10.0 (avg_steps=147.8, SLOWER)	agent1	blackboard
+EXP-014	1.0	0	keep	right_bias=-1.0: still perfect — right_bias*0.01 too small vs vel_gain*vel	agent0	blackboard
+EXP-A2-006	0.98	0	keep	momentum_threshold=-0.05, position_switch_point=-1.0, peak_detection=4.0: slight degradation	agent2	blackboard
+EXP-015	1.0	0	keep	energy_threshold=1.0: still perfect — Layer 2 alone handles goal reaching	agent0	blackboard
+EXP-015	1.0	0	keep	peak_detection_weight=2.5: perfect, 119.6 avg steps	agent3	blackboard
+EXP-016	1.0	0	keep	peak_detection_weight=1.0: perfect, 119.6 avg steps — minimal effective value	agent3	blackboard
+EXP-017	1.0	0	keep	velocity_gain=1.0: still perfect, 137 avg steps	agent3	blackboard
+EXP-018	0.98	0	discard	coast_zone_width=0.1: slight degradation 98%, 121.9 avg steps	agent3	blackboard
+EXP-019	1.0	0	keep	position_gain=5.0: perfect but SLOWER 141.5 avg steps	agent3	blackboard
+EXP-020	1.0	0	keep	position_gain=10.0: perfect but SLOWER 147.8 avg steps — position_gain hurts	agent3	blackboard
+EXP-A2-007	1.0	0	keep	momentum_threshold=0.03, position_switch_point=-1.0, peak_detection=4.0: perfect, avg steps 119.6	agent2	blackboard
+EXP-016	1.0	0	keep	energy_threshold=0.0: still perfect — Layer 1 triggers but car falls back and Layer 2 recovers	agent0	blackboard
+EXP-017	0.88	0	keep	coast_zone=0.5 + peak_weight=5.0: first non-velocity degradation	agent0	blackboard
+EXP-018	0.9	0	keep	coast_zone=0.5 alone: 90% — wide coast zone hurts	agent0	blackboard
+EXP-A2-008	1.0	0	keep	energy_threshold=0.1 with deep swing config: no change from 0.5, avg 119.6	agent2	blackboard
+EXP-021	1.0	0	keep	peak_detection=1.0+velocity_gain=5.0: no interaction, 119.6 avg steps	agent3	blackboard
+EXP-022	1.0	0	keep	peak_detection=1.0+swing_aggression=0.0: no interaction, 119.6 avg steps	agent3	blackboard
+EXP-023	1.0	0	keep	velocity_gain=0.5: still perfect, 137 avg steps — works very low	agent3	blackboard
+EXP-024	1.0	0	keep	peak_detection=1.0+right_bias=0.5: no interaction, 119.6 avg steps	agent3	blackboard
+EXP-025	1.0	0	keep	peak_detection=1.0+momentum_threshold=0.03: no interaction, 119.6 avg steps	agent3	blackboard
+EXP-A2-009	1.0	0	keep	energy_threshold=1.0 with deep swing: still no change, avg 119.6 — energy_threshold irrelevant with deep swing	agent2	blackboard
+EXP-019	0.0	0	discard	worst-case combo (all bad extremes + vel_gain=0.001): fails — coast_zone dominates	agent0	blackboard
+EXP-020	0.0	0	discard	worst-case + coast=0: still fails — pos_gain*0.01*pos overwhelms vel_gain=0.001	agent0	blackboard
+EXP-026	1.0	0	keep	velocity_gain=0.1: still perfect, 137 avg steps — works extremely low	agent3	blackboard
+EXP-027	1.0	0	keep	peak_detection_weight=0.5: same speedup 119.6 avg steps	agent3	blackboard
+EXP-028	1.0	0	keep	peak_detect=5+right_bias=0.3+mom_thresh=0.03: 119.2 avg steps — best so far	agent3	blackboard
+EXP-021	0.0	0	discard	vel_gain=0.001 + coast=0.5 + peak=5: coast zone swallows tiny signal	agent0	blackboard
+EXP-A1-021	1.0	0	keep	right_bias=0.01 (avg_steps=118.9, BEST EFFICIENCY)	agent1	blackboard
+EXP-A1-022	1.0	0	keep	right_bias=0.005 vg=5.0 (avg_steps=118.9)	agent1	blackboard
+EXP-A1-023	1.0	0	keep	right_bias=0.005 vg=10.0 (avg_steps=118.9, same)	agent1	blackboard
+EXP-022	0.98	0	keep	worst-case (momentum=-0.07, switch=0, agg=0, energy=0) but clean signal: 0.98	agent0	blackboard
+EXP-A2-010	1.0	0	keep	momentum_threshold=0.07+peak_detection=1.0+right_bias=1.0: 120.2 avg steps, no improvement over 119.6	agent2	blackboard
+EXP-023	1.0	0	keep	speed demon: peak=5+right_bias=0.01+pos_gain=0+energy=0: 119.7 avg steps	agent0	blackboard
+EXP-029	1.0	0	keep	peak=5+right_bias=0.5+mom=0.05: 119.7 avg steps	agent3	blackboard
+EXP-030	1.0	0	keep	peak=5+right_bias=-0.5: 137.3! left bias UNDOES peak detection benefit	agent3	blackboard
+EXP-031	1.0	0	keep	peak=5+right_bias=1.0: 120.2, too much right bias hurts	agent3	blackboard
+EXP-032	1.0	0	keep	peak=5+energy_thresh=0.0: 119.7, energy_threshold irrelevant	agent3	blackboard
+EXP-033	0.98	0	discard	peak=1+vel_gain=0.5+agg=0.5: 98%, agg+vel_gain interaction	agent3	blackboard
+EXP-024	1.0	0	keep	tuned coast=0.05+peak=3+right=0.05: 120.1 avg steps	agent0	blackboard
+EXP-A2-011	1.0	0	keep	balanced combo: swing_agg=0.5, peak=2.0, coast=0.05, right_bias=0.3: 119.9 avg steps	agent2	blackboard
+EXP-025	1.0	0	keep	minimal config: only vel_gain=10 everything else zero: 1.0, 137 avg steps	agent0	blackboard
+EXP-026	1.0	0	keep	fine-tuned coast=0.02+peak=2+right=0.02: 119.7 avg steps	agent0	blackboard
+EXP-A2-012	1.0	0	keep	right_bias=0.005 only: confirmed agent1 finding of 118.9 avg steps	agent2	blackboard
+EXP-034	1.0	0	keep	right_bias=0.01+peak=1.0: 119.0 avg steps — NOT additive	agent3	blackboard
+EXP-035	1.0	0	keep	right_bias=0.02: 119.1 avg steps — slightly worse than 0.01	agent3	blackboard
+EXP-036	1.0	0	keep	right_bias=0.005: 118.9 avg steps — same as 0.01, floor reached	agent3	blackboard
+EXP-037	1.0	0	keep	right_bias=0.01+peak=1+mom=0.01: 119.0 — combos don't improve	agent3	blackboard
+EXP-027	0.0	0	discard	right_bias=1.0 + vel_gain=0.5: fails — high right_bias prevents leftward momentum building	agent0	blackboard
+EXP-028	1.0	0	keep	vel_gain=10 overpowers right_bias=1.0: 1.0 score, 120.2 avg steps	agent0	blackboard
+EXP-A2-013	0.8	0	discard	velocity_gain=0.01+right_bias=0.005: too low vel_gain degrades to 0.8	agent2	blackboard
+EXP-029	0.58	0	keep	vel_gain=1.0 vs right_bias=1.0: partial degradation 58%	agent0	blackboard
+EXP-030	0.8	0	keep	vel_gain=2.0 vs right_bias=1.0: 80% — improving but still degraded	agent0	blackboard
+EXP-A2-014	1.0	0	keep	Layer1 dominant: energy=0, switch=0.0, vel_gain=10: perfect but 137 avg steps	agent2	blackboard
+EXP-031	0.96	0	keep	vel_gain=5.0 vs right_bias=1.0: 96% 124 avg steps — near threshold	agent0	blackboard
+EXP-A1-024	1.0	0	keep	right_bias=0.005 ROBUST across 7 seeds 100eps each (avg_steps 118.7-119.6)	agent1	blackboard
+EXP-A1-025	0.0	0	discard	vg=0.1 rb=1.0 (breaks: too much right bias drowns velocity signal)	agent1	blackboard
+EXP-A1-026	0.58	0	discard	vg=0.5 rb=0.5 (partially broken, 156.8 steps)	agent1	blackboard
+EXP-A1-027	1.0	0	keep	cw=0.01 rb=0.005 (avg_steps=119.6, coast doesn't help)	agent1	blackboard
+EXP-A2-015	0.54	0	discard	anti-archetype: vel_gain=3, pos_gain=5, right_bias=-1.0: severe degradation 0.54	agent2	blackboard
+EXP-032	0.0	0	discard	triple conflict: vel=0.001+pos=10+right=1: always pushes right from position signal	agent0	blackboard
+EXP-033	1.0	0	keep	right_bias=0.008+peak=0.3: 118.9 avg steps — ties best	agent0	blackboard
+EXP-A2-016	1.0	0	keep	velocity_gain=0.0005: still perfect 137 avg steps — threshold even lower than 0.001	agent2	blackboard
+EXP-034	1.0	0	keep	right_bias=0.015+momentum=0.03: 119.0 — doesn't beat 118.9	agent0	blackboard
+EXP-035	1.0	0	keep	right_bias=0.01 200-episode: 1.0 score, 119.4 avg steps — robust	agent0	blackboard
+EXP-A2-017	1.0	0	keep	velocity_gain=0.00001: still perfect\! Binary sign detection only — magnitude irrelevant	agent2	blackboard
+EXP-A1-028	0.88	0	discard	mt=-0.07 cw=0.3 (compound failure: coast+neg_threshold)	agent1	blackboard
+EXP-A1-029	0.96	0	discard	mt=-0.03 cw=0.1 (mild compound failure)	agent1	blackboard
+EXP-A1-030	1.0	0	keep	mt=-0.07 pg=10 (score ok but avg_steps=151.6)	agent1	blackboard
+EXP-A1-031	1.0	0	keep	vg=10 rb=1.0 mt=0.07 (extreme corner, still 1.0, steps=120.2)	agent1	blackboard
+EXP-038	0.98	0	keep	all harmful params (coast=0.5+mom=-0.07+pg=10): only 0.98 — surprisingly resilient	agent3	blackboard
+EXP-039	0.8	0	discard	vel_gain=0.01+right_bias=0.005: INTERACTION — tiny right_bias dominates tiny vel_gain at low vel	agent3	blackboard
+EXP-040	0.98	0	keep	right_bias=-1.0+mom=-0.07: 0.98, right_bias*0.01 too small to dominate	agent3	blackboard
+EXP-041	1.0	0	keep	best config (right_bias=0.005) at 200 episodes: still 1.0, 119.4 avg steps — ROBUST	agent3	blackboard
+EXP-042	1.0	0	keep	aggressive goal-seek archetype: 1.0, 120.2 avg steps	agent3	blackboard
+EXP-036	1.0	0	keep	vel_gain=3+right_bias=0.2: 120.0 avg steps — mild right bias ok	agent0	blackboard
+EXP-037	1.0	0	keep	aggressive commit: energy=0.2+switch=-0.6+right=0.01: 118.9 — tied	agent0	blackboard
+EXP-A2-018	0.0	0	discard	vel_gain=0.001+coast=0.01+aggr=0.0: coast zone swallows signal — always coasts, 0.0 score	agent2	blackboard
+EXP-043	1.0	0	keep	pos_gain=2+peak=3+vel=5: 140.9, position_gain still slows even with peak	agent3	blackboard
+EXP-044	1.0	0	keep	cautious swinger (energy=0.9+mom=0.05+peak=2+switch=-0.8): 119.6	agent3	blackboard
+EXP-045	1.0	0	keep	vel_gain=0.001: still works! Confirms extremely low threshold	agent3	blackboard
+EXP-046	1.0	0	keep	coast=0.05+peak=1: safe combo, 120.0 avg steps	agent3	blackboard
+EXP-047	0.98	0	keep	INTERACTION: agg=0+coast=0.02+peak=1: 0.98 — low aggression widens coast zone 4x	agent3	blackboard
+EXP-038	1.0	0	keep	right_bias=0.001: same 118.9 as 0.01 — binary phase change at any positive value	agent0	blackboard
+EXP-A2-019	1.0	0	keep	vel_gain=1.0+right_bias=0.005: 119.1 avg steps, slightly worse than vel_gain=10+right_bias=0.005	agent2	blackboard
+EXP-039	1.0	0	keep	right_bias=-0.001: same as baseline 137.0 — negative doesn't help	agent0	blackboard
+EXP-A2-020	1.0	0	keep	vel_gain=10+right_bias=0.002: 118.9 avg steps — same as 0.005	agent2	blackboard
+EXP-048	0.96	0	keep	INTERACTION: agg=0.5+coast=0.05+peak=1: 0.96 — coast_threshold=0.003 exceeds safe zone	agent3	blackboard
+EXP-049	1.0	0	keep	agg=0+coast=0.01+peak=1: 1.0, 120.0 — coast_threshold=0.001 is still safe	agent3	blackboard
+EXP-050	1.0	0	keep	right_bias=0.003 at 200ep: 1.0, 119.4 — same as 0.005	agent3	blackboard
+EXP-051	1.0	0	keep	right_bias=0.008 at 200ep: 1.0, 119.4 — same floor	agent3	blackboard
+EXP-052	1.0	0	keep	right_bias=0.015 at 200ep: 1.0, 119.5 — marginally worse	agent3	blackboard
+EXP-A2-021	1.0	0	keep	right_bias=0.05: 119.1 avg steps — slightly worse than 0.002-0.01 range	agent2	blackboard
+EXP-A2-022	1.0	0	keep	right_bias=0.001: 118.9 avg steps — same as 0.002 and 0.005	agent2	blackboard
+EXP-A2-023	1.0	0	keep	right_bias=0.001 200 episodes: score=1.0, avg_steps=119.4 — robust confirmation	agent2	blackboard
+EXP-040	1.0	0	keep	momentum_threshold=0.05+energy=0.3: same bimodal 137.0 — doesn't help slow group	agent0	blackboard
+EXP-042	1.0	0	keep	position_gain=1+switch=-0.5: 144.9 avg steps — WORSE, position_gain always hurts	agent0	blackboard
+EXP-A2-024	1.0	0	keep	momentum_threshold=0.05+right_bias=0.003: 118.9 avg — no improvement from momentum_threshold	agent2	blackboard
+EXP-A1-032	1.0	0	keep	sp=-1.0 pg=2.0 rb=-0.5 (avg_steps=120.3, all 2-swing)	agent1	blackboard
+EXP-A1-033	1.0	0	keep	sp=-1.0 pg=0.5 rb=-0.5 (avg_steps=137.2, 16/34 bimodal)	agent1	blackboard
+EXP-043	0.98	0	keep	ALL degradation factors combined: only drops to 0.98 — extremely robust	agent0	blackboard
+EXP-044	0.98	0	keep	max degradation with vel_gain=10: 0.98 — vel_gain=10 is bulletproof	agent0	blackboard
+EXP-A2-025	1.0	0	keep	position_gain=1.0+right_bias=0.003: 137.7 avg — position_gain CANCELS right_bias benefit	agent2	blackboard
+EXP-045	0.0	0	discard	max degradation + vel_gain=1: FAILS — vel_gain=1 not robust enough against toxics	agent0	blackboard
+EXP-046	0.96	0	keep	max degradation + vel_gain=5: 0.96 — barely surviving	agent0	blackboard
+EXP-A1-034	0.92	0	discard	archetype: all-coast (sa=0 cw=0.05 pdw=5)	agent1	blackboard
+EXP-A1-035	0.08	0	discard	archetype: position-dominant (pg=10 vg=1)	agent1	blackboard
+EXP-A1-036	1.0	0	keep	archetype: energy-gater (mt=0.07 et=0 sp=0) same as baseline	agent1	blackboard
+EXP-A2-026	0.98	0	keep	ALL MAX PARAMS: 0.98 score, 149 avg steps — only 1 failure despite maxing everything	agent2	blackboard
+EXP-047	0.7	0	keep	max degradation + vel_gain=3: 0.70 — significant failure	agent0	blackboard
+EXP-053	1.0	0	keep	DISTRIBUTION: baseline bimodal confirmed: 16×fast(avg=92.3) + 34×slow(avg=158.0), gap 103-152	agent3	blackboard
+EXP-054	1.0	0	keep	DISTRIBUTION: right_bias=0.005 unimodal: all 113-125, avg=118.9	agent3	blackboard
+EXP-055	1.0	0	keep	DISTRIBUTION: peak=1.0 TRIMODAL: 15×fast(86-104) + 24×mid(114-119) + 11×slow(161-182)	agent3	blackboard
+EXP-056	1.0	0	keep	DISTRIBUTION: peak=1+rb=0.005 = IDENTICAL to peak=1 alone! rb signal swallowed by coast zone	agent3	blackboard
+EXP-057	1.0	0	keep	DISTRIBUTION: right_bias=0.001 unimodal: all 113-125, avg=118.9. Even 0.001 breaks symmetry	agent3	blackboard
+EXP-A2-027	0.0	0	discard	ALL MIN PARAMS (including vel_gain=0): total failure as expected	agent2	blackboard
+EXP-048	0.86	0	keep	pos_gain=5+switch=-1.2+right=0.01: 0.86 — position_gain + right_bias interaction hurts	agent0	blackboard
+EXP-049	1.0	0	keep	minimalist vel follower (energy=1,mom=0.07,switch=-1.2): same 137 bimodal	agent0	blackboard
+EXP-A1-037	1.0	0	keep	absolute minimal: vg=0.0001 all-else-zero (score=1.0, avg=137)	agent1	blackboard
+EXP-A1-038	0.0	0	discard	vg=0.0001+rb=0.005 (INTERACTION: rb dominates at low vg)	agent1	blackboard
+EXP-A1-039	0.94	0	discard	engine defaults (coast=0.01+pg=1.0 hurts)	agent1	blackboard
+EXP-A1-040	0.8	0	discard	vg=0.01+rb=0.005 interaction threshold	agent1	blackboard
+EXP-A1-041	1.0	0	keep	vg=0.05+rb=0.005 minimum viable combo (avg=120.2)	agent1	blackboard
+EXP-A2-028	0.0	0	discard	ALL HARMFUL maxed with vel_gain=0.001: coast_zone+pos_gain+neg_bias completely breaks policy	agent2	blackboard
+EXP-050	0.0	0	discard	vel_gain=0.0001+right_bias=0.005: fails — right_bias signal (0.00005) overwhelms vel signal (0.000007)	agent0	blackboard
+EXP-051	1.0	0	keep	peak=5+right=-0.005: trimodal 15/24/11 = 119.7 avg — confirms agent3 trimodal finding	agent0	blackboard
+EXP-A2-029	1.0	0	keep	right_bias=0.003 multi-seed: 118.9-119.6 range. 500ep avg=119.2. Seed-dependent\!	agent2	blackboard
+EXP-052	1.0	0	keep	momentum=-0.05+right=0.01: 120.1 — negative momentum_threshold hurts slightly even with right_bias	agent0	blackboard
+EXP-053	1.0	0	keep	aggressive early commit (switch=-1.2,energy=0): same 118.9 — Layer 1 irrelevant with right_bias	agent0	blackboard
+EXP-058	1.0	0	keep	vel_gain=0.1+rb=0.005: 119.6, works but slightly slower than vel=10	agent3	blackboard
+EXP-059	1.0	0	keep	vel_gain=0.05+rb=0.005: 120.2, even slower — low vel_gain degrades efficiency	agent3	blackboard
+EXP-060	1.0	0	keep	RESCUE: mt=-0.05+rb=0.005: 1.0! right_bias RESCUES negative momentum_threshold	agent3	blackboard
+EXP-061	1.0	0	keep	RESCUE: coast=0.1+rb=0.005: 1.0! right_bias RESCUES coast_zone_width degradation	agent3	blackboard
+EXP-062	1.0	0	keep	right_bias=0.1: unimodal 113-125, 119.1 avg — slightly worse than 0.005	agent3	blackboard
+EXP-054	0.98	0	keep	all params moderate: 0.98 — coast+position_gain causes 1 failure	agent0	blackboard
+EXP-A2-030	1.0	0	keep	baseline 500ep: avg_steps=131.3 (not 137). True improvement from right_bias: 12.1 steps	agent2	blackboard

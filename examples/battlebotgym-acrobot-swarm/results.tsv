@@ -1,0 +1,74 @@
+commit	score	memory_gb	status	description	agent	design
+baseline	0.7493	0	keep	default config	setup	baseline
+EXP-A2-001	0.6764	0	discard	sign_strategy=0.0 (proportional control), all else baseline	agent2	blackboard
+EXP-A2-002	0.0597	0	discard	phase_offset=-1.5, all else baseline	agent2	blackboard
+EXP-A2-002b	0.5526	0	discard	phase_offset=-0.5, all else baseline	agent2	blackboard
+EXP-A2-003	0.7493	0	keep	energy_target=30.0, 100% success rate, all else baseline	agent2	blackboard
+EXP-A2-003b	0.7493	0	keep	energy_target=20.0, 100% success, all else baseline	agent2	blackboard
+EXP-A2-004	0.3955	0	discard	energy_pump_gain=2.0 catch_gain=8.0, fast when works but 48% success	agent2	blackboard
+EXP-A2-004b	0.7469	0	discard	catch_gain=8.0, all else baseline, 100% success but slightly slower	agent2	blackboard
+EXP-A2-005	0.2350	0	discard	theta1_w=1 theta2_w=6 dtheta1_w=1 dtheta2_w=5, link2-emphasis fails	agent2	blackboard
+EXP-A2-006	0.6456	0	discard	phase_offset=0.5, 100% success but avg 177 steps	agent2	blackboard
+EXP-A2-006b	0.7219	0	discard	phase_offset=0.2, 100% success, avg 139 steps	agent2	blackboard
+EXP-A2-006c	0.7388	0	discard	phase_offset=-0.1, 100% success, avg 131 steps	agent2	blackboard
+EXP-A2-007	0.7493	0	keep	energy_pump_gain=9.0, same as baseline	agent2	blackboard
+EXP-021	0.7511	0	keep	theta1=3.9 theta2=1.3 (grid search catch weights)	agent1	blackboard
+EXP-A2-007b	0.3955	0	discard	energy_pump_gain=1.0, too low for reliable pumping	agent2	blackboard
+EXP-A2-008	0.1588	0	discard	catch_threshold=0.5, too low, only 22% success	agent2	blackboard
+EXP-001	0.7493	0	discard	energy_pump_gain=5.5 (no change)	agent1	blackboard
+EXP-002	0.7493	0	discard	energy_pump_gain=4.5 (no change)	agent1	blackboard
+EXP-003	0.6823	0	discard	phase_offset=0.3 (worse)	agent1	blackboard
+EXP-004	0.6904	0	discard	phase_offset=-0.3 (worse)	agent1	blackboard
+EXP-005	0.7483	0	discard	phase_offset=0.1 (slightly worse)	agent1	blackboard
+EXP-006	0.7388	0	discard	phase_offset=-0.1 (worse)	agent1	blackboard
+EXP-007	0.7493	0	discard	energy_target=9.0 (no change)	agent1	blackboard
+EXP-008	0.7493	0	discard	energy_target=11.0 (no change)	agent1	blackboard
+EXP-009	0.7043	0	discard	catch_threshold=1.8 (worse)	agent1	blackboard
+EXP-010	0.7493	0	discard	catch_gain=2.2 (no change)	agent1	blackboard
+EXP-011	0.7493	0	discard	catch_gain=1.8 (no change)	agent1	blackboard
+EXP-012	0.7337	0	discard	theta1_weight=4.5 (worse)	agent1	blackboard
+EXP-013	0.7208	0	discard	theta1_weight=3.5 (worse)	agent1	blackboard
+EXP-014	0.7376	0	discard	theta2_weight=1.0 (worse)	agent1	blackboard
+EXP-015	0.7182	0	discard	theta2_weight=2.0 (worse)	agent1	blackboard
+EXP-016	0.7265	0	discard	dtheta1_weight=4.5 (worse)	agent1	blackboard
+EXP-017	0.7277	0	discard	dtheta1_weight=3.5 (worse)	agent1	blackboard
+EXP-018	0.7275	0	discard	dtheta2_weight=1.1 (worse)	agent1	blackboard
+EXP-019	0.7405	0	discard	dtheta2_weight=0.7 (worse)	agent1	blackboard
+EXP-020	0.7493	0	discard	velocity_threshold=2.2 (no change, unused param)	agent1	blackboard
+EXP-A2-008b	0.1530	0	discard	catch_threshold=1.0, still bad, 22% success	agent2	blackboard
+EXP-A2-009	0.7511	0	keep	velocity_threshold=0.5, NEW BEST! 100% success, avg 124.5 steps	agent2	blackboard
+EXP-A2-009b	0.7511	0	keep	velocity_threshold=0.1, same as 0.5	agent2	blackboard
+EXP-A2-009c	0.7511	0	keep	velocity_threshold=4.0, same as 0.1 and 0.5	agent2	blackboard
+EXP-A2-010	0.1114	0	discard	velocity-focused: theta1_w=1 theta2_w=0.5 dtheta1_w=8 dtheta2_w=5, 16% success	agent2	blackboard
+EXP-A2-011	0.3301	0	discard	position-only: dtheta1_w=0 dtheta2_w=0, 50% success	agent2	blackboard
+EXP-A2-012	0.6802	0	discard	theta1_weight=10, 100% success but slower 160 steps avg	agent2	blackboard
+EXP-A2-013	0.1584	0	discard	pump-focused: catch_thresh=0.3 pump_gain=8 e_target=15, fails	agent2	blackboard
+EXP-001	0.7493	0	discard	pump_gain=10 energy_target=5 (max aggression)	agent0	blackboard
+EXP-002	0.6764	0	discard	sign_strategy=0 (proportional control)	agent0	blackboard
+EXP-003	0.0000	0	discard	phase_offset=-1.57 (anti-phase)	agent0	blackboard
+EXP-004	0.0000	0	discard	phase_offset=+1.57	agent0	blackboard
+EXP-007	0.3886	0	discard	all catch weights=10 (max catch)	agent0	blackboard
+EXP-008	0.2454	0	discard	all catch weights=0.5 (min catch)	agent0	blackboard
+EXP-024	0.7498	0	keep	phase_offset=0.05 (fine-tuned phase)	agent0	blackboard
+EXP-040	0.7515	0	keep	phase_offset=0.05 theta2_weight=0 (drop theta2)	agent0	blackboard
+EXP-080	0.7516	0	keep	phase_offset=0.01 theta2_weight=0 (best combo)	agent0	blackboard
+EXP-A3-001	0.7498	0	discard	phase_offset=0.02, marginal improvement over 0.0	agent3	blackboard
+EXP-A3-002	0.7438	0	discard	phase_offset=0.05+theta2_weight=0.0, negative interaction	agent3	blackboard
+EXP-A3-003	0.7183	0	discard	theta1=4.5+dtheta1=3.5, negative interaction	agent3	blackboard
+EXP-A2-014	0.7516	0	keep	weight sweeps confirm baseline theta1=4, dtheta1=4, dtheta2=0.9 are optimal	agent2	blackboard
+EXP-A2-015	0.7516	0	keep	catch_gain sweep: 2.0 optimal, theta2_weight has ZERO effect	agent2	blackboard
+EXP-A2-016	0.7516	0	keep	agent0 request: theta2_w=0 theta1_w grid 3.5-4.5, best at theta1=4.0 (0.7516)	agent2	blackboard
+EXP-A2-017	0.7389	0	discard	agent1 request: theta1=3.9 theta2=1.3 pump sweep 3-8, all 0.7389, no interaction	agent2	blackboard
+EXP-A2-018	0.7516	0	keep	2D+3D grid search confirms baseline is global optimum for 4 active DoF	agent2	blackboard
+EXP-A2-019	0.7251	0	discard	best proportional mode: sign_strategy=0.3 pump_gain=10, still below baseline	agent2	blackboard
+EXP-A2-020	0.7516	0	keep	constant-sum ratio sweep confirms theta1=dtheta1=4.0 ratio is optimal	agent2	blackboard
+EXP-A2-021	0.375	0	discard	wild extremes: all weights=4 etc, all terrible	agent2	blackboard
+EXP-024-fix	0.7498	0	keep	phase_offset=0.05 with original baseline (confirmed)	agent0	blackboard
+EXP-100	0.7516	0	keep	agent1 config verified (theta1=3.9 theta2=1.3 po=0.01)	agent0	blackboard
+EXP-151	0.7515	0	discard	multi-param perturbation (cg=2.2 t2=1.35 dw2=0.85)	agent0	blackboard
+EXP-174	0.7516	0	keep	low-energy-max-pump archetype (pump=10 target=1 with best catch)	agent0	blackboard
+EXP-022	0.7356	0	discard	theta2=0 with theta1=3.9 phase=0.01 (worse than theta2=1.3)	agent1	blackboard
+EXP-023	0.7516	0	keep	4D grid sweep all catch weights - no improvement over best	agent1	blackboard
+EXP-024a1	0.7516	0	keep	sign_strategy sweep: step at 0.5, bang-bang always better	agent1	blackboard
+EXP-025	0.7516	0	keep	very low catch_gain (0.1-0.5) × theta1 (3-10) — no improvement	agent1	blackboard
+EXP-026	0.7516	0	keep	ultra-fine phase_offset -0.05 to 0.05 step 0.001 — no improvement	agent1	blackboard
