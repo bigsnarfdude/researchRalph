@@ -1,0 +1,40 @@
+# SAE-Bench — SAE architecture config for SynthSAEBench-16k
+#
+# Agents edit this file to optimize F1 score.
+# Score = F1 on SynthSAEBench-16k evaluation (higher is better).
+#
+# Baseline (vanilla BatchTopK): F1 ~0.82
+# Known best (LISTA-Matryoshka): F1 ~0.97
+# Ceiling (logistic regression probe): F1 ~0.97
+
+# --- Core architecture ---
+k: 25                          # TopK sparsity (L0 target). Range: 10-60
+d_sae: 4096                    # SAE width (fixed by benchmark rules)
+
+# --- LISTA iterative refinement ---
+use_refinement: true           # Enable LISTA encoder
+n_refinement_steps: 1          # Number of LISTA iterations. Range: 0-5
+eta: 0.3                       # LISTA step size. Range: 0.0-1.0
+learnable_eta: false           # Learn eta per step
+
+# --- Matryoshka multi-scale training ---
+use_matryoshka: true           # Enable Matryoshka training
+matryoshka_widths: [128, 512, 2048]  # Inner prefix widths
+detach_matryoshka_losses: true # Detach inner level gradients
+
+# --- Frequency sorting ---
+use_freq_sort: true            # Sort latents by firing frequency for Matryoshka
+
+# --- TERM loss ---
+use_term: true                 # Enable tilted empirical risk minimization
+term_tilt: 0.002               # Tilt coefficient. Range: 0.0-0.01
+
+# --- K schedule ---
+use_decreasing_k: true         # Anneal K from initial_k down to k
+initial_k: 60.0                # Starting K. Range: k to 200
+
+# --- Training ---
+lr: 3e-4                       # Learning rate (fixed by benchmark rules)
+use_lr_decay: true             # Decay LR in final 1/3
+training_samples: 50000000     # 50M for fast iteration (200M for final eval)
+batch_size: 1024               # Batch size
