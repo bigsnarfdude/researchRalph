@@ -16,6 +16,7 @@ Claude agents that optimize things for you. You give them:
 - **Instructions** on what "better" means
 
 They run experiments 24/7, learn from failures, and collaborate through a shared blackboard.
+A variety of receipes and examples of experiments to run with RRMA included.
 
 ```bash
 git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
