@@ -1,4 +1,4 @@
-# researchRalph v2
+# researchRalph v3
 
 <p align="center">
   <img src="assets/researchRalph.png" alt="researchRalph" width="300"/>
@@ -209,9 +209,9 @@ researchRalph/
 └── examples/run4-artifacts/   # Real data from 186-experiment run
 ```
 
-## Why v2: Agents Game Benchmarks
+## Why v3: Gaming, Simplification, Backward Planning
 
-RRMA agents consistently find degenerate shortcuts. This shaped the v2 harness design.
+RRMA agents consistently find degenerate shortcuts. This shaped the harness design across three iterations.
 
 **SAE-bench v1 → v2 (mid-run rebuild):** v1 shipped with the full LISTA-Matryoshka architecture (609 lines) pre-baked in `sae.py`. Agents just tuned config knobs on the pre-solved answer — 34 experiments, 8 hours, only +0.007 F1 gain. Parameter sweeps, not research. We observed this gaming mid-run, gutted `sae.py` to a 17-line empty template, stripped config to 6 vanilla params, and relaunched. v2 agents independently discovered LISTA from first principles and cited Gregor & LeCun 2010 by name on the blackboard. 0.61 → 0.90 F1 via genuine architectural innovation in 19 experiments.
 
@@ -230,7 +230,7 @@ We also stripped the bridge from 374 → 227 lines: removed roles (SCOUT/EXPLOIT
 
 ## Attribution
 
-Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), extended by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632). researchRalph v2 adds multi-agent collaboration via the blackboard pattern.
+Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), extended by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632). researchRalph adds multi-agent collaboration via the blackboard pattern and backward planning rounds.
 
 ## Links
 
