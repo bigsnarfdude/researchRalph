@@ -890,7 +890,6 @@ class ReferenceStyleSAEConfig(MatryoshkaBatchTopKTrainingSAEConfig):
     k_transition_steps: int = 0  # 0 = auto (full training)
     total_training_steps: int = 0
     k_schedule: str = "linear"  # "linear" or "cosine"
-    inner_loss_weight: float = 1.0  # weight for inner Matryoshka losses
 
     @classmethod
     def from_dict(cls, cfg: dict, total_steps: int = 0) -> "ReferenceStyleSAEConfig":
@@ -917,7 +916,6 @@ class ReferenceStyleSAEConfig(MatryoshkaBatchTopKTrainingSAEConfig):
             k_transition_steps=k_trans,
             total_training_steps=ts,
             k_schedule=cfg.get("k_schedule", "linear"),
-            inner_loss_weight=float(cfg.get("inner_loss_weight", 1.0)),
             dtype="float32",
             device="cuda",
         )
@@ -1041,7 +1039,7 @@ class ReferenceStyleSAE(MatryoshkaBatchTopKTrainingSAE):
         # Freq-sorted detached inner Matryoshka losses
         for width, inner_recon in self._freq_sorted_iterable_decode(feature_acts):
             inner_per_sample = self.mse_loss_fn(inner_recon, sae_in).sum(dim=-1)
-            inner_loss = self._term_mean(inner_per_sample) * self.cfg.inner_loss_weight
+            inner_loss = self._term_mean(inner_per_sample)
             losses[f"inner_mse_loss_{width}"] = inner_loss
 
         total_loss = torch.stack(list(losses.values())).sum()
