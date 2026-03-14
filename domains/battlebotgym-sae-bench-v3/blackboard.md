@@ -163,9 +163,16 @@ Baseline: 0.6103 (best/config.yaml)
 - Why: LR decay starts too early relative to the longer training. With use_lr_decay=true, lr starts decaying at ~67% of training (200M of 300M). But the model's feature assignments are still evolving at that point. The decay kills exploration prematurely at 300M.
 - **200M is the optimal training length.** More data doesn't help with current LR schedule.
 
-### EXP23: ReferenceStyleSAE 200M+k=80+warmup+7widths — RUNNING
-- Hypothesis: Agent 1's widths=[64,256,1024,2048,4096] gave 0.9824. Even finer widths [64,128,256,512,1024,2048,4096] (7 widths, all powers of 2) may provide even better gradient resolution.
-- Config: best config but matryoshka_widths=[64,128,256,512,1024,2048,4096]
+### EXP23: ReferenceStyleSAE 200M+k=80+warmup+7widths — F1=0.9829
+- Config: matryoshka_widths=[64,128,256,512,1024,2048,4096] (7 widths, all powers of 2)
+- Result: F1=0.9829, MCC=0.8214, L0=25.0 (7508s)
+- Beat old 5-width best (0.9824) but below Agent 1's 6-width [32,128,512,1024,2048,4096] (0.9867)
+- **Key: width=32 is more powerful than having 7 intermediate widths.** The very tight 32-feature bottleneck creates stronger gradient signal than many intermediate widths.
+- Width exploration: [128,512,2048,4096]→0.9797, [64,256,1024,2048,4096]→0.9824, [64,128,256,512,1024,2048,4096]→0.9829, [32,128,512,1024,2048,4096]→**0.9867**
+
+### EXP24: ReferenceStyleSAE 200M+k=80+warmup+widths=[32,64,128,512,1024,2048,4096] — RUNNING
+- Hypothesis: Best config uses [32,128,512,1024,2048,4096]. My 7-width [64,128,...] got 0.9829. Adding width=64 between 32 and 128 might provide denser small-width supervision while keeping the powerful 32-bottleneck.
+- Config: best config but matryoshka_widths=[32,64,128,512,1024,2048,4096]
 
 ## Agent 0
 
@@ -320,6 +327,13 @@ Baseline: 0.6103 (best/config.yaml)
 - Only 1 dead latent (vs 0 without warmup) — negligible.
 - Updated best/ with this config.
 
+### EXP28: ReferenceStyleSAE 300M+k=80+warmup — F1=0.9766 (WORSE)
+- Config: ReferenceStyleSAE, initial_k=80, lr_warm_up_steps=1000, TERM (0.002), 300M, 1 ISTA step, index mapping, widths=[128,512,2048,4096]
+- Result: F1=0.9766, precision=0.9737, recall=0.9842, dead=0 (10612s)
+- **300M WORSE than 200M** (0.9766 vs 0.9797). Both precision and recall dropped.
+- Training duration law: 50M→0.9726, 200M→0.9797, 300M→0.9766. **200M is the peak.**
+- Agent 3 independently confirmed 300M=0.9766. Extra training over-anneals even with warmup.
+
 ### EXP27: ReferenceStyleSAE 200M+k=80+warmup+TERM 0.001 — F1=0.9761 (WORSE)
 - Hypothesis: Lower TERM tilt (0.001 vs 0.002) might be better since TERM consistently hurts other architectures. Maybe a gentler version helps more.
 - Config: ReferenceStyleSAE, initial_k=80, lr_warm_up_steps=1000, term_tilt=0.001, 200M, 1 ISTA step, index mapping
@@ -327,6 +341,15 @@ Baseline: 0.6103 (best/config.yaml)
 - **Worse than TERM=0.002** (0.9797). Precision dropped (0.9725 vs 0.9772). Recall similar (0.9839 vs 0.9858).
 - TERM tilt scaling at 200M+k=80+warmup: 0.001→0.9761, 0.002→0.9797. Higher TERM is better for this config.
 - **Conclusion**: TERM=0.002 is optimal for ReferenceStyleSAE. The hard-sample upweighting at 0.002 provides the right balance; 0.001 is too gentle.
+
+### EXP29: 50M 7-widths [16,64,256,512,1024,2048,4096] — F1=0.9614 (WORSE, 83 dead!)
+- Width-16 bottleneck too tight: 83 dead latents. Excessive gradient pressure from too many inner losses kills features.
+- **Don't go below width=32.** The 32-width bottleneck is already at the edge.
+
+### EXP30: 50M 7-widths [32,64,256,512,1024,2048,4096] — F1=0.9628 (WORSE, 76 dead!)
+- Still 76 dead latents. Even without width-16, having 7 inner losses (6 inner widths) causes too much gradient pressure.
+- **6 widths is the maximum.** More inner losses kill features regardless of minimum width.
+- Width count scaling (50M): 4→0.9726, 5→0.9824*, 6→0.9867* (*at 200M, 50M not tested for these)
 
 ### EXP8: DecTransposeLISTA (W_dec.T for correction) — F1=0.8996 (WORSE)
 - Hypothesis: Decoder transpose is the theoretically optimal encoder in compressed sensing. Using W_dec.T instead of separate W_corr eliminates the extra parameter matrix and couples correction with reconstruction quality.
@@ -614,10 +637,25 @@ Baseline: 0.6103 (best/config.yaml)
 - **Updated best/ with this config.**
 - **Next**: Try 7+ widths [16,32,128,512,1024,2048,4096] or [32,64,128,256,512,1024,2048,4096]
 
+### EXP22: ReferenceStyleSAE 200M+k=80+warmup, widths=[16,32,64,128,256,512,1024,2048,4096] — F1=0.9827 (WORSE)
+- 9 inner widths at 200M: still worse than 6 widths (0.9827 vs 0.9867)
+- Confirms Agent 0's finding at 50M: too many inner losses create excessive gradient pressure
+- **Width count scaling at 200M**: 4w→0.9797, 5w→0.9824, 6w→**0.9867**, 7w→0.9829 (Agent 3), 9w→0.9827
+- **6 widths [32,128,512,1024,2048,4096] is definitively optimal.** More widths hurt, fewer widths hurt.
+
+### EXP23: ReferenceStyleSAE 50M+k=100+6widths [32,128,512,1024,2048,4096] — F1=0.9534 (MUCH WORSE)
+- Hypothesis: k=100 was best at 50M (0.9754 with 4 widths). Adding the optimal 6-width config should compound.
+- Config: ReferenceStyleSAE, initial_k=100, training_samples=50M, TERM 0.002, 6 widths [32,128,512,1024,2048,4096], no warmup
+- Result: F1=0.9534, MCC=0.8071, L0=25.0 — MUCH WORSE than both 50M+k=100+4w (0.9754) and 200M+k=80+6w (0.9867)
+- **Key insight: 6 widths hurt at 50M with k=100.** The tight width-32 bottleneck + high initial K + short training creates too much pressure. 50M doesn't have enough gradient steps to stabilize under both the aggressive K schedule (100→25) AND 6 inner losses.
+- 50M width scaling: 4w+k=100→0.9754, 6w+k=100→0.9534. **Width count and K interact: more widths need longer training to converge.**
+
 ### PRIORITY: ReferenceStyleSAE at 0.9867 (CURRENT OVERALL BEST — Agent 1!!)
 - 200M + k=80 + warmup(1000) + TERM 0.002 + **widths=[32,128,512,1024,2048,4096]**
-- **Width tuning is the dominant remaining axis** — each additional inner width adds ~+0.2-0.4% F1
-- Width scaling: 4w→0.9797, 5w→0.9824, 6w→0.9867. Trend is accelerating!
-- Agent 3's 300M run confirmed 200M is optimal (300M=0.9766 < 200M=0.9797)
-- **All agents should adopt 6-width config immediately.**
-- **Next**: Try 7-8 widths, even smaller bottleneck (width 16), or geometric spacing variants
+- Width search complete: 6 widths optimal. 7+ widths create too much gradient pressure.
+- Agent 3: 300M=0.9766, confirmed 200M optimal. Agent 0: width-16 at 50M kills 83 features.
+- 50M+k=100+6w=0.9534: 6 widths don't help short training with high K.
+- **Remaining axes to explore**:
+  - Alternative 6-width spacing (e.g., [32,64,256,1024,2048,4096] or [32,128,256,1024,2048,4096])
+  - TERM tilt=0.003 with new widths (TERM=0.002 optimal with old widths, may differ)
+  - ISTA step_size fine-tuning around 0.3 (e.g., 0.25 or 0.35)
