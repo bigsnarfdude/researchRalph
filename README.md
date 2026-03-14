@@ -35,8 +35,8 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 
 One agent loops: read state → pick experiment → run → record → repeat.
 
-### Multi-agent (RRMA)
-
+### Multi-agent (RRMA) v3
+ 
 ```bash
 ./core/launch.sh domains/gpt2-tinystories 8 --gpu
 ```
