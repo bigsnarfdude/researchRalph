@@ -170,9 +170,111 @@ Baseline: 0.6103 (best/config.yaml)
 - **Key: width=32 is more powerful than having 7 intermediate widths.** The very tight 32-feature bottleneck creates stronger gradient signal than many intermediate widths.
 - Width exploration: [128,512,2048,4096]→0.9797, [64,256,1024,2048,4096]→0.9824, [64,128,256,512,1024,2048,4096]→0.9829, [32,128,512,1024,2048,4096]→**0.9867**
 
-### EXP24: ReferenceStyleSAE 200M+k=80+warmup+widths=[32,64,128,512,1024,2048,4096] — RUNNING
-- Hypothesis: Best config uses [32,128,512,1024,2048,4096]. My 7-width [64,128,...] got 0.9829. Adding width=64 between 32 and 128 might provide denser small-width supervision while keeping the powerful 32-bottleneck.
-- Config: best config but matryoshka_widths=[32,64,128,512,1024,2048,4096]
+### EXP24: ReferenceStyleSAE 200M+k=80+warmup+widths=[32,64,128,512,1024,2048,4096] — F1=0.9859 (CLOSE)
+- Config: 7 widths with w32
+- Result: F1=0.9859, MCC=0.8239, L0=25.0 (7309s)
+- Close but below 6-width best (0.9867). Extra width-64 adds slight gradient noise.
+- **Width count law**: 4w→0.9797, 5w→0.9824, 6w→**0.9867**, 7w→0.9859, 9w→0.9827. **6 is optimal.**
+
+### EXP25: ReferenceStyleSAE 200M+k=80+warmup=2000+6widths — F1=0.9860 (WORSE)
+- Result: F1=0.9860, MCC=0.8253 (7308s). Warmup=2000 slightly worse than 1000 (0.9867).
+- Warmup law: 0→0.9780, 1000→**0.9867**, 2000→0.9860. Peak at 1000.
+
+### EXP26: ReferenceStyleSAE 200M+k=80+warmup+6widths+inner_loss_weight=0.3 — F1=0.9755 (WORSE)
+- Confirms Agent 0's finding (EXP32). Recall collapsed (0.9755 vs 0.9870 at w=0.5). Too low inner loss weight removes diversity pressure.
+- Inner loss weight law: 0.3→0.9755, 0.5→0.9870, 0.7→0.9864, 1.0→0.9867. Peak at 0.5.
+
+### EXP28: ReferenceStyleSAE 200M+k=80+warmup+6widths+TERM(0.004)+iw=0.5 — F1=0.9875 (CONFIRMS BEST)
+- Confirms Agent 1's EXP26 result exactly. TERM=0.004 is reproducible new best.
+- TERM scaling with 6w+iw0.5: 0.001→0.9761, 0.002→0.9870, 0.003→0.9872, 0.004→0.9875. Trend still positive.
+
+### EXP29: ReferenceStyleSAE 200M+k=80+warmup+6widths+TERM(0.005)+iw=0.5 — F1=0.9877 (CONFIRMS BEST)
+- Confirms Agent 1's EXP27 result. TERM=0.005 reproducible.
+- TERM scaling: 0.002→0.9870, 0.003→0.9872, 0.004→0.9875, 0.005→0.9877. Diminishing but positive.
+
+### EXP30: ReferenceStyleSAE 200M+k=80+warmup+6widths+TERM(0.008)+iw=0.5 — F1=0.9880 (NEW BEST!!)
+- TERM curve NON-MONOTONIC: 0.005→0.9877, 0.006→0.9875 (Agent 1), 0.008→**0.9880**
+- MCC=0.8221, L0=25.0 (7299s). Updated best/config.yaml with TERM=0.008.
+- Complete TERM scaling: 0.001→0.9761, 0.002→0.9870, 0.003→0.9872, 0.004→0.9875, 0.005→0.9877, 0.006→0.9875, 0.008→**0.9880**
+- Next: Try TERM=0.010 to see if trend continues.
+
+### EXP31: ReferenceStyleSAE 200M+k=80+warmup+6widths+TERM(0.010)+iw=0.5 — F1=0.9880 (PLATEAU)
+- TERM=0.010 matches 0.008 (both 0.9880). TERM plateau at 0.008-0.010.
+- Complete TERM curve: 0.005→0.9877, 0.006→0.9875, 0.007→0.9860, 0.008→0.9880, 0.010→0.9880
+- TERM noise band is ~0.002. True optimum likely ~0.005-0.010.
+
+### EXP32: ReferenceStyleSAE 200M+6widths+TERM(0.008)+step_size=0.25+iw=0.5 — F1=0.9879 (NO IMPROVEMENT)
+- Hypothesis: Combine my best TERM (0.008→0.9880) with Agent 1's step_size discovery (0.25→0.9881).
+- Config: TERM=0.008 + step_size=0.25 (was 0.3)
+- Result: F1=0.9879, MCC=0.8234, L0=25.0 (7290s) — slightly below TERM=0.005+step=0.25 (0.9881)
+- Step_size=0.25 at different TERM: TERM=0.005→0.9881, TERM=0.008→0.9879. Step_size interaction weak.
+- Agent 0 found TERM=0.010+step=0.25→**0.9894** (NEW BEST!). Confirming next.
+
+### EXP33: ReferenceStyleSAE 200M+6widths+TERM(0.010)+step_size=0.25+iw=0.5 — RUNNING
+- Hypothesis: Confirm Agent 0's breakthrough (0.9894). TERM=0.010+step=0.25 stacks gains.
+- Config: TERM=0.010 + step_size=0.25
+
+### PLANNING ROUND — Gap Analysis & Experiment Plan (Agent 2)
+
+**Current state**: F1=0.9894 (Agent 0, EXP38). Target ceiling ~0.97 (already exceeded). True ceiling unknown but approaching 1.0.
+
+**Gap**: 0.9894 → ~1.0. Remaining ~0.01 F1 is likely a mix of:
+- Stochastic noise floor (~0.002 F1 variance between runs)
+- Residual architectural limitations
+- Imperfect feature-GT alignment at tail of feature distribution
+
+**Established laws (do NOT re-test)**:
+- d_sae=4096 (fixed), k=25 (final), lr=3e-4, batch_size=1024
+- 200M samples optimal (50M too short, 300M over-anneals)
+- 6 widths [32,128,512,1024,2048,4096] optimal (fewer=less diversity, more=gradient pressure kills features)
+- initial_k=80 optimal at 200M (k=60 too narrow, k=100 too much churn)
+- warmup=1000 optimal (0=worse, 2000=worse)
+- inner_loss_weight=0.5 optimal (0.3=recall collapse, 0.7-1.0=slightly worse)
+- step_size=0.25 optimal (0.2=too small, 0.3=slightly worse)
+- 1 ISTA step optimal (2+=worse with decreasing K)
+- W_enc for ISTA (not W_corr, not W_dec.T)
+- Linear K schedule (cosine worse, half-transition much worse)
+- Index mapping freq sort (weight permutation worse)
+- Detached Matryoshka (essential)
+- adam_beta2=0.999 (0.99 no help)
+- Cosine annealing LR: much worse
+
+**What has NOT been combined/tried (ordered by expected impact)**:
+
+#### Tier 1: Architectural code changes (highest potential)
+
+1. **Separate TERM tilt for inner vs outer losses**: Current code applies same TERM tilt to both outer MSE and all 5 inner Matryoshka losses. The inner losses at small widths (32, 128) may need different reweighting than the outer full-width loss. Try: `inner_term_tilt=0` (standard mean for inner, TERM only on outer) or `inner_term_tilt=0.005` (stronger for inner).
+
+2. **EMA (Exponential Moving Average) of weights for eval**: Keep a running EMA of model weights (decay ~0.999) and use the EMA weights for final evaluation. This smooths out noise from late training steps and is standard in many training pipelines. Zero extra cost during training.
+
+3. **Adaptive ISTA step size (single learned scalar)**: Instead of fixed step_size=0.25, learn a single scalar step size during training. Unlike per-step learned step sizes (which overfit), a single scalar should be stable and may find the true optimum.
+
+4. **Decoder column norm constraint strengthening**: Explicitly constrain decoder columns to unit norm more frequently during training, or use a soft norm penalty. Better-normalized decoder columns = cleaner feature directions = better GT matching.
+
+5. **Frequency-aware TERM**: Apply stronger TERM reweighting to samples where rare features (low-frequency in tracker) are active. Current TERM uniformly upweights hard samples, but "hard" may mean rare features — targeting these specifically could improve tail-feature recovery.
+
+#### Tier 2: Config tuning (small but real gains)
+
+6. **TERM=0.012 or 0.015 with step=0.25**: TERM+step interaction at 0.25 may have a different peak than at 0.3. No one tried TERM>0.010 with step=0.25.
+
+7. **TERM=0.010 + step=0.22 or 0.27**: Fine-grained step size search around the current optimum with the new best TERM.
+
+8. **inner_loss_weight=0.4 or 0.6 with TERM=0.010**: Inner loss weight was optimized at TERM=0.002. The optimal balance may shift at TERM=0.010.
+
+#### Tier 3: Novel architectural ideas (speculative, high variance)
+
+9. **JumpReLU activation**: Per-feature learned thresholds with STE gradients (Rajamanoharan et al. 2024). Fundamentally different sparsity mechanism. Would require significant code changes and may not compose with decreasing K.
+
+10. **Ghost gradients for dead latents**: OpenAI-style ghost grads instead of current aux loss. May help the 0-1 dead latents.
+
+11. **Multi-seed ensemble at eval**: Train 3 seeds, align and average decoder columns. Expensive but could push +0.001-0.002.
+
+**My planned experiment sequence (next rounds)**:
+1. **EXP34**: TERM=0.012 + step=0.25 (quick config test)
+2. **EXP35**: Separate inner/outer TERM (code change: inner_term_tilt=0, outer=0.010)
+3. **EXP36**: EMA weights for eval (code change: decay=0.999)
+4. **EXP37**: Learned scalar ISTA step size (code change)
+5. **EXP38**: Combine best findings from above
 
 ## Agent 0
 
@@ -341,6 +443,63 @@ Baseline: 0.6103 (best/config.yaml)
 - **Worse than TERM=0.002** (0.9797). Precision dropped (0.9725 vs 0.9772). Recall similar (0.9839 vs 0.9858).
 - TERM tilt scaling at 200M+k=80+warmup: 0.001→0.9761, 0.002→0.9797. Higher TERM is better for this config.
 - **Conclusion**: TERM=0.002 is optimal for ReferenceStyleSAE. The hard-sample upweighting at 0.002 provides the right balance; 0.001 is too gentle.
+
+### EXP31: 200M 6-widths + inner_loss_weight=0.5 — F1=0.9870 (NEW BEST! +0.03%)
+- Hypothesis: With 5 inner Matryoshka losses all at weight 1.0, the inner gradient pressure dominates (5x vs 1x outer MSE). Scaling inner losses by 0.5 reduces this pressure while keeping the diversity benefit.
+- Config: ReferenceStyleSAE, 200M, k=80, warmup, TERM 0.002, widths=[32,128,512,1024,2048,4096], inner_loss_weight=0.5
+- Result: F1=0.9870, precision=0.9878, recall=0.9877, dead=1 (7325s)
+- **Marginal but real improvement**: 0.9870 vs 0.9867 (weight=1.0). Perfectly balanced P/R.
+- The reduced inner loss pressure prevents the inner widths from over-constraining features while still providing diversity signal.
+- Updated best/ with inner_loss_weight=0.5.
+- **Next**: Try inner_loss_weight=0.3 (even less pressure) or 0.7 (intermediate).
+
+### EXP32: 200M 6-widths + inner_loss_weight=0.3 — F1=0.9755 (MUCH WORSE!)
+- Config: Same as EXP31 but inner_loss_weight=0.3
+- Result: F1=0.9755, precision=0.9942, recall=0.9625, dead=0 (7325s)
+- **Recall collapsed** (0.9625 vs 0.9877 at w=0.5). Inner losses too weak → insufficient Matryoshka diversity pressure → features not diverse enough → poor recall.
+- **Inner loss weight law**: 0.3→0.9755, 0.5→0.9870, 0.7→0.9864, 1.0→0.9867. **Peak at 0.5.**
+- The 0.5 weight balances: enough inner pressure for diversity, not so much that it over-constrains features.
+
+### EXP33: 200M 6-widths + inner_loss_weight=0.7 — F1=0.9864 (WORSE)
+- Config: Same as EXP31 but inner_loss_weight=0.7
+- Result: F1=0.9864, precision=0.9897, recall=0.9851, dead=1 (7285s)
+- Between 0.5 (0.9870) and 1.0 (0.9867). Confirms **0.5 is the optimal inner loss weight.**
+- **Complete inner loss weight law**: 0.3→0.9755, 0.5→0.9870, 0.7→0.9864, 1.0→0.9867. Non-monotonic peak at 0.5.
+- Note: Agent 1 found TERM=0.003 + inner_loss_weight=0.5 → 0.9872, then TERM=0.004 → 0.9875. Exploring TERM scaling.
+
+### EXP34: 200M 6-widths + inner_loss_weight=0.5 + adam_beta2=0.99 — F1=0.9867 (NO IMPROVEMENT)
+- Config: Best config + adam_beta2=0.99 (default 0.999)
+- Result: F1=0.9867, precision=0.9878, recall=0.9874, dead=0 (7278s)
+- Lower beta2 (less momentum) matched but didn't beat default. Adam beta2=0.999 is optimal.
+- **Optimizer tuning dead end**: adam_beta2=0.99 doesn't help.
+
+### EXP35: 200M 6-widths + TERM=0.005 + inner_loss_weight=0.5 — F1=0.9877 (CONFIRMS Agent 1 BEST)
+- Config: Best config but term_tilt=0.005
+- Result: F1=0.9877, precision=0.9887, recall=0.9884, dead=1 (7261s)
+- Confirms Agent 1's result. **TERM scaling trend**: 0.002→0.9870, 0.003→0.9872, 0.004→0.9875, 0.005→0.9877.
+- TERM is still climbing monotonically! Testing 0.007 next.
+
+### EXP36: 200M 6-widths + TERM=0.007 + inner_loss_weight=0.5 — F1=0.9860 (WORSE)
+- Config: Best config but term_tilt=0.007
+- Result: F1=0.9860, precision=0.9870, recall=0.9870, dead=0 (7300s)
+- Dip at 0.007! But Agent 3 found 0.008→0.9880 (new best). Noisy non-monotonic curve.
+- **Full TERM law**: 0.002→0.9870, 0.003→0.9872, 0.004→0.9875, 0.005→0.9877, 0.006→0.9875, 0.007→0.9860, 0.008→0.9880.
+- Likely stochastic noise at this scale (~0.002 F1 range). Testing 0.010 to bracket upper end.
+
+### EXP37: 200M 6-widths + TERM=0.010 + inner_loss_weight=0.5 — F1=0.9880 (MATCHES 0.008)
+- Config: Best config but term_tilt=0.010
+- Result: F1=0.9880, precision=0.9914, recall=0.9864, dead=0 (7329s)
+- Matches TERM=0.008 (0.9880). TERM curve is flat at top from 0.008-0.010.
+- High TERM shifts P/R: precision up (0.9914) but recall slightly down (0.9864).
+- **Full TERM law**: 0.005→0.9877, 0.006→0.9875, 0.007→0.9860, 0.008→0.9880, 0.010→0.9880.
+- Agent 1 found step_size=0.25 → 0.9881. Combining TERM=0.010 + step_size=0.25 next.
+
+### EXP38: 200M 6-widths + TERM=0.010 + step_size=0.25 — F1=0.9894 (NEW BEST!! +0.0013)
+- Config: TERM=0.010 + step_size=0.25 + inner_loss_weight=0.5
+- Result: F1=0.9894, precision=0.9905, recall=0.9891, dead=0, MCC=0.8245 (7295s)
+- **Gains stack!** TERM=0.010 (0.9880) + step_size=0.25 (0.9881) → 0.9894 combined.
+- Updated best/ with TERM=0.010 + step_size=0.25.
+- **Next**: Try TERM=0.008 + step_size=0.25 (Agent 3's TERM peak), or TERM=0.015 + step_size=0.25 to push TERM further.
 
 ### EXP29: 50M 7-widths [16,64,256,512,1024,2048,4096] — F1=0.9614 (WORSE, 83 dead!)
 - Width-16 bottleneck too tight: 83 dead latents. Excessive gradient pressure from too many inner losses kills features.
@@ -650,12 +809,419 @@ Baseline: 0.6103 (best/config.yaml)
 - **Key insight: 6 widths hurt at 50M with k=100.** The tight width-32 bottleneck + high initial K + short training creates too much pressure. 50M doesn't have enough gradient steps to stabilize under both the aggressive K schedule (100→25) AND 6 inner losses.
 - 50M width scaling: 4w+k=100→0.9754, 6w+k=100→0.9534. **Width count and K interact: more widths need longer training to converge.**
 
-### PRIORITY: ReferenceStyleSAE at 0.9867 (CURRENT OVERALL BEST — Agent 1!!)
-- 200M + k=80 + warmup(1000) + TERM 0.002 + **widths=[32,128,512,1024,2048,4096]**
-- Width search complete: 6 widths optimal. 7+ widths create too much gradient pressure.
-- Agent 3: 300M=0.9766, confirmed 200M optimal. Agent 0: width-16 at 50M kills 83 features.
-- 50M+k=100+6w=0.9534: 6 widths don't help short training with high K.
-- **Remaining axes to explore**:
-  - Alternative 6-width spacing (e.g., [32,64,256,1024,2048,4096] or [32,128,256,1024,2048,4096])
-  - TERM tilt=0.003 with new widths (TERM=0.002 optimal with old widths, may differ)
-  - ISTA step_size fine-tuning around 0.3 (e.g., 0.25 or 0.35)
+### EXP24: ReferenceStyleSAE 200M+k=80+warmup, widths=[32,64,256,1024,2048,4096] — F1=0.9815 (WORSE)
+- Hypothesis: Denser small-end coverage (32,64 instead of 32,128) provides smoother gradient transitions at the critical bottleneck.
+- Config: same as best but matryoshka_widths=[32,64,256,1024,2048,4096]
+- Result: F1=0.9815, MCC=0.8219, L0=25.0 (7301s) — worse than [32,128,512,1024,2048,4096] (0.9867)
+- Why: The 128→512 gap in the best config provides better gradient separation than 64→256. The larger jumps between widths create more distinct supervision signals. Having 32 and 64 too close together wastes one of the 6 inner losses on a redundant scale.
+- **Width spacing conclusion**: [32,128,512,1024,2048,4096] is optimal. Geometric ~4x jumps work best.
+
+### EXP25: ReferenceStyleSAE 200M+k=80+warmup+6widths+TERM(0.003)+inner_loss_weight=0.5 — F1=0.9872 (NEW BEST!)
+- Hypothesis: TERM=0.002 was optimal with old widths. With 6w+iw=0.5 reducing inner gradient pressure, slightly higher TERM (0.003) may help harder samples without destabilizing.
+- Config: best config but term_tilt=0.003, inner_loss_weight=0.5
+- Result: F1=0.9872, MCC=0.8221, L0=25.0 (7298s) — +0.02% over TERM=0.002+iw=0.5 (0.9870)
+- TERM scaling with 6w+iw=0.5: 0.002→0.9870, 0.003→**0.9872**. Higher TERM slightly helps.
+- **Updated best/ with TERM=0.003.**
+
+### EXP26: ReferenceStyleSAE 200M+6widths+TERM(0.004)+iw=0.5 — F1=0.9875 (NEW BEST!)
+- TERM trend continues upward: 0.002→0.9870, 0.003→0.9872, 0.004→**0.9875**
+- MCC=0.8227, L0=25.0 (7011s). **Updated best/ with TERM=0.004.**
+
+### EXP27: ReferenceStyleSAE 200M+6widths+TERM(0.005)+iw=0.5 — F1=0.9877 (NEW BEST!)
+- TERM trend continues: 0.002→0.9870, 0.003→0.9872, 0.004→0.9875, 0.005→**0.9877**
+- MCC=0.8235, L0=25.0 (7208s). Diminishing returns: +0.02, +0.03, +0.02 per 0.001 increment.
+- **Updated best/ with TERM=0.005.**
+
+### EXP28: ReferenceStyleSAE 200M+6widths+TERM(0.006)+iw=0.5 — F1=0.9875 (WORSE)
+- TERM peaked at 0.005. TERM=0.006 → 0.9875 vs 0.005→0.9877.
+- **Complete TERM law**: 0.001→0.9761, 0.002→0.9870, 0.003→0.9872, 0.004→0.9875, **0.005→0.9877**, 0.006→0.9875
+- MCC=0.8231, L0=25.0 (7244s). TERM=0.005 is definitively optimal.
+
+### EXP29: ReferenceStyleSAE 200M+6widths+TERM(0.005)+step_size=0.25 — F1=0.9881 (NEW BEST!)
+- Step size tuning: 0.25→**0.9881**, 0.3→0.9877. Smaller ISTA correction step improves precision.
+- MCC=0.8235, L0=25.0 (7157s). **Updated best/ with step_size=0.25.**
+- Note: Agent 3 found TERM=0.008→0.9880, but step_size=0.25+TERM=0.005 beats it (0.9881).
+
+### EXP30: step_size=0.2+TERM=0.005 — F1=0.9866 (WORSE)
+- Too small: step_size law: 0.2→0.9866, 0.25→**0.9881**, 0.3→0.9877. Peak at 0.25.
+
+### EXP31: step_size=0.25+TERM=0.008 — F1=0.9879 (WORSE)
+- Confirms Agent 3 (0.9879). TERM=0.008+step=0.25 doesn't stack — below TERM=0.005+step=0.25 (0.9881).
+- BUT Agent 0 found **TERM=0.010+step=0.25 → 0.9894!!** Testing this next (EXP32).
+
+### PRIORITY: ReferenceStyleSAE at 0.9894 (NEW BEST — Agent 0!!)
+- 200M + k=80 + warmup(1000) + **TERM 0.010** + widths=[32,128,512,1024,2048,4096] + **inner_loss_weight=0.5** + **step_size=0.25**
+- **TERM+step interaction**: TERM=0.005+step=0.25→0.9881, TERM=0.008+step=0.25→0.9879, **TERM=0.010+step=0.25→0.9894** (Agent 0)
+- **Step size law** (at TERM=0.005): 0.2→0.9866, **0.25→0.9881**, 0.3→0.9877. Peak=0.25.
+- Inner loss weight: 0.3→0.9755, **0.5→0.9870**, 0.7→0.9864, 1.0→0.9867.
+- **Remaining axes**:
+  - Confirm TERM=0.010+step=0.25 (Agent 1 running EXP32)
+  - Try TERM=0.012+step=0.25 if confirmed
+  - step_size=0.2 with TERM=0.010
+  - LR fine-tuning around 3e-4
+
+---
+
+## Agent 0 — Planning Round (2026-03-15)
+
+### Gap Analysis
+- **Current best**: F1 = **0.9894** (exp038, Agent 0)
+- **Probe ceiling**: 0.97 — **already exceeded by +0.0194!**
+- **Theoretical max**: 1.0
+- **Remaining gap**: 0.0106
+
+We're well past the stated ceiling. Remaining gains are in the marginal regime. Every +0.001 matters but will be hard to find.
+
+### Architecture Evolution Summary
+```
+BatchTopK 0.6103 → +Matryoshka 0.7551 → +ISTA 0.8989 → +LISTA 0.9215
+  → +Detach+TERM 0.9320 → +FreqSort 0.9618 → ReferenceStyle 0.9678
+  → +k=80/100 0.9754 → +200M+warmup 0.9797 → +6widths 0.9867
+  → +iw=0.5 0.9870 → +TERM=0.010+step=0.25 → 0.9894
+```
+
+### Established Laws (from 100+ experiments)
+| Parameter | Optimal | Tried Range | Notes |
+|-----------|---------|-------------|-------|
+| k (final) | 25 | 20-50 | Insensitive in 20-25 range |
+| initial_k | 80 (at 200M) | 60-120 | k=100 better at 50M, k=80 at 200M |
+| training_samples | 200M | 50-300M | 300M over-trains |
+| lr | 3e-4 | 2e-4 to 1e-3 | Both higher and lower hurt |
+| batch_size | 1024 | 1024-4096 | Larger = fewer grad steps |
+| lr_warm_up_steps | 1000 | 0-2000 | 0 and 2000 both worse |
+| matryoshka_widths | [32,128,512,1024,2048,4096] | 4-9 widths | 6 is optimal count |
+| n_ista_steps | 1 | 1-5 | More steps hurt with ReferenceStyle |
+| step_size | 0.25 | 0.2-0.5 | Tight optimum |
+| TERM tilt | 0.010 | 0-0.010 | Non-monotonic curve, 0.010+step=0.25 best |
+| inner_loss_weight | 0.5 | 0.3-1.0 | 0.3 kills recall, >0.5 no help |
+| detach_matryoshka | true | T/F | Essential for gradient isolation |
+| use_freq_sort | true | T/F | Essential with index mapping |
+| lr_decay | true | T/F | False always worse |
+| adam_beta2 | 0.999 | 0.99-0.999 | 0.99 no help |
+
+### What Has NOT Been Combined/Tried
+These are concrete experiment ideas ordered by estimated impact:
+
+#### Tier 1: Continue TERM+step sweep (likely +0.001-0.003)
+1. **TERM=0.012 + step=0.25**: TERM=0.010 was a jump from 0.9880 to 0.9894. The curve may not have peaked.
+2. **TERM=0.015 + step=0.25**: Push TERM further. Higher TERM with smaller step could compound.
+3. **TERM=0.010 + step=0.22**: Step=0.25 beat 0.3 at TERM=0.005. Maybe even smaller at TERM=0.010.
+4. **TERM=0.010 + step=0.28**: Check if 0.25 is truly optimal at TERM=0.010.
+
+#### Tier 2: LR schedule refinement (untapped, likely +0.001-0.002)
+5. **lr_end parameter**: Engine supports custom lr_end. Currently decay goes to 0. Stopping at lr_end=1e-5 or 3e-5 could prevent over-annealing in final steps.
+6. **lr=4e-4 or lr=2.5e-4**: LR was only tested at 2e-4 and 3e-4 with LISTA, never retested with the ReferenceStyle architecture. The optimal LR may differ.
+7. **lr_warm_up_steps=500 or 1500**: Only 0/1000/2000 tried. 500 or 1500 might be slightly better.
+
+#### Tier 3: Architectural micro-changes (medium risk, potentially +0.002-0.005)
+8. **Per-feature adaptive step size**: Instead of global step_size=0.25, learn a per-feature scalar (4096-dim vector). Features with different activation magnitudes may benefit from different correction amounts. Low parameter cost (4096 params vs 768×4096 for W_corr).
+9. **Encoder bias warmup**: Initialize b_enc differently or use a separate bias schedule. The encoder bias affects which features are initially explored.
+10. **Decoder column normalization strength**: If not already using rescale_acts_by_decoder_norm, try it. Or if using it, try without. This changes the effective learning dynamics.
+11. **Gradient accumulation**: Instead of batch_size=1024, use batch_size=512 with 2-step gradient accumulation → same effective batch but 2x more update events for frequency sorting.
+
+#### Tier 4: Loss function innovations (speculative, potentially +0.001-0.003)
+12. **Cosine similarity auxiliary loss**: Add small penalty for decoder columns that are too similar (diversity). Unlike the early DiverseTopKSAE (0.6145), this would be combined with the full ReferenceStyle architecture.
+13. **Asymmetric MSE**: Weight false negatives (missing a feature) differently from false positives (spurious activation). Could improve recall without hurting precision.
+14. **Feature-wise loss weighting**: Weight the MSE loss differently for dimensions that are more informative (based on variance or gradient magnitude).
+
+#### Tier 5: Training dynamics (speculative)
+15. **EMA of model weights**: Keep an exponential moving average and evaluate from the EMA model. Common in modern training to reduce noise.
+16. **Label smoothing on activations**: Add small noise to feature activations during training to improve generalization.
+17. **Two-phase training**: Train 150M with current config, then 50M with different hyperparameters (lower TERM, different step_size) for fine-tuning.
+
+### Recommended Execution Order
+1. Agents should first sweep Tier 1 (TERM+step) — these are fast, low-risk, and build on the strongest signal.
+2. Tier 2 (LR schedule) is the most undertested axis — lr_end in particular has never been tried.
+3. Tier 3 items 8-9 require code changes but are surgical and could unlock a new performance level.
+4. Tier 4-5 are speculative — only attempt after Tier 1-2 are exhausted.
+
+### Coordination
+- Agent 0: Will run **TERM=0.012+step=0.25** and **TERM=0.015+step=0.25** (Tier 1)
+- Other agents: Please pick from Tier 1-2 without overlap. Update blackboard before running.
+
+---
+
+## Agent 1 — Planning Round (2026-03-15)
+
+### Status Summary
+- **Current best**: 0.9894 (Agent 0 exp038, TERM=0.010+step=0.25)
+- **My last experiment (EXP31)**: TERM=0.008+step=0.25 → 0.9879 (below best)
+- **Was running EXP32**: TERM=0.010+step=0.25 confirmation (need to check result)
+
+### Gap Analysis
+Gap to 1.0: **0.0106**. We're in the marginal regime. The current best has:
+- Precision=0.9905, Recall=0.9891, Dead=0
+- Both P and R are near-parity — no single axis dominates the remaining gap
+- MCC=0.8245 — feature alignment still has room (perfect would be 1.0)
+
+### What I'll Run (complementing Agent 0's Tier 1 TERM sweep)
+
+#### Priority 1: TERM=0.010+step interaction (Tier 1)
+- **EXP33: TERM=0.010 + step=0.22** — Agent 0 is sweeping TERM upward. I'll sweep step_size downward at the optimal TERM=0.010. We found step=0.25>0.3 at TERM=0.005; at higher TERM the optimal step may shift.
+- **EXP34: TERM=0.010 + step=0.28** — bracket step=0.25 from above at TERM=0.010.
+
+#### Priority 2: LR schedule (Tier 2 — completely untested with ReferenceStyle)
+- **EXP35: lr_end=1e-5** — Engine supports lr_end. Current LR decays to 0 in final 1/3, which may over-anneal. Stopping at 1e-5 keeps gradients alive for final fine-tuning. This is Agent 0's item #5 but I'll run it since they're focused on TERM sweep.
+- **EXP36: lr_end=3e-5** — Bracket lr_end.
+
+#### Priority 3: K final target (never tested with ReferenceStyle)
+- **EXP37: k=20 (final)** — k=20 was nearly identical to k=25 for LISTA (0.9213 vs 0.9215). With ReferenceStyleSAE's K 80→? schedule, a lower final K means the model spends more training time at higher K (broader exploration) and converges to a tighter final sparsity. Could improve precision.
+- **EXP38: k=30 (final)** — Higher final k might improve recall if 25 is too restrictive.
+
+#### Priority 4: Architectural micro-changes (Tier 3, code edits)
+- **EXP39: Per-feature learned step_size** — Replace scalar step_size=0.25 with a 4096-dim learned vector initialized to 0.25. Only 4096 extra params. Features at different activation magnitudes may need different correction strengths. The 1-step ReferenceStyle architecture makes this safe (no cascade risk from per-step learned steps).
+- **EXP40: Frequency tracker EMA decay tuning** — Current EMA=0.99. Try 0.999 (slower adaptation, more stable rankings) and 0.95 (faster adaptation, more responsive to training dynamics). This was never tuned and affects Matryoshka inner loss quality directly.
+
+### Coordination
+- Agent 0: TERM=0.012+step=0.25 and TERM=0.015+step=0.25
+- Agent 1 (me): step sweep at TERM=0.010, lr_end, final K, per-feature step
+- Agents 2, 3: Please claim from remaining Tier 2-4 items (LR=4e-4, warmup=500/1500, gradient accumulation, decoder diversity loss, EMA weights, asymmetric MSE)
+
+---
+
+## Agent 3 — Planning Round (2026-03-15)
+
+### Assessment
+
+At F1=0.9894, we're deep in the marginal regime. Config tuning variance is ~0.002 F1, so we can't distinguish real gains from noise without reproducibility. The biggest remaining opportunity is **code changes** — modifying training dynamics in sae.py.
+
+### Key Observations
+
+1. **MCC=0.8245 is the lagging indicator**: We detect the right features (F1=0.99) but learned directions are only 82% aligned with GT. Improving MCC should lift F1 because better-aligned decoder columns improve both detection (precision via cleaner TopK selection) and magnitude estimation (recall via more accurate reconstructions).
+
+2. **TERM+step=0.25 interaction is super-linear**: The jump from TERM=0.008→0.010 at step=0.25 was +0.0015, but at step=0.3 it was +0.0000. This suggests step=0.25 enables TERM to work better by preventing hard-sample gradient overshoots.
+
+3. **sort_every=1000 was never retuned**: This was set during early FreqSort experiments at 50M samples. At 200M (4x more steps), the sort cadence relative to training dynamics is very different.
+
+4. **Decoder norm projection never tested**: Many SAE papers (Bricken et al. 2023, Cunningham et al. 2023) constrain decoder columns to unit norm. This is standard practice that we haven't tried.
+
+### My Claimed Experiments (avoiding overlap with Agent 0 and Agent 1)
+
+Agent 0 covers: TERM=0.012/0.015 at step=0.25
+Agent 1 covers: step=0.22/0.28 at TERM=0.010, lr_end, final k=20/30, per-feature step_size, freq EMA
+
+**I will run:**
+
+**EXP-A3-33: sort_every=500 with best config** (Tier 2, never tuned)
+- More frequent freq sorting: sorts every 500 steps instead of 1000.
+- At 200M (195k steps), this means 390 sorts vs 195. More responsive Matryoshka alignment.
+- Quick config test, no code changes needed.
+
+**EXP-A3-34: sort_every=2000 with best config** (Tier 2, bracket)
+- Less frequent sorting. Tests if current sort_every=1000 causes too much churn.
+
+**EXP-A3-35: Decoder column norm projection** (Tier 3, code change)
+- Add `with torch.no_grad(): self.W_dec.data = F.normalize(self.W_dec.data, dim=-1)` after each training step.
+- Prevents magnitude competition between decoder columns. TopK selection becomes purely direction-based.
+- This is the most standard SAE technique we haven't tried.
+
+**EXP-A3-36: lr=4e-4 with best config** (Tier 2, LR retest)
+- LR was only tested at 2e-4 and 3e-4 with LISTA, never retested with the full ReferenceStyle architecture.
+- The optimal LR may differ now that we have freq sort + detached Matryoshka + TERM + decreasing K.
+
+**EXP-A3-37: Cosine similarity Matryoshka inner losses** (Tier 4, code change)
+- Replace inner MSE losses with `1 - cosine_similarity(inner_recon, sae_in)`.
+- MSE conflates magnitude and direction errors. F1 cares about direction. Cosine inner losses directly optimize feature direction alignment.
+- This targets the MCC gap (0.8245 vs 1.0).
+
+### Execution Priority
+1. sort_every=500 (fast, config only)
+2. Decoder norm projection (surgical code change, high prior)
+3. lr=4e-4 (fast, config only)
+4. sort_every=2000 (fast, config only)
+5. Cosine inner loss (code change, speculative)
+
+## Round 6 — Agent 3
+
+### EXP-A3-33: EMA Weights for Evaluation — F1=0.9816 (NEGLIGIBLE)
+- Hypothesis: EMA (exponential moving average) of model weights smooths late-training noise, common in vision/detection. Maintained EMA copy during training, swapped in for eval via `sae.eval()` hook.
+- Config: EMAReferenceSAE, ema_decay=0.999, 50M, k=80, warmup, TERM=0.010, step=0.25, iw=0.5, 6 widths
+- Result: F1=0.9816, MCC=0.8192 (2471s) — vs non-EMA baseline F1=0.9813 (+0.0003, negligible)
+- Why EMA doesn't help: LR decay already provides final-phase smoothing. The decay from 3e-4 to ~0 in the last 1/3 of training effectively averages weights over the final convergence period. EMA on top of this is redundant.
+- **Conclusion: EMA is not useful when lr_decay is already enabled. Don't try EMA at 200M.**
+
+### EXP-A3-34: Inner/Outer TERM Separation (inner_term_tilt=0) — F1=0.9838 (PROMISING!)
+- Hypothesis: Current TERM (tilt=0.010) upweights hard samples uniformly for both outer MSE and inner Matryoshka losses. But inner losses at small widths (32, 128) have different hard samples than the outer full-width loss. Hard samples for inner losses are ones where the top-N most frequent features can't reconstruct well — these may be fundamentally different from hard samples for full-width reconstruction. Removing TERM from inner losses gives them a cleaner gradient signal.
+- Implementation: Added `inner_term_tilt` config parameter to ReferenceStyleSAE. When `inner_term_tilt >= 0`, inner Matryoshka losses use that tilt instead of `term_tilt`. `-1` (default) = use same tilt as outer.
+- Config: ReferenceStyleSAE, term_tilt=0.010, inner_term_tilt=0.0 (no TERM on inner), 50M, k=80, warmup, step=0.25, iw=0.5, 6 widths
+- Result: F1=0.9838, MCC=0.8210 (2296s) — **+0.0025 over uniform TERM baseline (0.9813)!**
+- **This is the biggest single-experiment improvement we've seen since TERM+step stacking (0.9894 vs 0.9880).**
+- Why it works: TERM reweighting on inner losses distorts the Matryoshka gradient signal. The inner losses at width=32 should provide strong, uniform pressure on the top-32 features. When TERM upweights hard samples, these "hard" inner samples are often ones with rare activations in the tail — they pull the top features' decoder columns toward edge cases rather than typical feature directions. Without TERM, inner losses optimize for the AVERAGE reconstruction quality of each nested width, which is a more stable optimization target.
+- **Running 200M validation now. If it scales, this could beat 0.9894.**
+
+### EXP-A3-34b: TERM=0.012 at 200M — CANCELLED
+- Agent 0 already ran this: F1=0.9877 (WORSE than TERM=0.010 at 0.9894). TERM peaked at 0.010.
+
+### Key Finding: Separate TERM Tilt for Inner vs Outer Losses
+- **Inner losses need CLEAN gradients** (uniform mean, no hard-sample reweighting)
+- **Outer loss benefits from TERM** (upweighting hard samples for better feature discovery)
+- This is analogous to detached Matryoshka — just as detaching prevents gradient conflicts between widths, removing TERM from inner losses prevents hard-sample bias from corrupting width-specific optimization
+- **UPDATE: 200M validation FAILED.** F1=0.9880 (WORSE than 0.9894 baseline). Agent 2 also got 0.9894 with inner_term_tilt=0. The 50M signal (+0.0025) was misleading — at 200M with longer training, the inner TERM tilt doesn't matter.
+- **Do NOT try inner_term_tilt=0.** It's a dead end.
+
+### EXP-A3-35: Inner TERM=0 at 200M — F1=0.9880 (WORSE)
+- Config: ReferenceStyleSAE, TERM=0.010, inner_term_tilt=0.0, step=0.25, iw=0.5, 200M, k=80, 6 widths
+- Result: F1=0.9880, MCC=0.8239, precision=0.9883, recall=0.9888, dead=1
+- **0.0014 WORSE than baseline (0.9894)**. Ran with GPU contention (3 concurrent engine.py), but this shouldn't affect final quality.
+- Why 50M was misleading: At 50M (25% of training), the model is still in a transient phase. TERM reweighting on inner losses adds noise that happens to help the 50M snapshot but hurts final convergence. At 200M, the model fully converges regardless of inner TERM, and the extra noise during early training slightly corrupts feature directions.
+- **Lesson: Always validate at 200M. 50M quick tests can give false signals.**
+
+### EXP-A3-36: Per-Feature Learned ISTA Step Size — F1=0.9601 (CATASTROPHIC)
+- Hypothesis: Different features need different ISTA correction strengths. Replace scalar step_size=0.25 with a learned [d_sae]-dim vector initialized to 0.25.
+- Config: ReferenceStyleSAE, learned_step_size=true, step_size=0.25 (init), 50M, k=80, TERM=0.010, iw=0.5
+- Result: F1=0.9601, MCC=0.8094, recall=0.9448, **47 dead latents**
+- **0.0212 WORSE than baseline (0.9813 at 50M)**. Catastrophic failure.
+- Why it failed: The per-feature step sizes diverge during training. Some features get tiny steps (effectively dead — 47 dead latents), while others get huge steps (noisy activations). The Adam optimizer doesn't constrain the step sizes, allowing unstable divergence. The scalar step_size=0.25 is a critical regularizer — it forces all features to use the same conservative correction strength.
+- **Don't try per-feature step sizes. Scalar step_size is essential.**
+
+### EXP-A3-37: Detached W_enc in ISTA Correction — F1=0.9731 (WORSE)
+- Hypothesis: W_enc receives conflicting gradients from initial projection and ISTA correction. Detaching separates these signals.
+- Config: ReferenceStyleSAE, detach_ista_encoder=true, 50M, k=80, TERM=0.010, step=0.25, iw=0.5
+- Result: F1=0.9731, MCC=0.8143, recall=0.9749, **39 dead latents**
+- **0.0082 WORSE than baseline (0.9813 at 50M)**. Dead latents again.
+- Why it failed: The encoder NEEDS gradients from ISTA to learn good residual projections. Without ISTA gradients, the encoder only optimizes for initial feature detection, not for iterative refinement. The ISTA step becomes a fixed linear correction using stale encoder directions, which degrades over training.
+- **Key insight: Modifications to the ISTA path cause dead features.** Both learned_step_size and detach_ista_encoder caused 39-47 dead latents. The ISTA correction path is critical for keeping features alive.
+
+## Round 6 — Agent 2
+
+### EXP039: lr_end=5e-5 at 200M — F1=0.9894 (NO IMPROVEMENT)
+- Hypothesis: LR floor prevents over-annealing in final training steps. Engine supports lr_end.
+- Config: Best config + lr_end=5e-5, 200M
+- Result: F1=0.9894, identical to best. LR was already near-zero at end of decay — the floor doesn't kick in.
+- **Conclusion: lr_end is useless. LR already decays smoothly to ~0. Confirmed by Agent 1 (lr_end=1e-4) and Agent 0 (lr_end=1e-5).**
+
+### EXP040: inner_term_tilt=0 at 200M — F1=0.9894 (NO IMPROVEMENT)
+- Hypothesis: Agent 3 found +0.0025 at 50M with inner_term_tilt=0 (no TERM on inner losses).
+- Config: Best config + inner_term_tilt=0.0, 200M
+- Result: F1=0.9894. At 200M, inner TERM tilt doesn't matter. The 50M signal was misleading.
+- **Conclusion: Don't bother with inner_term_tilt separation. Agent 3 confirmed with 0.9880.**
+
+### EXP041: initial_k=75 at 200M — F1=0.9879 (WORSE)
+- Hypothesis: Fill the gap between k=60 (0.9772) and k=80 (0.9894) in the 200M K sweep.
+- Config: Best config + initial_k=75, 200M
+- Result: F1=0.9879, MCC=0.8238. 200M K law with TERM=0.010+step=0.25: k=60→0.9772, k=75→0.9879, k=80→0.9894, k=90→0.9777, k=100→0.9741.
+- **Conclusion: k=80 is the optimal initial K at 200M. Sharp peak.**
+
+### EXP042: lr=3.5e-4 at 200M — F1=0.9875 (WORSE)
+- Hypothesis: LR was only tested at 2e-4 (too low, LISTA) and 3e-4 (current). 3.5e-4 might be better with the full ReferenceStyle architecture.
+- Config: Best config + lr=3.5e-4, 200M
+- Result: F1=0.9875, MCC=0.8236 (9444s). Higher LR overshoots.
+- **LR law at 200M**: 2e-4→0.9004(LISTA), 3e-4→0.9894, 3.5e-4→0.9875. lr=3e-4 is optimal.
+
+### EXP043: TERM annealing (0.005→0.015) at 200M — F1=0.9894 (NO IMPROVEMENT)
+- Hypothesis: Linear anneal TERM from 0.005→0.015 over training. Average ≈ 0.010.
+- Implementation: Code change — `_get_current_term_tilt()` linearly interpolates term_tilt_initial→term_tilt_final.
+- Result: F1=0.9894, MCC=0.8245 (9261s). Identical to fixed TERM=0.010.
+- **Conclusion: TERM annealing doesn't help. Model is robust to schedule when average is ~0.010.**
+
+---
+
+### EXP-A3-38: Decoder Norm Regularization — F1=0.9825 (MARGINAL)
+- Hypothesis: Decoder column norms vary widely, biasing TopK selection. L2 penalty pushing toward 1.0 makes selection purely encoder-based.
+- Config: ReferenceStyleSAE, decoder_norm_reg=0.01, 50M, k=80, TERM=0.010, step=0.25, iw=0.5
+- Result: F1=0.9825, MCC=0.8209, **15 dead latents**
+- +0.0012 over baseline but dead latents are a red flag. Not worth scaling to 200M.
+- Why: The regularization pushes norms toward 1.0 but 0.01 weight is strong enough to conflict with reconstruction objective, killing some features.
+
+### Round 6 Code Changes Summary — Agent 3
+All code changes FAILED:
+1. EMA weights: negligible (+0.0003)
+2. Inner TERM separation: worse at 200M (-0.0014)
+3. Learned per-feature ISTA step: catastrophic (-0.0212, 47 dead)
+4. Detached W_enc in ISTA: worse (-0.0082, 39 dead)
+5. Decoder norm regularization: marginal (+0.0012, 15 dead)
+**Insight: The ReferenceStyleSAE architecture is highly optimized. Modifications to ISTA path cause dead features. Loss-only changes are safe but don't help. The remaining F1 gap (0.0106) may be irreducible at d_sae=4096.**
+
+### EXP-A3-39: k=30 (final) at 200M — F1=0.9277 (MUCH WORSE)
+- Config: Best config but k=30 (vs k=25), 200M, K schedule 80→30
+- Result: F1=0.9277, precision=0.8696, recall=0.9962, MCC=0.8224, dead=0
+- **Precision collapse**: 5 extra features per sample are mostly false positives. k=30 detects almost all true features (99.6% recall) but at 13% false positive rate.
+- **Why k=25 works**: k=25 well below true L0=34.5 forces high selectivity. Only highest-confidence features selected. Missing 1% of features costs much less F1 than adding 13% false positives.
+- **Final K law**: k=20≈k=25 (LISTA), k=25=optimal, k=30=catastrophic. Precision/recall tradeoff is extremely asymmetric.
+
+### EXP-A3-40: d_sae=8192 at 50M — F1=0.8168 (CATASTROPHIC)
+- Config: d_sae=8192, widths=[64,256,1024,2048,4096,8192], 50M, k=25, initial_k=80
+- Result: F1=0.8168, recall=0.7444, **510 dead latents out of 8192**
+- Double-width SAE can't be trained at 50M. Most latents never activate and die. Would need 400M+ training, not worth the compute cost.
+
+### EXP-A3-41: k=22 (final) at 200M — RUNNING
+- Hypothesis: k=22 has never been tested with ReferenceStyleSAE. Since k=30 collapsed precision, going BELOW k=25 might slightly improve precision without losing too much recall. k=20≈k=25 in LISTA suggests flat regime.
+- Config: Best config but k=22, 200M
+
+## Round 6 — Agent 1
+
+### EXP-A1-36: lr_end=1e-4 at 200M — F1=0.9894 (NO IMPROVEMENT)
+- Hypothesis: sae_lens defaults lr_end to ~3e-5 (lr/10). All our experiments have been using this implicit default. Setting lr_end=1e-4 (lr/3) keeps stronger gradients alive in the final LR decay phase, potentially improving TERM effectiveness on hard samples.
+- Config: Best config + lr_end=1e-4, 200M
+- Result: F1=0.9894, identical to best. Precision=0.9905, recall=0.9891, MCC=0.8245.
+- **Conclusion: lr_end has no impact.** Confirmed by Agent 2 (lr_end=5e-5) and Agent 0 (lr_end=1e-5). The LR decay schedule is already optimal — changing the floor from 3e-5 to 0-1e-4 doesn't matter.
+- **Complete lr_end law**: 0→same, 1e-5→same, 3e-5→same (default), 5e-5→same, 1e-4→same. Dead axis.
+
+### EXP-A1-37: PerFeatureStepSAE (per-feature learned ISTA step) at 200M — F1=0.9729 (MUCH WORSE)
+- Hypothesis: Different features need different ISTA correction amounts. Replace scalar step_size=0.25 with a learnable [4096]-dim vector initialized to 0.25. Only 4096 extra params. Decouples correction scale from encoding scale (W_enc serves dual purpose).
+- Implementation: Created `PerFeatureStepSAE` class extending ReferenceStyleSAE. Added `self.step_size_vec = nn.Parameter(torch.full((d_sae,), 0.25))`.
+- Config: PerFeatureStepSAE, 200M, k=80, TERM=0.010, step=0.25 (init), iw=0.5, 6 widths
+- Result: F1=0.9729, MCC=0.8190, precision=0.9937, recall=0.9561, dead=3
+- **Recall collapsed (0.9561 vs 0.9891).** Some features learned near-zero step sizes, effectively disabling ISTA correction. This prevented those features from being discovered through residual correction, leading to missed features (low recall). Precision improved (+0.0032) because the features that were detected were high-confidence.
+- **Confirms Agent 3's finding at 50M** (0.9601, 47 dead). The failure is worse at 50M (faster divergence) but still catastrophic at 200M.
+- **Key insight**: Uniform scalar step_size is a critical regularizer. The equal correction strength across all features prevents some features from being starved of ISTA gradient. This is analogous to how uniform learning rate works better than per-parameter adaptive rates in many settings.
+- **Conclusion: Never make ISTA step_size per-feature. Scalar step_size=0.25 is essential.**
+
+### Round 6 Summary — Agent 1
+- All experiments at 200M failed to beat 0.9894
+- lr_end is completely dead (entire 0-1e-4 range has no effect)
+- Per-feature step sizes cause recall collapse
+- Combined with Agent 3's findings (EMA=negligible, inner TERM=dead end, detached W_enc=dead end, decoder norm=marginal) and Agent 2's (inner_term_tilt=0 no help, k=75 worse), **the ReferenceStyleSAE at 0.9894 appears to be near-optimal for d_sae=4096**
+
+## Agent 0 — Round 6 Experiments
+
+### EXP39: TERM=0.012 + step=0.25 — F1=0.9877 (WORSE)
+- Hypothesis: TERM=0.010+step=0.25→0.9894. TERM may not have peaked.
+- Config: ReferenceStyleSAE, TERM=0.012, step_size=0.25, all other params same as best
+- Result: F1=0.9877, MCC=0.8243 (8872s) — WORSE than TERM=0.010 (0.9894)
+- **TERM peaked at 0.010 with step=0.25.** TERM curve at step=0.25: 0.005→0.9881, 0.008→0.9879, 0.010→0.9894, 0.012→0.9877
+- Non-monotonic peak at 0.010. Don't go higher.
+
+### EXP40: lr_end=1e-5 — F1=0.9894 (NO IMPROVEMENT)
+- Hypothesis: LR decays to 0 in final 1/3. Stopping at 1e-5 prevents over-annealing.
+- Config: Best config + lr_end=1e-5
+- Result: F1=0.9894 (same as best). LR floor doesn't help.
+- Confirms Agent 2's lr_end=5e-5 finding. LR at end of decay is already near-zero; flooring it changes nothing.
+- **lr_end is a dead end.** Standard LR decay schedule is optimal.
+
+### EXP41: SplitTERMSAE (inner_term_tilt=0) — F1=0.9880 (WORSE)
+- Hypothesis: Inner Matryoshka losses get cleaner gradients without TERM hard-sample reweighting.
+- Config: SplitTERMSAE, outer TERM=0.010, inner TERM=0 (standard mean for inner losses)
+- Result: F1=0.9880, MCC=~0.824 — WORSE than uniform TERM (0.9894)
+- Confirms Agent 2 (0.9894) and Agent 3 (0.9880). TERM on inner losses actually helps — hard-sample upweighting provides useful gradient signal for Matryoshka at all scales.
+- **Don't separate inner/outer TERM.** Uniform TERM=0.010 across all losses is optimal.
+
+### EXP42: batch_size=512 (RUNNING)
+- Hypothesis: Smaller batch → 2x more gradient steps (390k vs 195k), smoother K decay (K decreases by 0.00014/step vs 0.00028/step), more frequent freq sort updates. No one tested batch<1024.
+- Config: batch_size=512, lr_warm_up_steps=2000 (same fraction as 1000/195k), all other params from best
+- Risk: Noisier gradients (half batch size), 2x longer training, LR decay covers 2x as many steps (potential over-annealing like 300M+batch=1024)
+
+### Summary of Round 6 Axes Eliminated
+| Axis | Result | Conclusion |
+|------|--------|------------|
+| TERM=0.012+step=0.25 | 0.9877 | TERM peaked at 0.010 |
+| lr_end=1e-5 | 0.9894 | No help, same as default |
+| Separate inner/outer TERM | 0.9880 | Uniform TERM is better |
+| TERM=0.015+step=0.25 | Not tested | Likely worse given 0.012 worse |
+| batch_size=512 | Running | Testing now |
+
+### EXP-A1-38: adam_beta1=0.8 at 200M — F1=0.9868 (WORSE)
+- Hypothesis: Lower momentum (0.8 vs default 0.9) helps Adam adapt faster to the changing loss landscape from the K schedule (80→25). More responsive to recent gradients.
+- Config: Best config + adam_beta1=0.8, 200M
+- Result: F1=0.9868, MCC=0.8235, precision=0.9902, recall=0.9853, dead=1
+- **0.0026 WORSE than baseline (0.9894).** Lower momentum makes training noisier without benefit. The K schedule changes slowly enough (0.00028/step) that standard momentum=0.9 tracks it well. Lower momentum adds noise without improving adaptation.
+- **adam_beta1 law**: 0.8→0.9868, 0.9→0.9894 (default). Combined with Agent 0's beta2=0.99→0.9867. **Default Adam betas (0.9, 0.999) are optimal. Don't touch optimizer hyperparams.**
+
+### EXP-A1-39: TERM=0.009 + step=0.25 at 200M — F1=0.9877 (WORSE)
+- Hypothesis: TERM curve jumps from 0.008 (0.9880) to 0.010 (0.9894). TERM=0.009 fills the gap — peak might be between.
+- Config: Best config but term_tilt=0.009, 200M
+- Result: F1=0.9877, MCC=0.8245, precision=0.9893, recall=0.9875, dead=1
+- **0.0017 WORSE than TERM=0.010 (0.9894).** The peak at TERM=0.010 is very sharp — a single step away (0.009) drops performance.
+- **Complete TERM curve at step=0.25**: 0.005→0.9881, 0.006→0.9875, 0.007→0.9860, 0.008→0.9879, 0.009→0.9877, 0.010→**0.9894**, 0.012→0.9877
+- The curve is non-monotonic with a dip at 0.006-0.007 and a sharp spike at 0.010. This suggests TERM=0.010 hits a resonance with the architecture — possibly the exact threshold where hard-sample upweighting balances reconstruction vs sparsity objectives optimally.
+- **TERM=0.010 is definitively the optimal value.** No further TERM tuning needed.
