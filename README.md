@@ -10,7 +10,7 @@
 
 ## TLDR
 
-Claude agents that optimize things for you. You give them:
+Multi-agent group of Claude agents that optimize things for you. You give them:
 - A **config file** to edit (hyperparams, prompts, flags — whatever)
 - A **script** that runs the config and outputs a score
 - **Instructions** on what "better" means
