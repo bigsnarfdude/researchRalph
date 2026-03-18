@@ -2,7 +2,7 @@
 
 Optimize system prompts for LLM explanation quality. Agents edit `prompt_config.yaml`, generate responses via `claude -p` (haiku), and score with a Claude judge (sonnet).
 
-**No GPU needed.** Runs on any machine with Claude Code CLI.
+**No GPU needed.** Runs on any machine with Claude Code CLI. Claude is doing all the heavy lifting of prompt engineering. RRMA is the multi-agent version.
 
 ## Setup
 
