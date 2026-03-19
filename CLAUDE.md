@@ -1,52 +1,60 @@
-# researchRalph v2 — Claude Code Instructions
+# researchRalph — Claude Code Instructions
 
 ## What This Is
 
-A domain-agnostic multi-agent research framework. Agents collaborate through a shared blackboard to optimize any system with editable parameters and a scalar objective.
+A multi-agent research framework with three operating modes:
 
-## Structure
+- **v2** (`core/`): Structured multi-agent with blackboard, memory, operator control
+- **v3** (simplified): Plain blackboard, no roles, Ralph Wiggum loops
+- **v4** (`v4/`): Self-recursive — adds a gardener (outer agent) with stop authority and scaffold editing
 
-```
-core/           — Framework scripts (launch, stop, monitor, conductor, collect)
-domains/        — Reference implementations + template for new domains
-docs/           — Architecture, cognitive designs, extending, security
-```
+## Key Commands
 
-## Key Patterns
-
-### Single Agent
 ```bash
-./core/run-single.sh domains/<domain>
-```
-Loop: read state → pick experiment → run → record → update state → repeat.
-
-### Multi-Agent (Blackboard)
-```bash
+# v2: Multi-agent with operator control
 ./core/launch.sh domains/<domain> N [--gpu]
-```
-N agents in git worktrees, shared blackboard.md + results.tsv + strategy.md.
+./core/operator.sh domains/<domain> ban "dead end description"
 
-### Conductor (Reactive)
-```bash
-./core/conductor.sh domains/<domain>
+# v4: Fully autonomous (gardener handles everything)
+bash v4/outer-loop.sh domains/<domain> [max_gens] [num_agents] [max_turns] [monitor_min]
 ```
-Watches blackboard for REQUEST lines, spawns ephemeral agents.
 
 ## Adding a Domain
 
 ```bash
 cp -r domains/template domains/my-domain
-# Edit: config.yaml, run.sh, program.md
-./core/launch.sh domains/my-domain 4
+# Edit: config.yaml (or prompt_config.yaml), run.sh, program.md
 ```
 
-## Hardware Constraint
+A domain needs: something agents edit, a harness that outputs a score, and instructions.
 
-RRMA (researchRalph Multi-Agent) requires a **single homogeneous GPU node** (e.g., 8×A100 or 8×H100). Mixed GPU types across nodes cause errors due to hardware speed/memory differences producing incomparable scores and race conditions. Do not use multi-machine deployments with different GPU types.
+## v4 Architecture
+
+```
+outer-loop.sh → calibrate.sh → launch-agents.sh → [monitor loop] → diagnose.sh
+                                    ↓
+                              workers + meta-agent (screen sessions)
+                              meta-loop.sh compresses blackboard every 30 min
+```
+
+Process quality scoring (0-30) from artifacts. Stopping rules:
+- PQ < 10 after 15 exp → STOP_HACKING (rewrite program.md)
+- PQ ≥ 10 + flat + no blind spots → STOP_DONE
+- PQ ≥ 10 + flat + blind spots → REDESIGN
 
 ## Proven Results
 
-- 186 experiments, 8×A100, GPT-2 TinyStories
-- Blackboard design: 64% hit rate, 1.048 BPB
-- Vanilla (no memory): 17% hit rate, 1.152 BPB
-- Key: structured memory (facts/failures/hunches) prevents repeating dead ends
+- v2: 186 experiments, 8×A100, 64% hit rate, 1.048 BPB (GPT-2)
+- v3: 135 experiments, 1×RTX 4070 Ti, 0.9894 F1 (SAE-bench, beat 0.97 ceiling)
+- v4: Hacking detection validated (PQ=6/30, STOP_HACKING fired correctly)
+
+## Hardware
+
+Single homogeneous GPU node required for ML domains. CPU-only works for prompt optimization.
+
+## Critical Files
+
+- `v4/taste.md` — The gardener's principles. Human-seeded, auto-updated.
+- `v4/diagnose.sh` — Process quality scoring. Currently tuned for code-editing domains.
+- Domain `program.md` — Agent instructions. The gardener can rewrite this.
+- Domain `blackboard.md` — Shared state. Append-only.
