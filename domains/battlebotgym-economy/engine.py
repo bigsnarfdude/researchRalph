@@ -23,7 +23,7 @@ from typing import List, Tuple, Dict, Optional
 
 TOTAL_DAYS = 100
 INITIAL_POPULATION = 100
-DEFAULT_MATCHES = 50
+DEFAULT_MATCHES = 200
 
 # Base production per worker per day
 BASE_FOOD_PER_FARMER = 2.3
@@ -61,6 +61,7 @@ EVENT_BOUNTY_BASE = 0.07
 # Event severity
 DROUGHT_FOOD_LOSS_FACTOR = 0.30  # farming output reduced to 30% during drought
 DROUGHT_DURATION = 10            # days
+DROUGHT_COOLDOWN = 8             # days of immunity after drought ends
 
 RAID_BASE_DEATHS = 8             # base villager deaths in raid
 RAID_FOOD_STEAL_FRACTION = 0.30  # fraction of food stolen
@@ -69,6 +70,10 @@ RAID_GOLD_STEAL_FRACTION = 0.25
 
 PLAGUE_BASE_DEATH_RATE = 0.10    # 10% of population dies (before medicine)
 PLAGUE_DURATION = 6              # days of reduced productivity
+PLAGUE_COOLDOWN = 10             # days of immunity after plague ends
+
+# Stacking control — max 1 new catastrophe (drought/raid/plague) per day
+MAX_NEW_CATASTROPHES_PER_DAY = 1
 
 BOUNTY_FOOD_BONUS = 25           # free food
 BOUNTY_GOLD_BONUS = 10           # free gold
@@ -93,6 +98,8 @@ class Village:
     # Ongoing effects
     drought_days: int = 0
     plague_days: int = 0
+    drought_cooldown: int = 0       # immunity countdown after drought ends
+    plague_cooldown: int = 0        # immunity countdown after plague ends
     defense_rating: float = 0.0
     # Tracking
     peak_population: int = 100
@@ -338,26 +345,38 @@ def handle_consumption(village: Village, rng: random.Random) -> Tuple[int, str]:
 
 
 def roll_events(village: Village, cfg: dict, rng: random.Random) -> str:
-    """Check for random events. Returns event name or ''."""
+    """Check for random events. Returns event name or ''.
+
+    Variance control:
+      - Refractory periods prevent drought/plague from re-triggering immediately
+        after ending (DROUGHT_COOLDOWN / PLAGUE_COOLDOWN days of immunity).
+      - At most MAX_NEW_CATASTROPHES_PER_DAY catastrophes (drought/raid/plague)
+        can trigger on a single day, preventing simultaneous triple-stacking.
+      - Bounties are always allowed (positive events don't need capping).
+    """
     raid_preparedness = float(cfg.get('raid_preparedness', 0.3))
 
-    # Each event has independent probability
-    event = ""
+    events = []
+    catastrophes_today = 0
 
-    # Drought: more likely in later days (seasons)
+    # --- Drought: seasonal, with refractory cooldown ----------------------
     day = village.day
     season_factor = 1.0 + 0.5 * math.sin(day * 2 * math.pi / 100)  # peak around day 25
-    if village.drought_days == 0 and rng.random() < EVENT_DROUGHT_BASE * season_factor:
+    drought_eligible = (village.drought_days == 0 and village.drought_cooldown == 0)
+    if (drought_eligible
+            and catastrophes_today < MAX_NEW_CATASTROPHES_PER_DAY
+            and rng.random() < EVENT_DROUGHT_BASE * season_factor):
         village.drought_days = DROUGHT_DURATION
         village.total_events['drought'] += 1
-        event = "drought"
+        catastrophes_today += 1
+        events.append("drought")
 
-    # Raid: more likely when village has more resources (attractive target)
+    # --- Raid: wealth-attracted, defense-mitigated ------------------------
     wealth_factor = min(2.0, (village.food + village.materials + village.gold * 3) / 200)
     defense_reduction = village.defense_rating / (village.defense_rating + 50)
     raid_prob = EVENT_RAID_BASE * wealth_factor * (1.0 - defense_reduction * 0.7)
-    if rng.random() < raid_prob:
-        # Raid damage reduced by defense + preparedness
+    if (catastrophes_today < MAX_NEW_CATASTROPHES_PER_DAY
+            and rng.random() < raid_prob):
         defense_factor = 1.0 - defense_reduction
         prep_factor = 1.0 - raid_preparedness * 0.4
 
@@ -372,7 +391,6 @@ def roll_events(village: Village, cfg: dict, rng: random.Random) -> str:
         village.materials -= village.materials * RAID_MATERIAL_STEAL_FRACTION * defense_factor
         village.gold -= village.gold * RAID_GOLD_STEAL_FRACTION * defense_factor
 
-        # Raids also damage buildings
         building_damage = (1.0 - defense_reduction) * rng.random() * 5
         village.buildings = max(0, village.buildings - building_damage)
 
@@ -381,12 +399,15 @@ def roll_events(village: Village, cfg: dict, rng: random.Random) -> str:
         village.gold = max(0, village.gold)
 
         village.total_events['raid'] += 1
-        event = event + "+raid" if event else "raid"
+        catastrophes_today += 1
+        events.append("raid")
 
-    # Plague: more likely with high population density
+    # --- Plague: density-dependent, with refractory cooldown --------------
     density_factor = village.population / INITIAL_POPULATION
-    if village.plague_days == 0 and rng.random() < EVENT_PLAGUE_BASE * density_factor:
-        # Medicine (research) reduces plague severity
+    plague_eligible = (village.plague_days == 0 and village.plague_cooldown == 0)
+    if (plague_eligible
+            and catastrophes_today < MAX_NEW_CATASTROPHES_PER_DAY
+            and rng.random() < EVENT_PLAGUE_BASE * density_factor):
         medicine_factor = 1.0 - min(0.8, village.knowledge * RESEARCH_MEDICINE_BONUS)
         plague_deaths = max(0, int(village.population * PLAGUE_BASE_DEATH_RATE
                                     * medicine_factor * (0.6 + rng.random() * 0.8)))
@@ -395,23 +416,33 @@ def roll_events(village: Village, cfg: dict, rng: random.Random) -> str:
         village.total_deaths += plague_deaths
         village.plague_days = PLAGUE_DURATION
         village.total_events['plague'] += 1
-        event = event + "+plague" if event else "plague"
+        catastrophes_today += 1
+        events.append("plague")
 
-    # Bounty: random good luck
+    # --- Bounty: always allowed (positive event) --------------------------
     if rng.random() < EVENT_BOUNTY_BASE:
         village.food += BOUNTY_FOOD_BONUS * (0.5 + rng.random())
         village.gold += BOUNTY_GOLD_BONUS * (0.5 + rng.random())
         village.materials += BOUNTY_MATERIALS_BONUS * (0.5 + rng.random())
         village.total_events['bounty'] += 1
-        event = event + "+bounty" if event else "bounty"
+        events.append("bounty")
 
-    # Tick ongoing effects
-    if village.drought_days > 0:
-        village.drought_days -= 1
-    if village.plague_days > 0:
-        village.plague_days -= 1
+    # --- Tick ongoing effects and cooldowns -------------------------------
+    def tick_effect(days, cooldown, cooldown_duration):
+        if days > 0:
+            days -= 1
+            if days == 0:
+                cooldown = cooldown_duration
+        elif cooldown > 0:
+            cooldown -= 1
+        return days, cooldown
 
-    return event
+    village.drought_days, village.drought_cooldown = tick_effect(
+        village.drought_days, village.drought_cooldown, DROUGHT_COOLDOWN)
+    village.plague_days, village.plague_cooldown = tick_effect(
+        village.plague_days, village.plague_cooldown, PLAGUE_COOLDOWN)
+
+    return "+".join(events)
 
 
 # --- Main Simulation ------------------------------------------------------
@@ -422,19 +453,12 @@ def run_simulation(cfg: dict, seed: int, verbose: bool = False) -> dict:
 
     village = Village(
         population=INITIAL_POPULATION,
-        food=float(cfg.get('starting_food', 80)),
-        materials=float(cfg.get('starting_materials', 40)),
-        gold=float(cfg.get('starting_gold', 20)),
+        food=70.0,
+        materials=35.0,
+        gold=18.0,
         knowledge=0.0,
         buildings=0.0,
     )
-
-    # Override starting resources to fixed values (no gaming initial conditions)
-    village.food = 70.0
-    village.materials = 35.0
-    village.gold = 18.0
-    village.knowledge = 0.0
-    village.buildings = 0.0
 
     log = []
 

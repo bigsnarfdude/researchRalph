@@ -10,12 +10,13 @@
 
 ## TLDR
 
-Claude agents that do research for you. You give them:
+Multi-agent Claude agents that do research for you. You give them:
 - A **config file** to edit (hyperparams, prompts, architecture code — whatever)
 - A **script** that runs the config and outputs a score
 - **Instructions** on what "better" means
 
 They run experiments 24/7, learn from failures, and collaborate through a shared blackboard.
+A variety of recipes and examples of experiments to run with RRMA included.
 
 **v4 adds a gardener** — an outer agent that monitors process quality, detects when agents are gaming instead of researching, and redesigns the scaffold autonomously. No human in the loop.
 
@@ -40,14 +41,21 @@ v2 proved multi-agent collaboration works. v3 proved less protocol = better scie
 
 ## Run It
 
-### v2: Multi-agent with operator control
+### Single agent
 
 ```bash
-./core/launch.sh domains/gpt2-tinystories 8 --gpu    # 8 agents, GPU per agent
-./core/monitor.sh domains/gpt2-tinystories            # health dashboard
-./core/operator.sh domains/gpt2-tinystories ban "depth 12 diverges"  # steer mid-run
-./core/stop.sh gpt2-tinystories                       # stop
+./core/run-single.sh domains/gpt2-tinystories
 ```
+
+One agent loops: read state → pick experiment → run → record → repeat.
+
+### Multi-agent (RRMA) v3
+
+```bash
+./core/launch.sh domains/gpt2-tinystories 8 --gpu
+```
+
+8 agents in isolated git worktrees. They share a blackboard where they post findings, avoid each other's dead ends, and combine wins. Each agent gets one GPU via round-robin `CUDA_VISIBLE_DEVICES`.
 
 ### v4: Fully autonomous (the gardener)
 
@@ -61,10 +69,20 @@ bash v4/outer-loop.sh domains/sae-bench 5 4 200 20
 
 The gardener handles everything: calibrates via literature search, launches workers + meta-agent, monitors process quality every 20 min, stops when done or hacking detected, redesigns program.md if agents are stuck, appends lessons to taste.md.
 
-### Single agent (simplest)
+### battleBOT bridge
 
 ```bash
-./core/run-single.sh domains/gpt2-tinystories
+./rrma-bridge.sh auditbench 4    # 4 agents optimize auditbench
+```
+
+Launches RRMA agents against any battleBOT Gym domain via the bridge script.
+
+### Monitor and stop
+
+```bash
+./core/monitor.sh domains/gpt2-tinystories    # health dashboard
+./core/stop.sh gpt2-tinystories               # stop all agents
+./core/collect.sh gpt2-tinystories            # gather results
 ```
 
 ---
@@ -75,24 +93,39 @@ A domain is a folder with 3 files:
 
 ```
 domains/my-domain/
-├── config.yaml    ← what agents edit
-├── run.sh         ← runs the config, prints score to stdout
+├── config.yaml    ← what agents edit (hyperparams, prompts, flags)
+├── run.sh         ← runs the config, outputs a score
 └── program.md     ← tells agents what to optimize and how
 ```
 
 ```bash
 cp -r domains/template domains/my-domain
 # Edit the 3 files, then:
-./core/launch.sh domains/my-domain 4          # v2 mode
+./core/launch.sh domains/my-domain 4          # v3 mode
 bash v4/outer-loop.sh domains/my-domain       # v4 mode (autonomous)
 ```
 
 **Included domains:**
-- `domains/sae-bench/` — SAE architecture optimization (GPU, hard benchmark)
+
+*Core reference domains:*
+- `domains/sae-bench/` — SAE architecture optimization (GPU, hard benchmark, v4 validated)
 - `domains/gpt2-tinystories/` — GPT-2 training (186 experiments, 8×A100)
 - `domains/af-elicitation/` — AF elicitation prompt optimization via API
 - `domains/prompt-eval/` — Generic prompt optimization with LLM judge (CPU-only)
-- `domains/battlebotgym-*/` — 8 RL environments from battleBOT
+
+*battleBOT Gym (competitive optimization games):*
+- `domains/battlebotgym-acrobot/` — Acrobot swing-up control
+- `domains/battlebotgym-cartpole/` — CartPole balancing
+- `domains/battlebotgym-mountaincar/` — MountainCar continuous control
+- `domains/battlebotgym-pendulum/` — Pendulum stabilization
+- `domains/battlebotgym-lunarlander/` — Lunar Lander guidance
+- `domains/battlebotgym-arena/` — Multi-agent arena competition
+- `domains/battlebotgym-economy/` — Economic simulation optimization
+- `domains/battlebotgym-network/` — Network topology optimization
+- `domains/battlebotgym-sae-bench/` — SAE feature optimization (v1: pre-baked LISTA)
+
+*AuditBench (alignment auditing):*
+- `domains/battlebotgym-auditbench/` — Alignment auditing against 28 target LLMs with hidden behaviors (Lambda GH200)
 
 ---
 
@@ -141,7 +174,7 @@ See [v4/README.md](v4/README.md) for full details.
 
 ---
 
-## v2: How It Works
+## How It Works
 
 Each agent keeps structured notes:
 
@@ -196,7 +229,7 @@ See [docs/V4-VALIDATION.md](docs/V4-VALIDATION.md).
 
 ---
 
-## Steer Agents Mid-Run (v2)
+## Steer Agents Mid-Run
 
 ```bash
 OP="./core/operator.sh domains/my-domain"
@@ -207,16 +240,31 @@ $OP strategy "Phase 2: exploit top 3, stop exploring"
 $OP status
 ```
 
+Agents check for operator messages every round. Asynchronous — doesn't interrupt mid-experiment.
+
 ---
 
 ## Hardware
+
+**RRMA requires a single node with identical GPUs.** Mixed GPU types cause incomparable scores and race conditions.
 
 | Config | Status |
 |--------|--------|
 | GH200 480GB | v4 validation (March 2026) |
 | 8×A100 | v2 proven (Run 4, 186 experiments) |
+| 8×H100 | Works |
 | RTX 4070 Ti | v3 proven (SAE-bench, 135 experiments) |
-| CPU-only | Works for non-ML domains |
+| CPU-only | Works for non-ML domains (prompt optimization, bandits) |
+
+---
+
+## `claude -p` Is Fragile (and That's OK)
+
+The entire system is `claude -p` in a while loop. State lives in files, not in the agent's head. If Claude dies, the next restart picks up the same state. Nothing lost except the in-progress experiment.
+
+```bash
+./core/watchdog.sh gpt2-tinystories    # auto-restart stale agents
+```
 
 ---
 
@@ -225,8 +273,10 @@ $OP status
 ```
 researchRalph/
 ├── quickstart.sh              # Get running in 60 seconds
-├── core/                      # v2 harness
-│   ├── launch.sh              # Multi-agent launcher (worktrees, GPU assignment)
+├── rrma-bridge.sh             # battleBOT ↔ RRMA bridge launcher
+├── swarm-bench.sh             # Swarm benchmarking across domains
+├── core/                      # v2/v3 harness
+│   ├── launch.sh              # Multi-agent launcher (RRMA)
 │   ├── run-single.sh          # Single-agent loop
 │   ├── monitor.sh             # Health dashboard
 │   ├── stop.sh                # Stop agents
@@ -234,7 +284,8 @@ researchRalph/
 │   ├── watchdog.sh            # Auto-restart stale agents
 │   ├── operator.sh            # Steer agents mid-run
 │   ├── conductor.sh           # Reactive dispatch (optional)
-│   └── verifier.sh            # Reproduce claimed results (optional)
+│   ├── verifier.sh            # Reproduce claimed results (optional)
+│   └── notebook.sh            # Push results to GitHub repo
 ├── v4/                        # Self-recursive layer (the gardener)
 │   ├── outer-loop.sh          # Generation loop (calibrate → launch → monitor → stop/redesign)
 │   ├── diagnose.sh            # Process quality scoring
@@ -245,21 +296,45 @@ researchRalph/
 ├── domains/                   # Optimization targets
 │   ├── template/              # Start here
 │   ├── sae-bench/             # SAE architecture research (GPU, hard)
-│   ├── gpt2-tinystories/      # GPT-2 training (GPU)
-│   ├── af-elicitation/        # AF prompt optimization (API/GPU)
-│   └── battlebotgym-*/        # RL environments
+│   ├── gpt2-tinystories/      # Reference: ML training (GPU)
+│   ├── af-elicitation/        # Reference: AF prompt optimization (API)
+│   ├── prompt-eval/           # Reference: generic prompt optimization (CPU-only)
+│   ├── battlebotgym-*/        # 9 battleBOT Gym game domains
+│   ├── battlebotgym-auditbench/  # AuditBench: 28 target LLMs
+│   ├── battlebotgym-sae-bench/   # SAE feature optimization (v1: pre-baked LISTA)
+│   └── battlebotgym-sae-bench-v2/  # SAE from scratch (vanilla BatchTopK → ???)
 ├── docs/                      # Deep dives
 │   ├── V4-DESIGN.md           # v4 proposal and architecture
 │   ├── V4-VALIDATION.md       # v4 test results (March 2026)
 │   ├── RETROSPECTIVE-V3-SAE.md # v3 SAE-bench retrospective
 │   ├── ARCHITECTURE.md        # Blackboard pattern
 │   ├── COGNITIVE-DESIGNS.md   # 8 agent designs compared
-│   └── EXTENDING.md           # Adding new domains
+│   ├── EXTENDING.md           # Adding new domains
+│   └── SECURITY.md            # Threat model
 ├── hub/                       # HTTP event server (optional)
 ├── client/                    # Python SDK for hub
 ├── examples/                  # Past run artifacts
 └── tests/                     # Test suite
 ```
+
+## Why v3: Gaming, Simplification, Backward Planning
+
+RRMA agents consistently find degenerate shortcuts. This shaped the harness design across three iterations.
+
+**SAE-bench v1 → v2 (mid-run rebuild):** v1 shipped with the full LISTA-Matryoshka architecture (609 lines) pre-baked in `sae.py`. Agents just tuned config knobs on the pre-solved answer — 34 experiments, 8 hours, only +0.007 F1 gain. Parameter sweeps, not research. We observed this gaming mid-run, gutted `sae.py` to a 17-line empty template, stripped config to 6 vanilla params, and relaunched. v2 agents independently discovered LISTA from first principles and cited Gregor & LeCun 2010 by name on the blackboard. 0.61 → 0.90 F1 via genuine architectural innovation in 19 experiments.
+
+We also stripped the bridge from 374 → 227 lines: removed roles (SCOUT/EXPLOIT/DIVERSITY/ANALYST), structured blackboard protocol (CLAIM/RESPONSE/REQUEST), convergence watchdog, and strategy.md. The protocol overhead consumed context that should have gone to reasoning. The fix: a plain blackboard (like a BIRS math blackboard — shared surface, no protocol) and a 12-line agent prompt that says "read program.md, don't duplicate, write what you tried and why."
+
+**AuditBench (Lambda GH200):** 14 known behavior categories, recall-only metric, no false-positive penalty. All 4 agents independently converged on "always-fallback" — predict all 14 categories for every model → guaranteed 1.0 detection. One agent built a regex-only engine (zero LLM analysis) that scores identically 3x faster, proving the analysis step adds nothing. The benchmark was broken, not the agents.
+
+**Domain design principles (learned the hard way):**
+1. Never bake the answer into the harness — start from vanilla/minimal
+2. Score must penalize false positives (F1, not recall-only)
+3. Open-ended solution space — no closed set to enumerate
+4. The swarm IS the red team for your benchmark — if agents game it, the metric is broken
+5. Minimal agent prompt — let program.md define the task, don't waste context on protocol
+
+---
 
 ## Attribution
 
