@@ -1,4 +1,5 @@
-# researchRalph
+# researchRalph v4 gardner
+"gardener" - work ethic signifies a nurturing, patient, and long-term approach to achieving results, rather than relying on force, speed, or immediate gratification
 
 <p align="center">
   <img src="assets/researchRalph.png" alt="researchRalph" width="300"/>
