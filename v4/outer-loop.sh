@@ -84,7 +84,9 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
     DECISION="CONTINUE"
     MONITOR_COUNT=0
 
-    while [ "$DECISION" = "CONTINUE" ] || [ "$DECISION" = "TOO_EARLY" ]; do
+    NUDGE_COUNT=0  # track how many nudges this generation
+
+    while [ "$DECISION" = "CONTINUE" ] || [ "$DECISION" = "TOO_EARLY" ] || [ "$DECISION" = "NUDGE" ]; do
         log "Monitoring check in ${MONITOR_INTERVAL}m..."
         sleep $((MONITOR_INTERVAL * 60))
         MONITOR_COUNT=$((MONITOR_COUNT + 1))
@@ -95,8 +97,8 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         if [ "$ALIVE" -eq 0 ]; then
             log "All workers finished (used all $MAX_TURNS turns). Running final diagnosis."
             DECISION=$(bash "$SCRIPT_DIR/diagnose.sh" "$DOMAIN_DIR" 2>>"$LOG")
-            # If workers are done, treat CONTINUE as STOP_DONE
-            if [ "$DECISION" = "CONTINUE" ] || [ "$DECISION" = "TOO_EARLY" ]; then
+            # If workers are done, treat CONTINUE/NUDGE as STOP_DONE
+            if [ "$DECISION" = "CONTINUE" ] || [ "$DECISION" = "TOO_EARLY" ] || [ "$DECISION" = "NUDGE" ]; then
                 DECISION="STOP_DONE"
             fi
             break
@@ -105,6 +107,53 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         # Run diagnosis
         DECISION=$(bash "$SCRIPT_DIR/diagnose.sh" "$DOMAIN_DIR" 2>>"$LOG")
         log "Diagnosis: $DECISION (check $MONITOR_COUNT, workers alive: $ALIVE)"
+
+        # --- v4.1: Handle NUDGE (lightweight intervention) ---
+        if [ "$DECISION" = "NUDGE" ]; then
+            NUDGE_COUNT=$((NUDGE_COUNT + 1))
+            log "=== NUDGE #$NUDGE_COUNT ==="
+
+            if [ "$NUDGE_COUNT" -ge 3 ]; then
+                # 3 nudges without progress → escalate to REDESIGN
+                log "3 nudges without progress. Escalating to REDESIGN."
+                DECISION="REDESIGN"
+            else
+                # Generate a lightweight observation for the blackboard
+                NUDGE_PROMPT="You are observing a multi-agent research run. Read the blackboard and results below.
+
+The agents have high process quality but scores are flat and they may be stuck on one research axis.
+
+## Blackboard (last 60 lines):
+$(tail -60 "$DOMAIN_DIR/blackboard.md")
+
+## Recent results (last 15):
+$(tail -15 "$DOMAIN_DIR/results.tsv")
+
+## Meta-blackboard (if any):
+$(cat "$DOMAIN_DIR/meta-blackboard.md" 2>/dev/null | head -40 || echo "none")
+
+Write ONE short observation (2-3 sentences max) noting:
+- What axis/approach ALL recent experiments share
+- ONE alternative research direction nobody has tried
+- Frame as an observation, not an instruction
+
+Output ONLY the observation text. No headers, no markdown, no commentary."
+
+                NUDGE_TEXT=$(claude -p "$NUDGE_PROMPT" --dangerously-skip-permissions --max-turns 1 2>/dev/null)
+
+                if [ -n "$NUDGE_TEXT" ]; then
+                    echo "" >> "$DOMAIN_DIR/blackboard.md"
+                    echo "## Observation (gardener, $(date '+%H:%M'))" >> "$DOMAIN_DIR/blackboard.md"
+                    echo "$NUDGE_TEXT" >> "$DOMAIN_DIR/blackboard.md"
+                    log "Nudge appended to blackboard: $(echo "$NUDGE_TEXT" | head -1)"
+                else
+                    log "Nudge generation failed (empty output)"
+                fi
+
+                # Continue monitoring — NUDGE doesn't stop the run
+                DECISION="CONTINUE"
+            fi
+        fi
 
         # Safety: don't monitor forever (max 48 hours)
         if [ "$MONITOR_COUNT" -gt 144 ]; then  # 144 * 20min = 48h
@@ -271,7 +320,47 @@ $(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 1 
             ;;
 
         STOP_DONE)
-            log "=== SEARCH EXHAUSTED — GENERATING FINAL ARTIFACTS ==="
+            log "=== STOP_DONE TRIGGERED — CHECKING FOR UNEXPLORED DIRECTIONS ==="
+
+            # Before accepting STOP_DONE, ask: is the search genuinely exhausted?
+            REEVAL_PROMPT="You are reviewing a completed research run. Read the blackboard and results.
+
+## Blackboard (last 100 lines):
+$(tail -100 "$DOMAIN_DIR/blackboard.md")
+
+## Results (last 20):
+$(tail -20 "$DOMAIN_DIR/results.tsv")
+
+## Meta-blackboard:
+$(cat "$DOMAIN_DIR/meta-blackboard.md" 2>/dev/null | head -50 || echo "none")
+
+Answer these two questions:
+1. Are there research directions that were NEVER tried? (e.g., training curriculum, loss functions, multi-scale methods, data scaling, if agents only did architecture)
+2. Could the current best be significantly improved (>5%) with a different approach?
+
+If YES to either: output a single line starting with UNEXPLORED: followed by 1-2 unexplored directions.
+If NO to both: output a single line: EXHAUSTED
+
+Output ONLY one line. No explanation."
+
+            REEVAL=$(claude -p "$REEVAL_PROMPT" --dangerously-skip-permissions --max-turns 1 2>/dev/null | head -1)
+            log "Re-evaluation: $REEVAL"
+
+            if echo "$REEVAL" | grep -q "^UNEXPLORED:"; then
+                log "Unexplored directions found. Downgrading STOP_DONE to NUDGE."
+                NUDGE_TEXT=$(echo "$REEVAL" | sed 's/^UNEXPLORED: //')
+                echo "" >> "$DOMAIN_DIR/blackboard.md"
+                echo "## Observation (gardener, $(date '+%H:%M') — before stopping)" >> "$DOMAIN_DIR/blackboard.md"
+                echo "The search appears stalled. Unexplored directions: $NUDGE_TEXT" >> "$DOMAIN_DIR/blackboard.md"
+
+                # Don't stop — continue to next generation with the nudge
+                log "Continuing to generation $((gen + 1)) with nudge applied."
+                # Relaunch workers
+                bash "$SCRIPT_DIR/launch-agents.sh" "$DOMAIN_DIR" "$NUM_AGENTS" "$MAX_TURNS" 30 2>&1 | tee -a "$LOG"
+                continue
+            fi
+
+            log "=== SEARCH GENUINELY EXHAUSTED — GENERATING FINAL ARTIFACTS ==="
 
             # Final distillation
             bash "$SCRIPT_DIR/generate-meta-blackboard.sh" "$DOMAIN_DIR" 2>&1 | tee -a "$LOG"
