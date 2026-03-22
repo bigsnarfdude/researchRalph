@@ -113,6 +113,7 @@ bash v4/outer-loop.sh domains/my-domain       # v4 mode (autonomous)
 - `domains/gpt2-tinystories/` — GPT-2 training (186 experiments, 8×A100)
 - `domains/af-elicitation/` — AF elicitation prompt optimization via API
 - `domains/prompt-eval/` — Generic prompt optimization with LLM judge (CPU-only)
+- `domains/prompt-climb/` — Sandbagging detection prompt optimization (0.80→0.878 F1, 19 versions, 2 agents)
 
 *battleBOT Gym (competitive optimization games):*
 - `domains/battlebotgym-acrobot/` — Acrobot swing-up control
