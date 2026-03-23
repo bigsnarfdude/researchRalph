@@ -118,8 +118,8 @@ HEADER
         echo "" >> "$PROMPT_FILE"
     fi
 
-    # Run through Claude — single turn, no tools needed
-    claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions --max-turns 1 > "$DOMAIN_DIR/meta-blackboard.md.tmp"
+    # Run through Claude — needs a few turns for tool use before writing
+    claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions --max-turns 3 > "$DOMAIN_DIR/meta-blackboard.md.tmp"
 
     # Atomic replace
     mv "$DOMAIN_DIR/meta-blackboard.md.tmp" "$DOMAIN_DIR/meta-blackboard.md"

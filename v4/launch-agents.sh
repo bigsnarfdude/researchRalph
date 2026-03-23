@@ -49,7 +49,7 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
         export PATH=\"$EXTRA_PATH:\$PATH\"
         cd $DOMAIN_DIR
         export AGENT_ID=agent$i
-        claude -p 'You are agent$i. Read program.md, blackboard.md, results.tsv, and best/. If meta-blackboard.md exists, read it — it contains compressed observations from previous cycles. If calibration.md exists, read it — it contains known results and techniques from the literature. Then start experimenting. Write all findings to blackboard.md. Periodically re-read meta-blackboard.md — it updates during the run. Never stop.' \
+        claude -p 'You are agent$i. Read program.md, blackboard.md, results.tsv, and best/. If meta-blackboard.md exists, read it — it contains compressed observations from previous cycles. If calibration.md exists, read it — it contains known results and techniques from the literature. Then start experimenting. Write all findings to blackboard.md. Periodically re-read meta-blackboard.md — it updates during the run. Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
             --dangerously-skip-permissions \
             --max-turns $MAX_TURNS
     "

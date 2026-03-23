@@ -86,7 +86,7 @@ if [ -f "$DOMAIN_DIR/best/sae.py" ]; then
     cat "$DOMAIN_DIR/best/sae.py" >> "$PROMPT_FILE"
 fi
 
-claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions --max-turns 1 > "$DOMAIN_DIR/meta-blackboard.md"
+claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions --max-turns 3 > "$DOMAIN_DIR/meta-blackboard.md"
 
 rm -f "$PROMPT_FILE"
 
