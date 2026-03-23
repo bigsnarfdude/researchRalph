@@ -216,7 +216,7 @@ Rewrite program.md to force genuine research. Specific changes to consider:
 Output ONLY the new program.md content. No commentary.
 PROMPT
 )"
-            claude -p "$REDESIGN_PROMPT" --dangerously-skip-permissions --max-turns 1 > "$DOMAIN_DIR/program.md.new" 2>/dev/null
+            claude -p "$REDESIGN_PROMPT" --dangerously-skip-permissions --max-turns 3 > "$DOMAIN_DIR/program.md.new" 2>/dev/null
 
             # Backup and replace
             cp "$DOMAIN_DIR/program.md" "$DOMAIN_DIR/program.md.gen$gen"
@@ -283,7 +283,7 @@ Output a JSON object:
 }
 PROMPT
 )"
-            claude -p "$REDESIGN_PROMPT" --dangerously-skip-permissions --max-turns 1 > "/tmp/redesign-gen$gen.json" 2>/dev/null
+            claude -p "$REDESIGN_PROMPT" --dangerously-skip-permissions --max-turns 3 > "/tmp/redesign-gen$gen.json" 2>/dev/null
 
             # Parse and apply (simplified — just extract new_program_md if present)
             if grep -q '"new_program_md"' "/tmp/redesign-gen$gen.json"; then
@@ -294,7 +294,7 @@ PROMPT
                 # Let Claude do the extraction
                 claude -p "Extract ONLY the value of new_program_md from this JSON. Output the raw content, no JSON wrapping, no quotes. If it's null, output the word NULL.
 
-$(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 1 > "/tmp/new-program-$gen.md" 2>/dev/null
+$(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 3 > "/tmp/new-program-$gen.md" 2>/dev/null
 
                 if ! grep -q "NULL" "/tmp/new-program-$gen.md"; then
                     mv "/tmp/new-program-$gen.md" "$DOMAIN_DIR/program.md"
@@ -308,7 +308,7 @@ $(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 1 
             if grep -q '"add_to_blackboard"' "/tmp/redesign-gen$gen.json"; then
                 claude -p "Extract ONLY the value of add_to_blackboard from this JSON. Output the raw content, no JSON wrapping. If null, output NULL.
 
-$(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 1 >> "/tmp/bb-append-$gen.md" 2>/dev/null
+$(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 3 >> "/tmp/bb-append-$gen.md" 2>/dev/null
 
                 if ! grep -q "NULL" "/tmp/bb-append-$gen.md"; then
                     echo "" >> "$DOMAIN_DIR/blackboard.md"
