@@ -139,7 +139,7 @@ Write ONE short observation (2-3 sentences max) noting:
 
 Output ONLY the observation text. No headers, no markdown, no commentary."
 
-                NUDGE_TEXT=$(claude -p "$NUDGE_PROMPT" --dangerously-skip-permissions --max-turns 1 2>/dev/null)
+                NUDGE_TEXT=$(claude -p "$NUDGE_PROMPT" --dangerously-skip-permissions --max-turns 3 2>/dev/null)
 
                 if [ -n "$NUDGE_TEXT" ]; then
                     echo "" >> "$DOMAIN_DIR/blackboard.md"
