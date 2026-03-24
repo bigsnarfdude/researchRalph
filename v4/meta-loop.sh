@@ -100,8 +100,8 @@ HEADER
         echo "" >> "$PROMPT_FILE"
     fi
 
-    echo "### blackboard.md" >> "$PROMPT_FILE"
-    cat "$DOMAIN_DIR/blackboard.md" >> "$PROMPT_FILE"
+    echo "### blackboard.md (last 200 lines)" >> "$PROMPT_FILE"
+    tail -200 "$DOMAIN_DIR/blackboard.md" >> "$PROMPT_FILE"
     echo "" >> "$PROMPT_FILE"
 
     echo "### results.tsv" >> "$PROMPT_FILE"
@@ -118,8 +118,8 @@ HEADER
         echo "" >> "$PROMPT_FILE"
     fi
 
-    # Run through Claude — needs a few turns for tool use before writing
-    claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions --max-turns 3 > "$DOMAIN_DIR/meta-blackboard.md.tmp"
+    # Run through Claude — pipe via stdin to avoid ARG_MAX limits on large prompts
+    claude --dangerously-skip-permissions --max-turns 3 < "$PROMPT_FILE" > "$DOMAIN_DIR/meta-blackboard.md.tmp"
 
     # Atomic replace
     mv "$DOMAIN_DIR/meta-blackboard.md.tmp" "$DOMAIN_DIR/meta-blackboard.md"
