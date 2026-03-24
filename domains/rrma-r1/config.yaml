@@ -1,0 +1,7 @@
+model: Qwen/Qwen2.5-1.5B-Instruct
+baseline_score: 0.620
+target_score: 0.830
+metric: gsm8k_pass_at_1
+direction: higher_is_better
+budget_minutes: 30
+device: cuda
