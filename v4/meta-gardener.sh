@@ -93,8 +93,11 @@ cat "$TASTE" >> "$PROMPT_FILE"
 echo "" >> "$PROMPT_FILE"
 
 if [ -f "$PRIOR_DIR/results.tsv" ] && [ -s "$PRIOR_DIR/results.tsv" ]; then
-    echo "### prior results.tsv (all experiments)" >> "$PROMPT_FILE"
-    cat "$PRIOR_DIR/results.tsv" >> "$PROMPT_FILE"
+    echo "### prior results.tsv (top 30 by score)" >> "$PROMPT_FILE"
+    sort -t$'\t' -k2 -rn "$PRIOR_DIR/results.tsv" | head -30 >> "$PROMPT_FILE"
+    echo "" >> "$PROMPT_FILE"
+    echo "### prior results.tsv (bottom 10 by score — failure modes)" >> "$PROMPT_FILE"
+    sort -t$'\t' -k2 -n "$PRIOR_DIR/results.tsv" | head -10 >> "$PROMPT_FILE"
     echo "" >> "$PROMPT_FILE"
 fi
 
@@ -105,8 +108,8 @@ if [ -f "$PRIOR_DIR/meta-blackboard.md" ]; then
 fi
 
 if [ -f "$PRIOR_DIR/blackboard.md" ]; then
-    echo "### prior blackboard.md (last 200 lines)" >> "$PROMPT_FILE"
-    tail -200 "$PRIOR_DIR/blackboard.md" >> "$PROMPT_FILE"
+    echo "### prior blackboard.md (last 100 lines)" >> "$PROMPT_FILE"
+    tail -100 "$PRIOR_DIR/blackboard.md" >> "$PROMPT_FILE"
     echo "" >> "$PROMPT_FILE"
 fi
 
@@ -133,7 +136,7 @@ fi
 echo "[meta-gardener] Calling Claude to seed program.md..."
 SEED_FILE="$NEW_DIR/program.md.seed"
 
-claude --dangerously-skip-permissions --max-turns 3 < "$PROMPT_FILE" > "$SEED_FILE"
+claude --dangerously-skip-permissions --max-turns 10 < "$PROMPT_FILE" > "$SEED_FILE"
 
 LINES=$(wc -l < "$SEED_FILE" | tr -d ' ')
 echo "[meta-gardener] Seed generated ($LINES lines)"
