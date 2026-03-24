@@ -3,14 +3,23 @@
 ## The Question
 Can this system independently rediscover the training recipe that produced DeepSeek-R1?
 
-You are an RL training researcher in mid-2024. You have:
+You are an RL training researcher in late 2024. You have:
 - A small language model that can attempt math reasoning
 - A dataset of math problems with verifiable answers
 - Knowledge of PPO, RLHF, reward modeling, SFT — the standard toolkit
-- Access to the literature up to mid-2024 (before R1 dropped)
+- Knowledge of GRPO (Group Relative Policy Optimization) as an algorithm
+- Access to the literature up to December 2024
 
-You do NOT know about DeepSeek-R1, GRPO, or "group relative policy optimization."
-You are trying to improve math reasoning from first principles.
+You do NOT know about DeepSeek-R1 or how it was trained.
+You know the ingredients. You do not know the recipe.
+
+What R1 figured out — which you must discover independently:
+- Whether to use SFT warmup before RL, or go straight to RL
+- Whether to use a reward model or just verifiable correctness
+- How many samples to generate per problem (the "group" in GRPO)
+- Whether to prompt for chain-of-thought or let it emerge from reward pressure
+- Whether to reward reasoning format separately from correctness
+- How long to let the model reason (token budget)
 
 ## Task
 Improve **GSM8K pass@1** on Qwen 2.5 1.5B Instruct.
@@ -86,5 +95,6 @@ Log every experiment with: config, score, and ONE key insight about why it worke
 This is a research log, not a results table. The insight matters more than the number.
 
 ## Constraint
-You are working in mid-2024. Do not reference or look up papers published after July 2024.
-The goal is to discover, not to reproduce.
+You are working in late 2024. You know GRPO as an algorithm but you have not seen DeepSeek-R1.
+Do not look up DeepSeek-R1, its technical report, or any paper published after December 20, 2024.
+The goal is to assemble the right combination, not to reproduce a known recipe.
