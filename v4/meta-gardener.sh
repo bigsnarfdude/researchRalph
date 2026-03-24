@@ -77,9 +77,10 @@ left unresolved. These are the most important things for agents to test first.
 
 ## Output format
 
-Write ONLY the program.md content. No preamble, no explanation, no markdown fences.
-Start directly with the title line. Preserve the structure of the template program.md
-but update it with what you've learned.
+Your entire response must be the program.md file content and nothing else.
+No preamble. No explanation. No markdown code fences. No commentary after.
+The very first character of your response must be the `#` of the title line.
+If you add any explanation or meta-commentary, the file will be broken.
 
 ---
 
