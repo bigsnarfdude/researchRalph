@@ -2,14 +2,25 @@
 """
 Score Timeline — interactive SVG chart from results.tsv files.
 
+Features:
+  - Per-agent swimlanes: each agent gets its own horizontal track
+  - X-axis = each agent's own experiment sequence (sorted by EXP-ID number)
+  - Global best line shown across all tracks
+  - Duplicate/collision experiments flagged in red
+  - Multi-run comparison: --results a.tsv b.tsv --labels name1 name2
+    renders separate panels stacked vertically
+
 Usage:
-    python3 score_timeline.py --results domains/rrma-r1/results.tsv --output /tmp/timeline.html
-    python3 score_timeline.py --results r1.tsv v5.tsv --labels rrma-r1 sae-bench-v5 --output /tmp/compare.html
+    python3 score_timeline.py --results domains/rrma-r1/results.tsv [--baseline 0.62] [--target 0.83]
+    python3 score_timeline.py --results r1.tsv v5.tsv --labels rrma-r1 sae-bench-v5
+    python3 score_timeline.py --results r1.tsv --mode flat   # original flat timeline
 """
 import argparse
 import html
 import json
+import re
 from pathlib import Path
+from collections import defaultdict
 
 
 AGENT_COLORS = [
@@ -23,240 +34,256 @@ AGENT_COLORS = [
     "#ef4444",  # red
 ]
 
-DESIGN_MARKERS = {
-    "REINFORCE-group": "◆",
-    "GRPO": "●",
-    "GRPO-iter": "★",
-    "GRPO-noKL": "▲",
-    "GRPO-iter-SGD": "■",
-    "ReST": "✕",
-    "BatchRefStyleSAE": "●",
-    "EvalISTARefStyleSAE": "◆",
-}
-
-
 FALLBACK_HEADER = ["EXP-ID", "score", "train_min", "status", "description", "agent", "design"]
 
 
-def parse_tsv(path):
-    rows = []
-    with open(path) as f:
-        lines = [l.rstrip("\n") for l in f if l.strip()]
+def parse_exp_num(exp_id: str) -> tuple:
+    m = re.match(r"EXP-(\d+)([a-z]*)", exp_id or "")
+    if m:
+        return (int(m.group(1)), m.group(2))
+    return (9999, exp_id)
 
+
+def parse_tsv(path: str) -> list[dict]:
+    lines = [l.rstrip("\n") for l in Path(path).read_text().splitlines() if l.strip()]
     if not lines:
-        return rows
-
-    # Detect if first line is a header (contains "score" literally)
+        return []
     first = lines[0].split("\t")
-    if "score" in first:
-        header = first
-        data_lines = lines[1:]
+    if "score" in first or "EXP-ID" in first:
+        header, data = first, lines[1:]
     else:
-        header = FALLBACK_HEADER
-        data_lines = lines
-
-    for line in data_lines:
-            parts = line.split("\t")
-            if len(parts) < len(header):
-                parts += [""] * (len(header) - len(parts))
-            row = dict(zip(header, parts))
-            try:
-                row["score"] = float(row["score"])
-            except (ValueError, KeyError):
-                continue
-            rows.append(row)
+        header, data = FALLBACK_HEADER[:], lines
+    rows = []
+    for line in data:
+        parts = line.split("\t")
+        if len(parts) < len(header):
+            parts += [""] * (len(header) - len(parts))
+        row = dict(zip(header, parts))
+        try:
+            row["score"] = float(row["score"])
+        except (ValueError, KeyError):
+            continue
+        rows.append(row)
     return rows
 
 
-def build_html(all_rows, labels, baseline=None, target=None, title="Score Timeline"):
-    # Collect agents across all runs
-    all_agents = []
-    for rows, label in zip(all_rows, labels):
-        for r in rows:
-            agent = r.get("agent", "?")
-            key = f"{label}/{agent}" if len(labels) > 1 else agent
-            if key not in all_agents:
-                all_agents.append(key)
+def find_duplicates(rows: list[dict]) -> set[str]:
+    """Return EXP-IDs that appear more than once with different data."""
+    by_id = defaultdict(list)
+    for r in rows:
+        by_id[r.get("EXP-ID", "")].append(r)
+    dupes = set()
+    for eid, rlist in by_id.items():
+        if len(rlist) > 1:
+            scores = set(r["score"] for r in rlist)
+            if len(scores) > 1:  # conflicting — mark all as suspect
+                dupes.add(eid)
+    return dupes
 
-    agent_color = {a: AGENT_COLORS[i % len(AGENT_COLORS)] for i, a in enumerate(all_agents)}
 
-    # Build per-agent series + rolling best
-    series = {}  # agent -> [(exp_num, exp_id, score, design, desc, status)]
-    for rows, label in zip(all_rows, labels):
-        for i, r in enumerate(rows):
-            agent = r.get("agent", "?")
-            key = f"{label}/{agent}" if len(labels) > 1 else agent
-            exp_id = r.get("EXP-ID", f"EXP-{i+1}")
-            design = r.get("design", "")
-            desc = r.get("description", "")
-            status = r.get("status", "keep")
-            if key not in series:
-                series[key] = []
-            series[key].append({
-                "exp_id": exp_id,
-                "exp_num": i + 1,
-                "score": r["score"],
-                "design": design,
-                "desc": desc,
-                "status": status,
-                "global_idx": sum(len(v) for v in series.values()),
-                "label": label,
-            })
+def build_swimlane_svg(rows, label, agent_color_map, baseline=None, target=None,
+                       W=880, H_per_agent=120, PAD_L=60, PAD_R=80, PAD_T=24, PAD_B=24):
+    """Build one SVG panel (one results.tsv = one label) with per-agent swimlanes."""
+    # Group by agent, sort each agent's experiments by EXP-ID number
+    agents = []
+    agent_rows = defaultdict(list)
+    for r in rows:
+        ag = r.get("agent", "?")
+        if ag not in agents:
+            agents.append(ag)
+        agent_rows[ag].append(r)
 
-    # Global experiment order (by appearance across all rows flattened)
-    all_exp = []
-    for rows, label in zip(all_rows, labels):
-        for i, r in enumerate(rows):
-            all_exp.append({
-                "exp_id": r.get("EXP-ID", ""),
-                "score": r["score"],
-                "agent": r.get("agent", "?"),
-                "label": label,
-                "design": r.get("design", ""),
-                "desc": r.get("description", ""),
-                "status": r.get("status", "keep"),
-            })
+    for ag in agents:
+        agent_rows[ag].sort(key=lambda r: parse_exp_num(r.get("EXP-ID", "")))
 
-    total = len(all_exp)
-    if total == 0:
-        return "<p>No data</p>"
+    dupes = find_duplicates(rows)
 
-    all_scores = [r["score"] for r in all_exp]
-    y_min = max(0, min(all_scores) - 0.05)
-    y_max = min(1.0, max(all_scores) + 0.05)
+    # Global best (across all agents, in file order for rolling-best)
+    global_best = max(r["score"] for r in rows) if rows else 0
+
+    n_agents = len(agents)
+    total_H = PAD_T + n_agents * H_per_agent + PAD_B
+    svg = [f'<svg viewBox="0 0 {W} {total_H}" xmlns="http://www.w3.org/2000/svg" '
+           f'style="width:100%;background:#16162a;border-radius:8px;margin-bottom:6px;">']
+
+    # Y range shared across all swimlanes
+    all_scores = [r["score"] for r in rows]
+    y_min = max(0.0, min(all_scores) - 0.06)
+    y_max = min(1.0, max(all_scores) + 0.04)
     if baseline:
         y_min = min(y_min, baseline - 0.02)
     if target:
         y_max = max(y_max, target + 0.02)
+    score_range = y_max - y_min or 0.001
 
-    # SVG dimensions
-    W, H = 900, 380
-    PAD_L, PAD_R, PAD_T, PAD_B = 60, 30, 30, 50
+    tooltip_data = []
 
-    def cx(idx):
-        n = max(total - 1, 1)
-        return PAD_L + (idx / n) * (W - PAD_L - PAD_R)
+    for lane_i, ag in enumerate(agents):
+        color = agent_color_map.get(ag, "#888")
+        ag_rows = agent_rows[ag]
+        n = len(ag_rows)
+        if n == 0:
+            continue
 
-    def cy(score):
-        rng = y_max - y_min
-        if rng == 0:
-            return H - PAD_B
-        frac = (score - y_min) / rng
-        return H - PAD_B - frac * (H - PAD_T - PAD_B)
+        # Lane bounds
+        lane_top = PAD_T + lane_i * H_per_agent
+        lane_bot = lane_top + H_per_agent
+        inner_top = lane_top + 8
+        inner_bot = lane_bot - 14
+        inner_H = inner_bot - inner_top
 
-    svg_parts = []
-    svg_parts.append(f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:{W}px;background:#1a1a2e;border-radius:8px;">')
+        def cx(idx):
+            if n <= 1:
+                return PAD_L + (W - PAD_L - PAD_R) * 0.5
+            return PAD_L + idx / (n - 1) * (W - PAD_L - PAD_R)
 
-    # Grid lines
-    n_gridlines = 6
-    for i in range(n_gridlines + 1):
-        s = y_min + (y_max - y_min) * i / n_gridlines
-        y = cy(s)
-        svg_parts.append(f'<line x1="{PAD_L}" y1="{y:.1f}" x2="{W-PAD_R}" y2="{y:.1f}" stroke="#2a2a4a" stroke-width="1"/>')
-        svg_parts.append(f'<text x="{PAD_L-5}" y="{y+4:.1f}" text-anchor="end" fill="#888" font-size="11" font-family="monospace">{s:.3f}</text>')
+        def cy(score):
+            frac = (score - y_min) / score_range
+            return inner_bot - frac * inner_H
 
-    # Baseline line
-    if baseline:
-        y = cy(baseline)
-        svg_parts.append(f'<line x1="{PAD_L}" y1="{y:.1f}" x2="{W-PAD_R}" y2="{y:.1f}" stroke="#666" stroke-width="1.5" stroke-dasharray="6,3"/>')
-        svg_parts.append(f'<text x="{W-PAD_R+3}" y="{y+4:.1f}" fill="#888" font-size="10">baseline {baseline}</text>')
+        # Lane background
+        lane_bg = "#1c1c30" if lane_i % 2 == 0 else "#1a1a2c"
+        svg.append(f'<rect x="0" y="{lane_top}" width="{W}" height="{H_per_agent}" fill="{lane_bg}"/>')
 
-    # Target line
-    if target:
-        y = cy(target)
-        svg_parts.append(f'<line x1="{PAD_L}" y1="{y:.1f}" x2="{W-PAD_R}" y2="{y:.1f}" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.6"/>')
-        svg_parts.append(f'<text x="{W-PAD_R+3}" y="{y+4:.1f}" fill="#22c55e" font-size="10" opacity="0.8">target {target}</text>')
+        # Lane label
+        svg.append(f'<text x="8" y="{lane_top+15}" fill="{color}" font-size="12" '
+                   f'font-family="monospace" font-weight="bold">{html.escape(ag)}</text>')
 
-    # Rolling best line (global)
-    best_so_far = []
-    best = -1
-    for i, r in enumerate(all_exp):
-        if r["score"] > best:
-            best = r["score"]
-        best_so_far.append(best)
+        # Y-axis grid lines (3 ticks)
+        for tick_i in range(3):
+            s = y_min + score_range * tick_i / 2
+            y = cy(s)
+            svg.append(f'<line x1="{PAD_L}" y1="{y:.1f}" x2="{W-PAD_R}" y2="{y:.1f}" '
+                       f'stroke="#2a2a44" stroke-width="0.8"/>')
+            svg.append(f'<text x="{PAD_L-4}" y="{y+3:.1f}" text-anchor="end" fill="#555" '
+                       f'font-size="9" font-family="monospace">{s:.2f}</text>')
 
-    pts = " ".join(f"{cx(i):.1f},{cy(b):.1f}" for i, b in enumerate(best_so_far))
-    svg_parts.append(f'<polyline points="{pts}" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.3"/>')
+        # Baseline / target lines (only on first lane, subtly)
+        if lane_i == 0 and baseline:
+            y = cy(baseline)
+            svg.append(f'<line x1="{PAD_L}" y1="{y:.1f}" x2="{W-PAD_R}" y2="{y:.1f}" '
+                       f'stroke="#555" stroke-width="1" stroke-dasharray="5,3"/>')
+            svg.append(f'<text x="{W-PAD_R+3}" y="{y+3:.1f}" fill="#666" font-size="9">base {baseline}</text>')
+        if lane_i == 0 and target:
+            y = cy(target)
+            svg.append(f'<line x1="{PAD_L}" y1="{y:.1f}" x2="{W-PAD_R}" y2="{y:.1f}" '
+                       f'stroke="#22c55e" stroke-width="1" stroke-dasharray="5,3" opacity="0.5"/>')
+            svg.append(f'<text x="{W-PAD_R+3}" y="{y+3:.1f}" fill="#22c55e" font-size="9" opacity="0.7">target {target}</text>')
 
-    # Per-agent lines (keep only)
-    for agent_key in all_agents:
-        key_label = agent_key.split("/")[0] if len(labels) > 1 else None
-        key_agent = agent_key.split("/")[-1]
-        color = agent_color[agent_key]
+        # Connect "keep" experiments with line
+        keep_pts = [(i, r) for i, r in enumerate(ag_rows) if r.get("status") == "keep"]
+        if len(keep_pts) >= 2:
+            pts = " ".join(f"{cx(i):.1f},{cy(r['score']):.1f}" for i, r in keep_pts)
+            svg.append(f'<polyline points="{pts}" fill="none" stroke="{color}" stroke-width="2" opacity="0.8"/>')
 
-        agent_pts = []
-        for i, r in enumerate(all_exp):
-            agent = r["agent"]
-            label = r["label"]
-            rkey = f"{label}/{agent}" if len(labels) > 1 else agent
-            if rkey == agent_key and r["status"] == "keep":
-                agent_pts.append((i, r["score"]))
+        # Best marker for this agent
+        best_r = max(ag_rows, key=lambda r: r["score"])
+        best_i = ag_rows.index(best_r)
+        bx, by = cx(best_i), cy(best_r["score"])
 
-        if len(agent_pts) >= 2:
-            pts = " ".join(f"{cx(i):.1f},{cy(s):.1f}" for i, s in agent_pts)
-            svg_parts.append(f'<polyline points="{pts}" fill="none" stroke="{color}" stroke-width="2" opacity="0.7"/>')
+        # Points
+        for i, r in enumerate(ag_rows):
+            x, y = cx(i), cy(r["score"])
+            eid = r.get("EXP-ID", "?")
+            is_dupe = eid in dupes
+            is_discard = r.get("status") == "discard"
+            is_best = r is best_r
 
-    # Points
-    tooltips = []
-    for i, r in enumerate(all_exp):
-        agent = r["agent"]
-        label = r["label"]
-        rkey = f"{label}/{agent}" if len(labels) > 1 else agent
-        color = agent_color.get(rkey, "#fff")
-        is_discard = r["status"] == "discard"
-        marker = DESIGN_MARKERS.get(r["design"], "●")
-        x, y = cx(i), cy(r["score"])
+            pt_color = "#ef4444" if is_dupe else color
+            opacity = "0.4" if is_discard else "1"
+            radius = 7 if is_best else 5
 
-        opacity = "0.35" if is_discard else "1"
-        radius = 5 if not is_discard else 4
-        svg_parts.append(
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{radius}" fill="{color}" opacity="{opacity}" '
-            f'class="pt" data-idx="{i}" style="cursor:pointer"/>'
-        )
+            svg.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{radius}" '
+                       f'fill="{pt_color}" opacity="{opacity}" '
+                       f'class="pt" data-tip-idx="{len(tooltip_data)}" '
+                       f'style="cursor:pointer"/>')
+            if is_dupe:
+                svg.append(f'<text x="{x:.1f}" y="{y-8:.1f}" text-anchor="middle" '
+                           f'fill="#ef4444" font-size="9">!</text>')
 
-        tip = html.escape(f'{r["exp_id"]} | {r["score"]:.3f} | {rkey} | {r["design"]}\n{r["desc"]}')
-        tooltips.append({"x": x, "y": y, "tip": tip, "idx": i})
+            # X-axis label (every few, or if best/discard)
+            step = max(1, n // 6)
+            if i % step == 0 or is_best:
+                svg.append(f'<text x="{x:.1f}" y="{inner_bot+11:.1f}" text-anchor="middle" '
+                           f'fill="#555" font-size="8" font-family="monospace">{html.escape(eid)}</text>')
 
-    # X-axis labels (every N experiments)
-    step = max(1, total // 10)
-    for i, r in enumerate(all_exp):
-        if i % step == 0 or i == total - 1:
-            x = cx(i)
-            svg_parts.append(f'<text x="{x:.1f}" y="{H-PAD_B+15}" text-anchor="middle" fill="#888" font-size="10" font-family="monospace">{r["exp_id"]}</text>')
+            design = r.get("design", "")
+            desc = r.get("description", "")
+            tip = f'{eid} | score={r["score"]:.4f} | {ag}\ndesign: {design}\n{desc}'
+            if is_dupe:
+                tip += "\n⚠ DUPLICATE EXP-ID — verify!"
+            tooltip_data.append({"x": float(f"{x:.1f}"), "y": float(f"{y:.1f}"), "tip": tip})
 
-    # Best score annotation
-    best_idx = max(range(len(all_exp)), key=lambda i: all_exp[i]["score"])
-    bx, by = cx(best_idx), cy(all_exp[best_idx]["score"])
-    best_score = all_exp[best_idx]["score"]
-    svg_parts.append(f'<circle cx="{bx:.1f}" cy="{by:.1f}" r="8" fill="none" stroke="#fbbf24" stroke-width="2"/>')
-    svg_parts.append(f'<text x="{bx:.1f}" y="{by-12:.1f}" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">★ {best_score:.4f}</text>')
+        # Best annotation
+        svg.append(f'<circle cx="{bx:.1f}" cy="{by:.1f}" r="9" fill="none" '
+                   f'stroke="#fbbf24" stroke-width="1.5"/>')
+        svg.append(f'<text x="{bx:.1f}" y="{by-12:.1f}" text-anchor="middle" '
+                   f'fill="#fbbf24" font-size="10" font-weight="bold">★{best_r["score"]:.4f}</text>')
 
-    svg_parts.append('</svg>')
-    svg = "\n".join(svg_parts)
+    # Global best bar at top-right
+    svg.append(f'<text x="{W-4}" y="14" text-anchor="end" fill="#fbbf24" '
+               f'font-size="11" font-family="monospace">best {global_best:.4f}</text>')
+
+    svg.append('</svg>')
+    return "\n".join(svg), tooltip_data
+
+
+def build_html(all_rows, labels, baseline=None, target=None, title="Score Timeline"):
+    # Collect all agents across all runs for consistent coloring
+    all_agents = []
+    for rows in all_rows:
+        for r in rows:
+            ag = r.get("agent", "?")
+            if ag not in all_agents:
+                all_agents.append(ag)
+    agent_color = {ag: AGENT_COLORS[i % len(AGENT_COLORS)] for i, ag in enumerate(all_agents)}
+
+    panels = []
+    all_tooltips = []
+    for rows, label in zip(all_rows, labels):
+        svg, tips = build_swimlane_svg(rows, label, agent_color, baseline=baseline, target=target)
+        # Offset tip indices to be global
+        offset = len(all_tooltips)
+        svg = svg.replace('data-tip-idx="', f'data-tip-idx-offset="{offset}" data-tip-idx="')
+        panels.append((label, svg))
+        all_tooltips.extend(tips)
 
     # Legend
-    legend_items = ""
-    for agent_key in all_agents:
-        color = agent_color[agent_key]
-        legend_items += f'<span style="display:inline-flex;align-items:center;gap:4px;margin-right:16px;"><span style="width:12px;height:12px;border-radius:50%;background:{color};display:inline-block"></span><span style="color:#ccc;font-size:13px">{agent_key}</span></span>'
+    legend = ""
+    for ag in all_agents:
+        c = agent_color[ag]
+        legend += (f'<span style="display:inline-flex;align-items:center;gap:5px;margin-right:14px">'
+                   f'<span style="width:11px;height:11px;border-radius:50%;background:{c}"></span>'
+                   f'<span style="color:#bbb;font-size:12px">{html.escape(ag)}</span></span>')
+    legend += (f'<span style="display:inline-flex;align-items:center;gap:5px;margin-right:14px">'
+               f'<span style="width:11px;height:11px;border-radius:50%;background:#ef4444"></span>'
+               f'<span style="color:#bbb;font-size:12px">duplicate EXP-ID</span></span>')
 
-    # Tooltip div + JS
-    tooltip_data = json.dumps(tooltips)
+    panels_html = ""
+    for label, svg in panels:
+        panels_html += f'<div class="run-label">{html.escape(label)}</div>\n{svg}\n'
+
+    tip_json = json.dumps(all_tooltips)
     js = f"""
 <script>
-const pts = document.querySelectorAll('.pt');
-const tip = document.getElementById('tip');
-const ttData = {tooltip_data};
-pts.forEach(pt => {{
-    pt.addEventListener('mouseenter', e => {{
-        const idx = parseInt(pt.getAttribute('data-idx'));
-        const d = ttData[idx];
-        tip.style.display = 'block';
-        tip.style.left = (d.x + 20) + 'px';
-        tip.style.top = (d.y - 10) + 'px';
-        tip.innerText = d.tip;
-    }});
-    pt.addEventListener('mouseleave', () => {{ tip.style.display = 'none'; }});
+const tips = {tip_json};
+document.querySelectorAll('.pt').forEach(pt => {{
+  const offset = parseInt(pt.getAttribute('data-tip-idx-offset') || 0);
+  const idx = parseInt(pt.getAttribute('data-tip-idx')) + offset;
+  const tip = document.getElementById('tip');
+  pt.addEventListener('mouseenter', e => {{
+    const d = tips[idx];
+    if (!d) return;
+    tip.style.display = 'block';
+    tip.innerText = d.tip;
+    const rect = pt.closest('svg').getBoundingClientRect();
+    const svgW = rect.width;
+    const vbW = 880;
+    const scaleX = svgW / vbW;
+    tip.style.left = (rect.left + d.x * scaleX + 12) + 'px';
+    tip.style.top = (rect.top + window.scrollY + d.y * (rect.height / parseFloat(pt.closest('svg').getAttribute('viewBox').split(' ')[3])) - 10) + 'px';
+  }});
+  pt.addEventListener('mouseleave', () => tip.style.display = 'none');
 }});
 </script>
 """
@@ -267,33 +294,36 @@ pts.forEach(pt => {{
 <meta charset="utf-8">
 <title>{html.escape(title)}</title>
 <style>
-body {{ background:#0f0f1a; color:#eee; font-family:system-ui,sans-serif; margin:0; padding:20px; }}
-h2 {{ color:#fff; font-size:18px; margin-bottom:8px; }}
-.legend {{ margin:10px 0 16px 0; }}
-.chart-wrap {{ position:relative; display:inline-block; width:100%; max-width:900px; }}
-#tip {{ position:absolute; background:#1e1e3a; border:1px solid #444; color:#eee; font-size:12px; font-family:monospace; padding:8px 10px; border-radius:4px; white-space:pre; pointer-events:none; display:none; z-index:100; max-width:400px; }}
+* {{ box-sizing: border-box; margin: 0; padding: 0; }}
+body {{ background: #0f0f1a; color: #eee; font-family: system-ui, sans-serif; padding: 20px; }}
+h2 {{ color: #fff; font-size: 17px; margin-bottom: 10px; }}
+.legend {{ margin: 8px 0 14px; display: flex; flex-wrap: wrap; gap: 4px; }}
+.run-label {{ color: #777; font-size: 11px; font-family: monospace; margin: 10px 0 3px;
+             text-transform: uppercase; letter-spacing: 0.05em; }}
+#tip {{ position: fixed; background: #1e1e3a; border: 1px solid #444; color: #eee;
+       font-size: 11px; font-family: monospace; padding: 8px 10px; border-radius: 4px;
+       white-space: pre; pointer-events: none; display: none; z-index: 100; max-width: 420px;
+       line-height: 1.5; }}
 </style>
 </head>
 <body>
 <h2>{html.escape(title)}</h2>
-<div class="legend">{legend_items}</div>
-<div class="chart-wrap">
-{svg}
+<div class="legend">{legend}</div>
+{panels_html}
 <div id="tip"></div>
-</div>
 {js}
 </body>
 </html>"""
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Score timeline chart from results.tsv")
+    parser = argparse.ArgumentParser(description="Score timeline chart (per-agent swimlanes)")
     parser.add_argument("--results", nargs="+", required=True, help="One or more results.tsv paths")
-    parser.add_argument("--labels", nargs="+", help="Labels for each results file (default: filename)")
-    parser.add_argument("--baseline", type=float, help="Baseline score to draw as dashed line")
-    parser.add_argument("--target", type=float, help="Target score to draw as green dashed line")
-    parser.add_argument("--title", default="Score Timeline", help="Chart title")
-    parser.add_argument("--output", "-o", default="/tmp/timeline.html", help="Output HTML path")
+    parser.add_argument("--labels", nargs="+", help="Labels for each results file")
+    parser.add_argument("--baseline", type=float)
+    parser.add_argument("--target", type=float)
+    parser.add_argument("--title", default="Score Timeline")
+    parser.add_argument("--output", "-o", default="/tmp/timeline.html")
     args = parser.parse_args()
 
     labels = args.labels or [Path(p).parent.name or Path(p).stem for p in args.results]
@@ -301,10 +331,7 @@ def main():
         labels += [Path(p).stem for p in args.results[len(labels):]]
 
     all_rows = [parse_tsv(p) for p in args.results]
-    page = build_html(all_rows, labels,
-                      baseline=args.baseline,
-                      target=args.target,
-                      title=args.title)
+    page = build_html(all_rows, labels, baseline=args.baseline, target=args.target, title=args.title)
     Path(args.output).write_text(page)
     print(f"Wrote {args.output} ({len(page)//1024}KB)")
 
