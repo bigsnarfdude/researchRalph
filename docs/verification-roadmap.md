@@ -132,3 +132,22 @@ in minutes rather than re-running days of experiments.
 
 This is the roadmap from "agents run experiments" to
 "agents run experiments that humans can trust."
+
+---
+
+## The Trust Layer — Three Properties
+
+A result is trustworthy when it is:
+
+| Property | What it means | How we get there |
+|----------|--------------|-----------------|
+| **Traceable** | Every result links to the reasoning that produced it | chat_viewer.py, extract_trace.py |
+| **Reproducible** | Same score on a different machine within noise | seed locking, Docker, validate.py |
+| **Auditable** | A human can detect gaming/hacking by reading the trace | spot-check protocol, reward audit |
+
+Build in this order. Traceability first — without it, reproducibility
+and auditability are both blind. Reproducibility second — without it,
+a result is an anecdote. Auditability last — this is the human judgment
+layer that can't be fully automated.
+
+When all three are in place: human certification is tractable at scale.

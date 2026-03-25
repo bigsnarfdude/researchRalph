@@ -126,6 +126,37 @@ That's the job. Domain knowledge + tooling + judgment. Not running experiments.
 
 ---
 
+## The Trust Layer
+
+Verification tooling is not just convenience — it is the trust layer between
+autonomous agents and human sign-off.
+
+Without it: a human looking at results.tsv sees numbers. No way to know if
+the score is real, if the reasoning was sound, if the agent found a shortcut.
+
+With it: a human can trace any result back to the exact reasoning that produced
+it, diff the code that changed, reproduce the score on a fresh machine, and
+certify it. That's trust — not faith.
+
+The trust layer has three properties:
+
+**Traceable** — every result links back to the reasoning chain that produced it.
+No black boxes. The chat viewer is the first implementation of this.
+
+**Reproducible** — a certified result can be re-run on a different machine and
+produce the same score within noise tolerance. Seed locking + Docker + validate.py.
+
+**Auditable** — a human with domain knowledge can spot reward hacking, circular
+reasoning, or metric gaming by reading the trace. The spot-check protocol
+formalizes this.
+
+Trust is not binary. It's a stack. Each layer adds a property.
+The goal is results that are traceable, reproducible, and auditable —
+at which point a human can certify them the same way they'd certify
+a result from a collaborator they've worked with for years.
+
+---
+
 ## This Is Not New
 
 Every high-trust field already works this way:
