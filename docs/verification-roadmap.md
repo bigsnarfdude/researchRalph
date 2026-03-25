@@ -12,15 +12,17 @@ Each item: what it is, why it matters, effort estimate.
 - [x] `extract_trace.py` — claude jsonl → markdown trace
 - [x] `chat_viewer.py` — interactive HTML: agent tabs, experiment tray, isolation
 - [x] `validate.py` (truthsayer) — golden set regression test
+- [x] `score_timeline.py` — SVG score chart with per-agent lines, rolling best, multi-run compare
+- [x] `trustloop_verifier.py` — computer use verifier stub (needs pyautogui for screen control)
 
 ---
 
 ## Layer 1 — Real-time Monitoring
 
-- [ ] **Score timeline chart**
+- [x] **Score timeline chart** (`tools/score_timeline.py`)
   - Parse results.tsv on interval, render SVG/canvas chart
-  - Per-agent lines, best score marker, baseline marker
-  - Effort: 2-3h | Priority: HIGH (presentation)
+  - Per-agent lines, rolling best, baseline/target markers, hover tooltips
+  - Multi-run comparison: `--results a.tsv b.tsv --labels name1 name2`
 
 - [ ] **Agent heartbeat check**
   - `screen -ls` + check blackboard.md mtime
