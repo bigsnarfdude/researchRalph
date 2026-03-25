@@ -1,6 +1,8 @@
 # The Human-RRMA Bridge
 ## Verification as the New Research Role
 
+![Research Ralph — TrustLoop: Human-in-the-Loop Program](assets/trustloop-banner.png)
+
 > "Humans aren't replaced — they move up the stack."
 
 ---
@@ -301,6 +303,48 @@ if the touch points are logged, signed, and auditable.
 
 ---
 
+## The Treadmill Problem
+
+HITL is the current rung — not the destination.
+
+The pattern is recursive:
+
+```
+Humans ran experiments      → agents abstracted that     → humans verify
+Humans verify runs          → TrustLoop abstracts that   → humans certify programs
+Humans certify programs     → ??? abstracts that          → humans define intent
+```
+
+Every automation layer moves humans one level up. The problem: in this stack,
+the layer above HITL is already being built while HITL is still being defined.
+Capabilities advance, the "intermediate regime" redefines itself forward,
+and the verification layer is always chasing the previous generation.
+
+**The treadmill:** you're building TrustLoop for RRMA v4 while v5 is
+self-replicating. By the time verification catches v5, the agents are
+writing their own verification.
+
+The only exits:
+
+1. **Freeze the capability frontier** — politically appealing, technically impossible
+2. **Verification scales with capability** — the verifier must be as capable as
+   what it's verifying; at the limit, you need ASI to verify ASI
+3. **Ground in outcomes, not process** — not "did the agent reason correctly"
+   but "did the world get better." Outcome verification doesn't require catching up.
+
+Option 3 is the only one that doesn't require winning a race.
+It shifts verification from trace-checking to reality-checking.
+
+**What survives either path:** the artifact structure. Traceable, reproducible,
+auditable results aren't just for human readers — they're ground truth for
+whatever verification layer comes next. The blackboard, results.tsv, reasoning
+chains are training data for the system above.
+
+The intermediate regime may be long or short. Either way: the tooling buys time,
+and the time is for finding option 3.
+
+---
+
 ## This Is Not New
 
 Every high-trust field already works this way:
@@ -309,5 +353,8 @@ Every high-trust field already works this way:
 - **Finance**: analysts verify quant models, don't write every trade
 - **DevOps**: engineers verify CI pipelines, don't deploy manually
 
-The 2100 century researcher verifies agent runs.
+The 21st century researcher verifies agent runs.
 The tooling is what makes verification tractable at scale.
+
+The treadmill keeps moving. The tools are how you stay on it long enough
+to find the exit.
