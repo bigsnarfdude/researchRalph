@@ -126,6 +126,42 @@ That's the job. Domain knowledge + tooling + judgment. Not running experiments.
 
 ---
 
+## Agent Verification
+
+A deeper problem sits beneath output verification: **who authorized the agent to act?**
+
+New systems are being built to verify that AI agents are acting on behalf of
+verified humans. This is the identity and accountability layer — not just
+"is the result correct" but "was this agent authorized to produce it, by whom,
+and when?"
+
+This matters when agents:
+- Write to shared state (blackboard, results.tsv, git)
+- Consume compute (GPU time, API credits)
+- Make decisions that propagate to the next generation
+- Produce results that get published or acted on
+
+In RRMA today this is implicit — we launched the agents, we trust them because
+we control the machine. At scale that breaks down:
+
+| Question | Today | At scale |
+|----------|-------|----------|
+| Who authorized this run? | You, manually | Needs cryptographic proof |
+| Which agent wrote this result? | AGENT_ID env var, self-reported | Needs signed attribution |
+| Was the domain tampered with? | Trust the machine | Needs integrity verification |
+| Who certified this result? | Informal | Needs logged human sign-off |
+
+The emerging stack for this:
+- **Agent identity protocols** — OAuth-style delegation: human → agent, scoped permissions
+- **Signed artifacts** — results.tsv entries signed by the agent key that produced them
+- **Audit logs** — immutable record of every agent action, who authorized it, what it changed
+- **Principal hierarchy** — human > gardener > worker, each level constrained by the one above
+
+RRMA's outer-loop/gardener/worker structure is already a principal hierarchy.
+The trust layer formalizes it with accountability.
+
+---
+
 ## The Trust Layer
 
 Verification tooling is not just convenience — it is the trust layer between
