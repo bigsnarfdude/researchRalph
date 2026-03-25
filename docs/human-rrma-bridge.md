@@ -227,6 +227,80 @@ a result from a collaborator they've worked with for years.
 
 ---
 
+## Computer Use as the Automated Verifier
+
+The verification steps we do manually today can be partially automated using
+Claude's computer use tool — an API capability that lets Claude interact with
+any GUI application at the OS level (screenshots, clicks, keyboard).
+
+Ref: https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
+
+**What this enables for TrustLoop:**
+
+```
+TrustLoop verifier agent (computer use)
+├── Opens chat_viewer in browser
+├── Clicks each experiment in the tray
+├── Reads the highlighted reasoning chain
+├── Screenshots anything anomalous
+└── Reports: "EXP-008 looks sound / EXP-003 looks like reward hacking"
+```
+
+Unlike playwright (browser-only, requires selectors), computer use works at
+the OS level on any application — Jupyter, IDEs, Lean VSCode, terminal output.
+It sees pixels and acts like a human would.
+
+**Key difference from RalphLoop agents:**
+RalphLoop agents use computer use to *do research*.
+TrustLoop agents use computer use to *verify research*.
+Same tool, different principal, different authorization scope.
+
+**Security model:**
+- TrustLoop verifier runs in a read-only sandbox
+- No write access to domain files, results.tsv, or blackboard
+- Can only read, screenshot, and report
+- Human reviews the verifier's report before certifying
+
+**Implementation path:**
+1. Containerized Linux desktop (Xvfb + browser)
+2. Computer use agent receives: chat_viewer URL + experiment list
+3. Agent clicks through experiments, screenshots reasoning chains
+4. Returns structured anomaly report
+5. Human reviews report → signs off or flags for investigation
+
+This is the first fully-automated layer of the spot-check protocol.
+Human still makes the final call — but the first pass is done by the verifier.
+
+---
+
+## HITL — Human-in-the-Loop
+
+Formal name for what this architecture implements.
+
+Traditional HITL was at the data level — humans label, model trains.
+RRMA HITL operates at the research loop level:
+
+```
+Traditional:  human labels data → model trains → repeat
+RRMA:         human seeds domain → agents research → human verifies → next gen
+```
+
+Human touch points:
+1. **Seeding** — what problem, what constraints, what prior knowledge
+2. **Monitoring** — is the run healthy, are agents making progress
+3. **Verification** — did it work, is the reasoning sound
+4. **Certification** — sign off before publishing or feeding next generation
+
+Everything between touch points is autonomous. The human is in the loop
+at the boundaries — not inside the loop running experiments.
+
+Regulatory relevance: EU AI Act requires identifiable human accountability
+for consequential AI actions. UK sector regulators (FCA, MHRA) setting
+domain-specific standards. HITL at the research loop level satisfies this
+if the touch points are logged, signed, and auditable.
+
+---
+
 ## This Is Not New
 
 Every high-trust field already works this way:

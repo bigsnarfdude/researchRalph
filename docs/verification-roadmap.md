@@ -71,6 +71,13 @@ Each item: what it is, why it matters, effort estimate.
   - Checklist template in repo
   - Effort: 2h to write protocol | Priority: HIGH
 
+- [ ] **Automated verifier agent (computer use)**
+  - Claude computer use agent runs in read-only sandbox
+  - Opens chat_viewer, clicks through experiments, screenshots anomalies
+  - Returns structured anomaly report for human review
+  - Ref: https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
+  - Effort: 1 day | Priority: MEDIUM (powerful, but spot-check protocol first)
+
 - [ ] **Reward hacking audit**
   - Does the metric actually reflect capability?
   - Check: eval set overlap with train, metric gaming patterns
