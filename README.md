@@ -1,6 +1,9 @@
 # researchRalph v4 Gardner Edition
 "gardener" - work ethic signifies a nurturing, patient, and long-term approach to achieving results, rather than relying on force, speed, or immediate gratification
 
+## TrustLoop — The Second Layer
+RRMA is the research loop. **TrustLoop is the verification loop that wraps it.**
+
 <p align="center">
   <img src="assets/researchRalph.png" alt="researchRalph" width="300"/>
 </p>
