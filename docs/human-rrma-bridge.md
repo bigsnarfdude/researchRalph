@@ -5,6 +5,40 @@
 
 ---
 
+## TrustLoop — The Second Layer
+
+RRMA is the research loop. **TrustLoop is the verification loop that wraps it.**
+
+```
+┌─────────────────────────────────────┐
+│  TrustLoop (human verification)     │
+│  ┌───────────────────────────────┐  │
+│  │  RRMA / RalphLoop             │  │
+│  │  (autonomous research)        │  │
+│  └───────────────────────────────┘  │
+└─────────────────────────────────────┘
+```
+
+RalphLoop runs experiments. TrustLoop certifies them.
+
+The two loops operate at different speeds and different trust levels:
+
+| | RalphLoop | TrustLoop |
+|--|-----------|-----------|
+| **Who** | Agents | Humans |
+| **Speed** | Minutes per experiment | Minutes per run |
+| **Input** | Domain seed, prior blackboard | results.tsv, traces, diffs |
+| **Output** | Experiments, scores, insights | Certified results, anomaly flags |
+| **Trust** | Self-reported | Externally verified |
+
+TrustLoop is not optional for consequential work. It's what turns
+agent output into publishable, regulatorily-compliant, trusted results.
+
+Product names in this space: verify.ai (parked, $1M), certify.run, agentaudit, tracelab.
+The concept matters more than the name.
+
+---
+
 ## The Paradigm Shift
 
 ```
