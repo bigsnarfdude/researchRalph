@@ -3,6 +3,9 @@
 
 ![Research Ralph — TrustLoop: Human-in-the-Loop Program](assets/trustloop-banner.png)
 
+> *"Trust, but verify."*
+> — Ronald Reagan, quoting a Russian proverb, 1987
+
 > "Humans aren't replaced — they move up the stack."
 
 ---
