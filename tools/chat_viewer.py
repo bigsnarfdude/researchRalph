@@ -70,19 +70,26 @@ def parse_results(path):
             except: pass
     return results
 
+def extract_exp_ids(text):
+    """Find any EXP-### references in text."""
+    return re.findall(r'EXP-\d+[a-z]?', text, re.IGNORECASE)
+
 def bubble_html(turn):
     text = turn["text"].replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
     ts = f'<span class="ts">{fmt_ts(turn["ts"])}</span>'
+    # Tag bubble with experiment IDs found in text
+    exp_ids = extract_exp_ids(turn["text"])
+    data_exps = f' data-exps="{",".join(set(e.upper() for e in exp_ids))}"' if exp_ids else ""
     if turn["type"] == "think":
-        return f'<div class="bubble think">{text}{ts}</div>'
+        return f'<div class="bubble think"{data_exps}>{text}{ts}</div>'
     elif turn["type"] == "tool":
         name = turn.get("name","")
-        return f'<div class="bubble tool"><span class="tool-badge">{name}</span>{text}{ts}</div>'
+        return f'<div class="bubble tool"{data_exps}><span class="tool-badge">{name}</span>{text}{ts}</div>'
     elif turn["type"] == "result":
         if len(text) > 250:
             preview = text[:250] + "..."
-            return f'<div class="bubble result long"><span class="preview">{preview}</span><span class="full">{text}</span>{ts}<span class="expand-hint">▸ click to expand</span></div>'
-        return f'<div class="bubble result">{text}{ts}</div>'
+            return f'<div class="bubble result long"{data_exps}><span class="preview">{preview}</span><span class="full">{text}</span>{ts}<span class="expand-hint">▸ click to expand</span></div>'
+        return f'<div class="bubble result"{data_exps}>{text}{ts}</div>'
     return ""
 
 def build_html(logs_dir, results_tsv=None):
@@ -186,6 +193,10 @@ body{{font-family:-apple-system,monospace;background:#0d1117;color:#c9d1d9;heigh
 .placeholder{{display:flex;align-items:center;justify-content:center;height:100%;color:#484f58;font-size:0.85em}}
 .exp-item.dimmed{{opacity:0.35}}
 .exp-agent{{font-size:0.68em;color:#6e7681;margin-left:4px}}
+.bubble.dim-bubble{{opacity:0.12;transition:opacity .2s}}
+.bubble.highlight-bubble{{opacity:1;outline:2px solid var(--c,#388bfd);border-radius:10px;transition:opacity .2s}}
+.clear-btn{{margin:8px 8px 0;padding:5px 10px;border-radius:5px;border:1px solid #30363d;background:transparent;color:#6e7681;font-size:0.72em;cursor:pointer;width:calc(100% - 16px)}}
+.clear-btn:hover{{border-color:#8b949e;color:#c9d1d9}}
 </style>
 </head>
 <body>
@@ -196,6 +207,7 @@ body{{font-family:-apple-system,monospace;background:#0d1117;color:#c9d1d9;heigh
 </div>
 <div class="main">
   <div class="tray" id="tray"><div class="tray-empty">Select an agent</div></div>
+  <!-- clear btn injected by JS -->
   <div class="chat-area" id="chat-area">
     {"".join(session_divs)}
     <div class="placeholder" id="placeholder">← select an agent to begin</div>
@@ -226,7 +238,7 @@ agents.forEach(agent => {{
 
 function buildTray(highlightAgent) {{
   const tray = document.getElementById('tray');
-  tray.innerHTML = results.map(r => {{
+  tray.innerHTML = '<button class="clear-btn" onclick="clearIsolation()">✕ clear filter</button>' + results.map(r => {{
     const pct = Math.max(4, ((r.score - 0.5) / 0.5 * 100)).toFixed(0);
     const agentColor = colors[r.agent] || '#8b949e';
     const dimmed = highlightAgent && r.agent !== highlightAgent ? 'dimmed' : '';
@@ -251,8 +263,48 @@ function selectAgent(agent) {{
 function selectExp(expId, agentId, el) {{
   document.querySelectorAll('.exp-item').forEach(e => e.classList.remove('selected'));
   el.classList.add('selected');
-  const idx = sessions.findIndex(s => s.agent === agentId);
+
+  // Find the session that actually contains this exp ID in bubble text
+  let idx = -1;
+  sessions.forEach((s, i) => {{
+    if (s.agent !== agentId) return;
+    const sess = document.getElementById('sess-' + i);
+    if (!sess) return;
+    const bubbles = sess.querySelectorAll('.bubble[data-exps]');
+    bubbles.forEach(b => {{
+      if ((b.dataset.exps || '').split(',').includes(expId.toUpperCase())) idx = i;
+    }});
+  }});
+  // Fallback to first session for this agent
+  if (idx < 0) idx = sessions.findIndex(s => s.agent === agentId);
   if (idx >= 0) showSession(idx);
+
+  // Isolate: dim all bubbles, highlight ones mentioning this exp
+  setTimeout(() => {{
+    const sess = document.getElementById('sess-' + idx);
+    if (!sess) return;
+    const bubbles = sess.querySelectorAll('.bubble');
+    let first = null;
+    bubbles.forEach(b => {{
+      const exps = (b.dataset.exps || '').split(',').filter(Boolean);
+      if (exps.includes(expId.toUpperCase())) {{
+        b.classList.remove('dim-bubble');
+        b.classList.add('highlight-bubble');
+        if (!first) first = b;
+      }} else {{
+        b.classList.remove('highlight-bubble');
+        b.classList.add('dim-bubble');
+      }}
+    }});
+    if (first) first.scrollIntoView({{behavior:'smooth', block:'center'}});
+  }}, 50);
+}}
+
+function clearIsolation() {{
+  document.querySelectorAll('.bubble').forEach(b => {{
+    b.classList.remove('dim-bubble','highlight-bubble');
+  }});
+  document.querySelectorAll('.exp-item').forEach(e => e.classList.remove('selected'));
 }}
 
 function showSession(i) {{

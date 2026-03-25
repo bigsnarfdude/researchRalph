@@ -1,0 +1,12 @@
+EXP-ID	score	train_min	status	description	agent	design
+EXP-001	0.660	39	keep	Multi-sample REINFORCE G=4, group-relative advantages	agent0	REINFORCE-group
+EXP-002b	0.645	22	discard	G=8 but MAX_GEN_LEN=192 too short, truncated reasoning	agent0	REINFORCE-group
+EXP-003	0.520	62	discard	G=8 gen=384 but lr=2e-5 no KL → catastrophic drift	agent0	REINFORCE-group
+EXP-004b	0.705	102	keep	G=8 gen=384 lr=5e-6 KL=0.1 ref_on_CPU	agent0	GRPO
+EXP-005	0.715	190	keep	G=8 400step KL=0.05 cosine_lr 5e-6→5e-7 — new best	agent0	GRPO
+EXP-006	0.670	20	discard	Iterative GRPO from best, SGD no KL → degraded	agent1	GRPO-noKL
+EXP-006c	0.725	74	keep	Iterative GRPO from best, no KL, wd=0.02, lr=3e-6 — new best	agent0	GRPO-iter
+EXP-007	0.667	13	discard	ReST from best checkpoint — SFT on own correct completions	agent1	ReST
+EXP-008a	0.700	25	keep	Iterative GRPO round 3, AdamW wd=0.02 lr=2e-6 G=4 55 steps	agent1	GRPO-iter
+EXP-008	0.760	74	keep	Iter GRPO rd2 from 0.725, G=8 lr=3e-6 wd=0.02 300step — BEST	agent0	GRPO-iter
+EXP-009	0.720	25	keep	Iter GRPO from 0.760, SGD lr=6e-6 wd=0.02 G=4 56 steps	agent1	GRPO-iter-SGD
