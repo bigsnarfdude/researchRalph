@@ -1,13 +1,17 @@
 #!/bin/bash
 # bootstrap.sh — deploy rrma-lean trace generator on a fresh Linux box
-# Usage: bash bootstrap.sh
+# Usage: bash bootstrap.sh [instance_name]
+# Example: bash bootstrap.sh lean_2nd_generator
 #
 # After running: authenticate Claude with `claude auth` before launching
 #
-# Works on: Lambda CPU, Hetzner, any Ubuntu 20.04+
+# Works on: Lambda A10, CPU instances, Hetzner, any Ubuntu 20.04+
 # No GPU required — Claude CLI is API calls, Lean is CPU-only
 
 set -e
+
+INSTANCE_NAME="${1:-lean_generator}"
+echo "[bootstrap] Instance: $INSTANCE_NAME"
 
 echo "[bootstrap] Installing dependencies..."
 sudo apt-get update -qq
@@ -32,18 +36,21 @@ echo "[bootstrap] Cloning researchRalph..."
 git clone https://github.com/bigsnarfdude/researchRalph ~/researchRalph
 cd ~/researchRalph
 
-echo "[bootstrap] Launching rrma-lean outer-loop..."
-screen -dmS rrma-lean bash -c \
+echo "[bootstrap] Launching rrma-lean outer-loop (instance: $INSTANCE_NAME)..."
+echo "$INSTANCE_NAME" > ~/researchRalph/domains/rrma-lean/instance_name.txt
+
+screen -dmS "$INSTANCE_NAME" bash -c \
     'source ~/.elan/env && export PATH="$HOME/.local/bin:$PATH" && \
      cd ~/researchRalph && \
      bash v4/outer-loop.sh domains/rrma-lean 5 2 30 10 \
      >> domains/rrma-lean/outer-loop.log 2>&1'
 
 sleep 3
-screen -ls | grep rrma
+screen -ls
 
 echo ""
-echo "[bootstrap] Done. Monitor with:"
+echo "[bootstrap] Done. Authenticate then monitor:"
+echo "  claude auth"
 echo "  tail -f ~/researchRalph/domains/rrma-lean/results.tsv"
 echo "  tail -f ~/researchRalph/domains/rrma-lean/outer-loop.log"
-echo "  screen -r rrma-lean"
+echo "  screen -r $INSTANCE_NAME"
