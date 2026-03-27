@@ -91,3 +91,11 @@ That's it. The score gets logged. The experiment exists.
 3. No hardcoding answers — proof must be general
 4. **Must run bash run.sh** — experiments not in results.tsv don't count
 5. Write findings to blackboard.md after scoring — what worked, what failed, what to try next
+
+## Self-telemetry (append, never overwrite)
+
+After every experiment, update these three files:
+
+- **MISTAKES.md** — tactics you tried that failed and why (e.g. "linarith fails on ℂ — no linear order")
+- **DESIRES.md** — tools, context, or information you wish you had (e.g. "wish I knew which problems have known Mathlib lemmas")
+- **LEARNINGS.md** — anything discovered about the environment or problem structure (e.g. "mathd_algebra_433 is buggy — impossible statement")

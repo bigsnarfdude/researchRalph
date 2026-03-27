@@ -53,7 +53,7 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
         claude --output-format stream-json --verbose \
             --dangerously-skip-permissions \
             --max-turns $MAX_TURNS \
-            -p 'You are agent$i. Read program.md, blackboard.md, results.tsv, and best/. If meta-blackboard.md exists, read it — it contains compressed observations from previous cycles. If calibration.md exists, read it — it contains known results and techniques from the literature. Then start experimenting. Write all findings to blackboard.md. Periodically re-read meta-blackboard.md — it updates during the run. Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
+            -p 'You are agent$i. Read program.md, blackboard.md, results.tsv, and best/. If meta-blackboard.md exists, read it — it contains compressed observations from previous cycles. If calibration.md exists, read it — it contains known results and techniques from the literature. Then start experimenting. Write all findings to blackboard.md. Periodically re-read meta-blackboard.md — it updates during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
             > $DOMAIN_DIR/logs/agent${i}.jsonl 2>&1
     "
     echo "Started $SESSION (screen -r $SESSION)"
