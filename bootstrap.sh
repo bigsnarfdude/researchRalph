@@ -1,19 +1,13 @@
 #!/bin/bash
 # bootstrap.sh — deploy rrma-lean trace generator on a fresh Linux box
-# Usage: bash bootstrap.sh YOUR_ANTHROPIC_API_KEY
+# Usage: bash bootstrap.sh
+#
+# After running: authenticate Claude with `claude auth` before launching
 #
 # Works on: Lambda CPU, Hetzner, any Ubuntu 20.04+
 # No GPU required — Claude CLI is API calls, Lean is CPU-only
 
 set -e
-
-if [ -z "$1" ]; then
-    echo "Usage: bash bootstrap.sh YOUR_ANTHROPIC_API_KEY"
-    exit 1
-fi
-
-export ANTHROPIC_API_KEY="$1"
-echo "export ANTHROPIC_API_KEY=$1" >> ~/.bashrc
 
 echo "[bootstrap] Installing dependencies..."
 sudo apt-get update -qq
