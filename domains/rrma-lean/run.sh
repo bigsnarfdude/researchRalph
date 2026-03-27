@@ -63,10 +63,16 @@ if [ ! -f "$RESULTS_TSV" ]; then
     echo -e "EXP-ID\tscore\tn_attempted\tstatus\tdescription\tagent\tdesign\ttrain_min" > "$RESULTS_TSV"
 fi
 
-# Generate next EXP-ID
-LAST_N=$(grep -oP 'exp\K\d+' "$RESULTS_TSV" 2>/dev/null | sort -n | tail -1 || echo 0)
+# Generate next EXP-ID — prefix from instance_name.txt if present
+INSTANCE=$(cat "$DOMAIN_DIR/instance_name.txt" 2>/dev/null | tr -d '[:space:]')
+if [ -n "$INSTANCE" ] && [ "$INSTANCE" != "nigel" ]; then
+    PREFIX=$(echo "$INSTANCE" | sed 's/lean_2nd_generator/lam/; s/lean_//; s/_generator//' | cut -c1-4)
+else
+    PREFIX="exp"
+fi
+LAST_N=$(grep -oP "${PREFIX}\K\d+" "$RESULTS_TSV" 2>/dev/null | sort -n | tail -1 || echo 0)
 NEXT_N=$(printf "%03d" $((10#$LAST_N + 1)))
-EXP_ID="exp${NEXT_N}"
+EXP_ID="${PREFIX}${NEXT_N}"
 
 # Determine status: keep if score beats current best, else discard
 CURRENT_BEST=$(awk -F'\t' 'NR>1 && $4=="keep" {print $2}' "$RESULTS_TSV" 2>/dev/null | sort -rn | head -1)
