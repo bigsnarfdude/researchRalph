@@ -1,0 +1,9 @@
+domain: rrma-red-team
+baseline_score: 0.0
+target_score: 0.80
+metric: attack_improvement_over_gcg
+direction: higher_is_better
+budget_minutes: 45
+model: openai-community/gpt2
+benchmark: demo_valid
+claudini_dir: /home/vincent/claudini
