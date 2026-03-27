@@ -1,24 +1,19 @@
 # Weekend Coding Session — Sat/Sun
 
-## Priority 1: Fix the pipeline (Saturday morning)
+## Priority 1: Fix the pipeline (Saturday morning) ✅ DONE
 
-rrma-lean is running but traces aren't being captured and scrubbing isn't built in.
-Fix these before anything else.
-
-**1a. Scrub-at-source**
-- Build `tools/scrub.py` — called automatically by run.sh after every score
-- Scrubs paths, server names, tokens from .lean files + blackboard entries
+**1a. Scrub-at-source** ✅
+- `tools/scrub.py` built — called by run.sh after every score
+- Scrubs paths, server names, tokens from .lean files
 - Stages clean version to `domains/<domain>/staged/`
-- See `tools/publish_hf_dataset.py` for existing scrub patterns
 
-**1b. Trace capture**
-- rrma-lean has no `logs/` dir — agent jsonl not being saved
-- Check why outer-loop isn't creating logs for this domain
-- May need to add `--log-to` flag in launch-agents.sh
+**1b. Trace capture** ✅
+- `v4/launch-agents.sh` now creates `logs/` dir + tees agent output to `logs/agent{N}.log`
 
-**1c. results.tsv auto-append**
-- Fixed in run.sh already but only on nigel
-- Sync fix back to local repo + commit
+**1c. results.tsv auto-append** ✅
+- `run.sh` updated: accepts `bash run.sh <method> "description" design_type`
+- Auto-generates EXP-ID, determines keep/discard vs current best, appends row
+- Synced to nigel, pipeline restarted
 
 ---
 
@@ -87,8 +82,12 @@ ssh vincent@nigel.birs.ca "tail -f ~/researchRalph/domains/rrma-lean/outer-loop.
 ssh vincent@nigel.birs.ca "screen -r rrma-worker0"  # Ctrl+A D to detach
 ```
 
-Current scores: exp001=0.64 (14 problems), exp003=0.30 (244), plateau at tactic ceiling.
-Gardener needs 10+ experiments before it fires axis rotation.
+Current scores (as of Sat Mar 27):
+- exp001=0.64 (14 problems, cherry-picked algebra)
+- exp008=0.4754 (244 problems) — best so far, hybrid cascade + 30 handcrafted proofs
+- SOTA range: 0.45-0.60 on MiniF2F valid set
+- Pattern that works: tactic cascade + targeted handcrafted proofs per problem class
+- Pipeline restarted with scrub + log capture enabled
 
 **The big picture (Pathfinder):**
 - Nobody has released full search traces on real Lean theorems (literature confirmed)
@@ -110,7 +109,54 @@ Gardener needs 10+ experiments before it fires axis rotation.
 
 ## Parking lot (not this weekend)
 
-- rrma-lean Level 2: fine-tune Qwen2.5 on proof traces (needs Lambda 96GB)
+### rrma-lean Level 2: Cold start SFT → GRPO
+
+This is the R1 recipe applied to Lean proof search.
+
+**Why our traces are the cold start:**
+- R1 needed a small set of "how to think" traces before GRPO
+- Without cold start, GRPO collapses (incoherent outputs, endless repetition)
+- Our traces ARE that signal: failed tactics + reasoning about failure + successful proof
+
+**The pipeline:**
+```
+Step 1: Convert traces → SFT format
+  Input:  theorem statement
+  Output: <think>
+            tried omega → failed (no linear order on ℂ)
+            tried linarith → failed
+            tried linear_combination 2*h₀ - h₁ → compiled
+          </think>
+          linear_combination 2 * h₀ - h₁
+
+Step 2: Cold start SFT
+  - Fine-tune Qwen2.5-7B on ~2000-5000 trace examples
+  - Model learns what proof search looks like
+  - Test: does it beat 0.4754 baseline without any search?
+
+Step 3: GRPO
+  - Sample 8 proof attempts per theorem from the SFT model
+  - Score: Lean compiles = 1, fails = 0 (unfakeable oracle)
+  - Update policy via GRPO: increase prob of successful attempts
+  - This is where capability jumps happen
+
+Step 4: Rejection sampling + SFT again (R1 step 3)
+  - Take best GRPO trajectories, SFT on those
+  - Locks in gains, repeat
+```
+
+**What we need:**
+- Lambda 96GB for GRPO rollouts
+- `tools/traces_to_sft.py` — convert agent JSONL → `<think>` format
+- ~2000 traces (we have this now from exp001-exp008 × 244 problems)
+
+**Key insight:** Lean compiler is cleaner than anything R1 had for math.
+Binary reward, unfakeable, free. Dead ends in our traces = the missing signal.
+
+**DeepSeek R1 released:** January 20, 2025
+
+---
+
 - Graph schema full extraction pipeline
 - Blog post: "Pathfinder — the search process is the dataset"
 - Reply to Clem with Pathfinder framing once repo is clean
