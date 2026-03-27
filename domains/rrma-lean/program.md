@@ -25,8 +25,10 @@ theorem algebra_2varlineareq_xpeeq7_2xpeeq3_eeq11_xeqn4 (x e : ℂ)
     (h₀ : x + e = 7) (h₁ : 2 * x + e = 3) : e = 11 ∧ x = -4 := by
   constructor <;> linarith [h₀, h₁]
 
-# 4. Score it:
-bash run.sh <method_name>
+# 4. Score it — THIS STEP IS MANDATORY. Do not skip.
+bash run.sh <method_name> "description of what you tried" design_type
+# run.sh auto-appends score to results.tsv. No manual editing needed.
+# Without this step your experiment does not exist in the record.
 ```
 
 ## Proof strategies to try
@@ -73,16 +75,19 @@ A method that solves 50/100 attempts scores 0.50.
 
 ## Results protocol
 
-Append to results.tsv:
-```
-EXP-ID  score  n_attempted  status  description  agent  design
+**run.sh auto-appends to results.tsv when you run it.** You do not need to edit results.tsv manually.
+
+Just run:
+```bash
+bash run.sh <method_name> "what you tried" design_type
 ```
 
-- design: tactic (pure tactic), llm-guided, hybrid, search
-- description: which problem categories + which tactics you prioritized
+That's it. The score gets logged. The experiment exists.
 
 ## TrustLoop rules
 
-1. Proof must compile without sorry
+1. Proof must compile without `sorry`
 2. Score on valid set only (not test)
-3. No hardcoding answers — the proof must be general
+3. No hardcoding answers — proof must be general
+4. **Must run bash run.sh** — experiments not in results.tsv don't count
+5. Write findings to blackboard.md after scoring — what worked, what failed, what to try next

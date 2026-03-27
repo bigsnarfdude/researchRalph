@@ -2,7 +2,7 @@
 
 ## The Core Idea
 
-**Footprints in snow.**
+**Footprints in snow. Pathfinder Level Unlocked**
 
 Known answers already exist. We're not making new paths. We're building a machine
 that follows existing footprints and records every step — every wrong turn, every
@@ -27,7 +27,7 @@ Known footprints (ground truth exists)
 
 ---
 
-## Every Domain Was a Footprint Domain
+## Every Domain has signal
 
 We were always bootstrapping TrustLoop. We just named it.
 
@@ -40,18 +40,18 @@ We were always bootstrapping TrustLoop. We just named it.
 
 ---
 
-## Why Lean Is Special (Training Wheels Domain)
+## Why Lean Is Special (Training Wheels for TrustLoop)
 
 Lean is the sandbox we use to build and validate TrustLoop itself because:
 
 - Oracle is **perfect and free** — proof compiles or it doesn't
 - Ground truth exists — Mathlib already has the answers
-- No domain expertise needed to know if it worked
+- No domain expertise required to validate signals
 - Binary signal, zero ambiguity
 - Can't fake a compilation
 
-We are NOT trying to advance formal mathematics.
-We are using formal mathematics as a safe test case to prove the infrastructure.
+We are NOT trying to advance formal mathematics with these experiments.
+We are using formal mathematics as a safe test case to prove the infrastructure and design.
 
 Once TrustLoop is validated here, port the whole stack to domains with messier oracles.
 
@@ -73,14 +73,11 @@ known answer → RRMA works backwards → question + search trace →
 The human never validates the math. The ground truth does.
 The human only validates one thing: **did the loop behave honestly.**
 
-That's a job anyone can do. Not "is this theorem true" but "did the machine
-follow the footprints without cheating."
+Not "is this theorem true" but "did the machine follow the footprints without cheating."
 
 ---
 
-## What TrustLoop Actually Certifies
-
-Not: "is the answer correct" — the oracle does that.
+## What TrustLoop Actually Helps
 
 Yes: "did the machine find it honestly"
 - No post-hoc selection (EXP-026 pattern)
@@ -89,7 +86,7 @@ Yes: "did the machine find it honestly"
 - Reproducible: same seed → same path
 
 The footprints certify the destination.
-TrustLoop certifies the journey.
+TrustLoop helps verify each step along the journey.
 
 ---
 
@@ -103,56 +100,21 @@ Level 3: Meta-human (checks systemic drift, not individual results)
 ```
 
 Human moves up the stack as each level gets automated.
-Lean lets us build levels 0-2 without needing a mathematician.
+Lean lets us build levels 0-2 without needing a domain expert in math.
 
 ---
 
-## What We're NOT Doing
+## The Dataset
 
-- Not competing with Anthropic / Claude 5
-- Not trying to solve open mathematics
-- Not building a product
-- Not generating novel datasets
+We run researchRalph loops and capture what comes out.
 
-**We are building the track the trains run on.**
-
-Anthropic builds the engine. We build:
-- The domain harness (RRMA outer-loop)
-- The verification layer (TrustLoop)
-- The oracle wrappers (Lean, Claudini, MiniF2F...)
-- The trace format (DAG schema)
-- The certified dataset exhaust
-
-Every new Claude model makes the harness more valuable, not less.
-Better worker. Same track.
-
----
-
-## The Dataset Is the Exhaust
-
-We don't generate datasets. We run loops and capture what comes out.
-
-The output isn't the proof. The proof already exists in Mathlib.
-The output is **the search process** — how an agent reasoned its way
+The output isn't a novel proof. The proof already exists in Mathlib.
+The output is **the search process** — how an agents reasoned its way
 to the answer from scratch, with all the dead ends included.
 
 That's what's never existed before. Not "here is the answer" but
 "here is how to find answers, including everything that didn't work."
 
----
-
-## The Positioning
-
-```
-Domain expert (BIRS math access)
-  + harness builder (RRMA, outer-loop, blackboard)
-  + verification layer (TrustLoop, oracle wrappers)
-  + trace collector (certified dataset exhaust)
-```
-
-The niche: infrastructure for machines doing research, not the research itself.
-
-Infrastructure compounds. The loop is the asset. The datasets are the exhaust.
 
 ---
 
@@ -172,8 +134,8 @@ Infrastructure compounds. The loop is the asset. The datasets are the exhaust.
 
 ## Next
 
-1. Let rrma-lean run — collect first footprint-following traces
-2. Extract DAG edges from rrma-r1 blackboard (manual annotation, ~2hr)
+1. Let rrma-lean run — collect traces
+2. Extract DAG edges from experiment blackboards (manual annotation, ~2hr)
 3. Prove graph features improve action classifier AUC (0.738 → >0.80)
-4. That proof IS the TrustLoop validation story
-5. Then: port to harder domain where footprints are sparse
+4. Use TrustLoop to create the validation story
+5. Then: port to harder domain where signals are sparse
