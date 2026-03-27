@@ -1,6 +1,40 @@
 # Getting Started
 
-This guide walks you through your first researchRalph run, step by step.
+## Quickest path: generate Lean proof traces in 10 minutes
+
+This is the fastest way to generate verified agent traces — autonomous Claude agents
+solving MiniF2F theorems in Lean 4. No GPU needed. Oracle is free and unfakeable.
+
+```bash
+# 1. Install Lean 4
+curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+source ~/.elan/env
+
+# 2. Clone MiniF2F (Lean 4 port)
+git clone https://github.com/yangky11/miniF2F-lean4.git ~/miniF2F-lean4
+cd ~/miniF2F-lean4 && lake exe cache get  # downloads Mathlib (~5 min, one-time)
+
+# 3. Clone researchRalph
+git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
+
+# 4. Run
+bash v4/outer-loop.sh domains/rrma-lean 5 2 20 10
+```
+
+Agents will start writing Lean proofs immediately. Watch results:
+```bash
+tail -f domains/rrma-lean/results.tsv      # scores as they land
+cat domains/rrma-lean/blackboard.md        # agent reasoning
+screen -r rrma-worker0                     # live agent session
+```
+
+Agent traces (with extended thinking) are logged to `domains/rrma-lean/logs/`.
+These are the dataset — every failed tactic attempt, every successful proof, every
+gardener intervention. See [TRUSTLOOP.md](TRUSTLOOP.md) for why these traces matter.
+
+---
+
+## Full guide: any domain, step by step
 
 ## Prerequisites
 

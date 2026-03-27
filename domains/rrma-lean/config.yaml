@@ -1,0 +1,9 @@
+domain: rrma-lean
+baseline_score: 0.0
+target_score: 0.50
+metric: minif2f_valid_pass_rate
+direction: higher_is_better
+budget_minutes: 60
+model: lean4+mathlib
+benchmark: minif2f_valid
+minif2f_dir: /home/vincent/miniF2F-lean4
