@@ -49,8 +49,8 @@ $PROGRAM
 
 claude -p "$PROMPT" \
     --dangerously-skip-permissions \
-    --max-turns 5 \
-    > "$DOMAIN_DIR/calibration.md" 2>/dev/null
+    --max-turns 20 \
+    > "$DOMAIN_DIR/calibration.md" 2>"$DOMAIN_DIR/calibration.log"
 
 LINES=$(wc -l < "$DOMAIN_DIR/calibration.md" | tr -d ' ')
 echo "[calibrate] Wrote calibration.md ($LINES lines)" >&2
