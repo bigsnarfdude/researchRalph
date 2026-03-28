@@ -81,7 +81,4 @@ Good first targets (known proofs, varying difficulty):
 Start with Euclid's primes or a MiniF2F easy problem — complex enough to
 require multi-step reasoning, simple enough that the harness works first try.
 
-## When to Build This
-
-After rrma-r1 validates that the loop can handle open-ended RL research.
-Lean is harder (sparser reward, longer horizon) but the oracle is perfect.
+Qwen 3.5 27b Dense Opus distilled model
