@@ -37,7 +37,7 @@ Lean 4 proofs are machine-verifiable. That makes them the ideal RRMA domain:
 - Log rotation prevents trace loss on restart ✓
 - Heredoc regex bug fixed — recovered 156 traces vs 74 previously ✓
 - SFT pipeline works end-to-end (traces → LoRA checkpoint) ✓
-- Eval harness written (`lean_eval.py`) — pending baseline run ✓
+- Eval harness written (`lean_eval.py`) — baseline run pending (needs Together.ai key + miniF2F on eval box)
 
 ### What's next
 1. Nigel continues passively — traces accumulate toward ~500-1K target
