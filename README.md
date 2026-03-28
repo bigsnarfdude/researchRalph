@@ -37,7 +37,8 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 |---------|------|-----------|--------|
 | v2 | Multi-agent blackboard + structured memory | Launch, steer with operator.sh | GPT-2: 1.048 BPB, 64% hit rate (8×A100) |
 | v3 | Stripped protocol, plain blackboard, Ralph Wiggum loop | Review + redesign between runs | SAE-bench: 0.9894 F1, 135 experiments, beat 0.97 probe ceiling |
-| **v4** | **Self-recursive: gardener monitors process quality, stops/redesigns automatically** | **None** | **SAE-bench: 0.8170 F1 in 38 exp (running), hacking detection validated** |
+| v4 | Self-recursive: gardener monitors process quality, stops/redesigns automatically | None | SAE-bench: 0.8170 F1 in 38 exp, hacking detection validated |
+| **v4.3** | **+ real literature search, agent self-telemetry, stream-json trace capture, multi-box parallel generation** | **None** | **rrma-lean: 0.6230 on MiniF2F (244 problems), climbing** |
 
 v2 proved multi-agent collaboration works. v3 proved less protocol = better science. v4 asks: can the human who redesigned v1→v3 be replaced by a process quality monitor?
 
@@ -72,6 +73,36 @@ bash v4/outer-loop.sh domains/sae-bench 5 4 200 20
 ```
 
 The gardener handles everything: calibrates via literature search, launches workers + meta-agent, monitors process quality every 20 min, stops when done or hacking detected, redesigns program.md if agents are stuck, appends lessons to taste.md.
+
+### Deploy to Lambda / remote box
+
+One-command bootstrap on any fresh Ubuntu box:
+
+```bash
+git clone https://github.com/bigsnarfdude/researchRalph
+bash researchRalph/bootstrap.sh [instance_name]
+claude auth
+```
+
+Installs Node.js, Claude CLI, Lean 4, downloads Mathlib cache (~5 min),
+launches outer-loop in a named screen session. No GPU required for trace
+generation — Claude CLI is API calls, Lean compiler is CPU-only.
+
+### Run two generators in parallel
+
+```bash
+# box 1 (nigel)
+bash v4/outer-loop.sh domains/rrma-lean 5 2 30 10
+
+# box 2 (Lambda) — seed from box 1 first
+scp nigel:~/researchRalph/domains/rrma-lean/blackboard.md domains/rrma-lean/
+scp nigel:~/researchRalph/domains/rrma-lean/results.tsv domains/rrma-lean/
+echo "lean_2nd_generator" > domains/rrma-lean/instance_name.txt
+bash v4/outer-loop.sh domains/rrma-lean 5 2 30 10
+```
+
+EXP-IDs are automatically prefixed by instance name (`exp001` on nigel,
+`lam001` on the second box) so traces merge without collision.
 
 ### battleBOT bridge
 
@@ -138,6 +169,22 @@ bash v4/outer-loop.sh domains/my-domain       # v4 mode (autonomous)
 
 v4 adds three capabilities the inner loop can't do:
 
+### 0. Real literature search (calibrate.sh)
+
+Before launching a generation, the gardener runs a web search to find current
+SOTA, known techniques, and relevant papers:
+
+```
+WebSearch: "MiniF2F Lean 4 SOTA 2025"
+WebSearch: "site:huggingface.co/papers formal theorem proving"
+→ calibration.md: 136 lines of current numbers, arxiv citations, what NOT to try
+```
+
+Agents start each generation with actual literature context, not just training
+data cutoff knowledge. On rrma-lean this immediately surfaced compiler-feedback
+loops as the highest ROI technique — agents applied it and jumped from 0.47 → 0.62
+in two experiments.
+
 ### 1. Process quality scoring (diagnose.sh)
 
 Measures research quality from artifacts — not just scores:
@@ -163,6 +210,52 @@ Score 0-30. Below 10 after 15 experiments = hacking.
 ### 3. Scaffold editing
 
 When STOP_HACKING fires, the gardener rewrites program.md to force genuine research (require paper citations, ablations, explanations). When REDESIGN fires, it diagnoses what's blocking exploration and makes minimal changes.
+
+### 4. Agent self-telemetry (v4.3)
+
+Every agent automatically maintains three files after each experiment:
+
+```
+MISTAKES.md   ← tactics that failed and why
+DESIRES.md    ← tools or context the agent wished it had
+LEARNINGS.md  ← discoveries about the environment or problem structure
+```
+
+These are **append-only** — agents write to them after every experiment, never overwrite. Example from rrma-lean after exp011:
+
+```markdown
+# MISTAKES
+
+1. `omega` cannot handle nonlinear ℤ mod goals — e.g., `a^2 % 4 = 0`
+   requires rewriting `a = 2*(a/2)` first, then `ring_nf; omega` works
+
+2. `Even.two_dvd` doesn't exist in current Mathlib —
+   use `Even.dvd` or construct the witness directly
+
+3. `interval_cases` needs explicit upper bound in context —
+   failed until adding `have : y + 1 ≤ 8 := by nlinarith`
+```
+
+No instrumentation. No custom logging. The agent writes it because program.md
+asks it to. The files are synced between boxes so agents don't rediscover
+the same failures independently.
+
+These files are **four datasets for the price of one run:**
+- Proof traces (JSONL logs) — for SFT cold start
+- Failure taxonomy (MISTAKES.md) — domain-specific gotcha list
+- Agent desires (DESIRES.md) — roadmap of what to build next
+- Environment discoveries (LEARNINGS.md) — knowledge that accumulates across experiments
+
+To add telemetry to any domain, add to program.md:
+
+```markdown
+## Self-telemetry (append, never overwrite)
+
+After every experiment, update:
+- **MISTAKES.md** — what failed and why
+- **DESIRES.md** — tools or context you wished you had
+- **LEARNINGS.md** — discoveries about the environment
+```
 
 ### taste.md — inherited judgment
 
@@ -291,13 +384,14 @@ researchRalph/
 │   ├── conductor.sh           # Reactive dispatch (optional)
 │   ├── verifier.sh            # Reproduce claimed results (optional)
 │   └── notebook.sh            # Push results to GitHub repo
+├── bootstrap.sh               # One-command deploy on Lambda / fresh Ubuntu box
 ├── v4/                        # Self-recursive layer (the gardener)
 │   ├── outer-loop.sh          # Generation loop (calibrate → launch → monitor → stop/redesign)
 │   ├── diagnose.sh            # Process quality scoring
-│   ├── calibrate.sh           # Literature search
+│   ├── calibrate.sh           # Literature search (WebSearch + HF papers, 20 turns)
 │   ├── taste.md               # Inherited principles
 │   ├── meta-loop.sh           # Live meta-agent (compress/reflect)
-│   └── launch-agents.sh       # v3-style launcher (plain blackboard)
+│   └── launch-agents.sh       # v3-style launcher (stream-json logs, telemetry)
 ├── domains/                   # Optimization targets
 │   ├── template/              # Start here
 │   ├── sae-bench/             # SAE architecture research (GPU, hard)
