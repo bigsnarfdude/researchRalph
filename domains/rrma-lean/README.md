@@ -1,4 +1,4 @@
-# RRMA-Lean — Placeholder Domain
+# RRMA-Lean
 
 ## The Idea
 
