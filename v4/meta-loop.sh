@@ -75,6 +75,12 @@ Approaches never tried. Update from previous cycle — remove any that were trie
 ## Stepping stones
 Ideas that didn't beat the best score but produced interesting intermediate results worth building on. These are the non-obvious paths that might matter later.
 
+## Devil's advocate
+Make the strongest case that the current best score is WRONG, inflated, or misleading.
+Consider: metric gaming, sorry/shortcut proofs, oracle quirks, evaluation leakage,
+results that wouldn't generalize beyond this benchmark. Be specific.
+If the score is genuinely solid, say so and explain why.
+
 ## Self-reflection
 Compare this meta-blackboard to your previous one (if any). What did you recommend last time? Did agents follow it? Did it help? What should you say differently this time?
 
@@ -83,7 +89,7 @@ Rules:
 - State confidence levels.
 - Do NOT give instructions or tell agents what to do. Describe what you SEE.
 - Focus on saving experiments. Every line should prevent a wasted run.
-- If this is your first cycle, skip the self-reflection section.
+- If this is your first cycle, skip the self-reflection and devil's advocate sections.
 
 ---
 

@@ -46,6 +46,12 @@ Approaches never tried. Most promising directions for new work.
 ## Key insight
 The single most important finding, in 2-3 sentences.
 
+## Devil's advocate
+Make the strongest case that the current best score is WRONG, inflated, or misleading.
+Consider: metric gaming, evaluation leakage, sorry/shortcut proofs, overfitting to oracle quirks,
+approaches that look good but wouldn't generalize. Be specific and ruthless.
+If the score is genuinely solid, say so and explain why.
+
 ## Experiment order
 What agents should do first, second, third with this cheat sheet.
 
