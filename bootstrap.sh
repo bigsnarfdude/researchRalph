@@ -1,7 +1,7 @@
 #!/bin/bash
 # bootstrap.sh — deploy rrma-lean trace generator on a fresh Linux box
-# Usage: bash bootstrap.sh [instance_name]
-# Example: bash bootstrap.sh lean_2nd_generator
+# Usage: bash bootstrap.sh [instance_name] [num_agents]
+# Example: bash bootstrap.sh lean_2nd_generator 4
 #
 # After running: authenticate Claude with `claude auth` before launching
 #
@@ -11,7 +11,8 @@
 set -e
 
 INSTANCE_NAME="${1:-lean_generator}"
-echo "[bootstrap] Instance: $INSTANCE_NAME"
+NUM_AGENTS="${2:-2}"
+echo "[bootstrap] Instance: $INSTANCE_NAME  Agents: $NUM_AGENTS"
 
 echo "[bootstrap] Installing dependencies..."
 sudo apt-get update -qq
@@ -39,11 +40,11 @@ cd ~/researchRalph
 echo "[bootstrap] Launching rrma-lean outer-loop (instance: $INSTANCE_NAME)..."
 echo "$INSTANCE_NAME" > ~/researchRalph/domains/rrma-lean/instance_name.txt
 
-screen -dmS "$INSTANCE_NAME" bash -c \
-    'source ~/.elan/env && export PATH="$HOME/.local/bin:$PATH" && \
+screen -dmS "$INSTANCE_NAME" bash -lc \
+    "source ~/.elan/env && export PATH=\"\$HOME/.local/bin:\$PATH\" && \
      cd ~/researchRalph && \
-     bash v4/outer-loop.sh domains/rrma-lean 5 2 30 10 \
-     >> domains/rrma-lean/outer-loop.log 2>&1'
+     bash v4/outer-loop.sh domains/rrma-lean 5 $NUM_AGENTS 200 30 \
+     2>&1 | tee domains/rrma-lean/logs/outer-loop.log"
 
 sleep 3
 screen -ls
