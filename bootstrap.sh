@@ -18,8 +18,10 @@ echo "[bootstrap] Installing dependencies..."
 sudo apt-get update -qq
 sudo apt-get install -y -qq git curl screen python3 python3-pip
 
-echo "[bootstrap] Installing Claude CLI..."
-curl -fsSL https://claude.ai/install.sh | sh
+echo "[bootstrap] Installing Node.js 22 + Claude CLI..."
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - -q
+sudo apt-get install -y -qq nodejs
+npm install -g @anthropic-ai/claude-code 2>&1 | tail -2
 export PATH="$HOME/.local/bin:$PATH"
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 
