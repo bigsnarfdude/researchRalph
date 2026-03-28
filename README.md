@@ -45,6 +45,31 @@ v2 proved multi-agent collaboration works. v3 proved less protocol = better scie
 
 ---
 
+## Domains
+
+RRMA is domain-agnostic. Anything with a config to edit and a score to maximize works. Proven domains:
+
+| Domain | Task | Oracle | Best Result |
+|--------|------|--------|-------------|
+| **gpt2-tinystories** | Optimize GPT-2 training on TinyStories | Val BPB (lower=better) | 1.047 BPB — matches Karpathy's H100 single-agent result in half the experiments |
+| **sae-bench / battlebotgym-sae-bench-v4** | Train sparse autoencoders, optimize Mathlib probe F1 | SAE-bench F1 | 0.9894 F1, beat 0.97 ceiling (135 experiments, 1×RTX 4070 Ti) |
+| **af-elicitation** | Optimize prompts to elicit alignment faking from LLMs | AF detection rate | Prompt configurations that reliably elicit AF across model families |
+| **prompt-climb** | Multi-agent prompt optimization for sandbagging detection | F1 on 100-sample eval | 0.878 F1 — 4 agents, 19 versions, 4 hours. Discovered plan specificity as key signal |
+| **rrma-red-team** | Discover adversarial token-suffix optimizers that beat GCG | Claudini benchmark loss | Novel attack variants, 0.825 final score |
+| **rrma-r1** | Rediscover DeepSeek-R1 training recipe from first principles | Math reasoning eval | Independently converged on GRPO + process reward model — same recipe R1 used |
+| **rrma-lean** | Lean 4 theorem proving on MiniF2F (244 problems) | Lean compiler (binary) | **0.8811 (215/244)** — above Goedel-Prover-V2-8B (84.6%), no training, pure search |
+
+### What makes a good RRMA domain
+
+- **Binary or continuous oracle** — something that outputs a score without human judgment
+- **Fast feedback** — seconds to minutes per experiment (not hours)
+- **Large search space** — enough room that agents can explore genuinely different directions
+- **No reward hacking** — the checker must be unfakeable (compiler, verifier, held-out eval)
+
+CPU-only domains (prompt optimization, Lean proving) run on any box. GPU domains (SAE training, LM training) need a CUDA node.
+
+---
+
 ## Run It
 
 ### Single agent
