@@ -4,8 +4,8 @@
 
 Auto-research for formal mathematics. Agents search for proofs in Lean 4.
 
-Inspired by: Andrej Karpathy podcast (March 2026) — discussion of auto-research
-and formal verification as a next frontier for AI-driven discovery.
+Inspired by: Andrej Karpathy podcast (March 2026) and Terrance Tao Dwarkesh Podcast (March 2026 )— discussion of auto-research
+and formal verification as a next frontier for AI-driven discovery and AI and Math.
 
 ## The Thesis
 
