@@ -1,4 +1,4 @@
-# researchRalph v4 Gardner Edition
+# researchRalph v4.3 Gardner Edition
 "gardener" - work ethic signifies a nurturing, patient, and long-term approach to achieving results, rather than relying on force, speed, or immediate gratification
 
 ## TrustLoop — The Second Layer
