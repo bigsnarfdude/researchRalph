@@ -1,85 +1,88 @@
-# RRMA-Lean
+# RRMA-Lean — Lean 4 Theorem Proving via Multi-Agent RRMA
 
-## The Idea
+## Status: Active — March 2026
 
 Auto-research for formal mathematics. Agents search for proofs in Lean 4.
+Running on nigel (8 agents), accumulating SFT traces for fine-tuning.
 
-Inspired by: Andrej Karpathy podcast (March 2026) and Terrance Tao Dwarkesh Podcast (March 2026 )— discussion of auto-research
-and formal verification as a next frontier for AI-driven discovery and AI and Math.
+Inspired by: Andrej Karpathy podcast (March 2026) and Terrence Tao / Dwarkesh Podcast (March 2026) — discussion of auto-research and formal verification as the next frontier for AI-driven discovery.
 
 ## The Thesis
 
 Lean 4 proofs are machine-verifiable. That makes them the ideal RRMA domain:
 
-- The score signal is binary and unambiguous (proof compiles or it doesn't)
+- Score signal is binary and unambiguous (proof compiles or it doesn't)
 - No reward hacking — the checker is a formal proof assistant, not a model
 - The search space is enormous but structured (tactics, lemmas, rewrites)
-- Agents can share partial proofs on the blackboard like experimental results
+- Agents share partial proofs on the blackboard like experimental results
 
-This is the purest version of the RRMA hypothesis: can agents do open-ended
-research with a ground-truth oracle?
+## Current Results (March 2026)
 
-## What This Domain Would Look Like
+| Metric | Value |
+|--------|-------|
+| Best score on miniF2F-valid (244 problems) | 0.7992 (nigel exp045) |
+| Unique problems solved | ~154-175 across boxes |
+| SFT traces collected | 156+ (nigel), 300-400+ total |
+| Experiments run | 150+ across 3 boxes |
 
-Agents are given:
-- A target theorem to prove (from MiniF2F, Mathlib, or a custom set)
-- A Lean 4 environment with Mathlib installed
-- A harness that attempts to compile the proof and returns pass/fail + error
+## SFT Pipeline
 
-Blackboard becomes a **proof attempt log** — agents share partial tactics,
-failed approaches, and useful lemmas discovered along the way.
+Agents generate `(thinking, proof)` traces via `claude --output-format stream-json`.
+Extracted with `tools/traces_to_sft.py` into DeepSeek-R1 chat format:
 
-## The Karpathy Angle
+```json
+{"messages": [
+  {"role": "system", "content": "You are an expert Lean 4 theorem prover..."},
+  {"role": "user", "content": "Prove the following theorem in Lean 4:\n..."},
+  {"role": "assistant", "content": "<think>\n...reasoning...\n</think>\n```lean\n...proof...\n```"}
+]}
+```
 
-Karpathy's framing: formal math is where AI auto-research becomes verifiable
-science. A proved theorem is true. Unlike benchmark scores (which can be gamed),
-a Lean proof that compiles is correct by definition.
+## Training Target
 
-Potential tasks:
-- **MiniF2F** — 488 competition math problems formalized in Lean/Isabelle/HOL
-- **Mathlib contributions** — agents prove lemmas that don't exist yet
-- **Custom curriculum** — start easy (commutativity proofs), escalate
+**`Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-v2`**
 
-## Related
+- Base: Qwen3.5-27B dense (27B parameters, all activated)
+- Pre-distilled from Claude Opus 4.6 reasoning chains
+- Already knows `<think>` format, strong tool use
+- Nobody has done Qwen3.5 + Lean4 SFT — this is unexplored territory
 
-- **AlphaProof** (DeepMind, 2024) — solved 4/6 IMO 2024 problems via RL on Lean
-- **Lean Copilot** — LLM-assisted tactic search
-- **ntp-toolkit** — neural theorem proving evaluation harness
-- **MiniF2F** — cross-system benchmark, good first target
+Trained via LoRA (r=16) with `tools/sft_train.py`. Checkpoint: `sft_data/sft_lean_ckpt_gh200/`.
 
-## Why This Is Hard
+## Baseline Comparison
 
-- Lean 4 environment setup is non-trivial (Mathlib takes ~1h to build)
-- Proof search is sparse reward — many dead ends before a valid tactic
-- The agent needs to understand the proof state, not just generate tokens
-- Needs a mature loop (v4+) that can handle long horizons with sparse reward
+| Model | miniF2F pass@32 | Notes |
+|-------|----------------|-------|
+| Goedel-Prover-V2-8B | 84.6% | Qwen3-8B base, SOTA open 8B |
+| Goedel-Prover-V2-32B | 90.4% | Current open SOTA |
+| Our agents (pass@1, nigel) | 79.9% | Claude Opus 4.6 multi-agent |
+| Qwen3.5-27B-Opus-Distilled (baseline) | TBD | eval pending |
+| Qwen3.5-27B-Opus-Distilled + Lean SFT | TBD | post-SFT eval pending |
 
-## Status
+Eval harness: `tools/lean_eval.py` — calls model via OpenAI-compatible API, compiles output with `lake build`, reports pass@1.
 
-Placeholder. Not yet implemented.
+## Recipe
 
-## The Pre-Knowledge Validation Strategy
+```
+Claude Opus 4.6 agents → miniF2F attempts → traces_to_sft.py → SFT on Qwen3.5-27B
+→ baseline eval → GRPO with Lean compiler as reward → iterate
+```
 
-Same philosophy as rrma-r1: pick a theorem with a **known proof**, hide the
-proof from agents, see if they independently discover it.
+This follows Kimina-Prover (Qwen2.5-72B, 80.7%) and Goedel-Prover-V2 (Qwen3-8B, 84.6%).
+Qwen3.5-27B is a stronger base than both — unexplored as of March 2026.
 
-This validates the loop before tackling unsolved problems:
-- Agents don't know the proof (even though we do)
-- We measure: did they find it? how many attempts? what tactic path?
-- If the loop rediscovers known proofs, it earns the right to attempt open ones
+## Infrastructure
 
-Good first targets (known proofs, varying difficulty):
+- **Nigel** (on-prem, 24 cores): 8 agents, Lean + miniF2F installed, trace collection
+- `v4/outer-loop.sh`: gardener manages generations, diagnoses hacking, redesigns scaffold
+- `tools/traces_to_sft.py`: extracts thinking+proof pairs from JSONL agent logs
+- `tools/sft_train.py`: LoRA fine-tuning via TRL SFTTrainer
+- `tools/lean_eval.py`: pass@1 eval via any OpenAI-compatible API + local Lean compiler
 
-| Theorem | Lean difficulty | Why |
-|---------|----------------|-----|
-| `Nat.add_comm` | trivial | Validates harness compiles at all |
-| Infinitely many primes (Euclid) | easy | Classic, well-known Mathlib proof |
-| √2 is irrational | medium | Requires number theory lemmas |
-| MiniF2F easy set (~100 problems) | medium | Benchmark with known solutions |
-| Cauchy-Schwarz inequality | hard | Real analysis, requires significant setup |
+## Related Work
 
-Start with Euclid's primes or a MiniF2F easy problem — complex enough to
-require multi-step reasoning, simple enough that the harness works first try.
-
-Qwen 3.5 27b Dense Opus distilled model to SFT train
-Goedel-Prover-V2-8B hits 84.6% on miniF2F (BASELINE SOLVER)
+- **Goedel-Prover-V2** — [arxiv 2508.03613](https://arxiv.org/abs/2508.03613) | [HF](https://huggingface.co/Goedel-LM/Goedel-Prover-V2-8B) | [GitHub](https://github.com/Goedel-LM/Goedel-Prover-V2) — **BASELINE SOLVER** (84.6% pass@32)
+- **Kimina-Prover** — [arxiv 2504.11354](https://arxiv.org/abs/2504.11354) | Qwen2.5-72B + RL
+- **DeepSeek-Prover-V2** — [arxiv 2504.21801](https://arxiv.org/abs/2504.21801)
+- **AlphaProof** — DeepMind, solved 4/6 IMO 2024 via RL on Lean
+- **MiniF2F** — 488 competition math problems, 244 valid set used here
