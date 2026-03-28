@@ -34,6 +34,15 @@ done
 touch "$DOMAIN_DIR/results.tsv"
 mkdir -p "$DOMAIN_DIR/logs"
 
+# Rotate any existing agent logs so they are never overwritten
+ROTATE_TS="$(date '+%Y%m%d_%H%M%S')"
+for existing in "$DOMAIN_DIR/logs"/agent*.jsonl; do
+    [ -f "$existing" ] || continue
+    base="$(basename "$existing" .jsonl)"
+    mv "$existing" "$DOMAIN_DIR/logs/${base}_${ROTATE_TS}.jsonl"
+    echo "Rotated: ${base}.jsonl → ${base}_${ROTATE_TS}.jsonl"
+done
+
 echo "Files OK. Launching..."
 echo ""
 
