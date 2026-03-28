@@ -1,7 +1,7 @@
 #!/bin/bash
-# diagnose.sh — compute process quality and stopping decision (v4.2)
+# diagnose.sh — compute process quality and stopping decision (v4.4)
 #
-# Reads blackboard.md, results.tsv, meta-blackboard.md
+# Reads blackboard.md, results.tsv, meta-blackboard.md, DESIRES.md, LEARNINGS.md, MISTAKES.md
 # Outputs a report to stderr and a single decision to stdout:
 #   CONTINUE | NUDGE | STOP_HACKING | STOP_DONE | REDESIGN | TOO_EARLY
 #
@@ -15,6 +15,11 @@
 #   - NUDGE now fires BEFORE STOP_DONE/REDESIGN (was unreachable in v4.1)
 #   - NUDGE condition 4: explicit FLAT=false guard (stagnation without rolling-flat)
 #   - AXIS_DIVERSE threshold relaxed: ≤3 designs (was ≤2)
+#
+# v4.4 changes:
+#   - Agent self-telemetry (DESIRES.md, LEARNINGS.md, MISTAKES.md) added to PQ
+#   - DESIRES_COUNT reported and fed into NUDGE/REDESIGN decisions
+#   - Scaffold desires trigger earlier NUDGE (agents asking for tools = blocked)
 #
 # Usage: bash diagnose.sh /path/to/domain
 
@@ -33,6 +38,9 @@ fi
 BB="$DOMAIN_DIR/blackboard.md"
 META="$DOMAIN_DIR/meta-blackboard.md"
 RESULTS="$DOMAIN_DIR/results.tsv"
+DESIRES="$DOMAIN_DIR/DESIRES.md"
+MISTAKES="$DOMAIN_DIR/MISTAKES.md"
+LEARNINGS="$DOMAIN_DIR/LEARNINGS.md"
 
 # --- Process quality signals (domain-agnostic) ---
 # NOTE: all counts use awk to avoid grep -c multiline/exit-code issues on Ubuntu
@@ -61,6 +69,14 @@ for f in "$DOMAIN_DIR/sae.py" "$DOMAIN_DIR/"*.py; do
     fi
 done
 
+# Agent self-telemetry signals
+DESIRES_COUNT=$(awk '/^\*\*/{c++} END{print c+0}' "$DESIRES" 2>/dev/null)
+LEARNINGS_COUNT=$(awk '/^\*\*/{c++} END{print c+0}' "$LEARNINGS" 2>/dev/null)
+MISTAKES_COUNT=$(awk '/^\*\*/{c++} END{print c+0}' "$MISTAKES" 2>/dev/null)
+
+# Scaffold desires = agents asking for tools/run.sh/eval changes (actionable by gardener)
+SCAFFOLD_DESIRES=$(awk 'BEGIN{IGNORECASE=1} /parallel|sorry|atomic merge|batch|run\.sh|evaluator|timeout/{c++} END{print c+0}' "$DESIRES" 2>/dev/null)
+
 # Blackboard depth (reasoning density = explanations / total lines)
 BB_LINES=$(wc -l < "$BB" 2>/dev/null | tr -d ' ' || echo 1)
 
@@ -84,6 +100,8 @@ PQ=0
 [ "${UNIQUE_DESIGNS:-0}" -gt 5 ]  && PQ=$((PQ + 3))
 [ "${CLASSES:-0}" -gt 1 ]         && PQ=$((PQ + 3))
 [ "${BB_LINES:-0}" -gt 100 ]      && PQ=$((PQ + 3))
+[ "${DESIRES_COUNT:-0}" -gt 0 ]   && PQ=$((PQ + 3))   # agents filing desires = active telemetry
+[ "${LEARNINGS_COUNT:-0}" -gt 5 ] && PQ=$((PQ + 3))   # agents sharing discovered knowledge
 
 # --- Score trajectory ---
 BEST_SCORE=$(tail -n +2 "$RESULTS" 2>/dev/null | awk -F'\t' '{print $2}' | sort -rn | head -1)
@@ -143,6 +161,8 @@ echo "[diagnose] Micro-flat (last 10 near best): $MICRO_FLAT" >&2
 echo "[diagnose] Stagnation depth: $STAGNATION exp since best" >&2
 echo "[diagnose] Recent axis diversity: $RECENT_DESIGNS designs in last 10 ($AXIS_DIVERSE)" >&2
 echo "[diagnose] Blind spots: $BLIND_SPOTS" >&2
+echo "[diagnose] Agent desires: $DESIRES_COUNT (scaffold-actionable: $SCAFFOLD_DESIRES)" >&2
+echo "[diagnose] Agent learnings: $LEARNINGS_COUNT | mistakes documented: $MISTAKES_COUNT" >&2
 echo "[diagnose] ===" >&2
 
 # --- Decision matrix (v4.2) ---
@@ -159,7 +179,12 @@ elif [ "$PQ" -lt 10 ] && [ "$TOTAL_EXP" -gt 15 ]; then
     echo "[diagnose] DECISION: STOP_HACKING (PQ=$PQ after $TOTAL_EXP experiments)" >&2
     echo "STOP_HACKING"
 
-# 3. High PQ + micro-flat + low axis diversity = NUDGE (early intervention)
+# 3. Agents have scaffold desires = they're blocked by missing tools (fire NUDGE early)
+elif [ "${SCAFFOLD_DESIRES:-0}" -ge 3 ] && [ "$PQ" -ge 10 ] && [ "$TOTAL_EXP" -gt 10 ]; then
+    echo "[diagnose] DECISION: NUDGE (agents have $SCAFFOLD_DESIRES scaffold desires — blocked by missing tools)" >&2
+    echo "NUDGE"
+
+# 4. High PQ + micro-flat + low axis diversity = NUDGE (early intervention)
 elif [ "$MICRO_FLAT" = "true" ] && [ "$AXIS_DIVERSE" = "false" ] && [ "$PQ" -ge 10 ]; then
     echo "[diagnose] DECISION: NUDGE (PQ=$PQ, micro-flat, low axis diversity: $RECENT_DESIGNS designs in last 10)" >&2
     echo "NUDGE"

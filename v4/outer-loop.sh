@@ -119,9 +119,9 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
                 DECISION="REDESIGN"
             else
                 # Generate a lightweight observation for the blackboard
-                NUDGE_PROMPT="You are observing a multi-agent research run. Read the blackboard and results below.
+                NUDGE_PROMPT="You are observing a multi-agent research run. Read the blackboard, results, and agent telemetry below.
 
-The agents have high process quality but scores are flat and they may be stuck on one research axis.
+The agents have high process quality but scores are flat and/or agents are blocked by missing tools.
 
 ## Blackboard (last 60 lines):
 $(tail -60 "$DOMAIN_DIR/blackboard.md")
@@ -132,9 +132,18 @@ $(tail -15 "$DOMAIN_DIR/results.tsv")
 ## Meta-blackboard (if any):
 $(cat "$DOMAIN_DIR/meta-blackboard.md" 2>/dev/null | head -40 || echo "none")
 
+## Agent DESIRES (tools/context they wish they had):
+$(cat "$DOMAIN_DIR/DESIRES.md" 2>/dev/null | tail -40 || echo "none")
+
+## Agent MISTAKES (what failed and why):
+$(cat "$DOMAIN_DIR/MISTAKES.md" 2>/dev/null | tail -30 || echo "none")
+
+## Agent LEARNINGS (discoveries about the environment):
+$(cat "$DOMAIN_DIR/LEARNINGS.md" 2>/dev/null | tail -30 || echo "none")
+
 Write ONE short observation (2-3 sentences max) noting:
-- What axis/approach ALL recent experiments share
-- ONE alternative research direction nobody has tried
+- What scaffold change (run.sh, program.md, or a new tool) would unblock the most agent desires
+- OR what axis/approach ALL recent experiments share and ONE alternative nobody has tried
 - Frame as an observation, not an instruction
 
 Output ONLY the observation text. No headers, no markdown, no commentary."
@@ -262,6 +271,15 @@ $(tail -150 "$DOMAIN_DIR/blackboard.md")
 
 ## Current results.tsv (last 30):
 $(tail -30 "$DOMAIN_DIR/results.tsv")
+
+## Agent DESIRES (tools/context they wish they had):
+$(cat "$DOMAIN_DIR/DESIRES.md" 2>/dev/null || echo "none")
+
+## Agent MISTAKES (patterns of failure):
+$(cat "$DOMAIN_DIR/MISTAKES.md" 2>/dev/null | tail -50 || echo "none")
+
+## Agent LEARNINGS (discoveries worth preserving):
+$(cat "$DOMAIN_DIR/LEARNINGS.md" 2>/dev/null | tail -50 || echo "none")
 
 ## Your job:
 Diagnose why agents can't reach the blind spots. Common causes:
