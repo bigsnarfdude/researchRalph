@@ -168,11 +168,11 @@ def extract_proof_traces(events, problems, min_thinking=50):
                 continue
             problem_name = Path(fn_m.group(1)).stem
 
-            # Extract content: heredoc, echo string, or python write
-            # Heredoc: cat > file << 'EOF' \n content \n EOF
-            eof_m = re.search(r"<<\s*'?EOF'?\n(.*?)^EOF", cmd, re.DOTALL | re.MULTILINE)
+            # Extract content: heredoc with any delimiter, echo string, or python write
+            # Heredoc: cat > file << 'DELIMITER' \n content \n DELIMITER
+            eof_m = re.search(r"<<\s*'?(\w+)'?\n(.*?)^\1", cmd, re.DOTALL | re.MULTILINE)
             if eof_m:
-                lean_content = eof_m.group(1)
+                lean_content = eof_m.group(2)
             else:
                 # echo '...' > file (single-quoted, \n are literal)
                 echo_m = re.search(r"echo\s+'(import Mathlib.*?)'", cmd, re.DOTALL)
