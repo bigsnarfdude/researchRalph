@@ -115,5 +115,3 @@ This is not an attempt to beat Goedel-Prover or achieve SOTA. The questions we'r
 1. Does RRMA v4 work on a new domain with a binary oracle? (Yes — validated)
 2. Do Claude Opus 4.6 multi-agent CoT traces contain useful SFT signal?
 3. Can that signal transfer to a smaller open model (Qwen3.5-27B)?
-
-The dataset is the deliverable. A positive signal test → open-source release + Anthropic API credit application to scale.
