@@ -1,9 +1,13 @@
-# RRMA DAG Schema v1
+# RRMA DAG Schema v2
 
 ## Core Insight
 
-The blackboard is not a log. It's a DAG with four distinct edge types that have
+The blackboard is not a log. It's a DAG with distinct edge types that have
 different predictive power for outcomes. Turns are cheap. Edges are the signal.
+
+**v2 adds:** telemetry nodes (Mistake, Desire, Learning) extracted from
+MISTAKES.md, DESIRES.md, LEARNINGS.md — written by agents themselves after
+every experiment. These convert inferred causal edges into explicit ones.
 
 ---
 
@@ -21,11 +25,12 @@ Insight
   content: text
 
 Experiment
-  id: EXP-001, v1, etc.
-  design: GRPO-iter, dpto, etc.
+  id: EXP-001, lam001, etc.
+  design: tactic | hybrid | search
   agent: agent0 | agent1
   iteration_n: int
   description: text
+  instance: nigel | lean_2nd_generator   ← NEW: which box
 
 Outcome
   id: EXP-001-result
@@ -43,11 +48,30 @@ Directive
   source: gardener | human
   content: text
   type: axis_rotation | stop | redesign | nudge
+
+Mistake                                   ← NEW (from MISTAKES.md)
+  id: mistake-{exp_id}-{n}
+  content: "omega fails on nonlinear ℤ mod goals"
+  tactic: str | null
+  experiment: EXP-ID where it was discovered
+
+Desire                                    ← NEW (from DESIRES.md)
+  id: desire-{exp_id}-{n}
+  content: "wish I had lemma retrieval for Mathlib"
+  experiment: EXP-ID where it was expressed
+
+Learning                                  ← NEW (from LEARNINGS.md)
+  id: learning-{exp_id}-{n}
+  content: "mathd_algebra_433 is buggy — impossible statement"
+  experiment: EXP-ID where it was discovered
 ```
+
+---
 
 ## Edges
 
 ```
+# Original edges (v1)
 CITES          Experiment  → Experiment   "trained from EXP-008 checkpoint"
 INFORMED_BY    Experiment  → Insight      "gardener flagged reward shaping"
 PRODUCED       Experiment  → Outcome
@@ -56,107 +80,198 @@ TRIGGERED_BY   Experiment  → Directive    "directly following an axis rotation
 UPDATED        Outcome     → Insight      "key finding: KL is essential"
 DIRECTED       Directive   → Experiment   "gardener caused this pivot"
 SEEDED_BY      Experiment  → Seed
+
+# New telemetry edges (v2)
+REVEALED       Experiment  → Mistake      "this exp discovered the failure"
+GENERATED      Experiment  → Desire       "this exp expressed the wish"
+DISCOVERED     Experiment  → Learning     "this exp found this env fact"
+
+AVOIDED_BY     Mistake     → Experiment   "future exp skipped this tactic"
+MOTIVATED      Desire      → Experiment   "this wish led to this experiment"
+BUILT_ON       Learning    → Experiment   "this env fact shaped this experiment"
 ```
 
 ---
 
-## Why edges matter more than turns
+## Why telemetry edges change the AUC story
 
-Four edge types, ranked by predictive power (hypothesis):
+### Before (v1 schema)
+```
+informed_by_dead_end = 1   ← inferred from: same design_type as recent discard
+```
+A proxy. We guess an experiment learned from a failure by proximity.
 
-1. **TRIGGERED_BY(Directive)** — highest signal
-   Experiments directly following a gardener axis rotation are disproportionately
-   likely to be keep. The gardener has taste; it fires when agents are stuck.
-   In rrma-r1: "axis rotation required 03/26" → EXP-021 onward (curriculum, shaped reward)
+### After (v2 schema)
+```
+AVOIDED_BY: Mistake("omega fails on ℂ") → Experiment("linear_combination over ℂ")
+```
+Explicit. The agent wrote it. We can read which mistake, in the agent's words,
+caused the strategy change.
 
-2. **CITES(Checkpoint)** — second highest
-   Experiments that start from a proven checkpoint outperform fresh starts.
-   "from 0.725" → EXP-008 (0.760). Citation = accumulated advantage.
+**Richer features for action classifier:**
 
-3. **INFORMED_BY(Insight:breakthrough)** — third
-   Majority voting discovery propagates forward. Any experiment that
-   INFORMED_BY the majority-vote insight has a different prior.
-
-4. **INFORMED_BY(Insight:dead_end)** — negative signal
-   "LoRA collapsed" → any subsequent LoRA experiment is suspect.
+| Feature | v1 | v2 |
+|---------|----|----|
+| Learned from failure | `informed_by_dead_end` (binary) | mistake text + tactic name |
+| Built on prior | `cites_checkpoint` (binary) | checkpoint + score delta |
+| Agent wanted something | not present | desire text + what experiment followed |
+| Env discovery | not present | learning text + how it changed approach |
 
 ---
 
-## Proof of concept — three steps
+## Predictive power ranking (updated)
 
-### Step 1: Manual edge extraction from blackboard.md
+1. **TRIGGERED_BY(Directive)** — highest
+   Experiments after gardener axis rotation disproportionately keep.
 
-Extract 4 binary features per experiment, no trace parsing needed:
+2. **MOTIVATED(Desire)** — NEW, hypothesis: second highest
+   When an agent expressed a desire and the next experiment fulfills it,
+   that's deliberate rather than random search. High prior on keep.
 
+3. **CITES(Checkpoint)** — third
+   Starting from a proven checkpoint = accumulated advantage.
+
+4. **AVOIDED_BY(Mistake)** — explicit negative signal
+   Much stronger than `informed_by_dead_end` because it's agent-labeled.
+   If the experiment explicitly avoided a known mistake, it's more likely
+   to make progress.
+
+5. **BUILT_ON(Learning)** — positive context
+   Agent built on an environment discovery. Correlated with genuine
+   exploration rather than random search.
+
+6. **INFORMED_BY(Insight:breakthrough)** — after a breakthrough event
+
+---
+
+## Extraction
+
+### v1 features (still valid, from blackboard.md)
 ```python
-features = {
-  "triggered_by_directive": bool,     # within 2 exp of a gardener directive?
-  "cites_checkpoint": bool,           # "from EXP-X" or "from checkpoint" in desc?
-  "informed_by_breakthrough": bool,   # after majority-vote discovery?
-  "informed_by_dead_end": bool,       # after a discard of same design_type?
+features_v1 = {
+  "triggered_by_directive": bool,
+  "cites_checkpoint": bool,
+  "informed_by_breakthrough": bool,
+  "informed_by_dead_end": bool,
 }
 ```
 
-### Step 2: Compare to tabular baseline
+### v2 features (new, from telemetry files)
+```python
+features_v2 = {
+  # From MISTAKES.md
+  "n_mistakes_at_time": int,          # how many mistakes known when exp ran
+  "avoided_known_mistake": bool,      # did exp avoid a previously logged mistake
+  "mistake_tactic": str | None,       # which tactic was avoided
 
-Current tabular LOO-CV AUC: 0.738 (N=46)
-Expected with graph features: > 0.80
+  # From DESIRES.md
+  "fulfills_prior_desire": bool,      # does this exp match a prior expressed desire
+  "desire_text": str | None,          # the desire that motivated it
 
-If graph features add >5pp AUC, the DAG is worth full extraction.
+  # From LEARNINGS.md
+  "built_on_learning": bool,          # does exp reference a prior env discovery
+  "learning_text": str | None,        # which discovery
+}
+```
 
-### Step 3: The training connection
+### Extraction script (to build: tools/dag_extractor_v2.py)
 
-Once validated, the DAG becomes training data in two ways:
+```
+Input:  results.tsv + blackboard.md + MISTAKES.md + DESIRES.md + LEARNINGS.md
+Output: dag_features_v2.json
 
-**a) Action classifier (near term)**
-   Input: subgraph centered on current experiment node
-   Output: P(keep)
-   Model: GNN or logistic regression on graph features
-   Train on: rrma-r1 (46 nodes) + sae-bench (259 nodes, no traces but edges extractable)
-
-**b) Research agent fine-tuning (longer term)**
-   Input: (current DAG state, blackboard context)
-   Output: next experiment proposal
-   Train on: (DAG prefix → next keep experiment) pairs
-   This is what makes the dataset valuable to Clem — it's (state, action, outcome)
-   not just (input, output)
+Steps:
+1. Parse MISTAKES.md → list of (exp_id, tactic, description) per mistake
+2. Parse DESIRES.md → list of (exp_id, description) per desire
+3. Parse LEARNINGS.md → list of (exp_id, description) per learning
+4. For each experiment in results.tsv:
+   a. v1 features (existing dag_extractor.py logic)
+   b. n_mistakes known at time of experiment
+   c. Did description reference a known mistake tactic?
+   d. Did description reference a prior desire?
+   e. Did description reference a prior learning?
+5. LOO-CV: tabular vs tabular+v1 vs tabular+v1+v2
+```
 
 ---
 
-## What makes this different from existing datasets
+## AUC targets
+
+| Features | Expected AUC | N needed |
+|----------|-------------|---------|
+| Tabular only | 0.738 (measured, N=46) | — |
+| Tabular + v1 graph | ~0.75-0.80 | 100+ |
+| Tabular + v1 + v2 telemetry | ~0.82-0.88 | 200+ |
+
+The telemetry features are explicit causal labels — they should outperform
+the inferred v1 features at equivalent N.
+
+---
+
+## Training connection (updated)
+
+**Action classifier (near term)**
+```
+Input:  subgraph centered on current experiment + telemetry nodes
+Output: P(keep)
+Train:  rrma-r1 (46) + rrma-lean (growing, now has telemetry)
+```
+
+**Research agent fine-tuning (longer term)**
+```
+Input:  (DAG state + MISTAKES.md + DESIRES.md at time T)
+Output: next experiment proposal
+Train:  (DAG prefix + telemetry context → next keep experiment)
+```
+
+The DESIRES.md file is especially valuable for the longer-term training:
+it's the agent's own articulation of what information would have helped.
+That's a supervision signal for what tools/context to provide future agents.
+
+---
+
+## What makes v2 different from existing datasets
 
 Standard ML experiment datasets:
   (hyperparams) → (metric)
 
-This dataset:
+v1 DAG:
   (DAG context: what was tried, what was learned, who directed the pivot)
-    → (next action: what to try)
-      → (outcome: did it work)
+    → (next action)
+      → (outcome)
 
-The DAG context is the thing that's missing from every other experiment log.
-It's the difference between a results table and a reasoning trace.
+v2 DAG:
+  (DAG context + explicit failure taxonomy + expressed desires + env discoveries)
+    → (next action: was it motivated by a desire? did it avoid a mistake?)
+      → (outcome: did explicit reasoning about past failures predict success?)
+
+The agent's own words about why it tried something — not reconstructed,
+not inferred, written in real time — is the thing that makes this causal
+rather than correlational.
 
 ---
 
-## Extraction plan
+## Extraction plan (updated)
 
-Phase 1 (this week): Manual annotation of rrma-r1 blackboard
-  - Mark directive nodes (gardener observations)
-  - Mark CITES edges from checkpoint references
-  - Mark breakthrough events (majority voting discovery)
-  - ~2 hours, ~50 nodes, ~80 edges
+Phase 1: dag_extractor.py v1 features on rrma-r1 (46 exp) — DONE
+  - AUC: 0.738 tabular, 0.701 tabular+graph (N too small)
+  - `triggered_by_directive` 100% keep rate (6/6) — signal exists
 
-Phase 2: Auto-extraction script
-  - Parse blackboard.md sections with regex
-  - Extract CITES edges from "from EXP-X" patterns
-  - Extract TRIGGERED_BY from temporal proximity to directives
-  - Validate against manual annotation
+Phase 2: Collect telemetry from rrma-lean runs (in progress)
+  - MISTAKES.md already appearing on nigel after exp011
+  - Target: 200+ experiments across nigel + Lambda
 
-Phase 3: Apply to sae-bench domains
-  - 259 more labeled experiments
-  - Same schema, different domain
-  - Cross-domain: does the DAG structure generalize?
+Phase 3: dag_extractor_v2.py
+  - Add v2 telemetry features
+  - LOO-CV comparison: does explicit causal labeling beat inferred?
+  - Expected: yes, because agent-labeled > proximity-inferred
 
-Phase 4: GNN or logistic regression on graph features
-  - Prove AUC improvement over tabular
-  - That's the paper / HF dataset contribution
+Phase 4: Action classifier v1
+  - Train on combined features
+  - Hook into run.sh: warn if P(keep) < 0.4
+  - Save to tools/action_classifier.pkl
+
+Phase 5: Paper / HF dataset
+  - "Causal structure of agent research traces"
+  - Dataset: DAG + telemetry files across 3 domains
+  - Claim: explicit telemetry features improve action prediction AUC
