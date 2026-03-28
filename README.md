@@ -1,4 +1,4 @@
-# researchRalph v4.3 Gardner Edition
+# researchRalph v4.4 Gardner Edition
 "gardener" - work ethic signifies a nurturing, patient, and long-term approach to achieving results, rather than relying on force, speed, or immediate gratification
 
 ## TrustLoop — The Second Layer
@@ -38,9 +38,10 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 | v2 | Multi-agent blackboard + structured memory | Launch, steer with operator.sh | GPT-2: 1.048 BPB, 64% hit rate (8×A100) |
 | v3 | Stripped protocol, plain blackboard, Ralph Wiggum loop | Review + redesign between runs | SAE-bench: 0.9894 F1, 135 experiments, beat 0.97 probe ceiling |
 | v4 | Self-recursive: gardener monitors process quality, stops/redesigns automatically | None | SAE-bench: 0.8170 F1 in 38 exp, hacking detection validated |
-| **v4.3** | **+ real literature search, agent self-telemetry, stream-json trace capture, multi-box parallel generation** | **None** | **rrma-lean: 0.6230 on MiniF2F (244 problems), climbing** |
+| v4.3 | + real literature search, agent self-telemetry, stream-json trace capture, multi-box parallel generation | None | rrma-lean: 0.6230 on MiniF2F (244 problems), climbing |
+| **v4.4** | **+ gardener reads DESIRES/MISTAKES/LEARNINGS — agent requests feed scaffold redesign** | **None** | **rrma-lean: 0.8811 (215/244), above Goedel-V2-8B (84.6%)** |
 
-v2 proved multi-agent collaboration works. v3 proved less protocol = better science. v4 asks: can the human who redesigned v1→v3 be replaced by a process quality monitor?
+v2 proved multi-agent collaboration works. v3 proved less protocol = better science. v4 asks: can the human who redesigned v1→v3 be replaced by a process quality monitor? v4.4 asks: can agents tell the gardener what they need?
 
 ---
 
