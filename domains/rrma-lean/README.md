@@ -2,8 +2,12 @@
 
 ## Status: Active — March 2026
 
+**Purpose:** RRMA domain transfer test. Lean 4 is a binary-oracle domain (proof compiles or it doesn't) — ideal for validating that the RRMA framework generalizes beyond alignment faking detection.
+
+**Secondary goal:** Generate an open-source dataset of Claude Opus 4.6 multi-agent CoT traces on Lean 4 problems. Nobody has published Opus reasoning chains on formal theorem proving. These traces are the cold-start SFT seed for smaller open models.
+
 Auto-research for formal mathematics. Agents search for proofs in Lean 4.
-Running on nigel (8 agents), accumulating SFT traces for fine-tuning.
+Running on nigel (8 agents, API-gated), accumulating SFT traces.
 
 Inspired by: Andrej Karpathy podcast (March 2026) and Terrence Tao / Dwarkesh Podcast (March 2026) — discussion of auto-research and formal verification as the next frontier for AI-driven discovery.
 
@@ -24,6 +28,22 @@ Lean 4 proofs are machine-verifiable. That makes them the ideal RRMA domain:
 | Unique problems solved | ~154-175 across boxes |
 | SFT traces collected | 156+ (nigel), 300-400+ total |
 | Experiments run | 150+ across 3 boxes |
+| SFT smoke test | Completed on GH200 — LoRA adapter saved |
+| API bottleneck | Confirmed — CPU is idle, Opus API is the rate limiter |
+| Infrastructure | Consolidated to nigel (8 agents). Lambda + GH200 terminated. |
+
+### What's validated
+- RRMA v4 outer loop works on a new domain with binary oracle ✓
+- Log rotation prevents trace loss on restart ✓
+- Heredoc regex bug fixed — recovered 156 traces vs 74 previously ✓
+- SFT pipeline works end-to-end (traces → LoRA checkpoint) ✓
+- Eval harness written (`lean_eval.py`) — pending baseline run ✓
+
+### What's next
+1. Nigel continues passively — traces accumulate toward ~500-1K target
+2. Baseline eval: Qwen3.5-27B-Opus-Distilled pass@1 on miniF2F (needs GPU + Together.ai key)
+3. Full SFT run when trace count is sufficient
+4. If SFT shows improvement → publish dataset on HuggingFace, apply for Anthropic API credits
 
 ## SFT Pipeline
 
@@ -81,8 +101,19 @@ Qwen3.5-27B is a stronger base than both — unexplored as of March 2026.
 
 ## Related Work
 
-- **Goedel-Prover-V2** — [arxiv 2508.03613](https://arxiv.org/abs/2508.03613) | [HF](https://huggingface.co/Goedel-LM/Goedel-Prover-V2-8B) | [GitHub](https://github.com/Goedel-LM/Goedel-Prover-V2) — **BASELINE SOLVER** (84.6% pass@32)
-- **Kimina-Prover** — [arxiv 2504.11354](https://arxiv.org/abs/2504.11354) | Qwen2.5-72B + RL
+- **Goedel-Prover-V2** — [arxiv 2508.03613](https://arxiv.org/abs/2508.03613) | [HF](https://huggingface.co/Goedel-LM/Goedel-Prover-V2-8B) | [GitHub](https://github.com/Goedel-LM/Goedel-Prover-V2) — **BASELINE SOLVER** (84.6% pass@32, Qwen3-8B base)
+- **Kimina-Prover** — [arxiv 2504.11354](https://arxiv.org/abs/2504.11354) | Qwen2.5-72B + RL (80.7%)
 - **DeepSeek-Prover-V2** — [arxiv 2504.21801](https://arxiv.org/abs/2504.21801)
 - **AlphaProof** — DeepMind, solved 4/6 IMO 2024 via RL on Lean
 - **MiniF2F** — 488 competition math problems, 244 valid set used here
+- **PutnamBench** — 672 Putnam problems; top open model (Goedel-V2-32B) solves 86/672 (12.8%) — a different, harder benchmark. We target miniF2F.
+
+## Scope
+
+This is not an attempt to beat Goedel-Prover or achieve SOTA. The questions we're answering:
+
+1. Does RRMA v4 work on a new domain with a binary oracle? (Yes — validated)
+2. Do Claude Opus 4.6 multi-agent CoT traces contain useful SFT signal?
+3. Can that signal transfer to a smaller open model (Qwen3.5-27B)?
+
+The dataset is the deliverable. A positive signal test → open-source release + Anthropic API credit application to scale.
