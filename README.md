@@ -1,5 +1,5 @@
 # researchRalph v4.4 Gardner Edition
-"gardener" - work ethic signifies a nurturing, patient, and long-term approach to achieving results, rather than relying on force, speed, or immediate gratification
+"gardener" - work ethic signifies a nurturing, patient, and long-term approach to achieving results, rather than relying on force, speed, or immediate gratification.
 
 ## TrustLoop — The Second Layer
 RRMA is the research loop. **TrustLoop is the verification loop that wraps it.**
