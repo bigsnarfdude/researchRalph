@@ -78,37 +78,41 @@ def main():
     print(f"Training data: {args.data}")
     print(f"Output: {args.output}")
 
-    # Load with Unsloth for 2x speedup
-    from unsloth import FastLanguageModel
+    from transformers import AutoTokenizer, AutoModelForCausalLM
+    from peft import LoraConfig, get_peft_model
     import torch
 
-    model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name=args.base_model,
-        max_seq_length=args.max_seq_len,
-        dtype=None,  # auto-detect
-        load_in_4bit=False,  # GH200 has plenty of VRAM
+    model = AutoModelForCausalLM.from_pretrained(
+        args.base_model,
+        torch_dtype=torch.bfloat16,
+        device_map="auto",
+        trust_remote_code=True,
     )
+    tokenizer = AutoTokenizer.from_pretrained(args.base_model, trust_remote_code=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
 
-    model = FastLanguageModel.get_peft_model(
-        model,
+    lora_config = LoraConfig(
         r=args.lora_r,
         lora_alpha=args.lora_alpha,
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
                         "gate_proj", "up_proj", "down_proj"],
         lora_dropout=0,
         bias="none",
-        use_gradient_checkpointing="unsloth",
-        random_state=42,
+        task_type="CAUSAL_LM",
     )
+    model = get_peft_model(model, lora_config)
+    model.print_trainable_parameters()
 
     print(f"Loading dataset from {args.data}...")
     dataset = load_dataset_from_jsonl(args.data)
     n = len(dataset)
     print(f"  {n} training examples")
 
-    from trl import SFTTrainer, SFTConfig
+    from trl import SFTTrainer
+    from transformers import TrainingArguments
 
-    training_args = SFTConfig(
+    training_args = TrainingArguments(
         output_dir=args.output,
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.batch_size,
@@ -121,15 +125,21 @@ def main():
         warmup_ratio=0.05,
         lr_scheduler_type="cosine",
         report_to="none",
-        max_seq_length=args.max_seq_len,
-        dataset_text_field=None,
+        dataloader_pin_memory=False,
     )
+
+    def formatting_func(example):
+        return tokenizer.apply_chat_template(
+            example["messages"], tokenize=False, add_generation_prompt=False
+        )
 
     trainer = SFTTrainer(
         model=model,
         tokenizer=tokenizer,
         train_dataset=dataset,
         args=training_args,
+        formatting_func=formatting_func,
+        max_seq_length=args.max_seq_len,
     )
 
     print("Starting training...")
