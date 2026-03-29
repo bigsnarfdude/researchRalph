@@ -1,0 +1,87 @@
+#!/bin/bash
+# Harness: run GPT-2 TinyStories training and log results
+# Usage: bash run.sh <exp_name> "description" design_type
+#
+# Serializes GPU access with flock so multiple agents don't OOM.
+# Automatically appends score to results.tsv.
+
+set -e
+
+METHOD=${1:-baseline}
+DESCRIPTION=${2:-"no description"}
+DESIGN=${3:-hyperparam}
+
+DOMAIN_DIR="$(cd "$(dirname "$0")" && pwd)"
+RESULTS_TSV="$DOMAIN_DIR/results.tsv"
+LOGS_DIR="$DOMAIN_DIR/logs"
+LOCKFILE="$DOMAIN_DIR/.gpu.lock"
+
+mkdir -p "$LOGS_DIR"
+
+AGENT="${CLAUDE_AGENT_ID:-manual}"
+RUN_LOG="$LOGS_DIR/${METHOD}_${AGENT}_$(date +%s).log"
+
+echo "[run.sh] Running experiment: $METHOD"
+echo "[run.sh] Description: $DESCRIPTION"
+echo "[run.sh] Waiting for GPU lock..."
+
+# Serialize GPU access — only one training at a time on 16GB
+(
+    flock -x 200
+
+    echo "[run.sh] GPU lock acquired. Starting training..."
+    START=$(date +%s)
+
+    # 10-minute timeout (5-min budget + compilation overhead)
+    timeout 600 uv run train.py > "$RUN_LOG" 2>&1
+    EXIT_CODE=$?
+
+    END=$(date +%s)
+    TRAIN_MIN=$(( (END - START) / 60 ))
+
+    if [ "$EXIT_CODE" -ne 0 ]; then
+        echo "[run.sh] CRASH (exit $EXIT_CODE)"
+        SCORE="crash"
+        VRAM="0"
+        STATUS="crash"
+    else
+        SCORE=$(grep "^val_bpb:" "$RUN_LOG" | tail -1 | awk '{print $2}')
+        VRAM=$(grep "^peak_vram_mb:" "$RUN_LOG" | tail -1 | awk '{print $2}')
+        STATUS="discard"
+
+        if [ -z "$SCORE" ]; then
+            echo "[run.sh] No val_bpb found in output"
+            SCORE="crash"
+            STATUS="crash"
+        fi
+    fi
+
+    # Generate EXP-ID
+    LAST_N=$(grep -oP 'exp\K\d+' "$RESULTS_TSV" 2>/dev/null | sort -n | tail -1 || echo 0)
+    NEXT_N=$(printf "%03d" $((10#${LAST_N:-0} + 1)))
+    EXP_ID="exp${NEXT_N}"
+
+    # Determine keep/discard
+    if [ "$STATUS" != "crash" ]; then
+        CURRENT_BEST=$(awk -F'\t' 'NR>1 && $4=="keep" {print $2}' "$RESULTS_TSV" 2>/dev/null | sort -n | head -1)
+        if [ -z "$CURRENT_BEST" ]; then
+            STATUS="keep"
+        elif python3 -c "exit(0 if float('$SCORE') < float('$CURRENT_BEST') else 1)" 2>/dev/null; then
+            STATUS="keep"
+        fi
+    fi
+
+    # Append to results
+    echo -e "${EXP_ID}\t${SCORE}\t${VRAM}\t${STATUS}\t${DESCRIPTION}\t${AGENT}\t${DESIGN}\t${TRAIN_MIN}" >> "$RESULTS_TSV"
+
+    # Update best/ if new best
+    if [ "$STATUS" = "keep" ]; then
+        cp "$DOMAIN_DIR/train.py" "$DOMAIN_DIR/best/train.py"
+        echo "[run.sh] NEW BEST: $SCORE — saved to best/train.py"
+    fi
+
+    echo ""
+    echo "[run.sh] $EXP_ID: val_bpb=$SCORE vram=${VRAM}MB status=$STATUS"
+    echo "val_bpb: $SCORE"
+
+) 200>"$LOCKFILE"

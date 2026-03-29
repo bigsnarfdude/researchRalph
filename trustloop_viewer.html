@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrustLoop</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f0f2f5;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #111827;
+}
+
+/* ── Top bar ── */
+#topbar {
+  height: 52px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 14px;
+  flex-shrink: 0;
+  z-index: 20;
+}
+#logo { font-size: 18px; font-weight: 800; color: #111827; letter-spacing: -0.02em; }
+#logo span { color: #2563eb; }
+#domain-pill {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: #6b7280;
+  font-family: monospace;
+  transition: all 0.2s;
+}
+#domain-pill.loaded { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+.topbtn {
+  background: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.topbtn:hover { border-color: #9ca3af; color: #111827; }
+.topbtn.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
+.topbtn.primary:hover { background: #1d4ed8; }
+#status-pill {
+  margin-left: auto;
+  font-size: 11px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sdot { width: 7px; height: 7px; border-radius: 50%; background: #d1d5db; flex-shrink: 0; }
+.sdot.ok { background: #10b981; }
+.sdot.busy { background: #f59e0b; animation: blink 1s infinite; }
+.sdot.err { background: #ef4444; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+/* ── Body layout ── */
+#body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Left sidebar ── */
+#sidebar {
+  width: 280px;
+  background: #111827;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Sidebar tabs */
+#sidebar-tabs {
+  display: flex;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1f2937;
+}
+.stab {
+  flex: 1;
+  padding: 10px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  color: #6b7280;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.stab:hover { color: #d1d5db; }
+.stab.active { color: #fff; border-bottom-color: #2563eb; }
+
+/* Tab panels */
+.tab-panel { display: none; flex: 1; flex-direction: column; overflow: hidden; min-height: 0; }
+.tab-panel.active { display: flex; }
+
+/* ── Explorer tab ── */
+#tab-explorer { }
+.sidebar-section-hd {
+  padding: 10px 12px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4b5563;
+  flex-shrink: 0;
+}
+#explorer-files {
+  flex-shrink: 0;
+}
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  margin: 1px 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.1s;
+  border: none;
+  background: none;
+  width: calc(100% - 10px);
+  text-align: left;
+  color: #9ca3af;
+  font-size: 12px;
+  border-left: 3px solid transparent;
+}
+.file-item:hover { background: #1f2937; color: #f9fafb; }
+.file-item.available { color: #e5e7eb; }
+.file-item.unavailable { opacity: 0.35; cursor: default; }
+.file-item.special-desires { border-left-color: #ef4444; }
+.file-item.special-mistakes { border-left-color: #d97706; }
+.file-item.special-learnings { border-left-color: #059669; }
+.file-item.special-meta { border-left-color: #6366f1; }
+.file-item.active-file { background: #1e3a5f; color: #fff; }
+.fi-icon { font-size: 13px; flex-shrink: 0; }
+.fi-name { flex: 1; font-family: monospace; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fi-count { font-size: 10px; padding: 1px 5px; border-radius: 8px; font-weight: 700; flex-shrink: 0; }
+.fc-red { background: #7f1d1d; color: #fca5a5; }
+.fc-green { background: #052e16; color: #86efac; }
+.fc-blue { background: #1e3a5f; color: #93c5fd; }
+.fc-yellow { background: #451a03; color: #fcd34d; }
+.fc-gray { background: #374151; color: #9ca3af; }
+
+.sidebar-sep { height: 1px; background: #1f2937; margin: 4px 0; flex-shrink: 0; }
+
+/* Experiment list */
+#explorer-exps {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+.exp-item {
+  padding: 7px 12px;
+  margin: 1px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.exp-item:hover { background: #1f2937; }
+.exp-item.sel { background: #1e3a5f; }
+.ei-id { font-size: 11px; font-weight: 600; font-family: monospace; color: #e5e7eb; }
+.ei-sub { font-size: 10px; color: #6b7280; display: flex; gap: 5px; align-items: center; margin-top: 1px; }
+.ei-score { font-family: monospace; color: #34d399; }
+.ei-badge { font-size: 9px; padding: 0 4px; border-radius: 3px; font-weight: 700; }
+.eb-keep { background: #052e16; color: #6ee7b7; }
+.eb-disc { background: #1f2937; color: #6b7280; }
+
+/* ── Chat tab ── */
+#tab-chat {
+  overflow: hidden;
+}
+#chat-chips {
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1f2937;
+}
+.chip {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 10px;
+  color: #9ca3af;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.chip:hover { background: #374151; border-color: #4b5563; color: #e5e7eb; }
+#chat-msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 0;
+}
+.cm { padding: 8px 11px; border-radius: 10px; font-size: 12px; line-height: 1.5; max-width: 97%; }
+.cm-user { background: #1e3a5f; border: 1px solid #1d4ed8; align-self: flex-end; color: #bfdbfe; }
+.cm-ai { background: #1f2937; border: 1px solid #374151; align-self: flex-start; color: #e5e7eb; }
+.cm-role { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; color: #4b5563; }
+.cm-ai .cm-role { color: #2563eb; }
+.cm-body h1,.cm-body h2,.cm-body h3 { font-size: 12px; color: #f9fafb; margin: 0.4em 0 0.2em; }
+.cm-body p { margin: 0.2em 0; }
+.cm-body ul,.cm-body ol { padding-left: 1.2em; margin: 0.2em 0; }
+.cm-body code { background: #111827; padding: 1px 4px; border-radius: 3px; font-family: monospace; font-size: 0.85em; color: #93c5fd; }
+.cm-body pre { background: #0f172a; color: #e2e8f0; border-radius: 6px; padding: 8px; overflow-x: auto; margin: 0.3em 0; }
+.cm-body pre code { background: none; color: inherit; }
+.thinking { color: #4b5563; font-style: italic; animation: blink 1.5s infinite; }
+#chat-footer {
+  border-top: 1px solid #1f2937;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+#ctx-pill {
+  background: #451a03;
+  border: 1px solid #78350f;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: #fcd34d;
+  display: none;
+  align-items: center;
+  gap: 5px;
+}
+#ctx-pill.on { display: flex; }
+#ctx-x { background: none; border: none; color: #fcd34d; cursor: pointer; margin-left: auto; font-size: 13px; padding: 0; }
+#chat-row { display: flex; gap: 6px; }
+#cinput {
+  flex: 1;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 7px 9px;
+  font-size: 12px;
+  resize: none;
+  font-family: inherit;
+  min-height: 52px;
+  max-height: 100px;
+  color: #f9fafb;
+  background: #1f2937;
+}
+#cinput:focus { outline: none; border-color: #2563eb; background: #111827; }
+#cinput::placeholder { color: #4b5563; }
+#csend {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: background 0.15s;
+}
+#csend:hover { background: #1d4ed8; }
+#csend:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
+
+/* ── Search tab ── */
+#tab-search { }
+#search-bar {
+  padding: 10px 8px 8px;
+  flex-shrink: 0;
+}
+#search-input {
+  width: 100%;
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 12px;
+  color: #f9fafb;
+  font-family: inherit;
+}
+#search-input:focus { outline: none; border-color: #2563eb; }
+#search-input::placeholder { color: #4b5563; }
+#search-results {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 4px 0;
+}
+.sr-item {
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background 0.1s;
+  border-bottom: 1px solid #1a2230;
+}
+.sr-item:hover { background: #1f2937; }
+.sr-filename { font-size: 11px; font-weight: 700; color: #2563eb; font-family: monospace; margin-bottom: 2px; }
+.sr-line { font-size: 11px; color: #6b7280; line-height: 1.4; word-break: break-all; }
+.sr-match { font-weight: 700; color: #fbbf24; }
+.sr-empty { padding: 16px 12px; font-size: 12px; color: #4b5563; font-style: italic; }
+
+/* ── Center area ── */
+#center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f0f2f5;
+}
+
+/* Score strip */
+#score-strip {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+}
+.sc { display: flex; flex-direction: column; gap: 1px; }
+.sc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; }
+.sc-val { font-size: 24px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.sc-val.green { color: #059669; }
+.sc-val.blue { color: #2563eb; }
+.sc-val.amber { color: #d97706; }
+.sc-val.gray { color: #9ca3af; }
+.sc-div { width: 1px; height: 36px; background: #f3f4f6; }
+.sc-domain { font-size: 14px; font-weight: 700; color: #111827; }
+.sc-sub { font-size: 11px; color: #6b7280; margin-top: 1px; }
+#score-progress { flex: 1; min-width: 80px; }
+.prog-track { height: 6px; background: #f3f4f6; border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #10b981); border-radius: 3px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); width: 0; }
+
+/* ── Briefing view ── */
+#briefing-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+#briefing-wrap { flex: 1; overflow-y: auto; padding: 16px 22px; }
+#briefing-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#briefing-title .refresh-btn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  color: #9ca3af;
+  transition: color 0.1s;
+  padding: 2px;
+}
+#briefing-title .refresh-btn:hover { color: #2563eb; }
+#briefing-cards { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── File viewer ── */
+#file-view {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+#file-toolbar {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+#file-back-btn {
+  background: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+#file-back-btn:hover { border-color: #9ca3af; color: #111827; }
+#file-breadcrumb { font-size: 13px; font-weight: 600; color: #111827; font-family: monospace; }
+#file-linecount { font-size: 11px; color: #9ca3af; margin-left: auto; }
+#file-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 24px;
+  background: #fff;
+}
+.file-md { font-size: 13px; line-height: 1.7; color: #374151; }
+.file-md h1,.file-md h2,.file-md h3 { color: #111827; margin: 0.8em 0 0.3em; }
+.file-md h2 { font-size: 15px; border-bottom: 1px solid #f3f4f6; padding-bottom: 4px; }
+.file-md h1 { font-size: 18px; }
+.file-md p { margin: 0.4em 0; }
+.file-md ul,.file-md ol { padding-left: 1.4em; margin: 0.3em 0; }
+.file-md code { background: #f3f4f6; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.85em; color: #dc2626; }
+.file-md pre { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 12px; overflow-x: auto; margin: 0.6em 0; }
+.file-md pre code { background: none; color: inherit; padding: 0; }
+.file-md blockquote { border-left: 3px solid #e5e7eb; padding-left: 12px; color: #6b7280; }
+.file-md table { border-collapse: collapse; width: 100%; font-size: 12px; margin: 0.6em 0; }
+.file-md th,.file-md td { border: 1px solid #e5e7eb; padding: 6px 10px; text-align: left; }
+.file-md th { background: #f9fafb; font-weight: 700; }
+.file-md tr:nth-child(even) { background: #fafafa; }
+.file-md hr { border: none; border-top: 1px solid #f3f4f6; margin: 0.8em 0; }
+.file-md strong { color: #111827; }
+.file-pre {
+  font-family: monospace; font-size: 12px; white-space: pre-wrap;
+  word-break: break-word; background: #f8fafc; border: 1px solid #e5e7eb;
+  border-radius: 8px; padding: 14px; color: #374151; line-height: 1.6;
+}
+.file-hl { background: #fef3c7; border-radius: 2px; padding: 0 2px; }
+
+/* Briefing card */
+.bcard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+}
+.bcard:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+.bcard-hd {
+  padding: 11px 15px 9px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #f9fafb;
+}
+.bcard-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+.bcard-meta { flex: 1; min-width: 0; }
+.bcard-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; }
+.bcard-title { font-size: 13px; font-weight: 700; color: #111827; margin-top: 1px; }
+.bcard-actions { display: flex; gap: 5px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+.bcard-body { padding: 11px 15px; font-size: 13px; color: #374151; line-height: 1.6; }
+.bcard-body p { margin: 0.3em 0; }
+.bcard-body h2,.bcard-body h3 { color: #111827; font-size: 13px; margin: 0.6em 0 0.2em; }
+.bcard-body ul,.bcard-body ol { padding-left: 1.3em; margin: 0.3em 0; }
+.bcard-body li { margin: 0.15em 0; }
+.bcard-body code { background: #f3f4f6; padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 0.85em; color: #dc2626; }
+.bcard-body pre { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 10px 14px; overflow-x: auto; margin: 0.5em 0; }
+.bcard-body pre code { background: none; color: inherit; padding: 0; }
+.bcard-body strong { color: #111827; }
+.bcard-body blockquote { border-left: 3px solid #e5e7eb; padding-left: 10px; color: #6b7280; font-style: italic; }
+.bcard.type-score { border-left: 4px solid #10b981; }
+.bcard.type-danger { border-left: 4px solid #ef4444; }
+.bcard.type-warn { border-left: 4px solid #f59e0b; }
+.bcard.type-info { border-left: 4px solid #2563eb; }
+.bcard.type-insight { border-left: 4px solid #8b5cf6; }
+.bcard.type-ok { border-left: 4px solid #10b981; }
+
+/* Action buttons */
+.act-btn {
+  border: none;
+  border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.act-approve { background: #dcfce7; color: #15803d; }
+.act-approve:hover { background: #bbf7d0; }
+.act-flag { background: #fef9c3; color: #a16207; }
+.act-flag:hover { background: #fef08a; }
+.act-view { background: #f3f4f6; color: #374151; }
+.act-view:hover { background: #e5e7eb; }
+.act-chat { background: #eff6ff; color: #1d4ed8; }
+.act-chat:hover { background: #dbeafe; }
+.act-block { background: #fee2e2; color: #b91c1c; }
+.act-block:hover { background: #fecaca; }
+.act-insights { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+.act-insights:hover { background: #e0e7ff; }
+.act-insights.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+
+/* Empty state */
+.brief-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+  color: #9ca3af;
+  text-align: center;
+}
+.brief-empty-icon { font-size: 48px; }
+.brief-empty-title { font-size: 16px; font-weight: 600; color: #6b7280; }
+.brief-empty-sub { font-size: 13px; }
+
+/* Sign-off bar */
+#signoff-bar {
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  padding: 10px 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+#signoff-status { font-size: 13px; color: #6b7280; flex: 1; }
+#signoff-status strong { color: #111827; }
+.signoff-btn {
+  background: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.signoff-btn:hover { background: #1f2937; }
+.signoff-btn.approved { background: #059669; }
+
+/* Insights panel */
+.insights-panel {
+  border-top: 1px solid #f3f4f6;
+  padding: 11px 15px;
+  background: #fafbff;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #1e3a5f;
+  display: none;
+}
+.insights-panel.on { display: block; }
+.insights-hd {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6366f1;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.insights-body h1,.insights-body h2,.insights-body h3 { font-size: 13px; color: #1e293b; margin: 0.5em 0 0.2em; font-weight: 700; }
+.insights-body p { margin: 0.3em 0; }
+.insights-body ul,.insights-body ol { padding-left: 1.3em; margin: 0.2em 0; }
+.insights-body li { margin: 0.15em 0; }
+.insights-body strong { color: #111827; }
+.insights-body code { background: #e0e7ff; padding: 1px 4px; border-radius: 3px; font-family: monospace; font-size: 0.85em; color: #4338ca; }
+.insights-thinking { color: #9ca3af; font-style: italic; animation: blink 1.5s infinite; font-size: 12px; }
+
+/* ── TSV table ── */
+.file-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.file-table th { background: #f9fafb; padding: 7px 10px; text-align: left; font-weight: 700; border-bottom: 2px solid #e5e7eb; }
+.file-table td { padding: 6px 10px; border-bottom: 1px solid #f9fafb; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-table tr:hover td { background: #fafafa; }
+.ps-keep { background: #dcfce7; color: #15803d; padding: 1px 6px; border-radius: 6px; font-size: 10px; font-weight: 700; }
+.ps-disc { background: #f3f4f6; color: #6b7280; padding: 1px 6px; border-radius: 6px; font-size: 10px; font-weight: 700; }
+
+/* ── Settings modal ── */
+#settings-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+#settings-bg.on { display: flex; }
+#settings-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 400px;
+  max-width: 90vw;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+}
+#settings-box h2 { font-size: 15px; font-weight: 800; margin-bottom: 18px; }
+.sf { margin-bottom: 14px; }
+.sf label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #6b7280; margin-bottom: 5px; }
+.sf input, .sf textarea { width: 100%; border: 1px solid #e5e7eb; border-radius: 7px; padding: 8px 10px; font-size: 12px; font-family: monospace; color: #111827; }
+.sf input:focus, .sf textarea:focus { outline: none; border-color: #2563eb; }
+.sf-note { font-size: 10px; color: #9ca3af; margin-top: 6px; }
+.sa { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+.sb-p { background: #2563eb; color: #fff; border: none; border-radius: 7px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.sb-s { background: #f3f4f6; color: #374151; border: none; border-radius: 7px; padding: 8px 16px; font-size: 13px; cursor: pointer; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 2px; }
+#file-content::-webkit-scrollbar-thumb { background: #d1d5db; }
+#briefing-wrap::-webkit-scrollbar-thumb { background: #d1d5db; }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div id="topbar">
+  <span id="logo">Trust<span>Loop</span></span>
+  <span id="domain-pill">no domain loaded</span>
+  <button class="topbtn primary" onclick="openDomain()">📁 Open Domain</button>
+  <button class="topbtn" onclick="refreshBriefing()" id="refresh-btn" style="display:none;">↻ Refresh</button>
+  <div id="status-pill">
+    <div class="sdot" id="sdot"></div>
+    <span id="stext">Ready</span>
+  </div>
+  <button class="topbtn" onclick="openSettings()">⚙ Settings</button>
+</div>
+
+<!-- Body -->
+<div id="body">
+
+  <!-- Left sidebar -->
+  <div id="sidebar">
+    <!-- Tab headers -->
+    <div id="sidebar-tabs">
+      <button class="stab active" id="stab-explorer" onclick="switchSideTab('explorer')">📁 Explorer</button>
+      <button class="stab" id="stab-chat" onclick="switchSideTab('chat')">💬 Chat</button>
+      <button class="stab" id="stab-search" onclick="switchSideTab('search')">🔍 Search</button>
+    </div>
+
+    <!-- Explorer panel -->
+    <div class="tab-panel active" id="tab-explorer">
+      <div class="sidebar-section-hd">Domain Files</div>
+      <div id="explorer-files">
+        <div style="padding:8px 12px;font-size:11px;color:#4b5563;">Open a domain…</div>
+      </div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-section-hd">
+        Experiments <span id="exp-count-lbl" style="font-weight:400;text-transform:none;letter-spacing:0;"></span>
+      </div>
+      <div id="explorer-exps"></div>
+    </div>
+
+    <!-- Chat panel -->
+    <div class="tab-panel" id="tab-chat">
+      <div id="chat-chips">
+        <button class="chip" onclick="chipAsk('results','What is the best result and why?')">📊 Best result?</button>
+        <button class="chip" onclick="chipAsk('board','Summarize the key claims and findings on the blackboard.')">📋 Blackboard</button>
+        <button class="chip" onclick="chipAsk('meta','List any red flags, concerns, or reasons to distrust the current best score.')">😈 Red flags?</button>
+        <button class="chip" onclick="chipAsk('desires','What do the agents need? What is blocking progress?')">🔴 Blockers?</button>
+        <button class="chip" onclick="chipAsk('meta','What should agents focus on next? What blind spots remain?')">🔭 What next?</button>
+      </div>
+      <div id="chat-msgs">
+        <div class="cm cm-ai">
+          <div class="cm-role">Claude</div>
+          <div class="cm-body">Open a domain, then click any file or insight card to start a conversation about your RRMA experiments.</div>
+        </div>
+      </div>
+      <div id="chat-footer">
+        <div id="ctx-pill">
+          <span>📎</span>
+          <span id="ctx-lbl">Context attached</span>
+          <button id="ctx-x" onclick="clearCtx()">✕</button>
+        </div>
+        <div id="chat-row">
+          <textarea id="cinput" placeholder="Ask about experiments…" onkeydown="handleKey(event)"></textarea>
+          <button id="csend" onclick="sendChat()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search panel -->
+    <div class="tab-panel" id="tab-search">
+      <div id="search-bar">
+        <input id="search-input" type="text" placeholder="Search all files…" oninput="searchFiles(this.value)">
+      </div>
+      <div id="search-results">
+        <div class="sr-empty">Open a domain to search.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center area -->
+  <div id="center">
+    <!-- Score strip (always visible) -->
+    <div id="score-strip">
+      <div class="sc">
+        <div class="sc-label">Best Score</div>
+        <div class="sc-val green" id="sc-best">—</div>
+      </div>
+      <div class="sc-div"></div>
+      <div class="sc">
+        <div class="sc-label">Experiments</div>
+        <div class="sc-val blue" id="sc-total">—</div>
+      </div>
+      <div class="sc-div"></div>
+      <div class="sc">
+        <div class="sc-label">Kept</div>
+        <div class="sc-val amber" id="sc-kept">—</div>
+      </div>
+      <div class="sc-div"></div>
+      <div>
+        <div class="sc-domain" id="sc-domain">No domain loaded</div>
+        <div class="sc-sub" id="sc-sub">Open a domain directory to begin</div>
+      </div>
+      <div id="score-progress" style="margin-left:auto;">
+        <div style="font-size:11px;color:#9ca3af;display:flex;justify-content:space-between;"><span>Score</span><span id="prog-pct"></span></div>
+        <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- Briefing view -->
+    <div id="briefing-view">
+      <div id="briefing-wrap">
+        <div id="briefing-title">
+          Trust Briefing
+          <button class="refresh-btn" onclick="refreshBriefing()" title="Refresh">↻</button>
+          <button class="act-btn act-insights" onclick="synthesizeAll()" id="synth-btn" style="margin-left:auto;font-size:11px;">✦ Synthesize All</button>
+        </div>
+        <div id="synth-panel" class="insights-panel" style="margin-bottom:12px;border-radius:10px;border:1px solid #c7d2fe;display:none;">
+          <div class="insights-hd">✦ Grand Synthesis — All Domain Files</div>
+          <div id="synth-body" class="insights-body"></div>
+        </div>
+        <div id="briefing-cards">
+          <div class="brief-empty">
+            <div class="brief-empty-icon">🔬</div>
+            <div class="brief-empty-title">Open a domain to begin</div>
+            <div class="brief-empty-sub">TrustLoop will generate a trust briefing from your RRMA artifacts.</div>
+            <button class="topbtn primary" onclick="openDomain()" style="margin-top:10px;">📁 Open Domain</button>
+          </div>
+        </div>
+      </div>
+      <div id="signoff-bar" style="display:none;">
+        <span id="signoff-status"><strong id="signoff-count">0</strong> items to review</span>
+        <button class="signoff-btn" onclick="approveAll()" id="signoff-btn">Approve All & Proceed →</button>
+      </div>
+    </div>
+
+    <!-- File viewer (hidden by default) -->
+    <div id="file-view">
+      <div id="file-toolbar">
+        <button id="file-back-btn" onclick="showBriefing()">← Briefing</button>
+        <span id="file-breadcrumb">—</span>
+        <span id="file-linecount"></span>
+        <button class="act-btn act-insights" onclick="insightFileViewer()" id="file-insights-btn" style="margin-left:auto;">✦ Insights</button>
+      </div>
+      <div id="file-content"></div>
+      <div id="file-insights-panel" class="insights-panel" style="border-top:1px solid #e5e7eb;padding:16px 22px;background:#fafbff;display:none;">
+        <div class="insights-hd">✦ Claude's Take</div>
+        <div id="file-insights-body" class="insights-body"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Settings -->
+<div id="settings-bg" onclick="handleSBG(event)">
+  <div id="settings-box">
+    <h2>⚙ Settings</h2>
+    <div class="sf">
+      <label>Anthropic API Key</label>
+      <input type="password" id="api-key" placeholder="sk-ant-…" autocomplete="off">
+    </div>
+    <div class="sf">
+      <label>Model</label>
+      <input type="text" id="api-model" value="claude-sonnet-4-6">
+    </div>
+    <div class="sf">
+      <label>System Prompt</label>
+      <textarea id="api-sys" rows="3">You are reviewing RRMA research artifacts. Be concise and technical. Focus on trust and validity of results.</textarea>
+    </div>
+    <div class="sf-note">API key stored in localStorage only.</div>
+    <div class="sa">
+      <button class="sb-s" onclick="closeSettings()">Cancel</button>
+      <button class="sb-p" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+marked.setOptions({ breaks: true, gfm: true });
+
+// ── State ────────────────────────────────────────────────────────────────────
+const S = {
+  dir: null, domainName: '',
+  files: {}, logFiles: [], experiments: [],
+  selectedExp: null, chatHistory: [], chatCtx: null,
+  popupRaw: '', popupFile: '',
+  reviewed: new Set(),
+  fileContents: {},       // {name: text} cache
+  activeSideTab: 'explorer',
+  activeFile: null,       // currently open file name in center viewer
+};
+
+// ── File definitions ─────────────────────────────────────────────────────────
+const FILES = [
+  { key:'desires',  names:['DESIRES.md','desires.md'],                icon:'🔴', label:'DESIRES.md',        cat:'Wants / Requests',     tcls:'fc-red',    special:'desires'  },
+  { key:'mistakes', names:['MISTAKES.md','mistakes.md'],               icon:'🟠', label:'MISTAKES.md',       cat:'Dead Ends / Failures', tcls:'fc-yellow', special:'mistakes' },
+  { key:'learnings',names:['LEARNINGS.md','learnings.md'],             icon:'🟢', label:'LEARNINGS.md',      cat:'Insights / Wins',      tcls:'fc-green',  special:'learnings'},
+  { key:'meta',     names:['meta-blackboard.md','meta_blackboard.md'], icon:'🧠', label:'meta-blackboard.md',cat:'Meta Compression',     tcls:'fc-blue',   special:'meta'     },
+  { key:'board',    names:['blackboard.md'],                           icon:'📋', label:'blackboard.md',     cat:'Shared State',         tcls:'fc-gray',   special:null       },
+  { key:'results',  names:['results.tsv'],                             icon:'📊', label:'results.tsv',       cat:'All Experiments',      tcls:'fc-blue',   special:null       },
+];
+
+function fileIcon(name) {
+  if (!name) return '📄';
+  const n = name.toLowerCase();
+  if (n === 'desires.md') return '🔴';
+  if (n === 'mistakes.md') return '🟠';
+  if (n === 'learnings.md') return '🟢';
+  if (n === 'meta-blackboard.md' || n === 'meta_blackboard.md') return '🧠';
+  if (n === 'blackboard.md') return '📋';
+  if (n === 'results.tsv') return '📊';
+  if (n.endsWith('.py')) return '🐍';
+  if (n.endsWith('.yaml') || n.endsWith('.yml')) return '⚙';
+  if (n.endsWith('.sh')) return '⚡';
+  if (n.endsWith('.jsonl')) return '📄';
+  if (n.endsWith('.log')) return '📄';
+  if (n.endsWith('.md')) return '📝';
+  if (n.endsWith('.tsv') || n.endsWith('.csv')) return '📊';
+  return '📄';
+}
+
+// ── Sidebar tab switching ─────────────────────────────────────────────────────
+function switchSideTab(tab) {
+  S.activeSideTab = tab;
+  ['explorer','chat','search'].forEach(t => {
+    document.getElementById('stab-'+t).classList.toggle('active', t === tab);
+    document.getElementById('tab-'+t).classList.toggle('active', t === tab);
+  });
+}
+
+// ── Open domain ──────────────────────────────────────────────────────────────
+async function openDomain() {
+  if (!window.showDirectoryPicker) { alert('Requires Chrome or Edge.'); return; }
+  try {
+    setStatus('busy', 'Opening…');
+    const h = await window.showDirectoryPicker({ mode: 'read' });
+    S.dir = h; S.domainName = h.name;
+    const pill = document.getElementById('domain-pill');
+    pill.textContent = h.name; pill.classList.add('loaded');
+    document.getElementById('refresh-btn').style.display = '';
+    await scanDir(h);
+    await refreshBriefing();
+    setStatus('ok', `${h.name} — ${S.experiments.length} experiments`);
+  } catch(e) { if (e.name !== 'AbortError') setStatus('err', e.message); }
+}
+
+async function scanDir(h) {
+  S.files = {}; S.logFiles = []; S.fileContents = {};
+  for await (const [n, fh] of h.entries()) {
+    if (fh.kind === 'file') {
+      S.files[n] = fh;
+      S.files[n.toLowerCase()] = fh;
+      if (n.startsWith('agent') && n.endsWith('.jsonl')) S.logFiles.push({name:n,handle:fh});
+    }
+  }
+  S.logFiles.sort((a,b) => a.name.localeCompare(b.name));
+  await loadExps();
+  // Cache all text file contents
+  await cacheFileContents();
+  renderFileTree();
+  renderStats();
+}
+
+async function cacheFileContents() {
+  const textExts = ['.md','.txt','.tsv','.csv','.yaml','.yml','.py','.sh','.log','.jsonl','.json'];
+  const seen = new Set();
+  for (const [n, fh] of Object.entries(S.files)) {
+    if (seen.has(n)) continue;
+    seen.add(n);
+    const lower = n.toLowerCase();
+    if (textExts.some(e => lower.endsWith(e))) {
+      try {
+        const txt = await rf(fh);
+        S.fileContents[n] = txt;
+        if (n !== lower) S.fileContents[lower] = txt;
+      } catch(e) {}
+    }
+  }
+}
+
+// ── Experiments ──────────────────────────────────────────────────────────────
+async function loadExps() {
+  const fh = S.files['results.tsv'];
+  if (!fh) { S.experiments = []; return; }
+  const txt = await rf(fh);
+  const lines = txt.trim().split('\n');
+  if (lines.length < 2) { S.experiments = []; return; }
+  const hdr = lines[0].split('\t').map(h => h.trim().toLowerCase());
+  const ci = n => hdr.findIndex(h => h === n || h.includes(n));
+  const iid = ci('exp-id') >= 0 ? ci('exp-id') : ci('exp');
+  const isc = ci('score'), ist = ci('status'), idc = ci('description');
+  S.experiments = lines.slice(1).filter(l=>l.trim()).map(line => {
+    const c = line.split('\t');
+    const g = i => (i>=0&&i<c.length)?c[i].trim():'';
+    return { id: g(iid)||g(0), score: parseFloat(g(isc))||0, status: g(ist)||'keep', desc: g(idc) };
+  });
+}
+
+// ── File tree (explorer tab) ──────────────────────────────────────────────────
+function renderFileTree() {
+  const wrap = document.getElementById('explorer-files');
+  const rows = FILES.map(f => {
+    let fh = null;
+    for (const n of f.names) { fh = S.files[n]||S.files[n.toLowerCase()]; if(fh) break; }
+    const avail = !!fh;
+    const cnt = f.key === 'results' ? S.experiments.length : '';
+    const specialCls = f.special ? `special-${f.special}` : '';
+    const activeCls = S.activeFile && f.names.some(n => n.toLowerCase() === S.activeFile.toLowerCase()) ? 'active-file' : '';
+    return `<button class="file-item ${avail?'available':'unavailable'} ${specialCls} ${activeCls}"
+      onclick="${avail ? `openFileInCenter('${f.key}')` : `setStatus('err','${f.label} not found in domain')`}" title="${avail ? f.cat : f.label + ' — not yet created'}">
+      <span class="fi-icon">${f.icon}</span>
+      <span class="fi-name">${f.label}</span>
+      ${avail ? `<span class="fi-count ${f.tcls}">${cnt||'→'}</span>` : `<span class="fi-count fc-gray" style="font-weight:400;opacity:0.6;">—</span>`}
+    </button>`;
+  });
+
+  // Extra files from directory not in FILES
+  const knownNames = new Set(FILES.flatMap(f => f.names.map(n=>n.toLowerCase())));
+  // Deduplicate case-insensitively: scanDir stores both n and n.toLowerCase() — keep only one per file
+  const extraSeen = new Set();
+  const extraUnique = [];
+  Object.keys(S.files).sort().forEach(n => {
+    const lower = n.toLowerCase();
+    if (knownNames.has(lower) || n.startsWith('agent') || extraSeen.has(lower)) return;
+    extraSeen.add(lower);
+    extraUnique.push(n);
+  });
+  extraUnique.sort().forEach(n => {
+    const lower = n.toLowerCase();
+    const activeCls = S.activeFile && S.activeFile.toLowerCase() === lower ? 'active-file' : '';
+    rows.push(`<button class="file-item available ${activeCls}" onclick="openFileInCenterByName('${escH(n)}')" title="${escH(n)}">
+      <span class="fi-icon">${fileIcon(n)}</span>
+      <span class="fi-name">${escH(n)}</span>
+    </button>`);
+  });
+
+  if (S.logFiles.length || S.files['outer-loop.log']) {
+    const logCount = S.logFiles.length + (S.files['outer-loop.log'] ? 1 : 0);
+    rows.push(`<button class="file-item available" onclick="openFileInCenter('logs')" title="Agent Logs">
+      <span class="fi-icon">📄</span><span class="fi-name">Logs…</span>
+      <span class="fi-count fc-gray">${logCount}</span>
+    </button>`);
+  }
+
+  wrap.innerHTML = rows.join('');
+
+  // Experiments
+  const expWrap = document.getElementById('explorer-exps');
+  document.getElementById('exp-count-lbl').textContent = S.experiments.length ? `(${S.experiments.length})` : '';
+  if (!S.experiments.length) {
+    expWrap.innerHTML = `<div style="padding:8px 12px;font-size:11px;color:#4b5563;">No experiments</div>`;
+    return;
+  }
+  expWrap.innerHTML = S.experiments.map(e => {
+    const sel = S.selectedExp === e.id ? 'sel' : '';
+    return `<div class="exp-item ${sel}" onclick="selExp('${escH(e.id)}')" data-exp="${escH(e.id)}">
+      <div class="ei-id">${escH(e.id)}</div>
+      <div class="ei-sub">
+        <span class="ei-score">${(e.score*100).toFixed(1)}%</span>
+        <span class="ei-badge ${e.status==='keep'?'eb-keep':'eb-disc'}">${e.status}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderStats() {
+  const best = S.experiments.reduce((m,e)=>Math.max(m,e.score),0);
+  const kept = S.experiments.filter(e=>e.status==='keep').length;
+  document.getElementById('sc-best').textContent = S.experiments.length ? (best*100).toFixed(2)+'%' : '—';
+  document.getElementById('sc-total').textContent = S.experiments.length || '—';
+  document.getElementById('sc-kept').textContent = S.experiments.length ? kept : '—';
+  document.getElementById('sc-domain').textContent = S.domainName || 'No domain';
+  document.getElementById('sc-sub').textContent = S.experiments.length ? `${kept} kept of ${S.experiments.length} experiments` : 'Open a domain to begin';
+  const pct = (best*100).toFixed(1);
+  document.getElementById('prog-pct').textContent = S.experiments.length ? pct+'%' : '';
+  document.getElementById('prog-fill').style.width = S.experiments.length ? (best*100)+'%' : '0';
+}
+
+function selExp(id) {
+  S.selectedExp = id;
+  document.querySelectorAll('.exp-item').forEach(el => el.classList.toggle('sel', el.dataset.exp === id));
+}
+
+// ── Open file in center viewer ────────────────────────────────────────────────
+async function openFileInCenter(key) {
+  if (!S.dir) return;
+  if (key === 'logs') { openLogsInCenter(); return; }
+  const def = FILES.find(f => f.key === key);
+  let fh = null, fname = '';
+  for (const n of (def?.names||[])) { fh = S.files[n]||S.files[n.toLowerCase()]; if(fh){fname=n;break;} }
+  if (!fh) return;
+
+  // Switch to file view first so user sees something immediately
+  document.getElementById('briefing-view').style.display = 'none';
+  const fv = document.getElementById('file-view');
+  fv.style.display = 'flex';
+  document.getElementById('file-breadcrumb').textContent = fname;
+  document.getElementById('file-linecount').textContent = '';
+
+  // Reset insights panel for new file
+  const fip = document.getElementById('file-insights-panel');
+  const fib = document.getElementById('file-insights-body');
+  if (fip) { fip.style.display = 'none'; fib.innerHTML = ''; delete fib.dataset.file; }
+  document.getElementById('file-insights-btn')?.classList.remove('active');
+
+  const content = document.getElementById('file-content');
+  content.innerHTML = `<div style="padding:20px;color:#9ca3af;font-size:13px;">Loading ${escH(fname)}…</div>`;
+
+  try {
+    setStatus('busy', `Loading ${fname}…`);
+    let txt = S.fileContents[fname] || S.fileContents[fname.toLowerCase()];
+    if (!txt) { txt = await rf(fh); S.fileContents[fname] = txt; }
+    setStatus('ok', `${fname} loaded`);
+    S.activeFile = fname;
+    S.currentFileRaw = txt;
+    S.currentFileName = fname;
+
+    const lines = txt.split('\n').length;
+    document.getElementById('file-linecount').textContent = `${lines} lines`;
+
+    if (key === 'results') {
+      content.innerHTML = makeResultsTable(txt);
+    } else if (fname.endsWith('.md')) {
+      content.innerHTML = `<div class="file-md">${marked.parse(txt)}</div>`;
+    } else {
+      content.innerHTML = `<pre class="file-pre">${escH(txt)}</pre>`;
+      content.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
+    }
+  } catch(e) {
+    setStatus('err', `Failed: ${e.message}`);
+    content.innerHTML = `<div style="padding:20px;color:#ef4444;font-size:13px;">Error loading ${escH(fname)}: ${escH(e.message)}</div>`;
+  }
+
+  renderFileTree(); // update active highlight
+}
+
+async function openFileInCenterByName(name) {
+  const fh = S.files[name] || S.files[name.toLowerCase()];
+  if (!fh) return;
+  const n = name.toLowerCase();
+
+  // Switch to file view first
+  document.getElementById('briefing-view').style.display = 'none';
+  const fv = document.getElementById('file-view');
+  fv.style.display = 'flex';
+  document.getElementById('file-breadcrumb').textContent = name;
+  document.getElementById('file-linecount').textContent = '';
+
+  const fip = document.getElementById('file-insights-panel');
+  const fib = document.getElementById('file-insights-body');
+  if (fip) { fip.style.display = 'none'; fib.innerHTML = ''; delete fib.dataset.file; }
+  document.getElementById('file-insights-btn')?.classList.remove('active');
+
+  const content = document.getElementById('file-content');
+  content.innerHTML = `<div style="padding:20px;color:#9ca3af;font-size:13px;">Loading ${escH(name)}…</div>`;
+
+  try {
+    setStatus('busy', `Loading ${name}…`);
+    let txt = S.fileContents[name] || S.fileContents[n];
+    if (!txt) { txt = await rf(fh); S.fileContents[name] = txt; }
+    setStatus('ok', `${name} loaded`);
+    S.activeFile = name;
+    S.currentFileRaw = txt;
+    S.currentFileName = name;
+
+    document.getElementById('file-linecount').textContent = `${txt.split('\n').length} lines`;
+
+    if (n.endsWith('.md')) {
+      content.innerHTML = `<div class="file-md">${marked.parse(txt)}</div>`;
+    } else if (n.endsWith('.tsv') || n.endsWith('.csv')) {
+      content.innerHTML = makeResultsTable(txt, n.endsWith('.csv') ? ',' : '\t');
+    } else {
+      content.innerHTML = `<pre class="file-pre">${escH(txt)}</pre>`;
+      content.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
+    }
+  } catch(e) {
+    setStatus('err', `Failed: ${e.message}`);
+    content.innerHTML = `<div style="padding:20px;color:#ef4444;font-size:13px;">Error loading ${escH(name)}: ${escH(e.message)}</div>`;
+  }
+
+  renderFileTree();
+}
+
+async function openLogsInCenter() {
+  const outerLog = S.files['outer-loop.log']||S.files['outer_loop.log'];
+  const all = [...S.logFiles];
+  if (outerLog) all.unshift({name:'outer-loop.log',handle:outerLog});
+  if (!all.length) { return; }
+
+  S.activeFile = 'logs';
+  document.getElementById('file-breadcrumb').textContent = 'Logs';
+  document.getElementById('file-linecount').textContent = `${all.length} files`;
+
+  const sidebar = all.map((f,i) =>
+    `<button onclick="loadLogInCenter('${escH(f.name)}')" data-log="${escH(f.name)}"
+      style="display:block;width:100%;text-align:left;padding:6px 9px;border-radius:6px;border:none;cursor:pointer;font-size:11px;font-family:monospace;color:${i===0?'#2563eb':'#9ca3af'};background:${i===0?'#eff6ff':'none'};"
+      onmouseover="this.style.background='#eff6ff';this.style.color='#1d4ed8'"
+      onmouseout="if(this.dataset.log!==window._activeLog){this.style.background='none';this.style.color='#9ca3af';}">
+      📄 ${escH(f.name)}
+    </button>`).join('');
+
+  const content = document.getElementById('file-content');
+  content.innerHTML = `<div style="display:flex;gap:0;height:100%;min-height:300px;">
+    <div id="log-sidebar" style="width:170px;border-right:1px solid #e5e7eb;padding:8px;flex-shrink:0;overflow-y:auto;background:#f9fafb;">${sidebar}</div>
+    <div id="log-body" style="flex:1;overflow-y:auto;padding:14px;"><p style="color:#9ca3af;font-size:12px;">Select a log file</p></div>
+  </div>`;
+
+  document.getElementById('briefing-view').style.display = 'none';
+  document.getElementById('file-view').style.display = 'flex';
+  renderFileTree();
+  if (all.length) loadLogInCenter(all[0].name);
+}
+
+async function loadLogInCenter(name) {
+  window._activeLog = name;
+  const all = [...S.logFiles];
+  const outerLog = S.files['outer-loop.log']||S.files['outer_loop.log'];
+  if (outerLog) all.unshift({name:'outer-loop.log',handle:outerLog});
+  const entry = all.find(f=>f.name===name);
+  if (!entry) return;
+  const txt = await rf(entry.handle);
+  S.fileContents[name] = txt;
+  const body = document.getElementById('log-body');
+  if (!body) return;
+  if (name.endsWith('.jsonl')) {
+    body.innerHTML = txt.trim().split('\n').filter(l=>l).map(l=>{
+      try { return renderJSONL(JSON.parse(l)); } catch(e){ return `<div style="font-size:11px;color:#9ca3af;font-family:monospace;padding:2px 0;">${escH(l)}</div>`;}
+    }).join('');
+  } else {
+    body.innerHTML = `<pre class="file-pre" style="font-size:11px;">${escH(txt)}</pre>`;
+  }
+  // Update sidebar button states
+  document.querySelectorAll('#log-sidebar button').forEach(btn => {
+    const isActive = btn.dataset.log === name;
+    btn.style.background = isActive ? '#eff6ff' : 'none';
+    btn.style.color = isActive ? '#1d4ed8' : '#9ca3af';
+  });
+}
+
+function showBriefing() {
+  S.activeFile = null;
+  document.getElementById('file-view').style.display = 'none';
+  document.getElementById('briefing-view').style.display = 'flex';
+  renderFileTree();
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
+function searchFiles(query) {
+  const results = document.getElementById('search-results');
+  const q = query.trim().toLowerCase();
+  if (!q || !S.dir) {
+    results.innerHTML = `<div class="sr-empty">${!S.dir ? 'Open a domain to search.' : 'Type to search…'}</div>`;
+    return;
+  }
+
+  const hits = [];
+  for (const [name, txt] of Object.entries(S.fileContents)) {
+    // skip duplicates (we store both n and n.toLowerCase())
+    if (name !== name.toLowerCase() && S.fileContents[name.toLowerCase()]) continue;
+    const lines = txt.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].toLowerCase().includes(q)) {
+        hits.push({ name, line: lines[i], lineNum: i+1 });
+        if (hits.length >= 200) break;
+      }
+    }
+    if (hits.length >= 200) break;
+  }
+
+  if (!hits.length) {
+    results.innerHTML = `<div class="sr-empty">No results for "${escH(query)}"</div>`;
+    return;
+  }
+
+  results.innerHTML = hits.map(h => {
+    const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+    const snippet = escH(h.line.trim().slice(0, 160)).replace(
+      new RegExp(escH(q).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi'),
+      m => `<span class="sr-match">${m}</span>`
+    );
+    const def = FILES.find(f => f.names.some(n => n.toLowerCase() === h.name.toLowerCase()));
+    const openFn = def
+      ? `openFileInCenter('${def.key}')`
+      : `openFileInCenterByName('${escH(h.name)}')`;
+    return `<div class="sr-item" onclick="${openFn};switchSideTab('explorer')">
+      <div class="sr-filename">${escH(h.name)} <span style="color:#9ca3af;font-weight:400;">:${h.lineNum}</span></div>
+      <div class="sr-line">${snippet}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Briefing generation ──────────────────────────────────────────────────────
+async function refreshBriefing() {
+  if (!S.dir) return;
+  setStatus('busy', 'Generating trust briefing…');
+  S.reviewed.clear();
+  const cards = [];
+
+  // 1. Score card
+  if (S.experiments.length) {
+    const best = S.experiments.reduce((m,e) => e.score > m.score ? e : m, S.experiments[0]);
+    const keeps = S.experiments.filter(e=>e.status==='keep');
+    cards.push({
+      type: 'score', icon: '📈',
+      kind: 'Score',
+      title: `Best: ${(best.score*100).toFixed(2)}% — ${keeps.length}/${S.experiments.length} kept`,
+      body: `<p><strong>${escH(best.id)}</strong> holds the current best at <strong>${(best.score*100).toFixed(2)}%</strong>.</p>
+             <p>${escH(best.desc||'No description')}</p>`,
+      actions: [
+        { label: 'View Results', cls: 'act-view', fn: `openFileInCenter('results')` },
+        { label: 'Ask Claude', cls: 'act-chat', fn: `chatAbout('score');switchSideTab('chat')` },
+      ],
+      id: 'score',
+    });
+  }
+
+  // 2. Meta-blackboard sections
+  const metaFH = S.files['meta-blackboard.md'] || S.files['meta_blackboard.md'];
+  if (metaFH) {
+    const meta = S.fileContents['meta-blackboard.md'] || S.fileContents['meta_blackboard.md'] || await rf(metaFH);
+    const sections = extractSections(meta);
+
+    if (sections['devil\'s advocate'] || sections['devils advocate']) {
+      const txt = sections['devil\'s advocate'] || sections['devils advocate'];
+      cards.push({
+        type: 'danger', icon: '😈',
+        kind: 'Devil\'s Advocate',
+        title: 'Strongest case the best score is wrong',
+        body: `<div class="file-md">${marked.parse(txt.trim())}</div>`,
+        actions: [
+          { label: 'Flag', cls: 'act-flag', fn: `markReviewed('devil')` },
+          { label: 'Approve', cls: 'act-approve', fn: `markReviewed('devil')` },
+          { label: 'Ask Claude', cls: 'act-chat', fn: `chatAbout('devil');switchSideTab('chat')` },
+        ],
+        id: 'devil', raw: txt,
+      });
+    }
+
+    if (sections['surprises']) {
+      const txt = sections['surprises'];
+      cards.push({
+        type: 'warn', icon: '⚡',
+        kind: 'Surprises',
+        title: 'Calibration failures this cycle',
+        body: `<div class="file-md">${marked.parse(txt.trim())}</div>`,
+        actions: [
+          { label: 'Approve', cls: 'act-approve', fn: `markReviewed('surprises')` },
+          { label: 'Ask Claude', cls: 'act-chat', fn: `chatAbout('surprises');switchSideTab('chat')` },
+        ],
+        id: 'surprises', raw: txt,
+      });
+    }
+
+    if (sections['blind spots']) {
+      const txt = sections['blind spots'];
+      cards.push({
+        type: 'info', icon: '🔭',
+        kind: 'Blind Spots',
+        title: 'Approaches never tried',
+        body: `<div class="file-md">${marked.parse(txt.trim())}</div>`,
+        actions: [
+          { label: 'View Meta', cls: 'act-view', fn: `openFileInCenter('meta')` },
+          { label: 'Ask Claude', cls: 'act-chat', fn: `chatAbout('blindspots');switchSideTab('chat')` },
+        ],
+        id: 'blindspots', raw: txt,
+      });
+    }
+
+    if (sections['current best']) {
+      const txt = sections['current best'];
+      cards.push({
+        type: 'ok', icon: '🏆',
+        kind: 'Current Best',
+        title: 'Winning config from meta-agent',
+        body: `<div class="file-md">${marked.parse(txt.trim())}</div>`,
+        actions: [
+          { label: 'Approve', cls: 'act-approve', fn: `markReviewed('best')` },
+        ],
+        id: 'metabest', raw: txt,
+      });
+    }
+  }
+
+  // 3. DESIRES card
+  const desFH = S.files['DESIRES.md'] || S.files['desires.md'];
+  if (desFH) {
+    const des = S.fileContents['DESIRES.md'] || S.fileContents['desires.md'] || await rf(desFH);
+    const lines = des.trim().split('\n').filter(l=>l.trim()).length;
+    cards.push({
+      type: 'info', icon: '🔴',
+      kind: 'Agent DESIRES',
+      title: `${lines} lines — agents have unmet needs`,
+      body: `<div class="file-md">${marked.parse(des.slice(0,1200).trim())}${des.length>1200?'<p style="color:#9ca3af;font-style:italic;">… truncated</p>':''}</div>`,
+      actions: [
+        { label: 'Unblock', cls: 'act-approve', fn: `markReviewed('desires')` },
+        { label: 'View Full', cls: 'act-view', fn: `openFileInCenter('desires')` },
+        { label: 'Ask Claude', cls: 'act-chat', fn: `chatAbout('desires');switchSideTab('chat')` },
+      ],
+      id: 'desires', raw: des,
+    });
+  }
+
+  // 4. MISTAKES card
+  const misFH = S.files['MISTAKES.md'] || S.files['mistakes.md'];
+  if (misFH) {
+    const mis = S.fileContents['MISTAKES.md'] || S.fileContents['mistakes.md'] || await rf(misFH);
+    const lines = mis.trim().split('\n').filter(l=>l.trim()).length;
+    if (lines > 0) {
+      cards.push({
+        type: 'warn', icon: '🟠',
+        kind: 'Dead Ends',
+        title: `${lines} lines of documented failures`,
+        body: `<div class="file-md">${marked.parse(mis.slice(0,1000).trim())}</div>`,
+        actions: [
+          { label: 'Approve', cls: 'act-approve', fn: `markReviewed('mistakes')` },
+          { label: 'View Full', cls: 'act-view', fn: `openFileInCenter('mistakes')` },
+        ],
+        id: 'mistakes', raw: mis,
+      });
+    }
+  }
+
+  // 5. LEARNINGS card
+  const leaFH = S.files['LEARNINGS.md'] || S.files['learnings.md'];
+  if (leaFH) {
+    const lea = S.fileContents['LEARNINGS.md'] || S.fileContents['learnings.md'] || await rf(leaFH);
+    const lines = lea.trim().split('\n').filter(l=>l.trim()).length;
+    if (lines > 0) {
+      cards.push({
+        type: 'insight', icon: '🟢',
+        kind: 'Learnings',
+        title: `${lines} lines of confirmed insights`,
+        body: `<div class="file-md">${marked.parse(lea.slice(0,1000).trim())}</div>`,
+        actions: [
+          { label: 'Approve', cls: 'act-approve', fn: `markReviewed('learnings')` },
+          { label: 'View Full', cls: 'act-view', fn: `openFileInCenter('learnings')` },
+        ],
+        id: 'learnings', raw: lea,
+      });
+    }
+  }
+
+  // 6. Blackboard card
+  const boardFH = S.files['blackboard.md'];
+  if (boardFH) {
+    const txt = S.fileContents['blackboard.md'] || await rf(boardFH);
+    const lines = txt.trim().split('\n').filter(l=>l.trim()).length;
+    cards.push({
+      type: 'info', icon: '📋',
+      kind: 'Blackboard',
+      title: `Shared agent state — ${lines} lines`,
+      body: `<div class="file-md">${marked.parse(txt.slice(0,1400).trim())}${txt.length>1400?'<p style="color:#9ca3af;font-style:italic;">… truncated</p>':''}</div>`,
+      actions: [
+        { label: 'View Full', cls: 'act-view', fn: `openFileInCenter('board')` },
+        { label: 'Ask Claude', cls: 'act-chat', fn: `chatAbout('board');switchSideTab('chat')` },
+      ],
+      id: 'board', raw: txt,
+    });
+  }
+
+  renderBriefing(cards);
+  setStatus('ok', `Briefing ready — ${cards.length} items`);
+}
+
+function extractSections(md) {
+  const sections = {};
+  const lines = md.split('\n');
+  let currentSection = null, currentLines = [];
+  for (const line of lines) {
+    const hm = line.match(/^##\s+(.+)$/);
+    if (hm) {
+      if (currentSection) sections[currentSection.toLowerCase().trim()] = currentLines.join('\n');
+      currentSection = hm[1]; currentLines = [];
+    } else if (currentSection) {
+      currentLines.push(line);
+    }
+  }
+  if (currentSection) sections[currentSection.toLowerCase().trim()] = currentLines.join('\n');
+  return sections;
+}
+
+function renderBriefing(cards) {
+  const wrap = document.getElementById('briefing-cards');
+  const bar = document.getElementById('signoff-bar');
+  const countEl = document.getElementById('signoff-count');
+
+  if (!cards.length) {
+    wrap.innerHTML = `<div class="brief-empty">
+      <div class="brief-empty-icon">✓</div>
+      <div class="brief-empty-title">Nothing to review</div>
+      <div class="brief-empty-sub">No DESIRES, surprises, or devil's advocate found. Generation looks clean.</div>
+    </div>`;
+    bar.style.display = 'none';
+    return;
+  }
+
+  wrap.innerHTML = cards.map(card => `
+    <div class="bcard type-${card.type}" id="bcard-${card.id}">
+      <div class="bcard-hd">
+        <span class="bcard-icon">${card.icon}</span>
+        <div class="bcard-meta">
+          <div class="bcard-type">${card.kind}</div>
+          <div class="bcard-title">${card.title}</div>
+        </div>
+        <div class="bcard-actions">
+          <button class="act-btn act-insights" id="insights-btn-${card.id}" onclick="getInsights('${card.id}')">✦ Insights</button>
+          ${card.actions.map(a => `<button class="act-btn ${a.cls}" onclick="${a.fn}">${a.label}</button>`).join('')}
+        </div>
+      </div>
+      <div class="bcard-body">${card.body}</div>
+      <div class="insights-panel" id="insights-${card.id}">
+        <div class="insights-hd">✦ Claude's Take</div>
+        <div class="insights-body"></div>
+      </div>
+    </div>
+  `).join('');
+
+  window._briefingCards = cards;
+  bar.style.display = 'flex';
+  countEl.textContent = cards.length;
+  document.getElementById('signoff-status').innerHTML = `<strong>${cards.length}</strong> items to review`;
+}
+
+function markReviewed(id) {
+  S.reviewed.add(id);
+  const card = document.getElementById(`bcard-${id}`);
+  if (card) {
+    card.style.opacity = '0.5';
+    card.style.transform = 'scale(0.99)';
+    card.style.transition = 'all 0.3s';
+  }
+  const remaining = (window._briefingCards?.length || 0) - S.reviewed.size;
+  const countEl = document.getElementById('signoff-count');
+  if (countEl) countEl.textContent = Math.max(0, remaining);
+  document.getElementById('signoff-status').innerHTML =
+    remaining > 0 ? `<strong>${remaining}</strong> items remaining` : '<strong style="color:#059669;">All reviewed ✓</strong>';
+  if (remaining <= 0) {
+    document.getElementById('signoff-btn').classList.add('approved');
+    document.getElementById('signoff-btn').textContent = 'Generation Approved ✓';
+  }
+}
+
+function chatAbout(id) {
+  const card = window._briefingCards?.find(c => c.id === id);
+  if (!card) return;
+  const raw = card.raw || card.title;
+  S.chatCtx = { label: card.kind, content: raw };
+  document.getElementById('ctx-lbl').textContent = `${card.kind} attached`;
+  document.getElementById('ctx-pill').classList.add('on');
+  document.getElementById('cinput').focus();
+}
+
+function approveAll() {
+  (window._briefingCards || []).forEach(c => markReviewed(c.id));
+}
+
+// ── Results table ─────────────────────────────────────────────────────────────
+function makeResultsTable(tsv, sep='\t') {
+  const lines = tsv.trim().split('\n');
+  if (lines.length < 2) return '<p style="color:#9ca3af;">Empty</p>';
+  const hdr = lines[0].split(sep).map(h=>h.trim());
+  const rows = lines.slice(1).filter(l=>l).map(l=>l.split(sep).map(c=>c.trim()));
+  const isc = hdr.findIndex(h=>h.toLowerCase()==='score');
+  const ist = hdr.findIndex(h=>h.toLowerCase()==='status');
+  return `<table class="file-table">
+    <thead><tr>${hdr.map(h=>`<th>${escH(h)}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map((c,i)=>{
+      if(i===isc) return `<td style="color:#059669;font-family:monospace;font-weight:700;">${(parseFloat(c)*100).toFixed(2)}%</td>`;
+      if(i===ist) return `<td><span class="${c==='keep'?'ps-keep':'ps-disc'}">${escH(c)}</span></td>`;
+      return `<td title="${escH(c)}">${escH(c)}</td>`;
+    }).join('')}</tr>`).join('')}</tbody>
+  </table>`;
+}
+
+function renderJSONL(obj) {
+  const role = obj.role||obj.type||'entry';
+  const c = {user:'#2563eb',assistant:'#059669',system:'#7c3aed',tool:'#d97706'}[role]||'#6b7280';
+  let body = '';
+  if (typeof obj.content === 'string') body = `<div style="font-size:11px;color:#374151;white-space:pre-wrap;">${escH(obj.content.slice(0,3000))}</div>`;
+  else if (Array.isArray(obj.content)) body = obj.content.map(b=>{
+    if(b.type==='text') return `<div style="font-size:11px;color:#374151;white-space:pre-wrap;">${escH((b.text||'').slice(0,2000))}</div>`;
+    if(b.type==='tool_use') return `<div style="font-size:11px;color:#d97706;">🔧 ${escH(b.name)}</div>`;
+    return '';
+  }).join('');
+  return `<div style="border-left:2px solid ${c};padding:5px 10px;margin-bottom:5px;border-radius:0 5px 5px 0;background:#fafafa;">
+    <div style="font-size:10px;font-weight:700;color:${c};text-transform:uppercase;margin-bottom:2px;">${escH(role)}</div>${body}</div>`;
+}
+
+// ── Insights (inline Claude analysis) ────────────────────────────────────────
+async function insightFileViewer() {
+  const raw = S.currentFileRaw;
+  const name = S.currentFileName || 'file';
+  const panel = document.getElementById('file-insights-panel');
+  const body = document.getElementById('file-insights-body');
+  const btn = document.getElementById('file-insights-btn');
+
+  // Toggle off
+  if (panel.style.display !== 'none' && body.dataset.file === name) {
+    panel.style.display = 'none';
+    btn.classList.remove('active');
+    return;
+  }
+
+  panel.style.display = 'block';
+  btn.classList.add('active');
+  body.dataset.file = name;
+  body.innerHTML = '<div class="insights-thinking">Thinking…</div>';
+
+  const sys = `You are a sharp ML research reviewer. You are reading "${name}" from an RRMA research domain.
+Give your honest, direct opinion: what matters here, what's surprising, what's worth acting on, what's noise. Be specific.`;
+  const trunc = raw.length > 10000 ? raw.slice(0, 10000) + '\n…[truncated]' : raw;
+
+  try {
+    const text = await callClaude(trunc, sys);
+    body.innerHTML = marked.parse(text);
+    body.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
+  } catch(e) {
+    body.innerHTML = `<p style="color:#ef4444;">${escH(e.message)}</p>`;
+  }
+}
+
+async function synthesizeAll() {
+  const panel = document.getElementById('synth-panel');
+  const body = document.getElementById('synth-body');
+  const btn = document.getElementById('synth-btn');
+
+  // Toggle off
+  if (panel.style.display !== 'none' && body.dataset.loaded) {
+    panel.style.display = 'none';
+    btn.classList.remove('active');
+    return;
+  }
+
+  panel.style.display = 'block';
+  btn.classList.add('active');
+  body.innerHTML = '<div class="insights-thinking">Reading all domain files…</div>';
+
+  // Build a combined view of all key files
+  const keyFiles = ['results.tsv', 'DESIRES.md', 'desires.md', 'MISTAKES.md', 'mistakes.md',
+    'LEARNINGS.md', 'learnings.md', 'meta-blackboard.md', 'meta_blackboard.md', 'blackboard.md'];
+
+  const parts = [];
+  for (const name of keyFiles) {
+    const content = S.fileContents?.[name] || S.fileContents?.[name.toLowerCase()];
+    if (content) parts.push(`### ${name}\n${content.slice(0, 3000)}${content.length > 3000 ? '\n…[truncated]' : ''}`);
+  }
+
+  if (!parts.length) {
+    body.innerHTML = '<p style="color:#9ca3af;">No domain files loaded yet. Open a domain first.</p>';
+    return;
+  }
+
+  const combined = parts.join('\n\n---\n\n');
+  const sys = `You are a senior ML research advisor doing a holistic review of an RRMA research run.
+You have access to ALL domain artifacts: results, agent desires, mistakes, learnings, blackboard, and meta-blackboard.
+Give a grand synthesis: What is the overall story of this run? What is the single most important finding?
+What should happen next? What would you bet on? What would you kill? Be opinionated and direct.`;
+
+  try {
+    const text = await callClaude(combined, sys);
+    body.innerHTML = marked.parse(text);
+    body.dataset.loaded = '1';
+    body.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
+  } catch(e) {
+    body.innerHTML = `<p style="color:#ef4444;">${escH(e.message)}</p>`;
+  }
+}
+
+async function getInsights(cardId) {
+  const apiKey = localStorage.getItem('rrma_key');
+  if (!apiKey) { openSettings(); return; }
+
+  const card = window._briefingCards?.find(c => c.id === cardId);
+  if (!card) return;
+
+  const panel = document.getElementById(`insights-${cardId}`);
+  const btn = document.getElementById(`insights-btn-${cardId}`);
+  const body = panel.querySelector('.insights-body');
+
+  if (panel.classList.contains('on') && body.dataset.loaded) {
+    panel.classList.remove('on');
+    btn.classList.remove('active');
+    return;
+  }
+
+  panel.classList.add('on');
+  btn.classList.add('active');
+  if (body.dataset.loaded) return;
+  body.innerHTML = '<div class="insights-thinking">Thinking…</div>';
+
+  const prompts = {
+    devil:     'You are reviewing a devil\'s advocate analysis of an ML experiment. Give your honest, direct opinion: is this critique valid? What\'s the strongest point? What\'s overblown? What would you actually worry about?',
+    surprises: 'You are reviewing calibration failures in an ML research run. Which surprises matter most? What do they reveal about the team\'s assumptions? What should change as a result?',
+    desires:   'You are reviewing what AI research agents are asking for. Which requests are legitimate blockers vs noise? What does this list reveal about where the research is stuck?',
+    mistakes:  'You are reviewing documented failures in an ML experiment. Which dead ends are truly dead vs worth revisiting? What patterns do you see? What should never be tried again?',
+    learnings: 'You are reviewing confirmed insights from an ML research run. Which findings are genuinely surprising vs expected? What is the most actionable insight here?',
+    blindspots:'You are reviewing unexplored research directions. Which blind spots are most promising? Which are probably dead ends? What would you try first?',
+    metabest:  'You are reviewing the current best configuration in an ML run. Is this result trustworthy? What could be inflating it? What would you do next?',
+    board:     'You are reviewing a shared research blackboard from a multi-agent ML run. Summarize the key findings, disagreements, and open questions. What is the most important thing happening here?',
+    score:     'You are reviewing experiment results from an ML training run. What does the score trajectory tell you? Is progress real or noise? What would you focus on next?',
+  };
+
+  const sys = prompts[cardId] || 'You are a sharp ML research reviewer. Give your honest, direct opinion on what you see. Be specific and opinionated. Skip hedging.';
+  const content = card.raw || card.title;
+  const trunc = content.length > 8000 ? content.slice(0, 8000) + '\n…[truncated]' : content;
+
+  try {
+    const text = await callClaude(trunc, sys);
+    body.innerHTML = marked.parse(text);
+    body.dataset.loaded = '1';
+    body.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
+  } catch(e) {
+    body.innerHTML = `<p style="color:#ef4444;">${escH(e.message)}</p>`;
+  }
+}
+
+// ── Shared claude -p proxy ────────────────────────────────────────────────────
+async function callClaude(prompt, system) {
+  const sys = system || localStorage.getItem('rrma_sys') || 'You are reviewing RRMA research artifacts. Be concise and technical.';
+  const api_key = localStorage.getItem('rrma_key') || '';
+  const resp = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt, system: sys, api_key }),
+  });
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data.error || `Server error ${resp.status}`);
+  return data.text || '(empty)';
+}
+
+// ── Chat ──────────────────────────────────────────────────────────────────────
+async function chipAsk(fileKey, question) {
+  const def = FILES.find(f => f.key === fileKey);
+  let fh = null;
+  for (const n of (def?.names||[])) { fh = S.files[n]||S.files[n.toLowerCase()]; if(fh) break; }
+  if (fh) {
+    let txt = S.fileContents[def?.label||fileKey] || S.fileContents[(def?.label||fileKey).toLowerCase()];
+    if (!txt) txt = await rf(fh);
+    S.chatCtx = { label: def?.label||fileKey, content: txt };
+    document.getElementById('ctx-lbl').textContent = `${def?.label||fileKey} attached`;
+    document.getElementById('ctx-pill').classList.add('on');
+  }
+  document.getElementById('cinput').value = question;
+  switchSideTab('chat');
+  sendChat();
+}
+
+function handleKey(e) { if (e.key==='Enter'&&!e.shiftKey) { e.preventDefault(); sendChat(); } }
+function clearCtx() { S.chatCtx = null; document.getElementById('ctx-pill').classList.remove('on'); }
+
+async function sendChat() {
+  const inp = document.getElementById('cinput');
+  const txt = inp.value.trim();
+  if (!txt) return;
+
+  let content = txt;
+  if (S.chatCtx) {
+    const trunc = S.chatCtx.content.length > 14000 ? S.chatCtx.content.slice(0,14000)+'\n…[truncated]' : S.chatCtx.content;
+    content = `<file name="${S.chatCtx.label}">\n${trunc}\n</file>\n\n${txt}`;
+    clearCtx();
+  }
+
+  inp.value = '';
+  document.getElementById('csend').disabled = true;
+  addMsg('user', txt);
+  S.chatHistory.push({ role:'user', content });
+  const tid = 'think-'+Date.now();
+  addThink(tid);
+
+  try {
+    // Build full prompt from history for claude -p (stateless)
+    const historyText = S.chatHistory.slice(-6).map(m =>
+      `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+    ).join('\n\n');
+    const reply = await callClaude(historyText);
+    rmEl(tid);
+    S.chatHistory.push({role:'assistant', content:reply});
+    addMsg('ai', reply);
+  } catch(e) { rmEl(tid); addMsg('ai','Error: '+e.message); S.chatHistory.pop(); }
+  document.getElementById('csend').disabled = false;
+  inp.focus();
+}
+
+function addMsg(role, txt) {
+  const msgs = document.getElementById('chat-msgs');
+  const d = document.createElement('div');
+  d.className = `cm cm-${role}`;
+  const html = role==='ai' ? marked.parse(txt) : escH(txt).replace(/\n/g,'<br>');
+  d.innerHTML = `<div class="cm-role">${role==='user'?'You':'Claude'}</div><div class="cm-body">${html}</div>`;
+  if (role==='ai') d.querySelectorAll('pre code').forEach(el=>{ try{hljs.highlightElement(el);}catch(e){} });
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addThink(id) {
+  const msgs = document.getElementById('chat-msgs');
+  const d = document.createElement('div');
+  d.id = id; d.className = 'cm cm-ai';
+  d.innerHTML = '<div class="cm-role">Claude</div><div class="cm-body thinking">Thinking…</div>';
+  msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+}
+function rmEl(id) { const el=document.getElementById(id); if(el) el.remove(); }
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+function openSettings() {
+  document.getElementById('api-key').value = localStorage.getItem('rrma_key')||'';
+  document.getElementById('api-model').value = localStorage.getItem('rrma_model')||'claude-sonnet-4-6';
+  document.getElementById('api-sys').value = localStorage.getItem('rrma_sys')||'You are reviewing RRMA research artifacts. Be concise and technical. Focus on trust and validity of results.';
+  document.getElementById('settings-bg').classList.add('on');
+}
+function closeSettings() { document.getElementById('settings-bg').classList.remove('on'); }
+function handleSBG(e) { if(e.target===e.currentTarget) closeSettings(); }
+function saveSettings() {
+  const k=document.getElementById('api-key').value.trim();
+  const m=document.getElementById('api-model').value.trim();
+  const s=document.getElementById('api-sys').value.trim();
+  if(k) localStorage.setItem('rrma_key',k);
+  if(m) localStorage.setItem('rrma_model',m);
+  if(s) localStorage.setItem('rrma_sys',s);
+  closeSettings();
+  setStatus('ok','Settings saved');
+}
+
+// ── Status / utils ─────────────────────────────────────────────────────────────
+function setStatus(s, msg) {
+  document.getElementById('sdot').className = 'sdot '+s;
+  document.getElementById('stext').textContent = msg;
+}
+async function rf(fh) { return await (await fh.getFile()).text(); }
+function escH(s) {
+  if(!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') { closeSettings(); }
+  if ((e.ctrlKey||e.metaKey)&&e.key==='o') { e.preventDefault(); openDomain(); }
+});
+if (!localStorage.getItem('rrma_key')) {
+  setTimeout(() => addMsg('ai', 'Add your Anthropic API key in Settings (top-right) to enable chat and insights.'), 300);
+}
+</script>
+</body>
+</html>

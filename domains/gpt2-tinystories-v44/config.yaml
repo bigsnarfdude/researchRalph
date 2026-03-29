@@ -1,0 +1,9 @@
+domain: gpt2-tinystories-v44
+baseline_score: 1.20
+target_score: 1.04
+metric: val_bpb
+direction: lower_is_better
+budget_minutes: 5
+model: gpt2-tinystories
+gpu: rtx4070ti-16gb
+note: v4.4 rerun of gpt2-tinystories on single 16GB GPU
