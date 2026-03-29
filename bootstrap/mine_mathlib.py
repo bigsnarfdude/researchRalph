@@ -44,18 +44,21 @@ def extract_theorems(lean_text: str, source_file: str) -> list[dict]:
     """
     results = []
 
-    # Match: theorem/lemma NAME ... := by PROOF
-    # Handle multiline statements
-    pattern = re.compile(
-        r'^((?:theorem|lemma)\s+(\w+)[^:=]*):=\s*by\b',
-        re.MULTILINE
-    )
+    # Find all theorem/lemma start positions
+    decl_pattern = re.compile(r'^(?:theorem|lemma)\s+(\w+)', re.MULTILINE)
 
-    for m in pattern.finditer(lean_text):
-        decl_start = m.start()
-        stmt = m.group(1).strip()
-        name = m.group(2)
-        proof_start = m.end()
+    for decl_m in decl_pattern.finditer(lean_text):
+        name = decl_m.group(1)
+        decl_start = decl_m.start()
+
+        # Scan forward up to 2000 chars to find ':= by'
+        window = lean_text[decl_start:decl_start + 2000]
+        by_m = re.search(r':=\s*by\b', window)
+        if not by_m:
+            continue
+
+        stmt = window[:by_m.start()].strip()
+        proof_start = decl_start + by_m.end()
 
         # Extract proof body: everything after 'by' until next top-level decl
         rest = lean_text[proof_start:]
