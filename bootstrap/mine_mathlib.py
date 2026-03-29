@@ -81,9 +81,8 @@ def extract_theorems(lean_text: str, source_file: str) -> list[dict]:
         if not any(t in proof_lower for t in TARGET_TACTICS):
             continue
 
-        # Reject if contains complex/irrelevant tactics
-        full_lower = lean_text[:proof_start + len(proof_body)].lower()
-        if any(c.lower() in full_lower for c in COMPLEX_TACTICS):
+        # Reject if contains complex/irrelevant tactics (check proof body only, not imports)
+        if any(c.lower() in proof_lower for c in COMPLEX_TACTICS):
             continue
 
         # Build the full lean snippet (with imports)
