@@ -125,6 +125,8 @@ def main():
         lr_scheduler_type="cosine",
         report_to="none",
         max_seq_length=args.max_seq_len,
+        gradient_checkpointing=True,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
         dataloader_pin_memory=False,
     )
 
