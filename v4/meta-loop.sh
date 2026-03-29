@@ -75,6 +75,14 @@ Approaches never tried. Update from previous cycle — remove any that were trie
 ## Stepping stones
 Ideas that didn't beat the best score but produced interesting intermediate results worth building on. These are the non-obvious paths that might matter later.
 
+## Surprises
+What happened this cycle that contradicted prior expectations? List each as:
+- Expected: [what was predicted]
+- Actual: [what happened]
+- Why the gap existed: [what assumption was wrong]
+
+Surprises are calibration failures — the most information-dense events in a run.
+
 ## Devil's advocate
 Make the strongest case that the current best score is WRONG, inflated, or misleading.
 Consider: metric gaming, sorry/shortcut proofs, oracle quirks, evaluation leakage,

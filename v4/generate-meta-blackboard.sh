@@ -46,6 +46,14 @@ Approaches never tried. Most promising directions for new work.
 ## Key insight
 The single most important finding, in 2-3 sentences.
 
+## Surprises
+What happened that contradicted prior expectations? List each surprise as:
+- Expected: [what the system/agents predicted]
+- Actual: [what happened]
+- Why the gap existed: [what assumption was wrong]
+
+These are the most information-dense events in the run. Every surprise is a calibration failure worth preserving.
+
 ## Devil's advocate
 Make the strongest case that the current best score is WRONG, inflated, or misleading.
 Consider: metric gaming, evaluation leakage, sorry/shortcut proofs, overfitting to oracle quirks,
