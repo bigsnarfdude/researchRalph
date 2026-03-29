@@ -77,13 +77,25 @@ def main():
             line = line.strip()
             if line:
                 problems.append(json.loads(line))
-    print(f"Generating {args.n_candidates} candidates for {len(problems)} problems...", file=sys.stderr)
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
+    # Resume: skip problems already in output file
+    done_ids = set()
+    if out_path.exists():
+        with out_path.open() as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    done_ids.add(json.loads(line).get("problem_id", ""))
+        print(f"Resuming: {len(done_ids)} problems already done, skipping...", file=sys.stderr)
+
+    problems = [p for p in problems if p.get("problem_id", f"problem_{i}") not in done_ids]
+    print(f"Generating {args.n_candidates} candidates for {len(problems)} remaining problems...", file=sys.stderr)
+
     total = 0
-    with out_path.open("w") as out:
+    with out_path.open("a") as out:
         for i, prob in enumerate(problems):
             pid = prob.get("problem_id", f"problem_{i}")
             stmt = prob.get("theorem_statement", prob.get("full_lean", ""))
