@@ -29,22 +29,32 @@ def make_prompt(stmt: str) -> str:
     return f"Prove the following theorem in Lean 4 using Mathlib:\n\n```lean\n{stmt}\n```"
 
 
+def strip_junk(code: str) -> str:
+    """Remove trailing hallucinated content after the proof ends."""
+    import re
+    lines = code.split('\n')
+    out = []
+    for line in lines:
+        # Stop at comment blocks that look like appended junk
+        if re.match(r'\s*/\*\*', line) or re.match(r'\s*--\s*(Problem|http|This is|Copyright)', line):
+            break
+        out.append(line)
+    return '\n'.join(out).strip()
+
+
 def extract_lean_from_response(response: str, stmt: str) -> str:
     """Extract lean code from model response, or construct it."""
-    # Try to extract ```lean ... ``` block
     import re
     m = re.search(r'```lean\s*(.*?)```', response, re.DOTALL)
     if m:
-        code = m.group(1).strip()
-        # If it already has imports, use as-is
+        code = strip_junk(m.group(1).strip())
         if code.startswith("import"):
             return code
-        # Otherwise wrap with header + statement
         if ":= by" in code:
             return LEAN_HEADER + code
         return LEAN_HEADER + stmt + " := by\n" + code
     # Fallback: treat whole response as proof body
-    return LEAN_HEADER + stmt + " := by\n" + response.strip()
+    return LEAN_HEADER + stmt + " := by\n" + strip_junk(response.strip())
 
 
 def main():
