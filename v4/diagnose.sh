@@ -103,28 +103,39 @@ PQ=0
 [ "${DESIRES_COUNT:-0}" -gt 0 ]   && PQ=$((PQ + 3))   # agents filing desires = active telemetry
 [ "${LEARNINGS_COUNT:-0}" -gt 5 ] && PQ=$((PQ + 3))   # agents sharing discovered knowledge
 
+# --- Score direction (higher_is_better or lower_is_better) ---
+DIRECTION=$(grep '^direction:' "$DOMAIN_DIR/config.yaml" 2>/dev/null | awk '{print $2}' | tr -d '"')
+DIRECTION="${DIRECTION:-higher_is_better}"
+if [ "$DIRECTION" = "lower_is_better" ]; then
+    SORT_FLAG="-n"      # ascending: lowest first = best first
+    IMPROVE_SIGN="-1"   # improvement = negative delta (score went down)
+else
+    SORT_FLAG="-rn"     # descending: highest first = best first
+    IMPROVE_SIGN="1"    # improvement = positive delta (score went up)
+fi
+
 # --- Score trajectory ---
-BEST_SCORE=$(tail -n +2 "$RESULTS" 2>/dev/null | awk -F'\t' '{print $2}' | sort -rn | head -1)
+BEST_SCORE=$(tail -n +2 "$RESULTS" 2>/dev/null | awk -F'\t' '{print $2}' | sort $SORT_FLAG | head -1)
 
 # Rolling window: best in last 20 vs best in prior experiments
-BEST_LAST_20=$(tail -20 "$RESULTS" | awk -F'\t' '{print $2}' | sort -rn | head -1)
-BEST_PRIOR_20=$(head -n -20 "$RESULTS" 2>/dev/null | tail -n +2 | awk -F'\t' '{print $2}' | sort -rn | head -1)
+BEST_LAST_20=$(tail -20 "$RESULTS" | awk -F'\t' '{print $2}' | sort $SORT_FLAG | head -1)
+BEST_PRIOR_20=$(head -n -20 "$RESULTS" 2>/dev/null | tail -n +2 | awk -F'\t' '{print $2}' | sort $SORT_FLAG | head -1)
 
 # Flat = less than 1% absolute improvement over rolling window of 20
 FLAT="false"
 if [ -n "$BEST_PRIOR_20" ] && [ -n "$BEST_LAST_20" ] && [ "$TOTAL_EXP" -gt 20 ]; then
     FLAT=$(awk "BEGIN {
-        delta = $BEST_LAST_20 - $BEST_PRIOR_20;
+        delta = ($BEST_LAST_20 - $BEST_PRIOR_20) * $IMPROVE_SIGN;
         if (delta < 0.01) print \"true\"; else print \"false\"
     }")
 fi
 
 # Also check shorter window: best in last 10 vs best overall
-BEST_LAST_10=$(tail -10 "$RESULTS" | awk -F'\t' '{print $2}' | sort -rn | head -1)
+BEST_LAST_10=$(tail -10 "$RESULTS" | awk -F'\t' '{print $2}' | sort $SORT_FLAG | head -1)
 MICRO_FLAT="false"
 if [ -n "$BEST_SCORE" ] && [ -n "$BEST_LAST_10" ] && [ "$TOTAL_EXP" -gt 15 ]; then
     MICRO_FLAT=$(awk "BEGIN {
-        delta = $BEST_LAST_10 - ($BEST_SCORE - 0.005);
+        delta = ($BEST_LAST_10 - ($BEST_SCORE + 0.005 * $IMPROVE_SIGN)) * $IMPROVE_SIGN;
         if (delta < 0.005) print \"true\"; else print \"false\"
     }")
 fi
