@@ -101,7 +101,7 @@ def main():
                     done_ids.add(json.loads(line).get("problem_id", ""))
         print(f"Resuming: {len(done_ids)} problems already done, skipping...", file=sys.stderr)
 
-    problems = [p for p in problems if p.get("problem_id", f"problem_{i}") not in done_ids]
+    problems = [p for j, p in enumerate(problems) if p.get("problem_id", f"problem_{j}") not in done_ids]
     print(f"Generating {args.n_candidates} candidates for {len(problems)} remaining problems...", file=sys.stderr)
 
     total = 0
