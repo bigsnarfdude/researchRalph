@@ -73,11 +73,11 @@ echo ""
 
 # ── Combine + deduplicate ─────────────────────────────────────────────────────
 echo "[combine] Merging all sources..."
-python3 - <<'PYEOF'
-import json, sys
+OUTPUT_DIR="$OUTPUT_DIR" python3 - <<'PYEOF'
+import json, os, sys
 from pathlib import Path
 
-output_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("data/lean4-proof-corpus")
+output_dir = Path(os.environ.get("OUTPUT_DIR", "data/lean4-proof-corpus"))
 sources = [
     ("rrma_competition",  output_dir / "rrma_competition.jsonl"),
     ("minif2f_test",      output_dir / "minif2f_test.jsonl"),
@@ -107,7 +107,7 @@ with open(output_dir / "combined.jsonl", "w") as out:
         print(f"  {source_name}: {count} unique")
 
 print(f"  Total combined: {total}")
-PYEOF "$OUTPUT_DIR"
+PYEOF
 echo ""
 
 # ── Summary ───────────────────────────────────────────────────────────────────
