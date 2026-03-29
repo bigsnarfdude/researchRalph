@@ -135,6 +135,7 @@ def main():
     parser.add_argument("--verify", action="store_true", help="Re-verify each proof with lean_verify")
     parser.add_argument("--min-tactics", type=int, default=1, help="Min tactic count to include")
     parser.add_argument("--sft-format", action="store_true", help="Include SFT chat format in output")
+    parser.add_argument("--multi-proof", action="store_true", help="Include multiple distinct proofs per problem (up to 3)")
     args = parser.parse_args()
 
     attempts_dir = Path(args.attempts_dir)
@@ -145,7 +146,8 @@ def main():
     print(f"Found {len(lean_files)} .lean files in {attempts_dir}", file=sys.stderr)
 
     total = verified = skipped = 0
-    seen_ids = set()
+    # multi-proof: track (problem_id -> set of proof fingerprints)
+    seen_ids: dict = {}  # problem_id -> count of proofs kept
 
     with output_path.open('w') as out:
         for lean_file in sorted(lean_files):
@@ -160,11 +162,24 @@ def main():
                 skipped += 1
                 continue
 
-            # Deduplicate by problem_id
-            if example['problem_id'] in seen_ids:
-                skipped += 1
-                continue
-            seen_ids.add(example['problem_id'])
+            pid = example['problem_id']
+            proof_fp = example['proof_body'][:120]  # fingerprint
+
+            if args.multi_proof:
+                # Keep up to 3 distinct proofs per problem
+                if pid not in seen_ids:
+                    seen_ids[pid] = set()
+                if proof_fp in seen_ids[pid] or len(seen_ids[pid]) >= 3:
+                    skipped += 1
+                    continue
+                seen_ids[pid].add(proof_fp)
+                # Tag with proof variant number
+                example['problem_id'] = f"{pid}_v{len(seen_ids[pid])}"
+            else:
+                if pid in seen_ids:
+                    skipped += 1
+                    continue
+                seen_ids[pid] = {proof_fp}
 
             if example['tactic_count'] < args.min_tactics:
                 skipped += 1
