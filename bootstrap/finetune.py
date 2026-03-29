@@ -109,10 +109,9 @@ def main():
     n = len(dataset)
     print(f"  {n} training examples")
 
-    from trl import SFTTrainer
-    from transformers import TrainingArguments
+    from trl import SFTTrainer, SFTConfig
 
-    training_args = TrainingArguments(
+    training_args = SFTConfig(
         output_dir=args.output,
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.batch_size,
@@ -125,6 +124,7 @@ def main():
         warmup_ratio=0.05,
         lr_scheduler_type="cosine",
         report_to="none",
+        max_seq_length=args.max_seq_len,
         dataloader_pin_memory=False,
     )
 
@@ -135,11 +135,10 @@ def main():
 
     trainer = SFTTrainer(
         model=model,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
         train_dataset=dataset,
         args=training_args,
         formatting_func=formatting_func,
-        max_seq_length=args.max_seq_len,
     )
 
     print("Starting training...")
