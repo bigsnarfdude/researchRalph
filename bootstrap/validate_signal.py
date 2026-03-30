@@ -202,21 +202,23 @@ def test_easy_subset(stmts_json, minif2f_dir, base_model_id, adapter_path, load_
             text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
             inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512).to(model.device)
 
-            with torch.no_grad():
-                outputs = model.generate(
-                    **inputs, max_new_tokens=256, temperature=0.8,
-                    do_sample=True, num_return_sequences=n_candidates,
-                    pad_token_id=tokenizer.eos_token_id,
-                )
-
-            input_len = inputs["input_ids"].shape[1]
+            # Generate one at a time to avoid OOM
             prob_solved = False
-            for seq in outputs:
-                response = tokenizer.decode(seq[input_len:], skip_special_tokens=True)
+            for _ in range(n_candidates):
+                with torch.no_grad():
+                    out = model.generate(
+                        **inputs, max_new_tokens=384, temperature=0.8,
+                        do_sample=True, num_return_sequences=1,
+                        pad_token_id=tokenizer.eos_token_id,
+                    )
+                response = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
                 lean_code = extract_lean(response, stmt)
                 if verify_lean(lean_code, pid, minif2f_dir):
                     prob_solved = True
                     break
+                del out
+                torch.cuda.empty_cache()
+
             if prob_solved:
                 solved += 1
                 print(f"    PASS: {pid}")
@@ -283,21 +285,22 @@ def test_train_recall(traces_path, stmts_json, minif2f_dir, base_model_id, adapt
             text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
             inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512).to(model.device)
 
-            with torch.no_grad():
-                outputs = model.generate(
-                    **inputs, max_new_tokens=256, temperature=0.8,
-                    do_sample=True, num_return_sequences=n_candidates,
-                    pad_token_id=tokenizer.eos_token_id,
-                )
-
-            input_len = inputs["input_ids"].shape[1]
             prob_solved = False
-            for seq in outputs:
-                response = tokenizer.decode(seq[input_len:], skip_special_tokens=True)
+            for _ in range(n_candidates):
+                with torch.no_grad():
+                    out = model.generate(
+                        **inputs, max_new_tokens=384, temperature=0.8,
+                        do_sample=True, num_return_sequences=1,
+                        pad_token_id=tokenizer.eos_token_id,
+                    )
+                response = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
                 lean_code = extract_lean(response, stmt)
                 if verify_lean(lean_code, pid, minif2f_dir):
                     prob_solved = True
                     break
+                del out
+                torch.cuda.empty_cache()
+
             if prob_solved:
                 solved += 1
                 print(f"    PASS: {pid}")
