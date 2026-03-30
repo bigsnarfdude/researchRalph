@@ -129,12 +129,19 @@ def extract_proof_traces(events, problems, min_thinking=50):
       [tool_result]
 
     For each .lean write, collect:
-      - All thinking blocks in the window before the write
+      - All thinking blocks before the write (looking back to the thinking session)
       - The lean content written
-      - The problem name (from filename)
+      - The problem name — from filename OR theorem name inside the content
 
     Returns list of dicts: {problem_name, statement, thinking, proof, source}
     """
+    # Build reverse map: theorem_name -> problem_id (for test_* files)
+    thm_to_problem = {}
+    for prob, stmt in problems.items():
+        m = re.search(r'theorem\s+(\w+)', stmt)
+        if m:
+            thm_to_problem[m.group(1)] = prob
+
     traces = []
     n = len(events)
 
@@ -197,13 +204,34 @@ def extract_proof_traces(events, problems, min_thinking=50):
         if not proof_body or proof_body == "sorry":
             continue
 
-        # Collect thinking blocks from a window before this write
-        # Look back up to 20 events for thinking blocks
-        window_start = max(0, i - 20)
+        # If filename doesn't match a known problem, try matching via theorem name inside content
+        if problem_name not in problems:
+            tm = re.search(r'theorem\s+(\w+)', lean_content)
+            if tm:
+                problem_name = thm_to_problem.get(tm.group(1), problem_name)
+
+        # Collect thinking blocks before this write.
+        # Agents often think once then batch-write many files (gaps of 20-50 events).
+        # Strategy: walk back to find the contiguous "thinking session" — all thinking
+        # blocks since the last non-thinking, non-tool_result event that isn't a write.
+        # In practice: look back up to 200 events, collect all thinking blocks,
+        # but stop if we hit another thinking session boundary (a second thinking block
+        # cluster separated by a large gap of non-thinking events > 10).
         thinking_parts = []
-        for j in range(window_start, i):
+        last_thinking_idx = -1
+        gap = 0
+        for j in range(i - 1, max(-1, i - 200), -1):
             if events[j]["type"] == "thinking":
                 thinking_parts.append(events[j]["content"])
+                last_thinking_idx = j
+                gap = 0
+            else:
+                gap += 1
+                # Stop if we've gone more than 15 non-thinking events past the
+                # last thinking block (we've left the thinking session)
+                if last_thinking_idx >= 0 and gap > 15:
+                    break
+        thinking_parts = list(reversed(thinking_parts))
 
         combined_thinking = "\n\n".join(thinking_parts)
         if len(combined_thinking) < min_thinking:
@@ -263,6 +291,8 @@ def main():
     parser.add_argument("logs_dir", help="Directory containing *.jsonl agent logs")
     parser.add_argument("--minif2f", default=None,
                         help="Path to miniF2F-lean4 repo for problem statements")
+    parser.add_argument("--statements-json", default=None,
+                        help="JSON file mapping problem_id -> theorem_statement (alternative to --minif2f)")
     parser.add_argument("--out", default="sft_traces.jsonl",
                         help="Output JSONL file")
     parser.add_argument("--min-thinking", type=int, default=200,
@@ -284,7 +314,12 @@ def main():
 
     # Load problem statements
     problems = {}
-    if args.minif2f:
+    if args.statements_json:
+        import json as _json
+        with open(args.statements_json) as _f:
+            problems = _json.load(_f)
+        print(f"  Loaded {len(problems)} problem statements from {args.statements_json}")
+    elif args.minif2f:
         print(f"Loading miniF2F problems from {args.minif2f}...")
         problems = load_minif2f_problems(args.minif2f)
         print(f"  Loaded {len(problems)} problem statements")
