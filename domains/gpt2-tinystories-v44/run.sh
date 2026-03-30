@@ -5,8 +5,6 @@
 # Serializes GPU access with flock so multiple agents don't OOM.
 # Automatically appends score to results.tsv.
 
-set -e
-
 METHOD=${1:-baseline}
 DESCRIPTION=${2:-"no description"}
 DESIGN=${3:-hyperparam}
@@ -21,11 +19,10 @@ mkdir -p "$LOGS_DIR"
 AGENT="${CLAUDE_AGENT_ID:-manual}"
 RUN_LOG="$LOGS_DIR/${METHOD}_${AGENT}_$(date +%s).log"
 
-echo "[run.sh] Running experiment: $METHOD"
-echo "[run.sh] Description: $DESCRIPTION"
-echo "[run.sh] Waiting for GPU lock..."
+echo "[run.sh] Queuing experiment: $METHOD"
+echo "[run.sh] Results will appear in results.tsv when done (~7 min)."
 
-# Serialize GPU access — only one training at a time on 16GB
+# Run in background so agents aren't blocked by 2-min bash timeout
 (
     flock -x 200
 
@@ -33,7 +30,7 @@ echo "[run.sh] Waiting for GPU lock..."
     START=$(date +%s)
 
     # 10-minute timeout (5-min budget + compilation overhead)
-    timeout 600 uv run train.py > "$RUN_LOG" 2>&1
+    timeout 600 uv run train.py > "$RUN_LOG" 2>&1 || true
     EXIT_CODE=$?
 
     END=$(date +%s)
@@ -84,4 +81,5 @@ echo "[run.sh] Waiting for GPU lock..."
     echo "[run.sh] $EXP_ID: val_bpb=$SCORE vram=${VRAM}MB status=$STATUS"
     echo "val_bpb: $SCORE"
 
-) 200>"$LOCKFILE"
+) 200>"$LOCKFILE" &
+echo "[run.sh] Background PID: $!"
