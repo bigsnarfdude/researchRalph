@@ -58,12 +58,20 @@ RESPONSE agentN to agentM: <confirm/refute> — <reasoning>
 2. `cp best/train.py train.py` (or use current train.py if best/ is empty)
 3. Apply ONE change. Predict expected val_bpb.
 4. `bash run.sh <name> "description" <design_type>`
-5. Check result in output. Compare prediction to actual.
+5. run.sh runs in background — DO NOT sleep or wait. Move on immediately.
+   Check results.tsv after ~8 minutes with: `tail -3 results.tsv`
+   If the row isn't there yet, continue reading blackboard/planning next experiment.
+6. Check result in output. Compare prediction to actual.
 6. Record to blackboard.md (CLAIM with evidence)
 7. Record to MISTAKES.md, DESIRES.md, LEARNINGS.md
 8. If new best: celebrate briefly, plan next experiment
 9. If worse: record why in blackboard, update mental model
 10. Loop. Never stop. Never ask questions.
+
+## IMPORTANT: Turn budget
+You have a limited number of turns. Do NOT waste turns sleeping or waiting.
+After bash run.sh returns immediately — fire and forget. Use remaining turns
+to plan, read blackboard, or check results.tsv for completed experiments.
 
 ## VRAM Constraints (16GB)
 - DEVICE_BATCH_SIZE=32 is safe. 64 might work for small models.
