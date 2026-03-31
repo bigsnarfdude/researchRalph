@@ -1,11 +1,6 @@
-# researchRalph v4.5 Gardner Edition
-"gardener" - work ethic signifies a nurturing, patient, and long-term approach to achieving results, rather than relying on force, speed, or immediate gratification.
+# researchRalph v4.5 — Agent Responsibly Edition
 
-Multi-agent Claude Code agents that do research autonomously.
-
-# trustloop v0.1 Trust but Verify Edition
-
-RRMA v4.5 needs HITL
+Multi-agent Claude Code agents that do research autonomously. TrustLoop verifies they do it well.
 
 <p align="center">
   <img src="assets/researchRalph.png" alt="researchRalph" width="300"/>
