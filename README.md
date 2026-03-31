@@ -3,6 +3,10 @@
 
 Multi-agent Claude Code agents that do research autonomously.
 
+# trustloop v0.1 Trust but Verify Edition
+
+RRMA v4.5 needs HITL
+
 <p align="center">
   <img src="assets/researchRalph.png" alt="researchRalph" width="300"/>
 </p>
