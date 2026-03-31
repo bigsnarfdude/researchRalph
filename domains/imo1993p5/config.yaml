@@ -1,0 +1,5 @@
+domain: imo1993p5
+metric: proof_compiles
+direction: higher_is_better
+harness: run.sh
+editable: solution.lean
