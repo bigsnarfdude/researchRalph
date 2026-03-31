@@ -372,38 +372,62 @@ researchRalph/
 │   ├── monitor.sh             # Health dashboard
 │   ├── stop.sh / collect.sh   # Stop agents / gather results
 │   ├── watchdog.sh            # Auto-restart stale agents
-│   └── operator.sh            # Steer agents mid-run
+│   ├── operator.sh            # Steer agents mid-run
+│   └── conductor.sh           # Orchestrator
 ├── v4/                        # Self-recursive layer (the gardener)
-│   ├── outer-loop.sh          # Generation loop
-│   ├── diagnose.sh            # Process quality scoring
+│   ├── outer-loop.sh          # Generation loop (calls diagnose.py every 20m)
+│   ├── diagnose.py            # v4.5 smart diagnosis via TrustLoop scorer
+│   ├── diagnose.sh            # v4.4 legacy bash diagnosis (fallback)
 │   ├── calibrate.sh           # Literature search
 │   ├── taste.md               # Inherited principles
-│   ├── meta-loop.sh           # Live meta-agent
-│   └── launch-agents.sh       # Worker launcher with stream-json + telemetry
-├── trustloop/                 # Verification layer
+│   ├── meta-loop.sh           # Live meta-agent (blackboard compression)
+│   ├── launch-agents.sh       # Worker launcher with stream-json + telemetry
+│   ├── stop-agents.sh         # Kill worker/meta screen sessions
+│   ├── generate-meta-blackboard.sh  # Cross-generation memory
+│   └── env.sh                 # Portable PATH setup for claude CLI
 ├── trustloop_server.py        # Local trace server + forensic chat
 ├── trustloop_viewer.html      # Browser UI for traces
-├── tools/                     # Analysis and MCP tools
+├── tools/                     # Analysis, MCP, and scoring
+│   ├── trustloop_scorer.py    # v4.5 experiment classifier + anomaly detection + insight engine
 │   ├── rrma_mcp.py            # RRMA MCP server (read-only domain inspection)
 │   ├── trustloop_mcp.py       # TrustLoop MCP server (trace queries)
+│   ├── rrma_traces.py         # OpenTraces schema + RRMA multi-agent extensions
+│   ├── trace_forensics.py     # Forensic analysis engine (Claude tool-use loop)
+│   ├── trustloop_dashboard.py # Live monitoring UI (timeline, swimlanes, steer)
+│   ├── trustloop_viz.py       # Pareto-front experiment visualization
+│   ├── trustloop_verifier.py  # Automated verification via Claude
+│   ├── score_timeline.py      # Per-agent swimlane charts
 │   ├── traces_to_sft.py       # Convert traces to SFT format
+│   ├── dag_extractor.py       # DAG structural analysis
 │   ├── forensic.sh            # CLI forensic analysis
-│   └── ...                    # DAG extraction, scoring, visualization
+│   └── scrub.py               # PII/secret scrubber
 ├── bootstrap/                 # SFT dataset pipeline
 │   ├── generate_opus_traces.py
-│   ├── build_dataset.py
-│   ├── finetune.py
-│   └── ...                    # dedup, audit, eval, validate
-├── domains/                   # 25+ optimization targets
+│   ├── build_dataset.py       # Trace → SFT dataset
+│   ├── dedup_dataset.py       # Deduplication
+│   ├── audit_dataset.py       # Quality audit
+│   ├── finetune.py            # Fine-tuning script
+│   ├── eval_signal.py / validate_signal.py  # Signal evaluation
+│   └── DATASET_CARD.md        # HuggingFace dataset card
+├── domains/                   # 26 optimization targets
 │   ├── template/              # Start here
-│   ├── rrma-lean/             # Lean 4 theorem proving
-│   ├── sae-bench/             # SAE architecture research
-│   ├── gpt2-tinystories/      # ML training reference
+│   ├── rrma-lean/             # Lean 4 theorem proving (MiniF2F 0.8811)
+│   ├── gpt2-tinystories/      # GPT-2 training (8×A100, 1.047 BPB)
+│   ├── gpt2-tinystories-v44/  # GPT-2 single-GPU (RTX 4070 Ti, 1.102 BPB)
+│   ├── sae-bench/             # SAE architecture (0.9894 F1)
+│   ├── rrma-r1/               # DeepSeek-R1 recipe rediscovery
+│   ├── rrma-red-team/         # Adversarial optimization (0.825)
+│   ├── prompt-climb/          # Prompt optimization (0.878 F1)
 │   ├── imo1993p5/             # Single-problem controlled test
-│   └── battlebotgym-*/        # Competitive optimization games
+│   ├── af-elicitation/        # Alignment faking elicitation
+│   ├── trustloop-test/        # TrustLoop integration test
+│   └── battlebotgym-*/        # 14 competitive optimization games
 ├── sft_data/                  # Accumulated SFT training data
 ├── data/                      # Traces and datasets from runs
 ├── docs/                      # Deep dives
+├── client/                    # Client utilities
+├── hub/                       # Model/dataset hub integration
+├── examples/                  # Example configurations
 └── tests/                     # Test suite
 ```
 
