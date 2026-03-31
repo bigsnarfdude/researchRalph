@@ -71,8 +71,9 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
     log "=== GENERATION $gen / $MAX_GENERATIONS ==="
 
     # Snapshot pre-generation state
-    PRE_BEST=$(awk -F'\t' '{print $2}' "$DOMAIN_DIR/results.tsv" 2>/dev/null | sort -rn | head -1)
-    PRE_EXP=$(grep -c $'\t' "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 0)
+    PRE_BEST=$(awk -F'\t' 'NR>1{print $2}' "$DOMAIN_DIR/results.tsv" 2>/dev/null | sort -rn | head -1 || true)
+    PRE_BEST="${PRE_BEST:-0}"
+    PRE_EXP=$(awk -F'\t' 'NR>1{n++} END{print n+0}' "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 0)
     PRE_PQ="unknown"
 
     # --- Step 0: Calibrate (first generation only) ---
@@ -184,8 +185,9 @@ NUDGE_EOF
     bash "$SCRIPT_DIR/stop-agents.sh" 2>&1 | tee -a "$LOG"
 
     # --- Step 4: Post-generation metrics ---
-    POST_BEST=$(awk -F'\t' '{print $2}' "$DOMAIN_DIR/results.tsv" 2>/dev/null | sort -rn | head -1)
-    POST_EXP=$(grep -c $'\t' "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 0)
+    POST_BEST=$(awk -F'\t' 'NR>1{print $2}' "$DOMAIN_DIR/results.tsv" 2>/dev/null | sort -rn | head -1 || true)
+    POST_BEST="${POST_BEST:-0}"
+    POST_EXP=$(awk -F'\t' 'NR>1{n++} END{print n+0}' "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 0)
     NEW_EXP=$((POST_EXP - PRE_EXP))
 
     log "Generation $gen complete: $NEW_EXP new experiments, best=$POST_BEST (was $PRE_BEST)"
