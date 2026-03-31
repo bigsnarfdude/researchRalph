@@ -72,6 +72,9 @@ RESPONSE agentN to agentM: <confirm/refute> — <reasoning>
 You have a limited number of turns. Do NOT waste turns sleeping or waiting.
 After bash run.sh returns immediately — fire and forget. Use remaining turns
 to plan, read blackboard, or check results.tsv for completed experiments.
+Do NOT poll results.tsv in a loop. Check it at most 2-3 times per experiment.
+Between checks: read blackboard, plan next experiment, write to LEARNINGS.md.
+Polling wastes turns and tokens without producing breakthroughs.
 
 ## VRAM Constraints (16GB)
 - DEVICE_BATCH_SIZE=32 is safe. 64 might work for small models.
