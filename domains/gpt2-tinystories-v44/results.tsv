@@ -1,1 +1,4 @@
-EXP-ID	val_bpb	peak_vram_mb	status	description	agent	design	train_min
+exp_id	score	vram	status	description	agent	design	train_min
+exp001	1.171181	11701.0	keep	SDPA baseline depth=8 AR=64 batch=2^17	manual	hyperparam	5
+exp002	1.171318	11701.0	discard	TOTAL_BATCH_SIZE=2^16 for more steps in 5min	agent0	hyperparam	5
+exp003	1.106267	11549.0	keep	halve TOTAL_BATCH_SIZE from 2^17 to 2^16 — doubles optimizer steps	agent1	hyperparam	5

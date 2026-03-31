@@ -102,7 +102,7 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         ALIVE="${ALIVE:-0}"
         if [ "$ALIVE" -eq 0 ]; then
             log "All workers finished (used all $MAX_TURNS turns). Running final diagnosis."
-            DECISION=$(bash "$SCRIPT_DIR/diagnose.sh" "$DOMAIN_DIR" 2>>"$LOG")
+            DECISION=$(python3 "$SCRIPT_DIR/diagnose.py" "$DOMAIN_DIR" 2>>"$LOG")
             # If workers are done, treat CONTINUE/NUDGE as STOP_DONE
             if [ "$DECISION" = "CONTINUE" ] || [ "$DECISION" = "TOO_EARLY" ] || [ "$DECISION" = "NUDGE" ]; then
                 DECISION="STOP_DONE"
@@ -111,7 +111,7 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         fi
 
         # Run diagnosis
-        DECISION=$(bash "$SCRIPT_DIR/diagnose.sh" "$DOMAIN_DIR" 2>>"$LOG")
+        DECISION=$(python3 "$SCRIPT_DIR/diagnose.py" "$DOMAIN_DIR" 2>>"$LOG")
         log "Diagnosis: $DECISION (check $MONITOR_COUNT, workers alive: $ALIVE)"
 
         # --- v4.1: Handle NUDGE (lightweight intervention) ---
