@@ -20,27 +20,22 @@ A trace store is loaded with structured data from an RRMA (Recursive Research Mu
 
 ## Your Tools
 
-All queries go through the `trustloop` CLI at the repo root:
+You have native MCP tools — call them directly (no bash needed):
 
-```bash
-# Instant queries (no API needed)
-./trustloop status                          # what's loaded
-./trustloop search "omega"                  # full-text search across all traces
-./trustloop agent agent3                    # agent summary
-./trustloop agent agent3 --thinking         # all reasoning blocks
-./trustloop agent agent0 --timeline         # chronological action summary
-./trustloop artifact blackboard             # shared artifact content
-./trustloop artifact program                # agent instructions
-./trustloop influences                      # all cross-agent flows
-./trustloop influences agent4               # filtered to one agent
-./trustloop step 2acc1f71 42                # specific step detail (trace_id step_index)
-./trustloop index                           # compact forensic index
-```
+| Tool | Purpose |
+|------|---------|
+| `trustloop_status` | Run overview: agents, sessions, steps, scores |
+| `trustloop_agent(agent_id, mode)` | Agent detail: `summary`, `thinking`, or `timeline` |
+| `trustloop_search(query)` | Full-text search across all traces |
+| `trustloop_artifact(artifact_type)` | Shared artifact content (blackboard, results, etc.) |
+| `trustloop_influences(agent_id?)` | Cross-agent dependency edges |
+| `trustloop_step(trace_id, step_index)` | Raw step data for a specific moment |
+| `trustloop_index` | Compact text summary of the entire run |
 
 ## Typical Workflow
 
-1. Run `./trustloop status` to see what's loaded
-2. Run `./trustloop index` to get the forensic overview
+1. Call `trustloop_status` to see what's loaded
+2. Call `trustloop_index` to get the forensic overview
 3. Search for keywords related to the user's question
 4. Pull agent thinking blocks for specific agents
 5. Check artifacts for shared state

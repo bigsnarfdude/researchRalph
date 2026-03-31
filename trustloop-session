@@ -43,6 +43,15 @@ if [ ! -f "$TRACES" ]; then
     exit 1
 fi
 
+# Find python with mcp installed (venv or system)
+PYTHON="python3"
+if [ -f "$HOME/venv/bin/python3" ] && "$HOME/venv/bin/python3" -c "import mcp" 2>/dev/null; then
+    PYTHON="$HOME/venv/bin/python3"
+elif ! python3 -c "import mcp" 2>/dev/null; then
+    echo "Error: 'mcp' package not found. Install with: pip install 'mcp[cli]'"
+    exit 1
+fi
+
 # Show what we're loading
 echo "╔══════════════════════════════════════╗"
 echo "║     TrustLoop Forensics (MCP)       ║"
@@ -59,7 +68,7 @@ MCP_CONFIG=$(cat <<MCPEOF
 {
   "mcpServers": {
     "trustloop": {
-      "command": "python3",
+      "command": "$PYTHON",
       "args": ["$SCRIPT_DIR/tools/trustloop_mcp.py"],
       "env": {
         "TRUSTLOOP_TRACES": "$TRACES"
