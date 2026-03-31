@@ -22,3 +22,45 @@ exp020	crash		crash	Remove value embeddings — VE ablation, frees 16.8M params 
 exp021	1.114496	11195.0	discard	Remove value embeddings — VE ablation v2 (also disables VE gates)	agent1	ablation	5
 exp022	1.214665	9393.4	discard	depth=10 devbatch=16 batch2^16 — more capacity, 2x grad_accum, ~600 steps	agent0	architecture	6
 exp023	crash		crash	GQA with n_kv_head=2 (from 4) — halve KV heads, save params for potential depth increase	agent1	architecture	0
+exp024	1.109210	11549.0	discard	GQA n_kv_head=2 v2 (with KV head expansion fix in SDPA)	agent1	architecture	5
+exp025	1.111218	11092.0	discard	remove softcap entirely — test if QK-norm makes it redundant	agent0	architecture	5
+exp026	1.101116	11549.0	keep	FINAL_LR_FRAC=0.05 (from 0.0) — non-zero final LR	agent1	schedule	5
+exp027	1.100641	11549.0	keep	MATRIX_LR=0.02 (from 0.04) — test if even lower Muon LR helps	agent0	optimizer	5
+exp028	1.099750	11549.0	keep	FINAL_LR_FRAC=0.03 (calibration says sometimes better than 0.05)	agent1	schedule	5
+exp029	1.099400	11549.0	keep	MATRIX_LR=0.02 + FINAL_LR_FRAC=0.05 — combine two additive improvements	agent0	optimizer	5
+exp030	1.099741	11549.0	discard	MATRIX_LR=0.02 + FINAL_LR_FRAC=0.03 — combining two wins	agent1	optimizer	5
+exp031	1.099829	11549.0	discard	MATRIX_LR=0.02 + FINAL_LR_FRAC=0.03 — test 0.03 vs 0.05 at matrix_lr=0.02	agent0	optimizer	5
+exp032	1.108755	11549.0	discard	MATRIX_LR=0.01 + FINAL_LR_FRAC=0.05 — push matrix LR even lower	agent1	optimizer	5
+exp033	1.103438	11549.0	discard	SCALAR_LR=1.0 (from 0.5) — faster per-layer scalar learning	agent0	optimizer	5
+exp034	1.102206	11549.0	discard	MATRIX_LR=0.015 — fine grid between 0.01 (too low) and 0.02 (best)	agent1	optimizer	5
+exp035	1.424567	13589.5	discard	label_smoothing=0.1 in cross_entropy — regularization via softer targets	agent1	regularization	5
+exp036	1.102057	11549.0	discard	ADAM_BETAS=(0.9, 0.95) — slower beta1 for embeddings	agent1	optimizer	5
+exp037	1.096144	11549.9	keep	WINDOW_PATTERN=S all-short windows at optimal config (1190 steps)	agent0	architecture	5
+exp038	1.095829	11549.9	keep	softcap=10 (from 15) — tighter logit capping for stronger regularization, on best config (mlr=0.02+flr=0.05+batch2^16+rope200k)	agent1	architecture	5
+exp039	1.106415	11572.5	discard	WINDOW_PATTERN=S with optimal config (batch2^16 mlr0.02 flr0.05 rope200k)	agent0	architecture	5
+exp040	1.105760	11572.5	discard	z-loss regularization (1e-4 * logsumexp^2) on best config (windowS+mlr0.02+flr0.05)	agent1	regularization	5
+exp041	1.096594	11549.9	discard	HEAD_DIM=64 (8 heads vs 4 at 512-dim) — more attention diversity	agent0	architecture	5
+exp042	1.098621	11688.1	discard	softcap=8 (from 10) — continue lower-softcap trend, best config otherwise	agent1	architecture	5
+exp043	1.096293	11549.9	discard	buffer_size=5000 (from 1000) — better best-fit packing, data pipeline change, clean config (softcap=10+HEAD_DIM=128+no_zloss)	agent0	hyperparam	5
+exp044	1.101672	11549.9	discard	ns_steps=3 (from 5) — fewer Muon polar express iterations, faster steps, more total steps	agent1	optimizer	5
+exp045	1.098148	11549.9	discard	cosine warmdown schedule (from linear) — smoother LR decay, more time at moderate LR, clean config	agent0	schedule	5
+exp046	1.090281	6953.0	keep	depth=6 (from 8) — smaller model for 50% more optimizer steps, throughput play	agent1	architecture	5
+exp047	crash		crash	weight tying (lm_head.weight = wte.weight) — saves 4.2M params (8%), shared embedding/output representation, clean config	agent0	architecture	0
+exp048	crash		crash	depth=4 (from 6/8) — ultra shallow for max throughput, test capacity floor	agent1	architecture	0
+exp049	1.089782	6952.6	keep	depth=6 + weight tying — saves 48% params (12.6M), test regularization effect at small scale	agent0	architecture	5
+exp050	1.089305	10299.4	keep	depth=7 (512-dim, 4 heads, 7 layers) — bracket depth optimum between 6 and 8	agent1	architecture	5
+exp051	1.090932	6952.6	discard	depth=6 + weight tying + mlr=0.03 (from 0.02) — LR retune for 384-dim regime + optimizer bugfix (value_embeds/resid/x0 groups were missing)	agent0	optimizer	5
+exp052	1.090674	6952.6	discard	depth=6 + weight tying + matrix_lr=0.03 (from 0.02) — LR retune at 384-dim with 2x more steps	agent1	optimizer	5
+exp053	1.089072	10299.4	keep	depth=7 + weight tying (512-dim, 4 heads, ~27M unique params) — combine best depth with regularization	agent1	architecture	5
+exp054	1.094260	5357.4	discard	depth=7 + TOTAL_BATCH_SIZE=2^15 + DEVICE_BATCH_SIZE=16 — batch halving for more steps at depth=7, test if step count wins overcome gradient noise	agent0	hyperparam	5
+exp055	1.088910	10299.4	keep	depth=7 + weight tying + EMBEDDING_LR=0.4 (from 0.6) — lower embedding LR for weight-tied config where embedding also serves as output projection	agent0	optimizer	5
+exp056	crash		crash	sequence_len=1024 training (eval stays at 2048) — halve attention cost, more steps at full depth=7+wt capacity, orthogonal throughput lever	agent0	architecture	0
+exp057	1.145403	5495.7	discard	TRAIN_SEQ_LEN=1024 (from 2048) — halve training context for faster attention, orthogonal throughput lever, depth=7+wt best config	agent1	architecture	5
+exp058	1.144892	5496.7	discard	sequence_len=1024 training v2 (contiguous fix) — halve attention cost, more steps at depth=7+wt capacity	agent0	architecture	5
+exp059	1.090145	10299.4	discard	softcap=15 (from 10) at depth=7+wt — retune softcap at new operating point (1430 steps vs 1240 at depth=8)	agent1	hyperparam	5
+exp060	1.091679	10299.4	discard	EMBEDDING_LR=0.3 (from 0.4) at depth=7+wt — continue lower-embedding-LR trend for weight-tied config	agent0	optimizer	5
+exp061	1.093252	10299.4	discard	WEIGHT_DECAY=0.0 (from 0.2) at depth=7+wt — test if weight tying makes explicit weight decay redundant	agent1	hyperparam	5
+exp062	1.100354	9141.4	discard	HEAD_DIM=64 (8 heads vs 4) at depth=7+wt — more attention diversity, orthogonal architecture axis flagged by gardener	agent0	architecture	5
+exp063	1.089107	10299.4	discard	FINAL_LR_FRAC=0.03 (from 0.05) at depth=7+wt — test if lower final LR helps at weight-tied operating point	agent1	schedule	5
+exp064	1.089878	10299.4	discard	WARMDOWN_RATIO=0.4 (from 0.5) at depth=7+wt — shorter warmdown, more peak LR time, testing at 1389-step operating point	agent1	schedule	5
+exp065	1.096017	11233.2	discard	MLP ratio 5x (from 4x) at depth=7+wt — more MLP capacity if model is attention-bound, testing free capacity hypothesis	agent1	architecture	5

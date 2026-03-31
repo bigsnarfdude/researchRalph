@@ -27,6 +27,14 @@ echo "[run.sh] Results will appear in results.tsv when done (~7 min)."
     flock -x 200
 
     echo "[run.sh] GPU lock acquired. Starting training..."
+
+    # Snapshot train.py at flock-acquire time (not at result time)
+    # This prevents race conditions where another agent modifies train.py
+    # between experiment start and result recording.
+    SNAPSHOT="$LOGS_DIR/${METHOD}_${AGENT}_$(date +%s)_train.py"
+    cp "$DOMAIN_DIR/train.py" "$SNAPSHOT"
+    CONFIG_HASH=$(md5sum "$SNAPSHOT" 2>/dev/null | cut -d' ' -f1 || md5 -q "$SNAPSHOT" 2>/dev/null || echo "nohash")
+
     START=$(date +%s)
 
     # 10-minute timeout (5-min budget + compilation overhead)
@@ -71,10 +79,11 @@ echo "[run.sh] Results will appear in results.tsv when done (~7 min)."
     # Append to results
     echo -e "${EXP_ID}\t${SCORE}\t${VRAM}\t${STATUS}\t${DESCRIPTION}\t${AGENT}\t${DESIGN}\t${TRAIN_MIN}" >> "$RESULTS_TSV"
 
-    # Update best/ if new best
+    # Update best/ if new best — use the snapshot, not live train.py
     if [ "$STATUS" = "keep" ]; then
-        cp "$DOMAIN_DIR/train.py" "$DOMAIN_DIR/best/train.py"
-        echo "[run.sh] NEW BEST: $SCORE — saved to best/train.py"
+        cp "$SNAPSHOT" "$DOMAIN_DIR/best/train.py"
+        echo "$CONFIG_HASH" > "$DOMAIN_DIR/best/config_hash"
+        echo "[run.sh] NEW BEST: $SCORE — saved to best/train.py (hash: $CONFIG_HASH)"
     fi
 
     echo ""
