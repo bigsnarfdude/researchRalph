@@ -213,6 +213,42 @@ def main():
     decision = decide(report, domain_dir)
     print(f"[diagnose.py] DECISION: {decision}", file=sys.stderr)
 
+    # Write unresolved action items for outer-loop NUDGE handler
+    unresolved_gardener = [a for a in report.action_items if not a.resolved and a.owner == "gardener"]
+    unresolved_hitl = [a for a in report.action_items if not a.resolved and a.owner == "hitl"]
+    missed_checks = [c for c in report.gardener_checks if not c.found]
+
+    # Dead ends from insights
+    dead_ends = [i.message for i in report.insights if i.kind == "dead_end"]
+    # Tool efficiency issues
+    tool_issues = [i.message for i in report.insights if i.kind in ("tool_inefficiency", "agent_cost")]
+    # Single-axis stagnation: all recent experiments share one design type
+    recent_designs = [e.design for e in report.experiments[-10:] if e.design]
+    design_counts = {}
+    for d in recent_designs:
+        design_counts[d] = design_counts.get(d, 0) + 1
+    dominant_axis = None
+    if recent_designs and design_counts:
+        top_design, top_count = max(design_counts.items(), key=lambda x: x[1])
+        if top_count >= len(recent_designs) * 0.7:
+            dominant_axis = top_design
+
+    import json as _json
+    nudge_data = {
+        "decision": decision,
+        "pq": pq,
+        "gardener_fixes": [{"issue": a.issue, "fix": a.fix, "source": a.source_exp} for a in unresolved_gardener],
+        "hitl_fixes": [{"issue": a.issue, "fix": a.fix} for a in unresolved_hitl],
+        "missed_checks": [{"issue": c.issue, "expected": c.expected_in_program_md} for c in missed_checks],
+        "dead_ends": dead_ends,
+        "tool_issues": tool_issues,
+        "dominant_axis": dominant_axis,
+        "stagnation": report.stagnation_depth,
+    }
+    nudge_path = domain_dir / ".nudge_data.json"
+    nudge_path.write_text(_json.dumps(nudge_data, indent=2))
+    print(f"[diagnose.py] Wrote nudge data to {nudge_path}", file=sys.stderr)
+
     # Output decision to stdout (what outer-loop.sh reads)
     print(decision)
 

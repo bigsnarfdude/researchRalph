@@ -114,7 +114,7 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         DECISION=$(python3 "$SCRIPT_DIR/diagnose.py" "$DOMAIN_DIR" 2>>"$LOG")
         log "Diagnosis: $DECISION (check $MONITOR_COUNT, workers alive: $ALIVE)"
 
-        # --- v4.1: Handle NUDGE (lightweight intervention) ---
+        # --- v4.5: Handle NUDGE (observation + program.md patch) ---
         if [ "$DECISION" = "NUDGE" ]; then
             NUDGE_COUNT=$((NUDGE_COUNT + 1))
             log "=== NUDGE #$NUDGE_COUNT ==="
@@ -124,46 +124,66 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
                 log "3 nudges without progress. Escalating to REDESIGN."
                 DECISION="REDESIGN"
             else
-                # Generate a lightweight observation for the blackboard
+                # Read structured nudge data from diagnose.py
+                NUDGE_JSON="$DOMAIN_DIR/.nudge_data.json"
+
+                # Generate observation + program.md constraints from TrustLoop data
                 NUDGE_PROMPT="$(cat <<NUDGE_EOF
-You are observing a multi-agent research run. Read the blackboard, results, and agent telemetry below.
+You are the gardener in an RRMA research system. TrustLoop has diagnosed issues that need fixing.
 
-The agents have high process quality but scores are flat and/or agents are blocked by missing tools.
+## TrustLoop nudge data:
+$(cat "$NUDGE_JSON" 2>/dev/null || echo "{}")
 
-## Blackboard (last 60 lines):
-$(tail -60 "$DOMAIN_DIR/blackboard.md")
+## Current program.md:
+$(cat "$DOMAIN_DIR/program.md")
 
-## Recent results (last 15):
-$(tail -15 "$DOMAIN_DIR/results.tsv")
+## Blackboard (last 40 lines):
+$(tail -40 "$DOMAIN_DIR/blackboard.md")
 
-## Meta-blackboard (if any):
-$(cat "$DOMAIN_DIR/meta-blackboard.md" 2>/dev/null | head -40 || echo "none")
+## Recent results (last 10):
+$(tail -10 "$DOMAIN_DIR/results.tsv")
 
-## Agent DESIRES (tools/context they wish they had):
-$(cat "$DOMAIN_DIR/DESIRES.md" 2>/dev/null | tail -40 || echo "none")
+## Your job — TWO outputs separated by ===CONSTRAINTS===
 
-## Agent MISTAKES (what failed and why):
-$(cat "$DOMAIN_DIR/MISTAKES.md" 2>/dev/null | tail -30 || echo "none")
+PART 1: Write ONE observation (2-3 sentences) for the blackboard noting what's stuck and why.
 
-## Agent LEARNINGS (discoveries about the environment):
-$(cat "$DOMAIN_DIR/LEARNINGS.md" 2>/dev/null | tail -30 || echo "none")
+===CONSTRAINTS===
 
-Write ONE short observation (2-3 sentences max) noting:
-- What scaffold change (run.sh, program.md, or a new tool) would unblock the most agent desires
-- OR what axis/approach ALL recent experiments share and ONE alternative nobody has tried
-- Frame as an observation, not an instruction
+PART 2: Write constraints to APPEND to program.md. These must be concrete and actionable:
+- If dead_ends are listed: "Do NOT attempt [design] experiments — 0 keeps in N attempts."
+- If dominant_axis is set: "You have exhausted [axis]. Explore [alternative axis] instead. Look at [specific code section]."
+- If missed_checks show gaps: "CONSTRAINT: [the specific rule from the lesson]"
+- If gardener_fixes are listed: add each fix as a constraint.
 
-Output ONLY the observation text. No headers, no markdown, no commentary.
+Write ONLY the constraint lines (one per line, starting with "- "). If no constraints needed, write "NONE".
+Do NOT rewrite program.md. Only output text to append.
 NUDGE_EOF
 )"
 
-                NUDGE_TEXT=$(claude -p "$NUDGE_PROMPT" --dangerously-skip-permissions --max-turns 3 2>/dev/null)
+                NUDGE_OUTPUT=$(claude -p "$NUDGE_PROMPT" --dangerously-skip-permissions --max-turns 3 2>/dev/null)
 
-                if [ -n "$NUDGE_TEXT" ]; then
-                    echo "" >> "$DOMAIN_DIR/blackboard.md"
-                    echo "## Observation [gardener, $(date '+%H:%M')]" >> "$DOMAIN_DIR/blackboard.md"
-                    echo "$NUDGE_TEXT" >> "$DOMAIN_DIR/blackboard.md"
-                    log "Nudge appended to blackboard: $(echo "$NUDGE_TEXT" | head -1)"
+                if [ -n "$NUDGE_OUTPUT" ]; then
+                    # Split on ===CONSTRAINTS===
+                    OBSERVATION=$(echo "$NUDGE_OUTPUT" | sed '/===CONSTRAINTS===/,$d')
+                    CONSTRAINTS=$(echo "$NUDGE_OUTPUT" | sed '1,/===CONSTRAINTS===/d')
+
+                    # Append observation to blackboard
+                    if [ -n "$OBSERVATION" ]; then
+                        echo "" >> "$DOMAIN_DIR/blackboard.md"
+                        echo "## Observation [gardener, $(date '+%H:%M')]" >> "$DOMAIN_DIR/blackboard.md"
+                        echo "$OBSERVATION" >> "$DOMAIN_DIR/blackboard.md"
+                        log "Nudge observation: $(echo "$OBSERVATION" | head -1)"
+                    fi
+
+                    # Append constraints to program.md (if not NONE)
+                    if [ -n "$CONSTRAINTS" ] && ! echo "$CONSTRAINTS" | grep -qi "^NONE$"; then
+                        echo "" >> "$DOMAIN_DIR/program.md"
+                        echo "## Constraints [gardener, $(date '+%Y-%m-%d %H:%M')]" >> "$DOMAIN_DIR/program.md"
+                        echo "$CONSTRAINTS" >> "$DOMAIN_DIR/program.md"
+                        log "Patched program.md with constraints: $(echo "$CONSTRAINTS" | wc -l | tr -d ' ') lines"
+                    else
+                        log "No program.md constraints needed"
+                    fi
                 else
                     log "Nudge generation failed - empty output"
                 fi
