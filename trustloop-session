@@ -8,9 +8,9 @@
 #
 # What happens:
 #   1. Ensures traces are ingested
-#   2. Launches Claude Code with trustloop forensic context
+#   2. Launches Claude Code with TrustLoop MCP tools
 #   3. You just talk. Ask forensic questions in natural language.
-#   4. Claude uses ./trustloop CLI to query trace data
+#   4. Claude uses native MCP tools to query trace data (no bash shelling)
 
 set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -45,7 +45,7 @@ fi
 
 # Show what we're loading
 echo "╔══════════════════════════════════════╗"
-echo "║        TrustLoop Forensics          ║"
+echo "║     TrustLoop Forensics (MCP)       ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
 "$SCRIPT_DIR/trustloop" --traces "$TRACES" status 2>/dev/null
@@ -54,14 +54,33 @@ echo ""
 # Build the forensic index
 INDEX=$("$SCRIPT_DIR/trustloop" --traces "$TRACES" index 2>/dev/null)
 
+# Write MCP config with correct traces path
+MCP_CONFIG=$(cat <<MCPEOF
+{
+  "mcpServers": {
+    "trustloop": {
+      "command": "python3",
+      "args": ["$SCRIPT_DIR/tools/trustloop_mcp.py"],
+      "env": {
+        "TRUSTLOOP_TRACES": "$TRACES"
+      }
+    }
+  }
+}
+MCPEOF
+)
+echo "$MCP_CONFIG" > /tmp/trustloop_mcp_config.json
+
 # Launch interactive Claude Code session with:
-#   --append-system-prompt: bake in the CLAUDE.md + forensic index
-#   --allowed-tools: only trustloop queries + read (no writes)
+#   --mcp-config: TrustLoop MCP server (native tools, no bash shelling)
+#   --append-system-prompt-file: forensic analyst persona + skill docs
+#   --allowed-tools: MCP tools + read-only file access
 #   initial prompt: seed with index so Claude knows what's loaded
 cd "$SCRIPT_DIR"
 exec claude \
-    --append-system-prompt-file .trustloop/CLAUDE.md \
-    --allowed-tools "Bash(./trustloop *),Read,Glob,Grep" \
+    --mcp-config /tmp/trustloop_mcp_config.json \
+    --append-system-prompt-file .trustloop/SKILL.md \
+    --allowed-tools "mcp__trustloop__*,Read,Glob,Grep" \
     "Trace data loaded. Here is the forensic index:
 
 $INDEX
