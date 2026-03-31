@@ -83,21 +83,29 @@ def read_artifact(domain_dir: Path, artifact_type: str) -> dict:
 
 
 def parse_results_tsv(domain_dir: Path) -> list[dict]:
-    """Parse results.tsv into a list of experiment dicts."""
+    """Parse results.tsv into a list of experiment dicts.
+
+    Format is headerless TSV: exp_id, score, keep/discard, description, agent
+    """
     p = find_artifact(domain_dir, "results")
     if p is None:
         return []
     text = p.read_text(errors="replace")
-    reader = csv.DictReader(io.StringIO(text), delimiter="\t")
+    fields = ["exp_id", "score", "disposition", "description", "agent"]
+    reader = csv.reader(io.StringIO(text), delimiter="\t")
     rows = []
-    for row in reader:
+    for cols in reader:
+        if not cols or not cols[0].strip():
+            continue
+        row = {}
+        for i, name in enumerate(fields):
+            row[name] = cols[i] if i < len(cols) else ""
         # Normalize score to float
-        if "score" in row:
-            try:
-                row["score"] = float(row["score"])
-            except (ValueError, TypeError):
-                pass
-        rows.append(dict(row))
+        try:
+            row["score"] = float(row["score"])
+        except (ValueError, TypeError):
+            pass
+        rows.append(row)
     return rows
 
 
@@ -241,7 +249,7 @@ def rrma_status(domain: str | None = None) -> dict:
     sessions = get_screen_sessions()
 
     # Categorize sessions
-    agent_sessions = [s for s in sessions if re.match(r"agent\d+$", s)]
+    agent_sessions = [s for s in sessions if re.match(r"(agent\d+|rrma-worker\d*)$", s)]
     meta_sessions = [s for s in sessions if "meta" in s.lower()]
     gardener_sessions = [s for s in sessions if "gardener" in s.lower()]
     other_rrma = [s for s in sessions if s.startswith(("monitor", "diagnose", "score"))]
