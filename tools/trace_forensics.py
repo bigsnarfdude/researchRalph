@@ -254,9 +254,13 @@ class TraceStore:
                         found_in.append("observation")
 
                 if found_in:
-                    # Extract context snippet
+                    # Extract context snippet from all matched sources
+                    obs_text = "\n".join(
+                        obs.get("content", "") or ""
+                        for obs in step.get("observations", [])
+                    )
+                    full_text = thinking + "\n" + text + "\n" + obs_text
                     snippet = ""
-                    full_text = thinking + "\n" + text
                     idx = full_text.lower().find(query_lower)
                     if idx >= 0:
                         start = max(0, idx - 100)
