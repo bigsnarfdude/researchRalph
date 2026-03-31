@@ -84,6 +84,8 @@ class AgentReport:
     thinking_blocks: int = 0
     blackboard_reads: int = 0
     blackboard_writes: int = 0
+    tool_profile: dict = field(default_factory=dict)  # {tool_name: count}
+    output_tokens: int = 0
 
 
 @dataclass
@@ -418,15 +420,19 @@ def enrich_from_traces(agents: list[AgentReport], logs_dir: Path) -> None:
 
                     etype = event.get("type", "")
 
-                    # Count tool calls
+                    # Count tool calls and tokens
                     if etype == "assistant":
-                        content = event.get("message", {}).get("content", [])
+                        msg = event.get("message", {})
+                        usage = msg.get("usage", {})
+                        report.output_tokens += usage.get("output_tokens", 0)
+                        content = msg.get("content", [])
                         if isinstance(content, list):
                             for block in content:
                                 if isinstance(block, dict):
                                     if block.get("type") == "tool_use":
                                         report.tool_calls += 1
                                         tool_name = block.get("name", "")
+                                        report.tool_profile[tool_name] = report.tool_profile.get(tool_name, 0) + 1
                                         inp = block.get("input", {})
                                         # Detect artifact reads/writes
                                         if tool_name == "Read":
@@ -754,6 +760,31 @@ def generate_insights(
                 kind="top_agent",
                 message=f"{top.agent_id} leads with {top.breakthroughs} breakthroughs (best: {top.best_score})",
             ))
+
+    # 3b. Tool efficiency: flag agents with high Bash% and low breakthrough rate
+    for a in agents:
+        if a.tool_calls >= 50 and a.tool_profile:
+            bash_count = a.tool_profile.get("Bash", 0)
+            bash_pct = bash_count / a.tool_calls * 100
+            bt_per_100 = a.breakthroughs / a.tool_calls * 100 if a.tool_calls else 0
+            if bash_pct > 80:
+                insights.append(Insight(
+                    kind="tool_inefficiency",
+                    message=f"{a.agent_id}: {bash_pct:.0f}% Bash ({bash_count}/{a.tool_calls} calls), "
+                            f"{bt_per_100:.1f} BT per 100 calls, {a.output_tokens:,} output tokens",
+                    source="traces",
+                ))
+            # Compare agents: flag if one is 5x+ more calls for fewer breakthroughs
+            for b in agents:
+                if b.agent_id == a.agent_id or b.tool_calls < 10:
+                    continue
+                if a.tool_calls > b.tool_calls * 5 and a.breakthroughs <= b.breakthroughs:
+                    insights.append(Insight(
+                        kind="agent_cost",
+                        message=f"{a.agent_id} used {a.tool_calls/b.tool_calls:.0f}x more tool calls than "
+                                f"{b.agent_id} ({a.tool_calls} vs {b.tool_calls}) with {'fewer' if a.breakthroughs < b.breakthroughs else 'equal'} breakthroughs",
+                        source="traces",
+                    ))
 
     # 4. Resource waste
     total_time = sum(e.train_min for e in experiments)
@@ -1257,6 +1288,8 @@ def format_report(report: DomainReport) -> str:
     waste = [i for i in report.insights if i.kind == "resource_waste"]
     recurring = [i for i in report.insights if i.kind == "recurring_mistake"]
     unaddressed = [i for i in report.insights if i.kind == "unaddressed_desires"]
+    tool_ineff = [i for i in report.insights if i.kind == "tool_inefficiency"]
+    agent_cost = [i for i in report.insights if i.kind == "agent_cost"]
 
     if winning:
         lines.append("  What's working:")
@@ -1270,6 +1303,12 @@ def format_report(report: DomainReport) -> str:
         lines.append("  Recurring problems:")
         for i in recurring:
             lines.append(f"    ↻ {i.message}")
+    if tool_ineff or agent_cost:
+        lines.append("  Tool efficiency:")
+        for i in tool_ineff:
+            lines.append(f"    ⚡ {i.message}")
+        for i in agent_cost:
+            lines.append(f"    ⚡ {i.message}")
     if drifts:
         lines.append("  Agent drift:")
         for i in drifts:
@@ -1429,11 +1468,37 @@ def format_report(report: DomainReport) -> str:
         lines.append("")
         lines.append("### Traces")
         lines.append("")
-        lines.append(f"{'Agent':<10} {'Tools':<8} {'Think':<8} {'BB Read':<9} {'BB Write'}")
-        lines.append(f"{'─'*10} {'─'*8} {'─'*8} {'─'*9} {'─'*9}")
+        lines.append(f"{'Agent':<10} {'Tools':<8} {'Think':<8} {'BB Read':<9} {'BB Write':<9} {'Tokens Out'}")
+        lines.append(f"{'─'*10} {'─'*8} {'─'*8} {'─'*9} {'─'*9} {'─'*10}")
         for a in report.agents:
+            tok_str = f"{a.output_tokens:,}" if a.output_tokens else "—"
             lines.append(f"{a.agent_id:<10} {a.tool_calls:<8} {a.thinking_blocks:<8} "
-                         f"{a.blackboard_reads:<9} {a.blackboard_writes}")
+                         f"{a.blackboard_reads:<9} {a.blackboard_writes:<9} {tok_str}")
+
+        # Tool profile per agent
+        profiled = [a for a in report.agents if a.tool_profile]
+        if profiled:
+            lines.append("")
+            lines.append("### Tool Profile")
+            lines.append("")
+            # Collect all tool names across agents
+            all_tools = sorted({t for a in profiled for t in a.tool_profile})
+            header = f"{'Agent':<10}" + "".join(f" {t:<8}" for t in all_tools) + "  BT/100"
+            sep = f"{'─'*10}" + "".join(f" {'─'*8}" for _ in all_tools) + f"  {'─'*7}"
+            lines.append(header)
+            lines.append(sep)
+            for a in profiled:
+                parts = f"{a.agent_id:<10}"
+                for t in all_tools:
+                    count = a.tool_profile.get(t, 0)
+                    if a.tool_calls > 0:
+                        pct = count / a.tool_calls * 100
+                        parts += f" {count:>3} {pct:>3.0f}%"
+                    else:
+                        parts += f" {'—':>8}"
+                bt_per_100 = a.breakthroughs / a.tool_calls * 100 if a.tool_calls else 0
+                parts += f"  {bt_per_100:.2f}"
+                lines.append(parts)
 
     # 6d. Telemetry
     tel = report.telemetry
