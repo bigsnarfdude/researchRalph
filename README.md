@@ -445,7 +445,7 @@ The entire system is `claude -p` in a while loop. State lives in files, not in t
 
 ## Attribution
 
-Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`), extended by [Ryan Carson](https://x.com/ryancarson/status/2008548371712135632).
+Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`while :; do cat PROMPT.md | claude-code ; done`)
 
 ## Links
 
