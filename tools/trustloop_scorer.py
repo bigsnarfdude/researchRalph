@@ -120,6 +120,30 @@ class AgentTelemetry:
     learnings: list[str] = field(default_factory=list)     # discovered facts
 
 
+FixOwner = Literal["hitl", "gardener"]
+
+
+@dataclass
+class ActionItem:
+    """A classified fix for the HITL report."""
+    owner: FixOwner           # who should fix this
+    layer: str                # harness, program.md, agent, scaffold
+    issue: str                # what's wrong
+    fix: str                  # what to do
+    resolved: bool = False    # did someone already act on it
+    source_exp: str = ""      # which experiment(s) surfaced this
+    occurrences: int = 1      # how many times this was hit
+
+
+@dataclass
+class GardenerCheck:
+    """Did the gardener act on a flagged issue?"""
+    issue: str
+    expected_in_program_md: str   # keyword/constraint that should be there
+    found: bool                   # was it found in program.md
+    detail: str = ""
+
+
 @dataclass
 class DomainReport:
     domain: str
@@ -139,6 +163,8 @@ class DomainReport:
     workflow_checks: list[WorkflowCheck] = field(default_factory=list)
     insights: list[Insight] = field(default_factory=list)
     telemetry: AgentTelemetry = field(default_factory=AgentTelemetry)
+    action_items: list[ActionItem] = field(default_factory=list)
+    gardener_checks: list[GardenerCheck] = field(default_factory=list)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -831,6 +857,206 @@ def generate_insights(
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# Fix ownership classification + gardener effectiveness
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Keywords that signal a harness/infrastructure issue (HITL must fix)
+_HITL_KEYWORDS = [
+    "run.sh", "harness", "oom", "vram", "cuda", "gpu", "memory",
+    "race condition", "flock", "device_batch", "config.yaml",
+    "screen", "launch", "docker", "pip", "import", "module",
+]
+
+# Keywords that signal a constraint the gardener should write into program.md
+_GARDENER_KEYWORDS = [
+    "don't", "never", "always", "must", "requires", "too low",
+    "too high", "ceiling", "floor", "bracket", "optimal",
+    "redundant", "harmful", "catastroph", "worse",
+]
+
+
+def classify_action_items(
+    telemetry: AgentTelemetry,
+    experiments: list[ScoredExperiment],
+    insights: list[Insight],
+    program_md_text: str,
+) -> list[ActionItem]:
+    """Classify recurring issues into HITL vs gardener action items."""
+    items: list[ActionItem] = []
+    program_lower = program_md_text.lower()
+
+    # 1. From recurring mistakes — classify by lesson content
+    # Group mistakes by theme to find recurring ones
+    theme_mistakes: dict[str, list[dict]] = defaultdict(list)
+    for m in telemetry.mistakes:
+        lesson = (m.get("lesson", "") or m.get("why", "")).lower()
+        for theme in ["vram", "oom", "batch", "throughput", "learning rate",
+                       "race condition", "transfer", "softcap", "label_smooth"]:
+            if theme in lesson:
+                theme_mistakes[theme].append(m)
+
+    for theme, mistakes in theme_mistakes.items():
+        if len(mistakes) < 2:
+            continue
+        # Determine owner from lesson content
+        combined_lesson = " ".join(
+            (m.get("lesson", "") or m.get("why", "")).lower() for m in mistakes
+        )
+        is_hitl = any(kw in combined_lesson for kw in _HITL_KEYWORDS)
+        owner: FixOwner = "hitl" if is_hitl else "gardener"
+        layer = "harness" if is_hitl else "program.md"
+
+        # Check if already resolved: constraint in program.md
+        resolved = any(theme in program_lower for theme in [theme] + [
+            m.get("lesson", "").lower()[:30] for m in mistakes
+        ])
+
+        exps = ", ".join(m.get("exp", "?") for m in mistakes)
+        lesson_text = mistakes[-1].get("lesson", "") or mistakes[-1].get("why", "")
+
+        items.append(ActionItem(
+            owner=owner,
+            layer=layer,
+            issue=f"Recurring: '{theme}' ({len(mistakes)} times)",
+            fix=lesson_text,
+            resolved=resolved,
+            source_exp=exps,
+            occurrences=len(mistakes),
+        ))
+
+    # 2. From single critical mistakes (crashes, catastrophic regressions)
+    for m in telemetry.mistakes:
+        lesson = (m.get("lesson", "") or m.get("why", "")).lower()
+        result = m.get("result", "").lower()
+        # Catastrophic = crash or huge regression
+        is_critical = "crash" in result or "catastroph" in result or "oom" in result
+        if not is_critical:
+            continue
+        # Already captured as recurring?
+        exp = m.get("exp", "?")
+        if any(exp in item.source_exp for item in items):
+            continue
+        is_hitl = any(kw in lesson for kw in _HITL_KEYWORDS)
+        owner = "hitl" if is_hitl else "gardener"
+        layer = "harness" if is_hitl else "program.md"
+        resolved = any(kw in program_lower for kw in lesson.split()[:5] if len(kw) > 4)
+
+        items.append(ActionItem(
+            owner=owner,
+            layer=layer,
+            issue=f"{exp}: {m.get('what', '?')[:60]}",
+            fix=m.get("lesson", "") or m.get("why", ""),
+            resolved=resolved,
+            source_exp=exp,
+        ))
+
+    # 3. From dead-end insights — gardener should ban these in program.md
+    for ins in insights:
+        if ins.kind == "dead_end":
+            # Extract design name from message
+            design_match = re.search(r"Design '(\w+)'", ins.message)
+            design = design_match.group(1) if design_match else "unknown"
+            resolved = design.lower() in program_lower or "ban" in program_lower and design.lower() in program_lower
+
+            items.append(ActionItem(
+                owner="gardener",
+                layer="program.md",
+                issue=f"Dead end: {ins.message}",
+                fix=f"Add to program.md: 'Do not attempt {design} experiments'",
+                resolved=resolved,
+            ))
+
+    # 4. From unaddressed desires — HITL decision needed
+    for desire in telemetry.desires:
+        # Check if any experiment touched this desire
+        desire_words = {w.lower() for w in desire.split() if len(w) > 4}
+        exp_words = set()
+        for e in experiments:
+            exp_words.update(w.lower() for w in e.description.split() if len(w) > 4)
+        addressed = len(desire_words & exp_words) > len(desire_words) * 0.3
+
+        if not addressed:
+            # Is this a scaffold desire (HITL) or search direction desire (gardener)?
+            is_hitl = any(kw in desire.lower() for kw in [
+                "budget", "time", "hardware", "gpu", "longer", "profil",
+                "grid search", "automat", "sweep",
+            ])
+            items.append(ActionItem(
+                owner="hitl" if is_hitl else "gardener",
+                layer="harness" if is_hitl else "program.md",
+                issue=f"Unaddressed desire: {desire[:80]}",
+                fix="Evaluate and either address or explicitly deprioritize",
+                resolved=False,
+                source_exp="DESIRES.md",
+            ))
+
+    return items
+
+
+def check_gardener_effectiveness(
+    telemetry: AgentTelemetry,
+    insights: list[Insight],
+    program_md_text: str,
+) -> list[GardenerCheck]:
+    """Cross-reference program.md against what the gardener should have written."""
+    checks: list[GardenerCheck] = []
+    program_lower = program_md_text.lower()
+
+    # 1. Each recurring mistake lesson should appear as a constraint in program.md
+    theme_lessons: dict[str, str] = {}
+    for m in telemetry.mistakes:
+        lesson = m.get("lesson", "") or m.get("why", "")
+        if not lesson:
+            continue
+        for theme in ["vram", "oom", "batch", "throughput", "learning rate",
+                       "race condition", "depth", "softcap", "label_smooth"]:
+            if theme in lesson.lower():
+                theme_lessons[theme] = lesson
+
+    for theme, lesson in theme_lessons.items():
+        # Check for the theme or key terms in program.md
+        found = theme in program_lower
+        checks.append(GardenerCheck(
+            issue=f"Recurring mistake: {theme}",
+            expected_in_program_md=f"Constraint about '{theme}'",
+            found=found,
+            detail=f"Lesson: {lesson[:80]}" + (" — FOUND in program.md" if found else " — NOT in program.md"),
+        ))
+
+    # 2. Dead ends should be banned in program.md
+    for ins in insights:
+        if ins.kind == "dead_end":
+            design_match = re.search(r"Design '(\w+)'", ins.message)
+            design = design_match.group(1) if design_match else ""
+            if design:
+                found = design.lower() in program_lower
+                checks.append(GardenerCheck(
+                    issue=f"Dead end design: {design}",
+                    expected_in_program_md=f"Ban or warning about '{design}'",
+                    found=found,
+                    detail=f"{ins.message}" + (" — BANNED" if found else " — NOT banned"),
+                ))
+
+    # 3. Key learnings with "always"/"never" should be codified
+    for learning in telemetry.learnings:
+        for signal in ["never ", "always ", "IMPORTANT"]:
+            if signal.lower() in learning.lower():
+                # Extract key phrase
+                key_phrase = learning[:50].lower()
+                key_words = [w for w in key_phrase.split() if len(w) > 4][:3]
+                found = any(w in program_lower for w in key_words) if key_words else False
+                checks.append(GardenerCheck(
+                    issue=f"Strong learning: {learning[:60]}",
+                    expected_in_program_md=f"Guidance reflecting: {' '.join(key_words[:3])}",
+                    found=found,
+                    detail="Codified" if found else "NOT codified in program.md",
+                ))
+                break  # one check per learning
+
+    return checks
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # Domain report
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -904,6 +1130,16 @@ def score_domain(domain_dir: Path, with_traces: bool = False) -> DomainReport:
     # Insight generation
     insights = generate_insights(experiments, agent_reports, anomalies, direction, telemetry)
 
+    # Read program.md for cross-referencing
+    program_md_path = domain_dir / "program.md"
+    program_md_text = program_md_path.read_text() if program_md_path.exists() else ""
+
+    # HITL action items (fix ownership classification)
+    action_items = classify_action_items(telemetry, experiments, insights, program_md_text)
+
+    # Gardener effectiveness (did it act on what was flagged?)
+    gardener_checks = check_gardener_effectiveness(telemetry, insights, program_md_text)
+
     return DomainReport(
         domain=domain_dir.name,
         total_experiments=total,
@@ -922,6 +1158,8 @@ def score_domain(domain_dir: Path, with_traces: bool = False) -> DomainReport:
         workflow_checks=workflow_checks,
         insights=insights,
         telemetry=telemetry,
+        action_items=action_items,
+        gardener_checks=gardener_checks,
     )
 
 
@@ -938,23 +1176,230 @@ OUTCOME_SYMBOLS = {
 }
 
 
+def _run_status(report: DomainReport) -> str:
+    """Determine overall run status from report data."""
+    if report.total_experiments == 0:
+        return "EMPTY"
+    crash_rate = report.crashes / report.total_experiments
+    if crash_rate > 0.5:
+        return "FAILING"
+    if report.stagnation_depth > report.total_experiments * 0.5:
+        return "STAGNANT"
+    if report.breakthroughs == 0:
+        return "NO PROGRESS"
+    if report.stagnation_depth > 10:
+        return "PLATEAU"
+    if report.breakthroughs / report.total_experiments > 0.3:
+        return "HEALTHY"
+    return "ACTIVE"
+
+
 def format_report(report: DomainReport) -> str:
-    """Human-readable report."""
+    """Human-readable layered report.
+
+    Structure (Datadog-inspired):
+      1. Run Health        — stop or continue? (5 lines)
+      2. Diagnosis         — what's causing the current state
+      3. Action Items      — HITL fixes, gardener fixes
+      4. Gardener Report   — did the gardener do its job?
+      5. Unresolved        — quick-scan list
+      ─── drill-down ───
+      6. Evidence          — experiment table, agents, traces, telemetry
+    """
     lines = []
-    lines.append(f"# TrustLoop Scorer — {report.domain}")
-    lines.append(f"")
-    lines.append(f"**Experiments:** {report.total_experiments}  |  "
-                 f"**Best:** {report.best_score} ({report.best_exp})  |  "
-                 f"**Direction:** {report.score_direction}_is_better")
-    lines.append(f"**Breakthroughs:** {report.breakthroughs}  |  "
-                 f"**Crashes:** {report.crashes}  |  "
-                 f"**Redundant:** {report.redundant_pairs}  |  "
-                 f"**Stagnation:** {report.stagnation_depth}")
-    lines.append(f"**Efficiency:** {report.efficiency_score:.3f}")
+
+    # ══════════════════════════════════════════════════════════════════════
+    # 1. RUN HEALTH — is anything broken? (stop here if green)
+    # ══════════════════════════════════════════════════════════════════════
+    status = _run_status(report)
+    lines.append(f"# TrustLoop Report — {report.domain}")
+    lines.append("")
+    lines.append("## 1. Run Health")
+    lines.append("")
+    lines.append(f"  Status:        {status}")
+    lines.append(f"  Experiments:   {report.total_experiments}")
+    best_str = f"{report.best_score}" if report.best_score is not None else "—"
+    lines.append(f"  Best:          {best_str} ({report.best_exp or '—'})")
+    lines.append(f"  Breakthroughs: {report.breakthroughs}  |  Crashes: {report.crashes}  |  Redundant: {report.redundant_pairs}")
+    lines.append(f"  Stagnation:    {report.stagnation_depth} experiments since last breakthrough")
+    lines.append(f"  Efficiency:    {report.efficiency_score:.3f}")
+
+    # Workflow health (one line)
+    passed_count = sum(1 for c in report.workflow_checks if c.passed)
+    total_checks = len(report.workflow_checks)
+    failed_checks = [c for c in report.workflow_checks if not c.passed]
+    if total_checks > 0:
+        wf_str = f"  Workflow:      {passed_count}/{total_checks} checks passed"
+        if failed_checks:
+            wf_str += f"  FAILURES: {', '.join(c.check for c in failed_checks)}"
+        lines.append(wf_str)
+
+    # Anomaly summary (one line per alert-level anomaly)
+    alerts = [a for a in report.anomalies if a.severity == "ALERT"]
+    warns = [a for a in report.anomalies if a.severity == "WARN"]
+    if alerts or warns:
+        lines.append(f"  Anomalies:     {len(alerts)} alerts, {len(warns)} warnings")
+        for a in alerts:
+            lines.append(f"    !!! {a.category}: {a.message}")
     lines.append("")
 
-    # Experiment table
-    lines.append("## Experiments")
+    # ══════════════════════════════════════════════════════════════════════
+    # 2. DIAGNOSIS — what's causing the current state
+    # ══════════════════════════════════════════════════════════════════════
+    lines.append("## 2. Diagnosis")
+    lines.append("")
+
+    # Winning strategies
+    winning = [i for i in report.insights if i.kind == "winning_strategy"]
+    dead_ends = [i for i in report.insights if i.kind == "dead_end"]
+    drifts = [i for i in report.insights if i.kind == "agent_drift"]
+    collab = [i for i in report.insights if i.kind == "collaboration"]
+    waste = [i for i in report.insights if i.kind == "resource_waste"]
+    recurring = [i for i in report.insights if i.kind == "recurring_mistake"]
+    unaddressed = [i for i in report.insights if i.kind == "unaddressed_desires"]
+
+    if winning:
+        lines.append("  What's working:")
+        for i in winning:
+            lines.append(f"    ★ {i.message}")
+    if dead_ends:
+        lines.append("  Dead ends:")
+        for i in dead_ends:
+            lines.append(f"    ✗ {i.message}")
+    if recurring:
+        lines.append("  Recurring problems:")
+        for i in recurring:
+            lines.append(f"    ↻ {i.message}")
+    if drifts:
+        lines.append("  Agent drift:")
+        for i in drifts:
+            lines.append(f"    ↓ {i.message}")
+    if collab:
+        lines.append("  Collaboration:")
+        for i in collab:
+            lines.append(f"    ⇄ {i.message}")
+    if waste:
+        lines.append("  Resource waste:")
+        for i in waste:
+            lines.append(f"    $ {i.message}")
+    if unaddressed:
+        lines.append("  Gaps:")
+        for i in unaddressed:
+            lines.append(f"    ? {i.message}")
+
+    # Agent comparison (compact)
+    if len(report.agents) > 1:
+        lines.append("")
+        lines.append("  Agent summary:")
+        for a in report.agents:
+            best_s = f"{a.best_score}" if a.best_score is not None else "—"
+            lines.append(f"    {a.agent_id}: {a.total_experiments} exp, "
+                         f"{a.breakthroughs} BT, {a.crashes} crash, "
+                         f"rate {a.success_rate:.0%}, best {best_s}")
+
+    # Top agent
+    top_agents = [i for i in report.insights if i.kind == "top_agent"]
+    for i in top_agents:
+        lines.append(f"    → {i.message}")
+    lines.append("")
+
+    # ══════════════════════════════════════════════════════════════════════
+    # 3. ACTION ITEMS — what to fix, who fixes it
+    # ══════════════════════════════════════════════════════════════════════
+    lines.append("## 3. Action Items")
+    lines.append("")
+
+    hitl_items = [a for a in report.action_items if a.owner == "hitl"]
+    gardener_items = [a for a in report.action_items if a.owner == "gardener"]
+
+    if hitl_items:
+        lines.append("  HITL fixes (harness/scaffold):")
+        for a in hitl_items:
+            mark = "✓" if a.resolved else "○"
+            lines.append(f"    {mark} {a.issue}")
+            lines.append(f"      Fix: {a.fix}")
+            if a.source_exp:
+                lines.append(f"      Source: {a.source_exp}")
+        lines.append("")
+
+    if gardener_items:
+        lines.append("  Gardener fixes (program.md):")
+        for a in gardener_items:
+            mark = "✓" if a.resolved else "○"
+            lines.append(f"    {mark} {a.issue}")
+            lines.append(f"      Fix: {a.fix}")
+            if a.source_exp:
+                lines.append(f"      Source: {a.source_exp}")
+        lines.append("")
+
+    if not hitl_items and not gardener_items:
+        lines.append("  No action items.")
+        lines.append("")
+
+    resolved = sum(1 for a in report.action_items if a.resolved)
+    total_items = len(report.action_items)
+    if total_items > 0:
+        lines.append(f"  Score: {resolved}/{total_items} resolved")
+    lines.append("")
+
+    # ══════════════════════════════════════════════════════════════════════
+    # 4. GARDENER REPORT — did it do its job?
+    # ══════════════════════════════════════════════════════════════════════
+    if report.gardener_checks:
+        lines.append("## 4. Gardener Report")
+        lines.append("")
+        acted = sum(1 for c in report.gardener_checks if c.found)
+        total_gc = len(report.gardener_checks)
+        lines.append(f"  program.md coverage: {acted}/{total_gc} issues addressed")
+        lines.append("")
+
+        missed = [c for c in report.gardener_checks if not c.found]
+        if missed:
+            lines.append("  Missed (not in program.md):")
+            for c in missed:
+                lines.append(f"    ✗ {c.issue}")
+                lines.append(f"      Need: {c.expected_in_program_md}")
+            lines.append("")
+
+        covered = [c for c in report.gardener_checks if c.found]
+        if covered:
+            lines.append("  Covered:")
+            for c in covered:
+                lines.append(f"    ✓ {c.issue}")
+            lines.append("")
+
+    # ══════════════════════════════════════════════════════════════════════
+    # 5. UNRESOLVED — quick-scan before next launch
+    # ══════════════════════════════════════════════════════════════════════
+    unresolved_actions = [a for a in report.action_items if not a.resolved]
+    missed_gardener = [c for c in report.gardener_checks if not c.found]
+    if unresolved_actions or missed_gardener:
+        lines.append("## 5. Unresolved")
+        lines.append("")
+        hitl_unresolved = [a for a in unresolved_actions if a.owner == "hitl"]
+        gard_unresolved = [a for a in unresolved_actions if a.owner == "gardener"]
+        if hitl_unresolved:
+            lines.append(f"  HITL must fix ({len(hitl_unresolved)}):")
+            for a in hitl_unresolved:
+                lines.append(f"    → {a.issue}")
+        if gard_unresolved:
+            lines.append(f"  Gardener should fix ({len(gard_unresolved)}):")
+            for a in gard_unresolved:
+                lines.append(f"    → {a.issue}")
+        lines.append("")
+
+    # ══════════════════════════════════════════════════════════════════════
+    lines.append("─" * 72)
+    lines.append("")
+
+    # ══════════════════════════════════════════════════════════════════════
+    # 6. EVIDENCE — drill-down data (only read when verifying above)
+    # ══════════════════════════════════════════════════════════════════════
+    lines.append("## 6. Evidence")
+    lines.append("")
+
+    # 6a. Experiment log
+    lines.append("### Experiments")
     lines.append("")
     lines.append(f"{'ID':<8} {'Score':<12} {'Class':<14} {'Nov':<5} {'Agent':<8} {'Description'}")
     lines.append(f"{'─'*8} {'─'*12} {'─'*14} {'─'*5} {'─'*8} {'─'*40}")
@@ -965,9 +1410,9 @@ def format_report(report: DomainReport) -> str:
         lines.append(f"{e.exp_id:<8} {score_str:<12} {sym} {e.outcome_class:<12} "
                      f"{e.novelty:.2f}  {e.agent:<8} {e.description[:50]}{dup}")
 
-    # Agent table
+    # 6b. Agent detail
     lines.append("")
-    lines.append("## Agents")
+    lines.append("### Agents")
     lines.append("")
     lines.append(f"{'Agent':<10} {'Exps':<6} {'Keeps':<6} {'BT':<4} "
                  f"{'Crash':<6} {'Dup':<5} {'Rate':<6} {'Waste':<6} {'Best'}")
@@ -978,11 +1423,11 @@ def format_report(report: DomainReport) -> str:
                      f"{a.breakthroughs:<4} {a.crashes:<6} {a.redundant_count:<5} "
                      f"{a.success_rate:.2f}  {a.waste_ratio:.2f}  {best_str}")
 
-    # Trace stats (if available)
+    # 6c. Traces (if available)
     has_traces = any(a.tool_calls > 0 for a in report.agents)
     if has_traces:
         lines.append("")
-        lines.append("## Trace Analysis")
+        lines.append("### Traces")
         lines.append("")
         lines.append(f"{'Agent':<10} {'Tools':<8} {'Think':<8} {'BB Read':<9} {'BB Write'}")
         lines.append(f"{'─'*10} {'─'*8} {'─'*8} {'─'*9} {'─'*9}")
@@ -990,57 +1435,57 @@ def format_report(report: DomainReport) -> str:
             lines.append(f"{a.agent_id:<10} {a.tool_calls:<8} {a.thinking_blocks:<8} "
                          f"{a.blackboard_reads:<9} {a.blackboard_writes}")
 
-    # Telemetry summary
+    # 6d. Telemetry
     tel = report.telemetry
     if tel.desires or tel.mistakes or tel.learnings:
         lines.append("")
-        lines.append("## Agent Telemetry")
+        lines.append("### Telemetry")
         lines.append("")
-        lines.append(f"**Desires:** {len(tel.desires)}  |  "
-                     f"**Mistakes logged:** {len(tel.mistakes)}  |  "
-                     f"**Learnings:** {len(tel.learnings)}")
+        lines.append(f"Desires: {len(tel.desires)}  |  "
+                     f"Mistakes: {len(tel.mistakes)}  |  "
+                     f"Learnings: {len(tel.learnings)}")
         if tel.desires:
             lines.append("")
-            lines.append("### What agents want:")
+            lines.append("Desires:")
             for d in tel.desires:
                 lines.append(f"  - {d}")
         if tel.mistakes:
             lines.append("")
-            lines.append("### Logged failures:")
+            lines.append("Mistakes:")
             for m in tel.mistakes:
                 lesson = m.get("lesson", "") or m.get("why", "")
                 lines.append(f"  - {m.get('exp', '?')}: {m.get('what', '?')}"
                              + (f" => {lesson}" if lesson else ""))
+        if tel.learnings:
+            lines.append("")
+            lines.append("Key learnings:")
+            strong_signals = ["IMPORTANT", "massive win", "dominat", "never ", "always ", "confirmed"]
+            for l in tel.learnings:
+                if any(sig.lower() in l.lower() for sig in strong_signals):
+                    lines.append(f"  ★ {l}")
 
-    # Anomalies
+    # 6e. Anomalies (full list)
     if report.anomalies:
         lines.append("")
-        lines.append("## Anomalies")
+        lines.append("### Anomalies")
         lines.append("")
         for a in report.anomalies:
             icon = {"INFO": ".", "WARN": "!", "ALERT": "!!!"}[a.severity]
             target = f"[{a.exp_id or a.agent or 'global'}]"
             lines.append(f"  {icon} {a.severity} {a.category} {target}: {a.message}")
 
-    # Workflow checks
-    failed = [c for c in report.workflow_checks if not c.passed]
-    if failed:
+    # 6f. Workflow checks (full list)
+    if failed_checks:
         lines.append("")
-        lines.append("## Workflow Issues")
+        lines.append("### Workflow Failures")
         lines.append("")
-        for c in failed:
+        for c in failed_checks:
             lines.append(f"  FAIL {c.check}: {c.detail}")
 
-    passed_count = sum(1 for c in report.workflow_checks if c.passed)
-    total_checks = len(report.workflow_checks)
-    if total_checks > 0:
-        lines.append(f"")
-        lines.append(f"Workflow: {passed_count}/{total_checks} checks passed")
-
-    # Insights
+    # 6g. All insights (raw)
     if report.insights:
         lines.append("")
-        lines.append("## Insights")
+        lines.append("### All Insights")
         lines.append("")
         for ins in report.insights:
             lines.append(f"  [{ins.kind}] {ins.message}")

@@ -2,3 +2,23 @@ exp_id	score	vram	status	description	agent	design	train_min
 exp001	1.171181	11701.0	keep	SDPA baseline depth=8 AR=64 batch=2^17	manual	hyperparam	5
 exp002	1.171318	11701.0	discard	TOTAL_BATCH_SIZE=2^16 for more steps in 5min	agent0	hyperparam	5
 exp003	1.106267	11549.0	keep	halve TOTAL_BATCH_SIZE from 2^17 to 2^16 — doubles optimizer steps	agent1	hyperparam	5
+exp004	1.101996	11549.0	keep	TOTAL_BATCH_SIZE=2^16 grad_accum=1 for max steps	agent0	hyperparam	5
+exp005	1.107461	11549.0	discard	batch 2^16 + matrix_lr=0.06 (from 0.04)	agent1	optimizer	5
+exp006	1.112306	11549.0	discard	batch2^16+rope200k+warmup0.03	agent0	hyperparam	5
+exp007	1.107387	11549.0	discard	MLP ratio 3x (from 4x) — fewer params, faster steps, more optimization	agent0	architecture	5
+exp008	1.113040	11549.0	discard	matrix_lr=0.08 (from 0.06), all else same as best	agent1	optimizer	5
+exp009	1.105093	11549.0	discard	WARMDOWN_RATIO=0.67 (from 0.5) — longer gradual LR decay	agent0	schedule	5
+exp010	1.113548	11549.0	discard	WARMDOWN_RATIO=0.3 (from 0.5) — more time at peak LR	agent1	schedule	5
+exp011	1.108498	11549.0	discard	EMBEDDING_LR=1.0 (from 0.6) — faster embedding learning	agent0	optimizer	5
+exp012	1.124755	5997.2	discard	DEVICE_BATCH_SIZE=16 TOTAL_BATCH_SIZE=2^15 — double steps to ~2400	agent1	hyperparam	5
+exp013	1.102547	11549.0	discard	WEIGHT_DECAY=0.0 (from 0.2) — remove regularization at short training	agent0	regularization	5
+exp014	1.112268	11549.0	discard	softcap=30 (from 15) — less aggressive logit clamping	agent1	architecture	5
+exp015	1.101255	11549.0	keep	MATRIX_LR=0.04 (revert from 0.06) with RoPE 200K — test if lower Muon LR is better	agent0	optimizer	5
+exp016	1.110463	11549.0	discard	UNEMBEDDING_LR=0.008 (from 0.004) — faster lm_head learning	agent1	optimizer	5
+exp017	1.103183	11549.0	discard	EMBEDDING_LR=0.4 (from 0.6) — lower embedding LR consistent with lower matrix_lr win	agent0	optimizer	5
+exp018	1.103549	11549.0	discard	EMBEDDING_LR=0.4 (from 0.6) — slightly lower embedding LR, from new best config with matrix_lr=0.04	agent1	optimizer	5
+exp019	crash		crash	depth=10 AR=64 (640-dim, 5 heads) — more capacity, may OOM	agent0	architecture	0
+exp020	crash		crash	Remove value embeddings — VE ablation, frees 16.8M params (33% of model)	agent1	ablation	0
+exp021	1.114496	11195.0	discard	Remove value embeddings — VE ablation v2 (also disables VE gates)	agent1	ablation	5
+exp022	1.214665	9393.4	discard	depth=10 devbatch=16 batch2^16 — more capacity, 2x grad_accum, ~600 steps	agent0	architecture	6
+exp023	crash		crash	GQA with n_kv_head=2 (from 4) — halve KV heads, save params for potential depth increase	agent1	architecture	0
