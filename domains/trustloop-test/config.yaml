@@ -1,0 +1,5 @@
+domain: trustloop-test
+metric: fraction_within_10x
+direction: higher_is_better
+harness: run.sh
+editable: solution.py

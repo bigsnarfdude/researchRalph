@@ -40,11 +40,16 @@ log() {
 }
 
 # --- Pre-flight checks ---
-for f in program.md config.yaml engine.py run.sh sae.py blackboard.md; do
+# Required files
+for f in program.md config.yaml run.sh blackboard.md; do
     if [ ! -f "$DOMAIN_DIR/$f" ]; then
         echo "Error: missing $DOMAIN_DIR/$f"
         exit 1
     fi
+done
+# Optional files (ML domains have engine.py, sae.py — not all domains need them)
+for f in engine.py sae.py; do
+    [ ! -f "$DOMAIN_DIR/$f" ] && echo "Note: $f not present (optional)"
 done
 
 if [ ! -f "$TASTE" ]; then
@@ -119,7 +124,8 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
                 DECISION="REDESIGN"
             else
                 # Generate a lightweight observation for the blackboard
-                NUDGE_PROMPT="You are observing a multi-agent research run. Read the blackboard, results, and agent telemetry below.
+                NUDGE_PROMPT="$(cat <<NUDGE_EOF
+You are observing a multi-agent research run. Read the blackboard, results, and agent telemetry below.
 
 The agents have high process quality but scores are flat and/or agents are blocked by missing tools.
 
@@ -146,17 +152,19 @@ Write ONE short observation (2-3 sentences max) noting:
 - OR what axis/approach ALL recent experiments share and ONE alternative nobody has tried
 - Frame as an observation, not an instruction
 
-Output ONLY the observation text. No headers, no markdown, no commentary."
+Output ONLY the observation text. No headers, no markdown, no commentary.
+NUDGE_EOF
+)"
 
                 NUDGE_TEXT=$(claude -p "$NUDGE_PROMPT" --dangerously-skip-permissions --max-turns 3 2>/dev/null)
 
                 if [ -n "$NUDGE_TEXT" ]; then
                     echo "" >> "$DOMAIN_DIR/blackboard.md"
-                    echo "## Observation (gardener, $(date '+%H:%M'))" >> "$DOMAIN_DIR/blackboard.md"
+                    echo "## Observation [gardener, $(date '+%H:%M')]" >> "$DOMAIN_DIR/blackboard.md"
                     echo "$NUDGE_TEXT" >> "$DOMAIN_DIR/blackboard.md"
                     log "Nudge appended to blackboard: $(echo "$NUDGE_TEXT" | head -1)"
                 else
-                    log "Nudge generation failed (empty output)"
+                    log "Nudge generation failed - empty output"
                 fi
 
                 # Continue monitoring — NUDGE doesn't stop the run
@@ -310,7 +318,7 @@ PROMPT
                 cp "$DOMAIN_DIR/program.md" "$DOMAIN_DIR/program.md.gen$gen"
 
                 # Let Claude do the extraction
-                claude -p "Extract ONLY the value of new_program_md from this JSON. Output the raw content, no JSON wrapping, no quotes. If it's null, output the word NULL.
+                claude -p "Extract ONLY the value of new_program_md from this JSON. Output the raw content, no JSON wrapping, no quotes. If null, output the word NULL.
 
 $(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 3 > "/tmp/new-program-$gen.md" 2>/dev/null
 
@@ -341,7 +349,8 @@ $(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 3 
             log "=== STOP_DONE TRIGGERED — CHECKING FOR UNEXPLORED DIRECTIONS ==="
 
             # Before accepting STOP_DONE, ask: is the search genuinely exhausted?
-            REEVAL_PROMPT="You are reviewing a completed research run. Read the blackboard and results.
+            REEVAL_PROMPT="$(cat <<REEVAL_EOF
+You are reviewing a completed research run. Read the blackboard and results.
 
 ## Blackboard (last 100 lines):
 $(tail -100 "$DOMAIN_DIR/blackboard.md")
@@ -359,7 +368,9 @@ Answer these two questions:
 If YES to either: output a single line starting with UNEXPLORED: followed by 1-2 unexplored directions.
 If NO to both: output a single line: EXHAUSTED
 
-Output ONLY one line. No explanation."
+Output ONLY one line. No explanation.
+REEVAL_EOF
+)"
 
             REEVAL=$(claude -p "$REEVAL_PROMPT" --dangerously-skip-permissions --max-turns 1 2>/dev/null | head -1)
             log "Re-evaluation: $REEVAL"
@@ -368,7 +379,7 @@ Output ONLY one line. No explanation."
                 log "Unexplored directions found. Downgrading STOP_DONE to NUDGE."
                 NUDGE_TEXT=$(echo "$REEVAL" | sed 's/^UNEXPLORED: //')
                 echo "" >> "$DOMAIN_DIR/blackboard.md"
-                echo "## Observation (gardener, $(date '+%H:%M') — before stopping)" >> "$DOMAIN_DIR/blackboard.md"
+                echo "## Observation [gardener, $(date '+%H:%M') — before stopping]" >> "$DOMAIN_DIR/blackboard.md"
                 echo "The search appears stalled. Unexplored directions: $NUDGE_TEXT" >> "$DOMAIN_DIR/blackboard.md"
 
                 # Don't stop — continue to next generation with the nudge
@@ -437,6 +448,6 @@ PROMPT
     log ""
 done
 
-log "=== MAX GENERATIONS REACHED ($MAX_GENERATIONS) ==="
+log "=== MAX GENERATIONS REACHED [$MAX_GENERATIONS] ==="
 log "Final best: $(awk -F'\t' '{print $2}' "$DOMAIN_DIR/results.tsv" | sort -rn | head -1)"
 bash "$SCRIPT_DIR/generate-meta-blackboard.sh" "$DOMAIN_DIR" 2>&1 | tee -a "$LOG"

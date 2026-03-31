@@ -1,0 +1,480 @@
+#!/usr/bin/env python3
+"""
+trustloop — CLI for forensic analysis of RRMA multi-agent runs.
+
+Usage:
+    trustloop ingest  domains/rrma-lean --logs data/rrma_lean_logs
+    trustloop status
+    trustloop ask     "which agent was most productive?"
+    trustloop search  "omega"
+    trustloop agent   agent3
+    trustloop agent   agent3 --thinking
+    trustloop artifact blackboard
+    trustloop influences
+    trustloop influences agent4
+    trustloop timeline agent0
+    trustloop step    2acc1f71 42
+    trustloop serve   [--port 8765]
+    trustloop chat
+"""
+
+import argparse
+import json
+import os
+import sys
+import subprocess
+from pathlib import Path
+from textwrap import dedent
+
+BASE_DIR = Path(__file__).resolve().parent
+TRACES_DEFAULT = Path("/tmp/rrma_traces.jsonl")
+sys.path.insert(0, str(BASE_DIR / "tools"))
+
+
+def get_store(traces_path=None):
+    from trace_forensics import TraceStore
+    p = Path(traces_path) if traces_path else TRACES_DEFAULT
+    if not p.exists():
+        print(f"No traces at {p}")
+        print(f"Run: trustloop ingest <domain_dir> --logs <logs_dir>")
+        sys.exit(1)
+    return TraceStore(p)
+
+
+# ── Commands ──────────────────────────────────────────────────────────────────
+
+def cmd_ingest(args):
+    """Convert RRMA domain + logs → traces JSONL."""
+    from rrma_traces import build_swarm_record
+    domain_dir = Path(args.domain)
+    logs_dir = Path(args.logs) if args.logs else None
+    out = Path(args.out) if args.out else TRACES_DEFAULT
+
+    swarm, traces = build_swarm_record(domain_dir, logs_dir)
+
+    with open(out, "w") as f:
+        f.write(json.dumps({"record_type": "swarm", **swarm.model_dump()}, default=str) + "\n")
+        for trace in traces:
+            f.write(json.dumps({"record_type": "trace", **trace.model_dump()}, default=str) + "\n")
+
+    print(f"Ingested {len(traces)} traces → {out}")
+    print(f"  Domain:      {swarm.domain}")
+    print(f"  Agents:      {len(set(swarm.roles.values()))} roles, {len(traces)} sessions")
+    print(f"  Experiments: {swarm.total_experiments}")
+    print(f"  Best score:  {swarm.best_score}")
+    print(f"  Artifacts:   {len(swarm.artifacts)}")
+    print(f"  Influences:  {len(swarm.influences)}")
+    print(f"  File size:   {out.stat().st_size / 1024 / 1024:.1f} MB")
+
+
+def cmd_status(args):
+    """Show what's loaded."""
+    p = Path(args.traces) if args.traces else TRACES_DEFAULT
+    if not p.exists():
+        print(f"No traces at {p}")
+        print(f"Run: trustloop ingest <domain_dir> --logs <logs_dir>")
+        return
+
+    store = get_store(args.traces)
+    s = store.swarm
+    total_steps = sum(t["metrics"]["total_steps"] for t in store.traces)
+    total_thinking = sum(
+        sum(1 for st in t["steps"] if st.get("reasoning_content"))
+        for t in store.traces
+    )
+    total_tools = sum(
+        sum(len(st.get("tool_calls", [])) for st in t["steps"])
+        for t in store.traces
+    )
+
+    print(f"Domain:       {s.get('domain', '?')}")
+    print(f"Schema:       {s.get('schema_version', '?')}")
+    print(f"Traces:       {len(store.traces)}")
+    print(f"Agents:       {len(store.traces_by_agent)}")
+    print(f"Total steps:  {total_steps:,}")
+    print(f"Thinking:     {total_thinking:,} blocks")
+    print(f"Tool calls:   {total_tools:,}")
+    print(f"Experiments:  {s.get('total_experiments', 0)}")
+    print(f"Best score:   {s.get('best_score', '?')}")
+    print(f"Artifacts:    {len(s.get('artifacts', []))}")
+    print(f"Influences:   {len(s.get('influences', []))}")
+    print(f"Traces file:  {p} ({p.stat().st_size / 1024 / 1024:.1f} MB)")
+    print()
+    print("Agents:")
+    for aid in sorted(store.traces_by_agent):
+        traces = store.traces_by_agent[aid]
+        steps = sum(t["metrics"]["total_steps"] for t in traces)
+        thinking = sum(sum(1 for st in t["steps"] if st.get("reasoning_content")) for t in traces)
+        print(f"  {aid:>8s}  {len(traces)} sessions  {steps:>5,} steps  {thinking:>4} thinking")
+
+
+def cmd_ask(args):
+    """Forensic question via claude -p."""
+    store = get_store(args.traces)
+    question = " ".join(args.question)
+
+    index = store.build_index()
+
+    # Auto-pull evidence based on question
+    evidence_parts = []
+
+    # Agent-specific evidence
+    for aid in store.traces_by_agent:
+        if aid.lower() in question.lower():
+            blocks = store.get_agent_thinking(aid, 10)
+            if blocks:
+                lines = []
+                for b in blocks:
+                    lines.append(f"[step {b['step_index']}] {b['thinking'][:500]}")
+                    if b["artifact_writes"]:
+                        lines.append(f"  writes: {b['artifact_writes']}")
+                evidence_parts.append(f"## {aid} thinking (last 10)\n" + "\n".join(lines))
+
+    # Keyword search
+    stopwords = {"which", "what", "who", "how", "why", "did", "was", "the", "and",
+                 "for", "with", "from", "most", "least", "any", "all", "show", "me",
+                 "tell", "about", "their", "does", "that", "this", "have", "been", "were"}
+    keywords = [w for w in question.lower().split() if w not in stopwords and len(w) > 3]
+    for kw in keywords[:3]:
+        hits = store.search_traces(kw, 8)
+        if hits:
+            lines = [f"{h['agent_id']} step {h['step_index']} [{h['found_in']}]: {h['snippet'][:200]}" for h in hits]
+            evidence_parts.append(f"## Search: '{kw}'\n" + "\n".join(lines))
+
+    # Artifact pulls
+    artifact_triggers = {
+        "blackboard": ["blackboard", "shared", "coordinat", "communic"],
+        "program": ["program", "instructions", "scaffold", "task"],
+        "results": ["results", "score", "experiment", "best"],
+        "desires": ["desires", "wants", "request"],
+        "learnings": ["learn", "discover", "finding"],
+        "mistakes": ["mistake", "failure", "error", "dead end"],
+    }
+    for atype, triggers in artifact_triggers.items():
+        if any(t in question.lower() for t in triggers):
+            art = store.get_artifact(atype)
+            content = art.get("content", "")
+            if content and content != "(content not stored inline — too large)":
+                evidence_parts.append(f"## Artifact: {atype}\n{content[:3000]}")
+
+    # Influence pulls
+    if any(w in question.lower() for w in ["influence", "cross-agent", "coordinat", "collaborat", "flow"]):
+        infs = store.get_influences()
+        if infs:
+            lines = []
+            for i in infs[:20]:
+                src = store._agent_for_trace(i["source_trace_id"])
+                tgt = store._agent_for_trace(i["target_trace_id"])
+                lines.append(f"{src} -> {tgt} via {i['artifact_id']} ({i['influence_type']})")
+            evidence_parts.append("## Cross-agent influences\n" + "\n".join(lines))
+
+    evidence = "\n\n".join(evidence_parts)
+
+    prompt = f"""You are a forensic analyst for multi-agent AI research systems.
+You have structured trace data from an RRMA run.
+
+{index}
+
+{evidence}
+
+QUESTION: {question}
+
+Answer with specific evidence: cite agent IDs, step numbers, exact quotes. Be direct."""
+
+    # Pipe to claude -p
+    try:
+        result = subprocess.run(
+            ["claude", "-p", "--model", "sonnet"],
+            input=prompt, capture_output=True, text=True, timeout=180,
+        )
+        print(result.stdout)
+        if result.stderr:
+            print(result.stderr, file=sys.stderr)
+    except FileNotFoundError:
+        print("Error: 'claude' CLI not found. Install Claude Code first.")
+        sys.exit(1)
+    except subprocess.TimeoutExpired:
+        print("Error: claude -p timed out after 180s")
+        sys.exit(1)
+
+
+def cmd_search(args):
+    """Search across all traces."""
+    store = get_store(args.traces)
+    query = " ".join(args.query)
+    results = store.search_traces(query, args.max)
+
+    if not results:
+        print(f"No results for '{query}'")
+        return
+
+    print(f"Found {len(results)} hits for '{query}':\n")
+    for r in results:
+        print(f"  {r['agent_id']:>8s}  step {r['step_index']:<4d}  [{', '.join(r['found_in'])}]")
+        if r["snippet"]:
+            snippet = r["snippet"].replace("\n", " ")[:120]
+            print(f"           {snippet}")
+        print()
+
+
+def cmd_agent(args):
+    """Show agent summary or thinking blocks."""
+    store = get_store(args.traces)
+    aid = args.agent_id
+
+    if aid not in store.traces_by_agent:
+        print(f"Unknown agent: {aid}")
+        print(f"Available: {', '.join(sorted(store.traces_by_agent))}")
+        return
+
+    traces = store.traces_by_agent[aid]
+    total_steps = sum(t["metrics"]["total_steps"] for t in traces)
+
+    if args.thinking:
+        blocks = store.get_agent_thinking(aid, args.max or 20)
+        print(f"{aid}: {len(blocks)} thinking blocks (showing last {len(blocks)})\n")
+        for b in blocks:
+            print(f"--- step {b['step_index']} (trace {b['trace_id']}) ---")
+            if b["artifact_reads"]:
+                print(f"  reads: {b['artifact_reads']}")
+            if b["artifact_writes"]:
+                print(f"  writes: {b['artifact_writes']}")
+            if b["tool_calls"]:
+                print(f"  tools: {b['tool_calls']}")
+            print(b["thinking"])
+            print()
+    elif args.timeline:
+        events = store.get_agent_timeline(aid)
+        print(f"{aid}: {len(events)} key events\n")
+        for e in events:
+            tools = ", ".join(e["tools"][:3]) if e["tools"] else "-"
+            writes = ", ".join(e["artifact_writes"]) if e["artifact_writes"] else ""
+            summary = e["summary"][:100].replace("\n", " ") if e["summary"] else ""
+            prefix = f"  step {e['step_index']:<4d}"
+            if writes:
+                prefix += f"  WRITE→{writes}"
+            print(f"{prefix}  [{tools}]")
+            if summary:
+                print(f"           {summary}")
+            print()
+    else:
+        # Summary
+        print(f"Agent: {aid}")
+        print(f"  Sessions:  {len(traces)}")
+        print(f"  Steps:     {total_steps:,}")
+        thinking = sum(sum(1 for st in t["steps"] if st.get("reasoning_content")) for t in traces)
+        tools = sum(sum(len(st.get("tool_calls", [])) for st in t["steps"]) for t in traces)
+        print(f"  Thinking:  {thinking}")
+        print(f"  Tool calls:{tools}")
+
+        from collections import Counter
+        reads = Counter()
+        writes = Counter()
+        for t in traces:
+            for st in t["steps"]:
+                for r in st.get("artifact_reads", []): reads[r] += 1
+                for w in st.get("artifact_writes", []): writes[w] += 1
+        if reads:
+            print(f"  Reads:     {dict(reads.most_common())}")
+        if writes:
+            print(f"  Writes:    {dict(writes.most_common())}")
+
+        print(f"\n  Use --thinking or --timeline for detail")
+
+
+def cmd_artifact(args):
+    """Show a shared artifact."""
+    store = get_store(args.traces)
+    art = store.get_artifact(args.type)
+
+    if "error" in art:
+        print(f"Error: {art['error']}")
+        types = [a["artifact_type"] for a in store.swarm.get("artifacts", [])]
+        print(f"Available: {', '.join(types)}")
+        return
+
+    print(f"Artifact: {art['artifact_type']}")
+    print(f"Path:     {art['path']}")
+    print(f"Lines:    {art['line_count']}")
+    print(f"Hash:     {art['content_hash']}")
+    print(f"---")
+    if art.get("content"):
+        print(art["content"])
+    else:
+        print("(content not stored inline)")
+
+
+def cmd_influences(args):
+    """Show cross-agent influence chains."""
+    store = get_store(args.traces)
+    agent_id = args.agent_id if args.agent_id else None
+    infs = store.get_influences(agent_id)
+
+    if not infs:
+        print("No influences found.")
+        return
+
+    label = f" for {agent_id}" if agent_id else ""
+    print(f"Cross-agent influences{label}: {len(infs)}\n")
+
+    for i in infs:
+        src = store._agent_for_trace(i["source_trace_id"])
+        tgt = store._agent_for_trace(i["target_trace_id"])
+        print(f"  {src:>8s} → {tgt:<8s}  via {i['artifact_id']}  ({i['influence_type']})")
+
+
+def cmd_step(args):
+    """Show a specific step."""
+    store = get_store(args.traces)
+    step = store.get_step(args.trace_id, args.step_index)
+
+    if "error" in step:
+        print(f"Error: {step['error']}")
+        return
+
+    print(json.dumps(step, indent=2, default=str))
+
+
+def cmd_index(args):
+    """Print the compact index."""
+    store = get_store(args.traces)
+    print(store.build_index())
+
+
+def cmd_serve(args):
+    """Start the web server with traces loaded."""
+    cmd = [sys.executable, str(BASE_DIR / "trustloop_server.py")]
+    traces_path = args.traces or str(TRACES_DEFAULT)
+    if Path(traces_path).exists():
+        cmd.extend(["--traces", traces_path])
+    cmd.append(str(args.port))
+    os.execvp(cmd[0], cmd)
+
+
+def cmd_chat(args):
+    """Interactive forensic chat."""
+    store = get_store(args.traces)
+    print(f"TrustLoop Forensic Chat")
+    print(f"Loaded: {len(store.traces)} traces, {len(store.traces_by_agent)} agents")
+    print(f"Type a question. 'quit' to exit.\n")
+
+    for aid in sorted(store.traces_by_agent):
+        traces = store.traces_by_agent[aid]
+        steps = sum(t["metrics"]["total_steps"] for t in traces)
+        print(f"  {aid}: {len(traces)} sessions, {steps} steps")
+    print()
+
+    while True:
+        try:
+            question = input("trustloop> ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nBye.")
+            break
+        if not question:
+            continue
+        if question in ("quit", "exit", "q"):
+            break
+
+        # Build a synthetic args object
+        class FakeArgs:
+            pass
+        fa = FakeArgs()
+        fa.traces = args.traces
+        fa.question = question.split()
+        cmd_ask(fa)
+        print()
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="trustloop",
+        description="Forensic analysis of RRMA multi-agent runs",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=dedent("""\
+        Examples:
+          trustloop ingest domains/rrma-lean --logs data/rrma_lean_logs
+          trustloop status
+          trustloop ask "which agent was most productive?"
+          trustloop search "omega"
+          trustloop agent agent3 --thinking
+          trustloop artifact blackboard
+          trustloop influences agent4
+          trustloop chat
+        """),
+    )
+    parser.add_argument("--traces", default=None, help=f"Traces JSONL path (default: {TRACES_DEFAULT})")
+    sub = parser.add_subparsers(dest="command")
+
+    # ingest
+    p = sub.add_parser("ingest", help="Convert RRMA domain + logs → traces JSONL")
+    p.add_argument("domain", help="Domain directory")
+    p.add_argument("--logs", default=None, help="Logs directory (default: domain/logs)")
+    p.add_argument("--out", default=None, help=f"Output path (default: {TRACES_DEFAULT})")
+
+    # status
+    sub.add_parser("status", help="Show loaded trace stats")
+
+    # ask
+    p = sub.add_parser("ask", help="Forensic question via claude -p")
+    p.add_argument("question", nargs="+", help="Your question")
+
+    # search
+    p = sub.add_parser("search", help="Search across all traces")
+    p.add_argument("query", nargs="+")
+    p.add_argument("--max", type=int, default=15)
+
+    # agent
+    p = sub.add_parser("agent", help="Agent summary, thinking, or timeline")
+    p.add_argument("agent_id")
+    p.add_argument("--thinking", action="store_true", help="Show thinking blocks")
+    p.add_argument("--timeline", action="store_true", help="Show action timeline")
+    p.add_argument("--max", type=int, default=None)
+
+    # artifact
+    p = sub.add_parser("artifact", help="Show shared artifact content")
+    p.add_argument("type", help="blackboard, meta_blackboard, results, program, desires, learnings, mistakes")
+
+    # influences
+    p = sub.add_parser("influences", help="Cross-agent influence chains")
+    p.add_argument("agent_id", nargs="?", default=None)
+
+    # step
+    p = sub.add_parser("step", help="Show a specific step")
+    p.add_argument("trace_id")
+    p.add_argument("step_index", type=int)
+
+    # index
+    sub.add_parser("index", help="Print compact forensic index")
+
+    # serve
+    p = sub.add_parser("serve", help="Start web server with trace API")
+    p.add_argument("--port", type=int, default=8765)
+
+    # chat
+    sub.add_parser("chat", help="Interactive forensic chat")
+
+    args = parser.parse_args()
+    if not args.command:
+        parser.print_help()
+        return
+
+    commands = {
+        "ingest": cmd_ingest,
+        "status": cmd_status,
+        "ask": cmd_ask,
+        "search": cmd_search,
+        "agent": cmd_agent,
+        "artifact": cmd_artifact,
+        "influences": cmd_influences,
+        "step": cmd_step,
+        "index": cmd_index,
+        "serve": cmd_serve,
+        "chat": cmd_chat,
+    }
+    commands[args.command](args)
+
+
+if __name__ == "__main__":
+    main()

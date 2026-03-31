@@ -1,0 +1,69 @@
+#!/bin/bash
+# trustloop-session — Launch a forensic Claude Code session
+#
+# Usage:
+#   ./trustloop-session                              # use default traces
+#   ./trustloop-session /path/to/traces.jsonl        # use specific traces
+#   ./trustloop-session --ingest domains/rrma-lean   # ingest first, then launch
+#
+# What happens:
+#   1. Ensures traces are ingested
+#   2. Launches Claude Code with trustloop forensic context
+#   3. You just talk. Ask forensic questions in natural language.
+#   4. Claude uses ./trustloop CLI to query trace data
+
+set -e
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+TRACES="${TRACES_JSONL:-/tmp/rrma_traces.jsonl}"
+
+# Handle --ingest flag
+if [ "$1" = "--ingest" ]; then
+    shift
+    DOMAIN="${1:?Usage: trustloop-session --ingest <domain_dir> [--logs <logs_dir>]}"
+    shift
+    echo "Ingesting traces from $DOMAIN..."
+    "$SCRIPT_DIR/trustloop" ingest "$DOMAIN" "$@"
+    echo ""
+fi
+
+# Handle explicit traces path
+if [ -n "$1" ] && [ -f "$1" ]; then
+    TRACES="$1"
+fi
+
+# Check traces exist
+if [ ! -f "$TRACES" ]; then
+    echo "No traces found at $TRACES"
+    echo ""
+    echo "Ingest first:"
+    echo "  ./trustloop-session --ingest domains/rrma-lean --logs data/rrma_lean_logs"
+    echo ""
+    echo "Or point to existing traces:"
+    echo "  ./trustloop-session /path/to/traces.jsonl"
+    exit 1
+fi
+
+# Show what we're loading
+echo "╔══════════════════════════════════════╗"
+echo "║        TrustLoop Forensics          ║"
+echo "╚══════════════════════════════════════╝"
+echo ""
+"$SCRIPT_DIR/trustloop" --traces "$TRACES" status 2>/dev/null
+echo ""
+
+# Build the forensic index
+INDEX=$("$SCRIPT_DIR/trustloop" --traces "$TRACES" index 2>/dev/null)
+
+# Launch interactive Claude Code session with:
+#   --append-system-prompt: bake in the CLAUDE.md + forensic index
+#   --allowed-tools: only trustloop queries + read (no writes)
+#   initial prompt: seed with index so Claude knows what's loaded
+cd "$SCRIPT_DIR"
+exec claude \
+    --append-system-prompt-file .trustloop/CLAUDE.md \
+    --allowed-tools "Bash(./trustloop *),Read,Glob,Grep" \
+    "Trace data loaded. Here is the forensic index:
+
+$INDEX
+
+I'm ready to investigate. What do you want to know about this multi-agent run?"

@@ -34,13 +34,18 @@ done
 touch "$DOMAIN_DIR/results.tsv"
 mkdir -p "$DOMAIN_DIR/logs"
 
-# Rotate any existing agent logs so they are never overwritten
-ROTATE_TS="$(date '+%Y%m%d_%H%M%S')"
+# Rotate any existing agent logs — clean naming: agent0_s1.jsonl, agent0_s2.jsonl
 for existing in "$DOMAIN_DIR/logs"/agent*.jsonl; do
     [ -f "$existing" ] || continue
     base="$(basename "$existing" .jsonl)"
-    mv "$existing" "$DOMAIN_DIR/logs/${base}_${ROTATE_TS}.jsonl"
-    echo "Rotated: ${base}.jsonl → ${base}_${ROTATE_TS}.jsonl"
+    # Extract agent prefix (agent0, agent1, etc.)
+    agent_prefix=$(echo "$base" | grep -oE '^agent[0-9]+')
+    [ -z "$agent_prefix" ] && agent_prefix="$base"
+    # Find next session number for this agent
+    next_s=$(ls "$DOMAIN_DIR/logs/${agent_prefix}_s"*.jsonl 2>/dev/null | grep -oE '_s[0-9]+' | grep -oE '[0-9]+' | sort -n | tail -1)
+    next_s=$(( ${next_s:-0} + 1 ))
+    mv "$existing" "$DOMAIN_DIR/logs/${agent_prefix}_s${next_s}.jsonl"
+    echo "Rotated: $(basename "$existing") → ${agent_prefix}_s${next_s}.jsonl"
 done
 
 echo "Files OK. Launching..."
@@ -59,6 +64,7 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
         export PATH=\"$EXTRA_PATH:\$PATH\"
         cd $DOMAIN_DIR
         export AGENT_ID=agent$i
+        export CLAUDE_AGENT_ID=agent$i
         claude --output-format stream-json --verbose \
             --dangerously-skip-permissions \
             --max-turns $MAX_TURNS \

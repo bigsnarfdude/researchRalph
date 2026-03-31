@@ -83,11 +83,31 @@ if python3 -c "exit(0 if float('$SCORE') > float('$CURRENT_BEST') else 1)" 2>/de
     STATUS="keep"
 fi
 
-TIMESTAMP=$(date '+%Y-%m-%dT%H:%M:%S')
+TIMESTAMP=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 echo -e "${EXP_ID}\t${SCORE}\t${TOTAL}\t${STATUS}\t${DESCRIPTION}\t${AGENT}\t${DESIGN}\t0" >> "$RESULTS_TSV"
 
+# ── Structured experiment log (machine-readable) ─────────────────────────────
+EXPERIMENTS_JSONL="$DOMAIN_DIR/experiments.jsonl"
+python3 -c "
+import json, sys
+print(json.dumps({
+    'exp_id': '$EXP_ID',
+    'score': float('$SCORE'),
+    'n_attempted': int('$TOTAL'),
+    'n_passed': int('$PASS'),
+    'n_failed': int('$FAIL'),
+    'status': '$STATUS',
+    'description': sys.argv[1],
+    'agent': '$AGENT',
+    'design': '$DESIGN',
+    'method': '$METHOD',
+    'timestamp': '$TIMESTAMP',
+    'current_best': float('$CURRENT_BEST') if '$CURRENT_BEST' != '0' else 0.0,
+}))
+" "$DESCRIPTION" >> "$EXPERIMENTS_JSONL"
+
 echo ""
-echo "[run.sh] Logged: $EXP_ID  score=$SCORE  status=$STATUS  → results.tsv"
+echo "[run.sh] Logged: $EXP_ID  score=$SCORE  status=$STATUS  → results.tsv + experiments.jsonl"
 
 # ── Scrub and stage ───────────────────────────────────────────────────────────
 

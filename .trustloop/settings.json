@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./trustloop *)",
+      "Bash(python3 tools/trace_forensics.py *)",
+      "Bash(python3 tools/rrma_traces.py *)",
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Edit",
+      "Write",
+      "Bash(rm *)",
+      "Bash(git *)"
+    ]
+  }
+}
