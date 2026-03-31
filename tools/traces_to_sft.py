@@ -237,6 +237,46 @@ def extract_proof_traces(events, problems, min_thinking=50):
         if len(combined_thinking) < min_thinking:
             continue
 
+        # Filter: only keep traces that mention this specific problem.
+        # The thinking must reference the problem name, theorem name, or a
+        # closely related identifier. This prevents batch-write contamination
+        # where one thinking session gets mapped to 50 different problems.
+        problem_referenced = False
+        think_lower = combined_thinking.lower()
+        # Check problem_name variants: mathd_algebra_77 -> "mathd_algebra_77", "algebra_77", "algebra 77"
+        if problem_name.lower() in think_lower:
+            problem_referenced = True
+        else:
+            # Check shorter variants (e.g. "algebra_77" from "mathd_algebra_77")
+            parts = problem_name.split("_")
+            if len(parts) >= 2:
+                short = "_".join(parts[-2:])  # "algebra_77"
+                if short.lower() in think_lower:
+                    problem_referenced = True
+            # Check theorem name from the lean content
+            tm = re.search(r'theorem\s+(\w+)', lean_content)
+            if tm and tm.group(1).lower() in think_lower:
+                problem_referenced = True
+
+        if not problem_referenced:
+            continue
+
+        # Contamination check: reject traces that mention other problems
+        # more than the target. Agents often think about many problems in
+        # one session — only keep the trace if this problem dominates.
+        if problems:
+            target_count = think_lower.count(problem_name.lower())
+            parts_short = problem_name.split("_")
+            if len(parts_short) >= 2:
+                target_count += think_lower.count("_".join(parts_short[-2:]).lower())
+            other_count = 0
+            for other_name in problems:
+                if other_name == problem_name:
+                    continue
+                other_count += think_lower.count(other_name.lower())
+            if other_count > target_count * 3 and other_count > 5:
+                continue  # Polluted — other problems dominate
+
         # Get problem statement if we have the miniF2F index
         statement = problems.get(problem_name, f"-- problem: {problem_name}")
 
