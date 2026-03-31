@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "researchralph": {
+      "command": "python3",
+      "args": ["tools/rrma_mcp.py"],
+      "env": {
+        "RRMA_ROOT": "."
+      }
+    }
+  }
+}
