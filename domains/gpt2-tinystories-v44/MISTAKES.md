@@ -156,3 +156,44 @@
 **Result**: 1.0933 vs 1.0889 best — 0.004 BPB worse.
 **Why it failed**: Weight tying reduces unique params from 47M to ~27M. At this smaller model size, the model sees ~3.4 epochs of TinyStories in 300s. The model IS overfitting, and weight decay provides necessary regularization. The depth=8 result (WD neutral) was at 50M params / 1240 steps — different regime with more params and fewer repetitions.
 **Lesson**: Weight decay necessity depends on model size AND training duration. At smaller models (weight-tied), explicit regularization matters more. Don't extrapolate WD neutrality from larger models.
+
+## EXP-068: Freeze value embeddings at depth=7+wt (agent0)
+**What**: Froze all value embedding params at init (requires_grad=False), hoping init values provide useful signal while reducing trainable params.
+**Result**: 1.1053 vs 1.0850 best — 0.020 BPB worse. Large regression.
+**Why it failed**: Value embeddings need training to learn meaningful token representations. Init values are random uniform noise — useful as a starting point but not as a final representation. The accidental freeze at depth=6+wt was misleadingly competitive because: (1) smaller 384-dim model where VE is less critical, (2) resid/x0 scalars were also frozen (may have provided complementary regularization). At depth=7/512-dim with 3 VE layers, the model needs learned VE for good attention.
+**Lesson**: Don't freeze components that need to learn task-specific representations. The accidental freeze was a coincidence, not a technique. VE is essential at depth=7.
+
+## EXP-071 race condition (agent0)
+**What**: Queued window=64 (//32) experiment but agent1 kept overwriting train.py with //16 for their beta2=0.99 experiment.
+**Result**: My run.sh snapshot captured agent1's config (window=128+beta2=0.99) instead of my intended window=64.
+**Lesson**: The flock-acquire snapshot doesn't protect against edits between submission and lock acquisition. When the GPU queue is long, there's a wide window for the other agent to overwrite train.py. Need per-agent train files to prevent this.
+
+## EXP-066: Constant Muon momentum=0.95 (agent1)
+**What**: Eliminated the 0.85→0.95 momentum ramp over 300 steps, using constant 0.95 instead.
+**Result**: 1.0909 vs 1.0889 best — 0.002 BPB worse.
+**Why it failed**: The initial lower momentum (0.85) provides more gradient signal during early training when the model needs aggressive updates. Jumping straight to high momentum (0.95) over-smooths early gradients, slowing initial convergence. At ~1430 total steps, 300 ramp steps = 21% of training. The ramp-up is intentional and beneficial.
+**Lesson**: Muon momentum ramp is well-designed. Don't eliminate it. The schedule implicitly matches training phase: aggressive early, smooth late.
+
+## EXP-073: Muon beta2=0.99 (agent1, replicate of exp072)
+**What**: Changed NorMuon second momentum from 0.95 to 0.99 for more stable variance estimation.
+**Result**: 1.0842 vs 1.0837 best — 0.0005 BPB worse. Two replicates agree (exp072=1.0841 from race condition, exp073=1.0842).
+**Why it failed**: beta2=0.99 has a 100-step warmup period (1/(1-0.99)=100) before the variance estimate converges. With only ~1523 steps total, 7% of training runs with poor variance estimates. beta2=0.95 converges in 20 steps (1.4% of training), providing accurate normalization earlier.
+**Lesson**: At short training budgets, NorMuon beta2 should match the timescale: beta2=0.95 with ~1500 steps gives ~75 effective windows. Don't slow down the adaptive normalization.
+
+## EXP-074: Graduated windows (128/128/128/256/256/256/2048) (agent0)
+**What**: Instead of uniform short_window=128 for all layers, used graduated: layers 0-2 at 128, layers 3-5 at 256, layer 6 at 2048.
+**Result**: 1.0856 vs 1.0837 best — 0.002 BPB worse.
+**Why it failed**: Middle layers (3-5) also benefit from tight 128-token attention. Widening them to 256 slightly hurts. The model doesn't need a graduated hierarchy — all non-final layers should be tight, with the single full-context final layer handling global composition. TinyStories' short documents don't require phrase-level composition at 256 tokens.
+**Lesson**: Uniform short windows are optimal at this dataset/model. The intuition that "deeper layers need broader context" doesn't hold here — the final full-context layer is sufficient.
+
+## EXP-075: Constant weight decay (agent1)
+**What**: Removed linear WD decay schedule, keeping WD=0.2 constant throughout training. Hypothesis: model overfits at depth=7+wt (exp061 WD=0.0 hurt by 0.004), so keeping regularization through warmdown helps.
+**Result**: 1.0889 vs 1.0837 best — 0.005 BPB worse.
+**Why it failed**: The linear decay `WD * (1-progress)` is synergistic with the LR warmdown. As LR drops, the model is making smaller updates — constant WD at low LR means weight decay dominates, effectively shrinking weights toward zero when the model should be fine-tuning. The original schedule was designed to match WD intensity to the LR: high WD when LR is high (prevents overshoot), low WD when LR is low (allows convergence).
+**Lesson**: WD schedule should track LR schedule. Decoupled (constant) WD hurts at this training budget. The interplay between WD and LR is non-trivial — they need to be jointly designed.
+
+## EXP-077: Depth=6+wt+window=128 (agent1)
+**What**: Revisited depth=6 with window=128 improvement. Depth=6+wt got 1.090 with 1024 windows; window=128 improved depth=7 by 0.005 BPB.
+**Result**: 1.0875 vs 1.0837 best — 0.004 BPB worse.
+**Why it failed**: Despite 2611 steps (71% more than depth=7's 1523) and 171M tokens, the 384-dim model lacks capacity. The window improvement helps but doesn't compensate for going from 4 heads/512-dim to 3 heads/384-dim. Depth=7's 512-dim capacity is more valuable than depth=6's extra steps.
+**Lesson**: At this training budget, capacity (width) trumps step count once you're past the throughput sweet spot. Depth=7 is definitively optimal — the 512→384 dim reduction is too large to overcome with more steps.

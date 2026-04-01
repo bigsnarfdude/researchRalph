@@ -1,9 +1,12 @@
 #!/bin/bash
-# meta-loop.sh — the "sleep cycle" meta-agent
+# meta-loop.sh — the "sleep cycle" meta-agent (v4.6)
 #
 # Runs periodically during a research run.
-# Reads blackboard + results + its own previous meta-blackboard.
+# Reads stoplight + results + its own previous meta-blackboard.
 # Compresses, prunes, reflects, writes updated meta-blackboard.md.
+#
+# v4.6: Refreshes stoplight.md + recent_experiments.md before each cycle.
+#        Feeds stoplight (30 lines) to meta-agent instead of blackboard tail (200 lines).
 #
 # This is the recursive self-improvement core:
 #   meta-blackboard v1 -> agents explore -> meta-blackboard v2 (reads v1 + new results)
@@ -42,6 +45,13 @@ while true; do
 
     CYCLE=$((CYCLE + 1))
     echo "[meta] === Sleep cycle $CYCLE starting at $(date '+%H:%M:%S') ==="
+
+    # v4.6: Refresh context files for agents to read
+    REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+    if [ -f "$REPO_ROOT/tools/refresh_context.py" ]; then
+        python3 "$REPO_ROOT/tools/refresh_context.py" "$DOMAIN_DIR" 2>&1
+        echo "[meta] Refreshed stoplight.md + recent_experiments.md"
+    fi
 
     # Build the prompt
     PROMPT_FILE="/tmp/meta-loop-prompt-$$.md"
@@ -114,13 +124,26 @@ HEADER
         echo "" >> "$PROMPT_FILE"
     fi
 
-    echo "### blackboard.md (last 200 lines)" >> "$PROMPT_FILE"
-    tail -200 "$DOMAIN_DIR/blackboard.md" >> "$PROMPT_FILE"
-    echo "" >> "$PROMPT_FILE"
+    # v4.6: Use stoplight (30 lines) + recent_experiments instead of full blackboard tail (200 lines)
+    if [ -f "$DOMAIN_DIR/stoplight.md" ]; then
+        echo "### stoplight.md (compressed run state)" >> "$PROMPT_FILE"
+        cat "$DOMAIN_DIR/stoplight.md" >> "$PROMPT_FILE"
+        echo "" >> "$PROMPT_FILE"
+    else
+        echo "### blackboard.md (last 200 lines)" >> "$PROMPT_FILE"
+        tail -200 "$DOMAIN_DIR/blackboard.md" >> "$PROMPT_FILE"
+        echo "" >> "$PROMPT_FILE"
+    fi
 
-    echo "### results.tsv" >> "$PROMPT_FILE"
-    cat "$DOMAIN_DIR/results.tsv" >> "$PROMPT_FILE"
-    echo "" >> "$PROMPT_FILE"
+    if [ -f "$DOMAIN_DIR/recent_experiments.md" ]; then
+        echo "### recent_experiments.md (structured records)" >> "$PROMPT_FILE"
+        cat "$DOMAIN_DIR/recent_experiments.md" >> "$PROMPT_FILE"
+        echo "" >> "$PROMPT_FILE"
+    else
+        echo "### results.tsv" >> "$PROMPT_FILE"
+        cat "$DOMAIN_DIR/results.tsv" >> "$PROMPT_FILE"
+        echo "" >> "$PROMPT_FILE"
+    fi
 
     echo "### best/config.yaml" >> "$PROMPT_FILE"
     cat "$DOMAIN_DIR/best/config.yaml" >> "$PROMPT_FILE"

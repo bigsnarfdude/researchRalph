@@ -1,5 +1,10 @@
 #!/bin/bash
-# launch-agents.sh — starts N worker agents + 1 meta-agent in screen sessions
+# launch-agents.sh — starts N worker agents + 1 meta-agent in screen sessions (v4.6)
+#
+# v4.6 changes:
+#   - Agents read program_static.md (once) + program.md (dynamic) instead of monolithic program.md
+#   - Agents read stoplight.md + recent_experiments.md instead of full blackboard
+#   - refresh_context.py generates stoplight + recent_experiments before launch
 #
 # Usage: bash launch-agents.sh /path/to/domain [num_agents] [max_turns] [meta_interval_min]
 
@@ -48,7 +53,15 @@ for existing in "$DOMAIN_DIR/logs"/agent*.jsonl; do
     echo "Rotated: $(basename "$existing") → ${agent_prefix}_s${next_s}.jsonl"
 done
 
-echo "Files OK. Launching..."
+echo "Files OK."
+
+# --- v4.6: Generate initial context files ---
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+if [ -f "$REPO_ROOT/tools/refresh_context.py" ]; then
+    python3 "$REPO_ROOT/tools/refresh_context.py" "$DOMAIN_DIR" 2>&1
+fi
+
+echo "Launching..."
 echo ""
 
 # Build PATH export for screen sessions
@@ -68,7 +81,20 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
         claude --output-format stream-json --verbose \
             --dangerously-skip-permissions \
             --max-turns $MAX_TURNS \
-            -p 'You are agent$i. Read program.md, blackboard.md, results.tsv, and best/. If meta-blackboard.md exists, read it — it contains compressed observations from previous cycles. If calibration.md exists, read it — it contains known results and techniques from the literature. Then start experimenting. Write all findings to blackboard.md. Periodically re-read meta-blackboard.md — it updates during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
+            -p 'You are agent$i. Read these files in order:
+
+1. program_static.md — immutable rules, harness protocol, scoring, lifecycle (read ONCE, do not re-read)
+2. program.md — dynamic guidance, current regime, closed brackets, constraints (re-read when stuck)
+3. stoplight.md — compressed run state: health, what works, dead ends, recent activity
+4. recent_experiments.md — last 5 experiments with structured outcomes + full score trajectory
+5. best/ — current best train.py to start from
+6. If meta-blackboard.md exists, read it — compressed observations from previous cycles.
+7. If calibration.md exists, read it — known results from the literature.
+
+If program_static.md does not exist, read program.md for everything (backwards compatibility).
+If stoplight.md does not exist, read blackboard.md instead.
+
+Then start experimenting. Write all findings to blackboard.md. Periodically re-read stoplight.md and recent_experiments.md — they update during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
             > $DOMAIN_DIR/logs/agent${i}.jsonl 2>&1
     "
     echo "Started $SESSION (screen -r $SESSION)"

@@ -1,8 +1,13 @@
 #!/bin/bash
-# outer-loop.sh — the gardener (RRMA v4 outer agent)
+# outer-loop.sh — the gardener (RRMA v4.6 outer agent)
 #
 # Runs meta-RRMA generations. Monitors process quality. Stops, diagnoses,
 # and redesigns the scaffold between generations. Replaces the human.
+#
+# v4.6 changes:
+#   - Refreshes stoplight.md + recent_experiments.md in monitor loop
+#   - NUDGE/REDESIGN prompts use stoplight (30 lines) instead of raw blackboard tail
+#   - Agents read program_static.md + program.md (split context)
 #
 # Usage: bash outer-loop.sh /path/to/domain [max_generations] [num_agents] [max_turns] [monitor_interval_min]
 #
@@ -27,6 +32,7 @@ MONITOR_INTERVAL="${5:-20}"  # minutes between diagnose checks
 
 DOMAIN_DIR="$(cd "$DOMAIN_DIR" && pwd)"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TASTE="$SCRIPT_DIR/taste.md"
 
 # Ensure claude is on PATH (nigel needs login shell paths)
@@ -60,7 +66,7 @@ fi
 command -v claude >/dev/null 2>&1 || { echo "Error: claude CLI not found"; exit 1; }
 command -v screen >/dev/null 2>&1 || { echo "Error: screen not found"; exit 1; }
 
-log "=== RRMA v4 Outer Loop Starting ==="
+log "=== RRMA v4.6 Outer Loop Starting ==="
 log "Domain: $DOMAIN_DIR"
 log "Max generations: $MAX_GENERATIONS"
 log "Agents: $NUM_AGENTS, turns: $MAX_TURNS, monitor: ${MONITOR_INTERVAL}m"
@@ -110,6 +116,9 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
             break
         fi
 
+        # v4.6: Refresh context files before diagnosis
+        python3 "$REPO_ROOT/tools/refresh_context.py" "$DOMAIN_DIR" 2>>"$LOG" || true
+
         # Run diagnosis
         DECISION=$(python3 "$SCRIPT_DIR/diagnose.py" "$DOMAIN_DIR" 2>>"$LOG")
         log "Diagnosis: $DECISION (check $MONITOR_COUNT, workers alive: $ALIVE)"
@@ -137,11 +146,11 @@ $(cat "$NUDGE_JSON" 2>/dev/null || echo "{}")
 ## Current program.md:
 $(cat "$DOMAIN_DIR/program.md")
 
-## Blackboard (last 40 lines):
-$(tail -40 "$DOMAIN_DIR/blackboard.md")
+## Stoplight (compressed run state):
+$(cat "$DOMAIN_DIR/stoplight.md" 2>/dev/null || tail -40 "$DOMAIN_DIR/blackboard.md")
 
-## Recent results (last 10):
-$(tail -10 "$DOMAIN_DIR/results.tsv")
+## Recent experiments:
+$(cat "$DOMAIN_DIR/recent_experiments.md" 2>/dev/null || tail -10 "$DOMAIN_DIR/results.tsv")
 
 ## Your job — TWO outputs separated by ===CONSTRAINTS===
 
@@ -237,11 +246,11 @@ no explanations of WHY things work.
 ## Current program.md:
 $(cat "$DOMAIN_DIR/program.md")
 
-## Current blackboard.md (last 100 lines):
-$(tail -100 "$DOMAIN_DIR/blackboard.md")
+## Stoplight (compressed run state):
+$(cat "$DOMAIN_DIR/stoplight.md" 2>/dev/null || tail -100 "$DOMAIN_DIR/blackboard.md")
 
-## Current results.tsv (last 20):
-$(tail -20 "$DOMAIN_DIR/results.tsv")
+## Recent experiments:
+$(cat "$DOMAIN_DIR/recent_experiments.md" 2>/dev/null || tail -20 "$DOMAIN_DIR/results.tsv")
 
 ## Your job:
 Rewrite program.md to force genuine research. Specific changes to consider:
@@ -296,11 +305,11 @@ $(cat "$DOMAIN_DIR/meta-blackboard.md" 2>/dev/null || echo "No meta-blackboard y
 ## Current program.md:
 $(cat "$DOMAIN_DIR/program.md")
 
-## Current blackboard.md (last 150 lines):
-$(tail -150 "$DOMAIN_DIR/blackboard.md")
+## Stoplight (compressed run state):
+$(cat "$DOMAIN_DIR/stoplight.md" 2>/dev/null || tail -150 "$DOMAIN_DIR/blackboard.md")
 
-## Current results.tsv (last 30):
-$(tail -30 "$DOMAIN_DIR/results.tsv")
+## Recent experiments:
+$(cat "$DOMAIN_DIR/recent_experiments.md" 2>/dev/null || tail -30 "$DOMAIN_DIR/results.tsv")
 
 ## Agent DESIRES (tools/context they wish they had):
 $(cat "$DOMAIN_DIR/DESIRES.md" 2>/dev/null || echo "none")
@@ -374,11 +383,11 @@ $(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 3 
             REEVAL_PROMPT="$(cat <<REEVAL_EOF
 You are reviewing a completed research run. Read the blackboard and results.
 
-## Blackboard (last 100 lines):
-$(tail -100 "$DOMAIN_DIR/blackboard.md")
+## Stoplight (compressed run state):
+$(cat "$DOMAIN_DIR/stoplight.md" 2>/dev/null || tail -100 "$DOMAIN_DIR/blackboard.md")
 
-## Results (last 20):
-$(tail -20 "$DOMAIN_DIR/results.tsv")
+## Recent experiments:
+$(cat "$DOMAIN_DIR/recent_experiments.md" 2>/dev/null || tail -20 "$DOMAIN_DIR/results.tsv")
 
 ## Meta-blackboard:
 $(cat "$DOMAIN_DIR/meta-blackboard.md" 2>/dev/null | head -50 || echo "none")
@@ -425,8 +434,8 @@ You are recording what this generation taught about the research PROCESS (not th
 - Best score: $POST_BEST (started at: ${PRE_BEST:-baseline})
 - Decision: STOP_DONE
 
-## Blackboard (last 100 lines):
-$(tail -100 "$DOMAIN_DIR/blackboard.md")
+## Stoplight:
+$(cat "$DOMAIN_DIR/stoplight.md" 2>/dev/null || tail -100 "$DOMAIN_DIR/blackboard.md")
 
 ## Meta-blackboard:
 $(cat "$DOMAIN_DIR/meta-blackboard.md" 2>/dev/null || echo "none")
@@ -443,7 +452,7 @@ PROMPT
             echo "$LESSON" >> "$TASTE"
             log "Appended generation $gen lesson to taste.md"
 
-            log "=== RRMA v4 COMPLETE ==="
+            log "=== RRMA v4.6 COMPLETE ==="
             log "Final best: $POST_BEST"
             log "Total experiments: $POST_EXP"
             log "Generations: $gen"
@@ -451,7 +460,7 @@ PROMPT
             # Print summary
             echo ""
             echo "=================================="
-            echo "  RRMA v4 — Run Complete"
+            echo "  RRMA v4.6 — Run Complete"
             echo "=================================="
             echo "  Best score: $POST_BEST"
             echo "  Experiments: $POST_EXP"

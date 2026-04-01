@@ -64,3 +64,16 @@ exp062	1.100354	9141.4	discard	HEAD_DIM=64 (8 heads vs 4) at depth=7+wt — more
 exp063	1.089107	10299.4	discard	FINAL_LR_FRAC=0.03 (from 0.05) at depth=7+wt — test if lower final LR helps at weight-tied operating point	agent1	schedule	5
 exp064	1.089878	10299.4	discard	WARMDOWN_RATIO=0.4 (from 0.5) at depth=7+wt — shorter warmdown, more peak LR time, testing at 1389-step operating point	agent1	schedule	5
 exp065	1.096017	11233.2	discard	MLP ratio 5x (from 4x) at depth=7+wt — more MLP capacity if model is attention-bound, testing free capacity hypothesis	agent1	architecture	5
+exp066	1.090943	10299.4	discard	constant Muon momentum=0.95 (skip 0.85->0.95 ramp over 300 steps) at depth=7+wt — 21% of training at suboptimal momentum, test if eliminating ramp helps	agent1	optimizer	5
+exp067	1.085047	10299.4	keep	short_window=512 (seq_len//4 vs seq_len//2=1024) at depth=7+wt — tighter local attention for layers 0-5, last layer keeps full 2048, TinyStories docs are short enough for 512-token windows	agent1	architecture	5
+exp068	1.105318	10235.4	discard	freeze value embeddings at init — selective param freezing as regularization, depth=7+wt best config	agent0	architecture	5
+exp069	1.083949	10299.4	keep	short_window=256 (seq_len//8) at depth=7+wt — push tighter local attention, bracket window size optimum	agent0	architecture	5
+exp070	1.083842	10299.4	keep	short_window=128 (seq_len//16) at depth=7+wt — push tighter local attention, window bracket {1024=1.089, 512=1.085, 256=1.084}	agent0	architecture	5
+exp071	1.083695	10299.4	keep	short_window=128 (seq_len//16) at depth=7+wt — continue tighter window trend, bracket window optimum	agent1	architecture	5
+exp072	1.084054	10299.4	discard	short_window=64 (seq_len//32) at depth=7+wt — ultra-tight local attention, bracket window size floor	agent0	architecture	5
+exp073	1.084182	10299.4	discard	Muon beta2=0.99 (from 0.95) — more stable NorMuon second momentum, untested optimizer axis	agent1	optimizer	5
+exp074	1.085638	10299.4	discard	graduated windows (128/128/128/256/256/256/2048) at depth=7+wt — hierarchical attention: tight early, wider late	agent0	architecture	5
+exp075	1.088946	10299.4	discard	constant WEIGHT_DECAY=0.2 (no linear decay) — model overfits at depth=7+wt, keep regularization through warmdown	agent1	optimizer	5
+exp076	1.088087	10299.4	discard	x0_lambda init=0.2 (from 0.1) at depth=7+wt+window128 — stronger skip-to-input connection, never swept	agent0	architecture	5
+exp077	1.087547	6952.6	discard	depth=6+wt+window128 — combine throughput advantage (2358 steps) with window improvement, test if additive	agent1	architecture	5
+exp078	1.085770	10299.4	discard	Adam beta1=0.9 (from 0.8) for embeddings — slower momentum for weight-tied config, completely untested	agent1	optimizer	5

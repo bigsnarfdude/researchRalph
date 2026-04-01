@@ -257,3 +257,36 @@ WD=0.0 at depth=7+wt = 1.0933 (worse by 0.004). At depth=8 (50M params), WD was 
 
 ## EMBEDDING_LR=0.4 is optimal at depth=7+wt (agent0, exp060)
 ELR bracket: {0.3=1.092, 0.4=1.089, 0.6=~1.089}. Effective 0.49 is the sweet spot for the dual input/output role.
+
+## Muon momentum ramp is beneficial (agent1, exp066)
+Constant momentum=0.95 gave 1.0909 vs ramp 0.85→0.95 = 1.0889. The ramp saves 0.002 BPB. Lower initial momentum (0.85) provides more gradient signal during early training. At ~1430 steps, the 300-step ramp = 21% of training. Don't skip it.
+
+## MLP ratio 5x at depth=7+wt is harmful (exp065)
+MLP 5x = 1.096, 0.007 worse. More MLP capacity at 512-dim adds ~14% more params (VRAM 11233 vs 10299), slows step time, reduces total steps. Same pattern as MLP 3x at depth=8: the model is NOT attention-bound, extra MLP capacity doesn't help.
+
+## Freezing value embeddings is harmful (agent0, exp068)
+VE freezing at depth=7+wt = 1.1053 (0.016 worse than best). Value embeddings need to learn task-specific token representations. Init values are random noise. The accidental freeze at depth=6+wt was misleadingly competitive — don't extrapolate. VE training is essential.
+
+## Short window 512 is a genuine win (agent1, exp067)
+short_window = seq_len//4 = 512 (vs seq_len//2 = 1024) at depth=7+wt = 1.0850, a 0.004 BPB improvement over 1.0889. TinyStories docs average ~500 tokens, so 512-token attention windows match data locality. Last layer keeps full 2048 window.
+
+## Window size trend: smaller is better down to 128 (agent0, exp069-070; agent1, exp071)
+Full window bracket: {1024=1.089, 512=1.085, 256=1.084, 128=1.084}. Gains diminish: 0.004→0.001→0.0001. Two replicates at window=128 agree: 1.0838 and 1.0837. TinyStories' short documents benefit from very tight local attention in early layers. The last layer (full 2048 window) provides global context. The model learns local patterns first (early layers) and composes them with global context (final layer). This hierarchical attention pattern is effective for short-document datasets. Window=128 also gives ~198ms/step (vs ~210ms at 256), a 6% throughput bonus from reduced attention computation.
+
+## Reproducibility at window=128 (agent1 replication)
+exp070 (agent0) = 1.0838, exp071 (agent1) = 1.0837. Two independent runs with same config differ by only 0.0001 BPB. This confirms the signal-to-noise ratio at this point — differences <0.001 are within noise.
+
+## beta2=0.99 is slightly harmful (exp072 race condition + exp073 agent1)
+NorMuon second momentum beta2=0.99 (from 0.95) tested in two ways:
+- exp072 (agent0, race condition): window=128 + beta2=0.99 = 1.0841 (mislabeled as window=64)
+- exp073 (agent1): window=128 + beta2=0.99 = 1.0842
+Both ~0.0004 worse than best (1.0837). At 1430 steps, beta2=0.99 adapts too slowly — the variance estimates need ~100 steps to warm up (1/(1-0.99)=100 vs 1/(1-0.95)=20). With only 1430 total steps, the slower adaptation wastes too much early training.
+
+## Race condition wastes ~30% of agent0 experiments
+Experiments lost to race conditions: exp072 (intended window=64, ran beta2=0.99). The flock-acquire snapshot captures train.py state at lock acquisition time, not submission time. With two agents editing the same file and GPU queue delays of 5-15 min, there's a wide window for the other agent to overwrite configs.
+
+## Constant weight decay is harmful (agent1, exp075)
+WD schedule: {WD=0.0: 1.093, linear_decay: 1.084, constant=0.2: 1.089}. The linear decay `WD*(1-progress)` is optimal. Constant WD with declining LR creates over-regularization at convergence — the WD pressure dominates when LR is small. The original schedule was designed to match WD intensity to LR: high WD when LR is high, tapering together. Don't decouple them.
+
+## Graduated windows are worse than uniform (agent0, exp074)
+128/128/128/256/256/256/2048 = 1.0856 vs uniform 128+last2048 = 1.0837. Middle layers DON'T need wider context. The single full-context final layer handles all global composition. TinyStories is short enough that uniform tight windows are universally optimal.

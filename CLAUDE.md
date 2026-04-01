@@ -2,12 +2,12 @@
 
 ## What This Is
 
-A multi-agent research framework (v4.5) where Claude Code agents run experiments autonomously. A gardener (outer agent) monitors process quality, detects hacking/stagnation, and redesigns the scaffold. TrustLoop provides forensic scoring, anomaly detection, and insight generation.
+A multi-agent research framework (v4.6) where Claude Code agents run experiments autonomously. A gardener (outer agent) monitors process quality, detects hacking/stagnation, and redesigns the scaffold. TrustLoop provides forensic scoring, anomaly detection, and insight generation.
 
 ## Key Commands
 
 ```bash
-# v4.5: Fully autonomous with smart gardener + TrustLoop scoring
+# v4.6: Context-optimized agents + smart gardener + TrustLoop scoring
 bash v4/outer-loop.sh domains/<domain> [max_gens] [num_agents] [max_turns] [monitor_min]
 
 # v2: Multi-agent with operator control
@@ -31,16 +31,28 @@ cp -r domains/template domains/my-domain
 
 A domain needs: something agents edit, a harness that outputs a score, and instructions.
 
-## v4.5 Architecture
+## v4.6 Architecture
 
 ```
 outer-loop.sh → calibrate.sh → launch-agents.sh → [monitor loop] → diagnose.py
-                                    ↓                                    ↓
-                              workers + meta-agent              trustloop_scorer.py
-                              (screen sessions)                 (classify, AD, insights)
-                                    ↓
+                                    ↓                    ↓               ↓
+                              workers + meta-agent  refresh_context.py  trustloop_scorer.py
+                              (screen sessions)     (stoplight.md +     (classify, AD, insights)
+                                    ↓                recent_experiments.md)
                               DESIRES.md / MISTAKES.md / LEARNINGS.md (agent telemetry)
 ```
+
+### v4.6 Context Optimization
+
+Agents no longer read 600+ lines of raw blackboard. Instead:
+
+| Old (v4.5) | New (v4.6) | Lines |
+|------------|------------|-------|
+| program.md (monolithic 261 lines) | program_static.md (read once) + program.md (dynamic) | 98 + 95 |
+| blackboard.md (627+ lines, re-read every cycle) | stoplight.md (30 lines, auto-refreshed) | 43 |
+| grep results.tsv (growing) | recent_experiments.md (last 5, structured) | ~30 |
+
+`refresh_context.py` runs in monitor loop and meta-loop, keeping context files fresh.
 
 **diagnose.py** (v4.5) replaces bash grep-counting with the full TrustLoop scorer:
 - Experiment classification: BREAKTHROUGH / INCREMENTAL / PLATEAU / REGRESSION / CRASH
@@ -94,14 +106,19 @@ Note: train.py on nigel uses PyTorch SDPA (no flash_attn package needed). run.sh
 - v3: 135 experiments, 1×RTX 4070 Ti, 0.9894 F1 (SAE-bench, beat 0.97 ceiling)
 - v4: Hacking detection validated (PQ=6/30, STOP_HACKING fired correctly)
 - v4.5: gpt2-tinystories-v44 on RTX 4070 Ti, 1.102 BPB in 9 experiments
+- v4.6: Context optimization — stoplight (43 lines) replaces blackboard (627 lines), static/dynamic program split, structured experiment records
 
 ## Critical Files
 
 - `v4/diagnose.py` — Smart diagnosis via TrustLoop scorer (replaces diagnose.sh)
 - `v4/taste.md` — The gardener's principles. Human-seeded, auto-updated.
 - `tools/trustloop_scorer.py` — Classification, anomaly detection, telemetry parsing, insights
+- `tools/refresh_context.py` — v4.6 context optimizer: generates stoplight.md + recent_experiments.md
 - `tools/rrma_mcp.py` / `tools/trustloop_mcp.py` — MCP servers for Claude Code integration
 - `tools/rrma_traces.py` — OpenTraces v0.1.0 schema + 6 RRMA multi-agent extensions
-- Domain `program.md` — Agent instructions. The gardener can rewrite this.
-- Domain `blackboard.md` — Shared state. Append-only.
+- Domain `program_static.md` — Immutable agent rules (harness, scoring, lifecycle). Read once.
+- Domain `program.md` — Dynamic guidance (constraints, regime, closed brackets). Gardener rewrites this.
+- Domain `stoplight.md` — Auto-generated 30-line compressed run state. Replaces raw blackboard reads.
+- Domain `recent_experiments.md` — Auto-generated structured records of last 5 experiments.
+- Domain `blackboard.md` — Shared state. Append-only. Agents still write here, but read stoplight instead.
 - Domain `DESIRES.md` / `MISTAKES.md` / `LEARNINGS.md` — Agent self-telemetry.
