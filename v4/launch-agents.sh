@@ -61,6 +61,11 @@ if [ -f "$REPO_ROOT/tools/refresh_context.py" ]; then
     python3 "$REPO_ROOT/tools/refresh_context.py" "$DOMAIN_DIR" 2>&1
 fi
 
+# --- v4.8: Seed domain memory if missing ---
+if [ ! -d "$DOMAIN_DIR/memory" ]; then
+    python3 "$REPO_ROOT/tools/memory_system.py" seed "$DOMAIN_DIR" 2>&1
+fi
+
 # --- v4.7: Create agent-local workspaces ---
 # Each agent gets workspace/agentN/ with its own copy of train.py
 # Eliminates race condition where agents overwrite each other's train.py
@@ -88,6 +93,32 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
     SESSION="rrma-worker$i"
     screen -S "$SESSION" -X quit 2>/dev/null
 
+    # v4.8: Pre-generate verified memory context for this agent
+    MEMORY_CONTEXT=""
+    if [ -d "$DOMAIN_DIR/memory" ]; then
+        MEMORY_CONTEXT=$(python3 "$REPO_ROOT/tools/memory_system.py" --json recall \
+            "$DOMAIN_DIR/memory/" "agent$i startup: current best, closed brackets, key findings" \
+            --domain-dir "$DOMAIN_DIR" --top 5 2>/dev/null | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    for fname, content in data.get('content', {}).items():
+        # Strip frontmatter, keep only body + any verification tags
+        lines = content.split('\n')
+        in_fm = False
+        body = []
+        for line in lines:
+            if line.strip() == '---':
+                in_fm = not in_fm
+                continue
+            if not in_fm:
+                body.append(line)
+        print('\n'.join(body).strip())
+        print()
+except: pass
+" 2>/dev/null)
+    fi
+
     screen -dmS "$SESSION" bash -c "
         export PATH=\"$EXTRA_PATH:\$PATH\"
         cd $DOMAIN_DIR
@@ -105,6 +136,9 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
 5. best/train.py — current best config (READ ONLY — do not edit best/ directly)
 6. If meta-blackboard.md exists, read it — compressed observations from previous cycles.
 7. If calibration.md exists, read it — known results from the literature.
+
+## Verified Memory (auto-loaded, checked against live sources)
+${MEMORY_CONTEXT:-No domain memory available.}
 
 If program_static.md does not exist, read program.md for everything (backwards compatibility).
 If stoplight.md does not exist, read blackboard.md instead.

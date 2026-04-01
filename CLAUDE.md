@@ -2,12 +2,12 @@
 
 ## What This Is
 
-A multi-agent research framework (v4.6) where Claude Code agents run experiments autonomously. A gardener (outer agent) monitors process quality, detects hacking/stagnation, and redesigns the scaffold. TrustLoop provides forensic scoring, anomaly detection, and insight generation.
+A multi-agent research framework (v4.7) where Claude Code agents run experiments autonomously. A gardener (outer agent) monitors process quality, detects hacking/stagnation, and redesigns the scaffold. TrustLoop provides forensic scoring, anomaly detection, and insight generation.
 
 ## Key Commands
 
 ```bash
-# v4.6: Context-optimized agents + smart gardener + TrustLoop scoring
+# v4.7: Agent-local workspaces + memory system + context-optimized agents
 bash v4/outer-loop.sh domains/<domain> [max_gens] [num_agents] [max_turns] [monitor_min]
 
 # v2: Multi-agent with operator control
@@ -31,18 +31,37 @@ cp -r domains/template domains/my-domain
 
 A domain needs: something agents edit, a harness that outputs a score, and instructions.
 
-## v4.6 Architecture
+## v4.7 Architecture
 
 ```
 outer-loop.sh → calibrate.sh → launch-agents.sh → [monitor loop] → diagnose.py
                                     ↓                    ↓               ↓
                               workers + meta-agent  refresh_context.py  trustloop_scorer.py
-                              (screen sessions)     (stoplight.md +     (classify, AD, insights)
-                                    ↓                recent_experiments.md)
+                              workspace/agentN/     (stoplight.md +     (classify, AD, insights)
+                              (isolated train.py)    recent_experiments.md)
+                                    ↓
                               DESIRES.md / MISTAKES.md / LEARNINGS.md (agent telemetry)
 ```
 
-### v4.6 Context Optimization
+### v4.7 Agent-Local Workspaces
+
+The #1 race condition is fixed: agents no longer share a single `train.py`.
+
+- `launch-agents.sh` creates `workspace/agentN/train.py` for each agent, seeded from `best/train.py`
+- Agents edit **only** their own workspace copy — no contention, no config leaks
+- `run.sh` resolves the agent's workspace copy and snapshots it inside `flock`
+- Manual runs fall back to domain-root `train.py` (backwards compat)
+- `workspace/` is ephemeral (gitignored, recreated each launch)
+
+### v4.7 Memory System (`tools/memory_system.py`)
+
+Filesystem-native memory retrieval — no vector DB, no embeddings:
+- **Scanner**: parses frontmatter + mtime from topic files → manifest
+- **Retriever**: Haiku side-query picks top-5 relevant files per query; keyword fallback when LLM unavailable
+- **Staleness checker**: wraps memories older than 1 day with verification warnings
+- JSON output for programmatic use
+
+### v4.6 Context Optimization (still active)
 
 Agents no longer read 600+ lines of raw blackboard. Instead:
 
@@ -100,6 +119,8 @@ python3 tools/trustloop_scorer.py domains/gpt2-tinystories-v44 --traces
 
 Note: train.py on nigel uses PyTorch SDPA (no flash_attn package needed). run.sh uses `python3` not `uv`.
 
+**v4.7 workspace migration:** Domain root `train.py` and `best/train.py` are now stubs. Real configs live only in `workspace/agentN/train.py` (seeded from best at launch). Never edit domain root train.py directly.
+
 ## Proven Results
 
 - v2: 186 experiments, 8×A100, 64% hit rate, 1.048 BPB (GPT-2)
@@ -107,6 +128,7 @@ Note: train.py on nigel uses PyTorch SDPA (no flash_attn package needed). run.sh
 - v4: Hacking detection validated (PQ=6/30, STOP_HACKING fired correctly)
 - v4.5: gpt2-tinystories-v44 on RTX 4070 Ti, 1.102 BPB in 9 experiments
 - v4.6: Context optimization — stoplight (43 lines) replaces blackboard (627 lines), static/dynamic program split, structured experiment records
+- v4.7: Agent-local workspaces eliminate train.py race condition; filesystem-native memory system (scanner + retriever + staleness); 231-experiment retrospective written (EXPERIMENT_ANALYSIS.md)
 
 ## Critical Files
 
@@ -114,6 +136,7 @@ Note: train.py on nigel uses PyTorch SDPA (no flash_attn package needed). run.sh
 - `v4/taste.md` — The gardener's principles. Human-seeded, auto-updated.
 - `tools/trustloop_scorer.py` — Classification, anomaly detection, telemetry parsing, insights
 - `tools/refresh_context.py` — v4.6 context optimizer: generates stoplight.md + recent_experiments.md
+- `tools/memory_system.py` — v4.7 memory system: scanner, semantic retriever (Haiku), staleness checker
 - `tools/rrma_mcp.py` / `tools/trustloop_mcp.py` — MCP servers for Claude Code integration
 - `tools/rrma_traces.py` — OpenTraces v0.1.0 schema + 6 RRMA multi-agent extensions
 - Domain `program_static.md` — Immutable agent rules (harness, scoring, lifecycle). Read once.
@@ -121,4 +144,6 @@ Note: train.py on nigel uses PyTorch SDPA (no flash_attn package needed). run.sh
 - Domain `stoplight.md` — Auto-generated 30-line compressed run state. Replaces raw blackboard reads.
 - Domain `recent_experiments.md` — Auto-generated structured records of last 5 experiments.
 - Domain `blackboard.md` — Shared state. Append-only. Agents still write here, but read stoplight instead.
+- Domain `workspace/agentN/train.py` — Agent-local isolated train.py (v4.7). Ephemeral, gitignored.
 - Domain `DESIRES.md` / `MISTAKES.md` / `LEARNINGS.md` — Agent self-telemetry.
+- `EXPERIMENT_ANALYSIS.md` — 231-experiment retrospective (The Good/Bad/Ugly). Key findings: throughput-over-capacity principle, overcomplication always loses, agents can't self-stop.

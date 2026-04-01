@@ -22,6 +22,11 @@ __pycache__/
 
 # Agent scratch (created at runtime in worktrees)
 memory/
+!domains/*/memory/
+!domains/*/memory/MEMORY.md
+!domains/*/memory/current_best.md
+!domains/*/memory/closed_brackets.md
+!domains/*/memory/key_findings.md
 scratch/
 
 # v4.7: Agent-local workspaces (ephemeral, recreated each launch)

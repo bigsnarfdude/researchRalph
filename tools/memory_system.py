@@ -53,6 +53,8 @@ class MemoryEntry:
     name: str = ""
     description: str = ""
     type: str = ""  # user | feedback | project | reference
+    verify_against: str = ""  # "results.tsv" | "blackboard.md:PATTERN" | "program.md:PATTERN" | "none"
+    claim: str = ""  # verifiable assertion, e.g. "best_score=1.0798"
     mtime: float = 0.0
     age_days: float = 0.0
     size_bytes: int = 0
@@ -161,6 +163,8 @@ def scan_memory_dir(memory_dir: Path) -> Manifest:
                 name=fm.get("name", fp.stem),
                 description=fm.get("description", ""),
                 type=fm.get("type", "unknown"),
+                verify_against=fm.get("verify_against", "none"),
+                claim=fm.get("claim", ""),
                 mtime=stat.st_mtime,
                 age_days=age_seconds / 86400,
                 size_bytes=stat.st_size,
@@ -281,15 +285,16 @@ def _keyword_fallback(manifest: Manifest, query: str, max_results: int) -> list[
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 3. Staleness Checker
+# 3. Skeptical Verification (replaces passive staleness warnings)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-STALENESS_WARNING = (
-    '<system-reminder>This memory is {age} old. Memories are point-in-time '
-    'observations, not live state — claims about code behavior or file:line '
-    'citations may be outdated. Verify against current code before asserting '
-    'as fact.</system-reminder>'
-)
+@dataclass
+class VerificationResult:
+    """Result of verifying a memory claim against its source."""
+    status: str  # "verified" | "corrected" | "unverifiable" | "source_missing"
+    claim: str
+    actual: str
+    message: str
 
 
 def format_age(days: float) -> str:
@@ -305,16 +310,171 @@ def format_age(days: float) -> str:
         return f"{months} months" if months != 1 else "1 month"
 
 
-def wrap_with_staleness(content: str, entry: MemoryEntry) -> str:
-    """Wrap memory content with staleness warning if older than 1 day."""
-    if not entry.is_stale:
+def _verify_results_tsv(domain_dir: Path, claim: str) -> VerificationResult:
+    """
+    Verify a claim against results.tsv.
+
+    Supports claims like:
+        best_score=1.0798
+        best_exp=exp099
+        total_experiments=105
+    """
+    results_path = domain_dir / "results.tsv"
+    if not results_path.exists():
+        return VerificationResult("source_missing", claim, "", "results.tsv not found")
+
+    try:
+        lines = results_path.read_text().strip().split("\n")
+    except OSError:
+        return VerificationResult("source_missing", claim, "", "results.tsv unreadable")
+
+    # Parse results: find best keep row
+    best_score = None
+    best_exp = None
+    total = 0
+    for line in lines:
+        cols = line.split("\t")
+        if len(cols) < 4:
+            continue
+        total += 1
+        exp_id = cols[0].strip()
+        try:
+            score = float(cols[1])
+        except (ValueError, IndexError):
+            continue
+        status = cols[3].strip() if len(cols) > 3 else ""
+        if status == "keep":
+            if best_score is None or score < best_score:
+                best_score = score
+                best_exp = exp_id
+
+    # Parse the claim
+    if not claim or "=" not in claim:
+        # No specific claim — just report current state
+        actual = f"best_score={best_score}, best_exp={best_exp}, total={total}"
+        return VerificationResult("verified", claim, actual, actual)
+
+    key, val = claim.split("=", 1)
+    key = key.strip()
+    val = val.strip()
+
+    if key == "best_score":
+        actual_val = str(best_score) if best_score is not None else "none"
+        try:
+            claimed_f = float(val)
+            if best_score is not None and abs(claimed_f - best_score) < 0.0005:
+                return VerificationResult("verified", claim, f"best_score={best_score}", "confirmed")
+            else:
+                return VerificationResult(
+                    "corrected", claim, f"best_score={best_score}",
+                    f"CORRECTED: memory says {val}, actual best is {best_score} ({best_exp})"
+                )
+        except ValueError:
+            return VerificationResult("corrected", claim, f"best_score={best_score}", f"claim unparseable, actual: {best_score}")
+
+    elif key == "best_exp":
+        actual_val = best_exp or "none"
+        if val == actual_val:
+            return VerificationResult("verified", claim, f"best_exp={actual_val}", "confirmed")
+        else:
+            return VerificationResult(
+                "corrected", claim, f"best_exp={actual_val}",
+                f"CORRECTED: memory says {val}, actual best exp is {actual_val}"
+            )
+
+    elif key == "total_experiments":
+        if str(total) == val:
+            return VerificationResult("verified", claim, f"total_experiments={total}", "confirmed")
+        else:
+            return VerificationResult(
+                "corrected", claim, f"total_experiments={total}",
+                f"CORRECTED: memory says {val} experiments, actual count is {total}"
+            )
+
+    return VerificationResult("unverifiable", claim, "", f"unknown claim key: {key}")
+
+
+def _verify_file_grep(domain_dir: Path, source_spec: str, claim: str) -> VerificationResult:
+    """
+    Verify a claim by grepping a file for a pattern.
+
+    source_spec format: "filename:PATTERN"  (e.g. "blackboard.md:exp057")
+    The pattern must be found in the file for the claim to be verified.
+    """
+    if ":" not in source_spec:
+        return VerificationResult("unverifiable", claim, "", f"bad source_spec: {source_spec}")
+
+    filename, pattern = source_spec.split(":", 1)
+    filepath = domain_dir / filename.strip()
+
+    if not filepath.exists():
+        return VerificationResult("source_missing", claim, "", f"{filename} not found")
+
+    try:
+        text = filepath.read_text(errors="replace")
+    except OSError:
+        return VerificationResult("source_missing", claim, "", f"{filename} unreadable")
+
+    if pattern.strip() in text:
+        return VerificationResult("verified", claim, f"found in {filename}", f"pattern '{pattern.strip()}' confirmed in {filename}")
+    else:
+        return VerificationResult(
+            "corrected", claim, f"NOT found in {filename}",
+            f"STALE: '{pattern.strip()}' no longer present in {filename}"
+        )
+
+
+def verify_memory(entry: MemoryEntry, domain_dir: Path) -> VerificationResult:
+    """
+    Verify a memory entry's claim against its declared source.
+
+    Dispatches to the right handler based on verify_against field.
+    """
+    source = entry.verify_against.strip()
+
+    if not source or source == "none":
+        return VerificationResult("verified", entry.claim, "", "structural — no verification needed")
+
+    if source == "results.tsv":
+        return _verify_results_tsv(domain_dir, entry.claim)
+
+    if ":" in source:
+        # file:pattern format — grep verification
+        return _verify_file_grep(domain_dir, source, entry.claim)
+
+    # Bare filename — check the file exists
+    filepath = domain_dir / source
+    if filepath.exists():
+        return VerificationResult("verified", entry.claim, "", f"{source} exists")
+    else:
+        return VerificationResult("source_missing", entry.claim, "", f"{source} not found")
+
+
+def wrap_with_verification(content: str, entry: MemoryEntry, vr: VerificationResult) -> str:
+    """
+    Wrap memory content with verification result.
+
+    - verified: pass through clean
+    - corrected: inject correction at top
+    - source_missing/unverifiable: add warning
+    """
+    if vr.status == "verified":
         return content
-    warning = STALENESS_WARNING.format(age=format_age(entry.age_days))
-    return f"{warning}\n{content}"
+
+    if vr.status == "corrected":
+        correction = f"[VERIFIED — {vr.message}]\n"
+        return f"{correction}{content}"
+
+    if vr.status == "source_missing":
+        warning = f"[UNVERIFIED — {vr.message}. Treat as hint, not fact.]\n"
+        return f"{warning}{content}"
+
+    warning = f"[UNVERIFIED — {vr.message}]\n"
+    return f"{warning}{content}"
 
 
 def check_staleness(manifest: Manifest) -> list[dict]:
-    """Return staleness report for all memories."""
+    """Return staleness report for all memories (kept for backwards compat)."""
     report = []
     for entry in manifest.entries:
         report.append({
@@ -336,21 +496,27 @@ def recall(
     query: str,
     max_results: int = 5,
     model: str = "haiku",
+    domain_dir: Optional[Path] = None,
 ) -> RetrievalResult:
     """
     Full recall pipeline:
     1. Scan memory directory for manifest
     2. Use LLM to select relevant files
-    3. Load selected files with staleness warnings
+    3. Load selected files with skeptical verification against live sources
     """
     manifest = scan_memory_dir(memory_dir)
     selected = retrieve_relevant(manifest, query, max_results, model)
+
+    # Resolve domain_dir: memory is usually at domains/<domain>/memory/
+    if domain_dir is None:
+        domain_dir = memory_dir.parent
 
     loaded = {}
     for entry in selected:
         try:
             content = entry.path.read_text(encoding="utf-8")
-            loaded[entry.filename] = wrap_with_staleness(content, entry)
+            vr = verify_memory(entry, domain_dir)
+            loaded[entry.filename] = wrap_with_verification(content, entry, vr)
         except OSError:
             continue
 
@@ -364,6 +530,124 @@ def recall(
 # ═══════════════════════════════════════════════════════════════════════════════
 # CLI
 # ═══════════════════════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Domain Memory Seeding
+# ═══════════════════════════════════════════════════════════════════════════════
+
+SEED_FILES = {
+    "MEMORY.md": """\
+# Domain Memory Index
+
+- [current_best.md](current_best.md) — current best score and config, verified against results.tsv
+- [closed_brackets.md](closed_brackets.md) — approaches ruled out, verified against program.md
+- [key_findings.md](key_findings.md) — discoveries from experiments, verified against blackboard.md
+""",
+    "current_best.md": """\
+---
+name: current_best
+description: Current best score, experiment ID, and key config choices
+type: project
+verify_against: results.tsv
+claim: best_score={best_score}
+---
+
+Best score: {best_score} ({best_exp})
+Total experiments: {total_experiments}
+
+Key config: see best/train.py for full config.
+""",
+    "closed_brackets.md": """\
+---
+name: closed_brackets
+description: Approaches that have been tried and ruled out — do not revisit
+type: feedback
+verify_against: program.md:CLOSED
+claim: closed brackets exist in program.md
+---
+
+Closed brackets are maintained in program.md under regime/constraints sections.
+Read program.md for the current list — this file is a pointer, not the source.
+""",
+    "key_findings.md": """\
+---
+name: key_findings
+description: Major discoveries from experiments — mechanisms that work or fail
+type: project
+verify_against: none
+claim:
+---
+
+Key findings are written by agents during experiments.
+This file starts empty — the gardener or agents populate it during runs.
+""",
+}
+
+
+def seed_domain_memory(domain_dir: Path) -> list[str]:
+    """
+    Create memory/ directory for a domain with starter topic files.
+    Reads results.tsv to populate current_best.md with live values.
+    Returns list of created files.
+    """
+    memory_dir = domain_dir / "memory"
+    memory_dir.mkdir(exist_ok=True)
+
+    # Parse results.tsv for current best
+    best_score = None
+    best_exp = None
+    total = 0
+    results_path = domain_dir / "results.tsv"
+    if results_path.exists():
+        for line in results_path.read_text().strip().split("\n"):
+            cols = line.split("\t")
+            if len(cols) < 4:
+                continue
+            total += 1
+            try:
+                score = float(cols[1])
+            except (ValueError, IndexError):
+                continue
+            status = cols[3].strip() if len(cols) > 3 else ""
+            if status == "keep":
+                if best_score is None or score < best_score:
+                    best_score = score
+                    best_exp = cols[0].strip()
+
+    created = []
+    for filename, template in SEED_FILES.items():
+        filepath = memory_dir / filename
+        if filepath.exists():
+            continue  # don't overwrite existing memory
+
+        content = template.format(
+            best_score=best_score or "unknown",
+            best_exp=best_exp or "unknown",
+            total_experiments=total,
+        )
+        filepath.write_text(content)
+        created.append(filename)
+
+    return created
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CLI
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def cmd_seed(args: argparse.Namespace) -> None:
+    domain_dir = Path(args.domain_dir)
+    if not domain_dir.is_dir():
+        print(f"Error: {domain_dir} is not a directory")
+        sys.exit(1)
+    created = seed_domain_memory(domain_dir)
+    if created:
+        print(f"Seeded {domain_dir}/memory/ with {len(created)} files:")
+        for f in created:
+            print(f"  {f}")
+    else:
+        print(f"Memory directory already exists at {domain_dir}/memory/ — no files overwritten")
+
 
 def cmd_scan(args: argparse.Namespace) -> None:
     manifest = scan_memory_dir(Path(args.memory_dir))
@@ -421,7 +705,9 @@ def cmd_staleness(args: argparse.Namespace) -> None:
 
 
 def cmd_recall(args: argparse.Namespace) -> None:
-    result = recall(Path(args.memory_dir), args.query, args.top, args.model)
+    memory_dir = Path(args.memory_dir)
+    domain_dir = Path(args.domain_dir) if hasattr(args, "domain_dir") and args.domain_dir else memory_dir.parent
+    result = recall(memory_dir, args.query, args.top, args.model, domain_dir=domain_dir)
 
     if args.json:
         data = {
@@ -448,6 +734,10 @@ def main():
     parser.add_argument("--json", action="store_true", help="JSON output")
     sub = parser.add_subparsers(dest="command", required=True)
 
+    # seed
+    p_seed = sub.add_parser("seed", help="Create memory directory for a domain with starter files")
+    p_seed.add_argument("domain_dir", help="Path to domain directory")
+
     # scan
     p_scan = sub.add_parser("scan", help="Scan memory directory, produce manifest")
     p_scan.add_argument("memory_dir", help="Path to memory directory")
@@ -464,15 +754,17 @@ def main():
     p_stale.add_argument("memory_dir", help="Path to memory directory")
 
     # recall (full pipeline)
-    p_recall = sub.add_parser("recall", help="Full pipeline: scan → retrieve → load with staleness")
+    p_recall = sub.add_parser("recall", help="Full pipeline: scan → retrieve → verify → load")
     p_recall.add_argument("memory_dir", help="Path to memory directory")
     p_recall.add_argument("query", help="User query")
+    p_recall.add_argument("--domain-dir", dest="domain_dir", help="Domain directory for verification (default: memory_dir parent)")
     p_recall.add_argument("--top", type=int, default=5, help="Max results (default: 5)")
     p_recall.add_argument("--model", default="haiku", help="LLM model (default: haiku)")
 
     args = parser.parse_args()
 
     dispatch = {
+        "seed": cmd_seed,
         "scan": cmd_scan,
         "retrieve": cmd_retrieve,
         "staleness": cmd_staleness,
