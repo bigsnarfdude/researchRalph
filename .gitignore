@@ -24,6 +24,9 @@ __pycache__/
 memory/
 scratch/
 
+# v4.7: Agent-local workspaces (ephemeral, recreated each launch)
+workspace/
+
 # Python
 .venv/
 *.egg-info/

@@ -67,9 +67,12 @@ This prevents parallel waste where both agents test the same thing.
 1. Read program_static.md (this file — once), then program.md, stoplight.md, recent_experiments.md
 2. Check blackboard.md for existing CLAIMEDs — do not duplicate another agent's claimed experiment
 3. Write your CLAIMED to blackboard.md
-4. `cp best/train.py train.py` (or use current train.py if best/ is empty)
-5. Apply ONE change. Predict expected val_bpb.
+4. `cp best/train.py workspace/$AGENT_ID/train.py` — copy best into YOUR workspace
+   (Your workspace is `workspace/agent0/`, `workspace/agent1/`, etc.)
+   **NEVER edit train.py in the domain root or best/ directly.**
+5. Apply ONE change to `workspace/$AGENT_ID/train.py`. Predict expected val_bpb.
 6. `bash run.sh <name> "description" <design_type>`
+   (run.sh automatically finds your workspace train.py via $CLAUDE_AGENT_ID)
 7. run.sh runs in background — DO NOT sleep or wait. Move on immediately.
    Check results.tsv after ~8 minutes with: `tail -3 results.tsv`
    If the row isn't there yet, continue reading blackboard/planning next experiment.
@@ -94,5 +97,5 @@ Use one of: baseline, architecture, optimizer, hyperparam, schedule, regularizat
 ## Scale-Independent Constraints (always valid)
 - **label_smoothing**: NEVER use — eval metric is standard CE/BPB, objective mismatch
 - **Throughput principle**: step count is #1 — any change adding >5% step time must deliver >0.005 BPB
-- **Race condition checks**: ALWAYS verify best/train.py HEAD_DIM and softcap before starting
+- **Workspace isolation**: Each agent edits only workspace/$AGENT_ID/train.py — never the domain root
 - **VE removal**: when removing value embeddings, MUST also make has_ve() return False

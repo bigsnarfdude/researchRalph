@@ -2,6 +2,8 @@
 # Harness: run GPT-2 TinyStories training and log results
 # Usage: bash run.sh <exp_name> "description" design_type
 #
+# v4.7: Agent-local workspaces eliminate race conditions.
+# Each agent edits workspace/agentN/train.py — no shared mutable file.
 # Serializes GPU access with flock so multiple agents don't OOM.
 # Automatically appends score to results.tsv.
 
@@ -19,7 +21,19 @@ mkdir -p "$LOGS_DIR"
 AGENT="${CLAUDE_AGENT_ID:-manual}"
 RUN_LOG="$LOGS_DIR/${METHOD}_${AGENT}_$(date +%s).log"
 
-echo "[run.sh] Queuing experiment: $METHOD"
+# v4.7: Resolve agent-local train.py (workspace/agentN/train.py)
+# Falls back to domain-level train.py for manual runs or backwards compat
+WORKSPACE="$DOMAIN_DIR/workspace/$AGENT"
+if [ -f "$WORKSPACE/train.py" ]; then
+    TRAIN_PY="$WORKSPACE/train.py"
+elif [ -f "$DOMAIN_DIR/train.py" ]; then
+    TRAIN_PY="$DOMAIN_DIR/train.py"
+else
+    echo "[run.sh] ERROR: No train.py found in workspace/$AGENT/ or domain root"
+    exit 1
+fi
+
+echo "[run.sh] Queuing experiment: $METHOD (using $TRAIN_PY)"
 echo "[run.sh] Results will appear in results.tsv when done (~7 min)."
 
 # Run in background so agents aren't blocked by 2-min bash timeout
@@ -28,12 +42,14 @@ echo "[run.sh] Results will appear in results.tsv when done (~7 min)."
 
     echo "[run.sh] GPU lock acquired. Starting training..."
 
-    # Snapshot train.py at flock-acquire time (not at result time)
-    # This prevents race conditions where another agent modifies train.py
-    # between experiment start and result recording.
+    # Snapshot the agent's train.py at flock-acquire time
     SNAPSHOT="$LOGS_DIR/${METHOD}_${AGENT}_$(date +%s)_train.py"
-    cp "$DOMAIN_DIR/train.py" "$SNAPSHOT"
+    cp "$TRAIN_PY" "$SNAPSHOT"
     CONFIG_HASH=$(md5sum "$SNAPSHOT" 2>/dev/null | cut -d' ' -f1 || md5 -q "$SNAPSHOT" 2>/dev/null || echo "nohash")
+
+    # Copy agent's train.py to domain root for the actual training run
+    # (training scripts expect train.py in the domain directory)
+    cp "$TRAIN_PY" "$DOMAIN_DIR/train.py"
 
     START=$(date +%s)
 

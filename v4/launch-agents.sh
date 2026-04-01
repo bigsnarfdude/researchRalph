@@ -61,6 +61,21 @@ if [ -f "$REPO_ROOT/tools/refresh_context.py" ]; then
     python3 "$REPO_ROOT/tools/refresh_context.py" "$DOMAIN_DIR" 2>&1
 fi
 
+# --- v4.7: Create agent-local workspaces ---
+# Each agent gets workspace/agentN/ with its own copy of train.py
+# Eliminates race condition where agents overwrite each other's train.py
+for i in $(seq 0 $((NUM_AGENTS - 1))); do
+    WS="$DOMAIN_DIR/workspace/agent$i"
+    mkdir -p "$WS"
+    # Seed from best/train.py if available, else domain root train.py
+    if [ -f "$DOMAIN_DIR/best/train.py" ]; then
+        cp "$DOMAIN_DIR/best/train.py" "$WS/train.py"
+    elif [ -f "$DOMAIN_DIR/train.py" ]; then
+        cp "$DOMAIN_DIR/train.py" "$WS/train.py"
+    fi
+    echo "Workspace: workspace/agent$i/train.py ready"
+done
+
 echo "Launching..."
 echo ""
 
@@ -87,12 +102,24 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
 2. program.md — dynamic guidance, current regime, closed brackets, constraints (re-read when stuck)
 3. stoplight.md — compressed run state: health, what works, dead ends, recent activity
 4. recent_experiments.md — last 5 experiments with structured outcomes + full score trajectory
-5. best/ — current best train.py to start from
+5. best/train.py — current best config (READ ONLY — do not edit best/ directly)
 6. If meta-blackboard.md exists, read it — compressed observations from previous cycles.
 7. If calibration.md exists, read it — known results from the literature.
 
 If program_static.md does not exist, read program.md for everything (backwards compatibility).
 If stoplight.md does not exist, read blackboard.md instead.
+
+## YOUR WORKSPACE (v4.7 — no more race conditions)
+Your private workspace is: workspace/agent$i/
+- Copy best/train.py → workspace/agent$i/train.py at the start of each experiment cycle
+- Edit ONLY workspace/agent$i/train.py — never edit train.py in the domain root or best/
+- run.sh automatically picks up workspace/agent$i/train.py when you run it
+- Other agents cannot see or modify your workspace
+
+Workflow per experiment:
+  cp best/train.py workspace/agent$i/train.py
+  # make your ONE change to workspace/agent$i/train.py
+  bash run.sh <name> "description" <design_type>
 
 Then start experimenting. Write all findings to blackboard.md. Periodically re-read stoplight.md and recent_experiments.md — they update during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
             > $DOMAIN_DIR/logs/agent${i}.jsonl 2>&1
