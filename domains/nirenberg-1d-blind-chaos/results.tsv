@@ -1,1 +1,22 @@
-exp_id	residual	solution_norm	status	description	agent	design	elapsed_s	solution_energy
+exp001	2.80498569e-21	0.000000	keep	default config u_offset=0 amp=0.1 mode=1	agent0	initial_cond	0	0.000000
+exp002	2.80498569e-21	0.000000	keep	default config u_offset=0	agent1	initial_cond	1	0.000000
+exp003	3.56681400e-13	1.001296	discard	u_offset=1.0 positive branch	agent0	initial_cond	0	-1.520844
+exp004	3.37911550e-13	1.001296	discard	u_offset=-1.0 negative branch	agent0	initial_cond	0	-1.520844
+exp005	2.88051949e-13	1.001296	discard	u_offset=0.9 positive branch	agent1	initial_cond	1	-1.520844
+exp006	crash	0	crash	u_offset=1.0 fourier_modes=128 improve residual	agent0	solver_param	0	0
+exp007	3.53361730e-13	1.001296	discard	u_offset=-0.9 negative branch	agent1	initial_cond	0	-1.520844
+exp008	crash	0	crash	u_offset=1.0 f128 maxiter=200	agent0	solver_param	0	0
+exp009	2.88051949e-13	1.001296	discard	u_offset=0.9 n_nodes=200 tol=1e-10 positive branch optimization	agent1	solver_param	0	-1.520844
+exp010	3.59806124e-13	1.001296	discard	u_offset=1.0 mode=2 amp=0.3	agent0	initial_cond	1	-1.520844
+exp011	1.74862376e-17	0.000000	discard	u_offset=0 mode=2 amp=0.5 oscillatory	agent0	initial_cond	0	-0.000000
+exp012	crash	0	crash	u_offset=0.9 fourier_modes=128 newton_tol=1e-14 high precision	agent1	solver_param	1	0
+exp013	2.89130324e-13	1.001296	discard	u_offset=0.5 mode=1 amp=0.5 phase=pi/2	agent0	initial_cond	0	-1.520844
+exp014	crash	0	crash	u_offset=0.9 fourier_modes=64 newton_tol=1e-14 maxiter=100	agent1	solver_param	0	0
+exp015	3.29242240e-13	1.001296	discard	u_offset=1.5 mode=3 amp=0.1	agent0	initial_cond	0	-1.520844
+exp016	8.81934684e-11	1.002503	discard	u_offset=0.9 scipy solver n_nodes=200 tol=1e-10	agent1	solver_param	1	-1.523848
+exp017	crash	0	crash	u_offset=1.0 newton_tol=1e-14 maxiter=100 tighter convergence	agent0	solver_param	2	0
+exp018	crash	0	crash	u_offset=0.9 fourier_modes=96 amp=0.15 better initial guess	agent1	solver_param	0	0
+exp019	8.81934684e-11	1.002503	discard	scipy solver u_offset=1.0 tol=1e-10 n=200	agent0	solver_param	0	-1.523848
+exp020	6.69306133e-20	0.000000	discard	u_offset=0.3 branch boundary sweep	agent1	branch_search	0	-0.000000
+exp021	3.05421974e-13	1.001296	discard	u_offset=0.5 branch boundary sweep	agent1	branch_search	1	-1.520844
+exp022	6.06963967e-15	0.000000	discard	u_offset=0.4 binary search boundary	agent1	branch_search	0	-0.000000
