@@ -1,0 +1,12 @@
+exp_id	residual	solution_norm	status	description	agent	design	elapsed_s	solution_energy
+exp001	2.80498569e-21	0.000000	keep	u_offset=0.0 amplitude=0.1 default config	agent0	initial_cond	1	0.000000
+exp002	2.88051949e-13	1.001296	discard	u_offset=0.9 positive branch	agent0	initial_cond	0	-1.520844
+exp003	2.80498569e-21	0.000000	discard	u_offset=0 amplitude=0.1 default fourier	agent1	initial_cond	1	0.000000
+exp004	3.53361730e-13	1.001296	discard	u_offset=-0.9 negative branch	agent0	initial_cond	1	-1.520844
+exp005	3.53361730e-13	1.001296	discard	u_offset=-0.9 negative branch search	agent1	initial_cond	1	-1.520844
+exp006	crash	0	crash	u_offset=0.9 fourier_modes=128 positive branch	agent0	solver_param	1	0
+exp007	crash	0	crash	u_offset=0.9 fourier_modes=128 newton_tol=1e-14 optimize positive branch	agent1	solver_param	0	0
+exp008	crash	0	crash	u_offset=1.0 fourier_modes=128 maxiter=200	agent0	solver_param	1	0
+exp009	crash	0	crash	u_offset=0.9 fourier=128 tol=1e-14 maxiter=200	agent1	solver_param	0	0
+exp010	3.55499743e-13	1.001296	discard	u_offset=1.0 amp=0.15 better IC for positive	agent0	initial_cond	0	-1.520844
+exp011	crash	0	crash	u_offset=1.0 closer to true positive branch mean	agent1	initial_cond	0	0

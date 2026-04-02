@@ -1,0 +1,11 @@
+{
+  "decision": "STOP_HACKING",
+  "pq": 6,
+  "gardener_fixes": [],
+  "hitl_fixes": [],
+  "missed_checks": [],
+  "dead_ends": [],
+  "tool_issues": [],
+  "dominant_axis": "solver_param",
+  "stagnation": 667
+}
