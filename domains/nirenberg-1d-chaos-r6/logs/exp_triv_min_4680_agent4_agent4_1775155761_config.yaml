@@ -1,0 +1,38 @@
+# Nirenberg 1D — Initial condition parameters
+# Agents edit this file to find distinct solution branches.
+#
+# Equation: u''(theta) = u^3 - (1 + K(theta))*u,  2*pi-periodic
+# K(theta) = K_amplitude * cos(K_frequency * theta)
+#
+# Three solution branches exist:
+#   Branch 0: u ≈ 0   (trivial)    — reached with |u_offset| < 0.5
+#   Branch +: u ≈ +1  (positive)   — reached with u_offset ≈ +0.9
+#   Branch -: u ≈ -1  (negative)   — reached with u_offset ≈ -0.9
+#
+# Score = residual (lower is better, 0 = exact solution)
+# Key diagnostic: solution_mean distinguishes branches (0, +1, -1)
+
+# --- Initial guess (EDIT THESE) ---
+u_offset: 0.4680      # DC offset — further probing trivial minimum
+amplitude: 0.0        # No perturbation
+n_mode: 1             # Mode 1
+phase: 0.0            # No phase
+
+# --- K function (fixed problem parameters — DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings (tunable) ---
+method: fourier
+fourier_modes: 1
+newton_tol: 1.0e-15
+newton_maxiter: 200
+n_nodes: 100
+solver_tol: 1.0e-8
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual   # TSV column used as the score
+  time_column: elapsed_s   # TSV column used as experiment time
+  score_direction: lower   # lower residual = better

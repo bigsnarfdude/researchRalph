@@ -1,4 +1,3 @@
-# Blackboard — nirenberg-1d-blind
+# Blackboard — Blind Nirenberg 1D (Control, No Oracle)
 
-Shared lab notebook. Write what you tried, what happened, and why.
-Read before starting to avoid duplicating work.
+Control run baseline for blind domain.
