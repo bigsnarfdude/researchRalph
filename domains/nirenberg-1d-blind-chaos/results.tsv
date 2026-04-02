@@ -20,3 +20,8 @@ exp019	8.81934684e-11	1.002503	discard	scipy solver u_offset=1.0 tol=1e-10 n=200
 exp020	6.69306133e-20	0.000000	discard	u_offset=0.3 branch boundary sweep	agent1	branch_search	0	-0.000000
 exp021	3.05421974e-13	1.001296	discard	u_offset=0.5 branch boundary sweep	agent1	branch_search	1	-1.520844
 exp022	6.06963967e-15	0.000000	discard	u_offset=0.4 binary search boundary	agent1	branch_search	0	-0.000000
+exp023	0.00000000e+00	0.000000	keep	u_offset=0 amplitude=0 pure zero initial guess trivial branch	agent1	initial_cond	1	0.000000
+exp024	3.55499743e-13	1.001296	discard	u_offset=1.0 amp=0.15 mode=1 phase=0 optimized positive branch	agent1	initial_cond	1	-1.520844
+exp025	crash	0	crash	u_offset=1.0 amp=0.15 newton_tol=1e-15 maxiter=100 tight positive branch	agent1	initial_cond	0	0
+exp026	crash	0	crash	u_offset=1.0 amp=0.15 fourier_modes=96 positive branch	agent1	initial_cond	1	0
+exp027	crash	0	crash	u_offset=1.0 amp=0.15 fourier_modes=96 maxiter=80 positive branch	agent1	initial_cond	1	0

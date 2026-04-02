@@ -1,1 +1,411 @@
-exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	0.00000000e+00	0.000000	0.000000	keep	Fourier spectral trivial branch, u_offset=0.0, amp=0, modes=4	agent0	initial_cond	0	0.000000
+exp002	2.57581612e-16	1.001296	1.000019	keep	positive branch u_offset=0.9 fourier spectral	agent1	branch_search	0	-1.520844
+exp003	2.57581612e-16	1.001296	1.000019	discard	Fourier spectral positive branch, u_offset=0.9, modes=4	agent0	initial_cond	1	-1.520844
+exp004	2.57581612e-16	1.001296	-1.000019	discard	negative branch u_offset=-0.9 fourier spectral	agent1	branch_search	0	-1.520844
+exp005	0.00000000e+00	0.000000	0.000000	keep	trivial branch u_offset=0.0 fourier spectral	agent1	branch_search	1	0.000000
+exp006	2.57581612e-16	1.001296	-1.000019	discard	Fourier spectral negative branch, u_offset=-0.9, modes=4	agent0	initial_cond	1	-1.520844
+exp007	2.57581612e-16	1.001296	1.000019	discard	Positive branch u_offset=0.9 fourier_modes=4 newton_tol=1e-14	agent2	initial_cond	0	-1.520844
+exp008	2.57581612e-16	1.001296	-1.000019	discard	negative branch u_offset=-0.9 fourier spectral modes=4 tol=1e-14	agent3	branch_search	0	-1.520844
+exp009	5.55111512e-17	1.001322	-1.000049	discard	negative branch optimization: fourier_modes=1, newton_tol=1e-15, maxiter=200	agent4	branch_search	0	-1.520921
+exp010	5.55111512e-17	1.001322	-1.000049	discard	negative branch fourier_modes=1 newton_tol=1e-15 200iter	agent1	solver_param	0	-1.520921
+exp011	5.55111512e-17	1.001322	1.000049	discard	positive branch fourier_modes=1 newton_tol=1e-15 200iter	agent1	solver_param	1	-1.520921
+exp012	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 fourier_modes=1 newton_tol=1e-15 maxiter=200	agent7	branch_search	1	-1.520921
+exp013	2.57581612e-16	1.001296	-1.000019	discard	negative branch u_offset=-0.9 tighter newton_tol=1e-15 maxiter=200	agent3	branch_search	0	-1.520844
+exp014	crash	0	0	crash	positive branch fourier_modes=64 newton_tol=1e-15	agent1	solver_param	1	0
+exp015	5.55111512e-17	1.001322	-1.000049	discard	negative branch u_offset=-0.9 fourier_modes=1 newton_tol=1e-14	agent5	branch_search	1	-1.520921
+exp016	5.55111512e-17	1.001322	-1.000049	discard	negative branch u_offset=-0.9 fourier_modes=1 tol=1e-15 maxiter=200	agent3	branch_search	0	-1.520921
+exp017	5.55111512e-17	1.001322	-1.000049	discard	negative branch u_offset=-0.9 fourier_modes=1 newton_tol=1e-15 maxiter=200	agent7	branch_search	0	-1.520921
+exp018	5.55111512e-17	1.001322	-1.000049	discard	Negative branch, fourier_modes=1, newton_tol=1e-15, push residual lower	agent0	solver_param	1	-1.520921
+exp018	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 fourier_modes=1 newton_tol=1e-15 maxiter=200	agent6	initial_cond	1	-1.520921
+exp019	crash	0	0	crash	positive branch fourier_modes=8 newton_tol=1e-15	agent1	solver_param	0	0
+exp020	5.55111512e-17	1.001322	1.000049	discard	Positive branch, fourier_modes=1, newton_tol=1e-15	agent0	solver_param	0	-1.520921
+exp021	5.55111512e-17	1.001322	-1.000049	discard	negative branch fourier_modes=1 newton_tol=1e-15	agent5	branch_search	0	-1.520921
+exp022	crash	0	0	crash	negative branch u_offset=-0.9 fourier_modes=8 newton_tol=1e-15 maxiter=200	agent7	branch_search	0	0
+exp023	2.00148302e-16	1.001298	1.000025	discard	positive branch fourier_modes=2 newton_tol=1e-15	agent1	solver_param	0	-1.520921
+exp024	2.57581612e-16	1.001296	-1.000019	discard	Negative branch u_offset=-0.9 fourier_modes=4 newton_tol=1e-14	agent2	initial_cond	0	-1.520844
+exp025	5.55111512e-17	1.001322	-1.000049	discard	negative branch u_offset=-0.9 fourier_modes=1 newton_tol=1e-15 maxiter=200	agent6	initial_cond	0	-1.520921
+exp026	5.55111512e-17	1.001322	-1.000049	discard	negative branch fourier_modes=1 newton_tol=1e-15 maxiter=200	agent5	branch_search	0	-1.520921
+exp027	2.00148302e-16	1.001298	-1.000025	discard	negative branch u_offset=-0.9 fourier_modes=2 newton_tol=1e-15 maxiter=200	agent7	branch_search	0	-1.520921
+exp028	crash	0	0	crash	negative branch u_offset=-0.9 fourier_modes=8 tol=1e-15 maxiter=200	agent3	solver_param	0	0
+exp029	2.00148302e-16	1.001298	-1.000025	discard	negative branch: fourier_modes=2, newton_tol=1e-15, maxiter=500	agent4	solver_param	0	-1.520921
+exp030	2.57581612e-16	1.001296	-1.000019	discard	negative branch u_offset=-0.9 fourier_modes=4 newton_tol=1e-15 maxiter=200	agent7	branch_search	0	-1.520844
+exp031	5.55111512e-17	1.001322	1.000049	discard	positive branch fourier_modes=1 newton_tol=1e-15 maxiter=200	agent5	branch_search	1	-1.520921
+exp032	2.00148302e-16	1.001298	1.000025	discard	Positive branch, fourier_modes=2, newton_tol=1e-15, maxiter=200 — trying to break 5.55e-17 floor	agent0	solver_param	1	-1.520921
+exp033	2.00148302e-16	1.001298	-1.000025	discard	negative branch u_offset=-0.9 fourier_modes=2 tol=1e-15 maxiter=200	agent3	solver_param	0	-1.520921
+exp034	5.55111512e-17	1.001322	-1.000049	discard	Negative branch u_offset=-0.9 fourier_modes=1 newton_tol=1e-14	agent2	initial_cond	0	-1.520921
+exp035	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=1.0 fourier_modes=1 newton_tol=1e-15 maxiter=200	agent6	initial_cond	1	-1.520921
+exp036	5.55111512e-17	1.001322	-1.000049	discard	negative branch fourier_modes=1 n_nodes=200 newton_tol=1e-15	agent5	solver_param	0	-1.520921
+exp037	crash	0	0	crash	Positive branch, modes=1, newton_tol=1e-16, maxiter=200 — tightest tolerance	agent0	solver_param	0	0
+exp038	5.55111512e-17	1.001322	1.000049	discard	Positive branch u_offset=0.9 fourier_modes=1 newton_tol=1e-14	agent2	initial_cond	1	-1.520921
+exp039	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 fourier_modes=1 tol=1e-15 maxiter=200	agent3	branch_search	0	-1.520921
+exp039	5.55111512e-17	1.001322	1.000049	discard	positive branch: fourier_modes=1, newton_tol=1e-15, maxiter=200	agent4	solver_param	0	-1.520921
+exp040	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=1.0 fourier_modes=1 newton_tol=1e-15	agent7	branch_search	0	-1.520921
+exp041	5.55111512e-17	1.001322	1.000049	discard	Positive branch u_offset=0.9 fm=1 newton_tol=1e-15 maxiter=200	agent2	solver_param	0	-1.520921
+exp042	5.11787527e-16	1.001322	1.000049	discard	positive branch u_offset=1.0 amp=0.1 fourier_modes=1 newton_tol=1e-15	agent7	perturbation	1	-1.520921
+exp043	5.55111512e-17	1.001322	-1.000049	discard	basin boundary test: u_offset=0.5, fourier_modes=1 — which branch does Newton find?	agent4	branch_search	1	-1.520921
+exp044	5.55111512e-17	1.001322	-1.000049	discard	Negative branch u_offset=-0.9 fm=1 newton_tol=1e-15 maxiter=200	agent2	solver_param	0	-1.520921
+exp045	5.55111512e-17	1.001322	-1.000049	discard	basin boundary test u_offset=0.50 modes=1	agent1	branch_search	0	-1.520921
+exp046	5.55111512e-17	1.001322	-1.000049	discard	negative branch u_offset=-1.0 amp=0.05 modes=1 tol=1e-15	agent7	perturbation	0	-1.520921
+exp047	2.00148302e-16	1.001298	-1.000025	discard	Negative branch u_offset=-0.9 fm=2 newton_tol=1e-15 maxiter=200	agent2	solver_param	0	-1.520921
+exp048	4.77524979e-16	1.001322	1.000049	discard	basin boundary: u_offset=0.48, fourier_modes=1 — mapping convergence	agent4	branch_search	0	-1.520921
+exp049	6.38616888e-29	0.000000	0.000000	discard	Basin boundary probe: u_offset=0.47, modes=1, which branch does Newton select?	agent0	branch_search	1	-0.000000
+exp050	2.00148302e-16	1.001298	1.000025	discard	positive branch u_offset=0.9 fourier_modes=2 newton_tol=1e-15 maxiter=200	agent6	initial_cond	0	-1.520921
+exp051	6.38616888e-29	0.000000	0.000000	discard	basin boundary test u_offset=0.47 modes=1	agent1	branch_search	0	-0.000000
+exp052	5.55111512e-17	1.001322	-1.000049	discard	Basin boundary probe: u_offset=0.50, which branch?	agent0	branch_search	0	-1.520921
+exp053	1.75541673e-16	1.001322	1.000049	discard	basin boundary: u_offset=0.49, fourier_modes=1 — narrowing boundary	agent4	branch_search	0	-1.520921
+exp054	2.00148302e-16	1.001298	-1.000025	discard	negative branch fourier_modes=2 newton_tol=1e-15	agent5	branch_search	1	-1.520921
+exp055	5.55111512e-17	1.001322	-1.000049	discard	Negative branch u_offset=-1.0 fm=1 newton_tol=1e-15 maxiter=200	agent2	initial_cond	0	-1.520921
+exp056	5.55111512e-17	1.001322	-1.000049	discard	basin boundary test u_offset=0.5 fourier_modes=1	agent7	branch_search	0	-1.520921
+exp057	crash	0	0	crash	positive branch u_offset=0.9 fourier_modes=8 newton_tol=1e-15 maxiter=200	agent6	initial_cond	0	0
+exp058	4.77524979e-16	1.001322	1.000049	discard	basin boundary test u_offset=0.48 modes=1	agent1	branch_search	0	-1.520921
+exp059	1.59654222e-29	0.000000	-0.000000	discard	basin boundary test u_offset=0.3 fourier_modes=1	agent7	branch_search	0	-0.000000
+exp060	4.77524979e-16	1.001322	1.000049	discard	Basin boundary probe: u_offset=0.48	agent0	branch_search	0	-1.520921
+exp061	crash	0	0	crash	negative branch fourier_modes=8 newton_tol=1e-15	agent5	branch_search	0	0
+exp062	1.57009246e-16	1.001322	1.000049	discard	positive branch with amplitude=0.1 perturbation, fourier_modes=1	agent4	perturbation	1	-1.520921
+exp063	4.37618166e-16	1.001296	1.000019	discard	positive branch u_offset=0.9 fourier_modes=3 newton_tol=1e-15 maxiter=200	agent6	initial_cond	0	-1.520844
+exp064	1.75541673e-16	1.001322	1.000049	discard	basin boundary test u_offset=0.49 modes=1	agent1	branch_search	0	-1.520921
+exp065	6.53772076e-23	0.000000	0.000000	discard	basin boundary test u_offset=0.45 fourier_modes=1	agent7	branch_search	1	-0.000000
+exp066	1.75541673e-16	1.001322	1.000049	discard	Basin boundary probe: u_offset=0.49	agent0	branch_search	1	-1.520921
+exp067	4.77524979e-16	1.001322	1.000049	discard	basin boundary test u_offset=0.48 fourier_modes=1	agent7	branch_search	1	-1.520921
+exp068	5.55111512e-17	1.001322	-1.000049	discard	basin boundary test u_offset=0.475 modes=1	agent1	branch_search	0	-1.520921
+exp069	2.94474458e-15	1.001296	-1.000019	discard	negative branch fourier_modes=8 newton_tol=1e-14	agent5	branch_search	0	-1.520844
+exp070	5.55111512e-17	1.001322	-1.000049	discard	Basin boundary probe: u_offset=0.495	agent0	branch_search	0	-1.520921
+exp071	crash	0	0	crash	positive branch modes=1 newton_tol=0 maxiter=500 force all iterations	agent6	solver_param	0	0
+exp072	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 n_mode=2 fourier_modes=1 tol=1e-15	agent7	perturbation	0	-1.520921
+exp073	crash	0	0	crash	positive branch modes=1 newton_tol=1e-16 maxiter=200	agent6	solver_param	1	0
+exp074	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 amp=0.05 modes=1 tol=1e-15	agent1	perturbation	0	-1.520921
+exp075	5.55111512e-17	1.001322	1.000049	discard	positive u_offset=0.9 amp=0.02 modes=1 tol=1e-15 maxiter=500	agent7	perturbation	1	-1.520921
+exp076	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 amp=0.1 n_mode=2 modes=1 tol=1e-15	agent1	perturbation	0	-1.520921
+exp077	6.38616888e-29	0.000000	0.000000	discard	basin boundary u_offset=0.47 fourier_modes=1 testing sub-epsilon trivial	agent5	branch_search	0	-0.000000
+exp078	5.55111512e-17	1.001322	-1.000049	discard	Negative branch u_offset=-0.9 amp=0.05 fm=1 newton_tol=1e-15	agent2	perturbation	0	-1.520921
+exp079	6.38616888e-29	0.000000	0.000000	discard	trivial branch near boundary: u_offset=0.47, fourier_modes=1 — testing ultra-low residual	agent4	branch_search	0	-0.000000
+exp080	6.38616888e-29	0.000000	0.000000	discard	basin boundary test u_offset=0.47 fourier_modes=1	agent3	branch_search	0	-0.000000
+exp081	0.00000000e+00	0.000000	0.000000	discard	basin boundary u_offset=0.46 fourier_modes=1	agent5	branch_search	0	0.000000
+exp082	6.38616888e-29	0.000000	-0.000000	discard	negative basin boundary test u_offset=-0.47 modes=1	agent1	branch_search	0	-0.000000
+exp083	5.55111512e-17	1.001322	1.000049	discard	Mode-2 perturbation u_offset=0.7 amp=0.15 — probing for unusual convergence	agent0	perturbation	1	-1.520921
+exp084	4.11261342e-27	0.000000	0.000000	discard	basin boundary u_offset=0.471 fourier_modes=1	agent5	branch_search	0	-0.000000
+exp085	4.77524979e-16	1.001322	1.000049	discard	basin boundary test u_offset=0.48 fourier_modes=1	agent3	branch_search	0	-1.520921
+exp086	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=1.0 (closer to true solution), fourier_modes=1	agent4	initial_cond	1	-1.520921
+exp087	5.55111512e-17	1.001322	1.000049	discard	negative basin boundary test u_offset=-0.475 modes=1	agent1	branch_search	1	-1.520921
+exp088	5.55111512e-17	1.001322	-1.000049	discard	Negative branch u_offset=-0.9 fm=1 n_nodes=200	agent2	solver_param	0	-1.520921
+exp089	6.38616888e-29	0.000000	0.000000	discard	basin boundary u_offset=0.47 modes=1 — expect trivial with ultra-low residual	agent6	branch_search	0	-0.000000
+exp090	5.55111512e-17	1.001322	-1.000049	discard	Mode-3 perturbation at basin boundary u_offset=0.5 amp=0.2	agent0	perturbation	0	-1.520921
+exp091	1.40766601e-23	0.000000	0.000000	discard	basin boundary u_offset=0.473 fourier_modes=1	agent5	branch_search	0	-0.000000
+exp092	5.55111512e-17	1.001322	-1.000049	discard	basin boundary test u_offset=0.475 fourier_modes=1	agent3	branch_search	0	-1.520921
+exp093	0.00000000e+00	0.000000	0.000000	discard	basin boundary u_offset=0.46 modes=1	agent6	branch_search	0	0.000000
+exp094	5.55111512e-17	1.001322	-1.000049	discard	negative branch with n_mode=2, phase=pi/2, amp=0.05 perturbation	agent4	perturbation	1	-1.520921
+exp095	5.55111512e-17	1.001322	-1.000049	discard	basin boundary u_offset=0.476 fourier_modes=1	agent5	branch_search	0	-1.520921
+exp096	4.77524979e-16	1.001322	-1.000049	discard	Negative basin boundary: u_offset=-0.48, modes=1	agent0	branch_search	0	-1.520921
+exp097	5.55111512e-17	1.001322	1.000049	discard	extreme u_offset=1.5 fourier_modes=1 tol=1e-15	agent7	branch_search	0	-1.520921
+exp098	5.55111512e-17	1.001322	-1.000049	discard	basin boundary test u_offset=0.5 fourier_modes=1	agent3	branch_search	0	-1.520921
+exp099	6.38616888e-29	0.000000	-0.000000	discard	negative basin boundary u_offset=-0.47 modes=1	agent6	branch_search	0	-0.000000
+exp100	5.72745888e-09	1.002503	1.000218	discard	scipy solver positive branch n_nodes=300 tol=1e-10	agent1	solver_param	0	-1.523848
+exp101	5.55111512e-17	1.001322	1.000049	discard	Negative basin boundary: u_offset=-0.495	agent0	branch_search	0	-1.520921
+exp102	1.68652198e-18	0.000000	0.000000	discard	basin boundary u_offset=0.474 fourier_modes=1	agent5	branch_search	0	-0.000000
+exp103	5.55111512e-17	1.001322	-1.000049	discard	extreme u_offset=-1.5 fourier_modes=1 tol=1e-15	agent7	branch_search	0	-1.520921
+exp104	5.55111512e-17	1.001322	-1.000049	discard	negative branch with n_nodes=300 finer mesh, fourier_modes=1	agent4	solver_param	0	-1.520921
+exp105	5.55111512e-17	1.001322	1.000049	discard	extreme u_offset=1.5 fourier_modes=1	agent3	branch_search	1	-1.520921
+exp106	1.41306163e-27	0.000000	0.000000	discard	Basin boundary u_offset=0.4705 fm=1 — probing between 0.47(6.4e-29) and 0.471(4.1e-27)	agent2	branch_search	0	-0.000000
+exp107	6.95552731e-16	1.001322	-1.000049	discard	u_offset=0.475 amp=0.05 — perturbation at basin boundary	agent6	perturbation	1	-1.520921
+exp108	crash	0	0	crash	scipy solver positive branch u_offset=0.9 n_nodes=200 tol=1e-12	agent7	solver_param	1	0
+exp109	5.55111512e-17	1.001322	-1.000049	discard	basin boundary u_offset=0.475 fourier_modes=1	agent5	branch_search	0	-1.520921
+exp110	5.55111512e-17	1.001322	1.000049	discard	Negative basin boundary: u_offset=-0.50, expecting positive branch	agent0	branch_search	1	-1.520921
+exp111	5.55111512e-17	1.001322	1.000049	discard	extreme u_offset=1.5, fourier_modes=1 — testing convergence at param boundary	agent4	branch_search	0	-1.520921
+exp112	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.5 amp=0.1 fourier_modes=1 — does perturbation change basin?	agent3	perturbation	0	-1.520921
+exp113	2.55446755e-28	0.000000	-0.000000	discard	Basin boundary u_offset=0.4702 fm=1 — narrowing toward 0.47 sweet spot	agent2	branch_search	0	-0.000000
+exp114	5.72745888e-09	1.002503	1.000218	discard	scipy solver positive branch u_offset=0.9 n_nodes=100 tol=1e-8	agent7	solver_param	0	-1.523848
+exp115	0.00000000e+00	0.000000	0.000000	discard	u_offset=0.475 amp=0.05 phase=pi — test phase flip at boundary	agent6	perturbation	1	0.000000
+exp116	5.55111512e-17	1.001322	-1.000049	discard	extreme u_offset=-1.5, fourier_modes=1 — testing convergence at negative boundary	agent4	branch_search	0	-1.520921
+exp117	1.68652198e-18	0.000000	-0.000000	discard	negative basin boundary u_offset=-0.474	agent5	branch_search	1	-0.000000
+exp118	2.57581612e-16	1.001296	-1.000019	discard	u_offset=0.5 fourier_modes=4 — basin with more grid points	agent3	branch_search	0	-1.520844
+exp119	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 phase=pi modes=1 tol=1e-15	agent7	perturbation	1	-1.520921
+exp120	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.475 amp=0.05 phase=pi/2 — basin phase scan	agent6	perturbation	0	-1.520921
+exp121	1.27723378e-28	0.000000	-0.000000	discard	ultra-low residual probe u_offset=0.4701 near trivial basin	agent1	branch_search	0	-0.000000
+exp122	2.57581612e-16	1.001296	1.000019	discard	u_offset=0.48 fourier_modes=4 — basin comparison	agent3	branch_search	0	-1.520844
+exp123	1.27723378e-28	0.000000	-0.000000	discard	Basin boundary u_offset=0.4701 fm=1	agent2	branch_search	1	-0.000000
+exp124	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.475 amp=0.05 phase=3pi/2 — basin phase scan	agent6	perturbation	0	-1.520921
+exp125	1.29246971e-26	0.000000	0.000000	discard	Phase=pi at basin boundary u_offset=0.495 amp=0.1 — does phase flip basin?	agent0	perturbation	0	-0.000000
+exp126	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 amp=0.15 phase=pi anti-K initial guess	agent7	perturbation	0	-1.520921
+exp127	5.55111512e-17	1.001322	1.000049	discard	positive branch phase=pi amp=0.15 modes=1	agent1	perturbation	0	-1.520921
+exp128	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 amp=0.05 fourier_modes=1	agent5	perturbation	0	-1.520921
+exp129	1.48401154e-28	0.000000	0.000000	discard	Basin boundary u_offset=0.47005 fm=1 fine search	agent2	branch_search	1	0.000000
+exp130	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.475 amp=0.05 n_mode=2 — mode-2 perturbation at basin boundary	agent6	perturbation	0	-1.520921
+exp131	5.55111512e-17	1.001322	1.000049	discard	u_offset=0.9 amp=0.15 n_mode=2 phase=pi/2 fourier_modes=1	agent3	perturbation	0	-1.520921
+exp132	5.55111512e-17	1.001322	-1.000049	discard	Phase=pi/2 at basin boundary u_offset=0.495 amp=0.1	agent0	perturbation	0	-1.520921
+exp133	5.55111512e-17	1.001322	1.000049	discard	positive branch n_mode=3 amp=0.2 modes=1	agent1	perturbation	0	-1.520921
+exp134	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=1.0 exact solution mean value	agent5	branch_search	0	-1.520921
+exp135	0.00000000e+00	0.000000	0.000000	discard	basin boundary u_offset=0.46 modes=1 — trivial or nontrivial?	agent7	branch_search	0	0.000000
+exp136	2.60019365e-11	1.002503	1.000218	discard	scipy solver positive branch u_offset=0.9 n_nodes=300 tol=1e-10	agent3	solver_param	0	-1.523848
+exp137	4.88329751e-30	0.000000	0.000000	discard	Basin boundary u_offset=0.469 fm=1 — below 0.47	agent2	branch_search	0	-0.000000
+exp138	5.55111512e-17	1.001322	1.000049	discard	u_offset=-0.475 modes=1 — Z2 mirror basin test, expect positive branch	agent6	branch_search	0	-1.520921
+exp139	6.35227453e-17	0.000000	0.000000	discard	small u_offset=0.1 near trivial basin	agent1	branch_search	0	-0.000000
+exp140	6.38616888e-29	0.000000	0.000000	discard	basin boundary u_offset=0.47 modes=1 — trivial or nontrivial?	agent7	branch_search	1	-0.000000
+exp141	crash	0	0	crash	scipy solver positive branch u_offset=0.9 tol=1e-12 n_nodes=300	agent5	solver_param	1	0
+exp142	8.58922841e-11	1.002503	-1.000218	discard	scipy solver negative branch u_offset=-0.9 n_nodes=300 tol=1e-10	agent3	solver_param	1	-1.523848
+exp143	5.55111512e-17	1.001322	1.000049	discard	large u_offset=1.3 beyond typical positive range	agent1	branch_search	0	-1.520921
+exp144	4.62343413e-16	0.000000	0.000000	discard	Basin boundary u_offset=0.468 fm=1 — continuing downward search	agent2	branch_search	0	-0.000000
+exp145	5.55111512e-17	1.001322	-1.000049	discard	basin boundary u_offset=0.475 modes=1 — trivial or nontrivial?	agent7	branch_search	0	-1.520921
+exp146	crash	0	0	crash	scipy solver u_offset=0.9 amp=0.1 solver_tol=1e-12 — compare with Fourier	agent6	solver_param	0	0
+exp147	2.60019365e-11	1.002503	1.000218	discard	scipy solver positive branch tol=1e-10 n_nodes=300	agent5	solver_param	1	-1.523848
+exp148	4.37618166e-16	1.001296	1.000019	discard	positive branch fourier_modes=3 newton_tol=1e-15	agent1	solver_param	1	-1.520844
+exp149	1.59654222e-29	0.000000	0.000000	discard	Basin boundary u_offset=0.4695 fm=1	agent2	branch_search	1	-0.000000
+exp150	4.90457770e-26	0.000000	0.000000	discard	basin boundary u_offset=0.472 modes=1	agent7	branch_search	0	-0.000000
+exp151	6.01446416e-16	1.001296	1.000019	discard	positive branch fourier_modes=3 — untested mode count	agent3	solver_param	0	-1.520844
+exp152	6.38616888e-29	0.000000	0.000000	discard	fine probe near trivial sweet spot: u_offset=0.4699, fourier_modes=1	agent4	branch_search	0	-0.000000
+exp153	8.81934684e-11	1.002503	1.000218	discard	scipy solver u_offset=0.9 amp=0.1 tol=1e-10 n_nodes=200	agent6	solver_param	0	-1.523848
+exp154	crash	0	0	crash	scipy solver positive branch: u_offset=0.9, n_nodes=200, tol=1e-12	agent0	solver_param	1	0
+exp155	1.40766601e-23	0.000000	0.000000	discard	basin boundary u_offset=0.473 modes=1	agent7	branch_search	1	-0.000000
+exp156	4.85701508e-16	1.001296	1.000019	discard	positive branch fourier_modes=5	agent3	solver_param	0	-1.520844
+exp157	2.31876803e-30	0.000000	0.000000	discard	Basin boundary u_offset=0.4688 fm=1 narrowing minimum	agent2	branch_search	1	0.000000
+exp158	1.68652198e-18	0.000000	0.000000	discard	basin boundary u_offset=0.474 modes=1	agent7	branch_search	0	-0.000000
+exp159	0.00000000e+00	0.000000	0.000000	discard	trivial branch center u_offset=0.0 with fourier_modes=1 — compare residual to modes=4	agent4	solver_param	1	0.000000
+exp160	8.66141542e-20	0.000000	0.000000	discard	u_offset=0.48 amp=0.1 phase=pi — testing phase effect at boundary	agent5	perturbation	1	-0.000000
+exp161	8.81934685e-11	1.002503	-1.000218	discard	scipy solver u_offset=-0.9 amp=0.1 tol=1e-10 n_nodes=200 — negative branch	agent6	solver_param	1	-1.523848
+exp162	7.05432259e-10	1.002503	1.000218	discard	scipy solver positive branch: u_offset=0.9, n_nodes=200, tol=1e-8	agent0	solver_param	0	-1.523848
+exp163	2.44462702e-16	0.000000	0.000000	discard	basin boundary u_offset=0.4745 modes=1	agent7	branch_search	0	-0.000000
+exp164	5.55111512e-17	1.001322	1.000049	discard	u_offset=0.9 amp=0.2 n_mode=3 fourier_modes=1 — exotic initial guess	agent3	perturbation	0	-1.520921
+exp165	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.48 amp=0.1 phase=0 — comparison	agent5	perturbation	0	-1.520921
+exp166	8.81934684e-11	1.002503	1.000218	discard	scipy solver positive branch: u_offset=0.9, n_nodes=200, tol=1e-10	agent0	solver_param	0	-1.523848
+exp167	1.68652198e-18	0.000000	-0.000000	discard	negative basin boundary: u_offset=-0.474, fourier_modes=1 — expect intermediate residual	agent4	branch_search	1	-0.000000
+exp168	4.98919444e-31	0.000000	-0.000000	discard	Basin boundary u_offset=0.4685 fm=1	agent2	branch_search	0	-0.000000
+exp169	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 amp=0.1 mode=2 perturbation	agent5	perturbation	1	-1.520921
+exp170	2.60019365e-11	1.002503	1.000218	discard	scipy solver: n_nodes=300, tol=1e-10 — testing if more nodes helps	agent0	solver_param	1	-1.523848
+exp171	7.06541606e-16	1.001322	-1.000049	discard	basin boundary u_offset=0.4748 modes=1	agent7	branch_search	0	-1.520921
+exp172	5.55111512e-17	1.001322	1.000049	discard	exotic initial cond: u_offset=0.6, amp=0.2, n_mode=3, phase=pi — seeking unusual convergence	agent4	perturbation	0	-1.520921
+exp173	7.48379165e-31	0.000000	0.000000	discard	Basin boundary u_offset=0.4683 fm=1 approaching minimum	agent2	branch_search	0	-0.000000
+exp174	1.15938402e-30	0.000000	0.000000	discard	Basin boundary u_offset=0.4686 fm=1 bracketing minimum	agent2	branch_search	1	0.000000
+exp175	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=1.0 exact initial guess modes=1	agent1	initial_cond	1	-1.520921
+exp176	5.55111512e-17	1.001322	-1.000049	discard	basin probe u_offset=0.6 modes=1 — negative or positive?	agent7	branch_search	1	-1.520921
+exp177	4.37618166e-16	1.001296	1.000019	discard	positive branch fourier_modes=3 — testing modes=3 residual level	agent4	solver_param	0	-1.520844
+exp178	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.8 modes=1 — negative or positive?	agent7	branch_search	0	-1.520921
+exp179	0.00000000e+00	0.000000	0.000000	discard	trivial basin u_offset=0.46 modes=1 mapping residual decay	agent1	ablation	0	0.000000
+exp180	1.15938402e-30	0.000000	0.000000	discard	Basin boundary u_offset=0.4684 fm=1 fine-tuning	agent2	branch_search	0	0.000000
+exp181	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.7 modes=1 — negative or positive?	agent7	branch_search	0	-1.520921
+exp182	4.88329751e-30	0.000000	0.000000	discard	trivial basin u_offset=0.469 residual transition mapping	agent1	ablation	1	-0.000000
+exp183	9.97838887e-31	0.000000	-0.000000	discard	Basin boundary u_offset=0.46852 fm=1 ultra-fine	agent2	branch_search	0	-0.000000
+exp184	5.55111512e-17	1.001322	1.000049	discard	Amplitude sweep: amp=0.05, u_offset=0.9, positive branch	agent0	ablation	0	-1.520921
+exp185	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.65 modes=1 — negative or positive?	agent7	branch_search	1	-1.520921
+exp186	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.625 modes=1	agent7	branch_search	0	-1.520921
+exp187	4.10973015e-21	0.000000	0.000000	discard	trivial basin u_offset=0.465 residual transition	agent1	ablation	0	-0.000000
+exp188	5.55111512e-17	1.001322	1.000049	discard	Amplitude sweep: amp=0.2, u_offset=0.9, positive branch	agent0	ablation	0	-1.520921
+exp189	2.60019365e-11	1.002503	-1.000218	discard	scipy solver negative branch: n_nodes=300, tol=1e-10, u_offset=-0.9	agent4	solver_param	1	-1.523848
+exp190	1.22082438e-30	0.000000	0.000000	discard	Basin boundary u_offset=0.46848 fm=1	agent2	branch_search	0	-0.000000
+exp191	1.24055339e-20	0.000000	0.000000	discard	trivial basin u_offset=0.4 middle of basin	agent1	ablation	0	-0.000000
+exp192	5.55111512e-17	1.001322	1.000049	discard	Extreme u_offset=1.5, looking for divergence or unknown behavior	agent0	branch_search	0	-1.520921
+exp193	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.61 modes=1	agent7	branch_search	0	-1.520921
+exp194	3.25175408e-12	1.002503	-1.000218	discard	scipy solver negative branch tighter: n_nodes=300, tol=1e-11	agent4	solver_param	0	-1.523848
+exp195	4.98919444e-31	0.000000	0.000000	discard	Negative basin boundary u_offset=-0.4685 fm=1 — Z2 symmetry test	agent2	branch_search	0	-0.000000
+exp196	5.55111512e-17	1.001322	-1.000049	discard	Extreme u_offset=-1.5	agent0	branch_search	1	-1.520921
+exp197	crash	0	0	crash	scipy solver negative branch: n_nodes=300, tol=1e-12 — agent0 reports crash at this level	agent4	solver_param	1	0
+exp198	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.605 modes=1	agent7	branch_search	0	-1.520921
+exp199	8.58922841e-11	1.002503	-1.000218	discard	scipy negative branch n_nodes=300 tol=1e-10 — best scipy config	agent6	solver_param	0	-1.523848
+exp200	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.601 modes=1	agent7	branch_search	0	-1.520921
+exp201	crash	0	0	crash	Positive branch fourier_modes=16 — measuring convergence vs modes	agent0	ablation	0	0
+exp202	5.31636824e-13	0.000000	-0.000000	discard	scipy trivial branch u_offset=0 amp=0.01 n_nodes=300 tol=1e-10	agent6	solver_param	1	-0.000000
+exp203	5.55111512e-17	1.001322	-1.000049	discard	basin recheck u_offset=0.600 modes=1	agent7	branch_search	0	-1.520921
+exp204	4.98919444e-31	0.000000	-0.000000	discard	u_offset=0.4685 fm=1 tol=1e-15 maxiter=500 — can more iterations break 4.99e-31?	agent2	solver_param	0	-0.000000
+exp205	5.55111512e-17	1.001322	-1.000049	discard	basin probe u_offset=0.6005 modes=1	agent7	branch_search	1	-1.520921
+exp206	3.26514669e-14	1.001296	1.000019	discard	Positive branch modes=16 newton_tol=1e-13 (relaxed for convergence)	agent0	ablation	0	-1.520844
+exp207	5.55111512e-17	1.001322	1.000049	discard	positive branch with K-matched initial guess amp=0.15 phase=pi	agent1	initial_cond	0	-1.520921
+exp208	1.17127139e-24	0.000000	0.000000	discard	fourier u_offset=0.001 modes=1 tol=1e-15 — trivial residual vs offset	agent6	ablation	0	-0.000000
+exp209	5.55111512e-17	1.001322	-1.000049	discard	basin probe u_offset=0.6008 modes=1	agent7	branch_search	0	-1.520921
+exp210	7.48379165e-31	0.000000	0.000000	discard	trivial branch minimum search: u_offset=0.4683, fourier_modes=1	agent4	branch_search	0	-0.000000
+exp211	5.55111512e-17	1.001322	1.000049	discard	basin probe u_offset=0.6009 modes=1	agent7	branch_search	1	-1.520921
+exp212	6.35227453e-17	0.000000	0.000000	discard	fourier u_offset=0.1 modes=1 — trivial residual scaling	agent6	ablation	0	-0.000000
+exp213	4.88329751e-30	0.000000	0.000000	discard	u_offset=0.469 fourier_modes=1 — targeting ultra-low trivial residual	agent5	branch_search	1	-0.000000
+exp214	1.89920454e-15	1.001296	-1.000019	discard	negative branch fourier_modes=4 newton_tol=1e-13 fast convergence	agent1	solver_param	0	-1.520844
+exp215	2.89846004e-31	0.000000	0.000000	discard	trivial minimum search: u_offset=0.4682	agent4	branch_search	1	0.000000
+exp216	1.96261557e-16	1.001296	-1.000019	discard	u_offset=0.4685 fm=4 tol=1e-15 — does higher modes help at boundary?	agent2	solver_param	1	-1.520844
+exp217	4.62343413e-16	0.000000	0.000000	discard	u_offset=0.468 fourier_modes=1 — scanning minimum trivial residual	agent5	branch_search	0	-0.000000
+exp217	1.59654222e-29	0.000000	-0.000000	discard	fourier u_offset=0.3 modes=1 — trivial residual scaling	agent6	ablation	0	-0.000000
+exp218	4.98919444e-31	0.000000	-0.000000	discard	Verify trivial branch at u_offset=0.4685 — is residual lower than at 0?	agent0	branch_search	1	-0.000000
+exp219	4.62343413e-16	0.000000	0.000000	discard	trivial minimum search: u_offset=0.4680	agent4	branch_search	0	-0.000000
+exp220	2.41595655e-09	1.002503	-1.000218	discard	scipy negative branch n_nodes=200 tol=1e-10	agent1	solver_param	0	-1.523848
+exp221	4.88329751e-30	0.000000	0.000000	discard	near-boundary trivial u_offset=0.469 modes=1 — testing 4.88e-30 range	agent3	branch_search	0	-0.000000
+exp222	1.59654222e-29	0.000000	0.000000	discard	u_offset=0.4695 fourier_modes=1	agent5	branch_search	1	-0.000000
+exp223	3.13892973e-24	0.000000	0.000000	discard	fourier u_offset=0.05 modes=1 — trivial residual nonmonotonic scan	agent6	ablation	1	-0.000000
+exp223	5.55111512e-17	1.001322	1.000049	discard	negative side basin probe u_offset=-0.5 modes=1	agent7	branch_search	1	-1.520921
+exp223	6.55196639e-16	0.000000	0.000000	discard	trivial minimum: u_offset=0.4681	agent4	branch_search	1	-0.000000
+exp224	0.00000000e+00	0.000000	0.000000	discard	Trivial branch at u_offset=0.0 — verifying residual=0.0 is reproducible	agent0	branch_search	0	0.000000
+exp225	5.63592552e-11	0.000000	-0.000000	discard	scipy trivial branch u_offset=0.0 n_nodes=200 tol=1e-10	agent1	solver_param	0	-0.000000
+exp226	4.98919444e-31	0.000000	-0.000000	discard	u_offset=0.4685 fm=1 phase=pi — does phase shift improve residual at boundary?	agent2	perturbation	0	-0.000000
+exp227	4.62343413e-16	0.000000	0.000000	discard	near-boundary trivial u_offset=0.468 modes=1 — probing lower residuals	agent3	branch_search	1	-0.000000
+exp228	3.99135555e-30	0.000000	-0.000000	discard	u_offset=0.4691 fourier_modes=1	agent5	branch_search	1	-0.000000
+exp229	1.27723378e-28	0.000000	0.000000	discard	fourier u_offset=0.15 modes=1 — narrowing residual peak	agent6	ablation	1	-0.000000
+exp230	4.98919444e-31	0.000000	0.000000	discard	trivial minimum fine search: u_offset=0.46825	agent4	branch_search	0	-0.000000
+exp231	6.38616888e-29	0.000000	-0.000000	discard	negative side basin probe u_offset=-0.47 modes=1	agent7	branch_search	0	-0.000000
+exp232	5.55111512e-17	1.001322	1.000049	discard	negative side basin probe u_offset=-0.475 modes=1	agent7	branch_search	1	-1.520921
+exp233	1.48205110e-29	0.000000	0.000000	discard	u_offset=0.4692 fourier_modes=1	agent5	branch_search	0	-0.000000
+exp233	1.59654222e-29	0.000000	0.000000	discard	near-boundary trivial u_offset=0.4695 modes=1 — fine-tuning	agent3	branch_search	0	-0.000000
+exp234	5.55111512e-17	1.001322	-1.000049	discard	verifying agent7 basin map: u_offset=0.59 should be negative	agent1	branch_search	1	-1.520921
+exp235	5.02028006e-31	0.000000	0.000000	discard	trivial minimum ultra-fine: u_offset=0.46815	agent4	branch_search	0	-0.000000
+exp236	5.66505501e-18	0.000000	0.000000	discard	fourier u_offset=0.09 modes=1 — probing anomaly near 0.1	agent6	ablation	1	-0.000000
+exp237	5.55111512e-17	1.001322	1.000049	discard	u_offset=0.4685 fm=1 amp=0.01 — perturbation at sweet spot	agent2	perturbation	1	-1.520921
+exp238	5.55111512e-17	1.001322	1.000049	discard	negative side basin probe u_offset=-0.6 modes=1	agent7	branch_search	0	-1.520921
+exp238	7.35969598e-30	0.000000	0.000000	discard	u_offset=0.46905 fourier_modes=1	agent5	branch_search	0	-0.000000
+exp239	2.31876803e-30	0.000000	0.000000	discard	near-boundary trivial u_offset=0.4688 modes=1	agent3	branch_search	1	0.000000
+exp240	5.55111512e-17	1.001322	1.000049	discard	verifying agent7: u_offset=0.61 should be positive	agent1	branch_search	0	-1.520921
+exp241	5.37200170e-16	0.000000	0.000000	discard	fourier u_offset=0.11 modes=1 — other side of 0.1 anomaly	agent6	ablation	0	-0.000000
+exp242	5.55111512e-17	1.001322	-1.000049	discard	negative side basin probe u_offset=-0.7 modes=1	agent7	branch_search	0	-1.520921
+exp243	7.41025552e-30	0.000000	-0.000000	discard	u_offset=0.4689 fourier_modes=1	agent5	branch_search	0	-0.000000
+exp244	4.98919444e-31	0.000000	-0.000000	discard	near-boundary trivial u_offset=0.4685 modes=1 — hunting minimum	agent3	branch_search	0	-0.000000
+exp245	5.55111512e-17	1.001322	1.000049	discard	Z2 symmetry test: u_offset=-0.59 should→positive (mirrors +0.59→negative)	agent1	branch_search	0	-1.520921
+exp246	1.83992400e-30	0.000000	0.000000	discard	fourier u_offset=0.12 modes=1 — anomaly peak mapping	agent6	ablation	1	-0.000000
+exp247	5.55111512e-17	1.001322	-1.000049	discard	negative side basin probe u_offset=-0.65 modes=1	agent7	branch_search	0	-1.520921
+exp248	7.48379165e-31	0.000000	0.000000	discard	near-boundary trivial u_offset=0.4683 modes=1	agent3	branch_search	0	-0.000000
+exp249	4.37618166e-16	1.001296	1.000019	discard	positive branch fourier_modes=3 — testing odd mode count	agent5	solver_param	1	-1.520844
+exp250	5.55111512e-17	1.001322	-1.000049	discard	Z2 test: u_offset=-0.61 should→negative (mirrors +0.61→positive)	agent1	branch_search	1	-1.520921
+exp251	3.62021453e-16	1.001296	1.000019	discard	Basin boundary u_offset=0.475 with modes=4 — does grid size change basin?	agent0	branch_search	0	-1.520844
+exp252	5.55111512e-17	1.001322	-1.000049	discard	mirror boundary test u_offset=-0.6009 modes=1	agent7	branch_search	0	-1.520921
+exp253	1.15938402e-30	0.000000	0.000000	discard	near-boundary trivial u_offset=0.4686 modes=1	agent3	branch_search	0	0.000000
+exp254	5.55111512e-17	1.001322	-1.000049	discard	mirror boundary test u_offset=-0.601 modes=1	agent7	branch_search	0	-1.520921
+exp255	crash	0	0	crash	positive branch fourier_modes=5 — odd mode comparison	agent5	solver_param	0	0
+exp256	2.08282465e-16	1.001296	-1.000019	discard	Basin u_offset=0.495 with modes=4 — where modes=1 gives sign flip	agent0	branch_search	1	-1.520844
+exp257	5.55111512e-17	1.001322	-1.000049	discard	mirror boundary test u_offset=-0.61 modes=1	agent7	branch_search	1	-1.520921
+exp258	0.00000000e+00	0.000000	0.000000	discard	near-boundary trivial u_offset=0.46845 modes=1 — converging on minimum	agent3	branch_search	1	0.000000
+exp259	crash	0	0	crash	positive branch fourier_modes=6 — even mode comparison	agent5	solver_param	0	0
+exp260	7.48379165e-31	0.000000	0.000000	discard	fourier u_offset=0.115 modes=1 — cliff midpoint between 0.11 and 0.12	agent6	ablation	0	-0.000000
+exp261	1.59654222e-29	0.000000	-0.000000	discard	Trivial branch u_offset=0.3 fm=1 — confirming 1.60e-29	agent2	branch_search	0	-0.000000
+exp262	2.57581612e-16	1.001296	1.000019	discard	Basin u_offset=0.48 with modes=4 — mapping modes=4 basin	agent0	branch_search	0	-1.520844
+exp263	5.55111512e-17	1.001322	-1.000049	discard	mirror boundary test u_offset=-0.62 modes=1	agent7	branch_search	0	-1.520921
+exp264	1.24729861e-31	0.000000	-0.000000	discard	fourier u_offset=0.112 modes=1 — narrowing the cliff	agent6	ablation	0	-0.000000
+exp265	2.57581612e-16	1.001296	-1.000019	discard	Basin u_offset=0.49 with modes=4	agent0	branch_search	1	-1.520844
+exp266	5.55111512e-17	1.001322	-1.000049	discard	mirror boundary test u_offset=-0.64 modes=1	agent7	branch_search	1	-1.520921
+exp267	0.00000000e+00	0.000000	0.000000	discard	negative mirror u_offset=-0.46845 modes=1 — testing Z2 symmetry of exact-zero	agent3	branch_search	0	0.000000
+exp268	2.02539645e-15	1.001296	1.000019	discard	modes=4 basin test: u_offset=0.59 (negative with modes=1)	agent1	branch_search	0	-1.520844
+exp269	6.56259264e-16	0.000000	0.000000	discard	fourier u_offset=0.111 modes=1 — cliff resolution	agent6	ablation	0	-0.000000
+exp270	0.00000000e+00	0.000000	0.000000	discard	trivial basin mid-point u_offset=0.2 modes=1	agent3	branch_search	1	0.000000
+exp271	4.10973015e-21	0.000000	0.000000	discard	Trivial branch u_offset=0.465 fm=1 — between 0.46(exact) and 0.4685(4.99e-31)	agent2	branch_search	0	-0.000000
+exp272	3.74189583e-31	0.000000	0.000000	discard	fourier u_offset=0.1115 modes=1 — bisecting 0.111-0.112 cliff	agent6	ablation	0	-0.000000
+exp273	2.57581612e-16	1.001296	-1.000019	discard	modes=4 basin: u_offset=0.50 (negative with modes=1)	agent1	branch_search	0	-1.520844
+exp274	1.24055339e-20	0.000000	0.000000	discard	trivial basin u_offset=0.4 modes=1	agent3	branch_search	0	-0.000000
+exp275	1.23680252e-17	0.000000	0.000000	discard	Trivial branch u_offset=0.467 fm=1	agent2	branch_search	0	-0.000000
+exp276	6.82884823e-16	0.000000	0.000000	discard	fourier u_offset=0.1112 modes=1 — finer cliff bisection	agent6	ablation	1	-0.000000
+exp277	5.55111512e-17	1.001322	-1.000049	discard	second basin boundary u_offset=0.59 modes=1 — verifying agent7 neg→pos boundary	agent5	branch_search	0	-1.520921
+exp278	2.06774381e-16	1.001296	-1.000019	discard	modes=4 basin: u_offset=0.55 narrowing neg→pos	agent1	branch_search	1	-1.520844
+exp279	6.53772076e-23	0.000000	0.000000	discard	trivial basin u_offset=0.45 modes=1	agent3	branch_search	0	-0.000000
+exp280	3.62021453e-16	1.001296	1.000019	discard	basin boundary with modes=4: u_offset=0.475 — which branch?	agent4	branch_search	0	-1.520844
+exp281	7.10527030e-16	0.000000	0.000000	discard	fourier u_offset=0.1114 modes=1 — ultra-fine cliff bisection	agent6	ablation	0	-0.000000
+exp282	5.55111512e-17	1.001322	1.000049	discard	second basin boundary u_offset=0.61 modes=1 — should be positive	agent5	branch_search	0	-1.520921
+exp283	2.08282465e-16	1.001296	-1.000019	discard	modes=4 basin: u_offset=0.57	agent1	branch_search	0	-1.520844
+exp284	4.37618166e-16	1.001296	-1.000019	discard	negative branch u_offset=-0.9 fourier_modes=3 tol=1e-15 maxiter=500	agent7	solver_param	1	-1.520844
+exp285	2.44462702e-16	0.000000	0.000000	discard	Basin probe u_offset=0.4745, modes=1 — between trivial(0.47) and flip(0.475)	agent0	branch_search	0	-0.000000
+exp286	2.57581612e-16	1.001296	-1.000019	discard	basin with modes=4: u_offset=0.50 — modes=1 gives negative	agent4	branch_search	0	-1.520844
+exp287	6.35227453e-17	0.000000	0.000000	discard	trivial basin u_offset=0.1 modes=1	agent3	branch_search	0	-0.000000
+exp288	7.20108768e-16	1.001296	-1.000019	discard	modes=4 basin: u_offset=0.58	agent1	branch_search	0	-1.520844
+exp289	5.55111512e-17	1.001322	-1.000049	discard	second basin boundary u_offset=0.60 modes=1	agent5	branch_search	0	-1.520921
+exp290	crash	0	0	crash	negative branch u_offset=-0.9 fourier_modes=5 tol=1e-15 maxiter=500	agent7	solver_param	0	0
+exp291	1.57009246e-16	1.001322	1.000049	discard	Basin probe u_offset=0.4755 modes=1	agent0	branch_search	0	-1.520921
+exp292	2.57581612e-16	1.001296	1.000019	discard	basin modes=4: u_offset=0.48 — modes=1 gives positive	agent4	branch_search	0	-1.520844
+exp293	5.55111512e-17	1.001322	1.000049	discard	Positive branch u_offset=0.9 amp=0.15 n_mode=3 phase=pi/2 fm=1 — complex initial guess	agent2	perturbation	0	-1.520921
+exp294	1.59654222e-29	0.000000	-0.000000	discard	trivial basin u_offset=0.3 modes=1	agent3	branch_search	1	-0.000000
+exp295	5.55111512e-17	1.001322	1.000049	discard	second basin boundary u_offset=0.605	agent5	branch_search	0	-1.520921
+exp296	1.88564362e-15	1.001296	-1.000019	discard	modes=4 basin: u_offset=0.585	agent1	branch_search	0	-1.520844
+exp297	2.57581612e-16	1.001296	-1.000019	discard	basin boundary modes=4 u_offset=0.5 — which branch?	agent7	branch_search	0	-1.520844
+exp298	2.06774381e-16	1.001296	-1.000019	discard	basin modes=4: u_offset=0.47 — modes=1 gives trivial	agent4	branch_search	1	-1.520844
+exp299	5.55111512e-17	1.001322	-1.000049	discard	Re-verify u_offset=0.475, modes=1 — previous agents say negative	agent0	branch_search	0	-1.520921
+exp300	5.55111512e-17	1.001322	1.000049	discard	second basin boundary u_offset=0.602	agent5	branch_search	0	-1.520921
+exp301	3.62021453e-16	1.001296	-1.000019	discard	modes=4 basin: u_offset=0.589 near transition	agent1	branch_search	1	-1.520844
+exp302	2.06774381e-16	1.001296	1.000019	discard	basin boundary modes=4 u_offset=0.6 — which branch?	agent7	branch_search	0	-1.520844
+exp303	2.06774381e-16	1.001296	-1.000019	discard	basin boundary modes=4 u_offset=0.55 — which branch?	agent7	branch_search	1	-1.520844
+exp304	5.55111512e-17	1.001322	1.000049	discard	second basin boundary u_offset=0.601	agent5	branch_search	0	-1.520921
+exp305	2.57581612e-16	1.001296	-1.000019	discard	basin boundary modes=4 u_offset=0.575	agent7	branch_search	1	-1.520844
+exp306	1.86448479e-16	1.001296	-1.000019	discard	u_offset=0.46845 modes=4 — is exact-zero specific to modes=1?	agent3	branch_search	1	-1.520844
+exp307	0.00000000e+00	0.000000	0.000000	discard	fourier u_offset=0.2 modes=1 — verify exact zero per agent3	agent6	ablation	1	0.000000
+exp308	5.55111512e-17	1.001322	-1.000049	discard	second basin boundary u_offset=0.6005	agent5	branch_search	1	-1.520921
+exp309	3.62021453e-16	1.001296	1.000019	discard	basin boundary modes=4 u_offset=0.59	agent7	branch_search	1	-1.520844
+exp310	7.06541606e-16	1.001322	-1.000049	discard	Probing negative sliver width: u_offset=0.4748	agent0	branch_search	1	-1.520921
+exp311	2.30011512e-15	1.001296	1.000019	discard	basin modes=4 at u_offset=0.60 — modes=1 boundary neg/pos is here	agent4	branch_search	0	-1.520844
+exp312	2.06774381e-16	1.001296	-1.000019	discard	modes=4 trivial boundary u_offset=0.47	agent1	branch_search	1	-1.520844
+exp313	2.00148302e-16	1.001298	-1.000025	discard	u_offset=0.46845 modes=2 — basin boundary depends on mode count	agent3	branch_search	1	-1.520921
+exp314	7.66704402e-20	0.000000	0.000000	discard	fourier u_offset=0.25 modes=1 — exact zero pattern scan	agent6	ablation	0	-0.000000
+exp315	2.06774381e-16	1.001296	-1.000019	discard	basin boundary modes=4 u_offset=0.58	agent7	branch_search	1	-1.520844
+exp316	5.55111512e-17	1.001322	1.000049	discard	Probing negative sliver lower edge: u_offset=0.4746	agent0	branch_search	0	-1.520921
+exp316	5.55111512e-17	1.001322	-1.000049	discard	second basin boundary u_offset=0.6008	agent5	branch_search	0	-1.520921
+exp317	2.06774381e-16	1.001296	-1.000019	discard	basin modes=4 at u_offset=0.55	agent4	branch_search	0	-1.520844
+exp318	9.11870810e-26	0.000000	-0.000000	discard	modes=4 trivial boundary: u_offset=0.46	agent1	branch_search	0	0.000000
+exp319	2.02934982e-20	0.000000	0.000000	discard	fourier u_offset=0.35 modes=1 — pattern scan	agent6	ablation	1	-0.000000
+exp320	4.98919444e-31	0.000000	-0.000000	discard	u_offset=0.4685 fm=1 solver_tol=1e-12 — does BVP tolerance affect residual?	agent2	solver_param	0	-0.000000
+exp321	5.55111512e-17	1.001322	1.000049	discard	second basin boundary u_offset=0.6009 — agent7 predicted this is the exact boundary	agent5	branch_search	0	-1.520921
+exp322	5.55111512e-17	1.001322	1.000049	discard	Probing sliver boundary: u_offset=0.4747	agent0	branch_search	0	-1.520921
+exp323	2.57581612e-16	1.001296	-1.000019	discard	basin modes=4 at u_offset=0.575 — narrowing neg/pos boundary	agent4	branch_search	0	-1.520844
+exp324	2.57581612e-16	1.001296	-1.000019	discard	modes=4 trivial boundary: u_offset=0.465	agent1	branch_search	0	-1.520844
+exp325	1.24055339e-20	0.000000	0.000000	discard	fourier u_offset=0.4 modes=1 — pattern scan	agent6	ablation	0	-0.000000
+exp326	3.95472062e-16	0.000000	0.000000	discard	modes=4 basin boundary: u_offset=0.45	agent3	branch_search	0	-0.000000
+exp327	4.98919444e-31	0.000000	-0.000000	discard	u_offset=0.4685 fm=1 n_nodes=50 — minimal mesh	agent2	solver_param	0	-0.000000
+exp328	2.02539645e-15	1.001296	1.000019	discard	basin modes=4 at u_offset=0.59	agent4	branch_search	0	-1.520844
+exp329	1.71041985e-28	0.000000	-0.000000	discard	modes=4 trivial boundary: u_offset=0.462	agent1	branch_search	0	-0.000000
+exp330	9.11870810e-26	0.000000	-0.000000	discard	modes=4 basin boundary: u_offset=0.46	agent3	branch_search	0	0.000000
+exp331	1.63485923e-26	0.000000	0.000000	discard	fourier u_offset=0.19 modes=1 — cliff near 0.2?	agent6	ablation	1	-0.000000
+exp332	4.88329751e-30	0.000000	-0.000000	discard	Negative basin boundary u_offset=-0.469 fm=1 — fine search	agent2	branch_search	1	-0.000000
+exp333	1.88564362e-15	1.001296	-1.000019	discard	basin modes=4 bisect: u_offset=0.585	agent4	branch_search	0	-1.520844
+exp334	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=0.9 n_mode=3 amp=0.2 modes=1	agent7	perturbation	0	-1.520921
+exp335	0.00000000e+00	0.000000	0.000000	discard	fourier u_offset=0.21 modes=1 — post-zero check	agent6	ablation	0	0.000000
+exp336	2.06774381e-16	1.001296	-1.000019	discard	modes=4 basin boundary: u_offset=0.467	agent3	branch_search	0	-1.520844
+exp337	5.55111512e-17	1.001322	-1.000049	discard	Oscillating IC: u_offset=0, amp=0.5, n_mode=2 — does mode-2 lead to mode-2 solution?	agent0	perturbation	0	-1.520921
+exp338	1.96261557e-16	1.001296	-1.000019	discard	basin modes=4 fine bisect: u_offset=0.588	agent4	branch_search	0	-1.520844
+exp339	3.62021453e-16	1.001296	-1.000019	discard	modes=4 basin boundary: u_offset=0.463	agent3	branch_search	0	-1.520844
+exp340	1.51762033e-26	0.000000	-0.000000	discard	fourier u_offset=0.18 modes=1 — mapping exact-zero range	agent6	ablation	0	-0.000000
+exp341	2.00148302e-16	1.001298	-1.000025	discard	modes=2 basin: u_offset=0.47 (trivial with modes=1, negative with modes=4)	agent1	branch_search	1	-1.520921
+exp342	4.85638505e-25	0.000000	0.000000	discard	Oscillating IC: u_offset=0, amp=0.5, n_mode=3	agent0	perturbation	0	-0.000000
+exp343	3.62021453e-16	1.001296	-1.000019	discard	basin modes=4: u_offset=0.589 — pinpointing neg/pos boundary	agent4	branch_search	0	-1.520844
+exp344	3.16470018e-19	0.000000	0.000000	discard	modes=4 basin boundary: u_offset=0.461	agent3	branch_search	0	-0.000000
+exp345	3.26971847e-26	0.000000	0.000000	discard	fourier u_offset=0.195 modes=1 — exact zero boundary	agent6	ablation	0	-0.000000
+exp346	5.37200170e-16	0.000000	0.000000	discard	u_offset=0.11 — convergence cliff resonance test	agent5	ablation	0	-0.000000
+exp347	2.00148302e-16	1.001298	-1.000025	discard	modes=2 boundary: u_offset=0.467	agent1	branch_search	0	-1.520921
+exp348	2.00532833e-15	1.001296	-1.000019	discard	basin modes=4: u_offset=0.5895	agent4	branch_search	1	-1.520844
+exp349	1.71041985e-28	0.000000	-0.000000	discard	modes=4 basin boundary: u_offset=0.462	agent3	branch_search	0	-0.000000
+exp350	5.55111512e-17	1.001322	1.000049	discard	positive branch u_offset=exact_solution_mean=1.000049 modes=1	agent7	initial_cond	0	-1.520921
+exp351	8.00079464e-26	0.000000	0.000000	discard	fourier u_offset=0.199 modes=1 — closer to exact zero	agent6	ablation	0	-0.000000
+exp352	3.74189583e-31	0.000000	0.000000	discard	u_offset=0.1115 — cliff edge per agent6 (7.11e-16 to 3.74e-31)	agent5	ablation	0	-0.000000
+exp353	1.03858499e-16	0.000000	0.000000	discard	scipy solver at sweet spot u_offset=0.4685 n_nodes=300 tol=1e-10	agent2	solver_param	1	-0.000000
+exp354	crash	0	0	crash	modes=2 boundary: u_offset=0.46	agent1	branch_search	0	0
+exp355	3.47776366e-16	1.001296	1.000019	discard	modes=4 basin boundary: u_offset=0.4625	agent3	branch_search	0	-1.520844
+exp356	1.13393158e-23	0.000000	0.000000	discard	fourier u_offset=0.22 modes=1 — upper zero range	agent6	ablation	1	-0.000000
+exp357	5.55111512e-17	1.001322	1.000049	discard	positive branch matched IC: offset=1.000049 amp=0.0727 matching solution shape	agent7	initial_cond	1	-1.520921
+exp358	7.10527030e-16	0.000000	0.000000	discard	u_offset=0.1114 — before cliff (expected ~1e-16)	agent5	ablation	0	-0.000000
+exp358	0.00000000e+00	0.000000	0.000000	discard	scipy solver trivial branch u_offset=0 n_nodes=300 tol=1e-10	agent2	solver_param	0	0.000000
+exp359	2.00148302e-16	1.001298	-1.000025	discard	modes=2 boundary: u_offset=0.465	agent1	branch_search	0	-1.520921
+exp360	crash	0	0	crash	modes=2 boundary: u_offset=0.45	agent1	branch_search	0	0
+exp361	6.35227453e-17	0.000000	0.000000	discard	Trivial branch u_offset=0.1 fm=1 — mapping residual in deep basin	agent2	branch_search	0	-0.000000
+exp362	0.00000000e+00	0.000000	0.000000	discard	Trivial branch u_offset=0.2 fm=1	agent2	branch_search	0	0.000000
+exp363	8.53395779e-17	0.000000	0.000000	discard	modes=2 trivial test: u_offset=0.3	agent1	branch_search	1	-0.000000
+exp364	2.00148302e-16	1.001298	1.000025	discard	energy comparison: modes=2 positive branch — checking if energy differs from modes=1,4	agent4	ablation	0	-1.520921
+exp365	0.00000000e+00	0.000000	0.000000	discard	fourier u_offset=-0.2 modes=1 — Z2 verification of exact zero	agent6	ablation	0	0.000000
+exp366	2.00148302e-16	1.001298	-1.000025	discard	modes=2 basin boundary: u_offset=0.465	agent3	branch_search	1	-1.520921
+exp367	3.72380123e-16	1.001298	1.000025	discard	modes=2 neg→pos boundary: u_offset=0.59	agent1	branch_search	0	-1.520921
+exp368	1.24055339e-20	0.000000	0.000000	discard	Trivial branch u_offset=0.4 fm=1	agent2	branch_search	0	-0.000000
+exp369	1.71041985e-28	0.000000	-0.000000	discard	modes=4 trivial basin boundary u_offset=0.462 tol=1e-14	agent5	branch_search	0	-0.000000
+exp370	crash	0	0	crash	modes=2 basin boundary: u_offset=0.46	agent3	branch_search	1	0
+exp371	2.00148302e-16	1.001298	-1.000025	discard	modes=2 boundary: u_offset=0.55	agent1	branch_search	1	-1.520921
+exp372	crash	0	0	crash	fourier u_offset=0.11 modes=2 — does cliff shift with grid?	agent6	ablation	1	0
+exp373	2.02934982e-20	0.000000	0.000000	discard	Trivial branch u_offset=0.35 fm=1	agent2	branch_search	0	-0.000000
+exp374	2.00148302e-16	1.001298	-1.000025	discard	modes=2 basin boundary: u_offset=0.462	agent3	branch_search	1	-1.520921
+exp375	2.00148302e-16	1.001298	-1.000025	discard	modes=2 boundary: u_offset=0.57	agent1	branch_search	0	-1.520921
+exp376	2.57581612e-16	1.001296	-1.000019	discard	modes=4 u_offset=0.465 — scanning for modes=4 basin boundary	agent5	branch_search	0	-1.520844
+exp377	3.83332188e-27	0.000000	0.000000	discard	fourier u_offset=0.11 modes=4 — cliff behavior with larger grid	agent6	ablation	0	0.000000
+exp378	crash	0	0	crash	modes=2 basin boundary: u_offset=0.461	agent3	branch_search	0	0
+exp379	7.21644966e-16	1.001298	-1.000025	discard	modes=2 boundary: u_offset=0.58	agent1	branch_search	0	-1.520921
+exp380	3.83328516e-15	1.001296	-1.000019	discard	modes=4 u_offset=0.463 — narrowing boundary	agent5	branch_search	0	-1.520844
+exp381	5.50637749e-28	0.000000	-0.000000	discard	fourier u_offset=0.1 modes=4 — comparison with modes=1 anomaly	agent6	ablation	0	0.000000
+exp382	6.78216095e-16	1.001296	1.000019	discard	energy study: modes=5 positive branch	agent4	ablation	0	-1.520844
+exp383	3.47776366e-16	1.001296	1.000019	discard	modes=4 u_offset=0.4625	agent5	branch_search	0	-1.520844
+exp384	5.55111512e-17	1.001322	1.000049	discard	Positive branch u_offset=1.000049 (exact mean) fm=1 — optimal starting point	agent2	initial_cond	1	-1.520921
+exp385	0.00000000e+00	0.000000	0.000000	discard	u_offset=0.2 modes=1 — verifying agent3 exact zero	agent5	ablation	0	0.000000
+exp386	5.55111512e-17	1.001322	1.000049	discard	Positive branch u_offset=1.001322 (solution_norm) fm=1	agent2	initial_cond	1	-1.520921
+exp387	2.39940441e-17	0.000000	0.000000	discard	modes=3 basin: u_offset=0.462 — does it crash like modes=2?	agent3	branch_search	0	-0.000000
+exp388	1.07183226e-15	1.001296	1.000019	discard	energy convergence: modes=6 positive branch	agent4	ablation	0	-1.520844
+exp389	4.26285720e-16	1.001296	-1.000019	discard	modes=3 basin: u_offset=0.463	agent3	branch_search	0	-1.520844
+exp390	5.55111512e-17	1.001322	1.000049	discard	Positive branch K-matching: u_offset=0.9 amp=0.15 n_mode=1 phase=0 (aligned with K(θ))	agent2	perturbation	0	-1.520921
+exp391	2.82905281e-15	1.001296	1.000019	discard	energy convergence: modes=7 positive branch — last before crash zone	agent4	ablation	0	-1.520844
+exp392	crash	0	0	crash	modes=5 basin: u_offset=0.4625 — was positive with modes=4, what about modes=5?	agent3	branch_search	1	0
+exp393	crash	0	0	crash	modes=5 at u_offset=0.465	agent3	branch_search	0	0
+exp394	4.85638505e-25	0.000000	0.000000	discard	u_offset=0 amp=0.5 fm=1 — can large perturbation from trivial reach non-trivial?	agent2	perturbation	1	-0.000000
+exp395	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0 amp=0.5 n_mode=2 fm=1 — mode-2 perturbation test	agent2	perturbation	0	-1.520921
+exp396	4.85638505e-25	0.000000	0.000000	discard	u_offset=0 amp=0.5 n_mode=3 fm=1 — mode-3 perturbation test	agent2	perturbation	0	-0.000000
+exp397	1.59654222e-29	0.000000	-0.000000	discard	u_offset=0 amp=0.3 n_mode=2 fm=1 — threshold search	agent2	perturbation	0	-0.000000
+exp398	1.24055339e-20	0.000000	0.000000	discard	u_offset=0 amp=0.4 n_mode=2 fm=1 — threshold narrowing	agent2	perturbation	1	-0.000000
+exp399	6.53772076e-23	0.000000	0.000000	discard	u_offset=0 amp=0.45 n_mode=2 fm=1 — narrowing mode-2 escape threshold	agent2	perturbation	0	-0.000000
+exp400	4.77524979e-16	1.001322	1.000049	discard	u_offset=0 amp=0.48 n_mode=2 fm=1	agent2	perturbation	0	-1.520921
+exp401	6.38616888e-29	0.000000	0.000000	discard	u_offset=0 amp=0.47 n_mode=2 fm=1 — crossing threshold?	agent2	perturbation	0	-0.000000
+exp402	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0 amp=0.475 n_mode=2 fm=1 — final threshold search	agent2	perturbation	0	-1.520921
