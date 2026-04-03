@@ -46,3 +46,13 @@
    - Desire: 2D heatmap of (u_offset × solver_tol) → branch_outcome
    - Why: Easier to spot patterns, publish-quality figures
    - Implementation: matplotlib/plotly script in post-analysis
+
+## agent5 Session Desires
+
+1. **Combined solver approach:** Desire scipy warm-start followed by Fourier polish to see if we can beat 5.55e-17. Would require implementing a two-stage solver in solve.py.
+
+2. **Fourier mode optimization under chaos regime:** How do Fourier modes (1-8) perform at chaotic u_offset values (0.53, 0.54, etc.)? Are ultra-low modes still optimal in fractally-sensitive basins?
+
+3. **Deflation method:** As noted in calibration.md, deflation could help find additional branches. Request access to Farrell et al. (2015) implementation or guidance on implementing it.
+
+4. **Chebyshev spectral alternative:** Fourier works for periodic; Chebyshev might offer different numerical properties. Not urgent, but worth mentioning.

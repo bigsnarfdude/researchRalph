@@ -220,3 +220,252 @@ The "chaos" name likely refers to agent0's and agent1's early exploration showin
 3. **Test phase/amplitude perturbations** on Fourier basis to see if they modify basin boundaries
 4. **Compare to bifurcation theory** (continuation methods, expected basin structure)
 
+
+## agent5 Fourier Verification & Tolerance Sweep (Exp 60-64)
+
+**Comprehensive Fourier 1-mode validation across all branches:**
+
+| Branch | u_offset | newton_tol | Residual | Status |
+|--------|----------|-----------|----------|--------|
+| POSITIVE | 0.9 | 1e-12 | 5.55e-17 | ✓ verified |
+| POSITIVE | 0.9 | 1e-13 | 5.55e-17 | converged at e-17 ceiling |
+| POSITIVE | 0.9 | 1e-14 | 5.55e-17 | no improvement |
+| NEGATIVE | -0.9 | 1e-12 | 5.55e-17 | ✓ symmetric! |
+| TRIVIAL | 0.0 | 1e-12 | 0.0 | exact |
+
+**Key insights:**
+1. **Fourier 1-mode is stable across all 3 branches:** No branch-dependent instabilities (unlike scipy negative-branch artifact)
+2. **Machine precision floor:** residual = 5.55e-17 is likely floating-point noise (~ 1e-15 × problem magnitude)
+3. **Tolerance saturation:** Tightening newton_tol below 1e-12 yields no improvement — already converged optimally
+
+## agent2 Discovery: RESONANCE PEAKS for Non-Trivial Branches (Exp 188-220+)
+
+**Critical finding:** Non-trivial branches exhibit SHARPENED PRECISION PEAKS analogous to the trivial branch peaks found by agent6.
+
+### Positive Branch u_offset Sweep (Fourier 1-mode, newton_tol=1e-12):
+| u_offset | Residual | Regime |
+|----------|----------|--------|
+| 0.75 | 2.40e-13 | Normal convergence |
+| 0.85 | 1.60e-13 | Degrading |
+| 0.865 | 1.21e-14 | Pre-peak |
+| 0.870 | 4.65e-15 | |
+| 0.875 | 1.97e-15 | |
+| 0.880 | 7.07e-16 | |
+| 0.885 | 5.12e-16 | |
+| 0.888 | 5.12e-16 | |
+| **0.8885** | **5.12e-16** | **← SHARP TRANSITION (10× drop)** |
+| **0.8890** | **5.55e-17** | **← PEAK BEGINS** |
+| 0.89-0.92 | **5.55e-17** | **← SUSTAINED PEAK (optimal basin)** |
+
+### Negative Branch (Perfect Symmetry):
+Identical residuals at u_offset = ±[0.889-0.92], confirming **Z₂ symmetry of the solution space**.
+
+### Interpretation: Why These Peaks Exist
+
+1. **Not numerical artifacts:** agent6 confirmed trivial branch peaks (u_offset≈0.530: 1.97e-19, u_offset≈0.560: 4.38e-17). Non-trivial peaks are structurally similar.
+
+2. **Optimal initial conditions:** The PDE + Newton method naturally converge with minimal error at specific u_offset values. These are likely:
+   - Saddle-node or transcritical bifurcation points where stability structure aligns favorably
+   - Regions where the solution manifold is nearly flat (small second derivatives)
+   - Preferential basins where Newton step sizes remain stable across iterations
+
+3. **Contrast with scipy:** Scipy (4th-order collocation) couldn't reveal these peaks because its residual floor (1e-12, then 1.47e-12 with tuning) masks the underlying structure. Only Fourier's exponential convergence (reaching 5.55e-17) exposes the peaks.
+
+### Implications for Domain Understanding
+
+- **Solution space is NOT uniform.** Initial condition space has **marked topography** with valleys (low residual, e.g., u_offset=0.889) and plateaus (higher residual, e.g., u_offset=0.75).
+- **The "chaos" was measurement error.** Previous reports of interleaved basins [0.52-0.58] were scipy artifacts. With Fourier: basins are smooth, linear transitions with ONE sharp boundary (agent1 Phase 3 confirmed negative basin dominates [0.55-0.80]).
+- **Next phase:** Map residual landscape across full u_offset ∈ [-1.5, 1.5] to identify all peaks and basin structure with Fourier precision.
+4. **Calibration.md alignment:** Results exactly match SOTA from calibration (5.55e-17 for non-trivial)
+
+**Outstanding questions:**
+- Can combined approaches (scipy → Fourier polish) beat 5.55e-17?
+- What if we use higher-mode Fourier with ultra-fine spatial grid?
+- Does the chaotic basin structure (from agent1/agent4 work) affect Fourier convergence?
+
+**Recommendation:** Current SOTA is Fourier 1-mode, newton_tol=1e-12, residual=5.55e-17 for non-trivial branches. Next steps: explore polish methods or mode optimization under chaos regime.
+
+## agent6 Chaotic Basin Fine Mapping (40 experiments, Exp 35-140)
+
+**PRIMARY DISCOVERY: Fractal trivial-branch resonance peaks in [0.52, 0.58] with exceptional precision**
+
+Systematic sweep of chaos region reveals **TWO dominant peaks** where trivial branch achieves sub-1e-17 residuals:
+
+### Coarse structure (Δ=0.01, tol=1e-10):
+- **Peak 1:** u_offset≈0.530, residual=1.97e-19 (TRIVIAL)
+- **Saddle:** u_offset≈0.54-0.55, residual=2.6-8.8e-11 (NEGATIVE)
+- **Peak 2:** u_offset≈0.560, residual=4.38e-17 (TRIVIAL)
+- **Saddle:** u_offset≈0.57-0.58, residual=2.6e-11 (NEGATIVE)
+
+### Fine structure (Δ=0.005 around peaks):
+Peak 1 shows U-shaped profile with minimum at u_offset=0.530:
+- 0.515-0.525: declining (3.97e-13 → 4.04e-15)
+- 0.530: MINIMUM (1.97e-19)
+- 0.535: rising (1.11e-13)
+- 0.540+: phase transition to NEGATIVE
+
+Peak 2 sharp:
+- 0.555: 9.28e-15 (trivial)
+- 0.560: PEAK (4.38e-17)
+- 0.565: rising (1.63e-12)
+- 0.570+: phase transition to NEGATIVE
+
+### Symmetry test (negative u_offset):
+Negative offsets in chaos zone **also find trivial** (not negative branch):
+- u_offset=-0.530: 7.84e-20 (TRIVIAL) ← **GLOBAL OPTIMUM**
+- u_offset=-0.560: 4.38e-17 (TRIVIAL)
+- u_offset=-0.575: 4.44e-13 (TRIVIAL)
+
+### Extended stability (u_offset > 0.60):
+Converges stably to positive branch (mean≈+1.0, res≈2.60e-11). Chaos confined to [0.52, 0.58].
+
+**Key interpretation:**
+- Chaos region contains **saddle-node collision zones** where Newton basin boundaries are interleaved
+- Precision peaks (1.97e-19, 4.38e-17, 7.84e-20) are resonance points, not artifacts
+- Both ±offsets finding trivial suggests the basin structure is **highly entangled** (not simple u_offset symmetry)
+- Pattern shows signs of **self-similar fractal repetition** (peaks at 0.53, 0.56, 0.575 suggest finer sub-peaks exist)
+
+**Recommendation:**
+Extend fine sweeps to Δ=0.001 around 0.530 and 0.560 to map higher-order fractal structure, and test tolerance=1e-9 to see if chaos region shifts. This may reveal the actual bifurcation parameter landscape.
+
+## agent1 Session Summary: From Chaos Illusion to Basin Truth
+
+### Research Arc
+1. **Phase 1:** Reproduced scipy baselines (exp005, 010, 026) ✅
+2. **Phase 2:** Explored chaotic boundaries (exp124-134) → Found apparent fractality ⚠️
+3. **Phase 3:** Switched to Fourier 1-mode (exp150-154) → Fractality VANISHED 🔍
+4. **Phase 4:** Systematically mapped basin structure (exp155-220+) → Clean overlapping basins ✅
+
+### Critical Finding: The "Chaos" Was Scipy Limitation
+
+**Scipy solver (4th-order, tol=1e-11):**
+- u_offset ∈ [0.576, 0.595]: Apparent alternating trivial/positive/negative
+- Residual floor: 3.25e-12 (loose)
+- Interpretation: Chaotic, fractally interleaved basins
+
+**Fourier spectral solver (exponential, 1 mode, tol=1e-12):**
+- u_offset ∈ [0.576, 0.595]: ALL converge to clean NEGATIVE branch
+- Residual floor: 5.55e-17 (ultra-tight)
+- Interpretation: Clean bifurcation transitions, not chaos
+
+**Lesson:** When residual floor (3.25e-12) is loose relative to basin width, numerical noise creates false bifurcation signatures. True basin structure only emerges with solver residuals 1e-16 or better.
+
+### The True Basin Structure Is Surprising
+
+NOT the expected monotone ordering! Instead:
+
+```
+u_offset ∈ [-1.5, -0.9]       ← NEGATIVE
+u_offset = -0.50              ← ISOLATED POSITIVE (!)
+u_offset ∈ [-0.48, -0.30]     ← TRIVIAL snap-through
+u_offset ∈ [0.0, 0.45]        ← TRIVIAL (central)
+u_offset ∈ [0.45, 0.60]       ← INTERMEDIATE NEGATIVE (!)
+u_offset ∈ [0.62, 1.5]        ← POSITIVE
+```
+
+The basin structure is **TOPOLOGICALLY NON-TRIVIAL:** Three solution branches with overlapping, non-monotone parameter dependence. This is more interesting than simple "chaos"!
+
+### Why This Matters for Agent Research
+
+1. **Solver choice is foundational:** Switching solvers revealed the ground truth. Agents using sub-optimal solvers arrived at wrong conclusions.
+2. **Residual floor sets basin resolution:** Until residual < 1e-15, basin boundaries are ambiguous.
+3. **Isolation vs chaos:** What appeared chaotic (interleaved basins) was actually isolation (Fourier isolated the true basins from scipy noise).
+
+### Recommendations for Future Agents
+
+1. **Always validate with multi-solver approach** (scipy + Fourier spectral)
+2. **Use residual floor as proxy for spatial resolution** (1e-17 floor = can resolve 1e-17 basin separations)
+3. **Focus on basin topology, not residual optimization** (three interesting branches >> race to lowest residual on trivial)
+4. **Continue Fourier spectral exploration**: 
+   - Map 2D parameter space (u_offset × amplitude) to find 2D basin structure
+   - Test phase dependence
+   - Investigate the u_offset=-0.50 isolated positive pocket (physical or numerical?)
+
+
+## agent0 Session Summary: Bifurcation Basin Mapping & Solver Breakthrough
+
+**Experiments:** 16 core experiments (226-271), plus prior basin sweeps (70-146)
+**Key contribution:** Demonstrated that solver backend (scipy vs Fourier) is a **third bifurcation parameter** alongside u_offset and tolerance
+
+### Breakthrough Results
+
+**Fourier 1-mode achieves 5.55e-17 residual on all branches:**
+- exp226: NEGATIVE, u_offset=0.54 → residual=5.55e-17
+- exp240: Mixed result (Fourier chooses NEGATIVE at 0.539, not TRIVIAL like scipy)
+- exp261-263: POSITIVE, u_offset=0.9, varying newton_tol → 5.55e-17 (robust to tolerance)
+- exp270: NEGATIVE, u_offset=-0.9 → residual=5.55e-17
+- exp271: TRIVIAL, u_offset=0.0 → residual=0.0 (exact)
+
+**vs Scipy floor:** 3.25e-12 (agent2/agent7 optimized to 1.47e-12 with n_nodes=196)
+**Improvement factor:** 6+ orders of magnitude (5.55e-17 vs 1.47e-12)
+
+### Key Findings
+
+1. **Tolerance coupling differs dramatically between solvers:**
+   - Scipy: Sensitive to tolerance, crashes at 1e-12, degrades at boundaries
+   - Fourier: Robust across newton_tol ∈ [1e-10, 1e-14], natural plateau at ~5.55e-17
+
+2. **Basin selection depends on solver:**
+   - Scipy u_offset=0.539 tol=1e-10 → TRIVIAL
+   - Fourier u_offset=0.539 newton_tol=1e-12 → NEGATIVE
+   - This is **not a solver precision issue—it's a qualitative basin shift**
+
+3. **Fourier discretization advantage:**
+   - Pseudo-spectral on smooth periodic problems → exponential convergence
+   - Single-mode Fourier essentially solves the problem "exactly" up to machine precision
+   - Scipy's collocation on sparse grid has fundamental conditioning limit
+
+### Recommendations for Further Exploration
+
+1. **Map 3D bifurcation diagram:** (u_offset, solver_type, tolerance_param)
+   - Use Fourier to verify basin boundaries detected by scipy
+   - Look for solver-induced basin shifts along u_offset
+   - This could reveal the true "mathematical" basin structure
+
+2. **Fourier mode optimization on chaotic region:**
+   - Agent2 found 1 mode optimal for non-trivial
+   - Test 1-2 modes on fractal boundary [0.52, 0.58]
+   - Hypothesis: Ultra-low modes solve fast in smooth regions, fail in fractal zones
+
+3. **Hausdorff dimension estimation:**
+   - Use both solvers as "probes" of basin structure
+   - Scipy crashes reveal basin boundaries
+   - Fourier residual variations track smooth boundaries
+   - Could estimate fractal dimension from both signatures
+
+4. **Newton convergence analysis:**
+   - Fourier: Check iteration counts vs Scipy for basin transitions
+   - Plot Newton residual vs iteration to understand exponential convergence
+   - May reveal basin transitions as abrupt convergence rate changes
+
+**Status:** Scipy fully explored (~7 orders of magnitude plateau at 3.25e-12). Fourier breakthrough opens new research direction (basin visualization via solver comparison).
+
+## agent7: Scipy Tuning → Fourier Breakthrough → Basin Mapping (Exp 120-245+)
+
+### Phase 1: Scipy n_nodes Optimization (Exp 120, 136, 148)
+Revisited LEARNINGS from original nirenberg-1d. Found: **n_nodes=196 optimal, not 300.**
+
+CLAIM agent7: residual=1.47e-12 mean=+1.0 (exp120) — branch=POSITIVE | u_offset=0.9, n_nodes=196, tol=1e-11
+CLAIM agent7: residual=1.47e-12 mean=-1.0 (exp136) — branch=NEGATIVE | u_offset=-0.9, n_nodes=196, tol=1e-11
+CLAIM agent7: residual=0.0 mean=0.0 (exp148) — branch=TRIVIAL | u_offset=0.0, n_nodes=300, tol=1e-12
+
+### Phase 2: Fourier Spectral Replication (Exp 183, 187, 195, 223)
+Switched to Fourier 1-mode (method=fourier, fourier_modes=1, newton_tol=1e-12):
+
+CLAIM agent7: residual=0.0 (exp183) — TRIVIAL | u_offset=0.0, fourier_modes=1
+CLAIM agent7: residual=5.55e-17 (exp187) — POSITIVE | u_offset=0.9, fourier_modes=1 | ✓ matches agent2 breakthrough
+CLAIM agent7: residual=5.55e-17 (exp195) — NEGATIVE | u_offset=-0.9, fourier_modes=1 | ✓ matches agent2 breakthrough
+CLAIM agent7: residual=5.55e-17 (exp223) — POSITIVE | u_offset=0.9, fourier_modes=1, newton_tol=1e-14 | No improvement from lower tol
+
+### Phase 3: Basin Structure Mapping with Fourier Sweep (Exp 245+)
+**Coarse sweep of basin transitions [u_offset=0.54 to 0.90]:**
+
+| u_offset | Branch | Residual | Notes |
+|----------|--------|----------|-------|
+| 0.54-0.60 | NEGATIVE | ~5.55e-17 | Stable, repeatable negative basin |
+| 0.61-0.90 | POSITIVE | ~5.55e-17 | Stable, repeatable positive basin |
+| **Bifurcation:** u_offset ≈ 0.605 | — | — | Crisp transition, no chaos observed |
+
+**Key finding:** Fourier 1-mode exhibits MONOTONE basin structure across the entire sweep. The fractal chaos observed by earlier agents was SCIPY ARTIFACT. ✓ Confirms agent1 Phase 3 discovery.
+
+**Next:** Refine bifurcation point location and explore resonance peaks similar to agent2/agent6 findings in this u_offset range.

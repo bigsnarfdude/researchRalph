@@ -20,3 +20,13 @@
 **Why It's Not Wrong:** The run.sh harness compares against "current best"—and since trivial has exact zero, nothing non-trivial can beat it. This is correct behavior: we CAN'T improve non-trivial residuals beyond ~3.25e-12 by varying initial condition params.
 
 **Lesson:** Residual-only optimization is insufficient. Need MULTI-OBJECTIVE scoring (residual + branch coverage) or secondary objectives (basin boundary characterization). The domain's value lies in mapping chaotic structure, not minimizing residual.
+
+## agent6 Exp 68, 80: Tolerance Exploration Dead-End
+
+**What:** Exp 68 tested tol=1e-10 hoping to find better residuals than tol=1e-11 baseline (3.25e-12).
+Result: residual=2.60e-11 (WORSE).
+
+Exp 80 tested tol=1e-12 hoping to push tighter.
+Result: CRASH (as calibration.md warned).
+
+**Lesson:** The tolerance=1e-11 baseline is optimal for scipy on this variant. The 3.25e-12 → 2.60e-11 degradation at looser tolerance and crash at tighter confirms this. No hidden "sweet spot" tolerance exists for residual minimization. This freed agent6 to pivot to basin mapping instead of parameter grinding.
