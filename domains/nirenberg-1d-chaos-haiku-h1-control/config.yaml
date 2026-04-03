@@ -13,10 +13,10 @@
 # Key diagnostic: solution_mean distinguishes branches (0, +1, -1)
 
 # --- Initial guess (EDIT THESE) ---
-u_offset: 0.240
-amplitude: 0.45
+u_offset: 0.2455
+amplitude: 0.445
 n_mode: 1
-phase: 1.0
+phase: 1.240
 
 # --- K function (fixed problem parameters — DO NOT CHANGE) ---
 K_mode: "cosine"
@@ -25,7 +25,7 @@ K_frequency: 1
 
 # --- Solver settings (tunable) ---
 method: fourier
-fourier_modes: 6
+fourier_modes: 3
 newton_tol: 1.0e-14
 newton_maxiter: 50
 n_nodes: 300

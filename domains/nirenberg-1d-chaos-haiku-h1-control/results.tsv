@@ -10243,3 +10243,851 @@ exp8608	4.15642452e-29	0.000000	0.000000	discard	cycle 60 u=0.0985	agent0	initia
 exp8609	4.15642452e-29	0.000000	0.000000	discard	cycle 60 u=0.0985	agent0	initial_cond	0	0.000000
 exp8610	4.15642452e-29	0.000000	0.000000	discard	cycle 60 u=0.0985	agent0	initial_cond	1	0.000000
 exp8611	2.19292611e-29	0.000000	0.000000	discard	cycle 60 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8612	2.19292611e-29	0.000000	0.000000	discard	cycle 60 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8613	2.19292611e-29	0.000000	0.000000	discard	cycle 60 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8614	4.22491788e-29	0.000000	0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	-0.000000
+exp8615	4.22491788e-29	0.000000	0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	1	-0.000000
+exp8616	4.22491788e-29	0.000000	0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	-0.000000
+exp8617	3.22245147e-29	0.000000	0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	0.000000
+exp8618	3.22245147e-29	0.000000	0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	0.000000
+exp8619	3.22245147e-29	0.000000	0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	0.000000
+exp8620	4.50941488e-29	0.000000	-0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	1	0.000000
+exp8621	4.50941488e-29	0.000000	-0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	0.000000
+exp8622	4.50941488e-29	0.000000	-0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	0.000000
+exp8623	4.88330883e-29	0.000000	-0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	1	0.000000
+exp8624	4.88330883e-29	0.000000	-0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	0	0.000000
+exp8625	4.88330883e-29	0.000000	-0.000000	discard	cycle 60 u=0.0990	agent0	initial_cond	1	0.000000
+exp8626	5.74085541e-29	0.000000	-0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	0.000000
+exp8627	5.74085541e-29	0.000000	-0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	0.000000
+exp8628	5.74085541e-29	0.000000	-0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	1	0.000000
+exp8629	1.54984578e-28	0.000000	0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8630	1.54984578e-28	0.000000	0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8631	1.54984578e-28	0.000000	0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8632	1.60328418e-29	0.000000	-0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8633	1.60328418e-29	0.000000	-0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	1	-0.000000
+exp8634	1.60328418e-29	0.000000	-0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8635	7.34590618e-29	0.000000	0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	0.000000
+exp8636	7.34590618e-29	0.000000	0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	1	0.000000
+exp8637	7.34590618e-29	0.000000	0.000000	discard	cycle 60 u=0.0995	agent0	initial_cond	0	0.000000
+exp8638	4.46546993e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8639	4.46546993e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8640	4.46546993e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8641	4.08106752e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8642	4.08106752e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8643	5.24531103e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.44 phase=0.8	manual	memory	0	0.000097
+exp8644	4.08106752e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8645	2.96820601e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.45 phase=0.8	manual	memory	1	0.000097
+exp8646	4.58623706e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8647	2.14221646e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.46 phase=0.8	manual	memory	0	0.000097
+exp8647	4.58623706e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8648	4.58623706e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8649	3.85200085e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.44 phase=0.8	manual	memory	1	0.000097
+exp8650	4.39794337e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8651	3.66181970e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.45 phase=0.8	manual	memory	0	0.000097
+exp8652	4.39794337e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8653	7.29561844e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.46 phase=0.8	manual	memory	1	0.000097
+exp8654	4.39794337e-29	0.000000	0.000000	discard	cycle 60 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8655	2.54950867e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.44 phase=0.8	manual	memory	0	0.000097
+exp8655	1.36727475e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8656	1.36727475e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8657	3.72132296e-17	0.070278	0.000000	discard	3D phase u=0.240 amp=0.45 phase=0.8	manual	memory	1	0.000097
+exp8658	1.36727475e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8659	4.83704644e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.46 phase=0.8	manual	memory	0	0.000097
+exp8660	6.14461376e-29	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8661	1.31271533e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.44 phase=0.8	manual	memory	1	0.000097
+exp8662	6.14461376e-29	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8663	2.60058098e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.45 phase=0.8	manual	memory	0	0.000097
+exp8663	6.14461376e-29	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8664	1.75906666e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8665	6.56506662e-18	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.46 phase=0.8	manual	memory	1	0.000097
+exp8666	1.75906666e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8667	2.38440053e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.44 phase=0.8	manual	memory	0	0.000097
+exp8668	1.75906666e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8669	4.61959057e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.45 phase=0.8	manual	memory	1	0.000097
+exp8670	1.11257917e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8671	2.57699914e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.46 phase=0.8	manual	memory	0	0.000097
+exp8671	1.11257917e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8672	1.11257917e-28	0.000000	0.000000	discard	cycle 60 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8673	4.66356587e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.44 phase=0.9	manual	memory	1	0.000097
+exp8674	8.58580947e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8675	8.63620460e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.45 phase=0.9	manual	memory	0	0.000097
+exp8676	8.58580947e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8677	5.97243974e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.46 phase=0.9	manual	memory	1	0.000097
+exp8678	8.58580947e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	1	0.000000
+exp8679	5.76243618e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.44 phase=0.9	manual	memory	0	0.000097
+exp8679	5.23962023e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8680	5.23962023e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8681	1.49489395e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.45 phase=0.9	manual	memory	0	0.000097
+exp8682	5.23962023e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8683	2.66150426e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.46 phase=0.9	manual	memory	0	0.000097
+exp8684	4.03266298e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8685	3.04806155e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.44 phase=0.9	manual	memory	0	0.000097
+exp8686	4.03266298e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	1	0.000000
+exp8687	2.13795160e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.45 phase=0.9	manual	memory	0	0.000097
+exp8687	4.03266298e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8688	4.80015937e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8688	4.43878892e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.46 phase=0.9	manual	memory	0	0.000097
+exp8689	4.80015937e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	1	0.000000
+exp8690	5.43334117e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.44 phase=0.9	manual	memory	0	0.000097
+exp8691	4.80015937e-29	0.000000	0.000000	discard	cycle 61 u=0.0975	agent0	initial_cond	0	0.000000
+exp8692	2.06439742e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.45 phase=0.9	manual	memory	0	0.000097
+exp8693	2.68824537e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8694	1.92915833e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.46 phase=0.9	manual	memory	0	0.000097
+exp8694	2.68824537e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8695	2.68824537e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8695	1.41106006e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.44 phase=0.9	manual	memory	0	0.000097
+exp8696	6.16758073e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8697	4.32992578e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.45 phase=0.9	manual	memory	0	0.000097
+exp8698	6.16758073e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8699	5.81247306e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.46 phase=0.9	manual	memory	0	0.000097
+exp8700	6.16758073e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8701	1.35631076e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.44 phase=1.0	manual	memory	0	0.000097
+exp8702	2.01926478e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	0.000000
+exp8703	2.01926478e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	0.000000
+exp8703	2.46050759e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.45 phase=1.0	manual	memory	0	0.000097
+exp8704	2.01926478e-29	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	1	0.000000
+exp8705	1.63336183e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.46 phase=1.0	manual	memory	1	0.000097
+exp8706	1.30310780e-28	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8707	4.39909554e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.44 phase=1.0	manual	memory	0	0.000097
+exp8708	1.30310780e-28	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8709	2.27964180e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.45 phase=1.0	manual	memory	1	0.000097
+exp8710	1.30310780e-28	0.000000	0.000000	discard	cycle 61 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8711	2.37060241e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.46 phase=1.0	manual	memory	0	0.000097
+exp8711	5.45343271e-29	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	-0.000000
+exp8712	5.45343271e-29	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	1	-0.000000
+exp8713	3.59691331e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.44 phase=1.0	manual	memory	1	0.000097
+exp8714	5.45343271e-29	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	-0.000000
+exp8715	8.61780663e-18	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.45 phase=1.0	manual	memory	0	0.000097
+exp8716	1.23429977e-28	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	0.000000
+exp8717	2.96268871e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.46 phase=1.0	manual	memory	1	0.000097
+exp8718	1.23429977e-28	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	0.000000
+exp8719	1.16698172e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.44 phase=1.0	manual	memory	0	0.000097
+exp8719	1.23429977e-28	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	0.000000
+exp8720	1.88036672e-29	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	1	0.000000
+exp8720	2.25096546e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.45 phase=1.0	manual	memory	1	0.000097
+exp8721	1.88036672e-29	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	0.000000
+exp8722	6.22574085e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.46 phase=1.0	manual	memory	0	0.000097
+exp8723	1.88036672e-29	0.000000	0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	0.000000
+exp8724	3.19957656e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.44 phase=1.0	manual	memory	1	0.000097
+exp8725	1.91190259e-29	0.000000	-0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	1	0.000000
+exp8726	4.05235948e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.45 phase=1.0	manual	memory	0	0.000097
+exp8726	1.91190259e-29	0.000000	-0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	0	0.000000
+exp8727	1.91190259e-29	0.000000	-0.000000	discard	cycle 61 u=0.0982	agent0	initial_cond	1	0.000000
+exp8727	4.70823918e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.46 phase=1.0	manual	memory	1	0.000097
+exp8728	6.13049994e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	0.000000
+exp8729	2.70557003e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.44 phase=1.1	manual	memory	0	0.000097
+exp8730	6.13049994e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	0.000000
+exp8731	2.21493602e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.45 phase=1.1	manual	memory	1	0.000097
+exp8732	6.13049994e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	1	0.000000
+exp8733	4.14693429e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.46 phase=1.1	manual	memory	0	0.000097
+exp8733	5.49750971e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	0.000000
+exp8734	5.49750971e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	0.000000
+exp8734	5.58970903e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.44 phase=1.1	manual	memory	0	0.000097
+exp8735	5.49750971e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	0.000000
+exp8736	1.61698577e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.45 phase=1.1	manual	memory	0	0.000097
+exp8737	4.15642452e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	0.000000
+exp8738	2.43412907e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.46 phase=1.1	manual	memory	0	0.000097
+exp8739	4.15642452e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	1	0.000000
+exp8740	2.52915795e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.44 phase=1.1	manual	memory	0	0.000097
+exp8741	4.15642452e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	0.000000
+exp8742	3.04548422e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.45 phase=1.1	manual	memory	0	0.000097
+exp8742	2.19292611e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8743	2.19292611e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8744	2.35374840e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.46 phase=1.1	manual	memory	0	0.000097
+exp8745	2.19292611e-29	0.000000	0.000000	discard	cycle 61 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8746	4.31390923e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.44 phase=1.1	manual	memory	0	0.000097
+exp8747	4.22491788e-29	0.000000	0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	1	-0.000000
+exp8748	2.56901335e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.45 phase=1.1	manual	memory	0	0.000097
+exp8749	4.22491788e-29	0.000000	0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	-0.000000
+exp8750	5.89393814e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.46 phase=1.1	manual	memory	0	0.000097
+exp8750	4.22491788e-29	0.000000	0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	-0.000000
+exp8751	3.22245147e-29	0.000000	0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	1	0.000000
+exp8751	3.78227330e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.44 phase=1.1	manual	memory	0	0.000097
+exp8752	3.22245147e-29	0.000000	0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	0.000000
+exp8753	3.99019737e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.45 phase=1.1	manual	memory	0	0.000097
+exp8754	3.22245147e-29	0.000000	0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	1	0.000000
+exp8755	1.81368447e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.46 phase=1.1	manual	memory	1	0.000097
+exp8756	4.50941488e-29	0.000000	-0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	0.000000
+exp8757	4.47270536e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.44 phase=1.2	manual	memory	0	0.000097
+exp8757	4.50941488e-29	0.000000	-0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	0.000000
+exp8758	4.50941488e-29	0.000000	-0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	1	0.000000
+exp8758	3.20961567e-17	0.070278	0.000000	discard	3D phase u=0.238 amp=0.45 phase=1.2	manual	memory	1	0.000097
+exp8759	4.88330883e-29	0.000000	-0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	0.000000
+exp8760	3.76619022e-17	0.070278	-0.000000	discard	3D phase u=0.238 amp=0.46 phase=1.2	manual	memory	0	0.000097
+exp8761	4.88330883e-29	0.000000	-0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	0.000000
+exp8762	2.63449220e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.44 phase=1.2	manual	memory	1	0.000097
+exp8763	4.88330883e-29	0.000000	-0.000000	discard	cycle 61 u=0.0990	agent0	initial_cond	0	0.000000
+exp8764	1.50350097e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.45 phase=1.2	manual	memory	0	0.000097
+exp8765	5.74085541e-29	0.000000	-0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	0.000000
+exp8766	5.74085541e-29	0.000000	-0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	1	0.000000
+exp8766	3.55165445e-17	0.070278	-0.000000	discard	3D phase u=0.239 amp=0.46 phase=1.2	manual	memory	1	0.000097
+exp8767	5.74085541e-29	0.000000	-0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	0.000000
+exp8768	1.01222764e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.44 phase=1.2	manual	memory	0	0.000097
+exp8769	1.54984578e-28	0.000000	0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8770	2.67856147e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.45 phase=1.2	manual	memory	1	0.000097
+exp8771	1.54984578e-28	0.000000	0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8772	2.56982081e-17	0.070278	-0.000000	discard	3D phase u=0.240 amp=0.46 phase=1.2	manual	memory	0	0.000097
+exp8773	1.54984578e-28	0.000000	0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8774	9.36536466e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.44 phase=1.2	manual	memory	1	0.000097
+exp8774	1.60328418e-29	0.000000	-0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	1	-0.000000
+exp8775	1.60328418e-29	0.000000	-0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8775	2.07979355e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.45 phase=1.2	manual	memory	0	0.000097
+exp8776	1.60328418e-29	0.000000	-0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8777	2.09682030e-17	0.070278	-0.000000	discard	3D phase u=0.241 amp=0.46 phase=1.2	manual	memory	1	0.000097
+exp8778	7.34590618e-29	0.000000	0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	1	0.000000
+exp8779	3.22381434e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.44 phase=1.2	manual	memory	0	0.000097
+exp8780	7.34590618e-29	0.000000	0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	0	0.000000
+exp8781	7.15119071e-18	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.45 phase=1.2	manual	memory	0	0.000097
+exp8781	7.34590618e-29	0.000000	0.000000	discard	cycle 61 u=0.0995	agent0	initial_cond	1	0.000000
+exp8782	4.46546993e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8782	4.93137771e-17	0.070278	-0.000000	discard	3D phase u=0.242 amp=0.46 phase=1.2	manual	memory	0	0.000097
+exp8783	4.46546993e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8784	4.46546993e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8785	4.08106752e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8786	4.08106752e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8787	4.08106752e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8788	4.58623706e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8789	4.58623706e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8790	4.58623706e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8791	4.39794337e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8792	4.39794337e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8793	4.39794337e-29	0.000000	0.000000	discard	cycle 61 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8794	1.36727475e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8795	1.36727475e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8796	1.36727475e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8797	6.14461376e-29	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8798	6.14461376e-29	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8799	6.14461376e-29	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8800	1.75906666e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8801	1.75906666e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8802	1.75906666e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8803	1.11257917e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8804	1.11257917e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8805	1.11257917e-28	0.000000	0.000000	discard	cycle 61 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8806	8.58580947e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8807	7.36488554e-17	0.070278	0.000000	discard	3D fine u=0.240 amp=0.44 phase=1.15	manual	memory	1	0.000097
+exp8807	8.58580947e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	1	0.000000
+exp8808	8.58580947e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8808	5.50874358e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.44 phase=1.17	manual	memory	0	0.000097
+exp8809	5.23962023e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8810	1.01222764e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.44 phase=1.20	manual	memory	1	0.000097
+exp8811	5.23962023e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	1	0.000000
+exp8812	6.85940427e-17	0.070278	0.000000	discard	3D fine u=0.240 amp=0.44 phase=1.23	manual	memory	0	0.000097
+exp8813	5.23962023e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8814	4.03266298e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	1	0.000000
+exp8814	3.62338692e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.44 phase=1.25	manual	memory	1	0.000097
+exp8815	4.03266298e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8816	2.21638820e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.45 phase=1.15	manual	memory	0	0.000097
+exp8817	4.03266298e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8818	4.45718157e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.45 phase=1.17	manual	memory	1	0.000097
+exp8819	4.80015937e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	1	0.000000
+exp8820	2.67856147e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.45 phase=1.20	manual	memory	0	0.000097
+exp8820	4.80015937e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8821	4.80015937e-29	0.000000	0.000000	discard	cycle 62 u=0.0975	agent0	initial_cond	0	0.000000
+exp8822	2.29905112e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.45 phase=1.23	manual	memory	1	0.000097
+exp8823	2.68824537e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8824	3.42443899e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.45 phase=1.25	manual	memory	0	0.000097
+exp8825	2.68824537e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8826	9.16708844e-18	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.46 phase=1.15	manual	memory	1	0.000097
+exp8827	2.68824537e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8828	6.16758073e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8828	1.36073949e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.46 phase=1.17	manual	memory	0	0.000097
+exp8829	6.16758073e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8830	2.56982081e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.46 phase=1.20	manual	memory	1	0.000097
+exp8831	6.16758073e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8832	2.27762580e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.46 phase=1.23	manual	memory	0	0.000097
+exp8833	2.01926478e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	0.000000
+exp8834	2.72334887e-17	0.070278	-0.000000	discard	3D fine u=0.240 amp=0.46 phase=1.25	manual	memory	0	0.000097
+exp8834	2.01926478e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	1	0.000000
+exp8835	2.01926478e-29	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	0.000000
+exp8836	2.36910350e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.44 phase=1.15	manual	memory	0	0.000097
+exp8837	1.30310780e-28	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8838	2.41909943e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.44 phase=1.17	manual	memory	1	0.000097
+exp8839	1.30310780e-28	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8840	9.36536466e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.44 phase=1.20	manual	memory	0	0.000097
+exp8841	1.30310780e-28	0.000000	0.000000	discard	cycle 62 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8842	5.45343271e-29	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	-0.000000
+exp8842	1.55766537e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.44 phase=1.23	manual	memory	0	0.000097
+exp8843	5.45343271e-29	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	-0.000000
+exp8844	3.99987561e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.44 phase=1.25	manual	memory	0	0.000097
+exp8845	5.45343271e-29	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	-0.000000
+exp8846	2.40137961e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.45 phase=1.15	manual	memory	1	0.000097
+exp8847	1.23429977e-28	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	1	0.000000
+exp8848	1.23429977e-28	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	0.000000
+exp8848	1.82697659e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.45 phase=1.17	manual	memory	0	0.000097
+exp8849	1.23429977e-28	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	0.000000
+exp8850	2.07979355e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.45 phase=1.20	manual	memory	1	0.000097
+exp8851	1.88036672e-29	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	0.000000
+exp8852	3.67610927e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.45 phase=1.23	manual	memory	0	0.000097
+exp8853	1.88036672e-29	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	0.000000
+exp8854	1.00697485e-16	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.45 phase=1.25	manual	memory	1	0.000097
+exp8854	1.88036672e-29	0.000000	0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	1	0.000000
+exp8855	1.91190259e-29	0.000000	-0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	0.000000
+exp8855	3.00433234e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.46 phase=1.15	manual	memory	0	0.000097
+exp8856	1.91190259e-29	0.000000	-0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	0	0.000000
+exp8857	3.40707193e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.46 phase=1.17	manual	memory	1	0.000097
+exp8858	1.91190259e-29	0.000000	-0.000000	discard	cycle 62 u=0.0982	agent0	initial_cond	1	0.000000
+exp8859	2.09682030e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.46 phase=1.20	manual	memory	0	0.000097
+exp8860	6.13049994e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8861	6.13049994e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8861	7.31934032e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.46 phase=1.23	manual	memory	0	0.000097
+exp8862	6.13049994e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8863	5.88722808e-17	0.070278	-0.000000	discard	3D fine u=0.241 amp=0.46 phase=1.25	manual	memory	0	0.000097
+exp8864	5.49750971e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8865	4.99357719e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.44 phase=1.15	manual	memory	1	0.000097
+exp8866	5.49750971e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	1	0.000000
+exp8867	2.03808181e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.44 phase=1.17	manual	memory	0	0.000097
+exp8867	5.49750971e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8868	4.15642452e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8869	3.22381434e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.44 phase=1.20	manual	memory	0	0.000097
+exp8870	4.15642452e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8871	4.46364432e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.44 phase=1.23	manual	memory	0	0.000097
+exp8872	4.15642452e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	0.000000
+exp8873	5.61030385e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.44 phase=1.25	manual	memory	0	0.000097
+exp8874	2.19292611e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	1	-0.000000
+exp8875	2.19292611e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8875	1.72563120e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.45 phase=1.15	manual	memory	0	0.000097
+exp8876	2.19292611e-29	0.000000	0.000000	discard	cycle 62 u=0.0985	agent0	initial_cond	0	-0.000000
+exp8877	1.07231095e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.45 phase=1.17	manual	memory	0	0.000097
+exp8878	4.22491788e-29	0.000000	0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	1	-0.000000
+exp8879	7.15119071e-18	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.45 phase=1.20	manual	memory	0	0.000097
+exp8880	4.22491788e-29	0.000000	0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	-0.000000
+exp8881	3.41616978e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.45 phase=1.23	manual	memory	0	0.000097
+exp8881	4.22491788e-29	0.000000	0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	1	-0.000000
+exp8882	3.22245147e-29	0.000000	0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	0.000000
+exp8883	9.39503008e-18	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.45 phase=1.25	manual	memory	0	0.000097
+exp8884	3.22245147e-29	0.000000	0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	0.000000
+exp8885	2.40005510e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.46 phase=1.15	manual	memory	0	0.000097
+exp8886	3.22245147e-29	0.000000	0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	1	0.000000
+exp8887	4.71063958e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.46 phase=1.17	manual	memory	0	0.000097
+exp8888	4.50941488e-29	0.000000	-0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	0.000000
+exp8889	4.50941488e-29	0.000000	-0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	0.000000
+exp8889	4.93137771e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.46 phase=1.20	manual	memory	1	0.000097
+exp8890	4.50941488e-29	0.000000	-0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	0.000000
+exp8891	2.66359892e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.46 phase=1.23	manual	memory	0	0.000097
+exp8892	4.88330883e-29	0.000000	-0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	0.000000
+exp8893	3.08781402e-17	0.070278	-0.000000	discard	3D fine u=0.242 amp=0.46 phase=1.25	manual	memory	1	0.000097
+exp8894	4.88330883e-29	0.000000	-0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	1	0.000000
+exp8895	9.59016994e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.44 phase=1.15	manual	memory	0	0.000097
+exp8895	4.88330883e-29	0.000000	-0.000000	discard	cycle 62 u=0.0990	agent0	initial_cond	0	0.000000
+exp8896	5.74085541e-29	0.000000	-0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	0.000000
+exp8897	1.12059465e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.44 phase=1.17	manual	memory	1	0.000097
+exp8898	5.74085541e-29	0.000000	-0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	0.000000
+exp8899	1.19441616e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.44 phase=1.20	manual	memory	0	0.000097
+exp8900	5.74085541e-29	0.000000	-0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	0.000000
+exp8901	2.12287778e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.44 phase=1.23	manual	memory	1	0.000097
+exp8901	1.54984578e-28	0.000000	0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	1	-0.000000
+exp8902	1.54984578e-28	0.000000	0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8902	4.61062128e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.44 phase=1.25	manual	memory	0	0.000097
+exp8903	1.54984578e-28	0.000000	0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8904	1.42613823e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.45 phase=1.15	manual	memory	1	0.000097
+exp8905	1.60328418e-29	0.000000	-0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	1	-0.000000
+exp8906	4.27436339e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.45 phase=1.17	manual	memory	0	0.000097
+exp8907	1.60328418e-29	0.000000	-0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	-0.000000
+exp8908	1.60328418e-29	0.000000	-0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	1	-0.000000
+exp8908	2.91235584e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.45 phase=1.20	manual	memory	1	0.000097
+exp8909	7.34590618e-29	0.000000	0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	0.000000
+exp8910	5.93369028e-17	0.070278	0.000000	discard	3D fine u=0.243 amp=0.45 phase=1.23	manual	memory	0	0.000097
+exp8911	7.34590618e-29	0.000000	0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	0	0.000000
+exp8912	4.37276621e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.45 phase=1.25	manual	memory	1	0.000097
+exp8913	7.34590618e-29	0.000000	0.000000	discard	cycle 62 u=0.0995	agent0	initial_cond	1	0.000000
+exp8914	2.53038767e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.46 phase=1.15	manual	memory	0	0.000097
+exp8914	4.46546993e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8915	4.46546993e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8916	3.18903507e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.46 phase=1.17	manual	memory	1	0.000097
+exp8917	4.46546993e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8918	2.40177606e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.46 phase=1.20	manual	memory	0	0.000097
+exp8919	4.08106752e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8920	2.65206488e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.46 phase=1.23	manual	memory	1	0.000097
+exp8921	4.08106752e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8922	4.08106752e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8922	6.87245679e-17	0.070278	-0.000000	discard	3D fine u=0.243 amp=0.46 phase=1.25	manual	memory	0	0.000097
+exp8923	4.58623706e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8924	1.71699456e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.44 phase=1.15	manual	memory	1	0.000097
+exp8925	4.58623706e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8926	6.06509591e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.44 phase=1.17	manual	memory	0	0.000097
+exp8927	4.58623706e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8928	1.44454409e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.44 phase=1.20	manual	memory	1	0.000097
+exp8928	4.39794337e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	1	-0.000000
+exp8929	4.39794337e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8930	6.91159813e-18	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.44 phase=1.23	manual	memory	0	0.000097
+exp8931	4.39794337e-29	0.000000	0.000000	discard	cycle 62 u=0.1000	agent0	initial_cond	0	-0.000000
+exp8932	3.20293509e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.44 phase=1.25	manual	memory	1	0.000097
+exp8933	1.36727475e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8934	8.70396439e-18	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.45 phase=1.15	manual	memory	0	0.000097
+exp8935	1.36727475e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8936	1.36727475e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8936	3.67911233e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.45 phase=1.17	manual	memory	1	0.000097
+exp8937	6.14461376e-29	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8938	2.47758985e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.45 phase=1.20	manual	memory	0	0.000097
+exp8939	6.14461376e-29	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8940	2.14394205e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.45 phase=1.23	manual	memory	1	0.000097
+exp8941	6.14461376e-29	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8942	3.63955875e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.45 phase=1.25	manual	memory	0	0.000097
+exp8942	1.75906666e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8943	1.75906666e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8944	1.74768225e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.46 phase=1.15	manual	memory	1	0.000097
+exp8945	1.75906666e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8946	6.54097499e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.46 phase=1.17	manual	memory	0	0.000097
+exp8947	1.11257917e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8948	1.55904980e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.46 phase=1.20	manual	memory	1	0.000097
+exp8949	1.11257917e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	1	-0.000000
+exp8950	1.11257917e-28	0.000000	0.000000	discard	cycle 62 u=0.1050	agent0	initial_cond	0	-0.000000
+exp8950	8.53592075e-17	0.070278	-0.000000	discard	3D fine u=0.244 amp=0.46 phase=1.23	manual	memory	0	0.000097
+exp8951	8.58580947e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8952	3.09945735e-17	0.070278	0.000000	discard	3D fine u=0.244 amp=0.46 phase=1.25	manual	memory	1	0.000097
+exp8953	8.58580947e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	1	0.000000
+exp8954	8.58580947e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8955	5.23962023e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	1	0.000000
+exp8956	5.23962023e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8957	5.23962023e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8958	4.03266298e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	1	0.000000
+exp8959	4.03266298e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8960	4.03266298e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8961	4.80015937e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8962	4.80015937e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	0	0.000000
+exp8963	4.80015937e-29	0.000000	0.000000	discard	cycle 63 u=0.0975	agent0	initial_cond	1	0.000000
+exp8964	2.68824537e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8965	2.68824537e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8966	2.68824537e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8967	6.16758073e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8968	6.16758073e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8969	6.16758073e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8970	2.01926478e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	0.000000
+exp8971	2.01926478e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	1	0.000000
+exp8972	2.01926478e-29	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	0.000000
+exp8973	1.30310780e-28	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	1	-0.000000
+exp8974	1.30310780e-28	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8975	1.30310780e-28	0.000000	0.000000	discard	cycle 63 u=0.0980	agent0	initial_cond	0	-0.000000
+exp8976	5.45343271e-29	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	1	-0.000000
+exp8977	5.45343271e-29	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	-0.000000
+exp8978	5.45343271e-29	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	-0.000000
+exp8979	1.23429977e-28	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	0.000000
+exp8980	1.23429977e-28	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	0.000000
+exp8981	1.23429977e-28	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	1	0.000000
+exp8982	1.88036672e-29	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	0.000000
+exp8983	1.48104335e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.43 phase=1.20	manual	memory	0	0.000097
+exp8983	1.88036672e-29	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	0.000000
+exp8984	1.88036672e-29	0.000000	0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	1	0.000000
+exp8984	3.66153995e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.43 phase=1.21	manual	memory	0	0.000097
+exp8985	1.91190259e-29	0.000000	-0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	0.000000
+exp8986	5.74840895e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.43 phase=1.22	manual	memory	0	0.000097
+exp8987	1.91190259e-29	0.000000	-0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	1	0.000000
+exp8988	1.20210298e-17	0.070278	0.000000	discard	Ultra-3D u=0.242 amp=0.43 phase=1.23	manual	memory	1	0.000097
+exp8989	1.91190259e-29	0.000000	-0.000000	discard	cycle 63 u=0.0982	agent0	initial_cond	0	0.000000
+exp8990	1.52817680e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.43 phase=1.24	manual	memory	0	0.000097
+exp8991	6.13049994e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	0.000000
+exp8992	6.13049994e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	1	0.000000
+exp8992	8.47776983e-18	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.43 phase=1.25	manual	memory	1	0.000097
+exp8993	6.13049994e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	0.000000
+exp8994	3.22381434e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.44 phase=1.20	manual	memory	0	0.000097
+exp8995	5.49750971e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	0.000000
+exp8996	3.66474544e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.44 phase=1.21	manual	memory	1	0.000097
+exp8997	5.49750971e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	0.000000
+exp8998	2.53942580e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.44 phase=1.22	manual	memory	0	0.000097
+exp8999	5.49750971e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	0.000000
+exp9000	4.15642452e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	1	0.000000
+exp9000	4.46364432e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.44 phase=1.23	manual	memory	1	0.000097
+exp9001	4.15642452e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	0.000000
+exp9002	3.82969490e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.44 phase=1.24	manual	memory	0	0.000097
+exp9003	4.15642452e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	0.000000
+exp9004	5.61030385e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.44 phase=1.25	manual	memory	1	0.000097
+exp9005	2.19292611e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	-0.000000
+exp9006	7.15119071e-18	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.45 phase=1.20	manual	memory	0	0.000097
+exp9007	2.19292611e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	0	-0.000000
+exp9008	3.20113250e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.45 phase=1.21	manual	memory	1	0.000097
+exp9008	2.19292611e-29	0.000000	0.000000	discard	cycle 63 u=0.0985	agent0	initial_cond	1	-0.000000
+exp9009	4.22491788e-29	0.000000	0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	-0.000000
+exp9010	1.50525191e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.45 phase=1.22	manual	memory	0	0.000097
+exp9011	4.22491788e-29	0.000000	0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	-0.000000
+exp9012	3.41616978e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.45 phase=1.23	manual	memory	1	0.000097
+exp9013	4.22491788e-29	0.000000	0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	1	-0.000000
+exp9014	2.10911596e-17	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.45 phase=1.24	manual	memory	0	0.000097
+exp9015	3.22245147e-29	0.000000	0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	0.000000
+exp9016	9.39503008e-18	0.070278	-0.000000	discard	Ultra-3D u=0.242 amp=0.45 phase=1.25	manual	memory	0	0.000097
+exp9016	3.22245147e-29	0.000000	0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	1	0.000000
+exp9017	3.22245147e-29	0.000000	0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	0.000000
+exp9017	2.03679005e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.43 phase=1.20	manual	memory	0	0.000097
+exp9018	4.50941488e-29	0.000000	-0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	0.000000
+exp9019	1.14348964e-16	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.43 phase=1.21	manual	memory	0	0.000097
+exp9020	4.50941488e-29	0.000000	-0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	1	0.000000
+exp9021	3.02341166e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.43 phase=1.22	manual	memory	0	0.000097
+exp9022	4.50941488e-29	0.000000	-0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	0.000000
+exp9023	3.51998374e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.43 phase=1.23	manual	memory	0	0.000097
+exp9024	4.88330883e-29	0.000000	-0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	0.000000
+exp9025	4.88330883e-29	0.000000	-0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	0.000000
+exp9025	2.03668957e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.43 phase=1.24	manual	memory	0	0.000097
+exp9026	4.88330883e-29	0.000000	-0.000000	discard	cycle 63 u=0.0990	agent0	initial_cond	0	0.000000
+exp9027	5.50453094e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.43 phase=1.25	manual	memory	0	0.000097
+exp9028	5.74085541e-29	0.000000	-0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	1	0.000000
+exp9029	1.19441616e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.44 phase=1.20	manual	memory	0	0.000097
+exp9030	5.74085541e-29	0.000000	-0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	0.000000
+exp9031	1.13500838e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.44 phase=1.21	manual	memory	0	0.000097
+exp9032	5.74085541e-29	0.000000	-0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	0.000000
+exp9033	1.54984578e-28	0.000000	0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9033	4.37005576e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.44 phase=1.22	manual	memory	0	0.000097
+exp9034	1.54984578e-28	0.000000	0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9035	2.12287778e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.44 phase=1.23	manual	memory	0	0.000097
+exp9036	1.54984578e-28	0.000000	0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	1	-0.000000
+exp9037	2.01091097e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.44 phase=1.24	manual	memory	1	0.000097
+exp9038	1.60328418e-29	0.000000	-0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9039	4.61062128e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.44 phase=1.25	manual	memory	0	0.000097
+exp9040	1.60328418e-29	0.000000	-0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9041	1.60328418e-29	0.000000	-0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	1	-0.000000
+exp9041	2.91235584e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.45 phase=1.20	manual	memory	1	0.000097
+exp9042	7.34590618e-29	0.000000	0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	0.000000
+exp9043	6.32017864e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.45 phase=1.21	manual	memory	0	0.000097
+exp9044	7.34590618e-29	0.000000	0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	1	0.000000
+exp9045	2.50243349e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.45 phase=1.22	manual	memory	1	0.000097
+exp9046	7.34590618e-29	0.000000	0.000000	discard	cycle 63 u=0.0995	agent0	initial_cond	0	0.000000
+exp9047	5.93369028e-17	0.070278	0.000000	discard	Ultra-3D u=0.243 amp=0.45 phase=1.23	manual	memory	0	0.000097
+exp9048	4.46546993e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9049	2.02810081e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.45 phase=1.24	manual	memory	1	0.000097
+exp9049	4.46546993e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9050	4.46546993e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9051	4.37276621e-17	0.070278	-0.000000	discard	Ultra-3D u=0.243 amp=0.45 phase=1.25	manual	memory	0	0.000097
+exp9052	4.08106752e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9053	1.04150571e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.43 phase=1.20	manual	memory	1	0.000097
+exp9054	4.08106752e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9055	3.69277234e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.43 phase=1.21	manual	memory	0	0.000097
+exp9056	4.08106752e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9057	1.89143127e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.43 phase=1.22	manual	memory	1	0.000097
+exp9057	4.58623706e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9058	4.58623706e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9058	6.20931552e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.43 phase=1.23	manual	memory	0	0.000097
+exp9059	4.58623706e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9060	1.74434884e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.43 phase=1.24	manual	memory	1	0.000097
+exp9061	4.39794337e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9062	1.92312280e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.43 phase=1.25	manual	memory	0	0.000097
+exp9063	4.39794337e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9064	1.44454409e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.44 phase=1.20	manual	memory	0	0.000097
+exp9064	4.39794337e-29	0.000000	0.000000	discard	cycle 63 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9065	1.36727475e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9065	1.60534178e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.44 phase=1.21	manual	memory	0	0.000097
+exp9066	1.36727475e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9067	4.05824992e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.44 phase=1.22	manual	memory	0	0.000097
+exp9068	1.36727475e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9069	6.91159813e-18	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.44 phase=1.23	manual	memory	0	0.000097
+exp9070	6.14461376e-29	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9071	1.23796409e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.44 phase=1.24	manual	memory	0	0.000097
+exp9072	6.14461376e-29	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9073	6.14461376e-29	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9073	3.20293509e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.44 phase=1.25	manual	memory	0	0.000097
+exp9074	1.75906666e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9075	2.47758985e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.45 phase=1.20	manual	memory	0	0.000097
+exp9076	1.75906666e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9077	1.01491094e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.45 phase=1.21	manual	memory	0	0.000097
+exp9078	1.75906666e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9079	3.80250345e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.45 phase=1.22	manual	memory	0	0.000097
+exp9080	1.11257917e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9081	2.14394205e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.45 phase=1.23	manual	memory	0	0.000097
+exp9081	1.11257917e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9082	1.11257917e-28	0.000000	0.000000	discard	cycle 63 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9083	4.24480437e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.45 phase=1.24	manual	memory	0	0.000097
+exp9084	8.58580947e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	1	0.000000
+exp9085	3.63955875e-17	0.070278	-0.000000	discard	Ultra-3D u=0.244 amp=0.45 phase=1.25	manual	memory	1	0.000097
+exp9086	8.58580947e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9087	1.94706703e-17	0.070278	0.000000	discard	Ultra-3D u=0.245 amp=0.43 phase=1.20	manual	memory	0	0.000097
+exp9088	8.58580947e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9089	1.78239373e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.43 phase=1.21	manual	memory	1	0.000097
+exp9089	5.23962023e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	1	0.000000
+exp9090	5.23962023e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9091	2.90705368e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.43 phase=1.22	manual	memory	0	0.000097
+exp9092	5.23962023e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	1	0.000000
+exp9093	2.41016783e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.43 phase=1.23	manual	memory	1	0.000097
+exp9094	4.03266298e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9095	1.44227367e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.43 phase=1.24	manual	memory	0	0.000097
+exp9096	4.03266298e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9097	8.40651583e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.43 phase=1.25	manual	memory	1	0.000097
+exp9097	4.03266298e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	1	0.000000
+exp9098	4.80015937e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9099	2.41621615e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.44 phase=1.20	manual	memory	0	0.000097
+exp9100	4.80015937e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9101	7.31189618e-17	0.070278	0.000000	discard	Ultra-3D u=0.245 amp=0.44 phase=1.21	manual	memory	1	0.000097
+exp9102	4.80015937e-29	0.000000	0.000000	discard	cycle 64 u=0.0975	agent0	initial_cond	0	0.000000
+exp9103	2.48986937e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.44 phase=1.22	manual	memory	0	0.000097
+exp9104	2.68824537e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9105	2.66200809e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.44 phase=1.23	manual	memory	1	0.000097
+exp9105	2.68824537e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	1	-0.000000
+exp9106	2.68824537e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9106	3.62604279e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.44 phase=1.24	manual	memory	0	0.000097
+exp9107	6.16758073e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9108	3.69699392e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.44 phase=1.25	manual	memory	1	0.000097
+exp9109	6.16758073e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	1	-0.000000
+exp9110	1.62869650e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.45 phase=1.20	manual	memory	0	0.000097
+exp9111	6.16758073e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9112	2.93333755e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.45 phase=1.21	manual	memory	0	0.000097
+exp9112	2.01926478e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	1	0.000000
+exp9113	2.01926478e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	0.000000
+exp9113	1.89058079e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.45 phase=1.22	manual	memory	0	0.000097
+exp9114	2.01926478e-29	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	0.000000
+exp9115	3.96412007e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.45 phase=1.23	manual	memory	0	0.000097
+exp9116	1.30310780e-28	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	1	-0.000000
+exp9117	1.59420788e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.45 phase=1.24	manual	memory	0	0.000097
+exp9118	1.30310780e-28	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9119	3.25688346e-17	0.070278	-0.000000	discard	Ultra-3D u=0.245 amp=0.45 phase=1.25	manual	memory	0	0.000097
+exp9119	1.30310780e-28	0.000000	0.000000	discard	cycle 64 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9120	5.45343271e-29	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	-0.000000
+exp9120	5.43070854e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.43 phase=1.20	manual	memory	0	0.000097
+exp9121	5.45343271e-29	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	-0.000000
+exp9122	5.70555081e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.43 phase=1.21	manual	memory	0	0.000097
+exp9123	5.45343271e-29	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	1	-0.000000
+exp9124	2.20747974e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.43 phase=1.22	manual	memory	0	0.000097
+exp9125	1.23429977e-28	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	0.000000
+exp9126	2.23711654e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.43 phase=1.23	manual	memory	0	0.000097
+exp9127	1.23429977e-28	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	0.000000
+exp9128	6.07786085e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.43 phase=1.24	manual	memory	0	0.000097
+exp9128	1.23429977e-28	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	0.000000
+exp9129	1.88036672e-29	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	0.000000
+exp9130	1.50082617e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.43 phase=1.25	manual	memory	0	0.000097
+exp9131	1.88036672e-29	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	1	0.000000
+exp9132	5.00401412e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.44 phase=1.20	manual	memory	1	0.000097
+exp9133	1.88036672e-29	0.000000	0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	0.000000
+exp9134	2.17048076e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.44 phase=1.21	manual	memory	0	0.000097
+exp9135	1.91190259e-29	0.000000	-0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	0.000000
+exp9136	3.68253431e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.44 phase=1.22	manual	memory	1	0.000097
+exp9136	1.91190259e-29	0.000000	-0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	1	0.000000
+exp9137	1.91190259e-29	0.000000	-0.000000	discard	cycle 64 u=0.0982	agent0	initial_cond	0	0.000000
+exp9138	4.40251360e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.44 phase=1.23	manual	memory	0	0.000097
+exp9139	6.13049994e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	1	0.000000
+exp9140	2.09664876e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.44 phase=1.24	manual	memory	1	0.000097
+exp9141	6.13049994e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	0.000000
+exp9142	9.06869688e-18	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.44 phase=1.25	manual	memory	0	0.000097
+exp9143	6.13049994e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	0.000000
+exp9144	3.17866069e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.45 phase=1.20	manual	memory	1	0.000097
+exp9144	5.49750971e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	1	0.000000
+exp9145	5.49750971e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	0.000000
+exp9145	7.23301065e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.45 phase=1.21	manual	memory	0	0.000097
+exp9146	5.49750971e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	0.000000
+exp9147	2.06260857e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.45 phase=1.22	manual	memory	1	0.000097
+exp9148	4.15642452e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	0.000000
+exp9149	5.74201205e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.45 phase=1.23	manual	memory	0	0.000097
+exp9150	4.15642452e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	0.000000
+exp9151	3.21679689e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.45 phase=1.24	manual	memory	1	0.000097
+exp9151	4.15642452e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	1	0.000000
+exp9152	2.19292611e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	-0.000000
+exp9152	2.12181106e-17	0.070278	-0.000000	discard	Ultra-3D u=0.246 amp=0.45 phase=1.25	manual	memory	0	0.000097
+exp9153	2.19292611e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	0	-0.000000
+exp9154	2.19292611e-29	0.000000	0.000000	discard	cycle 64 u=0.0985	agent0	initial_cond	1	-0.000000
+exp9155	4.22491788e-29	0.000000	0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	-0.000000
+exp9156	4.22491788e-29	0.000000	0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	1	-0.000000
+exp9157	4.22491788e-29	0.000000	0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	-0.000000
+exp9158	3.22245147e-29	0.000000	0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	0.000000
+exp9159	3.22245147e-29	0.000000	0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	1	0.000000
+exp9160	3.22245147e-29	0.000000	0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	0.000000
+exp9161	4.50941488e-29	0.000000	-0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	0.000000
+exp9162	4.50941488e-29	0.000000	-0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	0.000000
+exp9163	4.50941488e-29	0.000000	-0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	0.000000
+exp9164	4.88330883e-29	0.000000	-0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	1	0.000000
+exp9165	4.88330883e-29	0.000000	-0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	0.000000
+exp9166	4.88330883e-29	0.000000	-0.000000	discard	cycle 64 u=0.0990	agent0	initial_cond	0	0.000000
+exp9167	5.74085541e-29	0.000000	-0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	0.000000
+exp9168	5.74085541e-29	0.000000	-0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	0.000000
+exp9169	5.74085541e-29	0.000000	-0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	1	0.000000
+exp9170	1.54984578e-28	0.000000	0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9171	1.54984578e-28	0.000000	0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9172	1.54984578e-28	0.000000	0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	1	-0.000000
+exp9173	1.60328418e-29	0.000000	-0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9174	1.60328418e-29	0.000000	-0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	1	-0.000000
+exp_nueva_sota	6.91159813e-18	0.070278	-0.000000	keep	NEW SOTA: u=0.244 amp=0.44 phase=1.23 modes=3 4th branch	agent1	memory	0	-0.000000
+exp9175	1.60328418e-29	0.000000	-0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9176	7.34590618e-29	0.000000	0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	0.000000
+exp9177	7.34590618e-29	0.000000	0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	1	0.000000
+exp9178	7.34590618e-29	0.000000	0.000000	discard	cycle 64 u=0.0995	agent0	initial_cond	0	0.000000
+exp9179	4.46546993e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9180	4.46546993e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9181	4.46546993e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9182	4.08106752e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9183	4.08106752e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9184	4.08106752e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9185	4.58623706e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9186	4.58623706e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9187	3.57727412e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.435 p=1.220	manual	memory	1	0.000097
+exp9187	4.58623706e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9188	4.39794337e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9188	5.98766994e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.435 p=1.225	manual	memory	0	0.000097
+exp9189	4.39794337e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9190	1.14589077e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.435 p=1.230	manual	memory	0	0.000097
+exp9191	4.39794337e-29	0.000000	0.000000	discard	cycle 64 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9192	1.45282096e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.435 p=1.235	manual	memory	0	0.000097
+exp9193	1.36727475e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9194	3.09177766e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.435 p=1.240	manual	memory	0	0.000097
+exp9195	1.36727475e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9196	1.36727475e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9196	1.44100413e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.440 p=1.220	manual	memory	0	0.000097
+exp9197	6.14461376e-29	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9198	6.37553400e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.440 p=1.225	manual	memory	0	0.000097
+exp9199	6.14461376e-29	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9200	3.97076933e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.440 p=1.230	manual	memory	0	0.000097
+exp9201	6.14461376e-29	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9202	2.93640891e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.440 p=1.235	manual	memory	0	0.000097
+exp9203	1.75906666e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9204	1.75906666e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9204	1.05687316e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.440 p=1.240	manual	memory	0	0.000097
+exp9205	1.75906666e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9206	4.27929152e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.445 p=1.220	manual	memory	0	0.000097
+exp9207	1.11257917e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9208	2.60505091e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.445 p=1.225	manual	memory	0	0.000097
+exp9209	1.11257917e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9210	6.25686865e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.445 p=1.230	manual	memory	0	0.000097
+exp9211	1.11257917e-28	0.000000	0.000000	discard	cycle 64 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9212	8.58580947e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9212	1.56449888e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.445 p=1.235	manual	memory	0	0.000097
+exp9213	8.58580947e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9214	5.50597013e-17	0.070278	-0.000000	discard	Extreme u=0.2435 amp=0.445 p=1.240	manual	memory	0	0.000097
+exp9215	8.58580947e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	1	0.000000
+exp9216	5.41334575e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.435 p=1.220	manual	memory	0	0.000097
+exp9217	5.23962023e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9218	2.27014758e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.435 p=1.225	manual	memory	0	0.000097
+exp9219	5.23962023e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9220	3.51634874e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.435 p=1.230	manual	memory	1	0.000097
+exp9220	5.23962023e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	1	0.000000
+exp9221	4.03266298e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9222	2.22761230e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.435 p=1.235	manual	memory	0	0.000097
+exp9223	4.03266298e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	1	0.000000
+exp9224	4.08149721e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.435 p=1.240	manual	memory	1	0.000097
+exp9225	4.03266298e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9226	4.05824992e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.440 p=1.220	manual	memory	0	0.000097
+exp9227	4.80015937e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9228	1.44581225e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.440 p=1.225	manual	memory	1	0.000097
+exp9228	4.80015937e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	1	0.000000
+exp9229	4.80015937e-29	0.000000	0.000000	discard	cycle 65 u=0.0975	agent0	initial_cond	0	0.000000
+exp9229	6.91159813e-18	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.440 p=1.230	manual	memory	0	0.000097
+exp9230	2.68824537e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9231	2.07629367e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.440 p=1.235	manual	memory	1	0.000097
+exp9232	2.68824537e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9233	1.23796409e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.440 p=1.240	manual	memory	0	0.000097
+exp9234	2.68824537e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9235	1.99597850e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.445 p=1.220	manual	memory	1	0.000097
+exp9236	6.16758073e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	1	-0.000000
+exp9237	6.16758073e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9237	1.56878932e-17	0.070278	0.000000	discard	Extreme u=0.2440 amp=0.445 p=1.225	manual	memory	0	0.000097
+exp9238	6.16758073e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9239	1.60627669e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.445 p=1.230	manual	memory	1	0.000097
+exp9240	2.01926478e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	0.000000
+exp9241	4.49743901e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.445 p=1.235	manual	memory	0	0.000097
+exp9242	2.01926478e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	0.000000
+exp9243	4.18720421e-17	0.070278	-0.000000	discard	Extreme u=0.2440 amp=0.445 p=1.240	manual	memory	1	0.000097
+exp9244	2.01926478e-29	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	1	0.000000
+exp9245	1.30310780e-28	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9245	6.48426336e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.435 p=1.220	manual	memory	0	0.000097
+exp9246	1.30310780e-28	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9247	5.43946827e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.435 p=1.225	manual	memory	0	0.000097
+exp9248	1.30310780e-28	0.000000	0.000000	discard	cycle 65 u=0.0980	agent0	initial_cond	0	-0.000000
+exp9249	4.38556047e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.435 p=1.230	manual	memory	0	0.000097
+exp9250	5.45343271e-29	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	-0.000000
+exp9251	1.88726203e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.435 p=1.235	manual	memory	0	0.000097
+exp9252	5.45343271e-29	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	1	-0.000000
+exp9253	7.37427224e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.435 p=1.240	manual	memory	0	0.000097
+exp9253	5.45343271e-29	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	-0.000000
+exp9254	1.23429977e-28	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	0.000000
+exp9255	2.00047795e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.440 p=1.220	manual	memory	0	0.000097
+exp9256	1.23429977e-28	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	1	0.000000
+exp9257	4.73443624e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.440 p=1.225	manual	memory	0	0.000097
+exp9258	1.23429977e-28	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	0.000000
+exp9259	1.24498176e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.440 p=1.230	manual	memory	0	0.000097
+exp9260	1.88036672e-29	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	1	0.000000
+exp9261	2.60889839e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.440 p=1.235	manual	memory	0	0.000097
+exp9261	1.88036672e-29	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	0.000000
+exp9262	1.88036672e-29	0.000000	0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	0.000000
+exp9262	2.00031494e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.440 p=1.240	manual	memory	0	0.000097
+exp9263	1.91190259e-29	0.000000	-0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	1	0.000000
+exp9264	2.90029079e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.445 p=1.220	manual	memory	0	0.000097
+exp9265	1.91190259e-29	0.000000	-0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	0.000000
+exp9266	7.40943549e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.445 p=1.225	manual	memory	0	0.000097
+exp9267	1.91190259e-29	0.000000	-0.000000	discard	cycle 65 u=0.0982	agent0	initial_cond	0	0.000000
+exp9268	5.56458432e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.445 p=1.230	manual	memory	0	0.000097
+exp9269	6.13049994e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	0.000000
+exp9270	6.13049994e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	0.000000
+exp9270	1.87285362e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.445 p=1.235	manual	memory	0	0.000097
+exp9271	6.13049994e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	1	0.000000
+exp9272	2.50119374e-17	0.070278	-0.000000	discard	Extreme u=0.2445 amp=0.445 p=1.240	manual	memory	1	0.000097
+exp9273	5.49750971e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	0.000000
+exp9274	2.89676303e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.435 p=1.220	manual	memory	0	0.000097
+exp9275	5.49750971e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	0.000000
+exp9276	4.98493354e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.435 p=1.225	manual	memory	1	0.000097
+exp9277	5.49750971e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	0.000000
+exp9278	4.15642452e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	0.000000
+exp9278	1.30045584e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.435 p=1.230	manual	memory	0	0.000097
+exp9279	4.15642452e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	1	0.000000
+exp9280	6.17347326e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.435 p=1.235	manual	memory	1	0.000097
+exp9281	4.15642452e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	0.000000
+exp9282	1.24666070e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.435 p=1.240	manual	memory	0	0.000097
+exp9283	2.19292611e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	-0.000000
+exp9284	2.48986937e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.440 p=1.220	manual	memory	1	0.000097
+exp9285	2.19292611e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	1	-0.000000
+exp9286	6.65175815e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.440 p=1.225	manual	memory	0	0.000097
+exp9286	2.19292611e-29	0.000000	0.000000	discard	cycle 65 u=0.0985	agent0	initial_cond	0	-0.000000
+exp9287	4.22491788e-29	0.000000	0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	1	-0.000000
+exp9288	2.66200809e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.440 p=1.230	manual	memory	1	0.000097
+exp9289	4.22491788e-29	0.000000	0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	-0.000000
+exp9290	3.58652726e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.440 p=1.235	manual	memory	0	0.000097
+exp9291	4.22491788e-29	0.000000	0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	-0.000000
+exp9292	3.62604279e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.440 p=1.240	manual	memory	1	0.000097
+exp9293	3.22245147e-29	0.000000	0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	1	0.000000
+exp9294	5.81212684e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.445 p=1.220	manual	memory	0	0.000097
+exp9294	3.22245147e-29	0.000000	0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	0.000000
+exp9295	3.22245147e-29	0.000000	0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	0.000000
+exp9295	1.28433691e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.445 p=1.225	manual	memory	1	0.000097
+exp9296	4.50941488e-29	0.000000	-0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	0.000000
+exp9297	4.96651047e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.445 p=1.230	manual	memory	0	0.000097
+exp9298	4.50941488e-29	0.000000	-0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	0.000000
+exp9299	2.19858791e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.445 p=1.235	manual	memory	1	0.000097
+exp9300	4.50941488e-29	0.000000	-0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	1	0.000000
+exp9301	2.66111562e-17	0.070278	-0.000000	discard	Extreme u=0.2450 amp=0.445 p=1.240	manual	memory	0	0.000097
+exp9301	4.88330883e-29	0.000000	-0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	0.000000
+exp9302	4.88330883e-29	0.000000	-0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	0.000000
+exp9302	4.90618890e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.435 p=1.220	manual	memory	0	0.000097
+exp9303	4.88330883e-29	0.000000	-0.000000	discard	cycle 65 u=0.0990	agent0	initial_cond	0	0.000000
+exp9304	2.47926655e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.435 p=1.225	manual	memory	0	0.000097
+exp9305	5.74085541e-29	0.000000	-0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	0.000000
+exp9306	3.86322615e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.435 p=1.230	manual	memory	0	0.000097
+exp9307	5.74085541e-29	0.000000	-0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	1	0.000000
+exp9308	2.12335517e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.435 p=1.235	manual	memory	0	0.000097
+exp9308	5.74085541e-29	0.000000	-0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	0.000000
+exp9309	1.54984578e-28	0.000000	0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9309	7.58821485e-18	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.435 p=1.240	manual	memory	0	0.000097
+exp9310	1.54984578e-28	0.000000	0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	1	-0.000000
+exp9311	4.78101137e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.440 p=1.220	manual	memory	0	0.000097
+exp9312	1.54984578e-28	0.000000	0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9313	4.77880002e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.440 p=1.225	manual	memory	0	0.000097
+exp9314	1.60328418e-29	0.000000	-0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	1	-0.000000
+exp9315	5.10531628e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.440 p=1.230	manual	memory	0	0.000097
+exp9316	1.60328418e-29	0.000000	-0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9317	1.60328418e-29	0.000000	-0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	-0.000000
+exp9317	1.35993503e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.440 p=1.235	manual	memory	0	0.000097
+exp9318	7.34590618e-29	0.000000	0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	1	0.000000
+exp9319	5.15092480e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.440 p=1.240	manual	memory	0	0.000097
+exp9320	7.34590618e-29	0.000000	0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	0.000000
+exp9321	4.92551438e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.445 p=1.220	manual	memory	0	0.000097
+exp9322	7.34590618e-29	0.000000	0.000000	discard	cycle 65 u=0.0995	agent0	initial_cond	0	0.000000
+exp9323	7.28596963e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.445 p=1.225	manual	memory	0	0.000097
+exp9324	4.46546993e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9325	4.46546993e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9325	4.90276230e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.445 p=1.230	manual	memory	0	0.000097
+exp9326	4.46546993e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9327	1.94754772e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.445 p=1.235	manual	memory	1	0.000097
+exp9328	4.08106752e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9329	1.04788469e-17	0.070278	-0.000000	discard	Extreme u=0.2455 amp=0.445 p=1.240	manual	memory	0	0.000097
+exp9330	4.08106752e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9331	4.08106752e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9332	4.58623706e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9333	4.58623706e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9334	4.58623706e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9335	4.39794337e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9336	4.39794337e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	1	-0.000000
+exp9337	4.39794337e-29	0.000000	0.000000	discard	cycle 65 u=0.1000	agent0	initial_cond	0	-0.000000
+exp9338	1.36727475e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9339	1.36727475e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9340	1.36727475e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9341	6.14461376e-29	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9342	6.14461376e-29	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9343	6.14461376e-29	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9344	1.75906666e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9345	1.75906666e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9346	1.75906666e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	1	-0.000000
+exp9347	1.11257917e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9348	1.11257917e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9349	1.11257917e-28	0.000000	0.000000	discard	cycle 65 u=0.1050	agent0	initial_cond	0	-0.000000
+exp9350	8.58580947e-29	0.000000	0.000000	discard	cycle 66 u=0.0975	agent0	initial_cond	0	0.000000
+exp9351	8.58580947e-29	0.000000	0.000000	discard	cycle 66 u=0.0975	agent0	initial_cond	1	0.000000
