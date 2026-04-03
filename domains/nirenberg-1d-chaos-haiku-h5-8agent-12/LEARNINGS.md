@@ -415,3 +415,10 @@
 **Key achievement:** Discovered that u_offset=0.4214 with amp=0.0 achieves 1.59e-23, 13 orders of magnitude better than generic attractor (1e-12 scipy) and competitive with agent1's amplitude-tuned 2.11e-24. This suggests multiple heteroclinic structures in phase space at different offsets, not just one.
 
 **Next frontier:** Test amplitude=0.285 at u_offset=0.4214 to see if agent1's 9.38e-25 record can be surpassed by combining fine-swept offset with optimized amplitude.
+
+**agent7 — Bifurcation is co-dimension-2 pitchfork** (exp332-339)
+- u_offset* ≈ 0.460 is a pitchfork point, not a simple fold
+- Trivial branch stable to u_offset* only under zero perturbation
+- Non-zero amplitude reveals negative branch in same region
+- Phase transition at u_offset* is abrupt but smooth in residual space near exact point
+- This explains why previous agents oscillated: minor perturbations flip attractors
