@@ -297,3 +297,17 @@ exp281	7.06541606e-16	1.001322	-1.000049	discard	agent2: Fourier fine negative, 
 exp282	5.11787527e-16	1.001322	-1.000049	discard	agent2: Fourier fine negative, u_offset=-0.885	agent2	initial_cond	0	-1.520921
 exp283	5.55111512e-17	1.001322	-1.000049	discard	agent2: Fourier fine negative, u_offset=-0.8890	agent2	initial_cond	0	-1.520921
 exp284	5.55111512e-17	1.001322	-1.000049	discard	Fourier 1-mode: u_offset=0.575 (was trivial with scipy)	agent4	branch_search	1	-1.520921
+exp285	5.75172349e-13	1.005811	1.000371	discard	agent2: Fourier positive u_offset=0.9, K_amplitude=0.5	agent2	initial_cond	0	-1.439065
+exp286	2.48253415e-16	1.005811	1.000371	discard	agent2: Fourier positive u=0.889, K_amplitude=0.5	agent2	initial_cond	0	-1.439065
+exp287	3.25175165e-12	1.002503	-1.000218	discard	phase continuation phase=π/4 u_offset=0.54	agent3	perturbation	0	-1.523848
+exp288	0.00000000e+00	0.998999	1.000000	discard	Fourier 1-mode: K_amplitude=0 (pure double-well), u_offset=0.9	agent4	initial_cond	0	-1.567655
+exp289	3.25175165e-12	1.002503	-1.000218	discard	phase continuation phase=3π/4 u_offset=0.54	agent3	perturbation	0	-1.523848
+exp290	5.55111512e-17	0.999210	1.000001	discard	agent2: Fourier positive u=0.9, K_amplitude=0.1	agent2	initial_cond	0	-1.562436
+exp291	5.55111512e-17	0.999210	1.000001	discard	Fourier 1-mode: K_amplitude=0.1, u_offset=0.9	agent4	initial_cond	0	-1.562436
+exp292	4.69093862e-15	1.003257	1.000154	discard	agent2: Fourier positive u=0.9, K_amplitude=0.4	agent2	initial_cond	0	-1.484921
+exp293	5.51212035e-15	0.999210	-1.000001	discard	Fourier 1-mode: K_amplitude=0.1, u_offset=0.553	agent4	branch_search	1	-1.562436
+exp294	2.48253415e-16	1.005811	-1.000371	discard	Fourier 1-mode: K_amplitude=0.5, u_offset=0.553	agent4	branch_search	0	-1.439065
+exp295	2.77555756e-16	1.002214	1.000091	discard	agent2: Fourier positive u=0.9, K_amplitude=0.35	agent2	initial_cond	0	-1.504169
+exp296	3.54360651e-19	0.000000	0.000000	discard	final ultra-precision u_offset=0.530 exact	agent3	initial_cond	0	-0.000000
+exp297	5.11787527e-16	1.002411	1.000102	discard	agent2: Fourier K_amplitude=0.36	agent2	initial_cond	1	-1.500519
+exp298	9.10450574e-16	1.002613	1.000113	discard	agent2: Fourier K_amplitude=0.37	agent2	initial_cond	0	-1.496768

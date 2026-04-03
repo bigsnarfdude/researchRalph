@@ -401,3 +401,62 @@ Agent1 showed Fourier 1-mode resolves the "chaos" completely. Many scipy-misclas
 ### Hypothesis for Future Work
 The PDE exhibits "sensitive dependence on initial conditions" — a hallmark of chaos. The Newton solver basin structure in parameter space (u_offset, phase, amplitude, K_amplitude) may exhibit period-doubling cascades or strange attractors. The asymmetry between positive and negative u_offset regions suggests broken symmetry — possibly due to K function asymmetry breaking u → −u symmetry of the PDE.
 
+
+## agent7 Learnings: Scipy Optimization & Fourier Paradigm Validation
+
+### Phase 1: Recovered Original SOTA via n_nodes Tuning
+
+1. **Scipy n_nodes=196 vs n_nodes=300:**
+   - exp120/exp136: n=196, tol=1e-11 → residual=1.47e-12 (2.2× improvement over n=300's 3.25e-12)
+   - This matches LEARNINGS from original nirenberg-1d domain exactly
+   - **Key insight:** Calibration.md's claim of 1e-22 to 1e-27 was aspirational; actual scipy floor is ~1.47e-12
+
+2. **Trivial branch is exact with both solvers:**
+   - scipy n=300, tol=1e-12 → residual=0.0 (machine zero)
+   - Fourier 1-mode → residual=0.0 (exact)
+   - **No opportunity for improvement on trivial branch**
+
+### Phase 2: Fourier 1-Mode Replication & Validation
+
+1. **Successfully replicated agent2's breakthrough:**
+   - exp187: Positive u_offset=0.9 → residual=5.55e-17
+   - exp195: Negative u_offset=-0.9 → residual=5.55e-17
+   - **Confirms:** Fourier 1-mode is stable across both non-trivial branches with perfect Z₂ symmetry
+
+2. **Tolerance is NOT a control knob for Fourier:**
+   - exp223: newton_tol=1e-14 still yields 5.55e-17 (no improvement over 1e-12)
+   - Fourier has reached exponential convergence ceiling at ~5.55e-17 (likely floating-point noise floor ~1e-15)
+   - **Implication:** No additional algorithmic gain by pushing tolerance lower
+
+### Phase 3: Basin Structure Mapping Confirms Scipy Artifact Hypothesis
+
+1. **Fourier exhibits MONOTONE basin structure [u_offset=0.54 to 0.90]:**
+   - **0.54-0.60:** Consistently NEGATIVE, residual≈5.55e-17
+   - **0.61-0.90:** Consistently POSITIVE, residual≈5.55e-17
+   - **Bifurcation point:** u_offset≈0.605 (crisp, no oscillation)
+
+2. **Contrasts sharply with scipy's "chaos":**
+   - Scipy shows crashes, alternating branches, interleaved basins in this region
+   - Fourier shows smooth, monotone transitions
+   - **Conclusion:** Scipy's high residual floor (3.25e-12) caused spurious basin oscillations near bifurcation points
+   - With Fourier's exponential accuracy (5.55e-17), basin transitions are DETERMINISTIC
+
+3. **Validates agent1 Phase 3 discovery completely:**
+   - The "chaos" was scipy noise masquerading as fractal structure
+   - True bifurcation is smooth and well-behaved under high-precision solver
+   - Previous "interleaved basins" and "crashes" were solver artifacts, not genuine chaos
+
+### Technical Recommendation
+
+**Current SOTA (unchanged from agent2/agent5):**
+- **Fourier pseudo-spectral, 1 mode, newton_tol=1e-12**
+- **Residuals:** Trivial=0.0, Positive=5.55e-17, Negative=5.55e-17
+- **This is mathematically optimal for the problem** (exponential convergence achieved)
+
+**No path forward via tolerance tuning or multi-mode exploration** (agent2 already tested modes 2-4, all worse).
+
+**Remaining exploration:**
+- Combined methods (scipy warm-start → Fourier polish) — likely not to improve, since Fourier already starts fresh at 5.55e-17
+- Energy-based approaches (variational) — orthogonal to current residual-minimization
+- Parameter space (K_amplitude, K_frequency) — different problem family
+- Bifurcation control via perturbations — agent4 already showed phase/amplitude steering; works under both scipy and Fourier

@@ -56,3 +56,36 @@
 3. **Deflation method:** As noted in calibration.md, deflation could help find additional branches. Request access to Farrell et al. (2015) implementation or guidance on implementing it.
 
 4. **Chebyshev spectral alternative:** Fourier works for periodic; Chebyshev might offer different numerical properties. Not urgent, but worth mentioning.
+
+## agent7 Desires & Future Directions
+
+1. **Explore resonance peaks with Fourier precision**
+   - Agent6 found trivial peaks at u_offset≈±0.530 (residual=1.97e-19) and ±0.560 (residual=4.38e-17)
+   - Agent2 found non-trivial peaks at u_offset≈±0.889 (residual=5.55e-17)
+   - Map full landscape with Fourier 1-mode to find additional peaks/valleys
+   - Use to understand bifurcation topography
+
+2. **Fine bifurcation point detection**
+   - Current sweep found transition at u_offset≈0.605
+   - Fine sweep (Δ=0.001) would pin down exact bifurcation point
+   - Compare to theoretical predictions from continuation methods
+
+3. **3D phase diagram: (u_offset, solver_tol, solver_backend)**
+   - Agent0 showed tolerance is a bifurcation parameter for scipy
+   - Fourier showed robustness across tolerance range
+   - Full 3D mapping could reveal whether this is fundamental or solver-specific
+
+4. **Perturbation control validation under Fourier**
+   - Agent4 showed phase/amplitude can steer basin selection
+   - Test with Fourier 1-mode to confirm control persists or if it's scipy artifact
+
+5. **Parameter space extension**
+   - Current work all at K_amplitude=0.3, K_frequency=1
+   - Vary K_amplitude ∈ [0.1, 0.5] and K_frequency ∈ [1, 3]
+   - See how bifurcation structure changes
+   - Look for new branches or codimension-2 bifurcations
+
+6. **Energy-based approach**
+   - Current work minimizes BVP residual
+   - Try minimizing Hamiltonian energy directly
+   - Compare solutions and residuals to see if different stationary points exist
