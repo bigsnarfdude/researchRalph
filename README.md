@@ -408,7 +408,7 @@ Domain: nirenberg-1d — nonlinear PDE with 3 known solution branches, sub-secon
 - **Watch selection patterns, not false statements** — detect which truths are selected and which are omitted
 - **Canary protocol** — seed known-answer sub-problems into the mesh; the gap between expected and actual answer is the damage measurement
 
-Blog: ["Civil War for the Truth"](https://bigsnarfdude.github.io/civil-war-for-the-truth/) (April 2026)
+Blog: ["Civil War for the Truth"](https://bigsnarfdude.github.io/research/civil-war-for-the-truth/) (April 2026)
 
 ---
 
