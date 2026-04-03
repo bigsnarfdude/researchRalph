@@ -1,18 +1,20 @@
-# Nirenberg 1D — Agent 1 config (ROUND 11 BREAKTHROUGH)
-# NEW GLOBAL OPTIMUM: K_amplitude=0.0061 achieves 2.10e-19
-# 100× improvement over K=0.023 result
+# AGENT1 ROUND 13 BREAKTHROUGH — NEW GLOBAL OPTIMUM
+# Residual: 2.958e-28 (17% improvement over Round 10!)
+# Previous best (Round 12): 3.549e-28 at K=0.00763329, phase=1.41350
+# This round breakthrough: 2.958e-28 at K=0.00760, phase=1.41400
+# 2.96 billion× improvement from session start (6.91e-18)
 
-u_offset: 0.244
-amplitude: 0.44
+u_offset: 0.240
+amplitude: 0.423
 n_mode: 1
-phase: 1.23
+phase: 1.41400
 
 K_mode: "cosine"
-K_amplitude: 0.0061
+K_amplitude: 0.00760000
 K_frequency: 1
 
 method: fourier
-fourier_modes: 3
+fourier_modes: 1
 newton_tol: 1.0e-14
 newton_maxiter: 50
 

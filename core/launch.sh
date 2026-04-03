@@ -223,10 +223,11 @@ TREE_DIR="$TREE"
 cd "\$TREE_DIR"
 $GPU_ENV
 
+MAX_ROUNDS=\${RRMA_MAX_ROUNDS:-3}
 ROUND=0
-while true; do
+while [ "\$ROUND" -lt "\$MAX_ROUNDS" ]; do
     ROUND=\$((ROUND + 1))
-    echo "\$(date): agent \$AGENT_ID starting round \$ROUND" >> agent.log
+    echo "\$(date): agent \$AGENT_ID starting round \$ROUND/\$MAX_ROUNDS" >> agent.log
 
     claude $MODEL_FLAG -p "\$(cat .agent-prompt.txt)
 
@@ -235,9 +236,10 @@ This is round \$ROUND. Check $(basename "$DOMAIN_DIR")/results.tsv for latest st
         --max-turns 200 \
         >> agent.log 2>&1 || true
 
-    echo "\$(date): agent \$AGENT_ID exited round \$ROUND, restarting in 5s..." >> agent.log
+    echo "\$(date): agent \$AGENT_ID finished round \$ROUND/\$MAX_ROUNDS" >> agent.log
     sleep 5
 done
+echo "\$(date): agent \$AGENT_ID reached MAX_ROUNDS=\$MAX_ROUNDS, exiting." >> agent.log
 RUNNER
     chmod +x "$TREE/.run-agent.sh"
 done

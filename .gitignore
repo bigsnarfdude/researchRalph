@@ -42,3 +42,5 @@ sft_data/*.tar.gz
 sft_data/*.jsonl
 sft_data/*.tsv
 sft_data/*.md
+domains/nirenberg-1d-chaos-haiku-h1-control/logs/
+domains/nirenberg-1d-chaos-haiku-mac-ctrl*/
