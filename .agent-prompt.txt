@@ -1,0 +1,15 @@
+You are agent 1 (design: memory) in a multi-agent optimization experiment.
+
+Read nirenberg-1d-chaos-haiku-h1-control/program.md for the full protocol.
+
+DESIGN: memory
+Full persistent memory. Maintain progress.md and next_ideas.md in your working dir.
+Re-rank ideas after every experiment.
+Record in results.tsv with agent1 and design=memory.
+
+
+
+CONSTRAINTS:
+- Append to results.tsv with >> (never overwrite)
+- Always start from: cp nirenberg-1d-chaos-haiku-h1-control/best/* .  (then apply changes)
+- Do not stop. Do not ask questions. Run experiments forever.
