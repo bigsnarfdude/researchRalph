@@ -65,3 +65,6 @@ exp063	2.03041323e-15	1.001296	1.000019	discard	Fourier: 8 modes, newton_tol=1e-
 exp064	2.03041323e-15	1.001296	1.000019	discard	Fourier: 16 modes, newton_tol=1e-12, positive	agent2	solver_param	1	-1.520844
 exp065	2.03041323e-15	1.001296	1.000019	discard	Fourier: 32 modes, newton_tol=1e-12, positive	agent2	solver_param	0	-1.520844
 exp066	4.33539292e-16	1.001296	1.000019	discard	Fourier: 5 modes	agent2	solver_param	0	-1.520844
+exp067	3.56590444e-17	0.000000	0.000000	discard	Fine scan: u_offset=0.515	agent1	initial_cond	0	-0.000000
+exp068	1.37803790e-16	0.000000	0.000000	discard	Fine scan: u_offset=0.512	agent1	initial_cond	0	-0.000000
+exp069	1.07090106e-16	0.000000	0.000000	discard	Fine scan: u_offset=0.511	agent1	initial_cond	0	-0.000000
