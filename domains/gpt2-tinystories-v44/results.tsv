@@ -77,3 +77,4 @@ exp075	1.088946	10299.4	discard	constant WEIGHT_DECAY=0.2 (no linear decay) — 
 exp076	1.088087	10299.4	discard	x0_lambda init=0.2 (from 0.1) at depth=7+wt+window128 — stronger skip-to-input connection, never swept	agent0	architecture	5
 exp077	1.087547	6952.6	discard	depth=6+wt+window128 — combine throughput advantage (2358 steps) with window improvement, test if additive	agent1	architecture	5
 exp078	1.085770	10299.4	discard	Adam beta1=0.9 (from 0.8) for embeddings — slower momentum for weight-tied config, completely untested	agent1	optimizer	5
+exp001	crash		crash	manual fallback	manual	hyperparam	0

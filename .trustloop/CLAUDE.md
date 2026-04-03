@@ -18,28 +18,42 @@ A trace store is loaded with structured data from an RRMA (Recursive Research Mu
 4. **Flag anomalies.** Stagnation, gaming, circular reasoning, wasted work.
 5. **Distinguish correlation from causation.** Reading the blackboard before succeeding doesn't mean the blackboard caused the success.
 
-## Your Tools
+## Your Tools (v4.9 unified API)
 
 You have native MCP tools — call them directly (no bash needed):
 
+**Domain & run control:**
 | Tool | Purpose |
 |------|---------|
-| `trustloop_status` | Run overview: agents, sessions, steps, scores |
-| `trustloop_agent(agent_id, mode)` | Agent detail: `summary`, `thinking`, or `timeline` |
-| `trustloop_search(query)` | Full-text search across all traces |
-| `trustloop_artifact(artifact_type)` | Shared artifact content (blackboard, results, etc.) |
-| `trustloop_influences(agent_id?)` | Cross-agent dependency edges |
-| `trustloop_step(trace_id, step_index)` | Raw step data for a specific moment |
-| `trustloop_index` | Compact text summary of the entire run |
+| `domains()` | List all RRMA domains with metadata |
+| `run_status(domain?)` | Active sessions + latest scores |
+| `artifact(domain, type)` | Raw artifact content (blackboard, program, etc.) |
+| `artifacts_list(domain)` | All artifacts with sizes and modification times |
+
+**Report hierarchy (start here):**
+| Tool | Purpose |
+|------|---------|
+| `report_status(domain)` | 5-line health check — stop or continue? |
+| `report_summary(domain)` | Intent vs outcome, agent efficiency, key insights |
+| `report_experiment(domain, exp_id)` | Single experiment tombstone |
+| `report_diagnosis(domain)` | Full report: action items, gardener checks, evidence |
+
+**Trace forensics (requires traces loaded):**
+| Tool | Purpose |
+|------|---------|
+| `traces_status()` | Overview of loaded trace data |
+| `traces_agent(agent_id, mode)` | Agent detail: `summary`, `thinking`, or `timeline` |
+| `traces_search(query)` | Full-text search across all traces |
+| `traces_influences(agent_id?)` | Cross-agent dependency edges |
+| `traces_step(trace_id, step_index)` | Raw step data for a specific moment |
+| `traces_index()` | Compact forensic index of the entire run |
 
 ## Typical Workflow
 
-1. Call `trustloop_status` to see what's loaded
-2. Call `trustloop_index` to get the forensic overview
-3. Search for keywords related to the user's question
-4. Pull agent thinking blocks for specific agents
-5. Check artifacts for shared state
-6. Synthesize findings with citations
+1. Call `report_status(domain)` — is anything broken?
+2. Call `report_summary(domain)` — what's the shape of the run?
+3. Call `report_diagnosis(domain)` — what needs fixing?
+4. If traces loaded: `traces_search(query)` to dig into agent reasoning
 
 ## Do NOT
 

@@ -2,8 +2,9 @@
   "mcpServers": {
     "trustloop": {
       "command": "python3",
-      "args": ["tools/trustloop_mcp.py"],
+      "args": ["tools/trustloop_api.py"],
       "env": {
+        "RRMA_ROOT": ".",
         "TRUSTLOOP_TRACES": "/tmp/rrma_traces.jsonl"
       }
     }

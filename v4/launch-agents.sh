@@ -75,10 +75,19 @@ for i in $(seq 0 $((NUM_AGENTS - 1))); do
     # Seed from best/train.py if available, else domain root train.py
     if [ -f "$DOMAIN_DIR/best/train.py" ]; then
         cp "$DOMAIN_DIR/best/train.py" "$WS/train.py"
+        echo "Workspace: workspace/agent$i/train.py ready"
     elif [ -f "$DOMAIN_DIR/train.py" ]; then
         cp "$DOMAIN_DIR/train.py" "$WS/train.py"
+        echo "Workspace: workspace/agent$i/train.py ready"
     fi
-    echo "Workspace: workspace/agent$i/train.py ready"
+    # Config-file domains (e.g. nirenberg-1d): seed config.yaml instead
+    if [ -f "$DOMAIN_DIR/best/config.yaml" ]; then
+        cp "$DOMAIN_DIR/best/config.yaml" "$WS/config.yaml"
+        echo "Workspace: workspace/agent$i/config.yaml ready"
+    elif [ -f "$DOMAIN_DIR/config.yaml" ]; then
+        cp "$DOMAIN_DIR/config.yaml" "$WS/config.yaml"
+        echo "Workspace: workspace/agent$i/config.yaml ready"
+    fi
 done
 
 echo "Launching..."
@@ -145,14 +154,18 @@ If stoplight.md does not exist, read blackboard.md instead.
 
 ## YOUR WORKSPACE (v4.7 — no more race conditions)
 Your private workspace is: workspace/agent$i/
-- Copy best/train.py → workspace/agent$i/train.py at the start of each experiment cycle
-- Edit ONLY workspace/agent$i/train.py — never edit train.py in the domain root or best/
-- run.sh automatically picks up workspace/agent$i/train.py when you run it
+- For train.py domains: cp best/train.py → workspace/agent$i/train.py
+- For config.yaml domains: cp best/config.yaml → workspace/agent$i/config.yaml
+- Edit ONLY your workspace copy — never edit files in the domain root or best/ directly
+- run.sh automatically picks up your workspace file via \$CLAUDE_AGENT_ID
 - Other agents cannot see or modify your workspace
 
 Workflow per experiment:
+  # train.py domains:
   cp best/train.py workspace/agent$i/train.py
-  # make your ONE change to workspace/agent$i/train.py
+  # config.yaml domains:
+  cp best/config.yaml workspace/agent$i/config.yaml
+  # make your ONE change, then:
   bash run.sh <name> "description" <design_type>
 
 Then start experimenting. Write all findings to blackboard.md. Periodically re-read stoplight.md and recent_experiments.md — they update during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \

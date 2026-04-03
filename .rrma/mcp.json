@@ -1,10 +1,11 @@
 {
   "mcpServers": {
-    "researchralph": {
+    "trustloop": {
       "command": "python3",
-      "args": ["tools/rrma_mcp.py"],
+      "args": ["tools/trustloop_api.py"],
       "env": {
-        "RRMA_ROOT": "."
+        "RRMA_ROOT": ".",
+        "TRUSTLOOP_TRACES": "/tmp/rrma_traces.jsonl"
       }
     }
   }

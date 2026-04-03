@@ -814,28 +814,28 @@ def get_memory(
 
 
 @app.post("/api/operator/claim")
-def operator_claim(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db)):
+def operator_claim(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db), agent: dict = Depends(auth_agent)):
     msg = req.message or req.content
     insert_event(db, "OPERATOR", "OPERATOR", {"message": msg, "subtype": "claim"}, tags=["operator"])
     return {"ok": True, "message": msg}
 
 
 @app.post("/api/operator/ban")
-def operator_ban(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db)):
+def operator_ban(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db), agent: dict = Depends(auth_agent)):
     content = req.content or req.message
     insert_event(db, "FAILURE", "OPERATOR", {"content": f"[OPERATOR BAN] {content}"}, tags=["operator", "ban"])
     return {"ok": True}
 
 
 @app.post("/api/operator/directive")
-def operator_directive(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db)):
+def operator_directive(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db), agent: dict = Depends(auth_agent)):
     msg = req.message or req.content
     insert_event(db, "OPERATOR", "OPERATOR", {"message": msg, "target": req.target, "subtype": "directive", "priority": "high"}, tags=["operator", "directive"])
     return {"ok": True}
 
 
 @app.post("/api/operator/strategy")
-def operator_strategy(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db)):
+def operator_strategy(req: OperatorRequest, db: sqlite3.Connection = Depends(get_db), agent: dict = Depends(auth_agent)):
     content = req.content or req.message
     insert_event(db, "OPERATOR", "OPERATOR", {"message": f"[STRATEGY] {content}", "subtype": "strategy", "priority": "high"}, tags=["operator", "strategy"])
     return {"ok": True}
@@ -1460,7 +1460,7 @@ def hai_card_markdown(
 
 
 @app.get("/dashboard", response_class=HTMLResponse)
-def dashboard(db: sqlite3.Connection = Depends(get_db)):
+def dashboard(db: sqlite3.Connection = Depends(get_db), agent: dict = Depends(auth_agent)):
     total_agents = db.execute("SELECT COUNT(*) FROM agents").fetchone()[0]
     total_events = db.execute("SELECT COUNT(*) FROM events").fetchone()[0]
     best_row = db.execute(
@@ -1500,7 +1500,7 @@ def dashboard(db: sqlite3.Connection = Depends(get_db)):
             content = esc(str(p)[:100])
 
         reply_badge = f' <span class="reply-badge">reply to #{e["reply_to"]}</span>' if e["reply_to"] else ""
-        tags_html = "".join(f' <span class="tag">#{t}</span>' for t in e.get("tags", []))
+        tags_html = "".join(f' <span class="tag">#{esc(t)}</span>' for t in e.get("tags", []))
         firehose_html += f'<div class="event" data-type="{etype.lower()}" id="event-{e["id"]}"><span class="type-badge {etype.lower()}">{etype}</span> <span class="agent-tag">{agent}</span>{platform_tag} <span class="dim">{when}</span>{reply_badge}{tags_html}<div class="event-content">{content}</div></div>\n'
 
     # ── Column 2: Results (by score) ──
@@ -1560,7 +1560,7 @@ def dashboard(db: sqlite3.Connection = Depends(get_db)):
         p = e["payload"]
         msg = esc(p.get("message", "")).replace("\n", "<br>")
         when = time_ago(e["created_at"])
-        tags_html = "".join(f' <span class="tag">#{t}</span>' for t in e.get("tags", []))
+        tags_html = "".join(f' <span class="tag">#{esc(t)}</span>' for t in e.get("tags", []))
         ops_html += f'<div class="bb-msg operator"><span class="dim">{when}</span>{tags_html}<div>{msg}</div></div>\n'
     if not ops_html:
         ops_html = '<p class="dim">No operator messages</p>'

@@ -6,16 +6,26 @@
 #
 # Usage: bash launch-agents-chaos-v2.sh <domain-dir> <num-agents> <chaos-ids> [max-turns] [meta-interval]
 #
+# Set RRMA_MODEL env var to override model (default: uses global claude setting)
+#   RRMA_MODEL=haiku bash launch-agents-chaos-v2.sh ...
+#
 # Examples:
 #   bash launch-agents-chaos-v2.sh domains/nirenberg-1d-chaos-r3 4 "2" 50 5       # 1/4 chaos
 #   bash launch-agents-chaos-v2.sh domains/nirenberg-1d-chaos-r4 4 "2,3" 50 5     # 2/4 chaos
 #   bash launch-agents-chaos-v2.sh domains/nirenberg-1d-chaos-r6 8 "2,5,7" 50 5   # 3/8 chaos
+#   RRMA_MODEL=haiku bash launch-agents-chaos-v2.sh domains/nirenberg-1d-chaos-haiku 2 "1" 50 5  # haiku
 
 DOMAIN_DIR="${1:?Usage: launch-agents-chaos-v2.sh <domain> <num-agents> <chaos-ids> [max-turns] [meta-interval]}"
 NUM_AGENTS="${2:?Specify number of agents}"
 CHAOS_IDS="${3:?Specify comma-separated chaos agent IDs (e.g. '1' or '2,5,7')}"
 MAX_TURNS="${4:-50}"
 META_INTERVAL="${5:-30}"
+
+# Model override (e.g. RRMA_MODEL=haiku or RRMA_MODEL=sonnet)
+MODEL_FLAG=""
+if [ -n "$RRMA_MODEL" ]; then
+    MODEL_FLAG="--model $RRMA_MODEL"
+fi
 
 DOMAIN_DIR="$(cd "$DOMAIN_DIR" && pwd)"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -27,11 +37,8 @@ CLAUDE_BIN="$(command -v claude)"
 # Parse chaos IDs into array
 IFS=',' read -ra CHAOS_ARRAY <<< "$CHAOS_IDS"
 
-# Build lookup set
-declare -A IS_CHAOS
-for cid in "${CHAOS_ARRAY[@]}"; do
-    IS_CHAOS[$cid]=1
-done
+# Build lookup string (bash 3.2 compatible — no associative arrays on macOS)
+CHAOS_LOOKUP=",${CHAOS_IDS},"
 
 # Load chaos prompt from domain
 CHAOS_PROMPT_FILE="$DOMAIN_DIR/chaos_prompt.md"
@@ -44,6 +51,7 @@ CHAOS_PROMPT="$(cat "$CHAOS_PROMPT_FILE")"
 
 echo "=== CHAOS AGENT EXPERIMENT v2 ==="
 echo "Domain: $DOMAIN_DIR"
+echo "Model: ${RRMA_MODEL:-default (global setting)}"
 echo "Workers: $NUM_AGENTS"
 echo "Chaos agents: $CHAOS_IDS (${#CHAOS_ARRAY[@]}/)"
 echo "Max turns: $MAX_TURNS"
@@ -128,10 +136,10 @@ except: pass
 " 2>/dev/null)
     fi
 
-    # Determine if this agent is chaos
+    # Determine if this agent is chaos (bash 3.2 compatible)
     AGENT_EXTRA=""
     AGENT_ROLE="HONEST"
-    if [ -n "${IS_CHAOS[$i]+x}" ]; then
+    if [[ "$CHAOS_LOOKUP" == *",$i,"* ]]; then
         AGENT_EXTRA="$CHAOS_PROMPT"
         AGENT_ROLE="CHAOS"
     fi
@@ -141,7 +149,7 @@ except: pass
         cd $DOMAIN_DIR
         export AGENT_ID=agent$i
         export CLAUDE_AGENT_ID=agent$i
-        claude --output-format stream-json --verbose \
+        claude $MODEL_FLAG --output-format stream-json --verbose \
             --dangerously-skip-permissions \
             --max-turns $MAX_TURNS \
             -p 'You are agent$i. Read these files in order:

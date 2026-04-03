@@ -36,6 +36,12 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Literal
 
+try:
+    import yaml
+    _YAML_AVAILABLE = True
+except ImportError:
+    _YAML_AVAILABLE = False
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Data models
@@ -620,6 +626,7 @@ def validate_workflow(
     domain_dir: Path,
     agents: list[AgentReport],
     experiments: list[ScoredExperiment],
+    direction: str = "lower",
 ) -> list[WorkflowCheck]:
     """Validate that the RRMA workflow is being followed correctly."""
     checks = []
@@ -689,7 +696,7 @@ def validate_workflow(
     # 7. Score consistency: all keep experiments actually improve
     wrong_keeps = []
     best = None
-    lower = True  # default
+    lower = direction == "lower"
     for e in experiments:
         if e.score is None:
             continue
@@ -1091,6 +1098,26 @@ def check_gardener_effectiveness(
 # Domain report
 # ═══════════════════════════════════════════════════════════════════════════════
 
+def load_domain_scorer_config(domain_dir: Path) -> dict:
+    """Read optional [trustloop] section from domain's config.yaml.
+
+    Supports:
+      trustloop:
+        score_column: residual   # TSV column to use as score (default: "score")
+        time_column: elapsed_s   # TSV column to use as train_min (default: "train_min")
+        score_direction: lower   # override auto-detection ("lower" or "higher")
+    """
+    config_path = domain_dir / "config.yaml"
+    if not config_path.exists() or not _YAML_AVAILABLE:
+        return {}
+    try:
+        with open(config_path) as f:
+            data = yaml.safe_load(f) or {}
+        return data.get("trustloop", {})
+    except Exception:
+        return {}
+
+
 def score_domain(domain_dir: Path, with_traces: bool = False) -> DomainReport:
     """Build complete domain scoring report."""
     results_path = domain_dir / "results.tsv"
@@ -1101,9 +1128,25 @@ def score_domain(domain_dir: Path, with_traces: bool = False) -> DomainReport:
     if not rows:
         return DomainReport(domain=domain_dir.name)
 
-    # Detect score direction
+    # Load per-domain scorer config
+    scorer_cfg = load_domain_scorer_config(domain_dir)
+    score_col = scorer_cfg.get("score_column", "score")
+    time_col = scorer_cfg.get("time_column", "train_min")
+
+    # Remap column names if needed
+    if score_col != "score" or time_col != "train_min":
+        for row in rows:
+            if score_col in row and "score" not in row:
+                row["score"] = row[score_col]
+            if time_col in row and "train_min" not in row:
+                row["train_min"] = row[time_col]
+
+    # Detect score direction (config override takes priority)
     descriptions = [r.get("description", "") for r in rows]
-    direction = detect_score_direction(domain_dir.name, descriptions)
+    if "score_direction" in scorer_cfg:
+        direction = scorer_cfg["score_direction"]
+    else:
+        direction = detect_score_direction(domain_dir.name, descriptions)
 
     # Classify experiments
     experiments = classify_experiments(rows, direction)
@@ -1156,7 +1199,7 @@ def score_domain(domain_dir: Path, with_traces: bool = False) -> DomainReport:
     anomalies = detect_anomalies(experiments, agent_reports, direction)
 
     # Workflow validation
-    workflow_checks = validate_workflow(domain_dir, agent_reports, experiments)
+    workflow_checks = validate_workflow(domain_dir, agent_reports, experiments, direction)
 
     # Insight generation
     insights = generate_insights(experiments, agent_reports, anomalies, direction, telemetry)
