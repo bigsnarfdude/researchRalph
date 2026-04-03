@@ -352,3 +352,13 @@ exp335	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=0.0
 exp336	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=0.785	agent2	initial_cond	0	-1.426566
 exp337	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=1.571	agent2	initial_cond	0	-1.426566
 exp338	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=3.14159	agent2	initial_cond	1	-1.426566
+exp339	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=8	agent2	initial_cond	0	-1.426566
+exp340	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=10	agent2	initial_cond	0	-1.426566
+exp341	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=20	agent2	initial_cond	0	-1.426566
+exp342	5.55111512e-17	1.001322	1.000049	discard	agent2: K_frequency=7	agent2	initial_cond	0	-1.520921
+exp343	5.55111512e-17	1.001322	1.000049	discard	agent2: K_frequency=9	agent2	initial_cond	0	-1.520921
+exp344	5.55111512e-17	1.001322	1.000049	discard	agent2: K_frequency=11	agent2	initial_cond	1	-1.520921
+exp345	5.55111512e-17	1.001322	1.000049	discard	agent2: n_mode=2, K_frequency=1	agent2	initial_cond	1	-1.520921
+exp346	0.00000000e+00	1.139035	1.140175	discard	agent2: n_mode=2, K_frequency=2	agent2	initial_cond	0	-1.426566
+exp347	5.55111512e-17	1.001322	1.000049	discard	agent2: n_mode=2, K_frequency=3	agent2	initial_cond	0	-1.520921
+exp348	0.00000000e+00	1.139035	1.140175	discard	agent2: n_mode=2, K_frequency=4	agent2	initial_cond	1	-1.426566
