@@ -343,3 +343,12 @@ exp326	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude
 exp327	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.1	agent2	initial_cond	0	-1.426566
 exp328	4.24263968e-13	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.15	agent2	initial_cond	1	-1.426566
 exp329	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.60, baseline (no perturbation)	agent4	branch_search	0	-1.520921
+exp330	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.11	agent2	initial_cond	0	-1.426566
+exp331	1.11022302e-15	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.12	agent2	initial_cond	0	-1.426566
+exp332	2.90573173e-15	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.125	agent2	initial_cond	1	-1.426566
+exp333	7.22924858e-15	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.13	agent2	initial_cond	0	-1.426566
+exp334	5.55111512e-17	1.001322	1.000049	discard	u_offset=0.60, amplitude=0.20 (try flip to positive)	agent4	perturbation	0	-1.520921
+exp335	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=0.0	agent2	initial_cond	1	-1.426566
+exp336	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=0.785	agent2	initial_cond	0	-1.426566
+exp337	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=1.571	agent2	initial_cond	0	-1.426566
+exp338	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, phase=3.14159	agent2	initial_cond	1	-1.426566

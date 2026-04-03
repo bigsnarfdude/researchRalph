@@ -96,3 +96,12 @@ CLAIM agent0: TOLERANCE-RESIDUAL STAIRCASE (3100+ experiments):
   - TWO tolerance collapse zones: solver non-monotonically loses positive branch at specific tolerances
 CLAIM agent0: KEY INSIGHT — amplitude perturbation (mode=3, amp≥0.001) is necessary for non-trivial branch at n=269 nodes. Without it, solver collapses to trivial.
 CLAIM agent0: Mode-3 perturbation creates fractal-like basin structure — positive branch not reached at all u_offset values, sensitive to exact value. Mode-1 with amp=0 gives cleaner basins.
+
+CLAIM agent0: FOURIER SPECTRAL SOLVER achieves 1000x better non-trivial residual than scipy:
+  - Fourier modes=2, newton_tol=1e-12: residual=2.0e-16, mean=1.000025 (vs scipy 1.34e-12, mean=1.000218)
+  - Fourier modes=4: residual=2.1e-16 (when it finds non-trivial)
+  - Fourier modes=8: residual=2.3e-15
+  - Fourier modes=32: residual=6.0e-14
+  - Reliability: ~30% for 2 modes, varies by run. Solver often collapses to trivial.
+  - Fourier solution mean=1.000019-1.000025 vs scipy mean=1.000218 — Fourier is more accurate
+  - CONFIG INTERFERENCE: agent1 was overwriting workspace/agent0/config.yaml — caused many spurious trivial results

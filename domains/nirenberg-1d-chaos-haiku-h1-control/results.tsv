@@ -4950,3 +4950,59 @@ exp3653	4.50941488e-29	0.000000	-0.000000	discard	cycle 16 u=0.0990	agent0	initi
 exp3654	4.88330883e-29	0.000000	-0.000000	discard	cycle 16 u=0.0990	agent0	initial_cond	0	0.000000
 exp3655	4.88330883e-29	0.000000	-0.000000	discard	cycle 16 u=0.0990	agent0	initial_cond	1	0.000000
 exp3656	4.88330883e-29	0.000000	-0.000000	discard	cycle 16 u=0.0990	agent0	initial_cond	0	0.000000
+exp3657	5.74085541e-29	0.000000	-0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	0.000000
+exp3658	5.74085541e-29	0.000000	-0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	1	0.000000
+exp3659	5.74085541e-29	0.000000	-0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	0.000000
+exp3660	1.54984578e-28	0.000000	0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	1	-0.000000
+exp3661	1.54984578e-28	0.000000	0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	-0.000000
+exp3662	1.54984578e-28	0.000000	0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	-0.000000
+exp3663	1.60328418e-29	0.000000	-0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	1	-0.000000
+exp3664	1.60328418e-29	0.000000	-0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	-0.000000
+exp3665	1.60328418e-29	0.000000	-0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	-0.000000
+exp3666	7.34590618e-29	0.000000	0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	0.000000
+exp3667	7.34590618e-29	0.000000	0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	0	0.000000
+exp3668	7.34590618e-29	0.000000	0.000000	discard	cycle 16 u=0.0995	agent0	initial_cond	1	0.000000
+exp3669	4.46546993e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3670	4.46546993e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3671	4.46546993e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	1	-0.000000
+exp3672	4.08106752e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3673	4.08106752e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3674	4.08106752e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3675	2.87608203e-17	0.058824	0.000000	discard	fine_grid phase=1.50 amp=0.25	agent1	perturbation	0	0.000033
+exp3675	4.58623706e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3676	7.61970838e-17	0.070535	0.000000	discard	fine_grid phase=1.50 amp=0.30	agent1	perturbation	1	0.000099
+exp3676	4.58623706e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	1	-0.000000
+exp3677	5.03240039e-17	0.082217	0.000000	discard	fine_grid phase=1.50 amp=0.35	agent1	perturbation	0	0.000216
+exp3677	4.58623706e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3678	2.60230385e-17	0.058824	0.000000	discard	fine_grid phase=1.55 amp=0.25	agent1	perturbation	0	0.000033
+exp3678	4.39794337e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3679	4.39794337e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	1	-0.000000
+exp3679	5.52902988e-17	0.070535	0.000000	discard	fine_grid phase=1.55 amp=0.30	agent1	perturbation	1	0.000099
+exp3680	4.39794337e-29	0.000000	0.000000	discard	Fourier 4 modes u=0.5	agent0	branch_search	0	-0.000000
+exp3680	4.39794337e-29	0.000000	0.000000	discard	cycle 16 u=0.1000	agent0	initial_cond	0	-0.000000
+exp3680	8.92873890e-17	0.082217	-0.000000	discard	fine_grid phase=1.55 amp=0.35	agent1	perturbation	0	0.000216
+exp3681	2.06102671e-15	1.001296	1.000019	discard	cycle 16 u=0.1050	agent0	initial_cond	1	-1.520844
+exp3681	2.06102671e-15	1.001296	1.000019	discard	Fourier 4 modes u=0.8	agent0	branch_search	1	-1.520844
+exp3681	2.34651361e-17	0.058824	0.000000	discard	fine_grid phase=1.57 amp=0.25	agent1	perturbation	1	0.000033
+exp3682	3.84592606e-16	1.001296	1.000019	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-1.520844
+exp3682	7.28145628e-17	0.070535	0.000000	discard	fine_grid phase=1.57 amp=0.30	agent1	perturbation	0	0.000099
+exp3683	3.84592606e-16	1.001296	1.000019	discard	Fourier 4 modes u=0.9	agent0	branch_search	0	-1.520844
+exp3684	2.06774381e-16	1.001296	1.000019	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-1.520844
+exp3685	1.75925969e-17	0.082217	0.000000	discard	fine_grid phase=1.57 amp=0.35	agent1	perturbation	0	0.000216
+exp3686	6.14461376e-29	0.000000	0.000000	discard	Fourier 4 modes u=1.0	agent0	branch_search	0	-0.000000
+exp3687	4.87416595e-14	1.001296	1.000019	discard	cycle 16 u=0.1050	agent0	initial_cond	1	-1.520844
+exp3688	3.77060482e-17	0.058824	0.000000	discard	fine_grid phase=1.59 amp=0.25	agent1	perturbation	1	0.000033
+exp3689	6.14461376e-29	0.000000	0.000000	discard	Fourier 4 modes u=1.1	agent0	branch_search	0	-0.000000
+exp3690	1.86448479e-16	1.001296	1.000019	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-1.520844
+exp3691	7.48468891e-17	0.070535	-0.000000	discard	fine_grid phase=1.59 amp=0.30	agent1	perturbation	0	0.000099
+exp3692	6.14461376e-29	0.000000	0.000000	discard	Fourier 4 modes u=1.2	agent0	branch_search	0	-0.000000
+exp3693	2.57581612e-16	1.001296	1.000019	discard	cycle 16 u=0.1050	agent0	initial_cond	1	-1.520844
+exp3694	3.06729024e-17	0.082217	0.000000	discard	fine_grid phase=1.59 amp=0.35	agent1	perturbation	1	0.000216
+exp3695	1.75906666e-28	0.000000	0.000000	discard	Fourier 4 modes u=1.5	agent0	branch_search	1	-0.000000
+exp3696	1.75906666e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-0.000000
+exp3697	3.10210988e-17	0.058824	0.000000	discard	fine_grid phase=1.64 amp=0.25	agent1	perturbation	0	0.000033
+exp3698	1.75906666e-28	0.000000	0.000000	discard	Fourier 4 modes u=2.0	agent0	branch_search	0	-0.000000
+exp3699	1.75906666e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-0.000000
+exp3700	4.44261653e-17	0.070535	0.000000	discard	fine_grid phase=1.64 amp=0.30	agent1	perturbation	0	0.000099
+exp3701	1.75906666e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initial_cond	1	-0.000000
+exp3702	6.73123399e-17	0.082217	0.000000	discard	fine_grid phase=1.64 amp=0.35	agent1	perturbation	1	0.000216

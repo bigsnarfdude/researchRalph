@@ -1,0 +1,24 @@
+# Nirenberg 1D — Agent 1 config
+# Fourier spectral method — trivial branch
+
+u_offset: 0.0
+amplitude: 0.35
+n_mode: 1
+phase: 1.55
+
+K_mode: "cosine"
+K_amplitude: 0.35
+K_frequency: 1
+
+method: fourier
+fourier_modes: 4
+newton_tol: 1.0e-14
+newton_maxiter: 50
+
+n_nodes: 300
+solver_tol: 1.0e-9
+
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower
