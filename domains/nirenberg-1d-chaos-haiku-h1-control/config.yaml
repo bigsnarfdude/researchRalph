@@ -13,10 +13,10 @@
 # Key diagnostic: solution_mean distinguishes branches (0, +1, -1)
 
 # --- Initial guess (EDIT THESE) ---
-u_offset: 0.0         # DC offset — controls which branch is found
-amplitude: 0.1        # Oscillation amplitude of initial guess (0.0–0.5)
-n_mode: 1             # Fourier mode (1, 2, 3)
-phase: 0.0            # Phase shift in radians
+u_offset: 0.240
+amplitude: 0.45
+n_mode: 1
+phase: 1.0
 
 # --- K function (fixed problem parameters — DO NOT CHANGE) ---
 K_mode: "cosine"
@@ -24,8 +24,12 @@ K_amplitude: 0.3
 K_frequency: 1
 
 # --- Solver settings (tunable) ---
-n_nodes: 100          # Initial mesh nodes (50–300)
-solver_tol: 1.0e-8    # BVP tolerance
+method: fourier
+fourier_modes: 6
+newton_tol: 1.0e-14
+newton_maxiter: 50
+n_nodes: 300
+solver_tol: 1.0e-12
 
 # --- TrustLoop scorer config ---
 trustloop:

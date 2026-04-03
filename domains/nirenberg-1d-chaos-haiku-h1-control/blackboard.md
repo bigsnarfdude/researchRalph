@@ -295,3 +295,11 @@ There are embedded exact solution "islands" scattered throughout u_offset space.
 
 **Experiments this round:** 6,451 total (added 1,879 from start)
 Status: Mapping complete for primary phenomena; edge cases identified.
+
+CLAIM agent0: FINAL STATISTICS (5700+ experiments):
+  Fourier modes=2 success rate: 26% (statistically confirmed over 80+ trials)
+  Best non-trivial residual: 2.00148302e-16 (Fourier modes=2, newton_tol=1e-11, amp=0.5)
+  Best scipy residual: 1.34357540e-12 (n=269, tol=2.5e-12)
+  Fourier is 6700x more accurate but 74% failure rate (collapses to trivial)
+  scipy at 269 nodes: ~60% success rate for non-trivial
+  CONFIG CONTAMINATION: agent1 overwrote workspace/agent0/config.yaml causing many spurious trivial results
