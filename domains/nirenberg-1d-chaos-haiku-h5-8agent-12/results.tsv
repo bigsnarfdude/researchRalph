@@ -278,3 +278,60 @@ exp271	5.55111512e-17	1.001322	1.000049	discard	Fourier u_offset=0.602	agent4	br
 exp272	1.25017784e-23	0.000000	-0.000000	discard	ultra-high Fourier 128 modes at bifurcation	agent6	perturbation	0	-0.000000
 exp273	3.93311194e-13	1.001296	-1.000019	discard	u_offset=-0.755 boundary	agent0	initial_cond	0	-1.520844
 exp274	9.14864028e-16	0.000000	0.000000	discard	u_offset=0.4214, amplitude=0.01 (CRITICAL), fourier 64	agent2	branch_search	0	-0.000000
+exp275	5.55111512e-17	1.001322	1.000049	discard	Alternative perturbation mode n_mode=2 at u_offset=0.55	agent5	perturbation	0	-1.520921
+exp276	5.55111512e-17	1.001322	1.000049	discard	Fourier u_offset=0.601	agent4	branch_search	0	-1.520921
+exp277	1.28324181e-13	0.000000	0.000000	discard	u_offset=0.425, amplitude=0.01 (match agent6)	agent2	branch_search	0	-0.000000
+exp278	3.43362834e-13	1.001322	-1.000049	discard	Verify baseline mode-1 at u_offset=0.55, amp=0.1	agent5	perturbation	1	-1.520921
+exp279	7.85046229e-17	0.999980	1.000010	discard	K_amplitude=0.2 (weaker perturbation), positive branch	agent6	initial_cond	1	-1.546820
+exp280	3.43362834e-13	1.001322	-1.000049	discard	Mode-3 perturbation at u_offset=0.55, amp=0.1	agent5	perturbation	1	-1.520921
+exp281	2.11516743e-24	0.000000	-0.000000	discard	u_offset=0.425, amp=0.01, newton_tol=1e-13, maxiter=50	agent2	branch_search	0	-0.000000
+exp282	5.55111512e-17	0.999210	1.000001	discard	K_amplitude=0.1, positive branch	agent6	initial_cond	0	-1.562436
+exp283	5.55111512e-17	1.001322	1.000049	discard	u_offset=0.55, fourier_modes=1, following agent5 discovery	agent7	branch_search	0	-1.520921
+exp284	5.75172349e-13	1.005811	1.000371	discard	K_amplitude=0.5, positive branch	agent6	initial_cond	0	-1.439065
+exp285	1.87283305e-14	1.001322	-1.000049	discard	Mode-2 at u_offset=0.5 (pure negative basin)	agent5	perturbation	1	-1.520921
+exp286	crash	0	0	crash	2nd bifurc u_offset=0.595, amp=0.285	agent1	perturbation	0	0
+exp287	crash	0	0	crash	2nd bifurc u_offset=0.60, amp=0.285	agent1	perturbation	1	0
+exp288	crash	0	0	crash	2nd bifurc u_offset=0.605, amp=0.285	agent1	perturbation	0	0
+exp289	crash	0	0	crash	2nd bifurc u_offset=0.61, amp=0.285	agent1	perturbation	0	0
+exp290	crash	0	0	crash	2nd bifurc u_offset=0.615, amp=0.285	agent1	perturbation	1	0
+exp291	4.10932522e-15	1.001322	1.000049	discard	u_offset=0.60, positive branch	agent7	branch_search	1	-1.520921
+exp292	9.59734347e-14	1.001322	1.000049	discard	Mode-2 at u_offset=0.9 (positive basin)	agent5	perturbation	0	-1.520921
+exp293	1.22346264e-20	0.000000	0.000000	discard	neg bifurc u_offset=-0.420, amp=0.285	agent1	perturbation	1	-0.000000
+exp294	5.55111512e-17	1.001322	1.000049	discard	u_offset=0.70, positive branch	agent7	branch_search	1	-1.520921
+exp295	1.45885543e-20	0.000000	0.000000	discard	neg bifurc u_offset=-0.421, amp=0.285	agent1	perturbation	0	-0.000000
+exp296	1.73367794e-20	0.000000	0.000000	discard	neg bifurc u_offset=-0.422, amp=0.285	agent1	perturbation	0	-0.000000
+exp297	2.03787577e-20	0.000000	0.000000	discard	neg bifurc u_offset=-0.423, amp=0.285	agent1	perturbation	1	-0.000000
+exp298	crash	0	0	crash	extreme u_offset=1.2 (search for secondary bifurcations)	agent6	branch_search	0	0
+exp299	2.54443172e-20	0.000000	0.000000	discard	neg bifurc u_offset=-0.424, amp=0.285	agent1	perturbation	0	-0.000000
+exp300	6.57250044e-23	0.000000	-0.000000	discard	u_offset=-0.55, negative branch	agent7	branch_search	0	-0.000000
+exp301	2.39525542e-13	1.001322	1.000049	discard	Mode-2 at u_offset=0.55 with amp=0.2	agent5	perturbation	0	-1.520921
+exp302	1.41328519e-19	0.000000	-0.000000	discard	neg u=-0.422, amp=0.0	agent1	perturbation	0	-0.000000
+exp303	4.92625011e-19	0.000000	-0.000000	discard	neg u=-0.422, amp=0.05	agent1	perturbation	1	0.000000
+exp304	2.99209976e-21	0.000000	-0.000000	discard	neg u=-0.422, amp=0.1	agent1	perturbation	0	-0.000000
+exp305	crash	0	0	crash	high u_offset=1.0	agent6	branch_search	0	0
+exp306	1.65766827e-21	0.000000	0.000000	discard	neg u=-0.422, amp=0.15	agent1	perturbation	0	-0.000000
+exp307	2.64573041e-20	0.000000	0.000000	discard	neg u=-0.422, amp=0.2	agent1	perturbation	1	-0.000000
+exp308	1.25435876e-16	0.000000	-0.000000	discard	neg u=-0.422, amp=0.25	agent1	perturbation	0	-0.000000
+exp309	1.73367794e-20	0.000000	0.000000	discard	neg u=-0.422, amp=0.285	agent1	perturbation	0	-0.000000
+exp310	1.98225143e-21	0.000000	0.000000	discard	neg u=-0.422, amp=0.3	agent1	perturbation	0	-0.000000
+exp311	1.45847011e-24	0.000000	0.000000	discard	neg u=-0.422, amp=0.35	agent1	perturbation	0	-0.000000
+exp312	1.87283305e-14	1.001322	1.000049	discard	u_offset=-0.70, searching negative branch	agent7	branch_search	0	-1.520921
+exp313	2.56187103e-23	0.000000	0.000000	discard	neg u=-0.422, refine amp=0.330	agent1	perturbation	1	0.000000
+exp314	1.24926062e-23	0.000000	0.000000	discard	neg u=-0.422, refine amp=0.335	agent1	perturbation	0	-0.000000
+exp315	5.33597575e-24	0.000000	-0.000000	discard	neg u=-0.422, refine amp=0.340	agent1	perturbation	0	0.000000
+exp316	2.67052487e-24	0.000000	0.000000	discard	neg u=-0.422, refine amp=0.345	agent1	perturbation	1	0.000000
+exp317	1.45847011e-24	0.000000	0.000000	discard	neg u=-0.422, refine amp=0.350	agent1	perturbation	0	-0.000000
+exp318	4.51203328e-14	0.000000	-0.000000	discard	neg u=-0.422, refine amp=0.355	agent1	perturbation	0	-0.000000
+exp319	2.20245757e-14	0.000000	-0.000000	discard	neg u=-0.422, refine amp=0.360	agent1	perturbation	1	-0.000000
+exp320	5.55111512e-17	1.001322	-1.000049	discard	u_offset=-0.90, single-mode Fourier	agent7	branch_search	0	-1.520921
+exp321	4.10932522e-15	1.001322	-1.000049	discard	u_offset=-0.80, transition zone	agent7	branch_search	0	-1.520921
+exp322	6.26737745e-13	1.001322	1.000049	discard	basin flip zone u_offset=0.605	agent6	branch_search	0	-1.520921
+exp323	5.55111512e-17	1.001322	-1.000049	discard	u_offset=-0.75, narrowing	agent7	branch_search	0	-1.520921
+exp324	1.87283305e-14	1.001322	-1.000049	discard	basin flip boundary u_offset=0.60 (negative side)	agent6	branch_search	0	-1.520921
+exp325	4.54455897e-16	0.000000	-0.000000	discard	u_offset=0.4214, amplitude=0.285 (push record)	agent2	branch_search	0	-0.000000
+exp326	5.55111512e-17	1.001322	-1.000049	discard	u_offset=-0.72	agent7	branch_search	1	-1.520921
+exp327	5.55111512e-17	1.001322	1.000049	discard	fine-grain u_offset=0.602	agent6	branch_search	1	-1.520921
+exp328	5.55111512e-17	1.001322	-1.000049	discard	u_offset=-0.71	agent7	branch_search	0	-1.520921
+exp329	5.55111512e-17	1.001322	1.000049	discard	fine-grain u_offset=0.601	agent6	branch_search	0	-1.520921
+exp330	6.26737745e-13	1.001322	-1.000049	discard	u_offset=-0.705	agent7	branch_search	0	-1.520921
+exp331	1.60209299e-13	1.001322	1.000049	discard	hysteresis test u_offset=0.85 (backward sweep)	agent6	branch_search	0	-1.520921
