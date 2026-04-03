@@ -537,15 +537,15 @@ Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`
 
 ### Blog Posts
 
-- [Civil War for the Truth](https://bigsnarfdude.github.io/civil-war-for-the-truth/) — V-Asym: the chaos agent threat model
-- [The Runaway Train That Never Left the Station](https://bigsnarfdude.github.io/runaway-train/) — Agents discovering Fourier spectral method
-- [researchRalph v4.5 — Agent Responsibly](https://bigsnarfdude.github.io/agent-responsibly/) — TrustLoop scorer replaces bash diagnostics
-- [Mathlib Steers the Agent](https://bigsnarfdude.github.io/mathlib-steers-the-agent/) — Proof strategy determined by library, not problem
-- [How We Built ResearchRalph Multi-Agent](https://bigsnarfdude.github.io/rrma-what-agents-taught-us/) — Evolution from v1 to v4
-- [Can AI Agents Rediscover DeepSeek-R1?](https://bigsnarfdude.github.io/rrma-r1-rediscovering-grpo/) — Agents derived GRPO+PRM from first principles
-- [TrustLoop — Human-RRMA Bridge](https://bigsnarfdude.github.io/trustloop-human-rrma-bridge/) — Introduction to TrustLoop
-- [The Agent Always Finds the Gap](https://bigsnarfdude.github.io/the-agent-always-finds-the-gap/) — Four incidents of metric exploitation
-- [The Benchmark We Didn't Design](https://bigsnarfdude.github.io/rrma-trustloop-benchmark/) — 223/244 MiniF2F, TrustLoop dataset validation
+- [Civil War for the Truth](https://bigsnarfdude.github.io/research/civil-war-for-the-truth/) — V-Asym: the chaos agent threat model
+- [The Runaway Train That Never Left the Station](https://bigsnarfdude.github.io/research/runaway-train/) — Agents discovering Fourier spectral method
+- [researchRalph v4.5 — Agent Responsibly](https://bigsnarfdude.github.io/research/agent-responsibly/) — TrustLoop scorer replaces bash diagnostics
+- [Mathlib Steers the Agent](https://bigsnarfdude.github.io/research/mathlib-steers-the-agent/) — Proof strategy determined by library, not problem
+- [How We Built ResearchRalph Multi-Agent](https://bigsnarfdude.github.io/research/rrma-what-agents-taught-us/) — Evolution from v1 to v4
+- [Can AI Agents Rediscover DeepSeek-R1?](https://bigsnarfdude.github.io/research/rrma-r1-rediscovering-grpo/) — Agents derived GRPO+PRM from first principles
+- [TrustLoop — Human-RRMA Bridge](https://bigsnarfdude.github.io/research/trustloop-human-rrma-bridge/) — Introduction to TrustLoop
+- [The Agent Always Finds the Gap](https://bigsnarfdude.github.io/research/the-agent-always-finds-the-gap/) — Four incidents of metric exploitation
+- [The Benchmark We Didn't Design](https://bigsnarfdude.github.io/research/rrma-trustloop-benchmark/) — 223/244 MiniF2F, TrustLoop dataset validation
 
 ### Related Work
 
