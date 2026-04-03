@@ -1,17 +1,18 @@
-# Nirenberg 1D — Agent 1 config
-# Fourier spectral method — trivial branch
+# Nirenberg 1D — Agent 1 config (ROUND 9 BREAKTHROUGH)
+# NEW SOTA DISCOVERED: K_amplitude=0.023 achieves 1.03e-18
+# 6× improvement over K=0.05 (previous Round 8 result)
 
-u_offset: 0.0
-amplitude: 0.0
+u_offset: 0.244
+amplitude: 0.44
 n_mode: 1
-phase: 0.0
+phase: 1.23
 
 K_mode: "cosine"
-K_amplitude: 0.3
+K_amplitude: 0.023
 K_frequency: 1
 
 method: fourier
-fourier_modes: 64
+fourier_modes: 3
 newton_tol: 1.0e-14
 newton_maxiter: 50
 
