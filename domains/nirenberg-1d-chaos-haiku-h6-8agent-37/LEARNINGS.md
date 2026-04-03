@@ -460,3 +460,43 @@ The PDE exhibits "sensitive dependence on initial conditions" — a hallmark of 
 - Energy-based approaches (variational) — orthogonal to current residual-minimization
 - Parameter space (K_amplitude, K_frequency) — different problem family
 - Bifurcation control via perturbations — agent4 already showed phase/amplitude steering; works under both scipy and Fourier
+
+## Strategic Summary: Nirenberg 1D Chaos Domain Structure
+
+### Hierarchical Control Architecture
+The domain exhibits a **3-level control hierarchy**:
+
+1. **Macro level (u_offset)**: Selects solution branch family
+   - u_offset ∈ [−0.45, 0] → trivial-family
+   - u_offset ∈ [0, 0.52] ∪ [0.58, 1.0] → positive-family
+   - u_offset ∈ [−1.0, −0.52] ∪ [−0.58, −0.1] → mixed (asymmetric)
+
+2. **Meso level (chaotic zone u_offset ∈ [0.52, 0.58])**: Fractal basin with sub-structure
+   - Basin structure alternates trivial/negative at Δu=0.01 scale
+   - Micro-chaos: sub-pixel (Δu < 0.001) sensitivity expected
+
+3. **Micro level (phase, amplitude)**: Fine steering within basins
+   - Phase: discrete 4-branch cycle; jumps at π/2 multiples
+   - Amplitude: continuous threshold; bistable switch at ≈0.075
+
+### Optimal Strategy for Residual Minimization
+1. **Target the ultra-low trivial windows** (u_offset ∈ {0.53, 0.56, −0.53, −0.56})
+2. **Use tol=1e-11 or 1e-12** (beyond 1e-12 crashes)
+3. **Keep n_nodes=300** (higher causes instability)
+4. **Avoid high amplitudes** (>0.15 destabilizes)
+5. **Phase control for branch flipping** (if non-trivial needed)
+
+### Ultra-Low Residual Regime
+Machine-precision convergence (residual ≈ 1e-19) achievable in trivial branch:
+- **Mechanism**: Trivial branch u≡0 is solution to unperturbed ODE u''(θ)=−u
+  - Perturbation K(θ)u causes O(K²) error → 1e-19 when K=0.3 and solver tol=1e-11
+- **Why trivial succeeds**: Low curvature, no Newton iterations needed
+- **Why non-trivial limited to 1e-12**: Nonlinear terms + Newton convergence → saturation
+
+### Research Frontier (Unexplored)
+1. **Period-doubling cascade**: Map (phase, amplitude) 2D plane for chaotic route
+2. **Sub-micro structure**: U_offset sweep at Δu=0.001 or smaller
+3. **K_frequency variation**: How does K_frequency=2,3,... change basin structure?
+4. **Solver mode selection**: Test other BVP solvers (not just scipy COLSYS)
+5. **Bifurcation analysis**: Continuation in K_amplitude to trace bifurcation lines
+

@@ -1,0 +1,15 @@
+K_amplitude: 0.3
+K_frequency: 1
+K_mode: cosine
+amplitude: 0.5
+fourier_modes: 10
+method: fourier
+n_mode: 1
+newton_maxiter: 200
+newton_tol: 1.0e-12
+phase: 0.0
+trustloop:
+  score_column: residual
+  score_direction: lower
+  time_column: elapsed_s
+u_offset: 1.0

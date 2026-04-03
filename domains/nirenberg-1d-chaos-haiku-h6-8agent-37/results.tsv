@@ -311,3 +311,29 @@ exp295	2.77555756e-16	1.002214	1.000091	discard	agent2: Fourier positive u=0.9, 
 exp296	3.54360651e-19	0.000000	0.000000	discard	final ultra-precision u_offset=0.530 exact	agent3	initial_cond	0	-0.000000
 exp297	5.11787527e-16	1.002411	1.000102	discard	agent2: Fourier K_amplitude=0.36	agent2	initial_cond	1	-1.500519
 exp298	9.10450574e-16	1.002613	1.000113	discard	agent2: Fourier K_amplitude=0.37	agent2	initial_cond	0	-1.496768
+exp299	1.49982872e-15	1.002822	1.000126	discard	agent2: Fourier K_amplitude=0.38	agent2	initial_cond	0	-1.492918
+exp300	2.83596253e-15	1.003037	1.000140	discard	agent2: Fourier K_amplitude=0.39	agent2	initial_cond	1	-1.488969
+exp301	5.55111512e-17	1.001322	1.000049	discard	agent2: Fourier K_frequency=1	agent2	initial_cond	1	-1.520921
+exp302	0.00000000e+00	1.139035	1.140175	discard	agent2: Fourier K_frequency=2	agent2	initial_cond	0	-1.426566
+exp303	5.55111512e-17	1.001322	1.000049	discard	agent2: Fourier K_frequency=3	agent2	initial_cond	1	-1.520921
+exp304	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2 detail	agent2	initial_cond	0	-1.426566
+exp305	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=4	agent2	initial_cond	0	-1.426566
+exp306	5.55111512e-17	1.001322	1.000049	discard	agent2: K_frequency=5	agent2	initial_cond	0	-1.520921
+exp307	5.55111512e-17	1.001322	-1.000049	discard	amplitude=0.01, u_offset=0.553	agent4	perturbation	1	-1.520921
+exp308	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=6	agent2	initial_cond	1	-1.426566
+exp309	5.55111512e-17	1.001322	-1.000049	discard	amplitude=0.05, u_offset=0.553	agent4	perturbation	1	-1.520921
+exp310	5.55111512e-17	1.001322	-1.000049	discard	agent2: Fourier negative K_frequency=1	agent2	initial_cond	0	-1.520921
+exp311	0.00000000e+00	1.139035	-1.140175	discard	agent2: Fourier negative K_frequency=2	agent2	initial_cond	0	-1.426566
+exp311	5.55111512e-17	1.001322	-1.000049	discard	amplitude=0.10, u_offset=0.553	agent4	perturbation	0	-1.520921
+exp312	5.55111512e-17	1.001322	-1.000049	discard	agent2: Fourier negative K_frequency=3	agent2	initial_cond	1	-1.520921
+exp313	0.00000000e+00	1.139035	-1.140175	discard	agent2: Fourier negative K_frequency=4	agent2	initial_cond	0	-1.426566
+exp314	1.69195221e-15	1.001322	-1.000049	discard	amplitude=0.12, u_offset=0.553	agent4	perturbation	0	-1.520921
+exp315	1.69195221e-15	1.001322	-1.000049	discard	amplitude=0.14, u_offset=0.553	agent4	perturbation	0	-1.520921
+exp316	5.71522282e-16	1.001322	-1.000049	discard	amplitude=0.145, u_offset=0.553	agent4	perturbation	1	-1.520921
+exp317	3.72380123e-16	1.001322	-1.000049	discard	amplitude=0.148, u_offset=0.553	agent4	perturbation	0	-1.520921
+exp318	1.75541673e-16	1.001322	-1.000049	discard	amplitude=0.149, u_offset=0.553	agent4	perturbation	0	-1.520921
+exp319	1.75541673e-16	1.001322	-1.000049	discard	amplitude=0.150, u_offset=0.553 (confirm transition)	agent4	perturbation	0	-1.520921
+exp320	0.00000000e+00	0.000000	0.000000	discard	agent2: Trivial K_frequency=1	agent2	initial_cond	1	0.000000
+exp321	0.00000000e+00	0.000000	0.000000	discard	agent2: Trivial K_frequency=2	agent2	initial_cond	0	0.000000
+exp322	4.44089210e-16	1.223520	1.224745	discard	agent2: K_frequency=2, K_amplitude=0.5	agent2	initial_cond	0	-1.175741
+exp323	1.75541673e-16	1.001322	-1.000049	discard	Exact rerun of exp273	agent4	perturbation	0	-1.520921

@@ -38,3 +38,16 @@
 - **Hysteresis and path-dependence:** Test if approaching u_offset=-0.425 from -0.46 (trivial side) vs -0.90 (negative side) yields different residuals. Heteroclinic bifurcations can exhibit directional convergence.
 - **Spectral content at negative bifurcation:** Following agent5's fourier mode spectrum idea, analyze mode composition at u_offset=-0.425 to understand if negative-side bifurcation structure mirrors positive-side.
 
+
+## agent6 Unfinished Explorations
+
+1. **Hysteresis gap measurement:** Precisely determine if forward (0→0.9) and backward (0.9→0) sweeps yield different branch sequences. Early test at 0.85 found positive as expected, but needs systematic logging.
+
+2. **Fourier mode spectrum at bifurcation:** FFT analysis of solution at u_offset=0.425 with 64 modes. Which modes dominate? Are all 64 active or is it sparse?
+
+3. **K_frequency variation:** Currently fixed at 1. Test K_frequency ∈ [2, 3] to see if bifurcation structure persists (especially super-convergence peaks).
+
+4. **Solver divergence threshold:** Map the crash boundary precisely. Current: crashes at u_offset > 0.95. Exact threshold would help define valid phase space.
+
+5. **Stability certificates:** For each branch solution, compute linearized stability matrix eigenvalues to confirm stability classification (stable/unstable/bifurcation saddle).
+

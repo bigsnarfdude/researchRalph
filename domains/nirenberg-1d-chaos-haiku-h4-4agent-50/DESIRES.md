@@ -40,3 +40,43 @@
 - Most critical: visualization (Capability 1) would have caught my exponent error instantly
 - Second priority: real solution inspection (Capability 2) to understand mechanism
 - Theoretical tools (Capability 5) would be needed for publication/validation
+
+## agent3 Additions & Unresolved Mysteries
+
+### Unresolved Question 1: Why 1-Mode Optimality?
+- **Phenomenon:** Fourier 1-mode is universally optimal across all u_offset and branches
+- **Puzzle:** This contradicts standard spectral method intuition (more modes = better)
+- **Hypothesis 1:** Solution structure has no higher-frequency content (pure 1-mode manifold)
+- **Hypothesis 2:** Dense Jacobian matrix from N modes has O(N³) complexity + conditioning collapse
+- **Hypothesis 3:** Newton solver achieves full quadratic convergence on 1 mode, but staggers on 2+ modes
+- **Desired investigation:** Inspect Newton solver convergence history (iteration count, residual vs iteration curve)
+
+### Unresolved Question 2: Bifurcation Mechanism at u=0.42 and u=0.46
+- **Phenomenon:** u_offset=0.42 → exact solution (residual=0.0), u_offset=0.46 → 1.19e-27 (near-exact)
+- **Why these specific points?** No obvious pattern at first glance
+- **Hypothesis 1:** These points lie on heteroclinic manifold connecting trivial to ±1 branches
+- **Hypothesis 2:** These are saddle-node or transcritical bifurcation points in the u_offset parameter
+- **Hypothesis 3:** Solution structure admits analytical closed-form representation at these u_offset values
+- **Desired investigation:** Analytical BVP bifurcation analysis or numerical continuation in K_amplitude to trace bifurcation diagram
+
+### Unresolved Question 3: Why Negative Branch Can't Reach u_offset=-0.46
+- **Phenomenon:** u_offset=-0.46 converges to trivial (mean≈0), not negative (mean≈-1)
+- **Asymmetry:** u_offset=+0.46 also converges to trivial (correct by symmetry)
+- **But:** Why does u_offset=-0.50 flip to positive branch, not negative?
+- **Basin structure:** The phase space has surprising asymmetries despite equation symmetry in u
+- **Hypothesis:** K(θ)=0.3·cos(θ) breaks the full u→-u symmetry at the basin level
+- **Desired investigation:** Compute eigenvalues of linearization around ±1 branches; check asymmetry in K function
+
+### Desired Capability: Phase Diagram Heatmap
+- **What:** 2D grid of (u_offset, Fourier_modes) → residual values
+- **Why:** Would show mode scaling landscape visually, reveal if other special points exist
+- **Current state:** Only have ~15 (u_offset, mode) pairs; full grid would be ~20×8=160 experiments
+- **Cost:** ~20 additional experiments
+- **Value:** Would definitively characterize mode scaling globally, not just at special points
+
+### Theoretical Question: "Single-Mode Completeness"
+- **Claim:** This domain is "single-mode complete" - solution admits 1-mode Fourier representation
+- **Evidence:** 1-mode gives 1e-27 residual (machine precision limit)
+- **But:** Is the actual solution truly 1-mode, or is 1-mode just lucky conditioning?
+- **Test:** Compare 1-mode residual vs higher-mode residual in SVD/QR decomposition space
+- **Implication:** If solution is truly 1-mode, we've discovered a special domain property worthy of publication

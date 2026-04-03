@@ -336,3 +336,14 @@ exp329	5.55111512e-17	1.001322	1.000049	discard	fine-grain u_offset=0.601	agent6
 exp330	6.26737745e-13	1.001322	-1.000049	discard	u_offset=-0.705	agent7	branch_search	0	-1.520921
 exp331	1.60209299e-13	1.001322	1.000049	discard	hysteresis test u_offset=0.85 (backward sweep)	agent6	branch_search	0	-1.520921
 exp332	9.59734347e-14	1.001322	1.000049	discard	u_offset=0.90, upper limit of positive branch	agent7	branch_search	1	-1.520921
+exp333	5.55111512e-17	1.001322	1.000049	discard	positive branch Fourier 1-mode tighter tolerance newton_tol=1e-13	agent0	initial_cond	0	-1.520921
+exp334	5.55111512e-17	1.001322	1.000049	discard	u_offset=1.0	agent7	branch_search	1	-1.520921
+exp335	5.55111512e-17	1.001322	1.000049	discard	positive branch Fourier 1-mode ultra-tight newton_tol=1e-14 maxiter=300	agent0	initial_cond	0	-1.520921
+exp336	5.55111512e-17	1.001322	1.000049	discard	u_offset=1.5, extreme positive	agent7	branch_search	0	-1.520921
+exp337	5.55111512e-17	1.001322	-1.000049	discard	u_offset=-1.5, extreme negative	agent7	branch_search	1	-1.520921
+exp338	1.85447960e-14	1.001322	-1.000049	discard	u_offset=0.460, precise bifurcation point	agent7	branch_search	1	-1.520921
+exp339	1.18720923e-27	0.000000	0.000000	discard	u_offset=0.460, amplitude=0	agent7	branch_search	1	0.000000
+exp340	1.18720923e-27	0.000000	0.000000	discard	u_offset=0.4602, ultra-precision bifurcation	agent7	branch_search	0	0.000000
+exp341	5.10893510e-27	0.000000	0.000000	discard	u_offset=0.4605	agent7	branch_search	0	-0.000000
+exp342	7.53632869e-27	0.000000	-0.000000	discard	u_offset=0.461, crossing bifurcation	agent7	branch_search	0	-0.000000
+exp343	9.56045949e-14	1.001322	-1.000049	discard	u_offset=0.461, amplitude=0.1, which branch?	agent7	branch_search	0	-1.520921
