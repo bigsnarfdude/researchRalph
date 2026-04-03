@@ -1,0 +1,131 @@
+exp001	0.00000000e+00	0.000000	0.000000	keep	trivial branch baseline: u_offset=0, scipy n=196 tol=1e-12	agent0	initial_cond	2	0.000000
+exp002	3.25175408e-12	1.002503	1.000218	keep	positive branch baseline: u_offset=0.9, scipy n=300 tol=1e-11	agent0	initial_cond	2	-1.523848
+exp003	3.25175408e-12	1.002503	-1.000218	discard	negative branch baseline: u_offset=-0.9, scipy n=300 tol=1e-11	agent0	initial_cond	2	-1.523848
+exp004	5.62802405e-12	1.002503	-1.000218	discard	negative branch: u_offset=-0.9, n_nodes=250, tol=1e-11	agent2	solver_param	1	-1.523848
+exp005	3.25175408e-12	1.002503	1.000218	discard	positive branch with Fourier 1-mode solver (optimal)	agent1	initial_cond	2	-1.523848
+exp006	4.00125878e-12	1.002503	-1.000218	discard	negative branch: u_offset=-0.9, n_nodes=280, tol=1e-11	agent2	solver_param	2	-1.523848
+exp007	5.55111512e-17	1.001322	1.000049	keep	positive branch: Fourier 1 mode, newton_tol=1e-12, u_offset=0.9	agent0	initial_cond	1	-1.520921
+exp008	1.51627807e-12	1.002503	1.000218	discard	n_nodes=194, positive branch, scipy, tol=1e-11	agent3	initial_cond	1	-1.523848
+exp009	5.55111512e-17	1.001322	-1.000049	discard	negative branch: Fourier 1 mode, newton_tol=1e-12, u_offset=-0.9	agent0	initial_cond	1	-1.520921
+exp010	1.47161968e-12	1.002503	1.000218	discard	n_nodes=196 (sweet spot), positive branch	agent3	initial_cond	0	-1.523848
+exp011	5.55111512e-17	1.001322	1.000049	discard	positive branch with Fourier 1-mode solver (optimal, method=fourier)	agent1	initial_cond	1	-1.520921
+exp012	2.00148302e-16	1.001298	1.000025	discard	positive branch: Fourier 2 modes, newton_tol=1e-12, u_offset=0.9	agent0	initial_cond	0	-1.520921
+exp013	5.55111512e-17	1.001322	-1.000049	discard	negative branch with Fourier 1-mode solver (optimal)	agent1	initial_cond	0	-1.520921
+exp014	0.00000000e+00	0.000000	0.000000	keep	trivial branch with Fourier 1-mode	agent1	initial_cond	0	0.000000
+exp014	1.22808404e-22	0.000000	-0.000000	keep	trivial branch: Fourier 64 modes, newton_tol=1e-14, maxiter=200, u_offset=0.46	agent0	initial_cond	0	-0.000000
+exp015	5.55111512e-17	1.001322	1.000049	discard	Fourier 1 mode, positive branch, newton_tol=1e-12	agent3	initial_cond	0	-1.520921
+exp016	1.60209299e-13	1.001322	-1.000049	discard	negative basin: u_offset=-0.85, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp017	0.00000000e+00	0.000000	0.000000	discard	trivial branch: Fourier 64 modes, newton_tol=1e-14, maxiter=200, u_offset=0.0	agent0	initial_cond	1	0.000000
+exp018	7.06541606e-16	1.001322	-1.000049	discard	negative basin: u_offset=-0.88, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp019	2.00148302e-16	1.001298	1.000025	discard	Fourier 2 modes, positive branch	agent3	initial_cond	0	-1.520921
+exp020	5.55111512e-17	1.001322	-1.000049	discard	negative basin: u_offset=-0.92, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp021	5.55111512e-17	1.001322	-1.000049	discard	negative basin: u_offset=-0.95, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp022	3.25175408e-12	1.002503	1.000218	discard	scipy, n=300, tol=1e-11, positive branch (SOTA config)	agent3	solver_param	0	-1.523848
+exp023	2.00148302e-16	1.001298	1.000025	discard	positive branch with Fourier 2-mode (test)	agent1	initial_cond	0	-1.520921
+exp024	1.60209299e-13	1.001322	1.000049	discard	positive basin: u_offset=0.85, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp025	4.42586856e-16	1.001296	1.000019	discard	positive branch with Fourier 3-mode	agent1	initial_cond	0	-1.520844
+exp026	2.57581612e-16	1.001296	1.000019	discard	positive branch with Fourier 4-mode	agent1	initial_cond	0	-1.520844
+exp027	5.55111512e-17	1.001322	-1.000049	discard	boundary exploration: u_offset=0.50, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp028	5.55111512e-17	1.001322	-1.000049	discard	boundary exploration: u_offset=0.55, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp029	1.60209299e-13	1.001322	1.000049	discard	positive basin boundary: u_offset=0.85, Fourier 1-mode, newton_tol=1e-12	agent0	branch_search	0	-1.520921
+exp030	7.84071865e-14	0.000000	0.000000	discard	trivial branch at u_offset=0.3 (exceptional convergence zone)	agent1	initial_cond	0	-0.000000
+exp031	1.87283305e-14	1.001322	-1.000049	discard	boundary exploration: u_offset=0.60, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp032	4.64837533e-15	1.001322	1.000049	discard	positive basin boundary: u_offset=0.87, Fourier 1-mode	agent0	branch_search	1	-1.520921
+exp033	5.55111512e-17	1.001322	1.000049	discard	boundary exploration: u_offset=0.65, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp034	0.00000000e+00	0.000000	0.000000	discard	trivial branch at u_offset=0.42 (boundary phenomenon)	agent1	initial_cond	0	0.000000
+exp035	7.06541606e-16	1.001322	1.000049	discard	positive basin: u_offset=0.88, Fourier 1-mode	agent0	branch_search	0	-1.520921
+exp036	1.23959910e-20	0.000000	0.000000	discard	boundary sweep u_offset=0.40	agent1	initial_cond	0	-0.000000
+exp037	0.00000000e+00	0.000000	0.000000	discard	boundary sweep u_offset=0.42	agent1	initial_cond	1	0.000000
+exp038	1.53736176e-14	0.000000	0.000000	discard	boundary sweep u_offset=0.44	agent1	initial_cond	0	-0.000000
+exp039	1.18720923e-27	0.000000	0.000000	discard	boundary sweep u_offset=0.46	agent1	initial_cond	0	0.000000
+exp039	5.55111512e-17	1.001322	1.000049	discard	boundary refinement: u_offset=0.62, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp040	4.77524979e-16	1.001322	1.000049	discard	boundary sweep u_offset=0.48	agent1	initial_cond	1	-1.520921
+exp041	5.55111512e-17	1.001322	-1.000049	discard	boundary sweep u_offset=0.50	agent1	initial_cond	0	-1.520921
+exp042	5.55111512e-17	1.001322	-1.000049	discard	boundary sweep u_offset=0.52	agent1	initial_cond	1	-1.520921
+exp043	1.60209299e-13	1.001322	1.000049	discard	Fourier 1 mode, u_offset=0.85, explore basin	agent3	initial_cond	0	-1.520921
+exp044	5.55111512e-17	1.001322	1.000049	discard	boundary refinement: u_offset=0.61, Fourier 1-mode	agent2	branch_search	1	-1.520921
+exp045	5.55111512e-17	1.001322	1.000049	discard	extreme u_offset=1.5, Fourier 1-mode	agent0	branch_search	1	-1.520921
+exp046	5.55111512e-17	1.001322	1.000049	discard	Fourier 1 mode, u_offset=0.95, explore basin	agent3	initial_cond	0	-1.520921
+exp047	1.60209299e-13	1.001322	-1.000049	discard	Fourier 1 mode, u_offset=-0.85, negative branch	agent3	initial_cond	0	-1.520921
+exp048	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.5, Fourier 1-mode	agent0	branch_search	1	-1.520921
+exp049	5.55111512e-17	1.001322	-1.000049	discard	Fourier 1 mode, u_offset=-0.95, negative branch	agent3	initial_cond	0	-1.520921
+exp050	1.86168355e-13	1.001322	1.000049	discard	u_offset=0.49, Fourier 1-mode	agent0	branch_search	1	-1.520921
+exp051	5.55111512e-17	1.001322	1.000049	discard	negative branch boundary u_offset=-0.52	agent1	initial_cond	1	-1.520921
+exp052	5.55111512e-17	1.001322	1.000049	discard	negative branch boundary u_offset=-0.50	agent1	initial_cond	0	-1.520921
+exp053	4.77524979e-16	1.001322	-1.000049	discard	negative branch boundary u_offset=-0.48	agent1	initial_cond	0	-1.520921
+exp054	1.18720923e-27	0.000000	0.000000	discard	negative branch boundary u_offset=-0.46	agent1	initial_cond	0	0.000000
+exp055	1.53736176e-14	0.000000	-0.000000	discard	negative branch boundary u_offset=-0.44	agent1	initial_cond	0	-0.000000
+exp056	0.00000000e+00	0.000000	0.000000	discard	negative branch boundary u_offset=-0.42	agent1	initial_cond	1	0.000000
+exp057	1.23959910e-20	0.000000	-0.000000	discard	negative branch boundary u_offset=-0.40	agent1	initial_cond	0	-0.000000
+exp058	1.87283305e-14	1.001322	1.000049	discard	negative side boundary: u_offset=-0.60, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp059	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.51, Fourier 1-mode	agent0	branch_search	0	-1.520921
+exp060	1.22808404e-22	0.000000	-0.000000	discard	Fourier 64 modes, u_offset=0.46, trivial branch (SOTA config)	agent3	initial_cond	0	-0.000000
+exp061	5.55111512e-17	1.001322	-1.000049	discard	negative side boundary: u_offset=-0.61, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp062	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.495, Fourier 1-mode	agent0	branch_search	0	-1.520921
+exp063	5.55111512e-17	1.001322	1.000049	discard	negative side: u_offset=-0.50, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp064	2.26746963e-23	0.000000	-0.000000	discard	Fourier 32 modes, u_offset=0.46, trivial branch	agent3	initial_cond	0	-0.000000
+exp065	5.55111512e-17	1.001322	1.000049	discard	boundary refinement: u_offset=-0.55, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp066	4.03063660e-24	0.000000	0.000000	discard	Fourier 16 modes, u_offset=0.46, trivial branch	agent3	initial_cond	1	-0.000000
+exp067	4.77524979e-16	1.001322	1.000049	discard	boundary refinement: u_offset=-0.57, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp068	7.30211472e-25	0.000000	-0.000000	discard	Fourier 8 modes, u_offset=0.46, trivial branch	agent3	initial_cond	1	0.000000
+exp069	0.00000000e+00	0.000000	0.000000	discard	u_offset=0.42 with tighter newton_tol=1e-13	agent1	initial_cond	0	0.000000
+exp070	7.30211472e-25	0.000000	-0.000000	discard	u_offset=0.46 with 8 Fourier modes	agent1	initial_cond	1	0.000000
+exp071	4.03063660e-24	0.000000	0.000000	discard	u_offset=0.46 with 16 Fourier modes (high risk)	agent1	initial_cond	0	-0.000000
+exp072	0.00000000e+00	0.000000	0.000000	discard	Verify agent1 claim: u_offset=0.42 exact solution, Fourier 1-mode	agent0	branch_search	1	0.000000
+exp073	5.55111512e-17	1.001322	1.000049	discard	boundary refinement: u_offset=-0.59, Fourier 1-mode	agent2	branch_search	0	-1.520921
+exp074	1.34715656e-25	0.000000	0.000000	discard	Fourier 4 modes, u_offset=0.46, trivial branch	agent3	initial_cond	1	-0.000000
+exp075	1.18720923e-27	0.000000	0.000000	discard	u_offset=0.46 bifurcation point, 1 Fourier modes	agent1	initial_cond	0	0.000000
+exp076	6.60506822e-14	0.000000	0.000000	discard	u_offset=0.46 bifurcation point, 2 Fourier modes	agent1	initial_cond	1	-0.000000
+exp077	1.34715656e-25	0.000000	0.000000	discard	u_offset=0.46 bifurcation point, 4 Fourier modes	agent1	initial_cond	0	-0.000000
+exp078	7.30211472e-25	0.000000	-0.000000	discard	u_offset=0.46 bifurcation point, 8 Fourier modes	agent1	initial_cond	0	0.000000
+exp079	4.03063660e-24	0.000000	0.000000	discard	u_offset=0.46 bifurcation point, 16 Fourier modes	agent1	initial_cond	1	-0.000000
+exp080	2.26746963e-23	0.000000	-0.000000	discard	u_offset=0.46 bifurcation point, 32 Fourier modes	agent1	initial_cond	0	-0.000000
+exp081	6.60506822e-14	0.000000	0.000000	discard	Fourier 2 modes, u_offset=0.46, trivial branch	agent3	initial_cond	1	-0.000000
+exp082	0.00000000e+00	0.000000	0.000000	discard	trivial exact solution: u_offset=0.42, Fourier 1-mode	agent2	branch_search	0	0.000000
+exp083	5.55111512e-17	1.001322	1.000049	discard	Verify agent2 claim: u_offset=0.61 positive branch, Fourier 1-mode	agent0	branch_search	0	-1.520921
+exp084	1.18720923e-27	0.000000	0.000000	discard	trivial ultra-precision: u_offset=0.46, Fourier 1-mode	agent2	branch_search	0	0.000000
+exp085	1.18720923e-27	0.000000	0.000000	discard	Fourier 1 mode, u_offset=0.46, trivial branch	agent3	initial_cond	1	0.000000
+exp086	1.53736176e-14	0.000000	0.000000	discard	trivial: u_offset=0.44, Fourier 1-mode	agent2	branch_search	0	-0.000000
+exp087	5.55111512e-17	1.001322	-1.000049	discard	negative u_offset=-0.61, Fourier 1-mode	agent0	branch_search	0	-1.520921
+exp088	1.23959910e-20	0.000000	0.000000	discard	trivial: u_offset=0.40, Fourier 1-mode	agent2	branch_search	0	-0.000000
+exp089	6.83100350e-16	0.000000	0.000000	discard	trivial: u_offset=0.41, Fourier 1-mode	agent2	branch_search	0	-0.000000
+exp090	5.34206721e-13	1.001322	1.000049	discard	Fourier 1 mode, u_offset=0.9, amplitude=0.1, positive branch	agent3	initial_cond	0	-1.520921
+exp091	1.11019073e-21	0.000000	0.000000	discard	trivial: u_offset=0.43, Fourier 1-mode	agent2	branch_search	1	-0.000000
+exp092	5.55111512e-17	1.001322	1.000049	discard	Fourier 1 mode, u_offset=0.9, amplitude=0, positive branch baseline	agent3	initial_cond	1	-1.520921
+exp093	6.53772076e-23	0.000000	0.000000	discard	trivial: u_offset=0.45, Fourier 1-mode	agent2	branch_search	0	-0.000000
+exp094	1.34715656e-25	0.000000	0.000000	discard	u_offset=0.46 bifurcation point, 4 Fourier modes	agent0	branch_search	0	-0.000000
+exp095	5.55111512e-17	1.001322	1.000049	discard	Fourier 1 mode, u_offset=0.61, critical phase boundary	agent3	initial_cond	1	-1.520921
+exp096	1.18720923e-27	0.000000	0.000000	discard	u_offset=0.46 bifurcation, 1 Fourier mode (recheck)	agent0	branch_search	0	0.000000
+exp097	1.87283305e-14	1.001322	-1.000049	discard	Fourier 1 mode, u_offset=0.60, negative branch side of boundary	agent3	initial_cond	1	-1.520921
+exp098	5.55111512e-17	1.001322	1.000049	discard	Fourier 1 mode solver, n_mode=2 initial condition, positive branch	agent3	initial_cond	0	-1.520921
+exp099	5.55111512e-17	1.001322	1.000049	discard	Fourier 1 mode, phase=π, positive branch	agent3	initial_cond	1	-1.520921
+exp100	1.18720923e-27	0.000000	0.000000	discard	Fourier 1 mode, u_offset=-0.46, negative branch super-convergence zone	agent3	initial_cond	0	0.000000
+exp101	1.46750759e-18	0.000000	-0.000000	discard	u_offset=0.42 (exact point) with amplitude=0.1 perturbation	agent2	branch_search	0	-0.000000
+exp102	1.23959910e-20	0.000000	0.000000	discard	fine u_offset=0.400 sweep	agent1	initial_cond	0	-0.000000
+exp103	3.73854076e-18	0.000000	0.000000	discard	fine u_offset=0.405 sweep	agent1	initial_cond	1	-0.000000
+exp104	6.83100350e-16	0.000000	0.000000	discard	fine u_offset=0.410 sweep	agent1	initial_cond	0	-0.000000
+exp105	7.62949335e-14	0.000000	0.000000	discard	fine u_offset=0.415 sweep	agent1	initial_cond	1	-0.000000
+exp106	0.00000000e+00	0.000000	0.000000	discard	fine u_offset=0.420 sweep	agent1	initial_cond	0	0.000000
+exp107	1.30788739e-25	0.000000	-0.000000	discard	fine u_offset=0.425 sweep	agent1	initial_cond	0	-0.000000
+exp108	1.11019073e-21	0.000000	0.000000	discard	fine u_offset=0.430 sweep	agent1	initial_cond	1	-0.000000
+exp109	7.42651848e-18	0.000000	0.000000	discard	fine u_offset=0.435 sweep	agent1	initial_cond	0	-0.000000
+exp110	1.53736176e-14	0.000000	0.000000	discard	fine u_offset=0.440 sweep	agent1	initial_cond	1	-0.000000
+exp111	4.08714808e-27	0.000000	0.000000	discard	fine u_offset=0.445 sweep	agent1	initial_cond	0	-0.000000
+exp112	6.53772076e-23	0.000000	0.000000	discard	fine u_offset=0.450 sweep	agent1	initial_cond	0	-0.000000
+exp113	5.23347088e-17	0.000000	0.000000	discard	fine u_offset=0.455 sweep	agent1	initial_cond	1	-0.000000
+exp114	1.18720923e-27	0.000000	0.000000	discard	fine u_offset=0.460 sweep	agent1	initial_cond	0	0.000000
+exp115	4.11274547e-21	0.000000	0.000000	discard	fine u_offset=0.465 sweep	agent1	initial_cond	1	-0.000000
+exp116	3.16838557e-13	0.000000	0.000000	discard	fine u_offset=0.470 sweep	agent1	initial_cond	0	-0.000000
+exp117	6.53772076e-23	0.000000	-0.000000	discard	Fourier 1 mode, u_offset=-0.45, test boundary	agent3	initial_cond	0	-0.000000
+exp118	5.55111512e-17	1.001322	1.000049	discard	u_offset=0.46 (ultra-precision point) with amplitude=0.1 perturbation	agent2	branch_search	1	-1.520921
+exp119	1.18720923e-27	0.000000	0.000000	discard	u_offset=0.46 with phase=π	agent2	branch_search	0	0.000000
+exp120	5.55111512e-17	1.001322	1.000049	discard	Fourier 1 mode, u_offset=-0.50, bifurcation boundary	agent3	initial_cond	1	-1.520921
+exp121	1.18720923e-27	0.000000	0.000000	discard	u_offset=0.46 with n_mode=2 (mode-2 initial condition)	agent2	branch_search	0	0.000000
+exp121	1.53736176e-14	0.000000	0.000000	discard	ultra-fine u_offset=0.440	agent1	initial_cond	0	-0.000000
+exp122	6.19006866e-14	0.000000	0.000000	discard	ultra-fine u_offset=0.441	agent1	initial_cond	1	-0.000000
+exp123	2.38631642e-13	0.000000	0.000000	discard	ultra-fine u_offset=0.442	agent1	initial_cond	0	-0.000000
+exp124	9.42041086e-28	0.000000	-0.000000	discard	ultra-fine u_offset=0.443	agent1	initial_cond	1	-0.000000
+exp125	3.79405082e-27	0.000000	0.000000	discard	ultra-fine u_offset=0.444	agent1	initial_cond	0	-0.000000
+exp126	4.08714808e-27	0.000000	0.000000	discard	ultra-fine u_offset=0.445	agent1	initial_cond	0	-0.000000
+exp127	3.93726241e-26	0.000000	0.000000	discard	ultra-fine u_offset=0.446	agent1	initial_cond	1	-0.000000
+exp128	8.17429616e-26	0.000000	0.000000	discard	ultra-fine u_offset=0.447	agent1	initial_cond	0	-0.000000
