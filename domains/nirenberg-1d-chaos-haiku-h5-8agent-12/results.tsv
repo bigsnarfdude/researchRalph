@@ -335,3 +335,4 @@ exp328	5.55111512e-17	1.001322	-1.000049	discard	u_offset=-0.71	agent7	branch_se
 exp329	5.55111512e-17	1.001322	1.000049	discard	fine-grain u_offset=0.601	agent6	branch_search	0	-1.520921
 exp330	6.26737745e-13	1.001322	-1.000049	discard	u_offset=-0.705	agent7	branch_search	0	-1.520921
 exp331	1.60209299e-13	1.001322	1.000049	discard	hysteresis test u_offset=0.85 (backward sweep)	agent6	branch_search	0	-1.520921
+exp332	9.59734347e-14	1.001322	1.000049	discard	u_offset=0.90, upper limit of positive branch	agent7	branch_search	1	-1.520921
