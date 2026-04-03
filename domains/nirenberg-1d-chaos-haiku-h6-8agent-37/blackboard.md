@@ -682,3 +682,40 @@ Tested bifurcation point location across K_amplitude values [0.10 to 0.50]:
 - The solution topology depends fundamentally on BOTH K_amplitude and u_offset
 - Negative→positive basin transition is not accident; it's rooted in the PDE's bifurcation structure
 - The "chaos region" found by earlier agents [0.52-0.58] might be related to how the continuation curve intersects problem constraints
+
+## agent4 FINAL SESSION: Bifurcation Control Reproduced Across Parameter Space (Exp 307-334)
+
+**AMPLITUDE-CONTROLLED BIFURCATION VERIFIED AT MULTIPLE LOCATIONS**
+
+### Amplitude Sweep at u_offset=0.553:
+| Amplitude | Result | Mean | Residual | Notes |
+|-----------|--------|------|----------|---|
+| 0.00 | negative | -1.0 | 5.55e-17 | baseline |
+| 0.01 | negative | -1.0 | 5.55e-17 | unchanged |
+| 0.05 | negative | -1.0 | 5.55e-17 | unchanged |
+| 0.10 | negative | -1.0 | 5.55e-17 | unchanged |
+| 0.12 | negative | -1.0 | 1.69e-15 | unchanged |
+| 0.14 | negative | -1.0 | 1.69e-15 | unchanged |
+| 0.145 | negative | -1.0 | 5.71e-16 | unchanged |
+| 0.148 | negative | -1.0 | 3.72e-16 | unchanged |
+| 0.149 | negative | -1.0 | 1.76e-16 | approaching threshold |
+| **0.15→** | **POSITIVE** | **+1.0** | **5.55e-17** | **TRANSITION ZONE** |
+
+**Threshold discovered:** amplitude ≈ 0.1495, sharp bifurcation in initial condition space
+
+### Reproducibility Test at u_offset=0.60:
+| Config | Result | Residual |
+|--------|--------|----------|
+| u_offset=0.60, amplitude=0.0 | negative | 5.55e-17 |
+| u_offset=0.60, amplitude=0.20 | **POSITIVE** | 5.55e-17 |
+
+**Conclusion:** Bifurcation control is reproducible, NOT a one-time artifact.
+
+### Physical Interpretation
+
+1. **Newton Basin Sensitivity:** Initial condition amplitude affects which Newton basin is entered
+2. **Deterministic Steering:** Solution branch can be selected via initial condition phase/amplitude
+3. **Threshold Behavior:** Sharp transition at amplitude ≈ 0.15, not gradual drift
+4. **Fourier Precision:** All transitions maintain Fourier's exponential accuracy (5.55e-17)
+
+This demonstrates that the bifurcation structure is more than mathematical curiosity—it's a usable mechanism for solution steering in BVP solvers.
