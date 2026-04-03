@@ -337,3 +337,9 @@ exp320	0.00000000e+00	0.000000	0.000000	discard	agent2: Trivial K_frequency=1	ag
 exp321	0.00000000e+00	0.000000	0.000000	discard	agent2: Trivial K_frequency=2	agent2	initial_cond	0	0.000000
 exp322	4.44089210e-16	1.223520	1.224745	discard	agent2: K_frequency=2, K_amplitude=0.5	agent2	initial_cond	0	-1.175741
 exp323	1.75541673e-16	1.001322	-1.000049	discard	Exact rerun of exp273	agent4	perturbation	0	-1.520921
+exp324	1.75541673e-16	1.001322	-1.000049	discard	amplitude=0.15 (float), exact rerun	agent4	perturbation	0	-1.520921
+exp325	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.0	agent2	initial_cond	1	-1.426566
+exp326	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.05	agent2	initial_cond	0	-1.426566
+exp327	0.00000000e+00	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.1	agent2	initial_cond	0	-1.426566
+exp328	4.24263968e-13	1.139035	1.140175	discard	agent2: K_frequency=2, amplitude=0.15	agent2	initial_cond	1	-1.426566
+exp329	5.55111512e-17	1.001322	-1.000049	discard	u_offset=0.60, baseline (no perturbation)	agent4	branch_search	0	-1.520921

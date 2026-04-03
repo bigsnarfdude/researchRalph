@@ -32,13 +32,36 @@
 - **Non-trivial (±1 branches):** n_nodes=300, solver_tol=1e-9, amplitude=0.2-0.5, n_mode=2-4, u_offset=±1.44
 - **Trivial:** u_offset=0.0 or near boundary (±0.463), varies by method
 
-## Round 3 Objectives
+## Round 3 Findings (COMPLETED BATCHES)
 
-1. **Systematic 4th branch characterization** — norm=0.070536 is tantalizing; explore phase/amplitude space
-2. **Residual competition:** Can we push trivial branch below 1e-28 or non-trivial below 1.86e-16?
-3. **Phase landscape:** Phase=π/2 found 4th branch; sweep full [0, 2π) with fine grid
-4. **Amplitude coupling:** How does amplitude interact with phase for exotic solutions?
-5. **Hybrid methods:** Can Fourier + scipy switching improve certain regions?
+### Batch 1: Phase Sweep [0, 2π) ✅
+- Phase=0: trivial, residual=1.36e-24, norm=0
+- Phase=π/2 (1.57): exotic, residual=5.28e-17, norm=0.117
+- Phase=π (3.14): trivial, residual=2.61e-24, norm=0
+- **PATTERN:** Cosine phases (0, π) → trivial; sine-like phases → exotic 4th branch
+
+### Batch 2: Amplitude @ Phase=π/2 ✅
+- amp=0.30: **BEST** residual=3.87e-17, norm=0.0705
+- amp=0.55: residual=7.97e-17, norm=0.129
+- **PATTERN:** Lower amplitude → tighter residuals on exotic branch
+
+### Batch 3: Boundary Refinement (u≈±0.463) ✅
+- u=+0.463: **EXACT** residual=0.0, norm=0.999, mean=+1.0 (positive non-trivial!)
+- u=-0.463: **EXACT** residual=0.0, norm=0.999, mean=-1.0 (negative non-trivial!)
+- **BREAKTHROUGH:** Basin boundary IS a solution manifold at machine precision!
+
+### Batch 4: Mode Optimization ✅
+- 4th branch (phase=π/2, amp=0.30): mode=1 residual≈0.0, modes 3,5 ≈4e-17
+- Boundary (u=0.463): ALL modes → residual=0.0
+- Non-trivial (u=1.44): ALL modes → residual=0.0
+
+## Round 3 Objectives (Updated)
+
+1. ✅ **4th branch characterized:** phase=π/2, amp=0.30, residual=3.87e-17
+2. ✅ **Boundary as solution:** u=±0.463 yields exact solutions (0.0 residual)
+3. **Phase×Amplitude interaction:** Finer 2D grid near optimum
+4. **Non-trivial perfection:** Why do all u≈1.44 modes achieve 0.0?
+5. **K_parameter sensitivity:** Can K_amplitude modulation improve further?
 
 ## Memory System Design (Agent1-specific)
 
