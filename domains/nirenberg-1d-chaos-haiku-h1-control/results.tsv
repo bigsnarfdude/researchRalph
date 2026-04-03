@@ -5006,3 +5006,83 @@ exp3699	1.75906666e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initia
 exp3700	4.44261653e-17	0.070535	0.000000	discard	fine_grid phase=1.64 amp=0.30	agent1	perturbation	0	0.000099
 exp3701	1.75906666e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initial_cond	1	-0.000000
 exp3702	6.73123399e-17	0.082217	0.000000	discard	fine_grid phase=1.64 amp=0.35	agent1	perturbation	1	0.000216
+exp3703	1.11257917e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-0.000000
+exp3704	0.00000000e+00	0.998999	1.000000	discard	symmetric_boundary pos u=0.462 fourier=2	agent1	branch_search	0	-1.567655
+exp3705	1.11257917e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-0.000000
+exp3706	0.00000000e+00	0.998999	-1.000000	discard	symmetric_boundary neg u=-.462 fourier=2	agent1	branch_search	1	-1.567655
+exp3707	1.11257917e-28	0.000000	0.000000	discard	cycle 16 u=0.1050	agent0	initial_cond	0	-0.000000
+exp3708	0.00000000e+00	0.998999	1.000000	discard	symmetric_boundary pos u=0.4625 fourier=2	agent1	branch_search	0	-1.567655
+exp3709	8.58580947e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3710	0.00000000e+00	0.998999	-1.000000	discard	symmetric_boundary neg u=-.4625 fourier=2	agent1	branch_search	0	-1.567655
+exp3711	8.58580947e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	1	0.000000
+exp3712	0.00000000e+00	0.998999	1.000000	discard	symmetric_boundary pos u=0.4630 fourier=2	agent1	branch_search	1	-1.567655
+exp3713	8.58580947e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3714	0.00000000e+00	0.998999	-1.000000	discard	symmetric_boundary neg u=-.4630 fourier=2	agent1	branch_search	0	-1.567655
+exp3715	5.23962023e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3716	0.00000000e+00	0.998999	1.000000	discard	symmetric_boundary pos u=0.4635 fourier=2	agent1	branch_search	0	-1.567655
+exp3717	5.23962023e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	1	0.000000
+exp3718	0.00000000e+00	0.998999	-1.000000	discard	symmetric_boundary neg u=-.4635 fourier=2	agent1	branch_search	0	-1.567655
+exp3719	5.23962023e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3720	8.88178420e-16	0.998999	1.000000	discard	symmetric_boundary pos u=0.4640 fourier=2	agent1	branch_search	0	-1.567655
+exp3721	4.03266298e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3722	8.88178420e-16	0.998999	-1.000000	discard	symmetric_boundary neg u=-.4640 fourier=2	agent1	branch_search	1	-1.567655
+exp3723	4.03266298e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3724	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=0.85 fourier=2 tol=1e-9	agent1	branch_search	0	-1.567655
+exp3725	4.03266298e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3726	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=0.95 fourier=2 tol=1e-9	agent1	branch_search	0	-1.567655
+exp3727	4.80015937e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	1	0.000000
+exp3728	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=1.05 fourier=2 tol=1e-9	agent1	branch_search	0	-1.567655
+exp3729	4.80015937e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3730	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=1.15 fourier=2 tol=1e-9	agent1	branch_search	0	-1.567655
+exp3731	4.80015937e-29	0.000000	0.000000	discard	cycle 17 u=0.0975	agent0	initial_cond	0	0.000000
+exp3732	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=1.25 fourier=2 tol=1e-9	agent1	branch_search	1	-1.567655
+exp3733	2.68824537e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	1	-0.000000
+exp3734	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=1.35 fourier=2 tol=1e-9	agent1	branch_search	0	-1.567655
+exp3735	2.68824537e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	0	-0.000000
+exp3736	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=1.45 fourier=2 tol=1e-9	agent1	branch_search	0	-1.567655
+exp3737	2.68824537e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	1	-0.000000
+exp3738	0.00000000e+00	0.998999	1.000000	discard	nontrivial_scan u=1.55 fourier=2 tol=1e-9	agent1	branch_search	1	-1.567655
+exp3739	6.16758073e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	0	-0.000000
+exp3740	0.00000000e+00	0.998999	1.000000	discard	boundary fourier_modes=2	agent1	solver_param	0	-1.567655
+exp3741	6.16758073e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	0	-0.000000
+exp3742	0.00000000e+00	0.998999	1.000000	discard	boundary fourier_modes=4	agent1	solver_param	1	-1.567655
+exp3743	6.16758073e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	1	-0.000000
+exp3744	0.00000000e+00	0.998999	1.000000	discard	boundary fourier_modes=8	agent1	solver_param	0	-1.567655
+exp3745	2.01926478e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	0	0.000000
+exp3746	0.00000000e+00	0.998999	1.000000	discard	boundary fourier_modes=16	agent1	solver_param	0	-1.567655
+exp3747	3.84592606e-16	1.001296	1.000019	discard	cycle 17 u=0.0980	agent0	initial_cond	0	-1.520844
+exp3748	0.00000000e+00	0.998999	1.000000	discard	boundary fourier_modes=32	agent1	solver_param	1	-1.567655
+exp3748	2.01926478e-29	0.000000	0.000000	discard	Fourier 4 u=0.9 retry 1	agent0	solver_param	1	0.000000
+exp3749	2.01926478e-29	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	0	0.000000
+exp3750	1.30310780e-28	0.000000	0.000000	discard	Fourier 4 u=0.9 retry 2	agent0	solver_param	0	-0.000000
+exp3751	1.30310780e-28	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	0	-0.000000
+exp3752	1.30310780e-28	0.000000	0.000000	discard	Fourier 4 u=0.9 retry 3	agent0	solver_param	1	-0.000000
+exp3752	1.30310780e-28	0.000000	0.000000	discard	cycle 17 u=0.0980	agent0	initial_cond	1	-0.000000
+exp3753	3.84592606e-16	1.001296	1.000019	discard	cycle 17 u=0.0980	agent0	initial_cond	0	-1.520844
+exp3753	3.84592606e-16	1.001296	1.000019	discard	Fourier 4 u=0.9 retry 4	agent0	solver_param	0	-1.520844
+exp3754	3.84592606e-16	1.001296	1.000019	discard	cycle 17 u=0.0982	agent0	initial_cond	0	-1.520844
+exp3755	3.84592606e-16	1.001296	1.000019	discard	Fourier 4 u=0.9 retry 5	agent0	solver_param	0	-1.520844
+exp3756	5.45343271e-29	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	1	-0.000000
+exp3757	5.45343271e-29	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	0	-0.000000
+exp3758	1.23429977e-28	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	0	0.000000
+exp3759	1.23429977e-28	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	0	0.000000
+exp3760	1.23429977e-28	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	0	0.000000
+exp3761	1.88036672e-29	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	1	0.000000
+exp3762	1.88036672e-29	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	0	0.000000
+exp3763	1.88036672e-29	0.000000	0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	0	0.000000
+exp3764	1.91190259e-29	0.000000	-0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	1	0.000000
+exp3765	1.91190259e-29	0.000000	-0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	0	0.000000
+exp3766	1.91190259e-29	0.000000	-0.000000	discard	cycle 17 u=0.0982	agent0	initial_cond	1	0.000000
+exp3767	6.13049994e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	0.000000
+exp3768	6.13049994e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	0.000000
+exp3769	6.13049994e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	1	0.000000
+exp3770	5.49750971e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	0.000000
+exp3771	5.49750971e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	0.000000
+exp3772	5.49750971e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	1	0.000000
+exp3773	4.15642452e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	0.000000
+exp3774	4.15642452e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	1	0.000000
+exp3775	4.15642452e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	0.000000
+exp3776	2.19292611e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	-0.000000
+exp3777	2.19292611e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	1	-0.000000
+exp3778	2.19292611e-29	0.000000	0.000000	discard	cycle 17 u=0.0985	agent0	initial_cond	0	-0.000000
+exp3779	4.22491788e-29	0.000000	0.000000	discard	cycle 17 u=0.0990	agent0	initial_cond	0	-0.000000

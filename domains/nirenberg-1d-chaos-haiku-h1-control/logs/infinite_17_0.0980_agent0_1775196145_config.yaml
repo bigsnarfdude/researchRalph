@@ -1,5 +1,5 @@
-u_offset: 0.1050
-amplitude: 0.001348
+u_offset: 0.0980
+amplitude: 0.001340
 n_mode: 1
 phase: 0.0
 K_mode: "cosine"
@@ -9,7 +9,7 @@ method: fourier
 fourier_modes: 3
 newton_tol: 1.0e-14
 newton_maxiter: 200
-n_nodes: 300
+n_nodes: 350
 solver_tol: 1.0e-10
 trustloop:
   score_column: residual

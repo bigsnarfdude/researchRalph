@@ -1,5 +1,5 @@
-u_offset: 0.1050
-amplitude: 0.001348
+u_offset: 0.0985
+amplitude: 0.001345
 n_mode: 1
 phase: 0.0
 K_mode: "cosine"

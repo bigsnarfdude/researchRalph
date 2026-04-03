@@ -500,3 +500,68 @@ Machine-precision convergence (residual ≈ 1e-19) achievable in trivial branch:
 4. **Solver mode selection**: Test other BVP solvers (not just scipy COLSYS)
 5. **Bifurcation analysis**: Continuation in K_amplitude to trace bifurcation lines
 
+
+## agent2 Extended Exploration: K_frequency Resonance Details (Exp 310-345)
+
+**Discovery refinement: K_frequency parity is a robust resonance, sensitive only to amplitude perturbations, robust to phase.**
+
+### Amplitude Threshold for K_frequency=2 Exactness (u_offset=0.9):
+
+| Amplitude | Residual | Category |
+|-----------|----------|----------|
+| 0.00 | 0.0 (exact) | Resonant |
+| 0.05 | 0.0 (exact) | Resonant |
+| 0.10 | 0.0 (exact) | Resonant |
+| **0.110** | **0.0 (exact)** | **← Critical boundary** |
+| 0.120 | 1.11e-15 | Degraded |
+| 0.125 | 2.91e-15 | Degraded |
+| 0.130 | 7.23e-15 | Degraded |
+| 0.150 | 4.24e-13 | Severely degraded |
+
+**Critical insight:** K_frequency=2 exactness survives perturbations up to amplitude≈0.115, then transitions sharply to exponential degradation.
+
+### Phase Robustness (K_frequency=2, K_amplitude=0.3, u_offset=0.9):
+
+| Phase (radians) | Residual | Note |
+|---|---|---|
+| 0.0 | 0.0 (exact) | Base |
+| 0.785 (π/4) | 0.0 (exact) | Phase shift: no effect |
+| 1.571 (π/2) | 0.0 (exact) | Perpendicular mode: no effect |
+| 3.142 (π) | 0.0 (exact) | Flipped mode: no effect |
+
+**Interpretation:** Exactness depends on K_frequency matching problem resonance, NOT on how the initial perturbation is "shaped" (phase). The amplitude threshold suggests a bifurcation-like transition in the solution manifold's complexity.
+
+### Remaining Parameter Space to Explore
+
+1. **Higher K_frequency:** Test K_frequency=7,8,9,10 to confirm parity holds indefinitely
+2. **Negative amplitude branches:** Does negative n_mode parameter show different behavior?
+3. **n_mode variation:** Current tests use n_mode=1; does n_mode=2,3 show parity effects?
+4. **Bifurcation mechanism:** Why exactly does amplitude≈0.115 break exactness? (Investigate energy/Lyapunov structure)
+5. **Isolated positive pocket:** Agent1 mentioned u_offset=-0.50 has isolated positive branch—map this with Fourier
+6. **K_amplitude sub-structure:** Test K_amplitude ∈ [0.0, 1.0] at K_frequency=2 to find other resonant values
+
+### Synthesis: Multi-Parameter Control of Solution Exactness
+
+The BVP has a **hidden control landscape**:
+
+```
+EXACT_SOLUTION = (K_frequency is even) AND 
+                 (K_amplitude ≤ threshold(K_freq)) AND
+                 (amplitude ≤ 0.115)
+                 
+TIGHT_CONVERGENCE = (K_frequency is odd) → residual ≈ 5.55e-17
+                    (independent of amplitude/phase for small perturbations)
+```
+
+This suggests the solution manifold has **cusp-like bifurcation structure** where:
+- **Branch 1 (even K_freq):** Exact solutions, limited amplitude basin
+- **Branch 2 (odd K_freq):** Near-exact solutions via exponential Fourier convergence, unlimited amplitude support
+
+The phase-robustness but amplitude-sensitivity indicates this is a **classical saddle-node or limit point bifurcation** in amplitude space, not a pitchfork (which would be phase-sensitive).
+
+### Recommended Next Steps
+
+1. Map the full (K_frequency, amplitude) control diagram
+2. Investigate why amplitude≈0.115 is special (connection to problem eigenvalues or resonances?)
+3. Implement continuation method to trace bifurcation curves as K_frequency varies
+4. Compare with theoretical bifurcation prediction from the Nirenberg problem's known structure
