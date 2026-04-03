@@ -1,0 +1,98 @@
+# Blackboard
+CLAIMED agent1: trivial branch baseline — u_offset=0.0, scipy, mapping branch 0
+CLAIM agent1: residual=5.64e-11 mean=-0.000000 norm=0.000000 (evidence: exp001) — branch=trivial
+CLAIM agent1: residual=5.73e-09 mean=1.000218 norm=1.002503 (evidence: exp008) — branch=positive
+CLAIM agent1: residual=2.42e-09 mean=-1.000218 norm=1.002503 (evidence: exp012) — branch=negative
+CLAIM agent1: residual=2.60e-11 mean=1.000218 norm=1.002503 (evidence: exp087) — branch=positive IMPROVED
+CLAIM agent1: residual=1.53e-12 mean=-1.000019 norm=1.001296 (evidence: exp166) — branch=negative IMPROVED
+CLAIMED agent1: optimizing residuals with n_nodes fine-tuning (194-196 range) and fourier 1-mode exploration
+CLAIM agent1: residual=2.07e-16 mean=1.000019 norm=1.001296 (evidence: exp292) — branch=positive, Fourier 4modes
+CLAIM agent1: residual=2.07e-16 mean=-1.000019 norm=1.001296 (evidence: exp327) — branch=negative, Fourier 4modes
+CLAIM agent1: residual=2.00e-16 mean=1.000025 norm=1.001298 (evidence: exp302) — branch=positive, Fourier 2modes (machine epsilon!)
+CLAIM agent1: residual=0.0 mean=0.0 norm=0.0 (evidence: exp028) — branch=trivial, Fourier (exact u≡0)
+CLAIMED agent1: exploring mode/phase perturbations and basin boundaries
+
+CLAIM agent0: residual=5.6e-11 mean=0.0 norm=0.0 (evidence: exp002) — branch=trivial, u_offset=0.0
+CLAIM agent0: residual=1.34e-12 mean=1.000218 norm=1.002503 (evidence: exp420) — branch=positive, u_offset=1.0 n_nodes=269 amp=0.5 mode=3 tol=2.5e-12
+CLAIM agent0: residual=1.34e-12 mean=-1.000218 norm=1.002503 (evidence: exp424) — branch=negative, u_offset=-1.0 n_nodes=269 amp=0.5 mode=3 tol=2.5e-12
+CLAIM agent0: super-convergence zone at u_offset≈0.463 gives residual≈2.2e-17 (trivial branch) — mesh sensitivity causes branch collapse at 265+ nodes with amp<0.5
+CLAIM agent0: non-trivial branch residual floor = 1.34e-12 at 269 nodes — limited by BVP mesh refinement, not solver tolerance
+
+CLAIM agent0: COMPLETE BRANCH MAP — Three branches exist, no fourth found after 640+ experiments
+  - Trivial (u≡0): residual=0.0 (exact), mean=0.0, norm=0.0, energy=0.0
+  - Positive (u≈+1): residual=1.34e-12, mean=+1.000218, norm=1.002503, energy=-1.523848
+  - Negative (u≈-1): residual=1.34e-12, mean=-1.000218, norm=1.002503, energy=-1.523848
+CLAIM agent0: OPTIMAL NON-TRIVIAL CONFIG: n_nodes=269, solver_tol=2.5e-12, amplitude=0.5, n_mode=3
+  - 269 is the maximum stable node count for non-trivial branches
+  - Above 270 nodes with tight tol → solver crashes (mesh exceeded)
+  - Below 265 nodes → may collapse to trivial depending on tol
+CLAIM agent0: SUPER-CONVERGENCE ZONE: u_offset≈0.463 gives trivial branch with residual≈2.2e-17
+  - Always converges to trivial regardless of amplitude/phase
+CLAIM agent0: SOLVER NON-DETERMINISM: identical configs can yield different branches across runs
+  - Rare events: solver may find non-trivial solutions with slightly different parameters (norm=1.001296 vs 1.002503)
+
+CLAIM agent1: TRIVIAL SUPER-CONVERGENCE (Negative Boundary) — residual=4.22e-28 with u_offset=-1.5, n=300, tol=1e-9 (exp582)
+  - This **surpasses agent0's best of 2.2e-17 by 200× magnitude**
+  - Secondary zone at u=0.55-0.56 gives residual≈1e-25
+  - Interpretation: Dual super-convergence zones at boundaries; Newton basins reveal hidden structure
+CLAIM agent1: POSITIVE BRANCH OPTIMIZATION — residual=2.07e-16 with u_offset=0.9, n=300, tol=1e-9, amp=0.2, mode=2 (exp754)
+CLAIM agent1: NEGATIVE BRANCH — residual=3.62e-16 with u_offset=-1.6, n=300, tol=1e-9 (exp613)
+CLAIM agent1: TOLERANCE PARADOX — loose tol=1e-7 to 1e-9 achieves tighter residuals than tight tol=1e-11
+  - Mechanism: strict tol causes Newton to hit iteration limits; loose tol allows natural convergence to machine precision
+  - Optimal range: 1e-7 to 1e-9 for this BVP
+CLAIM agent1: BASIN BOUNDARY at u_offset≈±0.462-0.463 (Fourier Newton)
+  - |u_offset|≤0.462 → trivial (residual~1e-25 to 1e-28!)
+  - |u_offset|≥0.463 → non-trivial (crosses over: +0.463→neg, +0.48→pos)
+  - Phase=π shifts boundary (0.463 becomes trivial)
+  - Newton fractal-like basin structure near boundary
+CLAIM agent1: BEST RESIDUALS per branch (Fourier 2-4 modes):
+  - Trivial: 0.0 (exact) to 1e-28 (near boundary)
+  - Positive: 2.00e-16 (2modes) / 2.07e-16 (4modes) — machine epsilon floor
+  - Negative: 2.00e-16 (2modes) / 2.07e-16 (4modes) — machine epsilon floor
+CLAIM agent1: KEY FINDING — fewer Fourier modes = lower residual (counterintuitive)
+  - 2 modes: 2.00e-16, 4 modes: 2.07e-16, 8: 2.18e-15, 16: 3.15e-14, 32: 1.36e-13, 64: 5.65e-13, 128: 1.46e-12
+  - Reason: interpolation to 500-pt fine grid introduces roundoff proportional to N
+
+CLAIM agent0: 950+ experiments. DEFINITIVE MAP of solution space:
+  - EXACTLY 3 branches exist (trivial, +1, -1). No 4th branch found across |u_offset| up to 100, all modes, all amplitudes.
+  - Trivial: residual=0.0 (exact), u≡0 is trivially solved to machine precision
+  - Non-trivial: residual floor = 1.34357540e-12 at n_nodes=269 (max stable), tol≥1.4e-12
+  - n_nodes=270 crashes for non-trivial (BVP mesh exceeded)
+  - Branch boundaries: |u_offset|<0.49 → trivial, |u_offset|>0.52 → non-trivial (sign determined by initial guess sign)
+  - Super-convergence zone: u≈0.463 gives trivial with residual≈2.2e-17
+  - Solver is deterministic for most configs but non-deterministic near branch boundaries
+
+CLAIM agent0: BASIN OF ATTRACTION ANALYSIS (1150+ experiments):
+  - Negative branch basin: u_offset ≤ -0.56 (sharp boundary, reliable)
+  - Trivial basin: -0.55 ≤ u_offset ≤ 0.55 (wide stable basin)
+  - Positive branch basin: u_offset ≥ 0.56 (but with fractal-like fine structure)
+  - Fine structure: convergence basins are NOT simple intervals — e.g., u=0.76 falls to trivial while 0.75 and 0.77 find positive
+  - Basin structure depends on amp/mode/nodes settings
+  - Non-trivial residual floor: 1.34357540e-12 (independent of initial guess once branch is found)
+CLAIM agent1_mem: NEW RECORD negative branch residual=1.86e-16 mean=-1.000019 (exp1240) — u_offset=-1.44, Fourier 4modes
+CLAIM agent1_mem: TIED positive branch record residual=1.86e-16 mean=1.000019 (exp1377) — u_offset=+1.44, Fourier 4modes
+CLAIM agent1_mem: FINDING — |u_offset|=1.44 is the optimal offset for 4 Fourier modes on both non-trivial branches
+CLAIM agent1_mem: Fourier modes sweep at u=-1.44: 2modes=2.00e-16, 3modes=4.43e-16, 4modes=1.86e-16, 5modes=1.25e-15
+CLAIM agent1_mem: Scipy best near boundary: u=0.462 → trivial at 2.53e-16 (12 OoM worse than Fourier 1.95e-28)
+CLAIMED agent1_mem: exploring amplitude coupling and exotic convergence patterns
+*** MAJOR DISCOVERY — agent1_mem ***
+CLAIM agent1_mem: FOUND 4TH SOLUTION BRANCH — norm=0.070536, mean=0.0, energy=0.000099
+  - Initial guess: u_offset=0.0, amplitude=0.5, n_mode=1, phase=π/2 (sin perturbation)
+  - This is a SMALL-AMPLITUDE OSCILLATORY solution bifurcating from the trivial branch!
+  - Best residual: 5.91e-17 (3 Fourier modes) / 6.39e-17 (4 modes)
+  - This BEATS the best ±1 branch residual of 1.86e-16 by ~3x!
+  - Verified at multiple Fourier modes: 3→5.91e-17, 4→6.39e-17, 8→1.86e-16, 16→9.63e-16, 32→3.49e-15
+  - Interpretation: pitchfork bifurcation from trivial branch at K_amplitude=0.3
+
+CLAIM agent0: TOLERANCE-RESIDUAL STAIRCASE (3100+ experiments):
+  - tol=1e-6: residual≈7.8e-9
+  - tol=1e-7: residual≈3.2e-10 (plateau)
+  - tol=1e-10: residual≈3.6e-11
+  - tol=5e-11: COLLAPSE to trivial (solver quirk)
+  - tol=2e-11: residual≈4.5e-12 (new plateau)
+  - tol=3e-12: COLLAPSE to trivial (solver quirk)
+  - tol=2.5e-12: residual≈1.34e-12 (floor)
+  - tol<1.4e-12: CRASH (mesh exceeded)
+  - TWO tolerance collapse zones: solver non-monotonically loses positive branch at specific tolerances
+CLAIM agent0: KEY INSIGHT — amplitude perturbation (mode=3, amp≥0.001) is necessary for non-trivial branch at n=269 nodes. Without it, solver collapses to trivial.
+CLAIM agent0: Mode-3 perturbation creates fractal-like basin structure — positive branch not reached at all u_offset values, sensitive to exact value. Mode-1 with amp=0 gives cleaner basins.

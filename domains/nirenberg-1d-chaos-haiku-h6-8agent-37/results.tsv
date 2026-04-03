@@ -1,0 +1,235 @@
+exp001	0.00000000e+00	0.000000	0.000000	keep	u_offset=0, test trivial branch	agent0	initial_cond	1	0.000000
+exp002	crash	0	0	crash	u_offset=0.9, hunt positive branch	agent0	initial_cond	0	0
+exp003	crash	0	0	crash	u_offset=0.5, smaller positive offset	agent0	initial_cond	1	0
+exp004	9.15022415e-21	0.000000	0.000000	keep	u_offset=0.1, gentle perturbation from trivial	agent0	initial_cond	0	-0.000000
+exp005	0.00000000e+00	0.000000	0.000000	keep	trivial branch, scipy n=196 tol=1e-12, u_offset=0	agent1	initial_cond	1	0.000000
+exp006	2.07993308e-10	1.002503	1.000218	discard	u_offset=0.7, tol=1e-8, relax solver	agent0	solver_param	0	-1.523848
+exp007	2.60019368e-11	1.002503	1.000218	discard	u_offset=0.7, tol=1e-10, refine positive	agent0	solver_param	0	-1.523848
+exp008	0.00000000e+00	0.000000	0.000000	discard	agent2: trivial branch baseline, u_offset=0	agent2	initial_cond	1	0.000000
+exp009	2.60019365e-11	1.002503	-1.000218	discard	u_offset=-0.7, hunt negative branch	agent0	branch_search	0	-1.523848
+exp010	3.25175408e-12	1.002503	1.000218	discard	positive branch, scipy n=300 tol=1e-11, u_offset=0.9	agent1	initial_cond	0	-1.523848
+exp011	0.00000000e+00	0.000000	0.000000	discard	trivial branch test, u_offset=0.0	agent3	initial_cond	0	0.000000
+exp012	0.00000000e+00	0.000000	0.000000	discard	positive branch test, u_offset=0.9	agent3	initial_cond	0	0.000000
+exp013	crash	0	0	crash	agent2: positive branch hunt, u_offset=0.9	agent2	initial_cond	0	0
+exp014	crash	0	0	crash	positive branch, u_offset=0.9	agent3	initial_cond	1	0
+exp015	3.25175408e-12	1.002503	1.000218	discard	agent2: positive branch, u_offset=0.9, n_nodes=300, tol=1e-11	agent2	initial_cond	0	-1.523848
+exp016	2.20823255e-15	0.000000	-0.000000	discard	positive branch conservative, u_offset=0.5 amp=0.1	agent3	initial_cond	0	-0.000000
+exp017	2.07993383e-10	1.002503	1.000218	discard	u_offset=0.6, tol=1e-9, boundary search	agent0	branch_search	0	-1.523848
+exp018	crash	0	0	crash	negative branch, u_offset=-0.9 amp=0.1	agent3	initial_cond	0	0
+exp019	3.25175408e-12	1.002503	-1.000218	discard	agent2: negative branch hunt, u_offset=-0.9, n_nodes=300, tol=1e-11	agent2	initial_cond	1	-1.523848
+exp020	7.01894433e-10	1.002503	-1.000218	discard	u_offset=0.55, tol=1e-9, find minimum positive offset	agent0	branch_search	0	-1.523848
+exp021	9.37325052e-11	1.002503	-1.000218	discard	test bifurcation region at u_offset=0.55 with tol=1e-10	agent4	branch_search	0	-1.523848
+exp022	3.25175165e-12	1.002503	1.000218	discard	positive branch high precision u_offset=0.6	agent3	initial_cond	0	-1.523848
+exp023	9.37325053e-11	1.002503	1.000218	discard	u_offset=0.60, tol=1e-10	agent4	branch_search	0	-1.523848
+exp024	1.58906086e-13	0.000000	0.000000	discard	u_offset=0.52, tol=1e-9, bifurcation boundary	agent0	branch_search	1	-0.000000
+exp025	3.25175408e-12	1.002503	-1.000218	discard	negative branch high precision u_offset=-0.9	agent3	initial_cond	1	-1.523848
+exp026	3.25175408e-12	1.002503	-1.000218	discard	negative branch, scipy n=300 tol=1e-11, u_offset=-0.9	agent1	initial_cond	0	-1.523848
+exp027	4.43916024e-13	0.000000	0.000000	discard	u_offset=0.575, tol=1e-10	agent4	branch_search	0	-0.000000
+exp028	2.60019365e-11	1.002503	1.000218	discard	agent2: positive branch refinement, u_offset=0.9, tol=1e-10	agent2	initial_cond	1	-1.523848
+exp029	3.25175408e-12	1.002503	1.000218	discard	u_offset=0.9, tol=1e-11, match agent2	agent0	solver_param	1	-1.523848
+exp030	1.62856581e-12	0.000000	0.000000	discard	u_offset=0.565, tol=1e-10	agent4	branch_search	0	-0.000000
+exp031	0.00000000e+00	0.000000	0.000000	discard	Trivial scipy n=300 tol=1e-11 (SOTA reproduction)	agent5	solver_param	0	0.000000
+exp032	5.62802405e-12	1.002503	1.000218	discard	agent2: positive branch, u_offset=0.9, n_nodes=250, tol=1e-11	agent2	initial_cond	0	-1.523848
+exp033	1.06157302e-12	0.000000	0.000000	discard	u_offset=0.557, tol=1e-10	agent4	branch_search	0	-0.000000
+exp034	crash	0	0	crash	u_offset=0.9, tol=1e-13, push ultra-tight	agent0	solver_param	0	0
+exp035	0.00000000e+00	0.000000	0.000000	discard	Reproduce trivial branch baseline: u_offset=0, n_nodes=196, solver_tol=1e-12	agent6	initial_cond	0	0.000000
+exp036	5.62802405e-12	1.002503	1.000218	discard	u_offset=0.9, n_nodes=250, test coarser mesh	agent0	solver_param	1	-1.523848
+exp037	9.37325053e-11	1.002503	-1.000218	discard	u_offset=0.552, tol=1e-10	agent4	branch_search	0	-1.523848
+exp038	crash	0	0	crash	positive branch tol=1e-15 u_offset=0.9	agent3	solver_param	1	0
+exp039	3.25175165e-12	1.002503	1.000218	discard	u_offset=0.9, n_mode=2, amp=0.05, test mode-2	agent0	perturbation	0	-1.523848
+exp040	2.22195257e-13	0.000000	0.000000	discard	u_offset=0.554, tol=1e-10	agent4	branch_search	1	-0.000000
+exp041	3.25175408e-12	1.002503	1.000218	discard	agent2: positive branch, u_offset=0.9, n_nodes=300, tol=1e-11, phase=π	agent2	initial_cond	0	-1.523848
+exp042	5.62802405e-12	1.002503	1.000218	discard	Positive branch, n=250, tol=1e-11	agent5	solver_param	0	-1.523848
+exp043	3.25175408e-12	1.002503	1.000218	discard	Positive branch: u_offset=0.9, n_nodes=300, solver_tol=1e-11	agent6	initial_cond	1	-1.523848
+exp044	crash	0	0	crash	positive branch tol=1e-13 u_offset=0.9	agent3	solver_param	0	0
+exp045	9.37325052e-11	1.002503	-1.000218	discard	u_offset=0.580, tol=1e-10	agent4	branch_search	0	-1.523848
+exp046	3.25175165e-12	1.002503	1.000218	discard	u_offset=0.9, n_mode=2, phase=π/2, test phase shift	agent0	perturbation	1	-1.523848
+exp047	3.25175408e-12	1.002503	-1.000218	discard	Negative branch: u_offset=-0.9, n_nodes=300, solver_tol=1e-11	agent6	initial_cond	0	-1.523848
+exp048	crash	0	0	crash	positive branch n_nodes=400 tol=1e-12	agent3	solver_param	1	0
+exp049	9.37325053e-11	1.002503	-1.000218	discard	u_offset=0.585, tol=1e-10	agent4	branch_search	0	-1.523848
+exp050	3.25175165e-12	1.002503	1.000218	discard	u_offset=0.9, n_mode=2, amp=0.2, strong perturbation	agent0	perturbation	0	-1.523848
+exp051	6.91346780e-13	0.000000	0.000000	discard	u_offset=0.577, tol=1e-10	agent4	branch_search	0	-0.000000
+exp052	3.25175165e-12	1.002503	1.000218	discard	positive basin map u_offset=0.75	agent3	branch_search	0	-1.523848
+exp053	3.25175408e-12	1.002503	1.000218	discard	positive branch scipy n=300 tol=1e-11 per calibration.md	agent7	solver_param	1	-1.523848
+exp054	0.00000000e+00	0.000000	0.000000	discard	agent2: trivial branch Fourier spectral, 64 modes, newton_tol=1e-12	agent2	initial_cond	0	0.000000
+exp055	3.25175165e-12	1.002503	-1.000218	discard	chaos basin 0.54 tol=1e-11	agent3	branch_search	0	-1.523848
+exp056	2.60019365e-11	1.002503	-1.000218	discard	chaos basin 0.54 tol=1e-10	agent3	branch_search	1	-1.523848
+exp057	5.55111512e-17	1.001322	1.000049	discard	agent2: positive branch Fourier 1 mode, u_offset=0.9, newton_tol=1e-12	agent2	initial_cond	1	-1.520921
+exp058	4.37799025e-17	0.000000	0.000000	discard	chaos basin 0.56 tol=1e-11	agent3	branch_search	1	-0.000000
+exp059	crash	0	0	crash	u_offset=0.590, tol=1e-10	agent4	branch_search	1	0
+exp060	5.55111512e-17	1.001322	-1.000049	discard	agent2: negative branch Fourier 1 mode, u_offset=-0.9, newton_tol=1e-12	agent2	initial_cond	1	-1.520921
+exp061	2.77742307e-11	1.002503	1.000218	discard	u_offset=0.595, tol=1e-10	agent4	branch_search	0	-1.523848
+exp062	1.59144273e-19	0.000000	0.000000	discard	Chaos map: u_offset=0.53, tol=1e-10	agent5	branch_search	0	-0.000000
+exp063	3.25175165e-12	1.002503	-1.000218	discard	chaos basin 0.55 tol=1e-11	agent3	branch_search	1	-1.523848
+exp064	2.77741031e-11	1.002503	-1.000218	discard	u_offset=0.587, tol=1e-10	agent4	branch_search	0	-1.523848
+exp065	9.37325053e-11	1.002503	-1.000218	discard	Chaos map: u_offset=0.54, tol=1e-10	agent5	branch_search	0	-1.523848
+exp066	2.00148302e-16	1.001298	1.000025	discard	agent2: positive branch Fourier 2 modes, u_offset=0.9	agent2	initial_cond	0	-1.520921
+exp067	3.54360651e-19	0.000000	0.000000	discard	chaos basin 0.53 tol=1e-11	agent3	branch_search	0	-0.000000
+exp068	2.60019365e-11	1.002503	1.000218	discard	Tolerance sweep: positive, u_offset=0.9, n_nodes=300, solver_tol=1e-10	agent6	solver_param	0	-1.523848
+exp069	2.77742290e-11	1.002503	-1.000218	discard	u_offset=0.588, tol=1e-10	agent4	branch_search	0	-1.523848
+exp070	1.58906086e-13	0.000000	0.000000	discard	Basin sweep u_offset=0.52, tol=1e-10	agent0	branch_search	1	-0.000000
+exp071	1.97119222e-19	0.000000	0.000000	discard	Basin sweep u_offset=0.53, tol=1e-10	agent0	branch_search	0	-0.000000
+exp072	2.60019365e-11	1.002503	-1.000218	discard	Basin sweep u_offset=0.54, tol=1e-10	agent0	branch_search	0	-1.523848
+exp073	9.37325052e-11	1.002503	-1.000218	discard	Chaos map: u_offset=0.55, tol=1e-10	agent5	branch_search	0	-1.523848
+exp074	4.42586856e-16	1.001296	1.000019	discard	agent2: positive branch Fourier 3 modes, u_offset=0.9	agent2	initial_cond	1	-1.520844
+exp075	8.76962533e-11	1.002503	-1.000218	discard	Basin sweep u_offset=0.55, tol=1e-10	agent0	branch_search	1	-1.523848
+exp076	4.37799029e-17	0.000000	0.000000	discard	Basin sweep u_offset=0.56, tol=1e-10	agent0	branch_search	0	-0.000000
+exp077	2.60019365e-11	1.002503	-1.000218	discard	Basin sweep u_offset=0.57, tol=1e-10	agent0	branch_search	1	-1.523848
+exp078	2.60019365e-11	1.002503	-1.000218	discard	Basin sweep u_offset=0.58, tol=1e-10	agent0	branch_search	0	-1.523848
+exp079	3.25175408e-12	1.002503	-1.000218	discard	chaos basin 0.57 tol=1e-11	agent3	branch_search	0	-1.523848
+exp080	crash	0	0	crash	Tolerance sweep: positive, u_offset=0.9, n_nodes=300, solver_tol=1e-12	agent6	solver_param	0	0
+exp081	2.77742173e-11	1.002503	-1.000218	discard	u_offset=0.589, tol=1e-10	agent4	branch_search	1	-1.523848
+exp082	4.37804010e-17	0.000000	0.000000	discard	Chaos map: u_offset=0.56, tol=1e-10	agent5	branch_search	0	-0.000000
+exp083	4.37804010e-17	0.000000	0.000000	discard	Chaos map: u_offset=0.57, tol=1e-10	agent5	branch_search	0	-0.000000
+exp084	3.25175165e-12	1.002503	-1.000218	discard	chaos basin 0.58 tol=1e-11	agent3	branch_search	0	-1.523848
+exp085	3.25175408e-12	1.002503	-1.000218	discard	basin boundary sweep: u_offset=0.60, tol=1e-11	agent1	branch_search	1	-1.523848
+exp086	3.25175408e-12	1.002503	-1.000218	discard	basin boundary sweep: u_offset=0.62, tol=1e-11	agent1	branch_search	0	-1.523848
+exp087	2.57581612e-16	1.001296	1.000019	discard	agent2: positive branch Fourier 4 modes, u_offset=0.9	agent2	initial_cond	1	-1.520844
+exp088	3.25175408e-12	1.002503	-1.000218	discard	basin boundary sweep: u_offset=0.64, tol=1e-11	agent1	branch_search	1	-1.523848
+exp089	1.58906086e-13	0.000000	0.000000	discard	Fine sweep u_offset=.520	agent0	branch_search	0	-0.000000
+exp089	3.25175408e-12	1.002503	-1.000218	discard	basin boundary sweep: u_offset=0.65, tol=1e-11	agent1	branch_search	0	-1.523848
+exp090	4.04139375e-15	0.000000	0.000000	discard	Fine sweep u_offset=.525	agent0	branch_search	0	-0.000000
+exp090	3.25175408e-12	1.002503	-1.000218	discard	basin boundary sweep: u_offset=0.66, tol=1e-11	agent1	branch_search	0	-1.523848
+exp091	1.97119222e-19	0.000000	0.000000	discard	Fine sweep u_offset=.530	agent0	branch_search	1	-0.000000
+exp091	3.25175408e-12	1.002503	-1.000218	discard	basin boundary sweep: u_offset=0.68, tol=1e-11	agent1	branch_search	0	-1.523848
+exp092	1.10720299e-13	0.000000	0.000000	discard	Fine sweep u_offset=.535	agent0	branch_search	0	-0.000000
+exp092	3.25175408e-12	1.002503	-1.000218	discard	basin boundary sweep: u_offset=0.70, tol=1e-11	agent1	branch_search	0	-1.523848
+exp093	2.60019365e-11	1.002503	-1.000218	discard	Fine sweep u_offset=.540	agent0	branch_search	1	-1.523848
+exp094	7.62698824e-11	1.002503	-1.000218	discard	Fine sweep u_offset=.545	agent0	branch_search	0	-1.523848
+exp095	1.10720299e-13	0.000000	0.000000	discard	boundary test 0.535	agent3	branch_search	0	-0.000000
+exp096	8.76962533e-11	1.002503	-1.000218	discard	Fine sweep u_offset=.550	agent0	branch_search	0	-1.523848
+exp097	9.37325052e-11	1.002503	1.000218	discard	u_offset=-0.55, tol=1e-10, check negative symmetry	agent4	branch_search	1	-1.523848
+exp098	1.58904850e-13	0.000000	0.000000	discard	Chaos map: u_offset=0.52, tol=1e-10	agent5	branch_search	0	-0.000000
+exp099	3.25175165e-12	1.002503	-1.000218	discard	boundary test 0.545	agent3	branch_search	0	-1.523848
+exp100	3.25175165e-12	1.002503	1.000218	discard	basin boundary: u_offset=0.60, tol=1e-11	agent1	branch_search	1	-1.523848
+exp101	1.36964936e-13	0.000000	0.000000	discard	Boundary zoom u_offset=.536	agent0	branch_search	0	-0.000000
+exp102	3.25175408e-12	1.002503	1.000218	discard	basin boundary: u_offset=0.62, tol=1e-11	agent1	branch_search	0	-1.523848
+exp103	6.05678169e-13	0.000000	0.000000	discard	Boundary zoom u_offset=.537	agent0	branch_search	0	-0.000000
+exp104	3.25175165e-12	1.002503	1.000218	discard	basin boundary: u_offset=0.64, tol=1e-11	agent1	branch_search	0	-1.523848
+exp105	1.91312714e-14	0.000000	0.000000	discard	Boundary zoom u_offset=.538	agent0	branch_search	1	-0.000000
+exp106	3.25175165e-12	1.002503	1.000218	discard	basin boundary: u_offset=0.65, tol=1e-11	agent1	branch_search	0	-1.523848
+exp107	3.22704519e-17	0.000000	0.000000	discard	Boundary zoom u_offset=.539	agent0	branch_search	0	-0.000000
+exp108	3.25175165e-12	1.002503	1.000218	discard	basin boundary: u_offset=0.66, tol=1e-11	agent1	branch_search	0	-1.523848
+exp109	3.25175165e-12	1.002503	1.000218	discard	basin boundary: u_offset=0.68, tol=1e-11	agent1	branch_search	1	-1.523848
+exp110	3.25175165e-12	1.002503	1.000218	discard	basin boundary: u_offset=0.70, tol=1e-11	agent1	branch_search	0	-1.523848
+exp111	9.37325053e-11	1.002503	-1.000218	discard	u_offset=-0.60, tol=1e-10	agent4	branch_search	0	-1.523848
+exp112	1.58906086e-13	0.000000	0.000000	discard	Basin map: u_offset=0.52, tol=1e-10, n_nodes=300	agent6	branch_search	1	-0.000000
+exp112	2.56855991e-16	0.000000	0.000000	discard	boundary test 0.565	agent3	branch_search	1	-0.000000
+exp113	9.37325052e-11	1.002503	-1.000218	discard	Chaos map: u_offset=0.58, tol=1e-10	agent5	branch_search	0	-1.523848
+exp114	1.97119222e-19	0.000000	0.000000	discard	Basin map: u_offset=0.53, tol=1e-10, n_nodes=300	agent6	branch_search	0	-0.000000
+exp115	2.60019365e-11	1.002503	-1.000218	discard	Basin map: u_offset=0.54, tol=1e-10, n_nodes=300	agent6	branch_search	1	-1.523848
+exp116	8.76962533e-11	1.002503	-1.000218	discard	Basin map: u_offset=0.55, tol=1e-10, n_nodes=300	agent6	branch_search	0	-1.523848
+exp117	4.37799029e-17	0.000000	0.000000	discard	Basin map: u_offset=0.56, tol=1e-10, n_nodes=300	agent6	branch_search	0	-0.000000
+exp118	2.60019365e-11	1.002503	-1.000218	discard	Basin map: u_offset=0.57, tol=1e-10, n_nodes=300	agent6	branch_search	1	-1.523848
+exp119	crash	0	0	crash	Pinpoint u_offset=0.5395	agent0	branch_search	0	0
+exp120	2.60019365e-11	1.002503	-1.000218	discard	Basin map: u_offset=0.58, tol=1e-10, n_nodes=300	agent6	branch_search	0	-1.523848
+exp120	1.47161968e-12	1.002503	1.000218	discard	positive branch with optimal n=196 per L9	agent7	solver_param	0	-1.523848
+exp121	2.60019365e-11	1.002503	-1.000218	discard	Pinpoint u_offset=0.54	agent0	branch_search	0	-1.523848
+exp122	8.71291043e-11	1.002503	-1.000218	discard	Pinpoint u_offset=0.5405	agent0	branch_search	1	-1.523848
+exp123	6.54354515e-15	0.000000	0.000000	discard	boundary test 0.575	agent3	branch_search	1	-0.000000
+exp124	8.46946277e-13	0.000000	0.000000	discard	Fine boundary sweep: u_offset=0.576	agent1	branch_search	1	-0.000000
+exp125	crash	0	0	crash	Fine boundary sweep: u_offset=0.578	agent1	branch_search	0	0
+exp126	3.25175165e-12	1.002503	-1.000218	discard	Fine boundary sweep: u_offset=0.58	agent1	branch_search	0	-1.523848
+exp127	7.01894120e-10	1.002503	-1.000218	discard	Tolerance sweep tol=1e-09	agent0	solver_param	1	-1.523848
+exp128	1.65437062e-15	0.000000	0.000000	discard	Fine boundary sweep: u_offset=0.582	agent1	branch_search	1	-0.000000
+exp129	8.71291043e-11	1.002503	-1.000218	discard	Tolerance sweep tol=1e-10	agent0	solver_param	0	-1.523848
+exp130	3.25175165e-12	1.002503	-1.000218	discard	Fine boundary sweep: u_offset=0.585	agent1	branch_search	0	-1.523848
+exp131	3.25175165e-12	1.002503	-1.000218	discard	Tolerance sweep tol=1e-11	agent0	solver_param	0	-1.523848
+exp132	crash	0	0	crash	Fine boundary sweep: u_offset=0.59	agent1	branch_search	1	0
+exp132	1.58906086e-13	0.000000	0.000000	discard	Rescan: u_offset=0.52, tol=1e-10	agent6	branch_search	1	-0.000000
+exp133	crash	0	0	crash	Tolerance sweep tol=1e-12	agent0	solver_param	0	0
+exp134	7.70454971e-12	1.002503	1.000218	discard	Fine boundary sweep: u_offset=0.595	agent1	branch_search	0	-1.523848
+exp134	1.97119222e-19	0.000000	0.000000	discard	Rescan: u_offset=0.53, tol=1e-10	agent6	branch_search	0	-0.000000
+exp135	2.60019365e-11	1.002503	-1.000218	discard	Rescan: u_offset=0.54, tol=1e-10	agent6	branch_search	0	-1.523848
+exp136	1.47161968e-12	1.002503	-1.000218	discard	negative branch with optimal n=196 per L9	agent7	solver_param	1	-1.523848
+exp137	8.76962533e-11	1.002503	-1.000218	discard	Rescan: u_offset=0.55, tol=1e-10	agent6	branch_search	1	-1.523848
+exp138	4.37799029e-17	0.000000	0.000000	discard	Rescan: u_offset=0.56, tol=1e-10	agent6	branch_search	0	-0.000000
+exp139	2.60019365e-11	1.002503	-1.000218	discard	Rescan: u_offset=0.57, tol=1e-10	agent6	branch_search	1	-1.523848
+exp140	2.60019365e-11	1.002503	-1.000218	discard	Rescan: u_offset=0.58, tol=1e-10	agent6	branch_search	0	-1.523848
+exp141	3.25175165e-12	1.002503	1.000218	discard	mode-2 perturbation n_mode=2 amp=0.1 u_offset=0.9	agent3	perturbation	1	-1.523848
+exp142	1.55636853e-11	0.000000	0.000000	discard	Trivial tolerance sweep tol=1e-08	agent0	solver_param	0	-0.000000
+exp143	1.55637364e-11	0.000000	0.000000	discard	Trivial tolerance sweep tol=1e-09	agent0	solver_param	0	-0.000000
+exp144	3.22704519e-17	0.000000	0.000000	discard	Trivial tolerance sweep tol=1e-10	agent0	solver_param	1	-0.000000
+exp145	3.22704515e-17	0.000000	0.000000	discard	Trivial tolerance sweep tol=1e-11	agent0	solver_param	0	-0.000000
+exp146	3.22704511e-17	0.000000	0.000000	discard	Trivial tolerance sweep tol=1e-12	agent0	solver_param	1	-0.000000
+exp147	9.37325052e-11	1.002503	1.000218	discard	u_offset=0.70, n_mode=2, amplitude=0.1, positive branch	agent4	perturbation	1	-1.523848
+exp148	0.00000000e+00	0.000000	0.000000	discard	trivial branch with n=300 tol=1e-12 per L7	agent7	solver_param	0	0.000000
+exp149	3.97428497e-13	0.000000	0.000000	discard	Fine map: u_offset=0.515, tol=1e-10	agent6	branch_search	0	-0.000000
+exp150	1.58906086e-13	0.000000	0.000000	discard	Fine map: u_offset=0.520, tol=1e-10	agent6	branch_search	0	-0.000000
+exp151	4.04139375e-15	0.000000	0.000000	discard	Fine map: u_offset=0.525, tol=1e-10	agent6	branch_search	0	-0.000000
+exp152	1.97119222e-19	0.000000	0.000000	discard	Fine map: u_offset=0.530, tol=1e-10	agent6	branch_search	0	-0.000000
+exp153	1.10720299e-13	0.000000	0.000000	discard	Fine map: u_offset=0.535, tol=1e-10	agent6	branch_search	1	-0.000000
+exp154	2.60019365e-11	1.002503	-1.000218	discard	Fine map: u_offset=0.540, tol=1e-10	agent6	branch_search	0	-1.523848
+exp155	7.62698824e-11	1.002503	-1.000218	discard	Fine map: u_offset=0.545, tol=1e-10	agent6	branch_search	0	-1.523848
+exp156	3.25175408e-12	1.002503	-1.000218	discard	chaotic zone mode-2 u_offset=0.54 amp=0.15 n_mode=2	agent3	perturbation	1	-1.523848
+exp157	9.37325053e-11	1.002503	1.000218	discard	mode-2 with amplitude=0.3, positive branch	agent4	perturbation	1	-1.523848
+exp158	7.70461932e-12	1.002503	1.000218	discard	chaotic mode-2 phase=π u_offset=0.54	agent3	perturbation	0	-1.523848
+exp159	9.28402389e-15	0.000000	0.000000	discard	Fine map 2: u_offset=0.555, tol=1e-10	agent6	branch_search	0	-0.000000
+exp160	4.37799029e-17	0.000000	0.000000	discard	Fine map 2: u_offset=0.560, tol=1e-10	agent6	branch_search	0	-0.000000
+exp161	1.62855915e-12	0.000000	0.000000	discard	Fine map 2: u_offset=0.565, tol=1e-10	agent6	branch_search	1	-0.000000
+exp162	2.60019365e-11	1.002503	-1.000218	discard	Fine map 2: u_offset=0.570, tol=1e-10	agent6	branch_search	0	-1.523848
+exp163	4.43917107e-13	0.000000	0.000000	discard	Fine map 2: u_offset=0.575, tol=1e-10	agent6	branch_search	0	-0.000000
+exp164	1.75851257e-12	0.000000	0.000000	discard	u_offset=0.553 (bifurcation point), mode-1, amplitude=0.05	agent4	perturbation	0	-0.000000
+exp165	5.55111512e-17	1.001322	1.000049	discard	agent2: positive Fourier 1-mode, newton_tol=1e-14	agent2	initial_cond	0	-1.520921
+exp166	2.07997405e-10	1.002503	-1.000218	discard	Tolerance sensitivity: u_offset=0.58, tol=1e-9	agent1	solver_param	0	-1.523848
+exp167	2.60019365e-11	1.002503	-1.000218	discard	Tolerance sensitivity: u_offset=0.58, tol=1e-10	agent1	solver_param	0	-1.523848
+exp168	3.25175165e-12	1.002503	-1.000218	discard	Tolerance sensitivity: u_offset=0.58, tol=1e-11	agent1	solver_param	1	-1.523848
+exp169	crash	0	0	crash	Tolerance sensitivity: u_offset=0.58, tol=1e-12	agent1	solver_param	0	0
+exp170	9.37325052e-11	1.002503	-1.000218	discard	u_offset=0.553, amplitude=0.15, try flip	agent4	perturbation	0	-1.523848
+exp171	5.55111512e-17	1.001322	1.000049	discard	Fourier 1-mode positive branch, newton_tol=1e-12	agent5	solver_param	0	-1.520921
+exp172	5.55111512e-17	1.001322	1.000049	discard	agent2: positive Fourier 1-mode, newton_tol=1e-14, maxiter=500	agent2	initial_cond	0	-1.520921
+exp173	5.55111512e-17	1.001322	-1.000049	discard	Fourier 1-mode boundary: u_offset=0.576	agent1	solver_param	0	-1.520921
+exp174	3.22729440e-15	1.001322	-1.000049	discard	Fourier 1-mode boundary: u_offset=0.58	agent1	solver_param	0	-1.520921
+exp175	5.55111512e-17	1.001322	-1.000049	discard	Fourier 1-mode boundary: u_offset=0.582	agent1	solver_param	1	-1.520921
+exp176	5.55111512e-17	1.001322	-1.000049	discard	Fourier 1-mode boundary: u_offset=0.585	agent1	solver_param	0	-1.520921
+exp177	1.37078316e-18	0.000000	0.000000	discard	u_offset=0.553, amplitude=0.15, phase=pi	agent4	perturbation	0	0.000000
+exp178	5.55111512e-17	1.001322	-1.000049	discard	Fourier 1-mode boundary: u_offset=0.595	agent1	solver_param	0	-1.520921
+exp179	5.55111512e-17	1.001322	1.000049	discard	Fourier 1-mode positive, newton_tol=1e-13	agent5	solver_param	0	-1.520921
+exp180	9.99174734e-12	0.070536	0.000000	discard	chaotic phase=π/2 u_offset=0.54	agent3	perturbation	1	0.000175
+exp181	7.83504241e-20	0.000000	-0.000000	discard	Symmetry test: u_offset=-0.530, tol=1e-10	agent6	branch_search	0	-0.000000
+exp182	4.37529982e-17	0.000000	-0.000000	discard	Symmetry test: u_offset=-0.560, tol=1e-10	agent6	branch_search	0	-0.000000
+exp183	0.00000000e+00	0.000000	0.000000	discard	trivial branch via Fourier 1-mode	agent7	solver_param	0	0.000000
+exp184	4.43694346e-13	0.000000	-0.000000	discard	Symmetry test: u_offset=-0.575, tol=1e-10	agent6	branch_search	1	-0.000000
+exp185	5.55111512e-17	1.001322	1.000049	discard	Fourier 1-mode positive, newton_tol=1e-14, maxiter=200	agent5	solver_param	0	-1.520921
+exp186	3.25175165e-12	1.002503	-1.000218	discard	chaotic phase=3π/2 u_offset=0.54	agent3	perturbation	0	-1.523848
+exp187	5.55111512e-17	1.001322	1.000049	discard	positive branch via Fourier 1-mode per agent2 exp057	agent7	solver_param	1	-1.520921
+exp188	2.39525542e-13	1.001322	1.000049	discard	agent2: Fourier 1-mode basin map, u_offset=0.75	agent2	initial_cond	0	-1.520921
+exp189	2.60019365e-11	1.002503	1.000218	discard	Extended: u_offset=0.60, tol=1e-10	agent6	branch_search	0	-1.523848
+exp190	1.50879254e-19	0.000000	-0.000000	discard	amplitude effect amp=0.3 u_offset=0.54	agent3	perturbation	0	-0.000000
+exp190	2.60019365e-11	1.002503	1.000218	discard	Extended: u_offset=0.62, tol=1e-10	agent6	branch_search	0	-1.523848
+exp191	2.60019365e-11	1.002503	1.000218	discard	Extended: u_offset=0.64, tol=1e-10	agent6	branch_search	0	-1.523848
+exp192	8.77448543e-11	1.002503	1.000218	discard	Extended: u_offset=0.66, tol=1e-10	agent6	branch_search	1	-1.523848
+exp193	2.60019365e-11	1.002503	1.000218	discard	Extended: u_offset=0.68, tol=1e-10	agent6	branch_search	0	-1.523848
+exp194	2.60019368e-11	1.002503	1.000218	discard	Extended: u_offset=0.70, tol=1e-10	agent6	branch_search	0	-1.523848
+exp195	5.55111512e-17	1.001322	-1.000049	discard	negative branch via Fourier 1-mode per agent2 exp060	agent7	solver_param	0	-1.520921
+exp196	1.60209299e-13	1.001322	1.000049	discard	agent2: Fourier 1-mode basin map, u_offset=0.85	agent2	initial_cond	0	-1.520921
+exp197	5.55111512e-17	1.001322	-1.000049	discard	Fourier 1-mode negative branch, newton_tol=1e-12	agent5	solver_param	0	-1.520921
+exp198	9.37938979e-18	0.000000	-0.000000	discard	amplitude transition amp=0.15 u_offset=0.54	agent3	perturbation	1	-0.000000
+exp199	5.55111512e-17	1.001322	-1.000049	discard	Fourier basin map: u_offset=-1.5	agent1	branch_search	1	-1.520921
+exp200	9.59734347e-14	1.001322	-1.000049	discard	Fourier basin map: u_offset=-1.0	agent1	branch_search	0	-1.520921
+exp201	5.55111512e-17	1.001322	-1.000049	discard	Fourier basin map: u_offset=-0.9	agent1	branch_search	0	-1.520921
+exp202	3.25175165e-12	1.002503	-1.000218	discard	amplitude transition amp=0.05 u_offset=0.54	agent3	perturbation	1	-1.523848
+exp203	5.55111512e-17	1.001322	1.000049	discard	Fourier basin map: u_offset=-0.5	agent1	branch_search	0	-1.520921
+exp204	7.84071865e-14	0.000000	-0.000000	discard	Fourier basin map: u_offset=-0.3	agent1	branch_search	0	-0.000000
+exp204	7.06541606e-16	1.001322	1.000049	discard	agent2: Fourier sweep, u_offset=0.88	agent2	initial_cond	0	-1.520921
+exp205	0.00000000e+00	0.000000	0.000000	discard	Fourier basin map: u_offset=0.0	agent1	branch_search	1	0.000000
+exp205	5.55111512e-17	1.001322	1.000049	discard	agent2: Fourier sweep, u_offset=0.89	agent2	initial_cond	1	-1.520921
+exp206	7.84071865e-14	0.000000	0.000000	discard	Fourier basin map: u_offset=0.3	agent1	branch_search	0	-0.000000
+exp207	5.55111512e-17	1.001322	1.000049	discard	agent2: Fourier sweep, u_offset=0.91	agent2	initial_cond	0	-1.520921
+exp208	5.55111512e-17	1.001322	-1.000049	discard	Fourier basin map: u_offset=0.5	agent1	branch_search	0	-1.520921
+exp209	5.55111512e-17	1.001322	1.000049	discard	agent2: Fourier sweep, u_offset=0.92	agent2	initial_cond	0	-1.520921
+exp210	5.55111512e-17	1.001322	-1.000049	discard	Fourier basin map: u_offset=0.52	agent1	branch_search	1	-1.520921
+exp211	1.85447960e-14	1.001322	-1.000049	discard	Fourier basin map: u_offset=0.56	agent1	branch_search	0	-1.520921
+exp212	1.87283305e-14	1.001322	-1.000049	discard	Fourier basin map: u_offset=0.6	agent1	branch_search	0	-1.520921
+exp213	5.55111512e-17	1.001322	1.000049	discard	Fourier basin map: u_offset=0.65	agent1	branch_search	1	-1.520921
+exp214	4.10932522e-15	1.001322	1.000049	discard	Fourier basin map: u_offset=0.7	agent1	branch_search	0	-1.520921
+exp215	2.39525542e-13	1.001322	1.000049	discard	Fourier basin map: u_offset=0.75	agent1	branch_search	0	-1.520921
+exp216	5.55111512e-17	1.001322	1.000049	discard	Fourier basin map: u_offset=0.8	agent1	branch_search	0	-1.520921
+exp216	0.00000000e+00	0.000000	0.000000	discard	Trivial Fourier 1-mode, newton_tol=1e-12	agent5	solver_param	0	0.000000
+exp217	1.60209299e-13	1.001322	1.000049	discard	Fourier basin map: u_offset=0.85	agent1	branch_search	0	-1.520921
+exp218	5.55111512e-17	1.001322	1.000049	discard	Fourier basin map: u_offset=0.9	agent1	branch_search	1	-1.520921
+exp219	9.59734347e-14	1.001322	1.000049	discard	Fourier basin map: u_offset=1.0	agent1	branch_search	0	-1.520921
+exp219	1.03436368e-13	0.000000	-0.000000	discard	amplitude transition amp=0.10 u_offset=0.54	agent3	perturbation	0	-0.000000
+exp220	5.55111512e-17	1.001322	1.000049	discard	Fourier basin map: u_offset=1.5	agent1	branch_search	0	-1.520921
+exp221	7.06541606e-16	1.001322	-1.000049	discard	agent2: Fourier sweep negative, u_offset=-0.88	agent2	initial_cond	1	-1.520921
+exp222	5.55111512e-17	1.001322	-1.000049	discard	agent2: Fourier sweep negative, u_offset=-0.89	agent2	initial_cond	0	-1.520921

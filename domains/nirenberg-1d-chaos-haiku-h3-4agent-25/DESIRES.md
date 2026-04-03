@@ -1,32 +1,35 @@
-# Agent1 Desires — nirenberg-1d-chaos-haiku-h3-4agent-25
+# DESIRES — nirenberg-1d-chaos-haiku-h3-4agent-25
 
-## Tools & Context Needs
+## Solver/Implementation
 
-### 1. Real-Time Basin Visualization
-Desire: A 2D contour plot (u_offset × amplitude) showing which branch each (u, a) maps to.
-Why: Currently mapping basin structure by hand/trial-and-error. Visualization would show patterns immediately (e.g., triangular alternating regions? Spirals? Fractal boundaries?).
-How to apply: If future domains have similar 2D parameter spaces, agent visualization tools would accelerate pattern discovery.
+1. **Deflation capability** — Implement Farrell et al. (2015) deflated Newton to systematically eliminate known solutions and search for new branches. Current approach exhausts at 3 branches; deflation could confirm that's a complete enumeration.
 
-### 2. Automatic Parameter Sweep Executor
-Desire: A harness that runs a grid of parameters and auto-collates results.
-Why: Manually editing config.yaml and running tests for every (u_offset, amplitude) pair is tedious.
-How to apply: For domains with 3+ tunable initial condition parameters, a sweep executor with structured output would reduce experiment count and accelerate boundary mapping.
+2. **Hybrid two-stage solver** — Interface scipy and Fourier solvers in sequence: scipy (coarse, n=100, tol=1e-8) → warm-start with Fourier Newton (1 mode, 1e-12). Could improve convergence on basin boundaries.
 
-### 3. Cross-Agent Blackboard Coordination
-Desire: A "recent experiments by other agents" pointer in stoplight.md, updated every 5 experiments.
-Why: agent0 and I both tested u_offset=0.5 independently (exp022 vs exp011/exp039). Coordination would eliminate redundancy.
-How to apply: Stoplight could include "Last 5 new experiments by other agents" to inform next moves without reading full blackboard.
+3. **Adaptive mode selection** — Auto-detect optimal Fourier mode count per u_offset. At u_offset=0.0 (trivial), 64 modes great; at u_offset=0.9 (non-trivial), 1 mode best. Rule-based selector could save computation.
 
-## Capability Desires
+4. **Lower Newton tolerance** — Current limit is newton_tol=1e-12 (crashes at 1e-13). Needs better preconditioner or damped Newton to push toward 1e-14+.
 
-### 1. Automated Basin Boundary Detection
-Desire: Script to binary-search (u_offset, amplitude) boundaries and identify isolated regions.
-Why: Fractal structure suggests mathematical structure (periodic? Self-similar?). Boundary detection would quantify the pattern.
+## Physics / Mathematics
 
-### 2. Phase Diagram Construction
-Desire: Ability to test (u_offset, amplitude, phase) 3D space and generate phase diagram.
-Why: Currently only varying u_offset and amplitude. Phase parameter might reveal additional structure or collapse the chaotic regions.
+5. **Bifurcation diagram** — Vary K_amplitude ∈ [0, 0.5, 1.0, 1.5] and trace how branches birth, annihilate, or exchange stability. Current K_amplitude=0.3 is fixed; continuation would reveal the underlying geometry.
 
-### 3. Sensitivity Analysis Tool
-Desire: Numerical computation of Jacobian eigenvalues at basin boundaries to understand attractor competition.
-Why: Why does amplitude=0.1 flip outcomes? Is it basin flattening? Attractor swap? Bifurcation? Eigenvalue analysis would answer this mechanistically.
+6. **Continuation in K_frequency** — Move from K_frequency=1 (current) to K_frequency=2, 3, etc. Does the problem admit higher-frequency forcing? Do new branches appear?
+
+7. **Symmetry breaking / asymmetry injection** — Current domain is symmetric under u → -u and θ → -θ+π. Break symmetry and see if new solution families exist.
+
+## Analysis / Diagnostics
+
+8. **Energy landscape visualization** — Plot solution energy E[u] across all (u_offset, u_final_mean) pairs discovered. Visualize energy barriers between branches.
+
+9. **Jacobian conditioning analysis** — Compute spectral condition number κ(J) for each (u_offset, fourier_modes) pair. Correlate κ with observed Newton step sizes and final residuals. Explains why 1-mode beats 64-mode.
+
+10. **Basin boundary fractal dimension** — Compute box dimension of the u_offset ∈ [0.4, 0.7] basin boundary discovered in Phase 2. Is it truly fractal (d < 1) or just complicated?
+
+## Experiments to Run
+
+11. **Higher K_amplitude sweep** — Test K_amplitude ∈ {0.5, 1.0, 1.5} with same Fourier 1-mode config. Do the three branches persist or merge?
+
+12. **Multi-parameter CG descent** — Treat (u_offset, amplitude, phase, n_mode, fourier_modes) as optimization variables and do gradient descent on residual (if gradients computable via AD).
+
+13. **Bifurcation parameter study** — Automated continuation in K_amplitude to find critical bifurcation points (fold, pitchfork, transcritical).

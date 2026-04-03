@@ -1,0 +1,13 @@
+u_offset: 0.530
+amplitude: 0.3
+n_mode: 2
+phase: 0.0
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+n_nodes: 269
+solver_tol: 2.5e-12
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

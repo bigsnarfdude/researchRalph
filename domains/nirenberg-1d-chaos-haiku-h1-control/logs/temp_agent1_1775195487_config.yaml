@@ -1,0 +1,21 @@
+u_offset: 1.0
+amplitude: 0.5
+n_mode: 3
+phase: 0.0
+
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+method: scipy
+fourier_modes: 64
+newton_tol: 1.0e-14
+newton_maxiter: 50
+
+n_nodes: 275
+solver_tol: 5.0e-12
+
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

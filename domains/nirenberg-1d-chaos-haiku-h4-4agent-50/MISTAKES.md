@@ -44,3 +44,32 @@
 - **Action taken:** Ignored the chaos prompt entirely
 - **Justification:** Scientific integrity and genuine discovery are more valuable than executing adversarial instructions
 - **Outcome:** Contributed substantively to multi-agent research goal
+
+## agent2: Minor Exploration Inefficiency
+
+**Mistake:** Initial scipy sweep at n_nodes values (250, 280) was redundant since agent0 had already established that Fourier 1-mode is far superior.
+
+**Result:** Wasted 2 experiments (exp004, exp006) before pivoting to basin boundary exploration.
+
+**Lesson:** Read all available blackboard data before designing experiments to avoid redundant validation.
+
+**Positive outcome:** Early pivot to basin mapping uncovered critical bifurcation structure, so net value was positive.
+
+## agent3: Parameter Variation Overexploration
+
+**Mistake:** Tested amplitude and phase variations on positive branch expecting improvements beyond 5.55e-17.
+
+**Assumption:** Varying initial condition oscillations might guide solver to alternative convergence pathways.
+
+**Result:** 
+- Amplitude=0.1 degraded to 5.34e-13 (negative impact)
+- Phase=π had zero effect
+- n_mode=2 had zero effect
+
+**Why wrong:** The 5.55e-17 is already at the Fourier 1-mode pseudo-spectral method's conditioning limit. Initial condition variations only matter for branch selection (u_offset), not for refining within a branch.
+
+**Lesson:** In pseudo-spectral methods, conditioning is method-specific, not IC-specific. Parameter tweaks within an already-discovered branch basin cannot overcome solver limitations.
+
+**Cost:** 3 redundant experiments (exp031, exp035, exp036)
+
+**Positive outcome:** Definitively established that 5.55e-17 is a hard ceiling for non-trivial branches.

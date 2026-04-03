@@ -1,0 +1,67 @@
+exp001	0.00000000e+00	0.000000	0.000000	keep	Reproduce trivial branch: scipy n=196 tol=1e-12 u_offset=0 amp=0	agent0	initial_cond	1	0.000000
+exp002	3.25175408e-12	1.002503	1.000218	keep	Positive branch: scipy n=300 tol=1e-11 u_offset=0.9 amp=0	agent0	initial_cond	0	-1.523848
+exp003	0.00000000e+00	0.000000	0.000000	keep	trivial branch, u_offset=0.0	agent1	initial_cond	1	0.000000
+exp004	3.25175408e-12	1.002503	-1.000218	discard	Negative branch: scipy n=300 tol=1e-11 u_offset=-0.9 amp=0	agent0	initial_cond	0	-1.523848
+exp005	0.00000000e+00	0.000000	0.000000	discard	Trivial branch, u_offset=0, scipy n=196 tol=1e-12	agent2	initial_cond	0	0.000000
+exp006	3.25175408e-12	1.002503	1.000218	discard	Positive branch, u_offset=0.9, scipy n=300 tol=1e-11	agent2	initial_cond	0	-1.523848
+exp007	crash	0	0	crash	Negative branch with tighter tolerances: n_nodes=400, tol=1e-13	agent1	initial_cond	1	0
+exp008	3.25175408e-12	1.002503	-1.000218	discard	Negative branch, u_offset=-0.9, scipy n=300 tol=1e-11	agent2	initial_cond	0	-1.523848
+exp009	0.00000000e+00	0.000000	0.000000	discard	trivial branch baseline u_offset=0	agent3	initial_cond	0	0.000000
+exp010	3.25175408e-12	1.002503	-1.000218	discard	Negative branch with u_offset=-0.85, n_nodes=300, tol=1e-11	agent1	initial_cond	1	-1.523848
+exp011	2.27780417e-13	1.001296	1.000019	discard	Positive branch: Fourier 64 modes newton_tol=1e-12 u_offset=0.9	agent0	initial_cond	0	-1.520844
+exp012	3.25175408e-12	1.002503	1.000218	discard	positive branch u_offset=+0.9	agent3	initial_cond	0	-1.523848
+exp013	3.25175408e-12	1.002503	-1.000218	discard	negative branch u_offset=-0.9	agent3	initial_cond	0	-1.523848
+exp014	2.27780417e-13	1.001296	-1.000019	discard	Negative branch: Fourier 64 modes newton_tol=1e-12 u_offset=-0.9	agent0	initial_cond	0	-1.520844
+exp015	5.55111512e-17	1.001322	1.000049	discard	Positive: Fourier 1 mode (ultra-low) newton_tol=1e-12 u_offset=0.9	agent0	initial_cond	0	-1.520921
+exp016	1.47161968e-12	1.002503	1.000218	discard	Positive branch: n_nodes=196 tol=1e-11	agent2	solver_param	0	-1.523848
+exp017	1.47161968e-12	1.002503	1.000218	discard	Positive branch: n_nodes=198 tol=1e-11	agent2	solver_param	0	-1.523848
+exp018	1.47161968e-12	1.002503	1.000218	discard	Positive branch: n_nodes=200 tol=1e-11	agent2	solver_param	1	-1.523848
+exp019	4.62118483e-17	0.000000	0.000000	discard	Branch boundary at u_offset=0.45, between trivial and positive	agent1	initial_cond	0	-0.000000
+exp020	3.25175165e-12	1.002503	1.000218	discard	Branch boundary at u_offset=0.6, transition zone to positive	agent1	initial_cond	0	-1.523848
+exp020	5.55111512e-17	1.001322	-1.000049	discard	Negative: Fourier 1 mode newton_tol=1e-12 u_offset=-0.9	agent0	initial_cond	0	-1.520921
+exp021	5.62802405e-12	1.002503	1.000218	discard	Positive branch: n_nodes=250 tol=1e-11	agent2	solver_param	0	-1.523848
+exp022	3.25175165e-12	1.002503	-1.000218	discard	Branch boundary at u_offset=0.5, exact boundary test	agent1	initial_cond	1	-1.523848
+exp023	1.47161968e-12	1.002503	-1.000218	discard	Negative branch: n_nodes=196 tol=1e-11	agent2	solver_param	0	-1.523848
+exp024	3.25175165e-12	1.002503	-1.000218	discard	Fine scan: u_offset=0.55	agent1	initial_cond	1	-1.523848
+exp025	0.00000000e+00	0.000000	0.000000	discard	Trivial: Fourier 64 modes newton_tol=1e-12 maxiter=200 u_offset=0	agent0	initial_cond	1	0.000000
+exp026	crash	0	0	crash	Positive: n=196, tol=1e-12 (tighter)	agent2	solver_param	0	0
+exp027	6.54354515e-15	0.000000	0.000000	discard	Fine scan: u_offset=0.575	agent1	initial_cond	1	-0.000000
+exp028	7.78244459e-12	1.002503	1.000218	discard	Positive: n=150 tol=1e-11	agent2	solver_param	0	-1.523848
+exp029	7.78244459e-12	1.002503	1.000218	discard	Positive: n=170 tol=1e-11	agent2	solver_param	1	-1.523848
+exp030	4.60808313e-17	0.000000	-0.000000	discard	Negative side: u_offset=-0.45	agent1	initial_cond	2	-0.000000
+exp031	1.51627807e-12	1.002503	1.000218	discard	Positive: n=194 tol=1e-11	agent2	solver_param	1	-1.523848
+exp032	2.00148302e-16	1.001298	1.000025	discard	Positive: Fourier 2 modes newton_tol=1e-12 u_offset=0.9	agent0	initial_cond	1	-1.520921
+exp033	3.25175165e-12	1.002503	1.000218	discard	Negative side: u_offset=-0.5	agent1	initial_cond	2	-1.523848
+exp034	4.42586856e-16	1.001296	1.000019	discard	Positive: Fourier 3 modes newton_tol=1e-12 u_offset=0.9	agent0	initial_cond	1	-1.520844
+exp035	1.58906086e-13	0.000000	0.000000	discard	Basin map: u_offset=0.52	agent1	initial_cond	2	-0.000000
+exp036	3.25175408e-12	1.002503	-1.000218	discard	Basin map: u_offset=0.51	agent1	initial_cond	2	-1.523848
+exp037	1.18720923e-27	0.000000	0.000000	discard	Boundary exploration: u_offset=0.46 (near trivial/positive fractal boundary) Fourier 1 mode	agent0	initial_cond	1	0.000000
+exp038	3.25175165e-12	1.002503	-1.000218	discard	Basin map: u_offset=0.54	agent1	initial_cond	1	-1.523848
+exp039	5.55111512e-17	1.001322	-1.000049	discard	Basin map: u_offset=0.50 Fourier 1 mode	agent0	initial_cond	1	-1.520921
+exp040	3.54360651e-19	0.000000	0.000000	discard	Basin map: u_offset=0.53	agent1	initial_cond	2	-0.000000
+exp041	2.27780417e-13	1.001296	1.000019	discard	Fourier spectral: 64 modes, newton_tol=1e-12, positive branch	agent2	solver_param	0	-1.520844
+exp042	5.55111512e-17	1.001322	-1.000049	discard	Basin map: u_offset=0.52 Fourier 1 mode	agent0	initial_cond	1	-1.520921
+exp043	2.27780417e-13	1.001296	-1.000019	discard	Fourier spectral: 64 modes, newton_tol=1e-12, negative branch	agent2	solver_param	1	-1.520844
+exp044	5.55111512e-17	1.001322	-1.000049	discard	Basin map: u_offset=0.54 Fourier 1 mode	agent0	initial_cond	1	-1.520921
+exp045	1.87283305e-14	1.001322	-1.000049	discard	Basin map: u_offset=0.60 Fourier 1 mode	agent0	initial_cond	2	-1.520921
+exp046	6.31838887e-14	0.000000	-0.000000	discard	Perturbation study: u_offset=0.5 with amplitude=0.1	agent1	perturbation	1	-0.000000
+exp047	crash	0	0	crash	Fourier: 64 modes, newton_tol=1e-13, maxiter=200, positive	agent2	solver_param	0	0
+exp048	3.25175165e-12	1.002503	-1.000218	discard	Perturbation study: u_offset=0.5 with amplitude=0.05	agent1	perturbation	0	-1.523848
+exp049	2.27780417e-13	1.001296	1.000019	discard	Fourier: 64 modes, newton_tol=1e-12, maxiter=200, positive	agent2	solver_param	1	-1.520844
+exp050	1.18720923e-27	0.000000	0.000000	discard	Negative side: u_offset=-0.46 Fourier 1 mode	agent0	initial_cond	1	0.000000
+exp051	5.55111512e-17	1.001322	1.000049	discard	Fourier: 1 mode, newton_tol=1e-12, positive	agent2	solver_param	0	-1.520921
+exp052	5.55111512e-17	1.001322	1.000049	discard	Fourier: 2 modes, newton_tol=1e-12, positive	agent2	solver_param	0	-1.520921
+exp053	5.55111512e-17	1.001322	1.000049	discard	Fourier: 4 modes, newton_tol=1e-12, positive	agent2	solver_param	0	-1.520921
+exp054	3.50056879e-14	0.000000	0.000000	discard	Amplitude sweep: u_offset=0.52, amplitude=0.05	agent1	perturbation	0	-0.000000
+exp055	5.55111512e-17	1.001322	-1.000049	discard	Fourier: 1 mode, newton_tol=1e-12, negative	agent2	solver_param	0	-1.520921
+exp056	5.34206721e-13	1.001322	1.000049	discard	Positive with amplitude=0.1: Fourier 1 mode u_offset=0.9	agent0	initial_cond	1	-1.520921
+exp057	0.00000000e+00	0.000000	0.000000	discard	Fourier: 1 mode, newton_tol=1e-12, trivial	agent2	solver_param	0	0.000000
+exp058	1.03436368e-13	0.000000	-0.000000	discard	Amplitude sweep: u_offset=0.54, amplitude=0.1	agent1	perturbation	0	-0.000000
+exp059	5.55111512e-17	1.001322	1.000049	discard	Positive with n_mode=2: Fourier 1 mode u_offset=0.9	agent0	initial_cond	0	-1.520921
+exp060	3.25175165e-12	1.002503	1.000218	discard	Negative side: u_offset=-0.54, amplitude=0	agent1	initial_cond	0	-1.523848
+exp061	4.35752042e-14	0.000000	-0.000000	discard	Negative side: u_offset=-0.54, amplitude=0.1	agent1	perturbation	0	-0.000000
+exp062	5.55111512e-17	1.001322	1.000049	discard	Positive ultra-convergence: maxiter=500 Fourier 1 u_offset=0.9	agent0	initial_cond	1	-1.520921
+exp063	2.03041323e-15	1.001296	1.000019	discard	Fourier: 8 modes, newton_tol=1e-12, positive	agent2	solver_param	0	-1.520844
+exp064	2.03041323e-15	1.001296	1.000019	discard	Fourier: 16 modes, newton_tol=1e-12, positive	agent2	solver_param	1	-1.520844
+exp065	2.03041323e-15	1.001296	1.000019	discard	Fourier: 32 modes, newton_tol=1e-12, positive	agent2	solver_param	0	-1.520844
+exp066	4.33539292e-16	1.001296	1.000019	discard	Fourier: 5 modes	agent2	solver_param	0	-1.520844

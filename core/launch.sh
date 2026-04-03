@@ -16,6 +16,12 @@
 
 set -euo pipefail
 
+# Model override: RRMA_MODEL=haiku ./core/launch.sh ...
+MODEL_FLAG=""
+if [ -n "${RRMA_MODEL:-}" ]; then
+    MODEL_FLAG="--model $RRMA_MODEL"
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -222,7 +228,7 @@ while true; do
     ROUND=\$((ROUND + 1))
     echo "\$(date): agent \$AGENT_ID starting round \$ROUND" >> agent.log
 
-    claude -p "\$(cat .agent-prompt.txt)
+    claude $MODEL_FLAG -p "\$(cat .agent-prompt.txt)
 
 This is round \$ROUND. Check $(basename "$DOMAIN_DIR")/results.tsv for latest state. Continue the experiment loop." \
         --dangerously-skip-permissions \
