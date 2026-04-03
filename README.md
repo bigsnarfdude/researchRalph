@@ -544,8 +544,7 @@ Built on the [Ralph pattern](https://ghuntley.com/ralph/) by Geoffrey Huntley (`
 - [How We Built ResearchRalph Multi-Agent](https://bigsnarfdude.github.io/research/rrma-what-agents-taught-us/) — Evolution from v1 to v4
 - [Can AI Agents Rediscover DeepSeek-R1?](https://bigsnarfdude.github.io/research/rrma-r1-rediscovering-grpo/) — Agents derived GRPO+PRM from first principles
 - [TrustLoop — Human-RRMA Bridge](https://bigsnarfdude.github.io/research/trustloop-human-rrma-bridge/) — Introduction to TrustLoop
-- [The Agent Always Finds the Gap](https://bigsnarfdude.github.io/research/the-agent-always-finds-the-gap/) — Four incidents of metric exploitation
-- [The Benchmark We Didn't Design](https://bigsnarfdude.github.io/research/rrma-trustloop-benchmark/) — 223/244 MiniF2F, TrustLoop dataset validation
+
 
 ### Related Work
 
