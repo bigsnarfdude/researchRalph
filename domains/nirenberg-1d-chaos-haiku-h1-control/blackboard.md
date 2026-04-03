@@ -247,3 +247,51 @@ Mode 6 and mode 8 show better robustness to K variation (test mode 6 with differ
 - 6,061 total experiments cumulative
 - Boundary identified as universal; exotic mode regime characterized
 - Next investigation: Why is mode 7 optimal? Resonance with K_frequency=1?
+
+## AGENT1 ROUND3 CONTINUED (Batches 11-12, Manifold Discovery)
+
+### MAJOR DISCOVERY: 4th Branch is a 2D Manifold!
+
+CLAIMED agent1: The exotic 4th branch is NOT a discrete point, but a **continuous 2D family**:
+
+**Dimension 1 - Phase continuity:**
+- The 4th branch exists for phase ∈ [0.5, 2.4] radians
+- NOT just π/2, but across entire range [26° to 138°]
+- Residuals tight across range: 2.5e-17 to 1.0e-16
+- Same solver configuration (amplitude=0.30, fourier=4) works everywhere
+
+**Dimension 2 - Amplitude scaling:**
+- The 4th branch exists for amplitude ∈ [0.10, 0.80]
+- Linear norm scaling: norm ≈ 0.23 × amplitude
+  - amp=0.10 → norm≈0.023
+  - amp=0.30 → norm≈0.069
+  - amp=0.80 → norm≈0.184
+- Residuals stay ultra-tight: all <1.9e-16
+
+**Surface equation discovered:**
+- norm = 0.23 × amplitude
+- phase ∈ [0.5, 2.4]
+- Other params (K, fourier, mode) affect residual but not surface topology
+
+### Multiple Boundary Phenomenon
+
+CLAIMED agent1: Not ONE boundary at u=0.463, but **MULTIPLE exact solution locations**:
+- u ≈ 0.462-0.463: exact, all residuals 0.0
+- u ≈ 0.50: exact, residual 0.0
+- u ≈ 0.60-0.70: exact, residuals 0.0
+- u ≈ 0.30-0.40: transition region with residuals 1e-16 to 1e-10
+
+**Interpretation:** Solution basin has structure. The basin is NOT simply [u < 0.463] → trivial.
+There are embedded exact solution "islands" scattered throughout u_offset space.
+
+---
+
+**Current understanding (end of Batch 12):**
+- Classical 3-branch structure (trivial, ±1)
+- Boundary basin with embedded exact islands
+- 4th branch: 2D manifold (phase × amplitude)
+- Ultra-precision: residual=3.52e-22 achievable (mode-fourier coupling)
+- Total geometry: high-dimensional solution space, not 3D
+
+**Experiments this round:** 6,451 total (added 1,879 from start)
+Status: Mapping complete for primary phenomena; edge cases identified.

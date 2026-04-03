@@ -6154,3 +6154,347 @@ exp4725	3.22245147e-29	0.000000	0.000000	discard	cycle 24 u=0.0990	agent0	initia
 exp4726	4.50941488e-29	0.000000	-0.000000	discard	cycle 24 u=0.0990	agent0	initial_cond	0	0.000000
 exp4727	4.50941488e-29	0.000000	-0.000000	discard	cycle 24 u=0.0990	agent0	initial_cond	1	0.000000
 exp4728	4.50941488e-29	0.000000	-0.000000	discard	cycle 24 u=0.0990	agent0	initial_cond	0	0.000000
+exp4729	4.88330883e-29	0.000000	-0.000000	discard	cycle 24 u=0.0990	agent0	initial_cond	0	0.000000
+exp4730	4.88330883e-29	0.000000	-0.000000	discard	cycle 24 u=0.0990	agent0	initial_cond	1	0.000000
+exp4731	4.88330883e-29	0.000000	-0.000000	discard	cycle 24 u=0.0990	agent0	initial_cond	0	0.000000
+exp4732	5.74085541e-29	0.000000	-0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	0.000000
+exp4733	5.74085541e-29	0.000000	-0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	1	0.000000
+exp4734	5.74085541e-29	0.000000	-0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	0.000000
+exp4735	1.54984578e-28	0.000000	0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	1	-0.000000
+exp4736	1.54984578e-28	0.000000	0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	-0.000000
+exp4737	1.54984578e-28	0.000000	0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	-0.000000
+exp4738	1.60328418e-29	0.000000	-0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	1	-0.000000
+exp4739	1.60328418e-29	0.000000	-0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	-0.000000
+exp4740	1.60328418e-29	0.000000	-0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	-0.000000
+exp4741	7.34590618e-29	0.000000	0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	1	0.000000
+exp4742	7.34590618e-29	0.000000	0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	0.000000
+exp4743	7.34590618e-29	0.000000	0.000000	discard	cycle 24 u=0.0995	agent0	initial_cond	0	0.000000
+exp4744	4.46546993e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4745	4.46546993e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4746	4.46546993e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	1	-0.000000
+exp4747	4.08106752e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4748	4.08106752e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4749	4.08106752e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	1	-0.000000
+exp4750	4.58623706e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4751	4.58623706e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4752	4.58623706e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	1	-0.000000
+exp4753	4.39794337e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4754	4.39794337e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4755	4.39794337e-29	0.000000	0.000000	discard	cycle 24 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4756	1.36727475e-28	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4757	1.36727475e-28	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	1	-0.000000
+exp4758	1.36727475e-28	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4759	6.14461376e-29	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4760	6.14461376e-29	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	1	-0.000000
+exp4761	6.14461376e-29	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4762	1.75906666e-28	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4763	1.75906666e-28	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4764	1.75906666e-28	0.000000	0.000000	discard	nmode test 1 r1	agent0	perturbation	0	-0.000000
+exp4765	1.75906666e-28	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4766	1.11257917e-28	0.000000	0.000000	discard	nmode test 1 r2	agent0	perturbation	1	-0.000000
+exp4766	1.11257917e-28	0.000000	0.000000	discard	cycle 24 u=0.1050	agent0	initial_cond	1	-0.000000
+exp4767	2.00148302e-16	1.001298	1.000025	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-1.520921
+exp4767	2.00148302e-16	1.001298	1.000025	discard	nmode test 1 r3	agent0	perturbation	0	-1.520921
+exp4768	2.00148302e-16	1.001298	1.000025	discard	cycle 24 u=0.1050	agent0	initial_cond	0	-1.520921
+exp4768	2.00148302e-16	1.001298	1.000025	discard	nmode test 1 r4	agent0	perturbation	0	-1.520921
+exp4769	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	1	-1.520921
+exp4770	2.00148302e-16	1.001298	1.000025	discard	nmode test 1 r5	agent0	perturbation	1	-1.520921
+exp4771	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	0	-1.520921
+exp4772	8.58580947e-29	0.000000	0.000000	discard	nmode test 1 r6	agent0	perturbation	0	0.000000
+exp4773	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	0	-1.520921
+exp4774	5.23962023e-29	0.000000	0.000000	discard	nmode test 1 r7	agent0	perturbation	1	0.000000
+exp4775	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	0	-1.520921
+exp4776	5.23962023e-29	0.000000	0.000000	discard	nmode test 1 r8	agent0	perturbation	0	0.000000
+exp4777	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	0	-1.520921
+exp4778	5.23962023e-29	0.000000	0.000000	discard	nmode test 1 r9	agent0	perturbation	0	0.000000
+exp4779	5.23962023e-29	0.000000	0.000000	discard	cycle 25 u=0.0975	agent0	initial_cond	1	0.000000
+exp4780	2.70683191e-16	0.070536	0.000000	discard	resonance K_freq=1 mode=1	agent1	solver_param	1	0.000099
+exp4781	4.03266298e-29	0.000000	0.000000	discard	nmode test 1 r10	agent0	perturbation	0	0.000000
+exp4782	4.03266298e-29	0.000000	0.000000	discard	cycle 25 u=0.0975	agent0	initial_cond	0	0.000000
+exp4783	4.59079438e-18	0.000000	0.000000	discard	resonance K_freq=1 mode=2	agent1	solver_param	0	0.000000
+exp4784	4.03266298e-29	0.000000	0.000000	discard	nmode test 2 r1	agent0	perturbation	0	0.000000
+exp4784	4.03266298e-29	0.000000	0.000000	discard	cycle 25 u=0.0975	agent0	initial_cond	0	0.000000
+exp4785	2.59145622e-17	0.000000	-0.000000	discard	resonance K_freq=1 mode=3	agent1	solver_param	1	0.000000
+exp4786	4.03266298e-29	0.000000	0.000000	discard	cycle 25 u=0.0975	agent0	initial_cond	1	0.000000
+exp4786	4.03266298e-29	0.000000	0.000000	discard	nmode test 2 r2	agent0	perturbation	1	0.000000
+exp4787	4.21900524e-23	0.000000	-0.000000	discard	resonance K_freq=1 mode=4	agent1	solver_param	0	0.000000
+exp4788	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	0	-1.520921
+exp4788	2.00148302e-16	1.001298	1.000025	discard	nmode test 2 r3	agent0	perturbation	0	-1.520921
+exp4789	1.35634976e-18	0.000000	-0.000000	discard	resonance K_freq=2 mode=2	agent1	solver_param	0	0.000000
+exp4790	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	0	-1.520921
+exp4791	2.00148302e-16	1.001298	1.000025	discard	nmode test 2 r4	agent0	perturbation	1	-1.520921
+exp4792	1.67320203e-23	0.000000	-0.000000	discard	resonance K_freq=2 mode=4	agent1	solver_param	1	-0.000000
+exp4793	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0975	agent0	initial_cond	0	-1.520921
+exp4794	2.68824537e-29	0.000000	0.000000	discard	nmode test 2 r5	agent0	perturbation	0	-0.000000
+exp4795	2.78892897e-22	0.000000	0.000000	discard	resonance K_freq=2 mode=6	agent1	solver_param	0	0.000000
+exp4796	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4797	2.68824537e-29	0.000000	0.000000	discard	nmode test 2 r6	agent0	perturbation	0	-0.000000
+exp4798	1.89315446e-18	0.000000	0.000000	discard	resonance K_freq=2 mode=8	agent1	solver_param	1	0.000000
+exp4799	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	1	-1.520921
+exp4800	2.68824537e-29	0.000000	0.000000	discard	nmode test 2 r7	agent0	perturbation	1	-0.000000
+exp4801	1.89901439e-22	0.000000	0.000000	discard	resonance K_freq=3 mode=3	agent1	solver_param	0	0.000000
+exp4802	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4803	6.16758073e-29	0.000000	0.000000	discard	nmode test 2 r8	agent0	perturbation	0	-0.000000
+exp4804	9.61705723e-26	0.000000	0.000000	discard	resonance K_freq=3 mode=6	agent1	solver_param	0	0.000000
+exp4804	6.16758073e-29	0.000000	0.000000	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-0.000000
+exp4805	6.16758073e-29	0.000000	0.000000	discard	nmode test 2 r9	agent0	perturbation	1	-0.000000
+exp4805	1.46437485e-22	0.000000	-0.000000	discard	resonance K_freq=3 mode=9	agent1	solver_param	1	0.000000
+exp4806	6.16758073e-29	0.000000	0.000000	discard	cycle 25 u=0.0980	agent0	initial_cond	1	-0.000000
+exp4807	crash	0	0	crash	boundary_search u=0.30	agent1	branch_search	0	0
+exp4807	6.16758073e-29	0.000000	0.000000	discard	nmode test 2 r10	agent0	perturbation	0	-0.000000
+exp4808	6.16758073e-29	0.000000	0.000000	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-0.000000
+exp4809	5.06169557e-20	0.000000	0.000000	discard	boundary_search u=0.35	agent1	branch_search	0	0.000000
+exp4810	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4810	2.00148302e-16	1.001298	1.000025	discard	nmode test 3 r1	agent0	perturbation	0	-1.520921
+exp4811	crash	0	0	crash	boundary_search u=0.40	agent1	branch_search	0	0
+exp4812	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4812	2.00148302e-16	1.001298	1.000025	discard	nmode test 3 r2	agent0	perturbation	0	-1.520921
+exp4813	0.00000000e+00	0.998999	-1.000000	discard	boundary_search u=0.45	agent1	branch_search	0	-1.567655
+exp4814	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4815	2.00148302e-16	1.001298	1.000025	discard	nmode test 3 r3	agent0	perturbation	0	-1.520921
+exp4816	0.00000000e+00	0.998999	-1.000000	discard	boundary_search u=0.50	agent1	branch_search	1	-1.567655
+exp4817	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	1	-1.520921
+exp4818	1.30310780e-28	0.000000	0.000000	discard	nmode test 3 r4	agent0	perturbation	1	-0.000000
+exp4819	4.44089210e-16	0.998999	-1.000000	discard	boundary_search u=0.55	agent1	branch_search	0	-1.567655
+exp4820	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4821	1.30310780e-28	0.000000	0.000000	discard	nmode test 3 r5	agent0	perturbation	0	-0.000000
+exp4822	0.00000000e+00	0.998999	1.000000	discard	boundary_search u=0.60	agent1	branch_search	0	-1.567655
+exp4823	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4824	5.45343271e-29	0.000000	0.000000	discard	nmode test 3 r6	agent0	perturbation	1	-0.000000
+exp4825	0.00000000e+00	0.998999	1.000000	discard	boundary_search u=0.65	agent1	branch_search	1	-1.567655
+exp4825	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0982	agent0	initial_cond	1	-1.520921
+exp4826	5.45343271e-29	0.000000	0.000000	discard	nmode test 3 r7	agent0	perturbation	0	-0.000000
+exp4827	0.00000000e+00	0.998999	1.000000	discard	boundary_search u=0.70	agent1	branch_search	0	-1.567655
+exp4827	5.45343271e-29	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	0	-0.000000
+exp4828	5.45343271e-29	0.000000	0.000000	discard	nmode test 3 r8	agent0	perturbation	0	-0.000000
+exp4828	1.24769788e-16	0.117042	-0.000000	discard	high_amplitude amp=0.5 phase=π/2	agent1	perturbation	0	0.001086
+exp4829	5.45343271e-29	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	1	-0.000000
+exp4830	1.23429977e-28	0.000000	0.000000	discard	nmode test 3 r9	agent0	perturbation	0	0.000000
+exp4830	1.85381193e-16	0.140031	0.000000	discard	high_amplitude amp=0.6 phase=π/2	agent1	perturbation	0	0.002348
+exp4830	1.23429977e-28	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	0	0.000000
+exp4831	5.88147149e-17	0.162797	0.000000	discard	high_amplitude amp=0.7 phase=π/2	agent1	perturbation	0	0.004424
+exp4831	1.23429977e-28	0.000000	0.000000	discard	nmode test 3 r10	agent0	perturbation	0	0.000000
+exp4831	1.23429977e-28	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	0	0.000000
+exp4832	9.08047114e-17	0.185311	0.000000	discard	high_amplitude amp=0.8 phase=π/2	agent1	perturbation	1	0.007571
+exp4832	1.23429977e-28	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	1	0.000000
+exp4833	1.88036672e-29	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	0	0.000000
+exp4833	1.35662964e-16	0.207543	0.000000	discard	high_amplitude amp=0.9 phase=π/2	agent1	perturbation	0	0.012063
+exp4834	1.88036672e-29	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	0	0.000000
+exp4834	1.09482697e-16	0.229470	-0.000000	discard	high_amplitude amp=1.0 phase=π/2	agent1	perturbation	0	0.018178
+exp4835	1.88036672e-29	0.000000	0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	1	0.000000
+exp4836	1.91190259e-29	0.000000	-0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	0	0.000000
+exp4837	1.91190259e-29	0.000000	-0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	1	0.000000
+exp4838	1.91190259e-29	0.000000	-0.000000	discard	cycle 25 u=0.0982	agent0	initial_cond	0	0.000000
+exp4839	6.13049994e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	0.000000
+exp4840	6.13049994e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	1	0.000000
+exp4841	6.13049994e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	0.000000
+exp4842	5.49750971e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	0.000000
+exp4843	5.49750971e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	1	0.000000
+exp4844	5.49750971e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	0.000000
+exp4845	4.15642452e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	0.000000
+exp4846	4.15642452e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	0.000000
+exp4847	4.15642452e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	0.000000
+exp4848	2.19292611e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	1	-0.000000
+exp4849	2.19292611e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	-0.000000
+exp4850	2.19292611e-29	0.000000	0.000000	discard	cycle 25 u=0.0985	agent0	initial_cond	0	-0.000000
+exp4851	4.22491788e-29	0.000000	0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	1	-0.000000
+exp4852	4.22491788e-29	0.000000	0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	0	-0.000000
+exp4853	4.22491788e-29	0.000000	0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	0	-0.000000
+exp4854	3.22245147e-29	0.000000	0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	1	0.000000
+exp4855	3.22245147e-29	0.000000	0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	0	0.000000
+exp4856	3.22245147e-29	0.000000	0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	1	0.000000
+exp4857	4.50941488e-29	0.000000	-0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	0	0.000000
+exp4858	4.50941488e-29	0.000000	-0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	0	0.000000
+exp4859	4.50941488e-29	0.000000	-0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	1	0.000000
+exp4860	4.88330883e-29	0.000000	-0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	0	0.000000
+exp4861	4.88330883e-29	0.000000	-0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	0	0.000000
+exp4862	4.88330883e-29	0.000000	-0.000000	discard	cycle 25 u=0.0990	agent0	initial_cond	1	0.000000
+exp4863	5.74085541e-29	0.000000	-0.000000	discard	cycle 25 u=0.0995	agent0	initial_cond	0	0.000000
+exp4864	5.74085541e-29	0.000000	-0.000000	discard	cycle 25 u=0.0995	agent0	initial_cond	0	0.000000
+exp4865	2.19286613e-15	1.001298	1.000025	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-1.520921
+exp4866	1.54984578e-28	0.000000	0.000000	discard	close u=0.95 amp=0.15 r1	agent0	solver_param	0	-0.000000
+exp4867	2.19286613e-15	1.001298	1.000025	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-1.520921
+exp4868	1.54984578e-28	0.000000	0.000000	discard	close u=0.95 amp=0.15 r2	agent0	solver_param	0	-0.000000
+exp4869	1.54984578e-28	0.000000	0.000000	discard	cycle 25 u=0.0995	agent0	initial_cond	1	-0.000000
+exp4870	1.54984578e-28	0.000000	0.000000	discard	close u=0.95 amp=0.15 r3	agent0	solver_param	0	-0.000000
+exp4871	1.54984578e-28	0.000000	0.000000	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-0.000000
+exp4872	1.60328418e-29	0.000000	-0.000000	discard	close u=0.98 amp=0.15 r1	agent0	solver_param	0	-0.000000
+exp4872	1.60328418e-29	0.000000	-0.000000	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-0.000000
+exp4873	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0995	agent0	initial_cond	1	-1.520921
+exp4873	2.00148302e-16	1.001298	1.000025	discard	close u=0.98 amp=0.15 r2	agent0	solver_param	1	-1.520921
+exp4874	3.72380123e-16	1.001298	1.000025	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-1.520921
+exp4874	3.72380123e-16	1.001298	1.000025	discard	close u=0.99 amp=0.15 r1	agent0	solver_param	0	-1.520921
+exp4875	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-1.520921
+exp4876	2.00148302e-16	1.001298	1.000025	discard	close u=1.00 amp=0.15 r1	agent0	solver_param	1	-1.520921
+exp4877	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-1.520921
+exp4878	7.34590618e-29	0.000000	0.000000	discard	close u=1.01 amp=0.15 r1	agent0	solver_param	0	0.000000
+exp4879	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.0995	agent0	initial_cond	0	-1.520921
+exp4880	4.46546993e-29	0.000000	0.000000	discard	close u=1.01 amp=0.15 r2	agent0	solver_param	0	-0.000000
+exp4881	crash	0	0	crash	fine_boundary u=0.40	agent1	branch_search	1	0
+exp4881	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.1000	agent0	initial_cond	1	-1.520921
+exp4882	4.46546993e-29	0.000000	0.000000	discard	close u=1.01 amp=0.15 r3	agent0	solver_param	1	-0.000000
+exp4883	crash	0	0	crash	fine_boundary u=0.42	agent1	branch_search	0	0
+exp4884	2.00148302e-16	1.001298	1.000025	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-1.520921
+exp4885	crash	0	0	crash	fine_boundary u=0.44	agent1	branch_search	0	0
+exp4885	4.46546993e-29	0.000000	0.000000	discard	close u=1.02 amp=0.15 r1	agent0	solver_param	0	-0.000000
+exp4886	4.46546993e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4887	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.46	agent1	branch_search	1	-1.567655
+exp4888	4.08106752e-29	0.000000	0.000000	discard	close u=1.02 amp=0.15 r2	agent0	solver_param	1	-0.000000
+exp4889	4.08106752e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	1	-0.000000
+exp4890	0.00000000e+00	0.998999	-1.000000	discard	fine_boundary u=0.48	agent1	branch_search	0	-1.567655
+exp4891	4.08106752e-29	0.000000	0.000000	discard	close u=1.02 amp=0.15 r3	agent0	solver_param	0	-0.000000
+exp4891	4.08106752e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4892	0.00000000e+00	0.998999	-1.000000	discard	fine_boundary u=0.50	agent1	branch_search	0	-1.567655
+exp4893	4.08106752e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4893	4.08106752e-29	0.000000	0.000000	discard	close u=1.05 amp=0.15 r1	agent0	solver_param	0	-0.000000
+exp4894	0.00000000e+00	0.998999	-1.000000	discard	fine_boundary u=0.52	agent1	branch_search	1	-1.567655
+exp4895	3.72380123e-16	1.001298	1.000025	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-1.520921
+exp4895	3.72380123e-16	1.001298	1.000025	discard	close u=1.05 amp=0.15 r2	agent0	solver_param	0	-1.520921
+exp4896	0.00000000e+00	0.998999	-1.000000	discard	fine_boundary u=0.54	agent1	branch_search	0	-1.567655
+exp4897	4.58623706e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4898	0.00000000e+00	0.998999	-1.000000	discard	fine_boundary u=0.56	agent1	branch_search	1	-1.567655
+exp4899	4.58623706e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	1	-0.000000
+exp4900	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.58	agent1	branch_search	0	-1.567655
+exp4901	4.39794337e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4902	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.60	agent1	branch_search	0	-1.567655
+exp4903	4.39794337e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	0	-0.000000
+exp4904	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.62	agent1	branch_search	1	-1.567655
+exp4904	4.39794337e-29	0.000000	0.000000	discard	cycle 25 u=0.1000	agent0	initial_cond	1	-0.000000
+exp4905	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.64	agent1	branch_search	0	-1.567655
+exp4905	1.36727475e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4906	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.66	agent1	branch_search	0	-1.567655
+exp4906	1.36727475e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4907	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.68	agent1	branch_search	0	-1.567655
+exp4907	1.36727475e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4908	0.00000000e+00	0.998999	1.000000	discard	fine_boundary u=0.70	agent1	branch_search	0	-1.567655
+exp4908	6.14461376e-29	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4909	6.14461376e-29	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	1	-0.000000
+exp4909	4.80675224e-18	0.023564	-0.000000	discard	4th_branch_family amp=0.10 phase=π/2	agent1	perturbation	1	-0.000005
+exp4910	5.25987407e-17	0.035333	-0.000000	discard	4th_branch_family amp=0.15 phase=π/2	agent1	perturbation	0	-0.000006
+exp4910	6.14461376e-29	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4911	1.75906666e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4911	4.47441355e-17	0.047088	-0.000000	discard	4th_branch_family amp=0.20 phase=π/2	agent1	perturbation	0	0.000003
+exp4912	1.75906666e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	1	-0.000000
+exp4912	7.78074825e-17	0.058824	-0.000000	discard	4th_branch_family amp=0.25 phase=π/2	agent1	perturbation	1	0.000033
+exp4913	1.75906666e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4913	3.87261605e-17	0.070535	-0.000000	discard	4th_branch_family amp=0.30 phase=π/2	agent1	perturbation	0	0.000099
+exp4914	1.11257917e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4914	5.19865099e-17	0.082217	0.000000	discard	4th_branch_family amp=0.35 phase=π/2	agent1	perturbation	0	0.000216
+exp4915	1.11257917e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4915	1.46236839e-16	0.093865	0.000000	discard	4th_branch_family amp=0.40 phase=π/2	agent1	perturbation	0	0.000405
+exp4916	1.11257917e-28	0.000000	0.000000	discard	cycle 25 u=0.1050	agent0	initial_cond	0	-0.000000
+exp4916	1.07126622e-16	0.105475	-0.000000	discard	4th_branch_family amp=0.45 phase=π/2	agent1	perturbation	0	0.000687
+exp4917	8.58580947e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	1	0.000000
+exp4917	1.24769788e-16	0.117042	-0.000000	discard	4th_branch_family amp=0.50 phase=π/2	agent1	perturbation	1	0.001086
+exp4918	8.58580947e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	0	0.000000
+exp4918	7.96826541e-17	0.128562	0.000000	discard	4th_branch_family amp=0.55 phase=π/2	agent1	perturbation	0	0.001631
+exp4919	8.58580947e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	0	0.000000
+exp4919	1.85381193e-16	0.140031	0.000000	discard	4th_branch_family amp=0.60 phase=π/2	agent1	perturbation	0	0.002348
+exp4920	5.23962023e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	1	0.000000
+exp4920	5.91168715e-17	0.151444	-0.000000	discard	4th_branch_family amp=0.65 phase=π/2	agent1	perturbation	1	0.003268
+exp4921	5.23962023e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	0	0.000000
+exp4921	5.88147149e-17	0.162797	0.000000	discard	4th_branch_family amp=0.70 phase=π/2	agent1	perturbation	0	0.004424
+exp4922	5.23962023e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	0	0.000000
+exp4922	8.47151389e-17	0.174087	0.000000	discard	4th_branch_family amp=0.75 phase=π/2	agent1	perturbation	0	0.005847
+exp4923	4.03266298e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	1	0.000000
+exp4923	9.08047114e-17	0.185311	0.000000	discard	4th_branch_family amp=0.80 phase=π/2	agent1	perturbation	0	0.007571
+exp4924	4.03266298e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	0	0.000000
+exp4925	2.99146097e-17	0.070535	0.000000	discard	phase_continuity phase=0.5 amp=0.3	agent1	branch_search	0	0.000099
+exp4926	4.03266298e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	1	0.000000
+exp4927	4.16438671e-17	0.070535	0.000000	discard	phase_continuity phase=0.8 amp=0.3	agent1	branch_search	1	0.000099
+exp4928	4.80015937e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	0	0.000000
+exp4929	4.84483353e-17	0.070535	-0.000000	discard	phase_continuity phase=1.0 amp=0.3	agent1	branch_search	0	0.000099
+exp4930	4.80015937e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	0	0.000000
+exp4931	9.22855674e-17	0.070535	0.000000	discard	phase_continuity phase=1.2 amp=0.3	agent1	branch_search	0	0.000099
+exp4932	4.80015937e-29	0.000000	0.000000	discard	cycle 26 u=0.0975	agent0	initial_cond	1	0.000000
+exp4933	2.59773402e-17	0.070535	-0.000000	discard	phase_continuity phase=1.4 amp=0.3	agent1	branch_search	1	0.000099
+exp4934	2.68824537e-29	0.000000	0.000000	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-0.000000
+exp4935	7.28145628e-17	0.070535	0.000000	discard	phase_continuity phase=1.57 amp=0.3	agent1	branch_search	0	0.000099
+exp4936	2.68824537e-29	0.000000	0.000000	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-0.000000
+exp4937	6.84292371e-17	0.070535	-0.000000	discard	phase_continuity phase=1.6 amp=0.3	agent1	branch_search	0	0.000099
+exp4938	2.68824537e-29	0.000000	0.000000	discard	cycle 26 u=0.0980	agent0	initial_cond	1	-0.000000
+exp4939	2.67234983e-17	0.070535	-0.000000	discard	phase_continuity phase=1.8 amp=0.3	agent1	branch_search	0	0.000099
+exp4940	6.16758073e-29	0.000000	0.000000	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-0.000000
+exp4941	1.00846882e-16	0.070535	0.000000	discard	phase_continuity phase=2.0 amp=0.3	agent1	branch_search	0	0.000099
+exp4942	6.16758073e-29	0.000000	0.000000	discard	cycle 26 u=0.0980	agent0	initial_cond	1	-0.000000
+exp4943	5.00678838e-17	0.070535	-0.000000	discard	phase_continuity phase=2.2 amp=0.3	agent1	branch_search	1	0.000099
+exp4944	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4945	2.00148302e-16	1.001298	1.000025	discard	maxiter=50 ntol=1e-15 r1	agent0	solver_param	0	-1.520921
+exp4945	2.48838720e-17	0.070535	-0.000000	discard	phase_continuity phase=2.4 amp=0.3	agent1	branch_search	0	0.000099
+exp4946	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4947	2.01926478e-29	0.000000	0.000000	discard	maxiter=100 ntol=1e-15 r1	agent0	solver_param	0	0.000000
+exp4948	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0980	agent0	initial_cond	1	-1.520921
+exp4949	2.01926478e-29	0.000000	0.000000	discard	maxiter=100 ntol=1e-15 r2	agent0	solver_param	0	0.000000
+exp4950	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4951	1.30310780e-28	0.000000	0.000000	discard	maxiter=100 ntol=1e-15 r3	agent0	solver_param	0	-0.000000
+exp4952	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-1.520921
+exp4953	1.30310780e-28	0.000000	0.000000	discard	maxiter=100 ntol=1e-15 r4	agent0	solver_param	1	-0.000000
+exp4954	1.30310780e-28	0.000000	0.000000	discard	cycle 26 u=0.0980	agent0	initial_cond	1	-0.000000
+exp4955	1.30310780e-28	0.000000	0.000000	discard	maxiter=100 ntol=1e-15 r5	agent0	solver_param	0	-0.000000
+exp4956	1.30310780e-28	0.000000	0.000000	discard	cycle 26 u=0.0980	agent0	initial_cond	0	-0.000000
+exp4957	5.45343271e-29	0.000000	0.000000	discard	maxiter=200 ntol=1e-15 r1	agent0	solver_param	1	-0.000000
+exp4957	5.45343271e-29	0.000000	0.000000	discard	cycle 26 u=0.0982	agent0	initial_cond	1	-0.000000
+exp4958	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0982	agent0	initial_cond	0	-1.520921
+exp4958	2.00148302e-16	1.001298	1.000025	discard	maxiter=200 ntol=1e-15 r2	agent0	solver_param	0	-1.520921
+exp4959	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0982	agent0	initial_cond	0	-1.520921
+exp4960	2.00148302e-16	1.001298	1.000025	discard	maxiter=500 ntol=1e-15 r1	agent0	solver_param	0	-1.520921
+exp4961	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0982	agent0	initial_cond	1	-1.520921
+exp4962	1.23429977e-28	0.000000	0.000000	discard	maxiter=1000 ntol=1e-15 r1	agent0	solver_param	1	0.000000
+exp4963	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0982	agent0	initial_cond	0	-1.520921
+exp4964	1.23429977e-28	0.000000	0.000000	discard	maxiter=1000 ntol=1e-15 r2	agent0	solver_param	0	0.000000
+exp4965	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0982	agent0	initial_cond	0	-1.520921
+exp4966	1.88036672e-29	0.000000	0.000000	discard	maxiter=1000 ntol=1e-15 r3	agent0	solver_param	1	0.000000
+exp4967	2.00148302e-16	1.001298	1.000025	discard	cycle 26 u=0.0982	agent0	initial_cond	1	-1.520921
+exp4968	1.88036672e-29	0.000000	0.000000	discard	maxiter=1000 ntol=1e-15 r4	agent0	solver_param	0	0.000000
+exp4969	1.88036672e-29	0.000000	0.000000	discard	cycle 26 u=0.0982	agent0	initial_cond	0	0.000000
+exp4970	1.88036672e-29	0.000000	0.000000	discard	maxiter=1000 ntol=1e-15 r5	agent0	solver_param	0	0.000000
+exp4971	1.88036672e-29	0.000000	0.000000	discard	cycle 26 u=0.0982	agent0	initial_cond	0	0.000000
+exp4972	1.91190259e-29	0.000000	-0.000000	discard	cycle 26 u=0.0982	agent0	initial_cond	0	0.000000
+exp4973	1.91190259e-29	0.000000	-0.000000	discard	cycle 26 u=0.0982	agent0	initial_cond	0	0.000000
+exp4974	1.91190259e-29	0.000000	-0.000000	discard	cycle 26 u=0.0982	agent0	initial_cond	1	0.000000
+exp4975	6.13049994e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	0.000000
+exp4976	6.13049994e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	0.000000
+exp4977	6.13049994e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	1	0.000000
+exp4978	5.49750971e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	0.000000
+exp4979	5.49750971e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	0.000000
+exp4980	5.49750971e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	0.000000
+exp4981	4.15642452e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	0.000000
+exp4982	4.15642452e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	1	0.000000
+exp4983	4.15642452e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	0.000000
+exp4984	2.19292611e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	-0.000000
+exp4985	2.19292611e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	1	-0.000000
+exp4986	2.19292611e-29	0.000000	0.000000	discard	cycle 26 u=0.0985	agent0	initial_cond	0	-0.000000
+exp4987	4.22491788e-29	0.000000	0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	-0.000000
+exp4988	4.22491788e-29	0.000000	0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	1	-0.000000
+exp4989	4.22491788e-29	0.000000	0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	-0.000000
+exp4990	3.22245147e-29	0.000000	0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	0.000000
+exp4991	3.22245147e-29	0.000000	0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	0.000000
+exp4992	3.22245147e-29	0.000000	0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	0.000000
+exp4993	4.50941488e-29	0.000000	-0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	1	0.000000
+exp4994	4.50941488e-29	0.000000	-0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	0.000000
+exp4995	4.50941488e-29	0.000000	-0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	0.000000
+exp4996	4.88330883e-29	0.000000	-0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	1	0.000000
+exp4997	4.88330883e-29	0.000000	-0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	0.000000
+exp4998	4.88330883e-29	0.000000	-0.000000	discard	cycle 26 u=0.0990	agent0	initial_cond	0	0.000000
+exp4999	5.74085541e-29	0.000000	-0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	0.000000
+exp5000	5.74085541e-29	0.000000	-0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	0.000000
+exp5001	5.74085541e-29	0.000000	-0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	1	0.000000
+exp5002	1.54984578e-28	0.000000	0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	-0.000000
+exp5003	1.54984578e-28	0.000000	0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	-0.000000
+exp5004	1.54984578e-28	0.000000	0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	1	-0.000000
+exp5005	1.60328418e-29	0.000000	-0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	-0.000000
+exp5006	1.60328418e-29	0.000000	-0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	-0.000000
+exp5007	1.60328418e-29	0.000000	-0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	1	-0.000000
+exp5008	7.34590618e-29	0.000000	0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	0.000000
+exp5009	7.34590618e-29	0.000000	0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	0.000000
+exp5010	7.34590618e-29	0.000000	0.000000	discard	cycle 26 u=0.0995	agent0	initial_cond	0	0.000000
+exp5011	4.46546993e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	0	-0.000000
+exp5012	4.46546993e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	1	-0.000000
+exp5013	4.46546993e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	0	-0.000000
+exp5014	4.08106752e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	0	-0.000000
+exp5015	4.08106752e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	1	-0.000000
+exp5016	4.08106752e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	0	-0.000000
+exp5017	4.58623706e-29	0.000000	0.000000	discard	Fourier 2 phase=0.0	agent0	perturbation	0	-0.000000
+exp5017	4.58623706e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	0	-0.000000
+exp5018	4.58623706e-29	0.000000	0.000000	discard	Fourier 2 phase=0.5	agent0	perturbation	1	-0.000000
+exp5018	4.58623706e-29	0.000000	0.000000	discard	cycle 26 u=0.1000	agent0	initial_cond	0	-0.000000
