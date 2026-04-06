@@ -124,3 +124,4 @@ exp117	1.51658476e-19	0.000000	0.000000	discard	trivial branch, n_mode=5, amplit
 exp118	1.13671782e-23	0.000000	0.000000	discard	Verify n_mode=2 resonance reproducibility	agent0	perturbation	1	0.000000
 exp119	3.25175165e-12	1.002503	1.000218	discard	stable region, u_offset=0.65	agent2	branch_search	1	-1.523848
 exp120	8.31925483e-19	0.000000	0.000000	discard	boundary region, u_offset=0.57	agent2	branch_search	1	-0.000000
+exp121	4.72145975e-16	1.140175	1.140175	discard	positive branch, K_frequency=0.3	agent0	branch_search	0	-1.429425

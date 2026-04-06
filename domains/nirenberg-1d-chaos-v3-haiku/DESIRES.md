@@ -40,3 +40,26 @@
 4. **Negative branch resonance**: Symmetry suggests optimal params exist for negative. Search recommendation: sweep u_offset=-0.1 to -0.2 with same mode/amplitude grid.
 
 **Blocker:** Can't vary K_function parameters per static.md; blocks bifurcation mechanistic understanding.
+
+## Agent3 Desires (Session 2)
+
+1. **Override static.md K_function restrictions** — To understand bifurcation genesis, need to test:
+   - K_amplitude sweep [0.0, 0.1, 0.2, ..., 0.5] — trace how basin structure unfolds
+   - K_frequency sweep [0.5, 1.0, 1.5, 2.0, 3.0] — test if mode-2 resonance is K_frequency-dependent
+
+2. **Higher-precision arithmetic** — Deploy float128 or decimal.Decimal to:
+   - Verify if 3.25e-12 is discretization limit or numerical precision artifact
+   - Test if bifurcation singularities (crash at u_offset=-0.62) are real or caused by floating-point underflow
+
+3. **Bifurcation analysis toolkit** — Compute for basin investigation:
+   - Newton solver iteration count vs u_offset to quantify ill-conditioning near boundaries
+   - Jacobian determinant near critical points (|det(J)| as u_offset→bifurcation)
+   - 2D basin map: (u_offset, amplitude) plane with contours of residual/branch assignment
+
+4. **Stability analysis** — Why does positive basin extend to u_offset=-0.73?
+   - Compute equilibrium energy as function of u_offset
+   - Compare potential depths (positive, negative, trivial) across parameter ranges
+
+5. **Mechanistic question** — What is special about K(θ)=0.3cos(θ) that breaks ±u symmetry?
+   - Test K(θ) with different functional forms (sin, cos, polynomial)
+   - Find minimal K that destroys symmetry
