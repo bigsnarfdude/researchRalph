@@ -1,0 +1,282 @@
+exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	5.63598005e-11	0.000000	-0.000000	keep	explore trivial branch, u_offset=0.0	agent0	initial_cond	1	-0.000000
+exp002	5.63598005e-11	0.000000	-0.000000	discard	trivial branch baseline, u_offset=0	agent1	initial_cond	0	-0.000000
+exp003	5.63598005e-11	0.000000	-0.000000	discard	trivial branch baseline, u_offset=0	agent2	initial_cond	0	-0.000000
+exp004	5.72745888e-09	1.002503	1.000218	discard	explore positive branch, u_offset=0.9	agent0	initial_cond	0	-1.523848
+exp005	5.72745888e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9	agent2	initial_cond	0	-1.523848
+exp006	2.41595655e-09	1.002503	-1.000218	discard	negative branch, u_offset=-0.9	agent2	initial_cond	1	-1.523848
+exp007	5.72745888e-09	1.002503	1.000218	discard	positive branch baseline, u_offset=0.9	agent1	initial_cond	0	-1.523848
+exp008	5.72745888e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9	agent3	initial_cond	1	-1.523848
+exp009	2.41595655e-09	1.002503	-1.000218	discard	negative branch baseline, u_offset=-0.9	agent1	initial_cond	0	-1.523848
+exp010	2.41595655e-09	1.002503	-1.000218	discard	explore negative branch, u_offset=-0.9	agent0	initial_cond	1	-1.523848
+exp011	2.41595655e-09	1.002503	-1.000218	discard	negative branch, u_offset=-0.9	agent3	initial_cond	0	-1.523848
+exp012	5.72746062e-09	1.002503	1.000218	discard	positive branch amplitude=0.0	agent2	perturbation	0	-1.523848
+exp013	5.72745888e-09	1.002503	1.000218	discard	positive branch amplitude=0.1	agent2	perturbation	0	-1.523848
+exp014	5.72745874e-09	1.002503	1.000218	discard	positive branch amplitude=0.2	agent2	perturbation	1	-1.523848
+exp015	2.41595655e-09	1.002503	1.000218	discard	positive branch amplitude=0.3	agent2	perturbation	0	-1.523848
+exp016	2.41595655e-09	1.002503	1.000218	discard	positive branch with amplitude=0.3	agent3	initial_cond	0	-1.523848
+exp017	8.81934684e-11	1.002503	1.000218	discard	positive branch refined: n_nodes=200, tol=1e-10	agent1	solver_param	1	-1.523848
+exp018	2.41595655e-09	1.002503	1.000218	discard	positive branch with amplitude=0.3	agent0	initial_cond	1	-1.523848
+exp019	5.72745888e-09	1.002503	1.000218	discard	positive branch n_mode=1	agent2	perturbation	0	-1.523848
+exp020	5.72962937e-09	1.002503	1.000218	discard	positive branch n_mode=2	agent2	perturbation	0	-1.523848
+exp021	5.72747764e-09	1.002503	1.000218	discard	positive branch n_mode=3	agent2	perturbation	1	-1.523848
+exp022	2.41595655e-09	1.002503	1.000218	discard	positive branch, amplitude=0.3, mode=2	agent3	initial_cond	1	-1.523848
+exp023	crash	0	0	crash	positive branch ultra-refined: n_nodes=300, tol=1e-12	agent1	solver_param	0	0
+exp024	5.72745808e-09	1.002503	-1.000218	discard	u_offset sweep: -1.5	agent2	branch_search	0	-1.523848
+exp025	5.72745861e-09	1.002503	-1.000218	discard	negative branch with amplitude=0.3	agent3	initial_cond	0	-1.523848
+exp026	5.72745881e-09	1.002503	-1.000218	discard	u_offset sweep: -1.2	agent2	branch_search	0	-1.523848
+exp027	2.41595655e-09	1.002503	-1.000218	discard	u_offset sweep: -0.9	agent2	branch_search	0	-1.523848
+exp028	3.25175165e-12	1.002503	1.000218	keep	positive branch: n_nodes=300, tol=1e-11	agent1	solver_param	0	-1.523848
+exp029	3.75113468e-11	0.000000	-0.000000	discard	u_offset sweep: -0.6	agent2	branch_search	0	-0.000000
+exp030	3.25175165e-12	1.002503	1.000218	discard	u_offset sweep: -0.3	agent2	branch_search	1	-1.523848
+exp031	3.25175165e-12	1.002503	1.000218	discard	u_offset sweep: 0.0	agent2	branch_search	0	-1.523848
+exp032	3.25175165e-12	1.002503	1.000218	discard	u_offset sweep: 0.3	agent2	branch_search	0	-1.523848
+exp033	3.25175165e-12	1.002503	1.000218	discard	u_offset sweep: 0.6	agent2	branch_search	1	-1.523848
+exp034	3.25175165e-12	1.002503	1.000218	discard	u_offset sweep: 0.9	agent2	branch_search	0	-1.523848
+exp035	3.25175165e-12	1.002503	1.000218	discard	u_offset sweep: 1.2	agent2	branch_search	0	-1.523848
+exp036	3.25175165e-12	1.002503	1.000218	discard	u_offset sweep: 1.5	agent2	branch_search	0	-1.523848
+exp037	3.25175165e-12	1.002503	-1.000218	discard	negative branch: n_nodes=300, tol=1e-11	agent1	solver_param	1	-1.523848
+exp038	5.63651966e-09	1.002503	1.000218	discard	positive branch with amplitude=0.45	agent0	initial_cond	1	-1.523848
+exp039	2.41595655e-09	1.002503	-1.000218	discard	negative branch, amplitude=0.1, mode=2	agent3	initial_cond	0	-1.523848
+exp040	3.25175165e-12	1.002503	1.000218	discard	boundary sweep near -0.5: -0.75	agent2	branch_search	1	-1.523848
+exp041	3.25175165e-12	1.002503	1.000218	discard	boundary sweep near -0.5: -0.65	agent2	branch_search	0	-1.523848
+exp042	3.25175165e-12	1.002503	1.000218	discard	boundary sweep near -0.5: -0.55	agent2	branch_search	0	-1.523848
+exp043	3.25175165e-12	1.002503	1.000218	discard	boundary sweep near -0.5: -0.45	agent2	branch_search	0	-1.523848
+exp043	5.72745798e-09	1.002503	-1.000218	discard	negative branch, amplitude=0.1, mode=3	agent3	initial_cond	0	-1.523848
+exp044	2.98157327e-13	0.000000	-0.000000	keep	trivial branch: n_nodes=300, tol=1e-11	agent1	solver_param	0	-0.000000
+exp045	3.25175165e-12	1.002503	1.000218	discard	boundary sweep near -0.5: -0.35	agent2	branch_search	0	-1.523848
+exp046	2.39021946e-15	0.000000	-0.000000	keep	boundary sweep near -0.5: -0.25	agent2	branch_search	1	-0.000000
+exp047	2.39021946e-15	0.000000	-0.000000	discard	boundary sweep near -0.5: -0.15	agent2	branch_search	0	-0.000000
+exp048	2.39021946e-15	0.000000	-0.000000	discard	boundary sweep near -0.5: -0.05	agent2	branch_search	0	-0.000000
+exp049	1.46644287e-11	0.000000	-0.000000	discard	trivial branch, amplitude=0.2	agent3	initial_cond	0	-0.000000
+exp050	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.30	agent2	branch_search	0	-0.000000
+exp051	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.28	agent2	branch_search	0	-0.000000
+exp052	2.41595655e-09	1.002503	1.000218	discard	positive branch with mode 2	agent0	initial_cond	0	-1.523848
+exp053	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.26	agent2	branch_search	1	-0.000000
+exp054	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.24	agent2	branch_search	0	-0.000000
+exp055	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.22	agent2	branch_search	0	-0.000000
+exp056	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.20	agent2	branch_search	1	-0.000000
+exp057	1.18414911e-13	0.000000	-0.000000	discard	trivial branch, amplitude=0.3	agent3	initial_cond	0	-0.000000
+exp058	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.10	agent2	branch_search	0	-0.000000
+exp059	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: -0.05	agent2	branch_search	0	-0.000000
+exp060	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: 0.0	agent2	branch_search	1	-0.000000
+exp061	2.39021946e-15	0.000000	-0.000000	discard	fine boundary: 0.05	agent2	branch_search	0	-0.000000
+exp062	2.41595655e-09	1.002503	1.000218	discard	positive branch with mode 3	agent0	initial_cond	0	-1.523848
+exp063	1.88197767e-10	0.000000	-0.000000	discard	trivial branch, amplitude=0.4	agent3	initial_cond	0	-0.000000
+exp064	3.25175165e-12	1.002503	1.000218	discard	positive branch, amplitude=0.2	agent1	perturbation	0	-1.523848
+exp065	1.51693144e-12	0.000000	-0.000000	discard	trivial branch, amplitude=0.35	agent3	initial_cond	1	-0.000000
+exp066	3.25175165e-12	1.002503	1.000218	discard	positive branch, amplitude=0.3	agent1	perturbation	1	-1.523848
+exp067	1.50170884e-14	0.000000	0.000000	discard	bifurcation test: u_offset=0.3	agent0	branch_search	0	-0.000000
+exp068	3.25175165e-12	1.002503	1.000218	discard	positive branch, mode=2	agent1	perturbation	1	-1.523848
+exp069	1.09513534e-11	0.000000	-0.000000	discard	trivial branch, amplitude=0.32	agent3	initial_cond	0	-0.000000
+exp070	2.41595655e-09	1.002503	-1.000218	discard	bifurcation test: u_offset=0.5	agent0	branch_search	0	-1.523848
+exp071	3.25175408e-12	1.002503	1.000218	discard	positive branch, mode=3	agent1	perturbation	0	-1.523848
+exp072	2.30410261e-12	0.000000	-0.000000	discard	trivial branch, amplitude=0.31	agent3	initial_cond	0	-0.000000
+exp073	5.72748208e-09	1.002503	1.000218	discard	bifurcation test: u_offset=0.6	agent0	branch_search	0	-1.523848
+exp074	2.39021946e-15	0.000000	-0.000000	discard	positive branch with phase=0.0	agent2	perturbation	0	-0.000000
+exp075	9.96344283e-12	0.070536	0.000000	discard	positive branch with phase=1.57	agent2	perturbation	1	0.000175
+exp076	1.10623942e-22	0.000000	0.000000	keep	positive branch with phase=3.14	agent2	perturbation	0	-0.000000
+exp077	5.98785584e-12	0.000000	-0.000000	discard	trivial branch, amplitude=0.3, mode=2	agent3	initial_cond	0	-0.000000
+exp078	1.10623942e-22	0.000000	0.000000	discard	positive branch with phase=4.71	agent2	perturbation	1	-0.000000
+exp079	3.25175165e-12	1.002503	1.000218	discard	positive branch, phase=π	agent1	perturbation	0	-1.523848
+exp079	1.10623942e-22	0.000000	0.000000	discard	positive branch with phase=6.28	agent2	perturbation	0	-0.000000
+exp080	5.57300013e-20	0.000000	0.000000	discard	bifurcation test: u_offset=0.4	agent0	branch_search	1	-0.000000
+exp081	1.10623942e-22	0.000000	0.000000	discard	verify: basic positive branch	agent2	initial_cond	0	-0.000000
+exp082	6.31838887e-14	0.000000	-0.000000	discard	u_offset=0.5 (between trivial and positive)	agent1	branch_search	0	-0.000000
+exp083	2.62635931e-11	1.002503	1.000218	discard	positive branch, tighter tolerance and finer mesh	agent3	solver_param	0	-1.523848
+exp084	8.95467025e-11	0.000000	0.000000	discard	bifurcation test: u_offset=0.45	agent0	branch_search	1	-0.000000
+exp085	3.25175408e-12	1.002503	1.000218	discard	u_offset=0.7	agent1	branch_search	0	-1.523848
+exp086	1.10623942e-22	0.000000	0.000000	discard	clean restart: positive branch u_offset=0.9	agent2	initial_cond	1	-0.000000
+exp087	2.62635931e-11	1.002503	-1.000218	discard	negative branch, tighter tolerance and finer mesh	agent3	solver_param	0	-1.523848
+exp088	3.25175165e-12	1.002503	1.000218	discard	u_offset=0.6	agent1	branch_search	0	-1.523848
+exp089	5.72745888e-09	1.002503	1.000218	discard	positive branch fresh attempt	agent2	initial_cond	0	-1.523848
+exp090	1.50158223e-14	0.000000	-0.000000	discard	bifurcation test: u_offset=-0.3	agent0	branch_search	0	-0.000000
+exp091	3.25175408e-12	1.002503	-1.000218	discard	u_offset=0.55	agent1	branch_search	1	-1.523848
+exp092	6.54666394e-18	0.000000	-0.000000	discard	trivial branch, very tight tolerance and finer mesh	agent3	solver_param	1	-0.000000
+exp093	5.72745888e-09	1.002503	1.000218	discard	positive branch phase=0.0	agent2	perturbation	0	-1.523848
+exp094	2.41595655e-09	1.002503	1.000218	discard	positive branch phase=1.57	agent2	perturbation	0	-1.523848
+exp095	2.41595655e-09	1.002503	1.000218	discard	positive branch phase=3.14	agent2	perturbation	0	-1.523848
+exp096	2.41595655e-09	1.002503	1.000218	discard	positive branch phase=4.71	agent2	perturbation	1	-1.523848
+exp097	5.72745885e-09	1.002503	1.000218	discard	positive branch phase=6.28	agent2	perturbation	0	-1.523848
+exp098	2.41595655e-09	1.002503	-1.000218	discard	negative branch phase=0.0	agent2	perturbation	0	-1.523848
+exp099	2.41595655e-09	1.002503	-1.000218	discard	negative branch phase=1.57	agent2	perturbation	1	-1.523848
+exp100	1.65991282e-15	0.000000	-0.000000	discard	u_offset=-0.55	agent1	branch_search	0	-0.000000
+exp101	5.72745894e-09	1.002503	-1.000218	discard	negative branch phase=3.14	agent2	perturbation	0	-1.523848
+exp102	2.41595655e-09	1.002503	-1.000218	discard	negative branch phase=4.71	agent2	perturbation	1	-1.523848
+exp103	2.41595655e-09	1.002503	-1.000218	discard	negative branch phase=6.28	agent2	perturbation	0	-1.523848
+exp104	2.41595655e-09	1.002503	1.000218	discard	bifurcation test: u_offset=-0.5	agent0	branch_search	0	-1.523848
+exp105	1.60426708e-13	0.000000	-0.000000	discard	u_offset=-0.5	agent1	branch_search	0	-0.000000
+exp106	6.54670004e-18	0.000000	-0.000000	discard	trivial branch, 1e-14 tolerance, 250 nodes	agent3	solver_param	1	-0.000000
+exp107	crash	0	0	crash	u_offset=-0.6	agent1	branch_search	1	0
+exp108	1.19266615e-13	0.000000	0.000000	discard	bifurcation boundary: u_offset=0.48	agent0	branch_search	0	-0.000000
+exp109	crash	0	0	crash	positive branch, 1e-14 tolerance, 250 nodes	agent3	solver_param	0	0
+exp110	5.90447763e-09	1.002503	1.000218	discard	pos branch n_nodes=50	agent2	solver_param	0	-1.523848
+exp111	3.25175165e-12	1.002503	-1.000218	discard	u_offset=-0.7	agent1	branch_search	0	-1.523848
+exp112	5.72745888e-09	1.002503	1.000218	discard	pos branch n_nodes=100	agent2	solver_param	0	-1.523848
+exp113	1.68033427e-09	1.002503	1.000218	discard	pos branch n_nodes=150	agent2	solver_param	1	-1.523848
+exp114	7.05432259e-10	1.002503	1.000218	discard	pos branch n_nodes=200	agent2	solver_param	0	-1.523848
+exp115	3.60113174e-10	1.002503	1.000218	discard	pos branch n_nodes=250	agent2	solver_param	0	-1.523848
+exp116	2.07993764e-10	1.002503	1.000218	discard	pos branch n_nodes=300	agent2	solver_param	0	-1.523848
+exp117	2.17865363e-10	0.000000	0.000000	discard	bifurcation boundary: u_offset=0.49	agent0	branch_search	0	-0.000000
+exp118	crash	0	0	crash	positive branch, 1e-13 tolerance, 250 nodes	agent3	solver_param	1	0
+exp119	5.90447763e-09	1.002503	-1.000218	discard	neg branch n_nodes=50	agent2	solver_param	0	-1.523848
+exp120	2.41595655e-09	1.002503	-1.000218	discard	neg branch n_nodes=100	agent2	solver_param	0	-1.523848
+exp121	5.66994262e-09	1.002503	-1.000218	discard	neg branch n_nodes=150	agent2	solver_param	1	-1.523848
+exp122	2.38041066e-09	1.002503	-1.000218	discard	neg branch n_nodes=200	agent2	solver_param	0	-1.523848
+exp123	9.37483263e-09	1.002503	-1.000218	discard	neg branch n_nodes=250	agent2	solver_param	0	-1.523848
+exp124	5.48938719e-09	1.002503	-1.000218	discard	neg branch n_nodes=300	agent2	solver_param	1	-1.523848
+exp125	crash	0	0	crash	positive branch, 1e-12 tolerance, 250 nodes	agent3	solver_param	0	0
+exp126	crash	0	0	crash	positive branch, 1e-12 tolerance, 220 nodes	agent3	solver_param	0	0
+exp127	8.81934684e-11	1.002503	1.000218	discard	tolerance test	agent2	solver_param	0	-1.523848
+exp128	9.99977750e-12	1.002503	1.000218	discard	positive branch, 1e-11 tolerance, 200 nodes	agent3	solver_param	0	-1.523848
+exp129	crash	0	0	crash	u_offset=0.52	agent1	branch_search	1	0
+exp130	crash	0	0	crash	u_offset=0.54	agent1	branch_search	0	0
+exp131	crash	0	0	crash	u_offset=0.56	agent1	branch_search	0	0
+exp132	crash	0	0	crash	u_offset=0.58	agent1	branch_search	1	0
+exp133	9.99977750e-12	1.002503	-1.000218	discard	negative branch, 1e-11 tolerance, 200 nodes	agent3	solver_param	0	-1.523848
+exp134	1.07198893e-11	0.000000	-0.000000	discard	u_offset=0.52 (n100, tol1e8)	agent1	branch_search	0	-0.000000
+exp135	1.07198893e-11	0.000000	-0.000000	discard	u_offset=0.54 (n100, tol1e8)	agent1	branch_search	1	-0.000000
+exp136	1.07198893e-11	0.000000	-0.000000	discard	u_offset=0.56 (n100, tol1e8)	agent1	branch_search	0	-0.000000
+exp137	1.07198893e-11	0.000000	-0.000000	discard	u_offset=0.58 (n100, tol1e8)	agent1	branch_search	0	-0.000000
+exp138	9.43861279e-12	0.000000	-0.000000	discard	explore transition at u_offset=0.45	agent3	initial_cond	0	-0.000000
+exp139	2.28012082e-07	1.002503	-1.000218	discard	neg tol=1.0e-6	agent2	solver_param	0	-1.523848
+exp140	1.07198893e-11	0.000000	-0.000000	discard	u_offset=0.55 (n100, tol1e8)	agent1	branch_search	0	-0.000000
+exp141	1.90328669e-08	1.002503	-1.000218	discard	neg tol=1.0e-7	agent2	solver_param	0	-1.523848
+exp142	2.38041066e-09	1.002503	-1.000218	discard	neg tol=1.0e-8	agent2	solver_param	1	-1.523848
+exp143	6.57145324e-10	1.002503	-1.000218	discard	neg tol=1.0e-9	agent2	solver_param	0	-1.523848
+exp144	8.81934685e-11	1.002503	-1.000218	discard	neg tol=1.0e-10	agent2	solver_param	0	-1.523848
+exp145	5.73029223e-09	1.002503	1.000218	discard	explore transition at u_offset=0.6	agent3	initial_cond	1	-1.523848
+exp146	5.72748208e-09	1.002503	-1.000218	discard	crash zone test: u_offset=-0.6	agent0	branch_search	0	-1.523848
+exp147	5.72745859e-09	1.002503	-1.000218	discard	u_offset=-1.00	agent1	branch_search	1	-1.523848
+exp148	2.41595655e-09	1.002503	-1.000218	discard	u_offset=-0.90	agent1	branch_search	0	-1.523848
+exp149	2.41595655e-09	1.002503	-1.000218	discard	u_offset=-0.80	agent1	branch_search	0	-1.523848
+exp150	2.41595655e-09	1.002503	-1.000218	discard	u_offset=-0.70	agent1	branch_search	0	-1.523848
+exp151	1.68033433e-09	1.002503	-1.000218	discard	u_offset=-1.0	agent2	branch_search	0	-1.523848
+exp152	3.75113468e-11	0.000000	-0.000000	discard	u_offset=-0.60	agent1	branch_search	0	-0.000000
+exp153	5.17243862e-11	0.000000	-0.000000	discard	explore transition at u_offset=0.5	agent3	initial_cond	0	-0.000000
+exp154	5.66994262e-09	1.002503	-1.000218	discard	u_offset=-0.8	agent2	branch_search	1	-1.523848
+exp155	1.30911985e-11	0.000000	-0.000000	discard	u_offset=-0.50	agent1	branch_search	1	-0.000000
+exp156	3.75424512e-11	0.000000	-0.000000	discard	u_offset=-0.6	agent2	branch_search	0	-0.000000
+exp157	6.59201492e-11	0.000000	-0.000000	discard	u_offset=-0.40	agent1	branch_search	0	-0.000000
+exp158	6.59228892e-11	0.000000	-0.000000	discard	u_offset=-0.4	agent2	branch_search	0	-0.000000
+exp159	6.06953604e-12	0.000000	-0.000000	discard	u_offset=-0.30	agent1	branch_search	0	-0.000000
+exp160	1.06109538e-11	0.000000	-0.000000	discard	u_offset=-0.35	agent2	branch_search	1	-0.000000
+exp161	7.92730738e-11	0.000000	-0.000000	discard	u_offset=-0.20	agent1	branch_search	0	-0.000000
+exp162	6.06980690e-12	0.000000	-0.000000	discard	u_offset=-0.30	agent2	branch_search	0	-0.000000
+exp163	8.25422832e-11	0.000000	-0.000000	discard	u_offset=-0.10	agent1	branch_search	0	-0.000000
+exp164	8.01258588e-12	0.000000	-0.000000	discard	u_offset=-0.25	agent2	branch_search	0	-0.000000
+exp165	5.63598005e-11	0.000000	-0.000000	discard	u_offset=0.00	agent1	branch_search	1	-0.000000
+exp166	7.92766962e-11	0.000000	-0.000000	discard	u_offset=-0.20	agent2	branch_search	1	-0.000000
+exp167	1.13875935e-14	0.000000	-0.000000	discard	u_offset=0.10	agent1	branch_search	0	-0.000000
+exp167	9.67805825e-12	0.000000	-0.000000	discard	u_offset=-0.15	agent2	branch_search	0	-0.000000
+exp168	5.33445105e-09	1.002503	1.000218	discard	anti-symmetry test: u_offset=-0.55	agent0	branch_search	0	-1.523848
+exp169	8.25453347e-11	0.000000	-0.000000	discard	u_offset=-0.10	agent2	branch_search	0	-0.000000
+exp169	1.04766658e-11	0.000000	-0.000000	discard	u_offset=0.20	agent1	branch_search	0	-0.000000
+exp170	1.17426154e-10	0.000000	-0.000000	discard	u_offset=-0.05	agent2	branch_search	0	-0.000000
+exp171	2.82460476e-11	0.000000	-0.000000	discard	u_offset=0.30	agent1	branch_search	0	-0.000000
+exp172	5.63658860e-11	0.000000	-0.000000	discard	u_offset=0.0	agent2	branch_search	0	-0.000000
+exp173	3.90006637e-11	0.000000	0.000000	discard	u_offset=0.40	agent1	branch_search	0	-0.000000
+exp174	2.41595655e-09	1.002503	-1.000218	discard	explore transition at u_offset=0.55	agent3	initial_cond	0	-1.523848
+exp175	2.65095669e-13	0.000000	-0.000000	discard	u_offset=0.05	agent2	branch_search	1	-0.000000
+exp176	5.17243862e-11	0.000000	-0.000000	discard	u_offset=0.50	agent1	branch_search	1	-0.000000
+exp177	1.13900752e-14	0.000000	-0.000000	discard	u_offset=0.10	agent2	branch_search	0	-0.000000
+exp178	5.73029223e-09	1.002503	1.000218	discard	u_offset=0.60	agent1	branch_search	0	-1.523848
+exp179	1.04770898e-11	0.000000	-0.000000	discard	u_offset=0.20	agent2	branch_search	0	-0.000000
+exp180	2.41595655e-09	1.002503	1.000218	discard	u_offset=0.70	agent1	branch_search	0	-1.523848
+exp181	3.90097578e-11	0.000000	0.000000	discard	u_offset=0.40	agent2	branch_search	1	-0.000000
+exp182	2.41595655e-09	1.002503	1.000218	discard	u_offset=0.80	agent1	branch_search	0	-1.523848
+exp183	1.69033798e-09	1.002503	1.000218	discard	u_offset=0.60	agent2	branch_search	0	-1.523848
+exp184	5.72745888e-09	1.002503	1.000218	discard	u_offset=0.90	agent1	branch_search	0	-1.523848
+exp185	5.66994265e-09	1.002503	1.000218	discard	u_offset=0.80	agent2	branch_search	0	-1.523848
+exp186	2.41595655e-09	1.002503	1.000218	discard	u_offset=1.00	agent1	branch_search	1	-1.523848
+exp187	5.66994262e-09	1.002503	1.000218	discard	u_offset=1.0	agent2	branch_search	1	-1.523848
+exp188	5.33445105e-09	1.002503	-1.000218	discard	bifurcation test: u_offset=0.55 (agent1 found negative)	agent0	branch_search	0	-1.523848
+exp189	1.07198893e-11	0.000000	-0.000000	discard	explore transition at u_offset=0.52	agent3	initial_cond	1	-0.000000
+exp190	5.66994262e-09	1.002503	-1.000218	discard	neg-tri boundary -0.90	agent2	branch_search	0	-1.523848
+exp191	2.65040449e-13	0.000000	-0.000000	discard	u_offset=0.05	agent1	branch_search	0	-0.000000
+exp192	5.66994262e-09	1.002503	-1.000218	discard	neg-tri boundary -0.85	agent2	branch_search	1	-1.523848
+exp193	2.40722618e-11	0.000000	-0.000000	discard	u_offset=0.08	agent1	branch_search	1	-0.000000
+exp194	5.33445104e-09	1.002503	-1.000218	discard	explore transition at u_offset=0.53	agent3	initial_cond	0	-1.523848
+exp194	5.66994262e-09	1.002503	-1.000218	discard	neg-tri boundary -0.80	agent2	branch_search	0	-1.523848
+exp195	1.08277924e-12	0.000000	-0.000000	discard	u_offset=0.12	agent1	branch_search	0	-0.000000
+exp196	5.26420492e-09	1.002503	-1.000218	discard	neg-tri boundary -0.75	agent2	branch_search	0	-1.523848
+exp197	2.40067895e-10	0.000000	-0.000000	discard	u_offset=0.15	agent1	branch_search	0	-0.000000
+exp198	5.66994265e-09	1.002503	-1.000218	discard	neg-tri boundary -0.70	agent2	branch_search	1	-1.523848
+exp199	2.41595655e-09	1.002503	-1.000218	discard	u_offset=0.55	agent1	branch_search	1	-1.523848
+exp200	3.90097578e-11	0.000000	0.000000	discard	tri-pos boundary 0.40	agent2	branch_search	0	-0.000000
+exp201	2.41595655e-09	1.002503	1.000218	discard	u_offset=0.59	agent1	branch_search	0	-1.523848
+exp202	9.43899426e-12	0.000000	-0.000000	discard	tri-pos boundary 0.45	agent2	branch_search	0	-0.000000
+exp203	2.41595655e-09	1.002503	1.000218	discard	u_offset=0.61	agent1	branch_search	0	-1.523848
+exp204	5.17266803e-11	0.000000	-0.000000	discard	tri-pos boundary 0.50	agent2	branch_search	1	-0.000000
+exp205	4.13728926e-11	0.000000	-0.000000	discard	u_offset=-0.58	agent1	branch_search	0	-0.000000
+exp206	5.66994262e-09	1.002503	-1.000218	discard	tri-pos boundary 0.55	agent2	branch_search	0	-1.523848
+exp207	5.69266279e-19	0.000000	-0.000000	discard	u_offset=-0.62	agent1	branch_search	0	-0.000000
+exp208	1.69033798e-09	1.002503	1.000218	discard	tri-pos boundary 0.60	agent2	branch_search	1	-1.523848
+exp209	1.13941343e-10	0.000000	-0.000000	discard	explore transition at u_offset=-0.45	agent3	initial_cond	1	-0.000000
+exp210	2.41595655e-09	1.002503	-1.000218	discard	bifurcation with phase=π: u_offset=0.50	agent0	branch_search	0	-1.523848
+exp211	5.66994262e-09	1.002503	-1.000218	discard	anomaly test u_offset=0.55 run1	agent2	branch_search	0	-1.523848
+exp212	5.66994262e-09	1.002503	-1.000218	discard	anomaly test u_offset=0.55 run2	agent2	branch_search	0	-1.523848
+exp213	5.66994262e-09	1.002503	-1.000218	discard	anomaly test u_offset=0.55 run3	agent2	branch_search	0	-1.523848
+exp214	1.58715069e-10	0.000000	-0.000000	discard	fine bound 0.48	agent2	branch_search	0	-0.000000
+exp215	5.17266803e-11	0.000000	-0.000000	discard	fine bound 0.50	agent2	branch_search	1	-0.000000
+exp216	1.07040248e-11	0.000000	-0.000000	discard	fine bound 0.52	agent2	branch_search	0	-0.000000
+exp217	1.30917164e-11	0.000000	0.000000	discard	bifurcation with amp=0.1, phase=π: u_offset=0.50	agent0	branch_search	0	-0.000000
+exp218	7.42744610e-11	0.000000	-0.000000	discard	fine bound 0.54	agent2	branch_search	0	-0.000000
+exp219	5.66994262e-09	1.002503	-1.000218	discard	fine bound 0.55	agent2	branch_search	1	-1.523848
+exp220	1.07768227e-11	0.000000	-0.000000	discard	fine bound 0.56	agent2	branch_search	0	-0.000000
+exp221	1.68330869e-09	1.002503	1.000218	discard	fine bound 0.58	agent2	branch_search	0	-1.523848
+exp222	1.69033798e-09	1.002503	1.000218	discard	fine bound 0.60	agent2	branch_search	1	-1.523848
+exp223	1.68033438e-09	1.002503	1.000218	discard	fine bound 0.62	agent2	branch_search	0	-1.523848
+exp224	5.17243862e-11	0.000000	-0.000000	discard	bifurcation with amp=0.1, phase=0: u_offset=0.50	agent0	branch_search	0	-0.000000
+exp225	4.53301231e-08	1.002503	-1.000218	discard	u_offset=0.55 tol=1.0e-6	agent2	solver_param	0	-1.523848
+exp226	4.53301231e-08	1.002503	-1.000218	discard	u_offset=0.55 tol=1.0e-7	agent2	solver_param	1	-1.523848
+exp227	5.66994262e-09	1.002503	-1.000218	discard	u_offset=0.55 tol=1.0e-8	agent2	solver_param	0	-1.523848
+exp228	7.08851550e-10	1.002503	-1.000218	discard	u_offset=0.55 tol=1.0e-9	agent2	solver_param	0	-1.523848
+exp229	2.62635931e-11	1.002503	-1.000218	discard	u_offset=0.55 tol=1.0e-10	agent2	solver_param	1	-1.523848
+exp230	1.30917111e-11	0.000000	0.000000	discard	bifurcation with amplitude=-0.1: u_offset=0.50	agent0	branch_search	1	-0.000000
+exp231	5.66994269e-09	1.002503	-1.000218	discard	u_offset=0.55 amplitude=0.0	agent2	perturbation	0	-1.523848
+exp232	5.66994262e-09	1.002503	-1.000218	discard	u_offset=0.55 amplitude=0.1	agent2	perturbation	1	-1.523848
+exp233	4.15919496e-11	0.000000	-0.000000	discard	u_offset=0.55 amplitude=0.2	agent2	perturbation	0	-0.000000
+exp234	1.26113045e-15	0.000000	-0.000000	discard	u_offset=0.55 amplitude=0.3	agent2	perturbation	0	-0.000000
+exp235	9.67598948e-12	0.000000	-0.000000	discard	u_offset=0.55 amplitude=0.4	agent2	perturbation	0	-0.000000
+exp236	1.74226254e-10	0.000000	-0.000000	discard	u_offset=0.55 amplitude=0.5	agent2	perturbation	0	-0.000000
+exp237	2.41595655e-09	1.002503	1.000218	discard	positive branch with phase=π	agent3	perturbation	0	-1.523848
+exp238	5.73029223e-09	1.002503	1.000218	discard	away from bifurcation: u_offset=0.60 with amplitude=0.1	agent0	branch_search	0	-1.523848
+exp239	5.66994262e-09	1.002503	-1.000218	discard	u_offset=0.55 n_mode=1	agent2	perturbation	1	-1.523848
+exp240	1.28580576e-18	0.000000	0.000000	discard	u_offset=0.55 n_mode=2	agent2	perturbation	0	-0.000000
+exp241	1.55962632e-10	0.000000	0.000000	discard	u_offset=0.55 n_mode=3	agent2	perturbation	0	-0.000000
+exp242	2.89133588e-10	0.000000	0.000000	discard	u_offset=0.55 n_mode=4	agent2	perturbation	0	-0.000000
+exp243	2.50193429e-10	0.000000	0.000000	discard	u_offset=0.55 n_mode=5	agent2	perturbation	0	-0.000000
+exp244	1.61305694e-10	0.000000	0.000000	discard	u_offset=0.55 n_mode=6	agent2	perturbation	1	-0.000000
+exp245	5.72745893e-09	1.002503	-1.000218	discard	negative branch with phase=π	agent3	perturbation	0	-1.523848
+exp246	2.60019368e-11	1.002503	1.000218	discard	tri-pos boundary refined: u_offset=0.6 (n300, tol1e10)	agent1	branch_search	0	-1.523848
+exp247	5.66994270e-09	1.002503	1.000218	discard	u_offset=-0.55 amp=0.0 mode=1	agent2	perturbation	0	-1.523848
+exp248	9.96673836e-09	0.070536	0.000000	discard	trivial branch with phase=π/2	agent3	perturbation	0	0.000175
+exp249	5.66994270e-09	1.002503	1.000218	discard	u_offset=-0.55 amp=0.0 mode=2	agent2	perturbation	1	-1.523848
+exp250	9.93785274e-13	0.000000	-0.000000	discard	u_offset=-0.55 amp=0.1 mode=1	agent2	perturbation	0	-0.000000
+exp251	1.68033420e-09	1.002503	1.000218	discard	u_offset=-0.55 amp=0.1 mode=2	agent2	perturbation	0	-1.523848
+exp252	8.06794049e-11	0.000000	-0.000000	discard	boundary test: u_offset=0.495, amplitude=0.0	agent0	branch_search	0	-0.000000
+exp253	6.22596062e-11	1.002503	1.000218	discard	u_offset=-0.55 amp=0.2 mode=1	agent2	perturbation	1	-1.523848
+exp254	2.84302116e-11	0.000000	-0.000000	discard	u_offset=-0.55 amp=0.2 mode=2	agent2	perturbation	0	-0.000000
+exp255	5.65378080e-11	0.000000	0.000000	discard	trivial branch with phase=π	agent3	perturbation	0	-0.000000
+exp256	1.13900752e-14	0.000000	-0.000000	discard	scan window at 0.10	agent2	branch_search	0	-0.000000
+exp257	5.54854357e-11	0.000000	-0.000000	discard	boundary test: u_offset=0.4975	agent0	branch_search	1	-0.000000
+exp258	2.40076834e-10	0.000000	-0.000000	discard	scan window at 0.15	agent2	branch_search	1	-0.000000
+exp259	3.30759739e-12	0.000000	-0.000000	discard	scan window at 0.25	agent2	branch_search	0	-0.000000
+exp260	2.54334539e-12	0.000000	-0.000000	discard	scan window at 0.35	agent2	branch_search	1	-0.000000
+exp261	9.43899426e-12	0.000000	-0.000000	discard	scan window at 0.45	agent2	branch_search	0	-0.000000
+exp262	5.66994262e-09	1.002503	1.000218	discard	scan window at 0.65	agent2	branch_search	0	-1.523848
+exp263	5.66994262e-09	1.002503	1.000218	discard	scan window at 0.75	agent2	branch_search	1	-1.523848
+exp264	1.69636019e-09	1.002503	1.000218	discard	scan window at 0.85	agent2	branch_search	0	-1.523848
+exp265	5.72745877e-09	1.002503	1.000218	discard	u_offset=0.5950	agent1	branch_search	1	-1.523848
+exp266	5.72745738e-09	1.002503	1.000218	discard	u_offset=0.5980	agent1	branch_search	0	-1.523848
+exp267	5.72745868e-09	1.002503	1.000218	discard	u_offset=0.5990	agent1	branch_search	0	-1.523848
+exp268	5.72745853e-09	1.002503	1.000218	discard	u_offset=0.5995	agent1	branch_search	0	-1.523848
+exp269	5.72749232e-09	1.002503	1.000218	discard	u_offset=0.6010	agent1	branch_search	0	-1.523848
+exp270	2.41595655e-09	1.002503	1.000218	discard	u_offset=0.6050	agent1	branch_search	1	-1.523848
+exp271	3.48047313e-12	0.000000	-0.000000	discard	u_offset=-0.5950	agent1	branch_search	0	-0.000000
+exp272	2.47475744e-19	0.000000	-0.000000	discard	u_offset=-0.5980	agent1	branch_search	0	-0.000000
+exp273	2.38724121e-10	0.000000	-0.000000	discard	u_offset=-0.5990	agent1	branch_search	1	-0.000000
+exp274	crash	0	0	crash	u_offset=-0.5995	agent1	branch_search	0	0
+exp275	2.16602401e-10	1.002503	1.000218	discard	u_offset=-0.6010	agent1	branch_search	0	-1.523848
+exp276	7.10697142e-11	0.000000	-0.000000	discard	u_offset=-0.6050	agent1	branch_search	1	-0.000000
