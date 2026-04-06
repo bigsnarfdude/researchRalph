@@ -1,0 +1,84 @@
+exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	5.63598005e-11	0.000000	-0.000000	keep	Negative branch probe, u_offset=-0.9	agent1	initial_cond	0	-0.000000
+exp002	5.63598005e-11	0.000000	-0.000000	discard	trivial branch baseline, u_offset=0.0	agent2	initial_cond	0	-0.000000
+exp003	5.72745881e-09	1.002503	-1.000218	discard	Negative branch with u_offset=-1.2	agent1	initial_cond	1	-1.523848
+exp004	5.63598005e-11	0.000000	-0.000000	discard	trivial branch, u_offset=0	agent3	initial_cond	0	-0.000000
+exp005	5.72745859e-09	1.002503	-1.000218	discard	negative branch, u_offset=-1.0	agent0	initial_cond	0	-1.523848
+exp006	5.72745788e-09	1.002503	1.000218	discard	Positive branch with u_offset=1.2	agent1	initial_cond	0	-1.523848
+exp007	5.72745888e-09	1.002503	1.000218	discard	positive branch baseline, u_offset=0.9	agent2	initial_cond	0	-1.523848
+exp008	2.41595655e-09	1.002503	1.000218	discard	positive branch, u_offset=+1.0	agent0	initial_cond	1	-1.523848
+exp009	5.72745888e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9	agent3	initial_cond	0	-1.523848
+exp010	2.41595655e-09	1.002503	-1.000218	discard	Bifurcation probe u_offset=-0.8	agent1	initial_cond	0	-1.523848
+exp011	2.41595655e-09	1.002503	-1.000218	discard	negative branch, u_offset=-0.9	agent3	initial_cond	0	-1.523848
+exp012	8.81934684e-11	1.002503	1.000218	discard	positive branch refined: n_nodes=200, tol=1e-10	agent2	solver_param	1	-1.523848
+exp013	1.30911985e-11	0.000000	-0.000000	keep	Bifurcation probe u_offset=-0.5	agent1	initial_cond	0	-0.000000
+exp014	5.72745864e-09	1.002503	-1.000218	discard	Bifurcation probe u_offset=-0.65	agent1	initial_cond	0	-1.523848
+exp015	5.63598005e-11	0.000000	-0.000000	discard	trivial branch, u_offset=0.0	agent0	initial_cond	0	-0.000000
+exp016	8.81934684e-11	1.002503	1.000218	discard	positive branch: u_offset=0.95, n_nodes=200, tol=1e-10	agent2	initial_cond	0	-1.523848
+exp017	1.95368268e-12	0.000000	-0.000000	keep	Bifurcation probe u_offset=-0.57	agent1	initial_cond	0	-0.000000
+exp018	5.72745869e-09	1.002503	-1.000218	discard	boundary search, u_offset=-0.75	agent3	branch_search	0	-1.523848
+exp019	3.37219364e-11	0.000000	-0.000000	discard	Bifurcation probe u_offset=-0.61	agent1	initial_cond	0	-0.000000
+exp020	2.41595655e-09	1.002503	-1.000218	discard	negative boundary, u_offset=-0.8	agent0	branch_search	1	-1.523848
+exp021	6.65041888e-10	1.002503	-1.000218	discard	Bifurcation probe u_offset=-0.63	agent1	initial_cond	0	-1.523848
+exp022	3.75113468e-11	0.000000	-0.000000	discard	boundary search, u_offset=-0.6	agent3	branch_search	1	-0.000000
+exp023	5.69266279e-19	0.000000	-0.000000	keep	Bifurcation probe u_offset=-0.62	agent1	initial_cond	0	-0.000000
+exp024	1.30911985e-11	0.000000	-0.000000	discard	negative boundary, u_offset=-0.5	agent0	branch_search	1	-0.000000
+exp025	2.41595655e-09	1.002503	-1.000218	discard	boundary search, u_offset=-0.7	agent3	branch_search	0	-1.523848
+exp026	5.72745855e-09	1.002503	1.000218	discard	Bifurcation probe u_offset=+0.62	agent1	initial_cond	0	-1.523848
+exp027	5.72748792e-09	1.002503	1.000218	discard	Bifurcation probe u_offset=+0.63	agent1	initial_cond	0	-1.523848
+exp028	5.72745864e-09	1.002503	-1.000218	discard	boundary search, u_offset=-0.65	agent3	branch_search	1	-1.523848
+exp029	3.75113468e-11	0.000000	-0.000000	discard	negative boundary, u_offset=-0.6	agent0	branch_search	0	-0.000000
+exp030	2.41595655e-09	1.002503	-1.000218	discard	Bifurcation probe u_offset=+0.55	agent1	initial_cond	0	-1.523848
+exp031	5.69266279e-19	0.000000	-0.000000	discard	boundary search, u_offset=-0.62	agent3	branch_search	0	-0.000000
+exp032	2.41595655e-09	1.002503	-1.000218	discard	negative boundary, u_offset=-0.7	agent0	branch_search	0	-1.523848
+exp033	5.73029223e-09	1.002503	1.000218	discard	boundary search, u_offset=0.6	agent3	branch_search	0	-1.523848
+exp034	5.73029223e-09	1.002503	1.000218	discard	Bifurcation probe u_offset=+0.60	agent1	initial_cond	0	-1.523848
+exp035	5.72826282e-09	1.002503	1.000218	discard	Bifurcation probe u_offset=+0.58	agent1	initial_cond	1	-1.523848
+exp036	2.82460476e-11	0.000000	-0.000000	discard	boundary search, u_offset=0.3	agent3	branch_search	1	-0.000000
+exp037	5.72745864e-09	1.002503	-1.000218	discard	negative boundary, u_offset=-0.65	agent0	branch_search	1	-1.523848
+exp038	1.07754871e-11	0.000000	-0.000000	discard	Bifurcation probe u_offset=+0.56	agent1	initial_cond	1	-0.000000
+exp039	9.43861279e-12	0.000000	-0.000000	discard	boundary search, u_offset=0.45	agent3	branch_search	0	-0.000000
+exp040	1.07198893e-11	0.000000	-0.000000	discard	boundary search, u_offset=0.52	agent3	branch_search	0	-0.000000
+exp041	5.17243862e-11	0.000000	-0.000000	discard	positive boundary, u_offset=+0.5	agent0	branch_search	1	-0.000000
+exp042	1.07754871e-11	0.000000	-0.000000	discard	boundary search, u_offset=0.56	agent3	branch_search	0	-0.000000
+exp043	2.41595655e-09	1.002503	-1.000218	discard	Negative branch optimization: pure offset, no oscillation	agent1	solver_param	1	-1.523848
+exp044	2.41595655e-09	1.002503	1.000218	discard	positive boundary, u_offset=+0.65	agent0	branch_search	1	-1.523848
+exp045	5.72826282e-09	1.002503	1.000218	discard	boundary search, u_offset=0.58	agent3	branch_search	0	-1.523848
+exp046	5.72745874e-09	1.002503	-1.000218	discard	Negative branch with mode-2 perturbation	agent1	perturbation	0	-1.523848
+exp047	8.81934685e-11	1.002503	-1.000218	discard	negative branch refined: u_offset=-0.9, n_nodes=200, tol=1e-10	agent2	initial_cond	1	-1.523848
+exp048	5.57178986e-09	1.002503	-1.000218	discard	Negative branch with mode-3 perturbation	agent1	perturbation	1	-1.523848
+exp049	8.81934684e-11	1.002503	-1.000218	discard	negative branch refined, n_nodes=200 tol=1e-10	agent3	solver_param	1	-1.523848
+exp050	crash	0	0	crash	Negative branch with solver_tol=1e-12	agent1	solver_param	1	0
+exp051	8.95295950e-11	1.002503	-1.000218	discard	Negative branch with solver_tol=1e-10	agent1	solver_param	1	-1.523848
+exp052	2.98482733e-13	0.000000	-0.000000	discard	trivial branch refined, n_nodes=200 tol=1e-10	agent3	solver_param	0	-0.000000
+exp053	8.95295950e-11	1.002503	1.000218	discard	Positive branch with solver_tol=1e-10	agent1	solver_param	0	-1.523848
+exp054	8.81934684e-11	1.002503	1.000218	discard	Positive branch with n_nodes=200	agent1	solver_param	0	-1.523848
+exp055	2.60019368e-11	1.002503	1.000218	discard	positive branch ultra-refined, n_nodes=300 tol=1e-10	agent3	solver_param	0	-1.523848
+exp056	8.77448544e-11	1.002503	1.000218	discard	Positive branch with n_nodes=300	agent1	solver_param	0	-1.523848
+exp057	7.70453892e-12	1.002503	-1.000218	discard	negative branch ultra-refined, n_nodes=300 tol=1e-10	agent3	solver_param	0	-1.523848
+exp058	2.60019365e-11	1.002503	-1.000218	discard	Negative branch with tol=1e-10, n_nodes=300	agent1	solver_param	1	-1.523848
+exp059	crash	0	0	crash	positive branch ultra-tight, n_nodes=300 tol=1e-12	agent3	solver_param	0	0
+exp060	8.81934685e-11	1.002503	-1.000218	discard	negative branch, refined solver, amplitude=0.0	agent0	solver_param	0	-1.523848
+exp061	7.70453892e-12	1.002503	-1.000218	discard	positive branch, n_nodes=300 tol=1e-11	agent3	solver_param	1	-1.523848
+exp062	2.61339314e-11	1.002503	1.000218	discard	negative boundary refined: u_offset=-0.625, n_nodes=200, tol=1e-10	agent2	branch_search	1	-1.523848
+exp063	0.00000000e+00	0.000000	0.000000	keep	Trivial branch with tol=1e-9	agent1	solver_param	0	0.000000
+exp064	3.25175408e-12	1.002503	1.000218	discard	positive branch, n_nodes=300 tol=1e-11	agent3	solver_param	0	-1.523848
+exp065	7.16167802e-10	1.002503	-1.000218	discard	Negative branch with tol=1e-9	agent1	solver_param	0	-1.523848
+exp066	8.81934685e-11	1.002503	-1.000218	discard	negative branch, refined solver, amplitude=0.2	agent0	solver_param	0	-1.523848
+exp067	7.70453892e-12	1.002503	-1.000218	discard	negative branch, n_nodes=300 tol=1e-11	agent3	solver_param	1	-1.523848
+exp068	8.81934684e-11	1.002503	-1.000218	discard	test negative boundary: u_offset=-0.65, n_nodes=200, tol=1e-10	agent2	branch_search	1	-1.523848
+exp069	3.31696748e-12	1.002503	-1.000218	discard	Negative branch with tol=1e-11	agent1	solver_param	1	-1.523848
+exp070	3.31696748e-12	1.002503	1.000218	discard	Positive branch with tol=1e-11	agent1	solver_param	0	-1.523848
+exp071	2.61333321e-11	1.002503	1.000218	discard	positive boundary refined: u_offset=+0.575, n_nodes=200, tol=1e-10	agent2	branch_search	1	-1.523848
+exp072	8.81934685e-11	1.002503	-1.000218	discard	negative branch, refined solver, mode=2	agent0	perturbation	1	-1.523848
+exp073	crash	0	0	crash	boundary test: u_offset=-0.60, n_nodes=200, tol=1e-10	agent2	branch_search	0	0
+exp074	8.77448034e-11	1.002503	-1.000218	discard	negative branch, n_nodes=300, tol=1e-10	agent0	solver_param	1	-1.523848
+exp075	4.84499392e-12	1.002503	-1.000218	discard	negative branch, n_nodes=350 tol=1e-11	agent3	solver_param	0	-1.523848
+exp076	crash	0	0	crash	negative branch, n_nodes=300, tol=1e-12	agent0	solver_param	0	0
+exp077	2.04834364e-12	1.002503	1.000218	discard	positive branch, n_nodes=350 tol=1e-11	agent3	solver_param	0	-1.523848
+exp078	crash	0	0	crash	positive branch, n_nodes=300, tol=1e-12	agent0	solver_param	0	0
+exp079	2.98157327e-13	0.000000	-0.000000	discard	trivial branch, n_nodes=300 tol=1e-11	agent3	solver_param	0	-0.000000
+exp080	2.04834364e-12	1.002503	-1.000218	discard	positive branch, amplitude=0.0 flat initial guess	agent3	perturbation	1	-1.523848
+exp081	crash	0	0	crash	positive branch, amplitude=0.2	agent3	perturbation	0	0
+exp082	0.00000000e+00	0.000000	0.000000	discard	trivial branch, n_nodes=300, tol=1e-11	agent0	solver_param	0	0.000000
+exp083	1.96612266e-12	0.000000	0.000000	discard	positive branch, n_mode=2	agent3	perturbation	0	-0.000000
