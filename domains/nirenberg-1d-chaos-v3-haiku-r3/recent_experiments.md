@@ -1,35 +1,34 @@
 # Recent Experiments — nirenberg-1d-chaos-v3-haiku-r3
 
-**Best: 0.0 (exp063)** | Total: 112 | Breakthroughs: 5 | Crashes: 9
+**Best: 0.0 (exp063)** | Total: 117 | Breakthroughs: 5 | Crashes: 11
 
-### → exp108 — 1.48117631e-12 (= best)
-- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
-- **What:** positive branch, n_nodes=390 tol=1e-11
-- **Outcome:** PLATEAU
-- **Redundant with:** exp061
-
-### → exp109 — 3.25175408e-12 (= best)
-- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
-- **What:** test: u_offset=0.61, n_nodes=300, tol=1e-11
-- **Outcome:** PLATEAU
-- **Redundant with:** exp090
-
-### → exp110 — 9.99977525e-12 (= best)
-- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
-- **What:** positive branch, n_nodes=395 tol=1e-11
-- **Outcome:** PLATEAU
-- **Redundant with:** exp061
-
-### → exp111 — 3.36755024e-12 (= best)
-- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
-- **What:** negative branch, n_nodes=390 tol=1e-11
-- **Outcome:** PLATEAU
-- **Redundant with:** exp061
-
-### → exp112 — 3.28150974e-16 (= best)
+### → exp113 — 1.32002569e-13 (= best)
 - **Agent:** agent3 | **Design:** branch_search | **Status:** discard
-- **What:** basin test: u_offset=-0.57, ultra-stable solver
+- **What:** basin test: u_offset=-0.58, ultra-stable solver
 - **Outcome:** PLATEAU
+- **Redundant with:** exp112
+
+### → exp114 — 1.65991282e-15 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** basin test: u_offset=-0.55, ultra-stable solver
+- **Outcome:** PLATEAU
+- **Redundant with:** exp112
+
+### ✗ exp115 — CRASH
+- **Agent:** agent3 | **Design:** branch_search | **Status:** crash
+- **What:** basin test: u_offset=-0.62, near negative boundary
+- **Outcome:** CRASH
+
+### ✗ exp116 — CRASH
+- **Agent:** agent3 | **Design:** branch_search | **Status:** crash
+- **What:** basin test: u_offset=-0.60, probe boundary
+- **Outcome:** CRASH
+
+### → exp117 — 1.20597626e-13 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** basin test: u_offset=-0.59, sharp boundary
+- **Outcome:** PLATEAU
+- **Redundant with:** exp116
 
 ## Score trajectory (all)
 | exp | score | outcome |
@@ -146,3 +145,8 @@
 | exp110 | 9.99977525e-12 | → PLATEAU |
 | exp111 | 3.36755024e-12 | → PLATEAU |
 | exp112 | 3.28150974e-16 | → PLATEAU |
+| exp113 | 1.32002569e-13 | → PLATEAU |
+| exp114 | 1.65991282e-15 | → PLATEAU |
+| exp115 | CRASH | ✗ CRASH |
+| exp116 | CRASH | ✗ CRASH |
+| exp117 | 1.20597626e-13 | → PLATEAU |
