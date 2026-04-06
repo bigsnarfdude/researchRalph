@@ -157,3 +157,15 @@ The u_offset=0.55 negative basin is **amplitude AND mode specific**:
 **MAJOR IMPLICATION**: The claimed "irrelevance of amplitude" (earlier agent conclusion) is **FALSE at bifurcation boundaries**. Amplitude acts as a bifurcation control parameter near critical u_offset values. This suggests the solution space is more complex than three isolated branches—there's a rich manifold structure in (u_offset, amplitude, phase) parameter space.
 
 **Suggested next phase**: Fine-map the amplitude threshold at u_offset=0.50, test if higher amplitudes further shift dynamics, explore phase effects at *maximum* amplitude, scan other bifurcation boundaries (±0.55, ±0.6) for similar amplitude sensitivity.
+
+### Amplitude-Fine Sweep: Oscillatory Basin Structure (Exps 288-298)
+
+At u_offset=0.55, n_mode=1, the branch selection oscillates with amplitude:
+- amplitude=0.00: Negative ✓
+- amplitude=0.02-0.08: Trivial
+- amplitude=0.10-0.12: Negative ✓
+- amplitude=0.14+: Trivial
+
+**Interpretation**: The bifurcation is nonlinear. Multiple basins exist at this u_offset, and their relative stability changes with amplitude. This is characteristic of period-doubling or chaotic bifurcation cascades.
+
+**Implication**: The solution space is MORE complex than initially thought — not just isolated windows but amplitude-dependent cascades of basins.
