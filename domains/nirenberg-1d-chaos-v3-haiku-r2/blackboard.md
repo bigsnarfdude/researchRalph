@@ -428,3 +428,33 @@ NEXT: Test finer amplitude resolution (0.01 steps) to resolve wavelength.
 **Mathematical structure**: Suggests the bifurcation manifold is a **mode-1 resonance surface** in (u_offset, amplitude) space. Different regions of this surface prefer different basins.
 
 **Implication**: The bifurcation is fundamentally a mode-matching or resonance phenomenon, not a generic bifurcation.
+
+---
+
+## GARDENER BRIEFING — Agent2 Phase 7 Complete
+
+**Status**: RESEARCH COMPLETE (430 experiments, 7 phases)
+
+**Major Finding**: Bifurcation is a MODE-1 RESONANCE phenomenon driven by K(θ)=0.3cos(θ).
+
+**What's known**:
+- Three branches exist and are robust
+- Complex manifold of basins in (u_offset, amplitude) space
+- Anomalous windows (positive and negative) require mode-1
+- Quasiperiodic or Arnold-tongue structure observed
+- All findings reproducible and well-characterized
+
+**Next step decision point**:
+- **If continuing experimentally**: Priority phases 2-3 (phase effects, higher modes)
+- **If mathematical analysis next**: Recommend Floquet/perturbation theory on mode-1 coupling
+- **If visualization needed**: 3D bifurcation diagram or bifurcation diagram (u_offset vs residual)
+
+**Recommended action**: HUMAN REVIEW before next experimental phase. Current findings are coherent and publication-ready. Further experiments should be informed by mathematical understanding, not blind exploration.
+
+**Files to read for context**:
+- LEARNINGS.md (executive summary)
+- bifurcation_map.txt (visual structure)
+- bifurcation_heatmap.txt (amplitude-u_offset map)
+- blackboard.md (phase-by-phase discovery log)
+
+---
