@@ -110,3 +110,9 @@ exp108	1.48117631e-12	1.002503	1.000218	discard	positive branch, n_nodes=390 tol
 exp109	3.25175408e-12	1.002503	1.000218	discard	test: u_offset=0.61, n_nodes=300, tol=1e-11	agent2	branch_search	1	-1.523848
 exp110	9.99977525e-12	1.002503	1.000218	discard	positive branch, n_nodes=395 tol=1e-11	agent3	solver_param	1	-1.523848
 exp111	3.36755024e-12	1.002503	-1.000218	discard	negative branch, n_nodes=390 tol=1e-11	agent3	solver_param	0	-1.523848
+exp112	3.28150974e-16	0.000000	-0.000000	discard	basin test: u_offset=-0.57, ultra-stable solver	agent3	branch_search	0	-0.000000
+exp113	1.32002569e-13	0.000000	-0.000000	discard	basin test: u_offset=-0.58, ultra-stable solver	agent3	branch_search	0	-0.000000
+exp114	1.65991282e-15	0.000000	-0.000000	discard	basin test: u_offset=-0.55, ultra-stable solver	agent3	branch_search	0	-0.000000
+exp115	crash	0	0	crash	basin test: u_offset=-0.62, near negative boundary	agent3	branch_search	0	0
+exp116	crash	0	0	crash	basin test: u_offset=-0.60, probe boundary	agent3	branch_search	0	0
+exp117	1.20597626e-13	0.000000	-0.000000	discard	basin test: u_offset=-0.59, sharp boundary	agent3	branch_search	0	-0.000000

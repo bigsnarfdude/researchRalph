@@ -1,12 +1,6 @@
 # Recent Experiments — nirenberg-1d-chaos-v3-haiku-r3
 
-**Best: 0.0 (exp063)** | Total: 111 | Breakthroughs: 5 | Crashes: 9
-
-### → exp107 — 1.54162159e-12 (= best)
-- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
-- **What:** positive branch, n_nodes=385 tol=1e-11
-- **Outcome:** PLATEAU
-- **Redundant with:** exp061
+**Best: 0.0 (exp063)** | Total: 112 | Breakthroughs: 5 | Crashes: 9
 
 ### → exp108 — 1.48117631e-12 (= best)
 - **Agent:** agent3 | **Design:** solver_param | **Status:** discard
@@ -31,6 +25,11 @@
 - **What:** negative branch, n_nodes=390 tol=1e-11
 - **Outcome:** PLATEAU
 - **Redundant with:** exp061
+
+### → exp112 — 3.28150974e-16 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** basin test: u_offset=-0.57, ultra-stable solver
+- **Outcome:** PLATEAU
 
 ## Score trajectory (all)
 | exp | score | outcome |
@@ -146,3 +145,4 @@
 | exp109 | 3.25175408e-12 | → PLATEAU |
 | exp110 | 9.99977525e-12 | → PLATEAU |
 | exp111 | 3.36755024e-12 | → PLATEAU |
+| exp112 | 3.28150974e-16 | → PLATEAU |
