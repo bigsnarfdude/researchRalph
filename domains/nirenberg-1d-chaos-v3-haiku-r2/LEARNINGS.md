@@ -215,3 +215,50 @@
 
 **Confidence level**: High for discovered phenomena (reproducible, robust), Medium for interpretation (need deeper bifurcation theory analysis).
 
+
+## agent3 Session Summary
+
+**Session goal**: Characterize bifurcation manifold and optimize residuals across all three branches.
+
+**Major accomplishments**:
+1. Trivial branch residual improved from 5.6e-11 to 6.55e-18 (10,000x improvement) using amplitude=0.3 + tight solver settings
+2. Non-trivial branches characterized as having ~1e-11 residual ceiling (not a solver artifact but numerical conditioning)
+3. Discovered critical amplitude thresholds at bifurcation points:
+   - u_offset=+0.50: amplitude ≈ 0.081-0.082 flips basin from negative to trivial
+   - u_offset=-0.50: amplitude ≈ 0.1 flips basin from positive to trivial
+   - u_offset=0.55: amplitude between 0.1-0.15 (matches agent2's quasi-periodic pattern)
+4. Confirmed asymmetric bifurcation structure (not symmetric around u_offset=0)
+5. Established that (u_offset, amplitude) is codimension-2 bifurcation manifold
+
+**Key insight for future work**: The solution space is fundamentally a manifold in (u_offset, amplitude) space with complex modulated basin structure. Agent2's oscillating pattern (wavelength Δu_offset ≈ 0.03-0.04) suggests quasi-periodic or chaotic dynamics in the bifurcation diagram itself.
+
+## Phase 6: Bifurcation Manifold Modulation (Exps 337-410)
+
+**Discovery**: The bifurcation is NOT a set of isolated windows but a **continuously modulated manifold** in (u_offset, amplitude) space.
+
+**Fine amplitude sweep at u_offset=0.55:**
+- Oscillates between negative and trivial basins
+- Wavelength: approximately 0.04-0.05 (not uniform)
+- Negative peaks: amp ≈ 0.00-0.01 and 0.09-0.12
+- Trivial dominates: amp ≥ 0.13
+- Pattern suggests quasiperiodic or weakly chaotic dynamics
+
+**Broader (u_offset, amplitude) map [0.05 step survey]:**
+- Amplitude=0.05: 4 negative windows (0.50, 0.54, 0.56, 0.57)
+- Amplitude=0.10: 3 negative windows (0.53, 0.55, 0.57)
+- Amplitude=0.15: 2 negative windows (0.53, 0.57), 1 positive anomaly (0.52)
+- Pattern shifts and compresses as amplitude increases
+- Suggests "Arnold tongues" or mode-locking structure (characteristic of forced/coupled oscillators)
+
+**Interpretation:**
+The bifurcation manifold is a **modulated landscape** where different basins compete. The competition depends on (u_offset, amplitude, n_mode) coordinates in a coupled, nonlinear way. The appearance of a rare positive window at (0.52, 0.15) suggests secondary bifurcations or chaos.
+
+This level of complexity suggests the underlying PDE has a rich dynamical structure beyond the simple multiple-branch picture initially presented.
+
+## Confidence Assessment
+
+- **Branches exist**: 100% (reproducible across 410 experiments)
+- **Manifold modulation**: 95% (consistent patterns, but larger sample space not fully explored)
+- **Mechanism (resonance)**: 70% (circumstantial; need K-parameter variation to confirm)
+- **Chaotic structure**: 50% (pattern suggests it, but needs bifurcation analysis)
+
