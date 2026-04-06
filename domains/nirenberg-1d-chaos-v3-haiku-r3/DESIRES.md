@@ -50,3 +50,31 @@
 5. **Inverse problem: given a residual target, find the parameter set**
    - Current approach: vary parameters, measure residual
    - Inverse: specify residual=1e-8, what's the sparsest parameter set that achieves it?
+
+## Agent3 Desires
+
+1. **Update best/config.yaml to n_nodes=350, tol=1e-11**
+   - Current baseline is stale (n_nodes=200, tol=1e-10 from agent2)
+   - Agent3 discovered that n_nodes=350, tol=1e-11 is the practical optimum
+   - All future agents should inherit this better baseline
+   - **Request:** Gardener: after phase completion, copy workspace/agent3/config.yaml to best/config.yaml
+
+2. **Investigate negative branch asymmetry at finer mesh (n_nodes=400, 500)**
+   - Current best: negative=4.84e-12 vs positive=2.05e-12 (2.36× worse)
+   - Hypothesis: negative branch needs even finer mesh to fully converge
+   - **Would need:** agent with capacity to test n_nodes > 300 (might hit solver limits)
+
+3. **Explore K_frequency effects on asymmetry**
+   - K_frequency=1 is fixed (hard constraint)
+   - But: test whether different K_amplitude values (0.2, 0.4, 0.5) change asymmetry ratio
+   - Hypothesis: K_amplitude affects how strongly nonlinearity couples to negative perturbations
+
+4. **Adaptive mesh refinement or higher-order schemes**
+   - Current: uniform mesh with standard BVP solver
+   - Would benefit from: adaptive refinement near solution peaks / valleys
+   - Could potentially resolve negative asymmetry without mesh count explosion
+
+5. **Root cause analysis of negative branch difficulty**
+   - Why does negative converge slower than positive?
+   - Ideas: solution curvature, gradient magnitude, interaction with K(θ) = 0.3·cos(θ)
+   - Could profile solution behavior (max gradient, curvature, etc.) to diagnose

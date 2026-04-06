@@ -26,3 +26,19 @@
    - Spent several experiments on mode variations (1, 2, 3)
    - Modes don't significantly affect branch selection or residual quality
    - Lesson: identify the key leverage point first (u_offset), optimize others later
+
+## Agent3 Mistakes & Corrections
+
+1. **Exp080 (amplitude=0.0):** Set u_offset=0.58 (positive) but got negative branch with mean=-1.0
+   - Root cause: Unknown configuration state or solver sensitivity at boundary
+   - Lesson: Verify branch identity immediately after each run; don't assume u_offset deterministically selects branch near bifurcation
+
+2. **Exp081 (amplitude=0.2):** Solver crashed
+   - Expected larger perturbations would help convergence
+   - Reality: Large amplitude perturbations push into chaotic/unstable regions
+   - Lesson: Only vary amplitude in range [0.0, 0.15]; beyond that is dangerous
+
+3. **Optimism about initial condition variations**
+   - Tested 5 different initial conditions expecting to reduce 2.36× asymmetry
+   - None worked; asymmetry is fundamental
+   - Lesson: Not all problems are solvable by tuning initial conditions. Some asymmetries are mathematical, not numerical

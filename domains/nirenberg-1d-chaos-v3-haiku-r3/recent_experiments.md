@@ -1,34 +1,33 @@
 # Recent Experiments — nirenberg-1d-chaos-v3-haiku-r3
 
-**Best: 0.0 (exp063)** | Total: 82 | Breakthroughs: 5 | Crashes: 6
+**Best: 0.0 (exp063)** | Total: 92 | Breakthroughs: 5 | Crashes: 7
 
-### ✗ exp078 — CRASH
-- **Agent:** agent0 | **Design:** solver_param | **Status:** crash
-- **What:** positive branch, n_nodes=300, tol=1e-12
+### → exp088 — 3.25175165e-12 (= best)
+- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
+- **What:** crash zone u_offset=-0.60 with stable solver
+- **Outcome:** PLATEAU
+
+### → exp089 — 3.25175165e-12 (= best)
+- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
+- **What:** test crash zone u_offset=-0.60 with ultra-stable solver: n_nodes=300, tol=1e-11
+- **Outcome:** PLATEAU
+
+### ✗ exp090 — CRASH
+- **Agent:** agent2 | **Design:** branch_search | **Status:** crash
+- **What:** boundary test: u_offset=-0.59, n_nodes=300, tol=1e-11
 - **Outcome:** CRASH
-- **Redundant with:** exp059
+- **Redundant with:** exp073
 
-### → exp079 — 2.98157327e-13 (= best)
-- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
-- **What:** trivial branch, n_nodes=300 tol=1e-11
-- **Outcome:** PLATEAU
-- **Redundant with:** exp052
-
-### → exp080 — 2.04834364e-12 (= best)
-- **Agent:** agent3 | **Design:** perturbation | **Status:** discard
-- **What:** positive branch, amplitude=0.0 flat initial guess
+### → exp091 — 3.25175408e-12 (= best)
+- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
+- **What:** u_offset=-0.62 with ultra-refined solver
 - **Outcome:** PLATEAU
 
-### ✗ exp081 — CRASH
-- **Agent:** agent3 | **Design:** perturbation | **Status:** crash
-- **What:** positive branch, amplitude=0.2
-- **Outcome:** CRASH
-
-### → exp082 — 0.0 (= best)
-- **Agent:** agent0 | **Design:** solver_param | **Status:** discard
-- **What:** trivial branch, n_nodes=300, tol=1e-11
+### → exp092 — 7.70453341e-12 (= best)
+- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
+- **What:** boundary test: u_offset=-0.595, n_nodes=300, tol=1e-11
 - **Outcome:** PLATEAU
-- **Redundant with:** exp061
+- **Redundant with:** exp073
 
 ## Score trajectory (all)
 | exp | score | outcome |
@@ -115,3 +114,13 @@
 | exp080 | 2.04834364e-12 | → PLATEAU |
 | exp081 | CRASH | ✗ CRASH |
 | exp082 | 0.0 | → PLATEAU |
+| exp083 | 1.96612266e-12 | → PLATEAU |
+| exp084 | 7.25322922e-14 | → PLATEAU |
+| exp085 | 2.04834364e-12 | → PLATEAU |
+| exp086 | 8.81934685e-11 | → PLATEAU |
+| exp087 | 3.25175408e-12 | → PLATEAU |
+| exp088 | 3.25175165e-12 | → PLATEAU |
+| exp089 | 3.25175165e-12 | → PLATEAU |
+| exp090 | CRASH | ✗ CRASH |
+| exp091 | 3.25175408e-12 | → PLATEAU |
+| exp092 | 7.70453341e-12 | → PLATEAU |

@@ -82,3 +82,16 @@ exp080	2.04834364e-12	1.002503	-1.000218	discard	positive branch, amplitude=0.0 
 exp081	crash	0	0	crash	positive branch, amplitude=0.2	agent3	perturbation	0	0
 exp082	0.00000000e+00	0.000000	0.000000	discard	trivial branch, n_nodes=300, tol=1e-11	agent0	solver_param	0	0.000000
 exp083	1.96612266e-12	0.000000	0.000000	discard	positive branch, n_mode=2	agent3	perturbation	0	-0.000000
+exp084	7.25322922e-14	0.000000	0.000000	discard	positive branch, n_mode=3	agent3	perturbation	1	-0.000000
+exp085	2.04834364e-12	1.002503	-1.000218	discard	negative branch, phase=π/2	agent3	perturbation	0	-1.523848
+exp086	8.81934685e-11	1.002503	1.000218	discard	positive branch: u_offset=0.9, amplitude=0.0	agent2	perturbation	0	-1.523848
+exp087	3.25175408e-12	1.002503	1.000218	discard	positive branch, phase=π/2	agent0	perturbation	1	-1.523848
+exp088	3.25175165e-12	1.002503	-1.000218	discard	crash zone u_offset=-0.60 with stable solver	agent0	branch_search	0	-1.523848
+exp089	3.25175165e-12	1.002503	-1.000218	discard	test crash zone u_offset=-0.60 with ultra-stable solver: n_nodes=300, tol=1e-11	agent2	branch_search	1	-1.523848
+exp090	crash	0	0	crash	boundary test: u_offset=-0.59, n_nodes=300, tol=1e-11	agent2	branch_search	0	0
+exp091	3.25175408e-12	1.002503	-1.000218	discard	u_offset=-0.62 with ultra-refined solver	agent0	branch_search	0	-1.523848
+exp092	7.70453341e-12	1.002503	-1.000218	discard	boundary test: u_offset=-0.595, n_nodes=300, tol=1e-11	agent2	branch_search	0	-1.523848
+exp093	3.25175408e-12	1.002503	1.000218	discard	u_offset=-0.55 with ultra-refined solver	agent0	branch_search	1	-1.523848
+exp094	3.25175165e-12	1.002503	1.000218	discard	u_offset=-0.5 with ultra-refined solver	agent0	branch_search	0	-1.523848
+exp095	3.25175165e-12	1.002503	-1.000218	discard	u_offset=+0.5 with ultra-refined solver	agent0	branch_search	0	-1.523848
+exp096	2.04834364e-12	1.002503	-1.000218	discard	verify negative branch best config	agent3	solver_param	0	-1.523848
