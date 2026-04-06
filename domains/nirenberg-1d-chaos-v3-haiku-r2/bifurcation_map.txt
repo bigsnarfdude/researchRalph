@@ -1,0 +1,42 @@
+BIFURCATION MAP — Nirenberg 1D (K_amp=0.3, K_freq=1)
+
+BRANCH SELECTION BY u_offset (amplitude=0.1, mode=1):
+
+u_offset      -1.5  -1.0  -0.8  -0.7  -0.6  -0.4  -0.2   0.0   0.2   0.4   0.5   0.55   0.6   0.8   1.0   1.5
+Branch         NEG   NEG   NEG  ----  TRIV  TRIV  TRIV  TRIV  TRIV  TRIV  TRIV  (NEG)  POS   POS   POS   POS
+Mean          -1.0  -1.0  -1.0        0.0   0.0   0.0   0.0   0.0   0.0   0.0  -1.0   1.0   1.0   1.0   1.0
+Residual (n=150, tol=1e-8):
+            ~5.7e-9        ~1.7e-9      stable           anomaly  ~5.7e-9
+
+AMPLITUDE SENSITIVITY AT u_offset=0.55 (mode=1):
+
+amplitude:  0.00  0.02  0.04  0.06  0.08  0.10  0.12  0.14  0.16  0.18  0.20
+Basin:       NEG  TRIV  TRIV  TRIV  TRIV   NEG   NEG   TRIV  TRIV  TRIV  TRIV
+             ↑    ↑     ↑     ↑     ↑      ↑     ↑     ↑     ↑     ↑     ↑
+         (oscillatory switching pattern indicates nonlinear bifurcation)
+
+MODE SENSITIVITY AT u_offset=0.55, amplitude=0.1:
+
+n_mode:     1      2      3      4      5      6
+Basin:     NEG    TRIV   TRIV   TRIV   TRIV   TRIV
+           (only mode-1 sustains negative basin)
+
+CONVERGENCE TRENDS (Best Known, n_nodes=200-300, tol=1e-8 to 1e-10):
+
+Trivial:    ~3.0e-13 (FP64 limit)
+Positive:   ~3.3e-12 (converges monotonically)
+Negative:   ~3.3e-12 (when properly parameterized; appeared oscillatory under mixed parameters)
+
+KEY DISCOVERIES:
+1. Three canonical branches (trivial, positive, negative) confirmed robust
+2. Bifurcation manifold at u_offset ≈ 0.55 with amplitude-dependent cascades
+3. Non-monotonic basin switching with amplitude: multiple minima in(u_offset, amplitude) space
+4. Mode-1 resonance: only fundamental mode sustains anomalous basin
+5. Asymmetric bifurcation: no mirror at u_offset = -0.55
+
+INTERPRETATION:
+- Solution space is NOT three isolated branches but a continuous manifold with:
+  * Smooth branch regions (u_offset < -0.7, u_offset > 0.6)
+  * Complex bifurcation region (u_offset ∈ 0.4-0.7) with cascades
+  * Possible period-doubling or chaotic dynamics in amplitude parameter
+- Physical origin: resonance between u_offset parameter and K(θ) = 0.3 cos(θ) structure
