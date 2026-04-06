@@ -1,0 +1,33 @@
+BIFURCATION MANIFOLD: (u_offset, amplitude) Parameter Space
+[agent2 Phase 6 — 367 experiments]
+
+Heat map: u_offset (rows) × amplitude (columns)
+Branch legend: -1=NEG (N), 0=TRI (T), +1=POS (P), ?=ambiguous
+
+          amp=0.05  amp=0.10  amp=0.15
+u_offset=0.50   N       T         T
+u_offset=0.51   T       T         T
+u_offset=0.52   T       T         P  ← positive window appears!
+u_offset=0.53   T       N         N
+u_offset=0.54   N       T         T
+u_offset=0.55   T       N         T  ← oscillates!
+u_offset=0.56   N       T         T
+u_offset=0.57   N       N         N
+u_offset=0.58   P       P         P
+u_offset=0.59   P       P         P
+u_offset=0.60   P       P         P
+
+PATTERN INTERPRETATION:
+
+1. **Modulated structure**: Basin selection oscillates with amplitude. Not random; appears periodic or quasi-periodic.
+
+2. **Phase locking regions**:
+   - Positive branch is stable for u_offset ≥ 0.58 (all amplitudes tested)
+   - Trivial basin dominates for u_offset ≤ 0.52 (mostly)
+   - Negative windows exist throughout middle region but shift position with amplitude
+
+3. **Emergent wavelength**: Negative windows appear roughly every Δu_offset ≈ 0.03-0.04 at fixed amplitude, but shift systematically with amplitude change. Suggests a beating or quasiperiodic bifurcation.
+
+4. **"Positive island" hypothesis**: u_offset=0.52, amplitude=0.15 shows positive branch (rare). May be a resonance or secondary bifurcation point.
+
+NEXT: Test finer amplitude resolution (0.01 steps) to resolve wavelength.
