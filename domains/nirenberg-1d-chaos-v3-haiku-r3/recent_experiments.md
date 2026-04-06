@@ -1,35 +1,36 @@
 # Recent Experiments — nirenberg-1d-chaos-v3-haiku-r3
 
-**Best: 0.0 (exp063)** | Total: 96 | Breakthroughs: 5 | Crashes: 7
+**Best: 0.0 (exp063)** | Total: 111 | Breakthroughs: 5 | Crashes: 9
 
-### → exp092 — 7.70453341e-12 (= best)
-- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
-- **What:** boundary test: u_offset=-0.595, n_nodes=300, tol=1e-11
-- **Outcome:** PLATEAU
-- **Redundant with:** exp073
-
-### → exp093 — 3.25175408e-12 (= best)
-- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
-- **What:** u_offset=-0.55 with ultra-refined solver
-- **Outcome:** PLATEAU
-- **Redundant with:** exp091
-
-### → exp094 — 3.25175165e-12 (= best)
-- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
-- **What:** u_offset=-0.5 with ultra-refined solver
-- **Outcome:** PLATEAU
-- **Redundant with:** exp091
-
-### → exp095 — 3.25175165e-12 (= best)
-- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
-- **What:** u_offset=+0.5 with ultra-refined solver
-- **Outcome:** PLATEAU
-- **Redundant with:** exp091
-
-### → exp096 — 2.04834364e-12 (= best)
+### → exp107 — 1.54162159e-12 (= best)
 - **Agent:** agent3 | **Design:** solver_param | **Status:** discard
-- **What:** verify negative branch best config
+- **What:** positive branch, n_nodes=385 tol=1e-11
 - **Outcome:** PLATEAU
+- **Redundant with:** exp061
+
+### → exp108 — 1.48117631e-12 (= best)
+- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
+- **What:** positive branch, n_nodes=390 tol=1e-11
+- **Outcome:** PLATEAU
+- **Redundant with:** exp061
+
+### → exp109 — 3.25175408e-12 (= best)
+- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
+- **What:** test: u_offset=0.61, n_nodes=300, tol=1e-11
+- **Outcome:** PLATEAU
+- **Redundant with:** exp090
+
+### → exp110 — 9.99977525e-12 (= best)
+- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
+- **What:** positive branch, n_nodes=395 tol=1e-11
+- **Outcome:** PLATEAU
+- **Redundant with:** exp061
+
+### → exp111 — 3.36755024e-12 (= best)
+- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
+- **What:** negative branch, n_nodes=390 tol=1e-11
+- **Outcome:** PLATEAU
+- **Redundant with:** exp061
 
 ## Score trajectory (all)
 | exp | score | outcome |
@@ -130,3 +131,18 @@
 | exp094 | 3.25175165e-12 | → PLATEAU |
 | exp095 | 3.25175165e-12 | → PLATEAU |
 | exp096 | 2.04834364e-12 | → PLATEAU |
+| exp097 | 3.25175408e-12 | → PLATEAU |
+| exp098 | 3.25175408e-12 | → PLATEAU |
+| exp099 | 3.25175165e-12 | → PLATEAU |
+| exp100 | CRASH | ✗ CRASH |
+| exp101 | CRASH | ✗ CRASH |
+| exp102 | 3.25175165e-12 | → PLATEAU |
+| exp103 | 3.25175165e-12 | → PLATEAU |
+| exp104 | 9.99840186e-12 | → PLATEAU |
+| exp105 | 1.66444913e-12 | → PLATEAU |
+| exp106 | 4.37799025e-17 | → PLATEAU |
+| exp107 | 1.54162159e-12 | → PLATEAU |
+| exp108 | 1.48117631e-12 | → PLATEAU |
+| exp109 | 3.25175408e-12 | → PLATEAU |
+| exp110 | 9.99977525e-12 | → PLATEAU |
+| exp111 | 3.36755024e-12 | → PLATEAU |

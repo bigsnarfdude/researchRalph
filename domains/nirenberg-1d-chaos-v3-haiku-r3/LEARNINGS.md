@@ -110,6 +110,36 @@ The bifurcation asymmetry likely stems from:
 
 **Interpretation:** Initial conditions are branch selectors, not residual optimizers. Once on the correct branch, residual quality depends entirely on solver parameters (mesh, tolerance), not initial perturbation structure. The ±1 branches are robust—hard to knock them off even with poor initial guesses.
 
+## Agent3 Phase 6: Optimal Mesh Density & Final Convergence
+
+**Discovery:** Mesh density has a non-monotonic effect on convergence quality!
+
+**Positive branch convergence progression:**
+- n_nodes=300: residual=3.25e-12
+- n_nodes=350: residual=2.04e-12 ✓
+- n_nodes=375: residual=1.66e-12
+- n_nodes=385: residual=1.54e-12
+- n_nodes=390: residual=1.48e-12 ✓ OPTIMAL
+- n_nodes=395: residual=9.99e-12 (degradation!)
+- n_nodes=400: residual=9.99e-12 (degradation!)
+
+**Negative branch convergence at various densities:**
+- n_nodes=350: residual=2.04e-12 ✓
+- n_nodes=390: residual=3.36e-12 (degradation!)
+
+**Key finding:** Positive branch reaches optimal at n_nodes=390 (1.48e-12), but negative branch prefers n_nodes=350 (2.04e-12). Beyond n_nodes=390, both branches degrade, suggesting numerical conditioning issues (ill-conditioning of linear systems, accumulated rounding error, or solver divergence).
+
+**Hypothesis for degradation:** The BVP solver uses a discretization scheme that has optimal behavior around n_nodes~390. Coarser meshes lack resolution; finer meshes cause:
+- Larger linear systems → higher condition number
+- Accumulated floating-point rounding error
+- Possible issues with the finite-difference/collocation stencil
+- Solver divergence in iterative refinement
+
+**Recommendation:** For practical applications on this problem:
+- Positive branch: use n_nodes=390, tol=1e-11 for best residual (1.48e-12)
+- Negative branch: use n_nodes=350, tol=1e-11 for reliability (2.04e-12, maintains quality)
+- Trivial branch: either n_nodes=200 or 300 with tol=1e-10+ (machine precision ~1e-13)
+
 ## Crash Zone Resolved: Sharp Bifurcation Boundary at u_offset ≈ -0.59 (Phase 5)
 
 **Critical discovery:** The crash at u_offset=-0.60 was NOT physical—it was solver numerical instability. With ultra-stable parameters (n_nodes=300, tol=1e-11), it converges cleanly to **negative branch** with residual 3.25e-12.
@@ -124,3 +154,36 @@ The bifurcation asymmetry likely stems from:
 **Mathematical interpretation:** This suggests a chaotic or singular region in the bifurcation manifold at u_offset ≈ ±0.59. The phase space transitions from smooth trivial basin (wider region) to a narrow chaotic zone before entering the negative branch.
 
 **Solver requirement:** This boundary region requires tol=1e-11 or tighter to navigate. Anything coarser (tol=1e-10 or 1e-9) causes crashes or convergence failure.
+
+## Basin of Attraction Overlap Discovery (Phase 6)
+
+**BREAKTHROUGH:** The bifurcation diagram near u_offset=0 is NOT a simple three-region map. There is complex basin overlap where the NEGATIVE branch's basin invades the positive side of the parameter space.
+
+**Empirical map (ultra-stable solver, n_nodes=300, tol=1e-11):**
+```
+u_offset range    | Converged branch | Residual
+-1.0 to -0.625   | Negative         | ~3.25e-12
+-0.625           | Boundary cross   |
+-0.60            | Negative         | 3.25e-12
+-0.595           | Negative         | 7.70e-12
+-0.59            | CRASH            | solver failure
+(gap between -0.59 and +0.56, likely trivial but untested)
++0.56            | Trivial          | 4.38e-17 (!!)
++0.57            | NEGATIVE         | 3.25e-12 ← BASIN OVERLAP
++0.58            | NEGATIVE         | 3.25e-12 ← BASIN OVERLAP
++0.59            | CRASH            | solver failure (mirrored!)
++0.60            | POSITIVE         | 3.25e-12
++0.61+           | POSITIVE         | 3.25e-12
+```
+
+**Interpretation:** The bifurcation manifold exhibits:
+1. **Multi-lobed structure**: Basins are not monotonic. Negative basin has a lobe extending into positive u_offset region.
+2. **Chaotic transition zones**: Crash points at ±0.59 indicate chaotic or singular transition regions
+3. **Basin boundaries**: Extremely sharp (width < 0.01), requiring tol≤1e-11 to resolve
+
+**Why agent1 found 'asymmetry':** The asymmetry isn't simple left-right symmetry breaking. It's a complex multi-lobed structure with overlapping basins. The trivial basin and negative basin have lobes that invade each other's territory.
+
+**Implication for science:** This problem exhibits a remarkably rich bifurcation structure. Understanding the origins of the basin overlap would require:
+1. Phase-space analysis to find ghost saddles or manifold structures
+2. Continuation of fixed points/equilibria across parameter space
+3. Lyapunov exponent computation in the chaotic zones
