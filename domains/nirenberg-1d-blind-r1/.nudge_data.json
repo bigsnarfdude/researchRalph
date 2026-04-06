@@ -1,0 +1,24 @@
+{
+  "decision": "STOP_HACKING",
+  "pq": 3,
+  "gardener_fixes": [
+    {
+      "issue": "Dead end: Design 'perturbation' has 7 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt perturbation experiments'",
+      "source": ""
+    }
+  ],
+  "hitl_fixes": [],
+  "missed_checks": [
+    {
+      "issue": "Dead end design: perturbation",
+      "expected": "Ban or warning about 'perturbation'"
+    }
+  ],
+  "dead_ends": [
+    "Design 'perturbation' has 7 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 8
+}

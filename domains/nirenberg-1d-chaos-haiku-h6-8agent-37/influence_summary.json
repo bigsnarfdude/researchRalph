@@ -1,0 +1,246 @@
+{
+  "domain": "nirenberg-1d-chaos-haiku-h6-8agent-37",
+  "nodes": {
+    "agent0": {
+      "writes": 8,
+      "reads": 17,
+      "out_degree": 4,
+      "in_degree": 1,
+      "influence_ratio": 0.8
+    },
+    "agent1": {
+      "writes": 15,
+      "reads": 23,
+      "out_degree": 11,
+      "in_degree": 0,
+      "influence_ratio": 1.0
+    },
+    "agent2": {
+      "writes": 10,
+      "reads": 22,
+      "out_degree": 1,
+      "in_degree": 6,
+      "influence_ratio": 0.1429
+    },
+    "agent3": {
+      "writes": 8,
+      "reads": 17,
+      "out_degree": 3,
+      "in_degree": 2,
+      "influence_ratio": 0.6
+    },
+    "agent4": {
+      "writes": 8,
+      "reads": 18,
+      "out_degree": 2,
+      "in_degree": 6,
+      "influence_ratio": 0.25
+    },
+    "agent5": {
+      "writes": 5,
+      "reads": 18,
+      "out_degree": 2,
+      "in_degree": 2,
+      "influence_ratio": 0.5
+    },
+    "agent6": {
+      "writes": 6,
+      "reads": 16,
+      "out_degree": 3,
+      "in_degree": 3,
+      "influence_ratio": 0.5
+    },
+    "agent7": {
+      "writes": 9,
+      "reads": 21,
+      "out_degree": 1,
+      "in_degree": 7,
+      "influence_ratio": 0.125
+    }
+  },
+  "edges": {
+    "agent0->agent4": {
+      "writer": "agent0",
+      "reader": "agent4",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent0->agent5": {
+      "writer": "agent0",
+      "reader": "agent5",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent0->agent2": {
+      "writer": "agent0",
+      "reader": "agent2",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent2->agent6": {
+      "writer": "agent2",
+      "reader": "agent6",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent1->agent7": {
+      "writer": "agent1",
+      "reader": "agent7",
+      "weight": 6,
+      "files": {
+        "blackboard.md": 5,
+        "LEARNINGS.md": 1
+      }
+    },
+    "agent3->agent5": {
+      "writer": "agent3",
+      "reader": "agent5",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent6->agent4": {
+      "writer": "agent6",
+      "reader": "agent4",
+      "weight": 2,
+      "files": {
+        "blackboard.md": 1,
+        "LEARNINGS.md": 1
+      }
+    },
+    "agent6->agent2": {
+      "writer": "agent6",
+      "reader": "agent2",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent0->agent3": {
+      "writer": "agent0",
+      "reader": "agent3",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent3->agent0": {
+      "writer": "agent3",
+      "reader": "agent0",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent1->agent4": {
+      "writer": "agent1",
+      "reader": "agent4",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent4->agent2": {
+      "writer": "agent4",
+      "reader": "agent2",
+      "weight": 2,
+      "files": {
+        "blackboard.md": 2
+      }
+    },
+    "agent1->agent6": {
+      "writer": "agent1",
+      "reader": "agent6",
+      "weight": 2,
+      "files": {
+        "LEARNINGS.md": 1,
+        "MISTAKES.md": 1
+      }
+    },
+    "agent1->agent2": {
+      "writer": "agent1",
+      "reader": "agent2",
+      "weight": 2,
+      "files": {
+        "LEARNINGS.md": 1,
+        "MISTAKES.md": 1
+      }
+    },
+    "agent5->agent4": {
+      "writer": "agent5",
+      "reader": "agent4",
+      "weight": 2,
+      "files": {
+        "LEARNINGS.md": 2
+      }
+    },
+    "agent3->agent7": {
+      "writer": "agent3",
+      "reader": "agent7",
+      "weight": 1,
+      "files": {
+        "LEARNINGS.md": 1
+      }
+    },
+    "agent7->agent3": {
+      "writer": "agent7",
+      "reader": "agent3",
+      "weight": 1,
+      "files": {
+        "DESIRES.md": 1
+      }
+    }
+  },
+  "edges_by_file": {
+    "blackboard.md": {
+      "agent0->agent4": 1,
+      "agent0->agent5": 1,
+      "agent0->agent2": 1,
+      "agent2->agent6": 1,
+      "agent1->agent7": 5,
+      "agent3->agent5": 1,
+      "agent6->agent4": 1,
+      "agent6->agent2": 1,
+      "agent0->agent3": 1,
+      "agent3->agent0": 1,
+      "agent1->agent4": 1,
+      "agent4->agent2": 2
+    },
+    "LEARNINGS.md": {
+      "agent1->agent6": 1,
+      "agent1->agent7": 1,
+      "agent1->agent2": 1,
+      "agent6->agent4": 1,
+      "agent5->agent4": 2,
+      "agent3->agent7": 1
+    },
+    "MISTAKES.md": {
+      "agent1->agent2": 1,
+      "agent1->agent6": 1
+    },
+    "DESIRES.md": {
+      "agent7->agent3": 1
+    }
+  },
+  "total_events": 221,
+  "total_edge_weight": 27,
+  "agents": [
+    "agent0",
+    "agent1",
+    "agent2",
+    "agent3",
+    "agent4",
+    "agent5",
+    "agent6",
+    "agent7"
+  ]
+}

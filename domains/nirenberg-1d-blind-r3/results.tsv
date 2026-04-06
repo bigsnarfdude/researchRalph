@@ -1,0 +1,479 @@
+exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	5.63592552e-11	0.000000	-0.000000	keep	trivial branch u_offset=0, baseline solver	agent0	initial_cond	0	-0.000000
+exp002	5.72745888e-09	1.002503	1.000218	discard	positive branch u_offset=+0.9, baseline solver	agent0	initial_cond	1	-1.523848
+exp003	2.41595655e-09	1.002503	-1.000218	discard	negative branch u_offset=-0.9, baseline solver	agent0	initial_cond	0	-1.523848
+exp004	8.81934685e-11	1.002503	-1.000218	discard	negative branch, n_nodes=200, tol=1e-10	agent0	solver_param	0	-1.523848
+exp005	2.41595655e-09	1.002503	-1.000218	discard	negative branch u_offset=-0.9, baseline solver	agent1	initial_cond	0	-1.523848
+exp006	8.81934684e-11	1.002503	1.000218	discard	positive branch, n_nodes=200, tol=1e-10	agent0	solver_param	1	-1.523848
+exp007	8.81934684e-11	1.002503	1.000218	discard	positive branch, n_mode=2	agent0	perturbation	0	-1.523848
+exp008	5.63592552e-11	0.000000	-0.000000	discard	baseline: trivial branch, u_offset=0	agent2	initial_cond	1	-0.000000
+exp009	crash	0	0	crash	positive branch, n_nodes=300, tol=1e-12	agent0	solver_param	0	0
+exp010	3.25175165e-12	1.002503	1.000218	keep	positive branch, n_nodes=300, tol=1e-11	agent0	solver_param	1	-1.523848
+exp011	8.81934685e-11	1.002503	-1.000218	discard	negative branch, n_nodes=200, tol=1e-10, improved solver	agent1	solver_param	1	-1.523848
+exp012	3.25175165e-12	1.002503	-1.000218	discard	negative branch, n_nodes=300, tol=1e-11	agent0	solver_param	0	-1.523848
+exp013	2.98147269e-13	0.000000	-0.000000	keep	trivial branch, n_nodes=300, tol=1e-11	agent0	solver_param	0	-0.000000
+exp014	1.57797638e-15	0.000000	-0.000000	keep	trivial branch, n_nodes=250, tol=1e-12	agent0	solver_param	1	-0.000000
+exp015	3.25175165e-12	1.002503	-1.000218	discard	negative branch, n_nodes=300, tol=1e-11 (match exp010 params)	agent1	solver_param	1	-1.523848
+exp016	2.41595655e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9, phase=π/2	agent2	initial_cond	0	-1.523848
+exp017	crash	0	0	crash	positive branch, n_nodes=250, tol=1e-12	agent0	solver_param	1	0
+exp018	5.62802405e-12	1.002503	1.000218	discard	positive branch, amp=0.05, tol=1e-11	agent0	solver_param	0	-1.523848
+exp019	2.41595655e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9, amplitude=0.3	agent2	initial_cond	1	-1.523848
+exp020	5.62802405e-12	1.002503	-1.000218	discard	negative branch, amp=0.05, tol=1e-11	agent0	solver_param	0	-1.523848
+exp021	crash	0	0	crash	negative branch, n_nodes=400, tol=1e-12 (ultra-tight)	agent1	solver_param	0	0
+exp022	5.72747764e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9, n_mode=3	agent2	perturbation	0	-1.523848
+exp023	5.62802405e-12	1.002503	-1.000218	discard	negative branch u_offset=-0.85, amplitude=0.05	agent3	initial_cond	1	-1.523848
+exp024	crash	0	0	crash	positive branch, amp=0.02, tol=1e-13	agent0	solver_param	1	0
+exp025	3.25175408e-12	1.002503	1.000218	discard	positive branch, amplitude=0.2, n_mode=2, phase=π/2	agent1	perturbation	0	-1.523848
+exp026	crash	0	0	crash	positive branch, amp=0.02, tol=1e-12	agent0	solver_param	0	0
+exp027	2.98644638e-13	0.000000	-0.000000	discard	trivial branch, n_nodes=150, tol=1e-9	agent2	solver_param	0	-0.000000
+exp028	3.25175408e-12	1.002503	-1.000218	discard	negative branch, amplitude=0.2, n_mode=2, phase=π/2	agent1	perturbation	1	-1.523848
+exp029	1.57797638e-15	0.000000	-0.000000	discard	trivial branch, tighter tol 1e-13	agent4	initial_cond	0	-0.000000
+exp030	7.08851508e-10	1.002503	-1.000218	discard	negative branch, n_nodes=150, tol=1e-9	agent2	solver_param	0	-1.523848
+exp031	0.00000000e+00	0.000000	0.000000	keep	trivial branch, n_nodes=300, tol=1e-11	agent1	solver_param	0	0.000000
+exp032	2.10093023e-10	1.002503	1.000218	discard	positive branch, n_nodes=150, tol=1e-9	agent2	solver_param	0	-1.523848
+exp033	crash	0	0	crash	positive branch, tighter tol 1e-13	agent4	initial_cond	0	0
+exp034	3.25175408e-12	1.002503	1.000218	discard	positive branch, phase=π, n_nodes=300	agent0	perturbation	0	-1.523848
+exp035	3.25175165e-12	1.002503	-1.000218	discard	negative branch u_offset=-0.9, n_mode=2, phase=π/2	agent3	perturbation	0	-1.523848
+exp036	3.25175165e-12	1.002503	1.000218	discard	positive branch, u_offset=0.95	agent0	branch_search	0	-1.523848
+exp037	3.25175165e-12	1.002503	1.000218	discard	positive branch u_offset=0.9, n_mode=3, amplitude=0.15	agent3	perturbation	0	-1.523848
+exp038	crash	0	0	crash	positive branch, n_nodes=300	agent4	initial_cond	0	0
+exp039	0.00000000e+00	0.000000	0.000000	discard	trivial branch, n_nodes=250, tol=1e-12	agent1	solver_param	1	0.000000
+exp040	2.98337043e-13	0.000000	-0.000000	discard	trivial branch, n_nodes=200, tol=1e-10	agent2	solver_param	0	-0.000000
+exp041	0.00000000e+00	0.000000	0.000000	discard	trivial branch, n_nodes=350, tol=1e-11	agent3	solver_param	0	0.000000
+exp042	crash	0	0	crash	positive branch with tighter tolerance (1e-13)	agent5	solver_param	1	0
+exp043	6.31838821e-14	0.000000	-0.000000	discard	intermediate u_offset=0.5, bifurcation test	agent1	branch_search	1	-0.000000
+exp044	2.04834364e-12	1.002503	1.000218	discard	positive branch, n_nodes=350, tol=1e-11	agent3	solver_param	1	-1.523848
+exp045	3.00917980e-15	0.000000	-0.000000	discard	intermediate u_offset=0.45	agent2	branch_search	0	-0.000000
+exp046	3.25175408e-12	1.002503	1.000218	discard	intermediate u_offset=0.7, bifurcation boundary	agent1	branch_search	0	-1.523848
+exp047	crash	0	0	crash	positive branch with tighter tolerance (1e-12)	agent5	solver_param	0	0
+exp048	2.04834364e-12	1.002503	-1.000218	discard	negative branch, n_nodes=350, tol=1e-11	agent3	solver_param	1	-1.523848
+exp049	3.25175408e-12	1.002503	1.000218	discard	intermediate u_offset=0.6, bifurcation boundary	agent1	branch_search	0	-1.523848
+exp050	8.81934685e-11	1.002503	1.000218	discard	intermediate u_offset=0.7	agent2	branch_search	0	-1.523848
+exp051	3.25175165e-12	1.002503	1.000218	discard	positive branch, amplitude=0.03, tol=1e-11	agent4	perturbation	0	-1.523848
+exp052	3.25175408e-12	1.002503	1.000218	discard	positive branch with phase=π	agent5	perturbation	0	-1.523848
+exp053	3.25175408e-12	1.002503	-1.000218	discard	intermediate u_offset=0.55, bifurcation boundary	agent1	branch_search	1	-1.523848
+exp054	8.81934684e-11	1.002503	1.000218	discard	bifurcation search u_offset=0.6	agent2	branch_search	0	-1.523848
+exp055	3.25175165e-12	1.002503	1.000218	discard	positive branch, phase=π/4	agent4	perturbation	1	-1.523848
+exp056	3.25175408e-12	1.002503	1.000218	discard	positive branch with phase=π/2	agent5	perturbation	0	-1.523848
+exp057	1.60426692e-13	0.000000	-0.000000	discard	intermediate u_offset=-0.5, bifurcation boundary	agent1	branch_search	0	-0.000000
+exp058	8.81934684e-11	1.002503	-1.000218	discard	bifurcation search u_offset=0.55	agent2	branch_search	0	-1.523848
+exp059	3.25175408e-12	1.002503	1.000218	discard	positive branch, n_mode=2	agent4	perturbation	0	-1.523848
+exp060	1.80784544e-12	0.000000	-0.000000	discard	bifurcation search u_offset=0.5	agent2	branch_search	0	-0.000000
+exp061	1.57797638e-15	0.000000	-0.000000	discard	trivial branch, tol=1e-14	agent4	solver_param	1	-0.000000
+exp062	9.99840186e-12	1.002503	1.000218	discard	positive branch, n_nodes=400, tol=1e-11	agent3	solver_param	1	-1.523848
+exp063	9.93787173e-13	0.000000	-0.000000	discard	negative side u_offset=-0.55	agent2	branch_search	1	-0.000000
+exp064	3.25175408e-12	1.002503	1.000218	discard	positive branch with mode-2 initial condition	agent5	perturbation	0	-1.523848
+exp065	1.88241530e-12	1.002503	1.000218	discard	positive branch, n_nodes=360, tol=1e-11	agent3	solver_param	0	-1.523848
+exp066	crash	0	0	crash	negative side u_offset=-0.6	agent2	branch_search	1	0
+exp067	3.25175408e-12	1.002503	1.000218	discard	positive branch, u_offset=0.85	agent4	branch_search	1	-1.523848
+exp068	3.25175408e-12	1.002503	-1.000218	discard	negative branch with amplitude=0.2	agent5	perturbation	1	-1.523848
+exp069	2.04834364e-12	1.002503	1.000218	discard	positive branch, n_nodes=350, tol=1e-11	agent0	solver_param	1	-1.523848
+exp070	1.73186184e-12	1.002503	1.000218	discard	positive branch, n_nodes=370, tol=1e-11	agent3	solver_param	1	-1.523848
+exp070	2.61333784e-11	1.002503	1.000218	discard	negative bifurcation u_offset=-0.575	agent2	branch_search	1	-1.523848
+exp071	3.25175408e-12	1.002503	1.000218	discard	positive branch, u_offset=1.0	agent4	branch_search	1	-1.523848
+exp071	2.04834364e-12	1.002503	-1.000218	discard	negative branch, n_nodes=350, tol=1e-11	agent0	solver_param	1	-1.523848
+exp072	2.04834364e-12	1.002503	1.000218	discard	positive branch, n_nodes=350, tol=1e-11	agent1	solver_param	1	-1.523848
+exp073	1.66444913e-12	1.002503	1.000218	discard	positive branch, n_nodes=375, tol=1e-11	agent3	solver_param	0	-1.523848
+exp074	2.04834364e-12	1.002503	1.000218	discard	positive branch, n_nodes=350, tol=1e-11, phase=π	agent6	perturbation	0	-1.523848
+exp075	2.15176781e-14	0.000000	0.000000	discard	boundary region u_offset=0.4 between trivial and positive	agent5	branch_search	0	-0.000000
+exp076	9.99840186e-12	1.002503	-1.000218	discard	positive branch, n_nodes=400, tol=1e-11	agent0	solver_param	0	-1.523848
+exp077	8.81934684e-11	1.002503	-1.000218	discard	deep negative u_offset=-0.8	agent2	branch_search	0	-1.523848
+exp078	2.04834364e-12	1.002503	-1.000218	discard	negative branch, n_nodes=350, tol=1e-11	agent1	solver_param	1	-1.523848
+exp079	1.54162159e-12	1.002503	1.000218	discard	positive branch, n_nodes=385, tol=1e-11	agent3	solver_param	0	-1.523848
+exp080	7.44220229e-15	0.000000	-0.000000	discard	boundary region u_offset=0.3	agent5	branch_search	1	-0.000000
+exp081	3.25175408e-12	1.002503	-1.000218	discard	negative branch, u_offset=-0.85	agent4	branch_search	0	-1.523848
+exp082	1.48117631e-12	1.002503	1.000218	discard	positive branch, n_nodes=390, tol=1e-11	agent3	solver_param	0	-1.523848
+exp083	9.99840186e-12	1.002503	1.000218	discard	positive branch, n_nodes=400, tol=1e-11	agent0	solver_param	0	-1.523848
+exp084	8.81934685e-11	1.002503	-1.000218	discard	negative transition u_offset=-0.7	agent2	branch_search	1	-1.523848
+exp085	9.99840186e-12	1.002503	-1.000218	discard	negative branch, n_nodes=400, tol=1e-11	agent1	solver_param	0	-1.523848
+exp086	8.33971481e-14	0.000000	-0.000000	discard	boundary region u_offset=0.2	agent5	branch_search	0	-0.000000
+exp087	9.99840186e-12	1.002503	-1.000218	discard	negative branch, n_nodes=400, tol=1e-11	agent0	solver_param	0	-1.523848
+exp088	9.99978354e-12	1.002503	1.000218	discard	positive branch, n_nodes=395, tol=1e-11	agent3	solver_param	1	-1.523848
+exp089	8.81934684e-11	1.002503	-1.000218	discard	bifurcation u_offset=-0.65	agent2	branch_search	0	-1.523848
+exp090	crash	0	0	crash	fourier spectral, positive branch, fourier_modes=128	agent7	initial_cond	0	0
+exp091	1.88241530e-12	1.002503	-1.000218	discard	positive branch, n_nodes=360	agent0	solver_param	1	-1.523848
+exp092	1.12868893e-13	0.000000	-0.000000	discard	boundary region u_offset=0.15	agent5	branch_search	0	-0.000000
+exp093	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-11	agent3	solver_param	0	-1.523848
+exp094	3.25175408e-12	1.002503	-1.000218	discard	negative branch, n_mode=3	agent4	perturbation	1	-1.523848
+exp094	9.99840186e-12	1.002503	1.000218	discard	positive branch, n_nodes=400, tol=1e-11	agent1	solver_param	1	-1.523848
+exp095	6.31537362e-12	0.000000	-0.000000	discard	crash zone u_offset=-0.605	agent2	branch_search	0	-0.000000
+exp096	1.88241530e-12	1.002503	1.000218	discard	positive branch, n_nodes=360	agent0	solver_param	0	-1.523848
+exp097	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392, tol=1e-11	agent3	solver_param	0	-1.523848
+exp098	1.88241530e-12	1.002503	-1.000218	discard	negative branch, n_nodes=360	agent0	solver_param	0	-1.523848
+exp098	4.48542600e-15	0.000000	-0.000000	discard	boundary region u_offset=0.25	agent5	branch_search	0	-0.000000
+exp099	1.88241530e-12	1.002503	1.000218	discard	positive branch, n_nodes=360, tol=1e-11	agent1	solver_param	0	-1.523848
+exp100	1.48117631e-12	1.002503	-1.000218	discard	negative branch, n_nodes=390, tol=1e-11	agent6	solver_param	0	-1.523848
+exp101	5.62802405e-12	1.002503	-1.000218	discard	negative branch, n_nodes=250, tol=1e-11	agent4	solver_param	0	-1.523848
+exp102	1.73186184e-12	1.002503	1.000218	discard	positive branch, n_nodes=370	agent0	solver_param	0	-1.523848
+exp103	1.88241530e-12	1.002503	-1.000218	discard	negative branch, n_nodes=360, tol=1e-11	agent1	solver_param	0	-1.523848
+exp104	2.98190532e-13	0.000000	-0.000000	discard	trivial branch, n_nodes=392, tol=1e-11	agent3	solver_param	0	-0.000000
+exp105	1.20769887e-14	0.000000	-0.000000	discard	boundary region u_offset=0.27	agent5	branch_search	1	-0.000000
+exp106	1.60013505e-12	1.002503	1.000218	discard	positive branch, n_nodes=380	agent0	solver_param	1	-1.523848
+exp107	8.81934685e-11	1.002503	-1.000218	discard	negative branch, n_nodes=200, tol=1e-10	agent4	solver_param	1	-1.523848
+exp108	1.48117631e-12	1.002503	1.000218	discard	positive branch, n_nodes=390	agent0	solver_param	0	-1.523848
+exp109	6.91307134e-16	0.000000	-0.000000	discard	boundary region u_offset=0.23	agent5	branch_search	1	-0.000000
+exp110	9.99978354e-12	1.002503	1.000218	discard	positive branch, n_nodes=395, tol=1e-11	agent6	solver_param	1	-1.523848
+exp111	9.99978354e-12	1.002503	1.000218	discard	positive branch, n_nodes=395	agent0	solver_param	1	-1.523848
+exp112	crash	0	0	crash	fourier spectral, negative branch, maxiter=500, tol=1e-12	agent7	initial_cond	3	0
+exp113	1.73186184e-12	1.002503	-1.000218	discard	negative branch, n_nodes=370, tol=1e-11	agent1	solver_param	1	-1.523848
+exp114	1.95977862e-15	0.000000	-0.000000	discard	boundary region u_offset=0.24	agent5	branch_search	1	-0.000000
+exp115	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392	agent0	solver_param	0	-1.523848
+exp116	1.60013505e-12	1.002503	-1.000218	discard	negative branch, n_nodes=380, tol=1e-11	agent1	solver_param	0	-1.523848
+exp117	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392	agent0	solver_param	1	-1.523848
+exp118	8.87679025e-18	0.000000	-0.000000	discard	boundary region u_offset=0.222	agent5	branch_search	1	-0.000000
+exp119	1.48117631e-12	1.002503	-1.000218	discard	negative branch, n_nodes=390, tol=1e-11	agent1	solver_param	0	-1.523848
+exp120	1.48117631e-12	1.002503	1.000218	discard	positive, n_nodes=390, mode-2, phase=π/2, amp=0.05	agent6	perturbation	0	-1.523848
+exp121	crash	0	0	crash	positive branch, n_nodes=392, tol=1e-12	agent0	solver_param	1	0
+exp122	7.53408376e-18	0.000000	-0.000000	discard	boundary region u_offset=0.221	agent5	branch_search	0	-0.000000
+exp123	9.99978354e-12	1.002503	-1.000218	discard	negative branch, n_nodes=395, tol=1e-11	agent1	solver_param	0	-1.523848
+exp124	2.50918801e-18	0.000000	-0.000000	discard	boundary region, u_offset=0.23, n_nodes=300, tol=1e-11	agent4	branch_search	0	-0.000000
+exp125	2.40075401e-12	1.001296	-1.000019	discard	fourier spectral, negative branch, tol=1e-10, 200iter	agent7	initial_cond	0	-1.520844
+exp126	6.37922757e-18	0.000000	-0.000000	discard	boundary region u_offset=0.220	agent5	branch_search	1	-0.000000
+exp126	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, amp=0.03	agent0	solver_param	1	-1.523848
+exp127	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392, tol=1e-11	agent1	solver_param	0	-1.523848
+exp128	1.48117631e-12	1.002503	-1.000218	discard	boundary region u_offset=0.5, n_nodes=390	agent6	branch_search	0	-1.523848
+exp129	9.99840186e-12	1.002503	1.000218	discard	positive branch, n_nodes=400, tol=1e-11	agent2	solver_param	1	-1.523848
+exp130	1.09951674e-21	0.000000	-0.000000	discard	trivial branch, n_nodes=392	agent0	solver_param	0	0.000000
+exp130	8.58757940e-12	1.001296	1.000019	discard	fourier spectral, positive branch, tol=1e-10, 200iter	agent7	initial_cond	0	-1.520844
+exp131	2.50918806e-18	0.000000	-0.000000	discard	boundary, u_offset=0.23, n_nodes=300, tol=1e-12	agent4	solver_param	0	-0.000000
+exp132	5.86480572e-18	0.000000	-0.000000	discard	boundary region u_offset=0.2195	agent5	branch_search	0	-0.000000
+exp133	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-11	agent1	solver_param	1	-1.523848
+exp134	9.44929173e-12	1.002503	1.000218	discard	positive branch, n_nodes=420, tol=1e-11	agent2	solver_param	0	-1.523848
+exp135	0.00000000e+00	0.000000	0.000000	discard	fourier spectral, trivial branch, tol=1e-10	agent7	initial_cond	1	0.000000
+exp136	5.38865138e-18	0.000000	-0.000000	discard	boundary region u_offset=0.219	agent5	branch_search	1	-0.000000
+exp137	2.50918812e-18	0.000000	-0.000000	discard	boundary, u_offset=0.23, n_nodes=300, tol=1e-13	agent4	solver_param	0	-0.000000
+exp138	crash	0	0	crash	positive branch, n_nodes=392, tol=1e-12	agent1	solver_param	0	0
+exp139	2.04834364e-12	1.002503	1.000218	discard	positive branch, n_nodes=350, tol=1e-11 (agent3 replication)	agent2	solver_param	0	-1.523848
+exp140	2.44041105e-18	0.000000	-0.000000	discard	boundary, u_offset=0.25, n_nodes=300, tol=1e-13	agent4	branch_search	1	-0.000000
+exp141	2.04834364e-12	1.002503	-1.000218	discard	negative branch, n_nodes=350, tol=1e-11	agent2	solver_param	0	-1.523848
+exp142	2.18117059e-19	0.000000	-0.000000	discard	boundary, u_offset=0.27	agent4	branch_search	0	-0.000000
+exp143	8.71026205e-17	0.000000	-0.000000	discard	boundary, u_offset=0.30	agent4	branch_search	1	-0.000000
+exp144	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, amplitude=0.05	agent1	initial_cond	0	-1.523848
+exp145	9.30161565e-11	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-10	agent3	solver_param	0	-1.523848
+exp146	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, amplitude=0.0	agent1	initial_cond	1	-1.523848
+exp147	1.35922655e-19	0.000000	-0.000000	discard	boundary, u_offset=0.28	agent4	branch_search	1	-0.000000
+exp148	1.02294733e-11	1.001296	1.000019	discard	fourier spectral, positive branch, fourier_modes=256	agent7	initial_cond	1	-1.520844
+exp149	4.60675961e-17	0.000000	0.000000	discard	boundary u_offset=0.45, n_nodes=390	agent6	branch_search	0	-0.000000
+exp150	crash	0	0	crash	positive branch, n_nodes=392, tol=1e-12, amplitude=0.01	agent3	solver_param	0	0
+exp151	1.27537998e-16	0.000000	-0.000000	discard	boundary, u_offset=0.29	agent4	branch_search	0	-0.000000
+exp152	2.04834364e-12	1.002503	1.000218	discard	positive branch u_offset=0.85, n_nodes=350, tol=1e-11	agent2	branch_search	0	-1.523848
+exp153	1.48117631e-12	1.002503	-1.000218	discard	bifurcation u_offset=0.55, n_nodes=390	agent6	branch_search	0	-1.523848
+exp154	1.02294733e-11	1.001296	1.000019	discard	fourier spectral, positive branch, modes=256, tol=1e-9	agent7	initial_cond	1	-1.520844
+exp155	1.45956404e-12	1.002503	-1.000218	discard	bifurcation point u_offset=0.55 with optimal n_nodes=392	agent5	branch_search	0	-1.523848
+exp156	1.47035555e-12	1.002503	-1.000218	discard	negative branch, n_nodes=391, tol=1e-11	agent1	solver_param	0	-1.523848
+exp157	1.45956404e-12	1.002503	1.000218	discard	positive branch, u_offset=0.92, n_nodes=392, tol=1e-11	agent3	initial_cond	0	-1.523848
+exp158	9.43553899e-20	0.000000	-0.000000	discard	boundary, u_offset=0.285	agent4	branch_search	1	-0.000000
+exp159	2.04834364e-12	1.002503	-1.000218	discard	bifurcation boundary u_offset=0.55, n_nodes=350, tol=1e-11	agent2	branch_search	0	-1.523848
+exp160	4.60978452e-17	0.000000	-0.000000	discard	negative boundary u_offset=-0.45, n_nodes=390	agent6	branch_search	0	-0.000000
+exp161	4.37802024e-17	0.000000	0.000000	discard	bifurcation boundary u_offset=0.56	agent5	branch_search	0	-0.000000
+exp162	1.45956404e-12	1.002503	1.000218	discard	positive branch, u_offset=0.88, n_nodes=392, tol=1e-11	agent3	initial_cond	1	-1.523848
+exp163	8.67559739e-20	0.000000	-0.000000	discard	boundary, u_offset=0.286	agent4	branch_search	1	-0.000000
+exp164	1.27904990e-12	1.001296	1.000019	discard	fourier spectral, positive branch, modes=128, tol=1e-11, amp=0.1	agent7	initial_cond	0	-1.520844
+exp165	1.19274255e-13	0.000000	0.000000	discard	boundary u_offset=0.48, n_nodes=390	agent6	branch_search	1	-0.000000
+exp166	2.04834364e-12	1.002503	1.000218	discard	outer boundary u_offset=1.0, n_nodes=350, tol=1e-11	agent2	branch_search	1	-1.523848
+exp167	7.94701205e-20	0.000000	-0.000000	discard	boundary, u_offset=0.287	agent4	branch_search	0	-0.000000
+exp168	1.45956404e-12	1.002503	-1.000218	discard	bifurcation boundary u_offset=0.57	agent5	branch_search	0	-1.523848
+exp169	1.48117631e-12	1.002503	-1.000218	discard	bifurcation u_offset=0.51, n_nodes=390	agent6	branch_search	1	-1.523848
+exp170	1.30926847e-16	0.000000	-0.000000	discard	boundary, u_offset=0.288	agent4	branch_search	1	-0.000000
+exp171	2.72285787e-12	1.001296	-1.000019	discard	fourier spectral, negative branch, modes=128, tol=1e-11, amp=0.1	agent7	initial_cond	0	-1.520844
+exp172	2.56855079e-16	0.000000	0.000000	discard	bifurcation boundary u_offset=0.565	agent5	branch_search	1	-0.000000
+exp173	7.59532329e-20	0.000000	-0.000000	discard	boundary, u_offset=0.2875	agent4	branch_search	0	-0.000000
+exp174	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392, tol=1e-11, amplitude=0.05	agent3	solver_param	0	-1.523848
+exp175	1.48117631e-12	1.002503	1.000218	discard	u_offset=0.75, n_nodes=390	agent6	branch_search	0	-1.523848
+exp176	1.45956404e-12	1.002503	1.000218	discard	bifurcation boundary u_offset=0.60	agent5	branch_search	1	-1.523848
+exp177	2.40075401e-12	1.001296	-1.000019	discard	fourier spectral, negative branch, modes=128, tol=1e-11, amp=0.05	agent7	initial_cond	1	-1.520844
+exp178	8.30733960e-20	0.000000	-0.000000	discard	boundary, u_offset=0.2865	agent4	branch_search	1	-0.000000
+exp179	2.42438900e-15	0.000000	0.000000	discard	bifurcation boundary u_offset=0.562	agent5	branch_search	1	-0.000000
+exp179	2.47607010e-12	1.001296	-1.000019	discard	fourier spectral, negative branch, modes=128, tol=1e-11, n_mode=2	agent7	perturbation	1	-1.520844
+exp180	1.48117631e-12	1.002503	-1.000218	discard	u_offset=-0.75, n_nodes=390	agent6	branch_search	0	-1.523848
+exp181	1.29470725e-16	0.000000	-0.000000	discard	boundary, u_offset=0.289	agent4	branch_search	0	-0.000000
+exp182	1.51461001e-18	0.000000	0.000000	discard	bifurcation boundary u_offset=0.561	agent5	branch_search	0	-0.000000
+exp183	1.31158483e-16	0.000000	-0.000000	discard	boundary, u_offset=0.2878	agent4	branch_search	1	-0.000000
+exp184	1.66607736e-12	1.001296	-1.000019	discard	fourier spectral, negative branch, modes=128, tol=1e-11, phase=π/2	agent7	perturbation	1	-1.520844
+exp185	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392 (optimal), tol=1e-11	agent2	solver_param	0	-1.523848
+exp186	1.48117631e-12	1.002503	1.000218	discard	u_offset=0.65, n_nodes=390	agent6	branch_search	0	-1.523848
+exp187	2.66677243e-16	0.000000	0.000000	discard	bifurcation boundary u_offset=0.5615	agent5	branch_search	0	-0.000000
+exp188	7.52598933e-20	0.000000	-0.000000	discard	boundary, u_offset=0.2876	agent4	branch_search	0	-0.000000
+exp189	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392 (optimal), tol=1e-11	agent2	solver_param	0	-1.523848
+exp190	9.30157143e-11	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-10	agent0	solver_param	0	-1.523848
+exp191	1.37730535e-12	1.001296	1.000019	discard	fourier spectral, positive branch, modes=128, tol=1e-11, phase=π/2, amp=0.1	agent7	perturbation	0	-1.520844
+exp192	1.31267654e-16	0.000000	-0.000000	discard	boundary, u_offset=0.2877	agent4	branch_search	0	-0.000000
+exp193	4.37802024e-17	0.000000	0.000000	discard	bifurcation boundary u_offset=0.560	agent5	branch_search	0	-0.000000
+exp194	2.98190532e-13	0.000000	-0.000000	discard	trivial branch, n_nodes=392 (optimal), tol=1e-11	agent2	solver_param	1	-0.000000
+exp195	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=5e-12	agent0	solver_param	0	-1.523848
+exp196	2.18007018e-17	0.000000	0.000000	discard	bifurcation boundary u_offset=0.287, n_nodes=392	agent3	branch_search	1	-0.000000
+exp196	1.03752160e-12	1.001296	1.000019	discard	fourier spectral, positive branch, modes=128, tol=1e-11, phase=π	agent7	perturbation	1	-1.520844
+exp197	1.26630053e-18	0.000000	0.000000	discard	bifurcation boundary u_offset=0.5609	agent5	branch_search	1	-0.000000
+exp198	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=2e-12	agent0	solver_param	1	-1.523848
+exp199	2.61670714e-17	0.000000	-0.000000	discard	u_offset=0.2876, amplitude=0.05	agent4	perturbation	0	-0.000000
+exp200	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=3e-12	agent0	solver_param	1	-1.523848
+exp201	1.37112114e-18	0.000000	0.000000	discard	bifurcation boundary u_offset=0.5608	agent5	branch_search	0	-0.000000
+exp202	1.09951674e-21	0.000000	-0.000000	discard	trivial branch, n_nodes=392, amplitude=0.05	agent2	solver_param	0	0.000000
+exp203	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=7e-12	agent0	solver_param	1	-1.523848
+exp204	1.72245319e-12	1.001296	-1.000019	discard	fourier spectral, negative branch, modes=128, tol=1e-11, phase=π, amp=0.05	agent7	perturbation	0	-1.520844
+exp205	1.51461001e-18	0.000000	0.000000	discard	bifurcation boundary u_offset=0.5610	agent5	branch_search	0	-0.000000
+exp206	1.40256839e-12	1.001296	1.000019	discard	fourier spectral, positive branch, modes=128, tol=1e-11, phase=π, n_mode=2	agent7	perturbation	0	-1.520844
+exp207	1.45956404e-12	1.002503	1.000218	discard	exotic u_offset=1.5, n_nodes=392	agent2	branch_search	1	-1.523848
+exp208	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392, tol=1.5e-12	agent0	solver_param	1	-1.523848
+exp209	1.45956404e-12	1.002503	-1.000218	discard	exotic u_offset=-1.5, n_nodes=392	agent2	branch_search	0	-1.523848
+exp210	1.33243273e-12	1.001296	1.000019	discard	fourier spectral, positive branch, modes=128, tol=1e-11, phase=π, amp=0.05	agent7	perturbation	0	-1.520844
+exp211	crash	0	0	crash	positive branch, n_nodes=392, tol=1.2e-12	agent0	solver_param	0	0
+exp212	crash	0	0	crash	positive branch, n_nodes=392, tol=1.3e-12	agent0	solver_param	0	0
+exp213	1.45956404e-12	1.002503	-1.000218	discard	bifurcation region u_offset=0.5, n_nodes=392	agent3	branch_search	0	-1.523848
+exp214	crash	0	0	crash	positive branch, n_nodes=392, tol=1.4e-12	agent0	solver_param	0	0
+exp215	8.94198236e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=96, tol=1e-11, phase=π	agent7	initial_cond	0	-1.520844
+exp216	1.45956404e-12	1.002503	1.000218	discard	positive, n_nodes=392, tol=1e-11	agent6	solver_param	1	-1.523848
+exp217	5.82619080e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=80, tol=1e-11, phase=π	agent7	initial_cond	1	-1.520844
+exp218	1.47035555e-12	1.002503	1.000218	discard	positive, n_nodes=391, tol=1e-11	agent6	solver_param	1	-1.523848
+exp219	1.04371048e-12	1.001296	1.000019	discard	fourier spectral, positive branch, modes=64, tol=1e-11, phase=π	agent7	initial_cond	1	-1.520844
+exp220	5.20322966e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=72, tol=1e-11, phase=π	agent7	initial_cond	0	-1.520844
+exp221	1.47035555e-12	1.002503	-1.000218	discard	negative, n_nodes=392, tol=1e-11	agent6	solver_param	1	-1.523848
+exp222	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, fourier_modes=128	agent0	solver_param	0	-1.523848
+exp223	6.40225622e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=76, tol=1e-11, phase=π	agent7	initial_cond	0	-1.520844
+exp224	9.30161565e-11	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-10	agent2	solver_param	0	-1.523848
+exp225	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, fourier_modes=64 (default)	agent0	solver_param	0	-1.523848
+exp226	4.28871165e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=70, tol=1e-11, phase=π	agent7	initial_cond	1	-1.520844
+exp227	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, fourier_modes=200	agent0	solver_param	0	-1.523848
+exp228	3.49473269e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=68, tol=1e-11, phase=π	agent7	initial_cond	1	-1.520844
+exp229	3.06238441e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=66, tol=1e-11, phase=π	agent7	initial_cond	1	-1.520844
+exp230	1.47035555e-12	1.002503	1.000218	discard	positive, n_nodes=392, amplitude=0.02	agent6	perturbation	1	-1.523848
+exp231	3.48413680e-13	1.001296	1.000019	discard	fourier spectral, positive branch, modes=65, tol=1e-11, phase=π	agent7	initial_cond	0	-1.520844
+exp232	1.47035555e-12	1.002503	1.000218	discard	positive, u_offset=0.88, n_nodes=392	agent6	branch_search	0	-1.523848
+exp233	2.73679483e-13	1.001296	-1.000019	discard	fourier spectral, negative branch, modes=66, tol=1e-11, phase=π/2, amp=0.05	agent7	initial_cond	0	-1.520844
+exp234	9.30156603e-11	1.002503	1.000218	discard	tolerance=1e-10, n_nodes=392, u_offset=0.9 (positive)	agent0	solver_param	0	-1.523848
+exp235	1.45956404e-12	1.002503	1.000218	discard	tolerance=1e-11, n_nodes=392, u_offset=0.9 (positive)	agent0	solver_param	0	-1.523848
+exp236	9.30156603e-11	1.002503	1.000218	discard	tolerance diagnostic: pos branch, n_nodes=392, tol=1e-10 (loose)	agent1	solver_param	0	-1.523848
+exp237	1.45956404e-12	1.002503	1.000218	discard	tolerance diagnostic: pos branch, n_nodes=392, tol=1e-11 (tight—expected sweet spot)	agent1	solver_param	0	-1.523848
+exp238	1.45956404e-12	1.002503	1.000218	discard	tolerance diagnostic: pos branch, n_nodes=392, tol=1.5e-12 (edge case boundary test)	agent1	solver_param	0	-1.523848
+exp238	1.45956404e-12	1.002503	1.000218	discard	tolerance=1.5e-12, n_nodes=392, u_offset=0.9 (positive)	agent0	solver_param	0	-1.523848
+exp239	9.30156603e-11	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-10 (loose baseline)	agent2	solver_param	0	-1.523848
+exp240	crash	0	0	crash	tolerance diagnostic: pos branch, n_nodes=392, tol=1e-12 (very tight)	agent1	solver_param	0	0
+exp241	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-11 (expected ~1.46e-12)	agent2	solver_param	0	-1.523848
+exp242	crash	0	0	crash	tolerance diagnostic: pos branch, n_nodes=392, tol=1e-13 (ultra-tight boundary probe)	agent1	solver_param	0	0
+exp243	9.30156603e-11	1.002503	1.000218	discard	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-10	agent3	solver_param	0	-1.523848
+exp244	1.45956404e-12	1.002503	1.000218	discard	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-11	agent3	solver_param	0	-1.523848
+exp245	crash	0	0	crash	positive branch, n_nodes=392, tol=1e-12 (stability edge)	agent2	solver_param	0	0
+exp246	1.45956404e-12	1.002503	-1.000218	discard	tolerance diagnostic: neg branch, n_nodes=392, tol=1e-11 (replicate positive)	agent1	solver_param	0	-1.523848
+exp247	1.45956404e-12	1.002503	1.000218	discard	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1.5e-12	agent3	solver_param	0	-1.523848
+exp248	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1.5e-12 (predict edge crash)	agent2	solver_param	0	-1.523848
+exp249	crash	0	0	crash	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-12	agent3	solver_param	1	0
+exp250	crash	0	0	crash	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-13	agent3	solver_param	1	0
+exp251	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392, tol=1e-11 (replicate)	agent2	solver_param	0	-1.523848
+exp252	1.45956404e-12	1.002503	-1.000218	discard	tolerance sweep: n_nodes=392, u_offset=-0.9, tol=1e-11, negative branch validation	agent3	solver_param	0	-1.523848
+exp253	9.30156603e-11	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-10 (loose baseline)	agent4	initial_cond	0	-1.523848
+exp254	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1e-11 (tight optimal)	agent4	initial_cond	0	-1.523848
+exp255	1.45956404e-12	1.002503	1.000218	discard	positive branch, n_nodes=392, tol=1.5e-12 (edge of stability)	agent4	initial_cond	1	-1.523848
+exp256	9.30156603e-11	1.002503	1.000218	discard	tolerance=1e-10, positive branch, n_nodes=392 (mesh optimum), diagnostic sweep	agent5	solver_param	0	-1.523848
+exp257	crash	0	0	crash	positive branch, n_nodes=392, tol=1e-12 (below stability)	agent4	initial_cond	0	0
+exp258	1.45956404e-12	1.002503	1.000218	discard	tolerance=1e-11, positive branch, n_nodes=392 (claimed optimum)	agent5	solver_param	0	-1.523848
+exp259	9.30156603e-11	1.002503	1.000218	discard	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-10	agent6	solver_param	0	-1.523848
+exp260	1.45956404e-12	1.002503	-1.000218	discard	negative branch, n_nodes=392, tol=1e-11 (cross-validate)	agent4	initial_cond	0	-1.523848
+exp261	1.45956404e-12	1.002503	1.000218	discard	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-11	agent6	solver_param	0	-1.523848
+exp262	crash	0	0	crash	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-12	agent6	solver_param	0	0
+exp263	crash	0	0	crash	tolerance=1e-12, positive branch, testing stability boundary	agent5	solver_param	1	0
+exp264	1.45956404e-12	1.002503	1.000218	discard	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1.5e-12	agent6	solver_param	0	-1.523848
+exp265	1.45956404e-12	1.002503	1.000218	discard	tolerance=1.5e-12, edge of stability band	agent5	solver_param	0	-1.523848
+exp266	crash	0	0	crash	tolerance sweep: n_nodes=392, u_offset=0.9, tol=1e-13	agent6	solver_param	1	0
+exp267	crash	0	0	crash	tolerance sweep: n_nodes=392, u_offset=0.9, tol=5e-13	agent6	solver_param	1	0
+exp268	5.87777730e-20	0.000000	0.000000	discard	bifurcation: u_offset=0.4 (boundary region)	agent7	bifurcation_analysis	0	-0.000000
+exp269	4.60686702e-17	0.000000	0.000000	discard	bifurcation: u_offset=0.45	agent7	bifurcation_analysis	0	-0.000000
+exp270	1.45956404e-12	1.002503	-1.000218	discard	negative branch tolerance check: n_nodes=392, u_offset=-0.9, tol=1e-11	agent6	solver_param	0	-1.523848
+exp271	1.45956404e-12	1.002503	-1.000218	discard	bifurcation: u_offset=0.50	agent7	bifurcation_analysis	1	-1.523848
+exp272	1.45956404e-12	1.002503	-1.000218	discard	negative branch edge case: n_nodes=392, u_offset=-0.9, tol=1.5e-12	agent6	solver_param	0	-1.523848
+exp273	3.51002997e-15	0.000000	0.000000	discard	bifurcation: u_offset=0.475	agent7	bifurcation_analysis	0	-0.000000
+exp274	1.45956404e-12	1.002503	1.000218	discard	scipy baseline validation: positive branch, n_nodes=392, tol=1e-11	agent0	solver_param	0	-1.523848
+exp275	3.64816801e-13	1.001296	-1.000019	discard	fourier spectral reproduction of exp233: negative branch, modes=66, phase=π/2, amp=0.05, tol=1e-11	agent0	initial_cond	1	-1.520844
+exp276	2.66626099e-13	1.001296	-1.000019	discard	Fourier spectral negative branch, fourier_modes=64, newton_tol=1e-11	agent1	solver_param	2	-1.520844
+exp277	5.47130094e-13	1.001296	-1.000019	discard	fourier: negative, modes=64	agent0	initial_cond	1	-1.520844
+exp278	1.61211386e-12	1.001296	-1.000019	discard	Fourier spectral, fourier_modes=128, newton_tol=1e-11	agent1	solver_param	4	-1.520844
+exp279	2.73679483e-13	1.001296	-1.000019	discard	fourier: negative, modes=65	agent0	initial_cond	4	-1.520844
+exp280	2.73679483e-13	1.001296	-1.000019	discard	fourier: negative, modes=67	agent0	initial_cond	5	-1.520844
+exp281	2.66626099e-13	1.001296	-1.000019	discard	Fourier spectral, fourier_modes=64, newton_tol=1e-12	agent1	solver_param	5	-1.520844
+exp282	3.22283552e-13	1.001296	-1.000019	discard	Fourier spectral: reproduce exp233 (modes=66, negative branch)	agent3	bifurcation_analysis	4	-1.520844
+exp283	4.55174441e-13	1.001296	-1.000019	discard	fourier: negative, modes=68	agent0	initial_cond	6	-1.520844
+exp284	2.66626099e-13	1.001296	1.000019	discard	Fourier spectral positive branch, fourier_modes=64, newton_tol=1e-12	agent1	solver_param	4	-1.520844
+exp285	2.66626099e-13	1.001296	-1.000019	discard	Fourier: mode 64 on negative branch	agent3	bifurcation_analysis	4	-1.520844
+exp286	2.35974309e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=32, newton_tol=1e-12	agent1	solver_param	1	-1.520844
+exp287	4.91771539e-13	1.001296	-1.000019	discard	fourier spectral: negative branch, modes=66, tol=1e-11, phase=π/2, amp=0.05 (replication of exp233)	agent4	initial_cond	5	-1.520844
+exp288	2.89420087e-13	1.001296	1.000019	discard	fourier: positive branch, modes=65, amp=0.05, phase=π/2	agent0	initial_cond	0	-1.520844
+exp289	1.79742650e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=48, newton_tol=1e-12	agent1	solver_param	1	-1.520844
+exp290	0.00000000e+00	0.000000	0.000000	discard	fourier: trivial branch, modes=65	agent0	initial_cond	2	0.000000
+exp291	6.86100627e-13	1.001296	-1.000019	discard	Mode 67	agent3	bifurcation_analysis	9	-1.520844
+exp292	6.86100627e-13	1.001296	-1.000019	discard	Mode 62	agent3	bifurcation_analysis	10	-1.520844
+exp293	6.86100627e-13	1.001296	-1.000019	discard	Mode 68	agent3	bifurcation_analysis	10	-1.520844
+exp294	6.86100627e-13	1.001296	-1.000019	discard	Mode 63	agent3	bifurcation_analysis	10	-1.520844
+exp295	6.86100627e-13	1.001296	-1.000019	discard	Mode 65	agent3	bifurcation_analysis	11	-1.520844
+exp296	7.50360935e-13	1.001296	-1.000019	discard	fourier: negative, modes=80, tol=1e-11, phase=π/2	agent4	initial_cond	11	-1.520844
+exp297	1.79742650e-13	1.001296	-1.000019	discard	Replicate exp289: modes=48, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp298	4.37332680e-13	1.001296	-1.000019	discard	fourier: negative, modes=72, tol=1e-11, phase=π/2	agent4	initial_cond	10	-1.520844
+exp299	1.58410400e-13	1.001296	-1.000019	discard	Mode 46, tol=1e-12	agent3	bifurcation_analysis	2	-1.520844
+exp300	1.41728832e-13	1.001296	-1.000019	discard	Mode 47, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp301	1.83270545e-13	1.001296	-1.000019	discard	Mode 49, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp302	1.66607736e-12	1.001296	-1.000019	discard	fourier: negative, modes=128, explore higher modes	agent0	initial_cond	18	-1.520844
+exp303	2.64034481e-13	1.001296	-1.000019	discard	Mode 50, tol=1e-12	agent3	bifurcation_analysis	9	-1.520844
+exp304	4.60378823e-13	1.001296	-1.000019	discard	fourier: negative, modes=74	agent4	initial_cond	12	-1.520844
+exp305	2.36550880e-13	1.001296	-1.000019	discard	Mode 45, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp306	1.92034767e-13	1.001296	-1.000019	discard	Mode 44, tol=1e-12	agent3	bifurcation_analysis	2	-1.520844
+exp307	1.38011254e-13	1.001296	-1.000019	discard	Mode 43, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp308	9.35958072e-13	1.001296	-1.000019	discard	fourier: negative, modes=80	agent0	initial_cond	12	-1.520844
+exp309	1.44750803e-13	1.001296	-1.000019	discard	Mode 42, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp310	1.14107260e-13	1.001296	-1.000019	discard	Mode 41, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp311	4.60378823e-13	1.001296	-1.000019	discard	fourier: negative, modes=70	agent4	initial_cond	10	-1.520844
+exp312	1.73072300e-13	1.001296	-1.000019	discard	Mode 40, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp313	2.66626099e-13	1.001296	1.000019	discard	positive branch, Fourier spectral, fourier_modes=64, newton_tol=1e-12	agent2	solver_param	10	-1.520844
+exp314	1.45956404e-12	1.002503	1.000218	discard	Mesh-optimal verification: n_nodes=392, positive branch u_offset=0.9	agent5	solver_param	1	-1.523848
+exp315	1.08966072e-13	1.001296	-1.000019	discard	Mode 39, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp316	2.65538320e-13	1.001296	-1.000019	discard	fourier: negative, modes=50	agent0	initial_cond	6	-1.520844
+exp317	8.23362921e-14	1.001296	-1.000019	discard	Mode 38, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp318	5.61630938e-14	1.001296	-1.000019	discard	Mode 37, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp319	2.35974309e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=32, newton_tol=1e-12	agent6	alternative_solvers	3	-1.520844
+exp320	2.04825084e-13	1.001296	-1.000019	discard	fourier: negative, modes=48	agent0	initial_cond	0	-1.520844
+exp321	1.33348746e-13	1.001296	-1.000019	discard	Mode 36, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp322	9.20318152e-14	1.001296	-1.000019	discard	Mode 35, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp323	1.10496110e-13	1.001296	-1.000019	discard	Mode 34, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp324	2.66626099e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, modes=64, tol=1e-12	agent7	solver_param	9	-1.520844
+exp325	3.96194605e-13	1.001296	-1.000019	discard	fourier: modes=72, newton_tol=1e-12	agent4	initial_cond	13	-1.520844
+exp326	2.35974309e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, fourier_modes=32, newton_tol=1e-12	agent6	alternative_solvers	2	-1.520844
+exp327	9.60309757e-14	1.001296	-1.000019	discard	Mode 33, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp328	1.39148919e-13	1.001296	-1.000019	discard	fourier: negative, modes=52	agent0	initial_cond	6	-1.520844
+exp329	2.35974309e-13	1.001296	-1.000019	discard	Mode 32, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp330	6.82361491e-14	1.001296	-1.000019	discard	Mode 31, tol=1e-12	agent3	bifurcation_analysis	0	-1.520844
+exp331	8.69919732e-14	1.001296	-1.000019	discard	Mode 30, tol=1e-12	agent3	bifurcation_analysis	0	-1.520844
+exp332	1.79742650e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, fourier_modes=48, newton_tol=1e-12	agent6	alternative_solvers	2	-1.520844
+exp333	6.26975285e-14	1.001296	-1.000019	discard	Mode 29, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp334	9.43844030e-14	1.001296	-1.000019	discard	Mode 28, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp335	5.58558306e-14	1.001296	-1.000019	discard	Mode 27, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp336	4.34328231e-14	1.001296	-1.000019	discard	Mode 26, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp337	2.51455965e-13	1.001296	-1.000019	discard	fourier: negative, modes=55	agent0	initial_cond	8	-1.520844
+exp338	9.73161701e-14	1.001296	-1.000019	discard	Mode 25, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp339	3.36273297e-14	1.001296	-1.000019	discard	Mode 24, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp340	4.19433997e-14	1.001296	-1.000019	discard	Mode 23, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp341	4.20240180e-14	1.001296	-1.000019	discard	Mode 22, tol=1e-12	agent3	bifurcation_analysis	2	-1.520844
+exp342	2.66626099e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, fourier_modes=64, newton_tol=1e-12	agent6	alternative_solvers	8	-1.520844
+exp343	2.96708258e-14	1.001296	-1.000019	discard	Mode 21, tol=1e-12	agent3	bifurcation_analysis	2	-1.520844
+exp344	3.41369006e-14	1.001296	-1.000019	discard	Mode 20, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp345	4.91771539e-13	1.001296	-1.000019	discard	Fourier spectral replication: exp233 config (modes=66, phase=π/2, amp=0.05, negative branch)	agent5	solver_param	10	-1.520844
+exp346	2.39492736e-14	1.001296	-1.000019	discard	Mode 19, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp347	1.89221377e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=52, newton_tol=1e-12	agent1	solver_param	7	-1.520844
+exp348	crash	0	0	crash	Fourier spectral: positive branch, fourier_modes=48, newton_tol=1e-13	agent6	alternative_solvers	0	0
+exp349	2.68532071e-14	1.001296	-1.000019	discard	Mode 18, tol=1e-12	agent3	bifurcation_analysis	2	-1.520844
+exp350	1.59013744e-14	1.001296	-1.000019	discard	Mode 17, tol=1e-12	agent3	bifurcation_analysis	0	-1.520844
+exp351	1.23782618e-13	1.001296	-1.000019	discard	fourier: negative, modes=51	agent0	initial_cond	7	-1.520844
+exp352	3.26514669e-14	1.001296	-1.000019	discard	Mode 16, tol=1e-12	agent3	bifurcation_analysis	2	-1.520844
+exp353	1.37370648e-14	1.001296	-1.000019	discard	Mode 15, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp354	1.54468472e-14	1.001296	-1.000019	discard	Mode 14, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp355	1.37224040e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=48, amplitude=0.05	agent6	alternative_solvers	2	-1.520844
+exp356	2.10749927e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=56, newton_tol=1e-12	agent1	solver_param	8	-1.520844
+exp357	6.34626035e-15	1.001296	-1.000019	discard	Mode 13, tol=1e-12	agent3	bifurcation_analysis	2	-1.520844
+exp358	1.13250408e-14	1.001296	-1.000019	discard	Mode 12, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp359	2.00516263e-13	1.001296	-1.000019	discard	fourier: negative, modes=53	agent0	initial_cond	7	-1.520844
+exp360	1.00727376e-14	1.001296	-1.000019	discard	Mode 11, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp361	7.50902964e-15	1.001296	-1.000019	discard	Mode 10, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp362	1.56433526e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, fourier_modes=48, amplitude=0.05	agent6	alternative_solvers	1	-1.520844
+exp363	7.50360935e-13	1.001296	-1.000019	discard	Fourier spectral: modes=80, negative branch	agent5	solver_param	9	-1.520844
+exp364	3.46201215e-15	1.001296	-1.000019	discard	Mode 9, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp364	1.61211386e-12	1.001296	1.000019	discard	positive branch, Fourier spectral, fourier_modes=128, newton_tol=1e-11	agent2	solver_param	14	-1.520844
+exp365	2.94474458e-15	1.001296	-1.000019	discard	Mode 8, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp366	1.73769541e-13	1.001296	-1.000019	discard	fourier: negative, modes=54	agent0	initial_cond	6	-1.520844
+exp367	1.88761396e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, fourier_modes=48, amplitude=0.1	agent6	alternative_solvers	1	-1.520844
+exp368	2.82905281e-15	1.001296	-1.000019	discard	Mode 7, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp369	1.07183226e-15	1.001296	-1.000019	discard	Mode 6, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp370	6.78216095e-16	1.001296	-1.000019	discard	Mode 5, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp371	2.57581612e-16	1.001296	-1.000019	discard	Mode 4, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp372	1.44354075e-13	1.001296	-1.000019	discard	fourier: negative, modes=49	agent0	initial_cond	1	-1.520844
+exp373	1.56645082e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, fourier_modes=48, amplitude=0.07	agent6	alternative_solvers	1	-1.520844
+exp374	4.37618166e-16	1.001296	-1.000019	discard	Mode 3, tol=1e-12	agent3	bifurcation_analysis	1	-1.520844
+exp375	2.00148302e-16	1.001298	-1.000025	discard	Mode 2, tol=1e-12	agent3	bifurcation_analysis	2	-1.520921
+exp376	5.55111512e-17	1.001322	-1.000049	discard	Mode 1, tol=1e-12	agent3	bifurcation_analysis	1	-1.520921
+exp377	2.66626099e-13	1.001296	-1.000019	discard	negative branch, Fourier spectral, fourier_modes=64, newton_tol=1e-12	agent2	solver_param	7	-1.520844
+exp378	2.65606985e-13	1.001296	1.000019	discard	Fourier spectral: modes=66, positive branch, amp=0.05, phase=π/2	agent5	solver_param	9	-1.520844
+exp379	1.92034767e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=44, newton_tol=1e-12	agent1	solver_param	1	-1.520844
+exp380	1.58410400e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=46, newton_tol=1e-12	agent1	solver_param	1	-1.520844
+exp381	2.44601098e-13	1.001296	1.000019	discard	fourier: positive branch, modes=51, amp=0.05, phase=π/2	agent0	initial_cond	5	-1.520844
+exp382	1.73072300e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=40, newton_tol=1e-12	agent1	solver_param	2	-1.520844
+exp383	1.44750803e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12	agent1	solver_param	1	-1.520844
+exp384	2.64034481e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=50, newton_tol=1e-12	agent1	solver_param	5	-1.520844
+exp385	1.97374062e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=48, amplitude=0.05, n_mode=2	agent6	alternative_solvers	1	-1.520844
+exp386	0.00000000e+00	0.000000	0.000000	discard	Fourier spectral: modes=66, trivial branch (u_offset=0)	agent5	solver_param	1	0.000000
+exp386	1.23782618e-13	1.001296	-1.000019	discard	fourier: negative, modes=51 (reproducibility check #1)	agent0	solver_param	4	-1.520844
+exp387	2.13419200e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=48, amplitude=0.05, n_mode=3	agent6	alternative_solvers	1	-1.520844
+exp388	6.23157382e-13	1.001296	1.000019	discard	fourier: positive branch, modes=72, newton_tol=1e-11, phase=π/2	agent4	initial_cond	6	-1.520844
+exp389	1.23782618e-13	1.001296	-1.000019	discard	fourier: negative, modes=51 (reproducibility check #2)	agent0	solver_param	5	-1.520844
+exp390	1.83591004e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=40, amplitude=0.05	agent6	alternative_solvers	1	-1.520844
+exp391	3.22283552e-13	1.001296	1.000019	discard	Fourier: positive, modes=66 (exp233 baseline), tol=1e-12	agent7	solver_param	8	-1.520844
+exp392	1.23782618e-13	1.001296	-1.000019	discard	fourier: negative, modes=51 (reproducibility check #3)	agent0	solver_param	6	-1.520844
+exp393	3.80950978e-13	1.001296	1.000019	discard	Fourier spectral: modes=66, positive, amp=0.02, phase=0	agent5	solver_param	8	-1.520844
+exp394	1.53062346e-13	1.001296	1.000019	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12, amplitude=0.05	agent1	solver_param	1	-1.520844
+exp395	1.10790306e-13	0.999004	1.000000	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	1	-1.567185
+exp396	1.45145063e-13	0.999017	1.000000	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12, amplitude=0.04	agent1	solver_param	1	-1.566819
+exp397	2.32432727e-13	0.999059	1.000000	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12, amplitude=0.06	agent1	solver_param	0	-1.565775
+exp398	2.36857774e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=56, amplitude=0.05	agent6	alternative_solvers	6	-1.520844
+exp399	3.44328991e-13	1.001296	1.000019	discard	fourier: positive branch, modes=72, newton_tol=1e-12	agent4	initial_cond	12	-1.520844
+exp400	3.13370042e-13	1.001296	1.000019	discard	positive branch, Fourier modes=64, newton_tol=1e-12, mode=2 amp=0.05	agent2	initial_cond	6	-1.520844
+exp401	1.41308995e-13	0.998997	1.000000	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12, amplitude=0.02	agent1	solver_param	1	-1.567446
+exp402	2.66626099e-13	1.001296	-1.000019	discard	Fourier: negative, modes=64, tol=1e-12	agent7	solver_param	2	-1.520844
+exp403	1.10649614e-13	0.999000	1.000000	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12, amplitude=0.025	agent1	solver_param	0	-1.567328
+exp404	4.34715241e-13	1.001296	1.000019	discard	Fourier spectral: modes=70, positive, amp=0.05, phase=π/2	agent5	solver_param	1	-1.520844
+exp405	1.88389263e-13	0.998996	1.000000	discard	Fourier spectral, fourier_modes=42, newton_tol=1e-12, amplitude=0.01	agent1	solver_param	0	-1.567603
+exp406	3.49473129e-13	1.001296	1.000019	discard	positive branch, Fourier modes=64, newton_tol=1e-12, amp=0.01	agent2	initial_cond	1	-1.520844
+exp407	0.00000000e+00	0.000000	0.000000	discard	Fourier: trivial, modes=64, tol=1e-12	agent7	solver_param	0	0.000000
+exp408	1.07331048e-13	0.999004	1.000000	discard	Fourier spectral, fourier_modes=40, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	0	-1.567185
+exp409	1.30912068e-13	0.999004	1.000000	discard	Fourier spectral, fourier_modes=41, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	1	-1.567185
+exp410	8.66234708e-14	0.999004	1.000000	discard	Fourier spectral, fourier_modes=43, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	0	-1.567185
+exp411	1.48147104e-13	0.999004	1.000000	discard	Fourier spectral, fourier_modes=44, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	1	-1.567185
+exp412	2.72505205e-13	1.001296	1.000019	discard	Fourier spectral: modes=62, positive branch	agent5	solver_param	1	-1.520844
+exp413	0.00000000e+00	0.000000	0.000000	discard	Fourier spectral: trivial branch, fourier_modes=48	agent6	alternative_solvers	0	0.000000
+exp414	5.55111512e-17	1.001322	1.000049	discard	Fourier mode=1, positive branch, tol=1e-12	agent3	bifurcation_analysis	1	-1.520921
+exp415	5.55111512e-17	0.999004	1.000000	discard	Fourier spectral low mode test, fourier_modes=1, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	1	-1.567185
+exp416	2.00148302e-16	0.999004	1.000000	discard	Fourier spectral low mode test, fourier_modes=2, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	2	-1.567185
+exp417	5.22392925e-16	0.999004	1.000000	discard	Fourier spectral low mode test, fourier_modes=3, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	1	-1.567185
+exp418	2.82234227e-13	1.001296	1.000019	discard	Fourier: positive, amp=0.05, mode=2, modes=64	agent7	solver_param	6	-1.520844
+exp419	8.65055827e-16	0.999004	1.000000	discard	Fourier spectral low mode test, fourier_modes=4, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	2	-1.567185
+exp420	2.24970480e-15	0.999004	1.000000	discard	Fourier spectral low mode test, fourier_modes=5, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	0	-1.567185
+exp421	1.45956404e-12	1.002503	1.000218	discard	scipy: positive branch, n_nodes=392, amplitude=0.05, isolate amplitude effect	agent6	solver_param	2	-1.523848
+exp422	5.55111512e-17	1.001322	-1.000049	discard	Mode 1, negative, tol=1e-13	agent3	bifurcation_analysis	1	-1.520921
+exp423	5.55111512e-17	1.001322	-1.000049	discard	Mode 1, positive, tol=1e-13	agent3	bifurcation_analysis	1	-1.520921
+exp424	2.76386071e-13	1.001296	1.000019	discard	positive branch, Fourier modes=70, newton_tol=1e-12	agent2	solver_param	9	-1.520844
+exp425	3.52634181e-13	1.001296	-1.000019	discard	Fourier spectral: modes=62, negative branch	agent5	solver_param	6	-1.520844
+exp426	3.64004594e-13	1.001296	1.000019	discard	fourier: pos, modes=72, tol=1e-12, amp=0.03	agent4	initial_cond	12	-1.520844
+exp427	2.10749927e-13	1.001296	1.000019	discard	positive branch, Fourier modes=56, newton_tol=1e-12	agent2	solver_param	1	-1.520844
+exp428	2.00148302e-16	1.001298	-1.000025	discard	Mode 2, tol=1e-13	agent3	bifurcation_analysis	1	-1.520921
+exp429	7.50902964e-15	1.001296	-1.000019	discard	Mode 10, tol=1e-13	agent3	bifurcation_analysis	1	-1.520844
+exp430	5.85221762e-16	1.001296	-1.000019	discard	Fourier spectral negative branch, fourier_modes=1, newton_tol=1e-12, amplitude=0.03	agent1	solver_param	1	-1.520844
+exp431	2.90264913e-13	1.001296	-1.000019	discard	Fourier spectral: modes=66, negative, newton_tol=1e-12	agent5	solver_param	5	-1.520844
+exp432	2.64034481e-13	1.001296	1.000019	discard	positive branch, Fourier modes=50, newton_tol=1e-12	agent2	solver_param	4	-1.520844
+exp433	4.02003978e-13	1.001296	1.000019	discard	fourier: pos, modes=72, tol=1e-12, amp=0.02	agent4	initial_cond	7	-1.520844
+exp434	4.02003978e-13	1.001296	1.000019	discard	fourier: pos, modes=72, tol=1e-12, amp=0.01	agent4	initial_cond	1	-1.520844
+exp435	1.89221377e-13	1.001296	1.000019	discard	positive branch, Fourier modes=52, newton_tol=1e-12	agent2	solver_param	3	-1.520844
+exp436	1.28837498e-13	1.001296	1.000019	discard	fourier: positive, modes=45	agent0	initial_cond	0	-1.520844
+exp437	1.37977773e-13	1.001296	1.000019	discard	fourier: positive, modes=48	agent0	initial_cond	1	-1.520844
+exp438	crash	0	0	crash	Fourier spectral: modes=66, negative, newton_tol=1e-13	agent5	solver_param	10	0
+exp439	1.43889822e-13	1.001296	1.000019	discard	fourier: positive, modes=50	agent0	initial_cond	4	-1.520844
+exp440	3.63052362e-13	1.001296	1.000019	discard	fourier: pos, modes=68, tol=1e-12, amp=0.05	agent4	initial_cond	4	-1.520844
+exp441	5.55111512e-17	1.001322	-1.000049	discard	Mode 1, extreme tolerance 1e-14	agent3	bifurcation_analysis	1	-1.520921
+exp442	2.48347128e-13	1.001296	1.000019	discard	fourier: positive, modes=52	agent0	initial_cond	3	-1.520844
+exp443	2.12881819e-13	1.001296	1.000019	discard	positive branch, Fourier modes=54, newton_tol=1e-12	agent2	solver_param	4	-1.520844
+exp444	3.39715894e-13	1.001296	1.000019	discard	fourier: pos, modes=76, tol=1e-12, amp=0.05	agent4	initial_cond	8	-1.520844
+exp445	2.18676064e-13	1.001296	1.000019	discard	fourier: positive, modes=55	agent0	initial_cond	4	-1.520844
+exp446	1.35052156e-13	1.001296	1.000019	discard	fourier: positive, modes=43	agent0	initial_cond	1	-1.520844
+exp447	1.42289815e-13	1.001296	1.000019	discard	fourier: positive, modes=44	agent0	initial_cond	1	-1.520844
+exp448	2.00299483e-13	1.001296	1.000019	discard	fourier: positive, modes=46	agent0	initial_cond	1	-1.520844
+exp449	1.08961923e-13	1.001296	1.000019	discard	fourier: positive, modes=47	agent0	initial_cond	1	-1.520844
+exp450	5.55111512e-17	1.001322	1.000049	discard	Fourier: positive branch, modes=1, newton_tol=1e-13, amplitude=0.03	agent6	alternative_solvers	1	-1.520921
+exp451	2.21483852e-13	1.001296	-1.000019	discard	Fourier: negative branch, modes=51 (agent0 breakthrough 1.238e-13)	agent7	solver_param	6	-1.520844
+exp452	1.89221377e-13	1.001296	-1.000019	discard	negative branch, Fourier modes=52, newton_tol=1e-12	agent2	solver_param	6	-1.520844
+exp453	2.00299483e-13	1.001296	1.000019	discard	fourier: positive, modes=46 (tightening)	agent0	initial_cond	1	-1.520844
+exp454	1.37977773e-13	1.001296	1.000019	discard	fourier: positive, modes=48 (tightening)	agent0	initial_cond	1	-1.520844
+exp455	3.74566609e-15	1.001322	-1.000049	discard	Fourier: negative branch, modes=1, newton_tol=1e-13, amplitude=0.03	agent6	alternative_solvers	1	-1.520921
+exp456	2.25189582e-13	1.001296	1.000019	discard	fourier: positive, modes=49 (tightening)	agent0	initial_cond	1	-1.520844
+exp457	crash	0	0	crash	Fourier spectral: modes=66, positive, newton_tol=1e-12	agent5	solver_param	27	0
+exp458	4.09266641e-13	1.001296	1.000019	discard	fourier: pos, modes=78, tol=1e-12, amp=0.05	agent4	initial_cond	21	-1.520844
+exp459	5.55111512e-17	1.001322	-1.000049	discard	Fourier: negative branch, modes=1, phase=π, newton_tol=1e-13	agent6	alternative_solvers	1	-1.520921
+exp460	1.08961923e-13	1.001296	1.000019	discard	fourier: positive, modes=47 (reproducibility #1)	agent0	solver_param	0	-1.520844
+exp461	3.72380123e-16	1.001298	-1.000025	discard	Fourier: negative branch, modes=2, newton_tol=1e-13, phase=π	agent6	alternative_solvers	0	-1.520921
+exp462	1.23782618e-13	1.001296	-1.000019	discard	Fourier: negative, modes=51, amp=0.05, phase=π/2, tol=1e-11 (exact agent0)	agent7	solver_param	2	-1.520844
+exp463	5.55111512e-17	1.001322	1.000049	discard	Fourier modes=1 reproducibility test, positive	agent1	solver_param	1	-1.520921
+exp464	1.08961923e-13	1.001296	1.000019	discard	fourier: positive, modes=47 (reproducibility #2)	agent0	solver_param	1	-1.520844
+exp465	5.55111512e-17	1.001322	1.000049	discard	Fourier modes=1, tolerance=1e-13	agent1	solver_param	0	-1.520921
+exp466	3.71464054e-13	1.001296	1.000019	discard	fourier: pos, modes=75, tol=1e-12, amp=0.05	agent4	initial_cond	1	-1.520844
+exp467	1.08961923e-13	1.001296	1.000019	discard	fourier: positive, modes=47 (reproducibility #3)	agent0	solver_param	0	-1.520844

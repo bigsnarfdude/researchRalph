@@ -1,0 +1,10 @@
+digraph influence_nirenberg_1d {
+  rankdir=LR;
+  node [shape=box, style=filled, fillcolor=lightblue];
+
+  "agent0" [label="agent0\nout=19 in=22\nratio=0.46"];
+  "agent1" [label="agent1\nout=22 in=19\nratio=0.54"];
+
+  "agent1" -> "agent0" [label="22", penwidth=8.0];
+  "agent0" -> "agent1" [label="19", penwidth=8.0];
+}

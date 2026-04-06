@@ -1,0 +1,52 @@
+# LiteLLM proxy config — routes claude CLI to local Ollama
+# Deploy on nigel: litellm --config tools/litellm_config.yaml --port 4000
+#
+# Usage from harness:
+#   export ANTHROPIC_BASE_URL=http://localhost:4000
+#   export ANTHROPIC_API_KEY=sk-litellm
+#   claude --model gemma4 -p "..."
+#
+# To use gemma4 as honest agents and haiku as chaos (cloud):
+#   RRMA_MODEL=gemma4 bash v4/launch-agents-chaos-v2.sh ...
+#   (chaos agents can still use cloud haiku via RRMA_CHAOS_MODEL=haiku)
+
+model_list:
+  # gemma4:26b — MoE 3.8B active, 256K context, tool use
+  # Falls back to gemma4:12b if 26b OOMs (set OLLAMA_MODEL=gemma4:12b)
+  - model_name: gemma4
+    litellm_params:
+      model: ollama/gemma4:26b
+      api_base: http://localhost:11434
+      stream: true
+      max_tokens: 8192          # thinking model needs room: tokens consumed by <think> + response
+      extra_body:
+        think: false            # top-level Ollama param to disable thinking mode
+
+  # qwen3:14b — non-thinking, already on nigel, good tool use, 9GB VRAM
+  - model_name: qwen3
+    litellm_params:
+      model: ollama/qwen3:14b
+      api_base: http://localhost:11434
+      stream: true
+      max_tokens: 8192
+
+  - model_name: gemma4-12b
+    litellm_params:
+      model: ollama/gemma4:12b
+      api_base: http://localhost:11434
+      stream: true
+      max_tokens: 8192
+
+  # haiku passthrough — chaos agents still use cloud Claude
+  - model_name: haiku
+    litellm_params:
+      model: claude-haiku-4-5-20251001
+      api_key: os.environ/ANTHROPIC_API_KEY_CLOUD
+
+litellm_settings:
+  drop_params: true          # silently drop unsupported params (e.g. --dangerously-skip-permissions)
+  request_timeout: 600       # 10 min — agents run long turns
+  num_retries: 2
+
+general_settings:
+  master_key: sk-litellm     # set ANTHROPIC_API_KEY=sk-litellm in harness env

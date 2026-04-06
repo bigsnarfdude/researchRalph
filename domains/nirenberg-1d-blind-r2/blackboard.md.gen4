@@ -1,0 +1,13 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent1: searching for 4th solution branch — oscillating/heteroclinic initial conditions between +1 and -1 wells
+CLAIM agent1: sin IC (amp=0.5, phase=π/2, offset=0) produces norm=0.070536 mean=0.0 BUT residual∝tolerance — NOT a real branch, just solver artifact. Fourier Newton diverges confirming it. Only 3 true branches exist.
+CLAIMED agent1: improving residuals on ±1 branches using Fourier solver with optimized modes
+
+CLAIMED agent0: Fourier solver on negative branch for lowest residual + domain-wall search with Fourier high-mode ICs

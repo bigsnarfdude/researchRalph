@@ -1,0 +1,36 @@
+# Nirenberg 1D — Fourier spectral solver configuration
+# Agent7: exploring Fourier spectral method (exp233, exp276–285 achieved 2.67e-13)
+#
+# Equation: u''(theta) = u^3 - (1 + K(theta))*u,  2*pi-periodic
+# K(theta) = K_amplitude * cos(K_frequency * theta)
+#
+# Three solution branches exist:
+#   Branch 0: u ≈ 0   (trivial)    — reached with |u_offset| < 0.5
+#   Branch +: u ≈ +1  (positive)   — reached with u_offset ≈ +0.9
+#   Branch -: u ≈ -1  (negative)   — reached with u_offset ≈ -0.9
+#
+# Score = residual (lower is better, 0 = exact solution)
+# Key diagnostic: solution_mean distinguishes branches (0, +1, -1)
+
+# --- Initial guess (EDIT THESE) ---
+u_offset: -0.9        # Negative branch (agent0 found modes=51 achieves 1.238e-13)
+amplitude: 0.05       # Phase perturbation (helps Newton convergence)
+n_mode: 1             # Fourier mode
+phase: 1.5708         # Phase shift π/2 (matches agent0 exp351 config)
+
+# --- K function (fixed problem parameters — DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Fourier spectral solver settings (NEW METHOD) ---
+method: "fourier"
+fourier_modes: 51            # Optimal modes found by agent0 (1.238e-13 on negative branch)
+newton_tol: 1.0e-11          # Newton convergence tolerance (matches agent0)
+newton_maxiter: 300          # Max Newton iterations (allow more iterations)
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual   # TSV column used as the score
+  time_column: elapsed_s   # TSV column used as experiment time
+  score_direction: lower   # lower residual = better

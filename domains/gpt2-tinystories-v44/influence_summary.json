@@ -1,0 +1,65 @@
+{
+  "domain": "gpt2-tinystories-v44",
+  "nodes": {
+    "agent0": {
+      "writes": 14,
+      "reads": 114,
+      "out_degree": 13,
+      "in_degree": 33,
+      "influence_ratio": 0.2826
+    },
+    "agent1": {
+      "writes": 33,
+      "reads": 127,
+      "out_degree": 33,
+      "in_degree": 13,
+      "influence_ratio": 0.7174
+    }
+  },
+  "edges": {
+    "agent1->agent0": {
+      "writer": "agent1",
+      "reader": "agent0",
+      "weight": 33,
+      "files": {
+        "blackboard.md": 12,
+        "MISTAKES.md": 7,
+        "DESIRES.md": 6,
+        "LEARNINGS.md": 8
+      }
+    },
+    "agent0->agent1": {
+      "writer": "agent0",
+      "reader": "agent1",
+      "weight": 13,
+      "files": {
+        "blackboard.md": 8,
+        "MISTAKES.md": 3,
+        "LEARNINGS.md": 2
+      }
+    }
+  },
+  "edges_by_file": {
+    "blackboard.md": {
+      "agent1->agent0": 12,
+      "agent0->agent1": 8
+    },
+    "MISTAKES.md": {
+      "agent1->agent0": 7,
+      "agent0->agent1": 3
+    },
+    "DESIRES.md": {
+      "agent1->agent0": 6
+    },
+    "LEARNINGS.md": {
+      "agent1->agent0": 8,
+      "agent0->agent1": 2
+    }
+  },
+  "total_events": 288,
+  "total_edge_weight": 46,
+  "agents": [
+    "agent0",
+    "agent1"
+  ]
+}

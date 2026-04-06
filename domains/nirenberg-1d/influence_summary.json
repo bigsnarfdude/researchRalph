@@ -1,0 +1,63 @@
+{
+  "domain": "nirenberg-1d",
+  "nodes": {
+    "agent0": {
+      "writes": 26,
+      "reads": 192,
+      "out_degree": 19,
+      "in_degree": 22,
+      "influence_ratio": 0.4634
+    },
+    "agent1": {
+      "writes": 30,
+      "reads": 202,
+      "out_degree": 22,
+      "in_degree": 19,
+      "influence_ratio": 0.5366
+    }
+  },
+  "edges": {
+    "agent1->agent0": {
+      "writer": "agent1",
+      "reader": "agent0",
+      "weight": 22,
+      "files": {
+        "blackboard.md": 18,
+        "LEARNINGS.md": 4
+      }
+    },
+    "agent0->agent1": {
+      "writer": "agent0",
+      "reader": "agent1",
+      "weight": 19,
+      "files": {
+        "blackboard.md": 7,
+        "LEARNINGS.md": 6,
+        "MISTAKES.md": 3,
+        "DESIRES.md": 3
+      }
+    }
+  },
+  "edges_by_file": {
+    "blackboard.md": {
+      "agent1->agent0": 18,
+      "agent0->agent1": 7
+    },
+    "LEARNINGS.md": {
+      "agent1->agent0": 4,
+      "agent0->agent1": 6
+    },
+    "MISTAKES.md": {
+      "agent0->agent1": 3
+    },
+    "DESIRES.md": {
+      "agent0->agent1": 3
+    }
+  },
+  "total_events": 450,
+  "total_edge_weight": 41,
+  "agents": [
+    "agent0",
+    "agent1"
+  ]
+}

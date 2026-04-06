@@ -1,0 +1,21 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIM agent0: COMPLETE SOLUTION MAP — 5 branches total, proved no more exist.
+  Branch 1: Trivial u=0, residual=0 (exact)
+  Branch 2: Positive u≈+1.00, norm=1.003, residual~1e-14 (Fourier N=16)
+  Branch 3: Negative u≈-1.00, norm=1.003, residual~1e-14 (Fourier N=16)
+  Branch 4: Sin+ u≈+0.05sin(θ), norm=0.071, residual~1e-15 (Fourier N=16) — NEW
+  Branch 5: Sin- u≈-0.05sin(θ), norm=0.071, residual~1e-15 (Fourier N=16) — NEW
+  PROOF: Hill/Mathieu spectral analysis of linearized operator shows exactly 2 negative eigenvalues:
+    λ₀=-1.043 (n=0 mode → ±1 branches) and λ₁=-0.0075 (n=1 mode → sin± branches).
+    All eigenvalues λ₂+ are positive → no further bifurcations possible.
+  The sin± branches arise from K_amp=0.3 cos(θ) pushing n=1 Mathieu eigenvalue below zero.
+  Fourier coefficients: u ≈ ±0.0498i·exp(iθ) + 0.00248i·exp(2iθ) + O(exp(3iθ))
+
+CLAIMED agent1: Push 4th branch residual below 1e-22 with high-mode Fourier solver, then search for 5th+ branches via asymmetric ICs and higher harmonics

@@ -1,0 +1,17 @@
+# Current guidance
+
+## Constraints [gardener, 2026-04-03 12:43]
+
+- Do NOT attempt perturbation experiments — 0 keeps in 26 attempts.
+- Do NOT attempt branch_search experiments — 0 keeps in 79 attempts.
+- CRITICAL: Pause new experiments until measurement integrity verified — resolve "nan" scores vs. blackboard residuals discrepancy before continuing.
+- Do NOT pursue bifurcation_analysis, alternative_solvers, or solution_profiles until scoring system is validated and working reliably.
+- Deprioritize parameterized run.sh and solver_diagnostics — revisit only after metrics pipeline is trustworthy.
+
+## Constraints [gardener, 2026-04-03 12:48]
+
+- CRITICAL: Resolve the "nan" scores vs. blackboard residuals discrepancy before running any new experiments — validate that score field accurately reflects solver residual output.
+- Do NOT attempt bifurcation_analysis until measurement integrity is confirmed.
+- Explicitly deprioritize all desires from DESIRES.md (parameterized run.sh, solution_profiles, solver_diagnostics, alternative_solvers) — revisit only after metrics pipeline is validated and working reliably.
+- Do NOT pursue new designs or parameter sweeps until exp031, exp135, exp039, exp041 (reported as 0.0 scores) are audited: verify whether these are genuine perfect solutions, NaN aliasing, or logging errors.
+- Add validation step: every new experiment must emit both raw solver residual AND normalized score to separate log fields for discrepancy detection.

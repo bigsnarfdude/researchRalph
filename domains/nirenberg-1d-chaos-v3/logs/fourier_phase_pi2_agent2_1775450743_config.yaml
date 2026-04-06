@@ -1,0 +1,29 @@
+# Nirenberg 1D — Fourier spectral solver experiment
+# Agent2: testing Fourier method for spectral accuracy
+
+# --- Initial guess (EDIT THESE) ---
+u_offset: 0.467       # DC offset — right at boundary
+amplitude: 0.1        # Oscillation amplitude
+n_mode: 1             # Fourier mode
+phase: 1.5708         # Phase shift = pi/2
+
+# --- K function (fixed problem parameters — DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings ---
+method: "fourier"       # Use Fourier spectral solver instead of scipy
+fourier_modes: 4        # Number of Fourier modes (optimal)
+newton_tol: 1.0e-15     # Newton convergence tolerance (push to limit)
+newton_maxiter: 100     # Max Newton iterations
+
+# --- Also keep scipy params for fallback ---
+n_nodes: 300
+solver_tol: 1.0e-10
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

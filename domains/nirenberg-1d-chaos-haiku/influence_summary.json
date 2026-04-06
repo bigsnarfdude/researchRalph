@@ -1,0 +1,57 @@
+{
+  "domain": "nirenberg-1d-chaos-haiku",
+  "nodes": {
+    "agent0": {
+      "writes": 12,
+      "reads": 16,
+      "out_degree": 3,
+      "in_degree": 2,
+      "influence_ratio": 0.6
+    },
+    "agent1": {
+      "writes": 11,
+      "reads": 14,
+      "out_degree": 2,
+      "in_degree": 3,
+      "influence_ratio": 0.4
+    }
+  },
+  "edges": {
+    "agent0->agent1": {
+      "writer": "agent0",
+      "reader": "agent1",
+      "weight": 3,
+      "files": {
+        "blackboard.md": 2,
+        "LEARNINGS.md": 1
+      }
+    },
+    "agent1->agent0": {
+      "writer": "agent1",
+      "reader": "agent0",
+      "weight": 2,
+      "files": {
+        "blackboard.md": 1,
+        "DESIRES.md": 1
+      }
+    }
+  },
+  "edges_by_file": {
+    "blackboard.md": {
+      "agent0->agent1": 2,
+      "agent1->agent0": 1
+    },
+    "LEARNINGS.md": {
+      "agent0->agent1": 1
+    },
+    "DESIRES.md": {
+      "agent1->agent0": 1
+    }
+  },
+  "total_events": 53,
+  "total_edge_weight": 5,
+  "agents": [
+    "agent0",
+    "agent1"
+  ]
+}

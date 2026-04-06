@@ -1,0 +1,27 @@
+{
+  "domain": "nirenberg-1d-blind-chaos",
+  "nodes": {
+    "agent0": {
+      "writes": 0,
+      "reads": 12,
+      "out_degree": 0,
+      "in_degree": 0,
+      "influence_ratio": 0.0
+    },
+    "agent1": {
+      "writes": 1,
+      "reads": 15,
+      "out_degree": 0,
+      "in_degree": 0,
+      "influence_ratio": 0.0
+    }
+  },
+  "edges": {},
+  "edges_by_file": {},
+  "total_events": 28,
+  "total_edge_weight": 0,
+  "agents": [
+    "agent0",
+    "agent1"
+  ]
+}

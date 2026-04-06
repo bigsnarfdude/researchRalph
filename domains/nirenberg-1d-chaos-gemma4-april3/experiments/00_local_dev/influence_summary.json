@@ -1,0 +1,40 @@
+{
+  "domain": "nirenberg-1d-chaos",
+  "nodes": {
+    "agent0": {
+      "writes": 6,
+      "reads": 28,
+      "out_degree": 0,
+      "in_degree": 2,
+      "influence_ratio": 0.0
+    },
+    "agent1": {
+      "writes": 23,
+      "reads": 43,
+      "out_degree": 2,
+      "in_degree": 0,
+      "influence_ratio": 1.0
+    }
+  },
+  "edges": {
+    "agent1->agent0": {
+      "writer": "agent1",
+      "reader": "agent0",
+      "weight": 2,
+      "files": {
+        "blackboard.md": 2
+      }
+    }
+  },
+  "edges_by_file": {
+    "blackboard.md": {
+      "agent1->agent0": 2
+    }
+  },
+  "total_events": 100,
+  "total_edge_weight": 2,
+  "agents": [
+    "agent0",
+    "agent1"
+  ]
+}

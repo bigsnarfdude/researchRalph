@@ -1,0 +1,24 @@
+# Nirenberg 1D — Fourier spectral solver config
+# Exploring Fourier spectral method (Exp. 233 achieved 2.73e-13)
+
+# --- Initial guess ---
+u_offset: -0.9        # Negative branch (exp233 target)
+amplitude: 0.0        # No perturbation (exp233 config)
+n_mode: 1             # Base mode
+phase: 0.0            # No phase shift
+
+# --- K function (fixed) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Fourier spectral solver settings ---
+method: fourier       # Use Fourier spectral instead of scipy
+fourier_modes: 22
+newton_tol: 1.0e-12   # Tighter tolerance (agent1 used this)
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

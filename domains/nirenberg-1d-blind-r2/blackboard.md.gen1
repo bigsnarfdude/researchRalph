@@ -1,0 +1,58 @@
+# Blackboard
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## agent0 exploration cycle 1
+
+CLAIM agent0: All three branches mapped successfully
+- Trivial (u≈0): residual=5.64e-11, mean≈0.0 (exp001) — branch=trivial
+- Positive (u≈+1): residual=5.73e-09, mean≈1.0 (exp003) — branch=positive
+- Negative (u≈-1): residual=2.42e-09, mean≈-1.0 (exp004) — branch=negative
+
+Status: All three branches accessible. Trivial branch gives lowest residual. Goal now: refine solver or initial conditions to reduce residual on positive/negative branches.
+
+## agent1 refinement cycles 1–3
+
+CLAIM agent1: Systematic solver/mesh optimization + amplitude tuning
+- Trivial: residual=2.98e-13, mean≈0.0 (exp010, solver_tol=1e-10) — **BEST OVERALL**
+- Negative: residual=2.60e-11, mean≈-1.0 (exp023, n_nodes=300, solver_tol=1e-10, amplitude=0.0)
+- Positive: residual=2.60e-11, mean≈1.0 (exp019, n_nodes=300, solver_tol=1e-10)
+
+Key insight: amplitude=0.0 improves non-trivial branches. All three branches now at or near theoretical precision floor.
+
+## agent2 refinement cycle 1
+
+CLAIM agent2: Positive branch optimized with solver_tol=1e-10 + n_nodes=150
+- Positive (u≈+1): residual=2.63e-11, mean≈1.0 (exp012) — branch=positive
+- Improvement: 5.73e-09 → 2.63e-11 (~220× reduction)
+- Next: optimize negative branch with same solver settings
+
+## agent4 refinement cycle 1
+
+CLAIMED agent4: Push both branches beyond 1e-11 with ultra-fine mesh (n_nodes=400, solver_tol=1e-11)
+
+CLAIM agent4: Positive branch breakthrough
+- Positive (u≈+1): residual=9.99e-12, mean≈1.0 (exp030, n_nodes=400, solver_tol=1e-11) — branch=positive
+- Improvement vs prior best: 2.60e-11 → 9.99e-12 (2.6× reduction)
+- Next: apply same settings to negative branch
+
+## agent5 refinement cycle 1
+
+CLAIMED agent5: Explore positive branch with higher-resolution mesh and ultra-tight tolerance
+
+CLAIM agent5: Initial positive branch test
+- Positive (u≈+1): residual=4.50e-11, mean=1.000218 (exp035, u_offset=0.95, n_nodes=250, amplitude=0.0) — branch=positive
+- Status: Slower than agent4's best (9.99e-12). Will try n_nodes=400 + solver_tol=1e-11.
+
+## agent7 diagnostic cycle 1
+
+CLAIMED agent7: Diagnose and fix context-refresh corruption
+
+CLAIM agent7: Context pipeline broken (nan values)
+- Results.tsv has valid residuals: exp010=2.98e-13, exp041=5.59e-12, exp037=7.78e-12
+- But recent_experiments.md and stoplight.md all report nan
+- Harness works: exp046 = 2.98e-13 (trivial baseline, u_offset=0)
+- Root issue: refresh_context.py scoring bug, not harness
+- Action: Use raw results.tsv as ground truth, continue optimization on real bests
+

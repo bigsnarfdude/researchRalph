@@ -1,0 +1,49 @@
+exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	5.63592552e-11	0.000000	-0.000000	keep	u_offset=0, testing trivial branch	agent0	initial_cond	0	-0.000000
+exp002	5.72745888e-09	1.002503	1.000218	discard	u_offset=0.9, testing positive branch	agent0	initial_cond	0	-1.523848
+exp003	2.41595655e-09	1.002503	-1.000218	discard	u_offset=-0.9, testing negative branch	agent0	initial_cond	1	-1.523848
+exp004	5.63592552e-11	0.000000	-0.000000	discard	trivial branch baseline, u_offset=0	agent1	initial_cond	0	-0.000000
+exp005	5.63592552e-11	0.000000	-0.000000	discard	baseline: trivial branch u_offset=0.0	agent2	initial_cond	0	-0.000000
+exp006	5.72745888e-09	1.002503	1.000218	discard	positive branch baseline, u_offset=0.9	agent1	initial_cond	0	-1.523848
+exp007	8.95295950e-11	1.002503	1.000218	discard	positive branch with tighter solver_tol=1e-10	agent0	solver_param	0	-1.523848
+exp008	2.62635931e-11	1.002503	1.000218	keep	positive branch: tighter tolerance (1e-10) and more nodes (150)	agent2	solver_param	0	-1.523848
+exp009	8.95295950e-11	1.002503	-1.000218	discard	negative branch with tighter solver_tol=1e-10	agent0	solver_param	0	-1.523848
+exp010	5.72753394e-09	1.002503	1.000218	discard	positive branch, reduced amplitude 0.05	agent3	initial_cond	0	-1.523848
+exp011	5.72962937e-09	1.002503	1.000218	discard	positive branch, n_mode=2	agent3	initial_cond	1	-1.523848
+exp012	crash	0	0	crash	positive branch with solver_tol=1e-12	agent0	solver_param	0	0
+exp013	8.95295950e-11	1.002503	1.000218	discard	positive branch, solver_tol=1e-10	agent3	solver_param	1	-1.523848
+exp014	8.95295950e-11	1.002503	1.000218	discard	positive branch with amplitude=0.2	agent0	perturbation	0	-1.523848
+exp015	2.62635931e-11	1.002503	1.000218	discard	positive branch with amplitude=0.2 (vs baseline 0.1)	agent1	initial_cond	1	-1.523848
+exp016	crash	0	0	crash	positive branch, solver_tol=1e-12	agent3	solver_param	0	0
+exp017	8.95295950e-11	1.002503	1.000218	discard	positive branch with n_mode=2	agent0	perturbation	1	-1.523848
+exp018	3.31697173e-12	1.002503	1.000218	keep	positive branch, solver_tol=1e-11	agent3	solver_param	1	-1.523848
+exp019	8.81934684e-11	1.002503	1.000218	discard	positive branch with n_nodes=200 for finer mesh	agent0	solver_param	0	-1.523848
+exp020	2.62635931e-11	1.002503	1.000218	discard	positive branch with amplitude=0.3	agent1	initial_cond	0	-1.523848
+exp021	2.98147269e-13	0.000000	-0.000000	keep	trivial branch with n_nodes=300 and tight solver_tol=1e-10	agent0	solver_param	0	-0.000000
+exp022	9.99977750e-12	1.002503	1.000218	discard	positive branch with finer mesh (n_nodes=200)	agent2	initial_cond	1	-1.523848
+exp023	2.62635931e-11	1.002503	-1.000218	discard	negative branch with amplitude=0.2	agent1	initial_cond	0	-1.523848
+exp024	2.60019365e-11	1.002503	1.000218	discard	positive branch with n_nodes=300 and tight solver_tol=1e-10	agent0	solver_param	0	-1.523848
+exp025	9.99977750e-12	1.002503	-1.000218	discard	negative branch with finer mesh (n_nodes=200)	agent2	initial_cond	0	-1.523848
+exp026	8.58922841e-11	1.002503	-1.000218	discard	negative branch with n_nodes=300 and tight solver_tol=1e-10	agent0	solver_param	0	-1.523848
+exp027	2.62635931e-11	1.002503	1.000218	discard	positive branch with n_mode=2, amplitude=0.2	agent1	initial_cond	1	-1.523848
+exp028	2.98213370e-13	0.000000	-0.000000	discard	trivial branch with n_nodes=400	agent0	solver_param	1	-0.000000
+exp029	2.62635931e-11	1.002503	1.000218	discard	positive branch with n_mode=3, amplitude=0.2	agent1	initial_cond	0	-1.523848
+exp030	crash	0	0	crash	positive branch with max mesh + tight tol (n_nodes=300, tol=1e-12)	agent2	solver_param	0	0
+exp031	2.62635931e-11	1.002503	1.000218	discard	positive branch with u_offset=0.85, amplitude=0.2	agent1	initial_cond	0	-1.523848
+exp032	crash	0	0	crash	positive branch with max mesh + tight tol (n_nodes=300, tol=1e-12)	agent2	solver_param	0	0
+exp033	2.62635931e-11	1.002503	1.000218	discard	positive branch with u_offset=0.95, amplitude=0.2	agent1	initial_cond	0	-1.523848
+exp034	2.60019365e-11	1.002503	1.000218	discard	positive branch with reduced amplitude=0.05, phase=pi/2	agent0	perturbation	0	-1.523848
+exp035	3.25175165e-12	1.002503	1.000218	discard	positive branch with max mesh (n_nodes=300, tol=1e-11)	agent2	solver_param	0	-1.523848
+exp036	7.78244459e-12	1.002503	1.000218	discard	positive branch with solver_tol=1e-11	agent1	solver_param	0	-1.523848
+exp037	3.25175165e-12	1.002503	-1.000218	discard	negative branch with max mesh (n_nodes=300, tol=1e-11)	agent2	solver_param	0	-1.523848
+exp038	crash	0	0	crash	positive branch with solver_tol=1e-12	agent1	solver_param	0	0
+exp039	3.25175408e-12	1.002503	1.000218	discard	positive branch with mode 2 perturbation (n_mode=2)	agent2	perturbation	0	-1.523848
+exp040	0.00000000e+00	0.000000	0.000000	keep	trivial branch with zero amplitude, solver_tol=1e-11	agent0	solver_param	0	0.000000
+exp041	3.25175408e-12	1.002503	1.000218	discard	positive branch with mode 3 perturbation (n_mode=3)	agent2	perturbation	0	-1.523848
+exp042	3.25175165e-12	1.002503	-1.000218	discard	negative branch with solver_tol=1e-11 (matching exp018 strategy)	agent3	solver_param	0	-1.523848
+exp043	2.60019365e-11	1.002503	1.000218	discard	positive branch with optimal config: n_nodes=300, solver_tol=1e-10	agent1	solver_param	1	-1.523848
+exp044	3.25175408e-12	1.002503	1.000218	discard	positive branch with zero amplitude, solver_tol=1e-11	agent0	solver_param	1	-1.523848
+exp045	3.25175408e-12	1.002503	-1.000218	discard	negative branch with zero amplitude, solver_tol=1e-11	agent0	solver_param	1	-1.523848
+exp046	8.77448544e-11	1.002503	1.000218	discard	positive branch with amplitude=0.25	agent1	initial_cond	0	-1.523848
+exp047	3.25175408e-12	1.002503	1.000218	discard	positive branch with lower amplitude (amplitude=0.05)	agent2	perturbation	0	-1.523848
+exp048	8.45774260e-11	1.002503	1.000218	discard	positive branch with phase=π	agent1	perturbation	0	-1.523848

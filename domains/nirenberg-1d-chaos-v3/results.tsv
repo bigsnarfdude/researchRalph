@@ -1,0 +1,157 @@
+exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	5.63598005e-11	0.000000	-0.000000	keep	trivial branch u_offset=0.0 baseline	agent1	initial_cond	0	-0.000000
+exp002	5.63598005e-11	0.000000	-0.000000	discard	trivial branch u_offset=0.0 default params	agent0	initial_cond	0	-0.000000
+exp003	5.72745888e-09	1.002503	1.000218	discard	positive branch u_offset=0.9	agent1	initial_cond	0	-1.523848
+exp004	2.41595655e-09	1.002503	-1.000218	discard	negative branch u_offset=-0.9	agent1	initial_cond	0	-1.523848
+exp005	5.72745888e-09	1.002503	1.000218	discard	positive branch u_offset=0.9	agent0	initial_cond	0	-1.523848
+exp006	2.41595655e-09	1.002503	-1.000218	discard	negative branch, u_offset=-0.9, default params	agent2	initial_cond	1	-1.523848
+exp007	5.72772544e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9, n_mode=2, amplitude=0.15	agent3	initial_cond	0	-1.523848
+exp008	8.81934684e-11	1.002503	1.000218	discard	positive branch n_nodes=200 tol=1e-10	agent1	solver_param	0	-1.523848
+exp009	8.81934685e-11	1.002503	-1.000218	discard	negative branch optimized: n_nodes=200 solver_tol=1e-10	agent2	solver_param	0	-1.523848
+exp010	8.58922841e-11	1.002503	-1.000218	discard	negative branch: n_nodes=300 solver_tol=1e-10	agent2	solver_param	0	-1.523848
+exp011	8.81934685e-11	1.002503	-1.000218	discard	negative branch n_nodes=200 tol=1e-10	agent1	solver_param	0	-1.523848
+exp012	8.77450245e-11	1.002503	-1.000218	discard	negative branch: u_offset=-1.0 amplitude=0 (pure constant IC closer to solution)	agent2	initial_cond	1	-1.523848
+exp013	8.81934685e-11	1.002503	1.000218	discard	positive branch optimized: u_offset=0.95 amp=0.05 n_nodes=200 tol=1e-10	agent0	solver_param	1	-1.523848
+exp014	2.60019365e-11	1.002503	1.000218	keep	positive branch n_nodes=300 tol=1e-10 max mesh	agent1	solver_param	0	-1.523848
+exp015	2.98157327e-13	0.000000	-0.000000	keep	trivial branch n_nodes=300 tol=1e-10	agent1	solver_param	0	-0.000000
+exp016	8.81934685e-11	1.002503	1.000218	discard	positive branch optimized: u_offset=0.95, n_nodes=200, tol=1e-10, low amplitude=0.05	agent3	solver_param	0	-1.523848
+exp017	6.08800966e-12	0.000000	-0.000000	discard	mode-2 IC with u_offset=0.5, amp=0.5 — searching for higher-mode branch	agent2	branch_search	0	-0.000000
+exp018	8.14945738e-11	1.002503	1.000218	discard	positive branch n_nodes=300 tol=1e-10 u_offset=0.95 amp=0.05	agent0	solver_param	1	-1.523848
+exp019	2.60019365e-11	1.002503	1.000218	discard	positive branch amp=0 flat IC n_nodes=300	agent1	perturbation	0	-1.523848
+exp020	2.60019365e-11	1.002503	-1.000218	discard	mode-2 IC with u_offset=-1.0, amp=0.5 — negative branch with mode-2 perturbation	agent2	branch_search	0	-1.523848
+exp021	1.80785839e-12	0.000000	-0.000000	discard	basin boundary test u_offset=0.5 — which branch?	agent1	branch_search	0	-0.000000
+exp022	8.77450245e-11	1.002503	1.000218	discard	positive branch flat IC u_offset=1.0 amp=0 n_nodes=300 tol=1e-10	agent0	initial_cond	0	-1.523848
+exp023	2.60019365e-11	1.002503	1.000218	discard	basin boundary test u_offset=0.7	agent1	branch_search	1	-1.523848
+exp024	2.60019368e-11	1.002503	-1.000218	discard	negative branch: u_offset=-0.95, n_nodes=300, tol=1e-10, amp=0.05	agent3	branch_search	1	-1.523848
+exp025	2.60019368e-11	1.002503	1.000218	discard	basin boundary test u_offset=0.6	agent1	branch_search	1	-1.523848
+exp026	0.00000000e+00	0.000000	0.000000	keep	trivial branch flat IC amp=0 n_nodes=300 tol=1e-10	agent0	initial_cond	0	0.000000
+exp027	2.60019365e-11	1.002503	-1.000218	discard	negative branch: u_offset=-1.0, phase=pi, mode-1, amp=0.3 — testing phase effect	agent2	perturbation	0	-1.523848
+exp028	8.77448562e-11	1.002503	-1.000218	discard	basin boundary test u_offset=0.55	agent1	branch_search	1	-1.523848
+exp029	crash	0	0	crash	basin boundary u_offset=0.52	agent1	branch_search	0	0
+exp030	crash	0	0	crash	Fourier spectral solver: negative branch, 64 modes, newton_tol=1e-14	agent2	solver_param	0	0
+exp031	2.60019365e-11	1.002503	-1.000218	discard	basin boundary u_offset=0.53	agent1	branch_search	0	-1.523848
+exp032	8.77449666e-11	1.002503	-1.000218	discard	basin boundary test u_offset=0.5 amp=0 n_nodes=300 tol=1e-10	agent0	branch_search	0	-1.523848
+exp033	2.82257648e-13	0.000000	-0.000000	discard	basin boundary u_offset=0.51	agent1	branch_search	0	-0.000000
+exp034	1.50179291e-14	0.000000	0.000000	discard	basin boundary test u_offset=0.3 amp=0 n_nodes=300 tol=1e-10	agent0	branch_search	0	-0.000000
+exp035	2.98830341e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, 64 modes, newton_tol=1e-12, maxiter=100	agent2	solver_param	0	-1.520844
+exp036	2.72381163e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, 64 modes, newton_tol=1e-12	agent2	solver_param	0	-1.520844
+exp037	5.81998747e-20	0.000000	0.000000	discard	basin boundary test u_offset=0.4 amp=0 n_nodes=300 tol=1e-10	agent0	branch_search	0	-0.000000
+exp038	5.76826740e-21	0.000000	0.000000	discard	Fourier spectral: trivial branch, 64 modes, newton_tol=1e-12	agent2	solver_param	0	-0.000000
+exp039	8.77450245e-11	1.002503	1.000218	discard	positive branch flat IC: u_offset=1.0, amp=0, n_nodes=300, tol=1e-10	agent3	initial_cond	0	-1.523848
+exp040	4.62118486e-17	0.000000	0.000000	discard	basin boundary test u_offset=0.45 amp=0 n_nodes=300 tol=1e-10	agent0	branch_search	0	-0.000000
+exp041	1.19273831e-13	0.000000	0.000000	discard	basin boundary u_offset=0.48 amp=0 flat IC	agent0	branch_search	1	-0.000000
+exp042	crash	0	0	crash	Fourier spectral: negative branch, 128 modes — testing if more modes reduces residual	agent2	solver_param	1	0
+exp043	2.42339207e-13	0.000000	0.000000	discard	basin boundary u_offset=0.49 amp=0 flat IC	agent0	branch_search	0	-0.000000
+exp044	3.27416486e-12	0.000000	-0.000000	discard	negative side basin boundary u_offset=-0.51	agent1	branch_search	1	-0.000000
+exp045	7.30423541e-14	1.001296	-1.000019	discard	Fourier spectral: negative branch, 32 modes — fewer modes for faster convergence	agent2	solver_param	0	-1.520844
+exp046	8.77449666e-11	1.002503	1.000218	discard	basin boundary u_offset=-0.5 amp=0 flat IC — symmetry test	agent0	branch_search	1	-1.523848
+exp047	2.60019365e-11	1.002503	1.000218	discard	positive branch K-matching IC: u_offset=1.0, amp=0.1, phase=pi, n_mode=1 — approx solution shape 1-0.1cos(θ)	agent3	perturbation	0	-1.523848
+exp048	1.87543122e-14	1.001296	-1.000019	discard	Fourier spectral: negative branch, 16 modes — testing minimal modes	agent2	solver_param	0	-1.520844
+exp049	2.44294562e-13	0.000000	-0.000000	discard	negative side basin boundary u_offset=-0.53	agent1	branch_search	0	-0.000000
+exp050	2.49631688e-15	1.001296	-1.000019	discard	Fourier spectral: negative branch, 8 modes — pushing to minimum modes	agent2	solver_param	0	-1.520844
+exp051	9.93787823e-13	0.000000	-0.000000	discard	negative side basin boundary u_offset=-0.55	agent1	branch_search	0	-0.000000
+exp052	2.60019368e-11	1.002503	1.000218	discard	negative basin boundary probe: u_offset=-0.52, amp=0.1 — testing if boundary is symmetric with positive side	agent3	branch_search	0	-1.523848
+exp053	crash	0	0	crash	negative side basin boundary u_offset=-0.6	agent1	branch_search	0	0
+exp054	2.06774381e-16	1.001296	-1.000019	discard	Fourier spectral: negative branch, 4 modes — extreme minimal	agent2	solver_param	0	-1.520844
+exp055	2.60019365e-11	1.002503	-1.000218	discard	negative side basin boundary u_offset=-0.65	agent1	branch_search	0	-1.523848
+exp056	3.72380123e-16	1.001298	-1.000025	discard	Fourier spectral: negative branch, 2 modes — absolute minimum	agent2	solver_param	0	-1.520921
+exp057	2.33702010e-12	0.000000	-0.000000	discard	negative side basin boundary u_offset=-0.58	agent1	branch_search	0	-0.000000
+exp058	2.44294562e-13	0.000000	-0.000000	discard	negative basin boundary: u_offset=-0.53, amp=0.1 — testing for crash or branch switch	agent3	branch_search	0	-0.000000
+exp059	8.69901540e-15	1.001296	1.000019	discard	Fourier spectral: positive branch, 4 modes — optimal config	agent2	solver_param	0	-1.520844
+exp060	8.77449666e-11	1.002503	1.000218	discard	flat IC amp=0 u_offset=-0.5 — should invert to positive per agent0	agent1	branch_search	0	-1.523848
+exp061	9.93787823e-13	0.000000	-0.000000	discard	negative basin boundary: u_offset=-0.55, amp=0.1 — continuing basin map	agent3	branch_search	0	-0.000000
+exp062	9.31342345e-15	1.001296	1.000019	discard	Fourier spectral: positive branch, 3 modes	agent2	solver_param	0	-1.520844
+exp063	1.60426708e-13	0.000000	-0.000000	discard	oscillatory IC amp=0.1 u_offset=-0.5 — contrast with flat	agent1	branch_search	0	-0.000000
+exp064	crash	0	0	crash	negative basin boundary: u_offset=-0.6, amp=0.1	agent3	branch_search	0	0
+exp065	8.80432345e-15	1.001296	1.000019	discard	Fourier spectral: positive branch, 6 modes	agent2	solver_param	0	-1.520844
+exp066	5.08060902e-21	0.000000	-0.000000	discard	mode-2 large amplitude IC, u_offset=0, searching for higher-mode branch	agent1	branch_search	0	-0.000000
+exp067	1.93879390e-12	0.000000	-0.000000	discard	negative basin boundary: u_offset=-0.57, amp=0.1	agent3	branch_search	1	-0.000000
+exp068	9.95585149e-15	0.000000	-0.000000	discard	mode-3 amp=0.5 u_offset=0.3 — searching for higher-mode branch	agent1	branch_search	0	-0.000000
+exp069	2.06774381e-16	1.001296	-1.000019	discard	Fourier: neg branch, 4 modes, newton_tol=1e-15 — pushing to float64 limit	agent2	solver_param	0	-1.520844
+exp070	1.20597626e-13	0.000000	-0.000000	discard	negative basin boundary: u_offset=-0.59, amp=0.1	agent3	branch_search	0	-0.000000
+exp071	2.60019365e-11	1.002503	-1.000218	discard	negative basin: u_offset=-0.65 — past crash zone?	agent3	branch_search	0	-1.523848
+exp072	1.39232435e-12	0.000000	0.000000	discard	u_offset=0.5 amp=0.1 phase=pi — test phase effect on basin	agent0	perturbation	0	0.000000
+exp073	9.34085475e-14	1.001296	-1.000019	discard	Fourier spectral negative branch 4 modes	agent1	solver_param	0	-1.520844
+exp074	2.16070002e-13	1.001298	-1.000025	discard	Fourier spectral negative branch 2 modes	agent1	solver_param	0	-1.520921
+exp075	3.62021453e-16	1.001296	-1.000019	discard	Fourier at basin boundary u_offset=0.52 — where scipy crashes	agent2	branch_search	0	-1.520844
+exp076	5.73350162e-13	1.001296	1.000019	discard	Fourier spectral positive branch 4 modes	agent1	solver_param	0	-1.520844
+exp077	3.84592606e-16	1.001296	1.000019	discard	Fourier: u_offset=0.3 amp=0.5 mode=3 — searching for higher-mode branch	agent2	branch_search	0	-1.520844
+exp078	5.73395060e-13	1.001296	1.000019	discard	Fourier positive branch 6 modes	agent1	solver_param	0	-1.520844
+exp079	5.73350162e-13	1.001296	1.000019	discard	Fourier spectral positive branch: 4 modes, newton_tol=1e-12	agent0	solver_param	0	-1.520844
+exp080	2.57581612e-16	1.001296	1.000019	discard	positive branch Fourier spectral: 4 modes, newton_tol=1e-12, u_offset=0.9	agent3	solver_param	0	-1.520844
+exp081	8.25713855e-22	0.000000	-0.000000	discard	Fourier: u_offset=0 amp=0.5 mode=3 — pure oscillatory IC for new branch	agent2	branch_search	1	-0.000000
+exp082	8.69901540e-15	1.001296	1.000019	discard	Fourier positive branch: 4 modes, u_offset=1.0	agent0	solver_param	0	-1.520844
+exp083	1.86448479e-16	1.001296	1.000019	discard	Fourier positive 4 modes newton_tol=1e-14	agent1	solver_param	1	-1.520844
+exp084	3.78535601e-16	1.001296	1.000019	discard	Fourier: u_offset=1.5 — testing for large-amplitude branches	agent2	branch_search	0	-1.520844
+exp085	1.96261557e-16	1.001296	-1.000019	discard	Fourier negative 4 modes newton_tol=1e-14	agent1	solver_param	0	-1.520844
+exp086	4.42586856e-16	1.001296	1.000019	discard	positive branch Fourier: 3 modes — testing if fewer modes improves	agent3	solver_param	0	-1.520844
+exp087	9.31342345e-15	1.001296	1.000019	discard	Fourier positive branch: 3 modes — testing below agent2 optimal	agent0	solver_param	0	-1.520844
+exp088	1.39875659e-23	0.000000	-0.000000	discard	Fourier trivial 4 modes newton_tol=1e-14	agent1	solver_param	0	-0.000000
+exp089	2.06774381e-16	1.001296	-1.000019	discard	Fourier: u_offset=-1.5 — testing for large-amplitude branches	agent2	branch_search	0	-1.520844
+exp090	1.07021589e-15	1.001296	1.000019	discard	positive branch Fourier: 6 modes — testing above sweet spot	agent3	solver_param	1	-1.520844
+exp091	2.06774381e-16	1.001296	-1.000019	discard	Fourier negative branch: 4 modes, u_offset=-1.0, newton_tol=1e-12	agent0	solver_param	0	-1.520844
+exp092	2.06774381e-16	1.001296	-1.000019	discard	Fourier neg branch: 4 modes, newton_tol=1e-15 — pushing below machine eps	agent0	solver_param	0	-1.520844
+exp093	2.57581612e-16	1.001296	-1.000019	discard	negative branch Fourier: 4 modes, newton_tol=1e-15 — pushing past agent1's 1e-14	agent3	solver_param	0	-1.520844
+exp094	3.62021453e-16	1.001296	-1.000019	discard	Fourier basin boundary test: u_offset=0.52 (where scipy crashes)	agent0	branch_search	0	-1.520844
+exp095	1.88564362e-15	1.001296	-1.000019	discard	Fourier basin test u_offset=0.53 — scipy gave NEGATIVE	agent1	branch_search	0	-1.520844
+exp096	2.06774381e-16	1.001296	-1.000019	discard	Fourier basin map: u_offset=0.50 amp=0.1 mode=1	agent2	branch_search	1	-1.520844
+exp097	1.88564362e-15	1.001296	-1.000019	discard	Fourier basin test u_offset=0.52 — scipy CRASHED	agent1	branch_search	0	-1.520844
+exp098	2.06774381e-16	1.001296	-1.000019	discard	Fourier basin test: u_offset=0.51	agent0	branch_search	0	-1.520844
+exp099	2.06774381e-16	1.001296	1.000019	discard	Fourier basin map: u_offset=0.45	agent2	branch_search	0	-1.520844
+exp100	2.57581612e-16	1.001296	1.000019	discard	positive branch Fourier: 4 modes, newton_tol=1e-14, maxiter=200	agent3	solver_param	1	-1.520844
+exp101	2.06774381e-16	1.001296	-1.000019	discard	Fourier basin test u_offset=0.51 — scipy gave trivial	agent1	branch_search	0	-1.520844
+exp102	2.06774381e-16	1.001296	-1.000019	discard	Fourier basin map: u_offset=0.47	agent2	branch_search	0	-1.520844
+exp103	2.06774381e-16	1.001296	-1.000019	discard	Fourier basin test: u_offset=0.50	agent0	branch_search	0	-1.520844
+exp104	2.12979964e-15	1.001296	-1.000019	discard	Fourier basin test u_offset=0.50	agent1	branch_search	0	-1.520844
+exp105	1.96261557e-16	1.001296	1.000019	discard	Fourier basin map: u_offset=0.46	agent2	branch_search	0	-1.520844
+exp106	2.06774381e-16	1.001296	1.000019	discard	Fourier basin test: u_offset=0.45	agent0	branch_search	0	-1.520844
+exp107	9.25602021e-29	0.000000	-0.000000	discard	Fourier basin test u_offset=0.40	agent1	branch_search	0	-0.000000
+exp108	1.75019607e-17	0.000000	-0.000000	discard	higher-mode search: mode-2 IC, amp=0.5, u_offset=0, Fourier 8 modes	agent3	branch_search	1	-0.000000
+exp109	2.06774381e-16	1.001296	1.000019	discard	Fourier basin map: u_offset=0.465	agent2	branch_search	0	-1.520844
+exp110	7.36177075e-16	1.001296	1.000019	discard	Fourier basin test u_offset=0.45	agent1	branch_search	0	-1.520844
+exp111	2.06774381e-16	1.001296	-1.000019	discard	Fourier basin test: u_offset=0.47	agent0	branch_search	0	-1.520844
+exp112	2.57581612e-16	1.001296	-1.000019	discard	Fourier basin map: u_offset=0.468	agent2	branch_search	1	-1.520844
+exp113	2.70017779e-15	1.001296	-1.000019	discard	higher-mode search: mode-3 IC, amp=0.5, u_offset=0.5, Fourier 8 modes	agent3	branch_search	0	-1.520844
+exp114	4.29945733e-22	0.000000	-0.000000	discard	Fourier basin test u_offset=0.42	agent1	branch_search	0	-0.000000
+exp115	1.04679798e-26	0.000000	-0.000000	discard	Fourier basin test u_offset=0.43	agent1	branch_search	1	-0.000000
+exp116	1.96261557e-16	1.001296	1.000019	discard	Fourier basin test: u_offset=0.46	agent0	branch_search	0	-1.520844
+exp117	1.96261557e-16	1.001296	1.000019	discard	Fourier basin map: u_offset=0.467	agent2	branch_search	0	-1.520844
+exp118	4.93737447e-25	0.000000	-0.000000	discard	Fourier basin test u_offset=0.44	agent1	branch_search	1	0.000000
+exp119	2.57581612e-16	1.001296	-1.000019	discard	Fourier flat IC: u_offset=0.50, amp=0 — compare with oscillatory IC basin	agent2	branch_search	0	-1.520844
+exp120	1.28666048e-23	0.000000	-0.000000	discard	higher-mode search: oscillatory IC 0.5*cos(θ), 16 Fourier modes — looking for 4th branch	agent3	branch_search	1	-0.000000
+exp121	2.06774381e-16	1.001296	1.000019	discard	Fourier basin test: u_offset=0.465 — pinning boundary	agent0	branch_search	0	-1.520844
+exp122	1.93466006e-23	0.000000	0.000000	discard	Fourier flat IC: u_offset=0.40, amp=0	agent2	branch_search	0	-0.000000
+exp123	2.57581612e-16	1.001296	-1.000019	discard	Fourier basin test: u_offset=0.468	agent0	branch_search	0	-1.520844
+exp124	5.79478325e-25	0.000000	0.000000	discard	Fourier u_offset=0.45 phase=π — does phase flip branch?	agent1	perturbation	1	-0.000000
+exp125	1.86096789e-16	0.070535	0.000000	discard	Fourier u_offset=0.45 phase=π/2	agent1	perturbation	0	0.000099
+exp126	4.43649881e-17	0.070535	-0.000000	discard	Fourier basin boundary: u_offset=0.467 phase=pi/2 — does phase shift the boundary?	agent2	perturbation	1	0.000099
+exp127	1.96261557e-16	1.001296	1.000019	discard	Fourier positive branch: 4 modes, newton_tol=1e-14, u_offset=1.0	agent0	solver_param	0	-1.520844
+exp128	1.43312454e-16	0.000000	0.000000	discard	Fourier: u_offset=0.467 phase=pi — phase effect at boundary	agent2	perturbation	1	-0.000000
+exp129	6.45055939e-16	1.001296	1.000019	discard	Fourier positive: exact solution mean as IC, amp=0	agent0	solver_param	0	-1.520844
+exp130	7.00071513e-16	0.070536	0.000000	discard	Investigating anomalous norm=0.07 solution with 16 modes	agent1	branch_search	0	0.000099
+exp131	1.43313150e-16	0.000000	-0.000000	discard	Fourier negative-side basin: u_offset=-0.467	agent2	branch_search	0	-0.000000
+exp132	3.95057840e-15	0.070536	-0.000000	discard	Anomalous norm=0.07 solution with 32 modes to confirm	agent1	branch_search	0	0.000099
+exp133	2.06774381e-16	1.001296	1.000019	discard	Fourier positive: amp=0.15 (K_amp/2), test if better IC shape helps	agent0	perturbation	1	-1.520844
+exp134	1.86448479e-16	1.001296	1.000019	discard	Fourier negative-side: u_offset=-0.55	agent2	branch_search	0	-1.520844
+exp135	2.90475302e-25	0.000000	-0.000000	discard	Fourier trivial test: u_offset=0.1, does Fourier find trivial?	agent0	branch_search	0	0.000000
+exp136	2.08282465e-16	1.001296	1.000019	discard	Fourier negative-side: u_offset=-0.50	agent2	branch_search	0	-1.520844
+exp137	2.64660147e-24	0.000000	-0.000000	discard	Fourier negative-side: u_offset=-0.48	agent2	branch_search	1	-0.000000
+exp138	2.07641969e-24	0.000000	-0.000000	discard	Fourier boundary test: u_offset=0.445 — between agent1's 0.44 trivial and 0.45 positive	agent0	branch_search	1	0.000000
+exp139	1.57100340e-12	0.000000	0.000000	discard	Scipy with same IC as anomalous Fourier solution (offset=0.45 phase=π/2)	agent1	branch_search	0	-0.000000
+exp140	7.06614991e-22	0.000000	-0.000000	discard	Fourier negative-side: u_offset=-0.49	agent2	branch_search	1	-0.000000
+exp141	2.97078698e-16	1.001296	1.000019	discard	Fourier boundary: u_offset=0.449	agent0	branch_search	0	-1.520844
+exp142	1.86623820e-16	0.070535	0.000000	discard	VERIFY 4th branch: u_offset=0.45, amp=0.1, phase=pi/2, Fourier 4 modes, tol=1e-14	agent3	branch_search	0	0.000099
+exp143	1.39110978e-22	0.000000	-0.000000	discard	Fourier boundary: u_offset=0.447	agent0	branch_search	0	-0.000000
+exp144	3.33044621e-16	0.070536	-0.000000	discard	4th branch verification: 8 Fourier modes — norm stability check	agent3	branch_search	0	0.000099
+exp145	6.85981617e-17	0.070535	0.000000	discard	4th branch search: u_offset=0.3 phase=π/2	agent1	branch_search	1	0.000099
+exp146	2.06774381e-16	1.001296	1.000019	discard	Fourier boundary: u_offset=0.448	agent0	branch_search	1	-1.520844
+exp147	4.60800143e-15	0.070536	0.000000	discard	4th branch verification: 32 Fourier modes — stability at high resolution	agent3	branch_search	0	0.000099
+exp148	7.08231583e-17	0.070535	0.000000	discard	4th branch search: u_offset=0.0 phase=π/2	agent1	branch_search	0	0.000099
+exp149	1.52970329e-16	0.070535	0.000000	discard	4th branch mirror: u_offset=-0.45, phase=pi/2 — testing u→-u symmetric partner	agent3	branch_search	0	0.000099
+exp150	4.08100283e-17	0.070535	-0.000000	discard	phase scan: u_offset=0.45, phase=pi/4 — looking for 5th branch	agent3	branch_search	0	0.000099
+exp151	7.08231583e-17	0.070535	0.000000	discard	Verifying 4th branch: u_offset=0 phase=pi/2 Fourier 4 modes	agent2	branch_search	0	0.000099
+exp152	4.85293820e-17	0.070535	-0.000000	discard	phase scan: u_offset=0.45, phase=3pi/4 — still same branch?	agent3	branch_search	0	0.000099
+exp153	7.08231583e-17	0.070535	0.000000	discard	4th branch verification: u_offset=0 amp=0.1 phase=pi/2 Fourier 4 modes	agent0	branch_search	1	0.000099
+exp154	5.75149886e-17	0.070535	-0.000000	discard	5th branch search: phase=3π/2 u_offset=0	agent1	branch_search	0	0.000099
+exp155	3.05864420e-17	0.070535	-0.000000	discard	5th branch search: phase=3pi/2 — anti-symmetric counterpart?	agent2	branch_search	0	0.000099
+exp156	6.39248763e-17	0.070535	0.000000	discard	4th branch with larger amp=0.5 phase=pi/2	agent0	branch_search	0	0.000099

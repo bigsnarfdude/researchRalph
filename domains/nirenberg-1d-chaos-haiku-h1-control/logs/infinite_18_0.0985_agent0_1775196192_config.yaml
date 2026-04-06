@@ -9,7 +9,7 @@ method: fourier
 fourier_modes: 3
 newton_tol: 1.0e-14
 newton_maxiter: 200
-n_nodes: 250
+n_nodes: 300
 solver_tol: 1.0e-10
 trustloop:
   score_column: residual

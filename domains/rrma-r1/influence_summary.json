@@ -1,0 +1,55 @@
+{
+  "domain": "rrma-r1",
+  "nodes": {
+    "agent0": {
+      "writes": 17,
+      "reads": 23,
+      "out_degree": 23,
+      "in_degree": 6,
+      "influence_ratio": 0.7931
+    },
+    "agent1": {
+      "writes": 14,
+      "reads": 53,
+      "out_degree": 6,
+      "in_degree": 23,
+      "influence_ratio": 0.2069
+    }
+  },
+  "edges": {
+    "agent1->agent0": {
+      "writer": "agent1",
+      "reader": "agent0",
+      "weight": 6,
+      "files": {
+        "blackboard.md": 2,
+        "results.tsv": 4
+      }
+    },
+    "agent0->agent1": {
+      "writer": "agent0",
+      "reader": "agent1",
+      "weight": 23,
+      "files": {
+        "blackboard.md": 12,
+        "results.tsv": 11
+      }
+    }
+  },
+  "edges_by_file": {
+    "blackboard.md": {
+      "agent1->agent0": 2,
+      "agent0->agent1": 12
+    },
+    "results.tsv": {
+      "agent1->agent0": 4,
+      "agent0->agent1": 11
+    }
+  },
+  "total_events": 107,
+  "total_edge_weight": 29,
+  "agents": [
+    "agent0",
+    "agent1"
+  ]
+}

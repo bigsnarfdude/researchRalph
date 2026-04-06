@@ -1,0 +1,133 @@
+{
+  "domain": "nirenberg-1d-chaos-r5",
+  "nodes": {
+    "agent0": {
+      "writes": 0,
+      "reads": 7,
+      "out_degree": 0,
+      "in_degree": 0,
+      "influence_ratio": 0.0
+    },
+    "agent1": {
+      "writes": 0,
+      "reads": 6,
+      "out_degree": 0,
+      "in_degree": 0,
+      "influence_ratio": 0.0
+    },
+    "agent2": {
+      "writes": 7,
+      "reads": 12,
+      "out_degree": 0,
+      "in_degree": 1,
+      "influence_ratio": 0.0
+    },
+    "agent3": {
+      "writes": 4,
+      "reads": 8,
+      "out_degree": 3,
+      "in_degree": 0,
+      "influence_ratio": 1.0
+    },
+    "agent4": {
+      "writes": 2,
+      "reads": 9,
+      "out_degree": 1,
+      "in_degree": 2,
+      "influence_ratio": 0.3333
+    },
+    "agent5": {
+      "writes": 3,
+      "reads": 8,
+      "out_degree": 2,
+      "in_degree": 0,
+      "influence_ratio": 1.0
+    },
+    "agent6": {
+      "writes": 2,
+      "reads": 10,
+      "out_degree": 0,
+      "in_degree": 1,
+      "influence_ratio": 0.0
+    },
+    "agent7": {
+      "writes": 2,
+      "reads": 9,
+      "out_degree": 0,
+      "in_degree": 2,
+      "influence_ratio": 0.0
+    }
+  },
+  "edges": {
+    "agent3->agent6": {
+      "writer": "agent3",
+      "reader": "agent6",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent4->agent7": {
+      "writer": "agent4",
+      "reader": "agent7",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent3->agent2": {
+      "writer": "agent3",
+      "reader": "agent2",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent3->agent4": {
+      "writer": "agent3",
+      "reader": "agent4",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent5->agent4": {
+      "writer": "agent5",
+      "reader": "agent4",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    },
+    "agent5->agent7": {
+      "writer": "agent5",
+      "reader": "agent7",
+      "weight": 1,
+      "files": {
+        "blackboard.md": 1
+      }
+    }
+  },
+  "edges_by_file": {
+    "blackboard.md": {
+      "agent3->agent6": 1,
+      "agent4->agent7": 1,
+      "agent3->agent2": 1,
+      "agent3->agent4": 1,
+      "agent5->agent4": 1,
+      "agent5->agent7": 1
+    }
+  },
+  "total_events": 89,
+  "total_edge_weight": 6,
+  "agents": [
+    "agent0",
+    "agent1",
+    "agent2",
+    "agent3",
+    "agent4",
+    "agent5",
+    "agent6",
+    "agent7"
+  ]
+}

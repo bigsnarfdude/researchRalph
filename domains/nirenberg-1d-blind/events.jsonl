@@ -1,0 +1,16 @@
+{"ts": "2026-04-02T18:11:29.590Z", "agent": "agent0", "op": "Read", "file": "program.md", "session": "s0", "seq": 5, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:30.014Z", "agent": "agent0", "op": "Read", "file": "stoplight.md", "session": "s0", "seq": 7, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:30.495Z", "agent": "agent0", "op": "Read", "file": "recent_experiments.md", "session": "s0", "seq": 9, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:35.639Z", "agent": "agent0", "op": "Read", "file": "blackboard.md", "session": "s0", "seq": 19, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:39.839Z", "agent": "agent0", "op": "Read", "file": "results.tsv", "session": "s0", "seq": 27, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:43.039Z", "agent": "agent1", "op": "Read", "file": "program.md", "session": "s0", "seq": 5, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:43.487Z", "agent": "agent1", "op": "Read", "file": "stoplight.md", "session": "s0", "seq": 7, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:43.803Z", "agent": "agent1", "op": "Read", "file": "recent_experiments.md", "session": "s0", "seq": 9, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:43.997Z", "agent": "agent0", "op": "Read", "file": "calibration.md", "session": "s0", "seq": 30, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:48.136Z", "agent": "agent1", "op": "Read", "file": "results.tsv", "session": "s0", "seq": 16, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:52.395Z", "agent": "agent1", "op": "Read", "file": "calibration.md", "session": "s0", "seq": 18, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:52.574Z", "agent": "agent0", "op": "Read", "file": "results.tsv", "session": "s0", "seq": 40, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:52.788Z", "agent": "agent1", "op": "Read", "file": "blackboard.md", "session": "s0", "seq": 20, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:11:55.157Z", "agent": "agent0", "op": "Read", "file": "results.tsv", "session": "s0", "seq": 42, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:13:06.231Z", "agent": "agent0", "op": "Read", "file": "results.tsv", "session": "s0", "seq": 82, "domain": "nirenberg-1d-blind"}
+{"ts": "2026-04-02T18:15:10.173Z", "agent": "agent1", "op": "Read", "file": "results.tsv", "session": "s0", "seq": 122, "domain": "nirenberg-1d-blind"}
