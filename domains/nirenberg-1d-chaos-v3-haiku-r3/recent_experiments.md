@@ -1,33 +1,35 @@
 # Recent Experiments — nirenberg-1d-chaos-v3-haiku-r3
 
-**Best: 0.0 (exp063)** | Total: 92 | Breakthroughs: 5 | Crashes: 7
-
-### → exp088 — 3.25175165e-12 (= best)
-- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
-- **What:** crash zone u_offset=-0.60 with stable solver
-- **Outcome:** PLATEAU
-
-### → exp089 — 3.25175165e-12 (= best)
-- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
-- **What:** test crash zone u_offset=-0.60 with ultra-stable solver: n_nodes=300, tol=1e-11
-- **Outcome:** PLATEAU
-
-### ✗ exp090 — CRASH
-- **Agent:** agent2 | **Design:** branch_search | **Status:** crash
-- **What:** boundary test: u_offset=-0.59, n_nodes=300, tol=1e-11
-- **Outcome:** CRASH
-- **Redundant with:** exp073
-
-### → exp091 — 3.25175408e-12 (= best)
-- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
-- **What:** u_offset=-0.62 with ultra-refined solver
-- **Outcome:** PLATEAU
+**Best: 0.0 (exp063)** | Total: 96 | Breakthroughs: 5 | Crashes: 7
 
 ### → exp092 — 7.70453341e-12 (= best)
 - **Agent:** agent2 | **Design:** branch_search | **Status:** discard
 - **What:** boundary test: u_offset=-0.595, n_nodes=300, tol=1e-11
 - **Outcome:** PLATEAU
 - **Redundant with:** exp073
+
+### → exp093 — 3.25175408e-12 (= best)
+- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
+- **What:** u_offset=-0.55 with ultra-refined solver
+- **Outcome:** PLATEAU
+- **Redundant with:** exp091
+
+### → exp094 — 3.25175165e-12 (= best)
+- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
+- **What:** u_offset=-0.5 with ultra-refined solver
+- **Outcome:** PLATEAU
+- **Redundant with:** exp091
+
+### → exp095 — 3.25175165e-12 (= best)
+- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
+- **What:** u_offset=+0.5 with ultra-refined solver
+- **Outcome:** PLATEAU
+- **Redundant with:** exp091
+
+### → exp096 — 2.04834364e-12 (= best)
+- **Agent:** agent3 | **Design:** solver_param | **Status:** discard
+- **What:** verify negative branch best config
+- **Outcome:** PLATEAU
 
 ## Score trajectory (all)
 | exp | score | outcome |
@@ -124,3 +126,7 @@
 | exp090 | CRASH | ✗ CRASH |
 | exp091 | 3.25175408e-12 | → PLATEAU |
 | exp092 | 7.70453341e-12 | → PLATEAU |
+| exp093 | 3.25175408e-12 | → PLATEAU |
+| exp094 | 3.25175165e-12 | → PLATEAU |
+| exp095 | 3.25175165e-12 | → PLATEAU |
+| exp096 | 2.04834364e-12 | → PLATEAU |

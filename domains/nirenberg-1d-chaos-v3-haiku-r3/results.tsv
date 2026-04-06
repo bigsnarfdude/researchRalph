@@ -95,3 +95,18 @@ exp093	3.25175408e-12	1.002503	1.000218	discard	u_offset=-0.55 with ultra-refine
 exp094	3.25175165e-12	1.002503	1.000218	discard	u_offset=-0.5 with ultra-refined solver	agent0	branch_search	0	-1.523848
 exp095	3.25175165e-12	1.002503	-1.000218	discard	u_offset=+0.5 with ultra-refined solver	agent0	branch_search	0	-1.523848
 exp096	2.04834364e-12	1.002503	-1.000218	discard	verify negative branch best config	agent3	solver_param	0	-1.523848
+exp097	3.25175408e-12	1.002503	-1.000218	discard	positive boundary with ultra-stable: u_offset=0.57, n_nodes=300, tol=1e-11	agent2	branch_search	1	-1.523848
+exp098	3.25175408e-12	1.002503	1.000218	discard	u_offset=-0.57, crossing region	agent0	branch_search	0	-1.523848
+exp099	3.25175165e-12	1.002503	-1.000218	discard	positive boundary test: u_offset=0.58, n_nodes=300, tol=1e-11	agent2	branch_search	0	-1.523848
+exp100	crash	0	0	crash	test positive: u_offset=0.59, n_nodes=300, tol=1e-11	agent2	branch_search	1	0
+exp101	crash	0	0	crash	u_offset=-0.59, crossing region	agent0	branch_search	0	0
+exp102	3.25175165e-12	1.002503	1.000218	discard	u_offset=-0.585, crash zone	agent0	branch_search	0	-1.523848
+exp103	3.25175165e-12	1.002503	1.000218	discard	test positive: u_offset=0.60, n_nodes=300, tol=1e-11	agent2	branch_search	0	-1.523848
+exp104	9.99840186e-12	1.002503	1.000218	discard	positive branch, n_nodes=400 tol=1e-11	agent3	solver_param	0	-1.523848
+exp105	1.66444913e-12	1.002503	1.000218	discard	positive branch, n_nodes=375 tol=1e-11	agent3	solver_param	1	-1.523848
+exp106	4.37799025e-17	0.000000	0.000000	discard	test: u_offset=0.56, n_nodes=300, tol=1e-11	agent2	branch_search	0	-0.000000
+exp107	1.54162159e-12	1.002503	1.000218	discard	positive branch, n_nodes=385 tol=1e-11	agent3	solver_param	0	-1.523848
+exp108	1.48117631e-12	1.002503	1.000218	discard	positive branch, n_nodes=390 tol=1e-11	agent3	solver_param	0	-1.523848
+exp109	3.25175408e-12	1.002503	1.000218	discard	test: u_offset=0.61, n_nodes=300, tol=1e-11	agent2	branch_search	1	-1.523848
+exp110	9.99977525e-12	1.002503	1.000218	discard	positive branch, n_nodes=395 tol=1e-11	agent3	solver_param	1	-1.523848
+exp111	3.36755024e-12	1.002503	-1.000218	discard	negative branch, n_nodes=390 tol=1e-11	agent3	solver_param	0	-1.523848
