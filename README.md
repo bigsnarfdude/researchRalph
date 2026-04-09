@@ -369,9 +369,11 @@ RRMA agents consistently find degenerate shortcuts. This shaped every design dec
 
 ---
 
-## Chaos Agent Experiments (V-Asym)
+## Chaos Agent Experiments (Attentional Hijacking)
 
-V-Asym — Verification Asymmetry Exploitation. An adversarial agent that steers a multi-agent system using only true statements. The victim's own commitment to verification is the attack vector.
+https://github.com/bigsnarfdude/ICML_experiments
+
+Split Personality: Instruction Tuning Decouples Awareness from Defense in Attentional Hijacking
 
 ### Setup
 
