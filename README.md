@@ -1,4 +1,4 @@
-# researchRalph v4.9
+# researchRalph v4.9.1 Advisor Pattern Edition
 
 ResearchRalph Multi-Agent (RRMA) — Claude Code agents that do research autonomously.
 TrustLoop — Behavioral IDS for autonomous agents. Watch your agents, experiments, and scaffolds in one place. Know immediately when something stalls, breaks, wastes compute, games metrics, or wins — and why.
