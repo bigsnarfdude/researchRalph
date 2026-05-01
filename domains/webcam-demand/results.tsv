@@ -1,0 +1,4 @@
+obs_id	ns_ew_ratio	ns_count	ew_count	total_count	status	description	agent	design	elapsed_s
+obs001	0.0	0	0	0	keep	default prompt baseline	manual	prompt	27
+obs002	0.0	0	1	1	discard	analyst prompt - queued only	manual	prompt_tune	16
+obs003	0.0	0	0	0	discard	replication check	manual	replication	8

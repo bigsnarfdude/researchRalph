@@ -1,0 +1,26 @@
+# Webcam Demand Observer — config
+# Agents tune the prompt and observation strategy to get accurate vehicle counts.
+# Score: ns_ew_ratio (the demand ratio delivered to traffic-signal domain)
+
+# --- Camera source (EDIT: try different URLs or timestamps) ---
+camera_url: "https://www.youtube.com/watch?v=R8hxzxRfJhs"
+
+# --- Approach labels for the prompt ---
+ns_label: "north-south (vertical traffic)"
+ew_label: "east-west (horizontal traffic)"
+
+# --- Prompt template (EDIT: tune for accuracy) ---
+# {ns_label} and {ew_label} are substituted at runtime
+prompt_template: |
+  You are a traffic analyst reviewing a camera image of an intersection.
+  Count vehicles (cars, trucks, buses) visible in each direction.
+  NS = {ns_label}. EW = {ew_label}.
+  Be conservative — only count vehicles you can clearly see.
+  Return ONLY valid JSON, no explanation:
+  {{"ns_count": <int>, "ew_count": <int>, "confidence": "high|medium|low", "raw_description": "<one sentence summary>"}}
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: ns_ew_ratio
+  time_column: elapsed_s
+  score_direction: higher  # higher ratio = stronger NS dominance signal

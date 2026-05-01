@@ -1,0 +1,68 @@
+# Traffic Signal Timing — 3×3 intersection grid
+#
+# Grid layout (row, col):
+#   (0,0)──(0,1)──(0,2)
+#     |      |      |
+#   (1,0)──(1,1)──(1,2)
+#     |      |      |
+#   (2,0)──(2,1)──(2,2)
+#
+# Morning peak: N-S demand is 4.5× heavier than E-W.
+# Key insight: coordinating offsets along a corridor creates a "green wave"
+# so vehicles arriving at the first intersection still see green at the next.
+#
+# Each intersection: green_ns + green_ew + 2*yellow(fixed=3) = cycle_length
+# offset: how many steps into the cycle this intersection starts (mod cycle_length)
+#
+# Score: avg_delay (lower is better, units = simulation steps)
+
+# --- Intersection (row=0, col=0) ---
+i00_green_ns: 40
+i00_green_ew: 25
+i00_offset: 0
+
+# --- Intersection (row=0, col=1) ---
+i01_green_ns: 40
+i01_green_ew: 25
+i01_offset: 0
+
+# --- Intersection (row=0, col=2) ---
+i02_green_ns: 40
+i02_green_ew: 25
+i02_offset: 0
+
+# --- Intersection (row=1, col=0) ---
+i10_green_ns: 40
+i10_green_ew: 25
+i10_offset: 0
+
+# --- Intersection (row=1, col=1) ---
+i11_green_ns: 40
+i11_green_ew: 25
+i11_offset: 0
+
+# --- Intersection (row=1, col=2) ---
+i12_green_ns: 40
+i12_green_ew: 25
+i12_offset: 0
+
+# --- Intersection (row=2, col=0) ---
+i20_green_ns: 40
+i20_green_ew: 25
+i20_offset: 0
+
+# --- Intersection (row=2, col=1) ---
+i21_green_ns: 40
+i21_green_ew: 25
+i21_offset: 0
+
+# --- Intersection (row=2, col=2) ---
+i22_green_ns: 40
+i22_green_ew: 25
+i22_offset: 0
+
+# --- TrustLoop scorer config (do not edit) ---
+trustloop:
+  score_column: avg_delay
+  time_column: elapsed_s
+  score_direction: lower

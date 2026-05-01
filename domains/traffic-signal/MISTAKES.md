@@ -1,0 +1,4 @@
+- No mistakes in the first experiment.
+- Experimenting with overly aggressive demand splits without further exploring the optimal ratio around 40/26.
+- Applying a generic green wave without considering its interaction with the demand split and cycle length more carefully.
+- The previous assumption that 40/26 was the optimal split was slightly off; 41/26 appears to be better.

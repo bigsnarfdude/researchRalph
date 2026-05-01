@@ -1,0 +1,8 @@
+- Increasing NS green time from 30 to 40 (while decreasing EW to 26) reduced avg_delay from 43.514 to 38.660.
+- NS demand is indeed the primary bottleneck during the morning peak.
+- A more aggressive NS split of 50/15 (exp003) resulted in a higher avg_delay (39.712) compared to the 40/26 split (exp002, 38.660). This suggests there's a limit to how much NS can be prioritized.
+- A very aggressive NS split of 55/10 (exp005) resulted in the highest avg_delay (47.630), indicating that extreme prioritization of one direction significantly degrades overall performance, likely due to starvation of the other direction.
+- A simple N-S green wave (exp004) with the 40/26 split parameters and offsets of 0, 24, 48 resulted in a higher avg_delay (42.000) compared to the non-green wave 40/26 split (exp002, 38.660). This implies that a basic green wave might not be beneficial or needs further tuning (e.g., different offset values, or a different base timing).
+- Increasing `green_ns` from 40 to 41 (`exp006`) while keeping `green_ew` at 26 resulted in a new best `avg_delay` of 38.418. This suggests that the optimal NS green time is slightly higher than 40.
+- Decreasing `green_ew` from 26 to 25 (`exp007`) while keeping `green_ns` at 40 resulted in `avg_delay` of 38.586, which was better than the original 40/26 split but not as good as 41/26.
+- Decreasing `green_ns` from 40 to 39 (`exp008`) while keeping `green_ew` at 26 resulted in `avg_delay` of 39.090, which was worse than both 40/26 and 41/26.

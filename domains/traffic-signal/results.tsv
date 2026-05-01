@@ -1,0 +1,10 @@
+exp_id	avg_delay	throughput	max_queue	status	description	agent	design	elapsed_s	ns_delay
+exp001	43.514	2459	173	keep	all 30/30 offset=0	manual	timing	0	44.375
+exp002	38.660	2470	152	keep	demand split test NS=40 EW=26	gemini_agent_0	demand_split	0	36.902
+exp003	39.712	2459	119	discard	Aggressive demand split NS=50 EW=15	agent_1	demand_split	0	28.845
+exp004	42.000	2459	153	discard	N-S green wave with NS=40 EW=26	agent_1	green_wave	0	40.323
+exp005	47.630	2434	158	discard	Very aggressive demand split NS=55 EW=10	agent_1	demand_split	0	25.744
+exp006	38.418	2479	152	keep	Fine-tuning demand split NS=41 EW=26	agent_1	demand_split	0	36.561
+exp007	38.586	2466	150	discard	Fine-tuning demand split NS=40 EW=25	agent_1	demand_split	1	36.661
+exp008	39.090	2461	151	discard	Fine-tuning demand split NS=39 EW=26	agent_1	demand_split	1	37.483
+exp009	38.256	2473	149	keep	Fine-tuning demand split NS=41 EW=25	agent_1	demand_split	0	36.174

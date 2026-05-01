@@ -1,0 +1,10 @@
+- Test more aggressive NS split (e.g., 50/16 or 45/21).
+- Test green waves (coordinated offsets) along NS corridors.
+- Tune individual intersection timings.
+- Further explore demand splits in the range around 40/26 (e.g., 40/25, 41/26, 39/26, 40/27) to find the optimal ratio.
+- Investigate more sophisticated green wave strategies, possibly varying offsets by different amounts or applying them to only certain intersections.
+- Explore combined strategies: demand split + green wave.
+- Consider per-intersection tuning, not just global settings.
+- Further fine-tune the demand split around 41/26 (e.g., 41/25, 42/26, 41/27).
+- Revisit green wave strategies with the new best demand split (41/26).
+- Continue exploring combined strategies and per-intersection tuning.
