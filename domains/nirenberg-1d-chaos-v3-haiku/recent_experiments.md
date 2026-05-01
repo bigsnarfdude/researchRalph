@@ -1,34 +1,35 @@
 # Recent Experiments — nirenberg-1d-chaos-v3-haiku
 
-**Best: 1.13671782e-23 (exp058)** | Total: 125 | Breakthroughs: 7 | Crashes: 16
+**Best: 7.58013271e-24 (exp133)** | Total: 159 | Breakthroughs: 8 | Crashes: 19
 
-### → exp116 — 1.13671782e-23 (= best)
-- **Agent:** agent0 | **Design:** branch_search | **Status:** discard
-- **What:** positive branch, K_frequency=0.75
-- **Outcome:** PLATEAU
-- **Redundant with:** exp096
+### ↓ exp150 — 3.25175165e-12 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** test mode-2 resonance on positive branch: u_offset=0.88, amplitude=0.3, n_mode=2
+- **Outcome:** REGRESSION
 
-### ↑ exp117 — 1.51658476e-19 (= best)
-- **Agent:** agent1 | **Design:** initial_cond | **Status:** discard
-- **What:** trivial branch, n_mode=5, amplitude=0.3
+### ↓ exp151 — 3.25175165e-12 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** test mode-2 resonance on negative branch: u_offset=-0.88, amplitude=0.3, n_mode=2
+- **Outcome:** REGRESSION
+- **Redundant with:** exp150
+
+### ↑ exp152 — 1.84236272e-15 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** negative resonance test: u_offset=-0.05, n_mode=2, amplitude=0.3
 - **Outcome:** INCREMENTAL
-- **Redundant with:** exp045
+- **Redundant with:** exp143
 
-### → exp118 — 1.13671782e-23 (= best)
-- **Agent:** agent0 | **Design:** perturbation | **Status:** discard
-- **What:** Verify n_mode=2 resonance reproducibility
-- **Outcome:** PLATEAU
+### ↑ exp153 — 7.85158994e-15 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** negative resonance test: u_offset=-0.1, n_mode=2, amplitude=0.3
+- **Outcome:** INCREMENTAL
+- **Redundant with:** exp115
 
-### ↓ exp119 — 3.25175165e-12 (= best)
-- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
-- **What:** stable region, u_offset=0.65
+### ↓ exp154 — 7.93390022e-15 (= best)
+- **Agent:** agent3 | **Design:** branch_search | **Status:** discard
+- **What:** negative resonance test: u_offset=-0.15, n_mode=2, amplitude=0.3
 - **Outcome:** REGRESSION
-- **Redundant with:** exp114
-
-### ↓ exp120 — 8.31925483e-19 (= best)
-- **Agent:** agent2 | **Design:** branch_search | **Status:** discard
-- **What:** boundary region, u_offset=0.57
-- **Outcome:** REGRESSION
+- **Redundant with:** exp115
 
 ## Score trajectory (all)
 | exp | score | outcome |
@@ -158,3 +159,37 @@
 | exp118 | 1.13671782e-23 | → PLATEAU |
 | exp119 | 3.25175165e-12 | ↓ REGRESSION |
 | exp120 | 8.31925483e-19 | ↓ REGRESSION |
+| exp121 | 4.72145975e-16 | ↓ REGRESSION |
+| exp122 | 7.71220789e-12 | ↓ REGRESSION |
+| exp123 | 4.8761791e-16 | ↓ REGRESSION |
+| exp124 | 3.25175165e-12 | ↓ REGRESSION |
+| exp125 | 4.8761791e-16 | ↑ INCREMENTAL |
+| exp126 | 3.25175408e-12 | ↓ REGRESSION |
+| exp127 | 5.39603612e-12 | ↓ REGRESSION |
+| exp128 | 4.8761791e-16 | ↑ INCREMENTAL |
+| exp129 | 1.63601566e-21 | ↑ INCREMENTAL |
+| exp130 | 7.7062094e-12 | ↓ REGRESSION |
+| exp131 | 4.8761791e-16 | ↑ INCREMENTAL |
+| exp132 | 4.8761791e-16 | ↑ INCREMENTAL |
+| exp133 | 7.58013271e-24 | ★ BREAKTHROUGH |
+| exp134 | 7.70530357e-12 | ↓ REGRESSION |
+| exp135 | 4.8761791e-16 | ↑ INCREMENTAL |
+| exp136 | 4.8761791e-16 | ↑ INCREMENTAL |
+| exp137 | CRASH | ✗ CRASH |
+| exp138 | CRASH | ✗ CRASH |
+| exp139 | 8.80713394e-24 | ↑ INCREMENTAL |
+| exp140 | 9.57110016e-12 | ↓ REGRESSION |
+| exp141 | CRASH | ✗ CRASH |
+| exp142 | 7.61383482e-24 | → PLATEAU |
+| exp143 | 1.67364293e-14 | ↓ REGRESSION |
+| exp144 | 1.52939907e-15 | ↓ REGRESSION |
+| exp145 | 3.95363874e-20 | ↑ INCREMENTAL |
+| exp146 | 9.57798616e-19 | ↑ INCREMENTAL |
+| exp147 | 7.70462232e-12 | ↓ REGRESSION |
+| exp148 | 1.72307213e-13 | ↓ REGRESSION |
+| exp149 | 1.13671782e-23 | ↑ INCREMENTAL |
+| exp150 | 3.25175165e-12 | ↓ REGRESSION |
+| exp151 | 3.25175165e-12 | ↓ REGRESSION |
+| exp152 | 1.84236272e-15 | ↑ INCREMENTAL |
+| exp153 | 7.85158994e-15 | ↑ INCREMENTAL |
+| exp154 | 7.93390022e-15 | ↓ REGRESSION |

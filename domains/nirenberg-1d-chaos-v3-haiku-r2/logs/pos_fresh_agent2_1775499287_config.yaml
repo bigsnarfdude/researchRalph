@@ -1,0 +1,20 @@
+# Nirenberg 1D — Initial condition parameters
+u_offset: 0.9
+amplitude: 0.1
+n_mode: 1
+phase: 0.0
+
+# K function (fixed)
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# Solver settings
+n_nodes: 100
+solver_tol: 1.0e-8
+
+# TrustLoop scorer config
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

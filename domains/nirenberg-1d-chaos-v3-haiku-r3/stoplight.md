@@ -1,12 +1,12 @@
 # Stoplight — nirenberg-1d-chaos-v3-haiku-r3
-Status: PLATEAU | Best: 0.0 (exp063) | Experiments: 117 | Stagnation: 54 since last breakthrough
+Status: PLATEAU | Best: 0.0 (exp063) | Experiments: 124 | Stagnation: 61 since last breakthrough
 
 ## What works
 - Design 'initial_cond' produced 4 breakthroughs — double down here
 
 ## Dead ends — do NOT retry
 - Design 'branch_search' has 45 experiments, 0 keeps — abandon this approach
-- Design 'perturbation' has 10 experiments, 0 keeps — abandon this approach
+- Design 'perturbation' has 17 experiments, 0 keeps — abandon this approach
 
 ## Gaps — unexplored
 - 34 desires filed but mostly unaddressed — gardener should read DESIRES.md
@@ -15,10 +15,10 @@ Status: PLATEAU | Best: 0.0 (exp063) | Experiments: 117 | Stagnation: 54 since l
 - agent0: 26 exp, 0 breakthroughs, rate 0%, best 0.0
 - agent1: 29 exp, 5 breakthroughs, rate 17%, best 0.0
 - agent2: 19 exp, 0 breakthroughs, rate 0%, best 4.37799025e-17
-- agent3: 43 exp, 0 breakthroughs, rate 0%, best 5.69266279e-19
+- agent3: 50 exp, 0 breakthroughs, rate 0%, best 6.91377163e-20
 
 ## Alerts
-- deep_stagnation: No improvement in 45 experiments — search space may be exhausted or agents are stuck
+- deep_stagnation: No improvement in 51 experiments — search space may be exhausted or agents are stuck
 
 ## Recent blackboard (last 20 entries)
 **Key Discoveries:**

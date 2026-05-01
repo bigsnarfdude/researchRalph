@@ -125,3 +125,36 @@ exp118	1.13671782e-23	0.000000	0.000000	discard	Verify n_mode=2 resonance reprod
 exp119	3.25175165e-12	1.002503	1.000218	discard	stable region, u_offset=0.65	agent2	branch_search	1	-1.523848
 exp120	8.31925483e-19	0.000000	0.000000	discard	boundary region, u_offset=0.57	agent2	branch_search	1	-0.000000
 exp121	4.72145975e-16	1.140175	1.140175	discard	positive branch, K_frequency=0.3	agent0	branch_search	0	-1.429425
+exp122	7.71220789e-12	1.002503	-1.000218	discard	boundary region, u_offset=0.58	agent2	branch_search	0	-1.523848
+exp123	4.87617910e-16	1.140175	-1.140175	discard	negative branch, K_frequency=0.3	agent0	branch_search	0	-1.429425
+exp124	3.25175165e-12	1.002503	1.000218	discard	boundary region, u_offset=0.59	agent2	branch_search	0	-1.523848
+exp125	4.87617910e-16	1.140175	-1.140175	discard	negative branch, K_frequency=0.2	agent0	branch_search	0	-1.429425
+exp126	3.25175408e-12	1.002503	-1.000218	discard	negative branch, K_frequency=1.0	agent0	branch_search	1	-1.523848
+exp127	5.39603612e-12	0.000000	0.000000	discard	trivial, u_offset=0.1, n_mode=2, amplitude=0.25	agent1	initial_cond	0	-0.000000
+exp128	4.87617910e-16	1.140175	-1.140175	discard	negative branch, K_frequency=0.75	agent0	branch_search	0	-1.429425
+exp129	1.63601566e-21	0.000000	0.000000	discard	trivial, u_offset=0.1, n_mode=2, amplitude=0.32	agent1	initial_cond	0	0.000000
+exp130	7.70620940e-12	1.002503	1.000218	discard	positive boundary precision: u_offset=+0.575	agent3	branch_search	0	-1.523848
+exp131	4.87617910e-16	1.140175	-1.140175	discard	negative branch, K_frequency=0.9	agent0	branch_search	0	-1.429425
+exp132	4.87617910e-16	1.140175	-1.140175	discard	negative branch, K_frequency=0.95	agent0	branch_search	1	-1.429425
+exp133	7.58013271e-24	0.000000	0.000000	keep	trivial, u_offset=0.1, n_mode=2, amplitude=0.28	agent1	initial_cond	1	0.000000
+exp134	7.70530357e-12	1.002503	-1.000218	discard	boundary precision: u_offset=+0.572	agent3	branch_search	0	-1.523848
+exp135	4.87617910e-16	1.140175	-1.140175	discard	negative branch, K_frequency=0.98	agent0	branch_search	0	-1.429425
+exp136	4.87617910e-16	1.140175	-1.140175	discard	negative branch, K_frequency=0.99	agent0	branch_search	0	-1.429425
+exp137	crash	0	0	crash	boundary: u_offset=+0.573	agent3	branch_search	0	0
+exp138	crash	0	0	crash	boundary: u_offset=+0.574	agent3	branch_search	1	0
+exp139	8.80713394e-24	0.000000	0.000000	discard	trivial, u_offset=0.1, n_mode=2, amplitude=0.29	agent1	initial_cond	0	-0.000000
+exp140	9.57110016e-12	0.000000	0.000000	discard	trivial, u_offset=0.1, n_mode=2, amplitude=0.27	agent1	initial_cond	0	-0.000000
+exp141	crash	0	0	crash	relaxed tolerance at bifurcation: tol=1e-10, u_offset=0.573	agent3	branch_search	0	0
+exp142	7.61383482e-24	0.000000	0.000000	discard	trivial, u_offset=0.1, n_mode=2, amplitude=0.275	agent1	initial_cond	0	0.000000
+exp143	1.67364293e-14	0.000000	-0.000000	discard	trivial resonance test: u_offset=0.0, n_mode=2, amplitude=0.3	agent3	branch_search	0	-0.000000
+exp144	1.52939907e-15	0.000000	0.000000	discard	resonance test: u_offset=0.05, n_mode=2, amplitude=0.3	agent3	branch_search	1	-0.000000
+exp145	3.95363874e-20	0.000000	0.000000	discard	resonance test: u_offset=0.15, n_mode=2, amplitude=0.3	agent3	branch_search	0	-0.000000
+exp146	9.57798616e-19	0.000000	0.000000	discard	resonance test: u_offset=0.2, n_mode=2, amplitude=0.3	agent3	branch_search	0	-0.000000
+exp147	7.70462232e-12	1.002503	1.000218	discard	bifurcation refinement: u_offset=0.505	agent2	branch_search	1	-1.523848
+exp148	1.72307213e-13	0.000000	0.000000	discard	u_offset=0.506	agent2	branch_search	1	-0.000000
+exp149	1.13671782e-23	0.000000	0.000000	discard	verify agent1 optimal: u_offset=0.1, n_mode=2, amplitude=0.3	agent3	branch_search	0	0.000000
+exp150	3.25175165e-12	1.002503	1.000218	discard	test mode-2 resonance on positive branch: u_offset=0.88, amplitude=0.3, n_mode=2	agent3	branch_search	0	-1.523848
+exp151	3.25175165e-12	1.002503	-1.000218	discard	test mode-2 resonance on negative branch: u_offset=-0.88, amplitude=0.3, n_mode=2	agent3	branch_search	0	-1.523848
+exp152	1.84236272e-15	0.000000	-0.000000	discard	negative resonance test: u_offset=-0.05, n_mode=2, amplitude=0.3	agent3	branch_search	0	-0.000000
+exp153	7.85158994e-15	0.000000	-0.000000	discard	negative resonance test: u_offset=-0.1, n_mode=2, amplitude=0.3	agent3	branch_search	1	-0.000000
+exp154	7.93390022e-15	0.000000	-0.000000	discard	negative resonance test: u_offset=-0.15, n_mode=2, amplitude=0.3	agent3	branch_search	0	-0.000000

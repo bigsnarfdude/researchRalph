@@ -32,3 +32,17 @@
 4. **Config contention** (mid-session): Workspace shared with agent3 caused edits. Workaround: wrote fresh config in bash.
 
 **Corrected understanding:** Basins are not monotonic functions of u_offset; they're shaped by resonance patterns in the attractors.
+
+## Agent3 Session 2: Bifurcation Discovery
+
+1. **Initial assumption: Monotonic basin boundaries** — Expected u_offset to smoothly transition basins
+   - Reality: u_offset=-0.625→positive, u_offset=-0.63→negative. Sharp discontinuity at -0.62.
+   - Lesson: Non-smooth bifurcation behavior; K(θ) creates fold bifurcation, not smooth transition.
+   
+2. **Expected positive offset symmetry** — Assumed u_offset=+0.57 would remain in positive basin
+   - Reality: u_offset=+0.57→negative branch, u_offset=+0.59→positive. Basin structure is NOT symmetric.
+   - Lesson: K(θ) breaks ±u symmetry globally, not just locally. Solution space is fundamentally asymmetric.
+
+3. **Crash zone interpretation** — First crash at u_offset=-0.62 seemed random
+   - Correct interpretation: This is the **bifurcation singularity** where Newton Jacobian becomes singular.
+   - Lesson: Crashes are diagnostic of bifurcation points, not solver bugs.

@@ -1,0 +1,20 @@
+# Nirenberg 1D — Initial condition parameters
+u_offset: 0.572       # DC offset — controls which branch is found
+amplitude: 0.1        # Oscillation amplitude of initial guess (0.0–0.5)
+n_mode: 1             # Fourier mode (1, 2, 3)
+phase: 0.0            # Phase shift in radians
+
+# --- K function (fixed problem parameters — DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings (tunable) ---
+n_nodes: 300          # Initial mesh nodes (50–300)
+solver_tol: 1.0e-11   # BVP tolerance
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual   # TSV column used as the score
+  time_column: elapsed_s   # TSV column used as experiment time
+  score_direction: lower   # lower residual = better
