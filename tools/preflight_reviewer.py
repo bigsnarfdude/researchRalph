@@ -114,11 +114,93 @@ def get_recent_experiments_text(results_tsv: Path, n: int = 5) -> str:
     return "\n".join([header] + rows) if rows else "(no results yet)"
 
 
-def get_mistakes(mistakes_file: Path) -> str:
+def parse_structured_mistakes(mistakes_file: Path) -> list:
+    """
+    Parse v4.9.3 structured MISTAKES.md into list of dicts.
+    Each entry: {exp, summary, status, approach, do_not_retry}.
+    Falls back gracefully on legacy free-text (no ## headers).
+    """
     if not mistakes_file.exists():
+        return []
+    entries = []
+    current = None
+    for line in mistakes_file.read_text().splitlines():
+        stripped = line.strip()
+        if stripped.startswith("## "):
+            if current:
+                entries.append(current)
+            m = re.match(r"##\s+(EXP-\d+|exp\d+):?\s*(.*)", stripped, re.IGNORECASE)
+            if not m:
+                current = None
+                continue
+            summary = m.group(2).strip()
+            status = ""
+            sm = re.search(r"→\s*(DEAD|PARTIAL|PRE-FLIGHT|KEEP)\b", summary, re.IGNORECASE)
+            if sm:
+                status = sm.group(1).upper()
+            current = {
+                "exp": m.group(1),
+                "summary": summary,
+                "status": status,
+                "approach": "",
+                "do_not_retry": "",
+            }
+        elif current:
+            if stripped.startswith("- **Approach**:"):
+                current["approach"] = stripped.split(":", 1)[1].strip().strip("*")
+            elif stripped.startswith("- **Do not retry**:"):
+                current["do_not_retry"] = stripped.split(":", 1)[1].strip().strip("*")
+            elif stripped.startswith("- **Lesson**:") and not current["do_not_retry"]:
+                current["do_not_retry"] = stripped.split(":", 1)[1].strip().strip("*")
+    if current:
+        entries.append(current)
+    return entries
+
+
+def format_mistakes_for_prompt(mistakes_file: Path, max_entries: int = 10) -> str:
+    """
+    Context-budgeted MISTAKES.md summary for the Haiku prompt.
+    Strategy: all entries with non-empty do_not_retry + last 5 chronologically,
+    de-duplicated, skipping empty PRE-FLIGHT rejections.
+    Falls back to raw text for legacy unstructured files.
+    """
+    entries = parse_structured_mistakes(mistakes_file)
+    if not entries:
+        # Legacy fallback: raw text (truncated)
+        if not mistakes_file.exists():
+            return "(none recorded)"
+        text = mistakes_file.read_text().strip()
+        return text[:800] if text else "(none recorded)"
+
+    # Skip PRE-FLIGHT entries with no do_not_retry — they add no signal
+    useful = [e for e in entries if not (e["status"] == "PRE-FLIGHT" and not e["do_not_retry"])]
+
+    # Priority: entries with do_not_retry pattern
+    with_pattern = [e for e in useful if e["do_not_retry"]]
+    without_pattern = [e for e in useful if not e["do_not_retry"]]
+
+    # Include all with pattern + last 5 without (chronological recency)
+    selected = with_pattern + without_pattern[-5:]
+    # De-duplicate by exp, preserve order
+    seen = set()
+    deduped = []
+    for e in selected:
+        if e["exp"] not in seen:
+            seen.add(e["exp"])
+            deduped.append(e)
+
+    if not deduped:
         return "(none recorded)"
-    text = mistakes_file.read_text().strip()
-    return text if text else "(none recorded)"
+
+    lines = []
+    for e in deduped[:max_entries]:
+        line = f"- {e['exp']}: {e['summary']}"
+        if e["approach"]:
+            line += f"\n  Approach: {e['approach']}"
+        if e["do_not_retry"]:
+            line += f"\n  Do not retry: {e['do_not_retry']}"
+        lines.append(line)
+    return "\n".join(lines)
 
 
 def call_haiku(prompt: str, timeout: int = 45) -> str:
@@ -181,7 +263,7 @@ def review(domain_dir_str: str, config_file_str: str, exp_id: str,
 
     # --- Check 3: Haiku judgment ---
     recent_exps = get_recent_experiments_text(results_tsv, n=5)
-    mistakes = get_mistakes(domain_dir / "MISTAKES.md")
+    mistakes = format_mistakes_for_prompt(domain_dir / "MISTAKES.md")
     config_summary = ", ".join(f"{k}={int(v) if v == int(v) else v}"
                                for k, v in list(proposed.items())[:12])
     if len(proposed) > 12:

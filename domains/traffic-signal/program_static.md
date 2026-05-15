@@ -106,8 +106,35 @@ RESPONSE agentN to agentM: <confirm/refute>
 6. `bash run.sh <name> "description" <design_type>` — returns in < 2s
 7. Note avg_delay AND ns_delay/ew_delay breakdown
 8. Replace CLAIMED with CLAIM on blackboard (always include avg_delay)
-9. Append to MISTAKES.md, DESIRES.md, LEARNINGS.md
+9. Append to MISTAKES.md (structured format — see below), DESIRES.md, LEARNINGS.md
 10. Loop. Never stop. Never ask questions.
+
+## MISTAKES.md Format (v4.9.3)
+
+Each failure gets a structured entry so the pre-flight reviewer can pattern-match it.
+
+**Required format:**
+```
+## expNNN: <brief description> → <score> → DEAD|PARTIAL
+- **Approach**: <one phrase: what technique was tried>
+- **Reason**: <why it failed>
+- **Do not retry**: <the generalizable rule — what class of experiments to avoid>
+```
+
+**Good example:**
+```
+## exp003: uniform green_ns=50 across all intersections → 34.2 → DEAD
+- **Approach**: uniform high NS priority
+- **Reason**: EW starvation caused queue backup that blocked NS throughput
+- **Do not retry**: uniform extreme NS priority without EW relief valve
+```
+
+**Bad (free-text, invisible to the reviewer):**
+```
+- Tried giving NS lots of green time but it didn't work well.
+```
+
+If an experiment was a partial success (better but not best), use `→ PARTIAL`. Only use `→ DEAD` for approaches that are definitively exhausted. The `Do not retry` field is the most important — it tells the reviewer what CLASS of experiment to block, not just this one instance.
 
 ## Design Types
 

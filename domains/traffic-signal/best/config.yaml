@@ -17,48 +17,48 @@
 # Score: avg_delay (lower is better, units = simulation steps)
 
 # --- Intersection (row=0, col=0) ---
-i00_green_ns: 41
-i00_green_ew: 25
+i00_green_ns: 43
+i00_green_ew: 24
 i00_offset: 0
 
 # --- Intersection (row=0, col=1) ---
-i01_green_ns: 41
-i01_green_ew: 25
+i01_green_ns: 43
+i01_green_ew: 24
 i01_offset: 0
 
 # --- Intersection (row=0, col=2) ---
-i02_green_ns: 41
-i02_green_ew: 25
+i02_green_ns: 43
+i02_green_ew: 24
 i02_offset: 0
 
 # --- Intersection (row=1, col=0) ---
-i10_green_ns: 41
-i10_green_ew: 25
+i10_green_ns: 43
+i10_green_ew: 24
 i10_offset: 0
 
 # --- Intersection (row=1, col=1) ---
-i11_green_ns: 41
-i11_green_ew: 25
+i11_green_ns: 43
+i11_green_ew: 24
 i11_offset: 0
 
 # --- Intersection (row=1, col=2) ---
-i12_green_ns: 41
-i12_green_ew: 25
+i12_green_ns: 43
+i12_green_ew: 24
 i12_offset: 0
 
 # --- Intersection (row=2, col=0) ---
-i20_green_ns: 41
-i20_green_ew: 25
+i20_green_ns: 43
+i20_green_ew: 24
 i20_offset: 0
 
 # --- Intersection (row=2, col=1) ---
-i21_green_ns: 41
-i21_green_ew: 25
+i21_green_ns: 43
+i21_green_ew: 24
 i21_offset: 0
 
 # --- Intersection (row=2, col=2) ---
-i22_green_ns: 41
-i22_green_ew: 25
+i22_green_ns: 43
+i22_green_ew: 24
 i22_offset: 0
 
 # --- TrustLoop scorer config (do not edit) ---

@@ -472,6 +472,9 @@ def parse_telemetry(domain_dir: Path) -> AgentTelemetry:
                 tel.desires.append(line[2:].strip())
 
     # MISTAKES.md — structured sections per experiment
+    # v4.9.3 format: ## expNNN: <summary> → <score> → DEAD|PARTIAL|PRE-FLIGHT (agent)
+    # Legacy format:  ## EXP-003: description (agent)
+    # Fields: **Approach** | **What** | **Score** | **Result** | **Reason** | **Why it failed** | **Do not retry** | **Lesson**
     mistakes_path = domain_dir / "MISTAKES.md"
     if mistakes_path.exists():
         current: dict | None = None
@@ -480,23 +483,42 @@ def parse_telemetry(domain_dir: Path) -> AgentTelemetry:
             if line.startswith("## "):
                 if current:
                     tel.mistakes.append(current)
-                # Parse "## EXP-003: matrix_lr=0.06 (agent1)"
+                # Parse header: ## expNNN: summary → score → STATUS (agent)
                 m = re.match(r"##\s+(EXP-\d+|exp\d+):?\s*(.*)", line, re.IGNORECASE)
+                summary = m.group(2).strip() if m else line[3:]
+                # Extract → STATUS from summary if present
+                status = ""
+                status_m = re.search(r"→\s*(DEAD|PARTIAL|PRE-FLIGHT|KEEP)\b", summary, re.IGNORECASE)
+                if status_m:
+                    status = status_m.group(1).upper()
                 current = {
                     "exp": m.group(1) if m else line[3:],
-                    "what": m.group(2).strip() if m else "",
-                    "result": "",
-                    "lesson": "",
+                    "summary": summary,
+                    "status": status,       # DEAD | PARTIAL | PRE-FLIGHT | KEEP | ""
+                    "approach": "",         # v4.9.3: **Approach** (replaces **What**)
+                    "what": "",             # legacy compat
+                    "score_val": "",        # v4.9.3: **Score**
+                    "result": "",           # legacy compat
+                    "reason": "",           # v4.9.3: **Reason** / **Why it failed**
+                    "do_not_retry": "",     # v4.9.3: **Do not retry** (was **Lesson**)
                 }
             elif current:
-                if line.startswith("- **What**:"):
+                if line.startswith("- **Approach**:"):
+                    current["approach"] = line.split(":", 1)[1].strip().strip("*")
+                elif line.startswith("- **What**:"):
                     current["what"] = line.split(":", 1)[1].strip().strip("*")
+                elif line.startswith("- **Score**:"):
+                    current["score_val"] = line.split(":", 1)[1].strip().strip("*")
                 elif line.startswith("- **Result**:"):
                     current["result"] = line.split(":", 1)[1].strip().strip("*")
+                elif line.startswith("- **Reason**:") or line.startswith("- **Why it failed**:"):
+                    current["reason"] = line.split(":", 1)[1].strip().strip("*")
+                elif line.startswith("- **Do not retry**:"):
+                    current["do_not_retry"] = line.split(":", 1)[1].strip().strip("*")
                 elif line.startswith("- **Lesson**:"):
-                    current["lesson"] = line.split(":", 1)[1].strip().strip("*")
-                elif line.startswith("- **Why it failed**:"):
-                    current["why"] = line.split(":", 1)[1].strip().strip("*")
+                    # Legacy: Lesson maps to do_not_retry (generalizable takeaway)
+                    if not current["do_not_retry"]:
+                        current["do_not_retry"] = line.split(":", 1)[1].strip().strip("*")
         if current:
             tel.mistakes.append(current)
 

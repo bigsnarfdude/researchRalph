@@ -51,9 +51,9 @@ if [ "${RRMA_PREFLIGHT:-0}" = "1" ] && [ -f "$PREFLIGHT_SCRIPT" ]; then
     if [[ "$PREFLIGHT" == SKIP_* ]]; then
         SKIP_REASON="${PREFLIGHT#SKIP_}"
         echo "[preflight] $EXP_ID REJECTED: $SKIP_REASON"
-        # Log rejection to MISTAKES.md
-        printf '\n[%s] PRE-FLIGHT REJECTION: %s\nDescription: %s\n' \
-            "$EXP_ID" "$SKIP_REASON" "$DESCRIPTION" >> "$DOMAIN_DIR/MISTAKES.md"
+        # Log rejection to MISTAKES.md in v4.9.3 structured format
+        printf '\n## %s: %s → PRE-FLIGHT\n- **Approach**: %s\n- **Reason**: %s\n- **Do not retry**: \n' \
+            "$EXP_ID" "$DESCRIPTION" "$DESIGN" "$SKIP_REASON" >> "$DOMAIN_DIR/MISTAKES.md"
         # Log to results.tsv as skip so EXP_ID is consumed and agents can see it
         printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
             "$EXP_ID" "skip" "0" "0" "skip" \

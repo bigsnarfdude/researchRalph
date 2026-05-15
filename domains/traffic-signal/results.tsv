@@ -8,3 +8,9 @@ exp006	38.418	2479	152	keep	Fine-tuning demand split NS=41 EW=26	agent_1	demand_
 exp007	38.586	2466	150	discard	Fine-tuning demand split NS=40 EW=25	agent_1	demand_split	1	36.661
 exp008	39.090	2461	151	discard	Fine-tuning demand split NS=39 EW=26	agent_1	demand_split	1	37.483
 exp009	38.256	2473	149	keep	Fine-tuning demand split NS=41 EW=25	agent_1	demand_split	0	36.174
+exp010	37.812	2481	148	keep	Fine-tuning demand split NS=42 EW=25	agent_1	demand_split	0	35.605
+exp011	38.118	2467	146	discard	Fine-tuning demand split NS=41 EW=24	agent_1	demand_split	0	35.820
+exp012	48.462	2487	155	discard	N-S green wave with NS=41 EW=25, offsets 0, 24, 48	agent_1	green_wave	0	48.632
+exp013	37.431	2483	146	keep	Further demand split tuning: NS=43, EW=24	agent_1	demand_split	0	34.799
+exp014	43.932	2468	128	discard	E-W green wave with NS=42, EW=25 and offsets 0, 24, 48 across columns	agent_1	green_wave	0	35.849
+exp015	38.418	2479	152	discard	Slightly less aggressive demand split: NS=41, EW=26	agent_1	demand_split	0	36.561
