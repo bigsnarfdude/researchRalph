@@ -15,6 +15,7 @@ Usage:
     python3 v4/diagnose.py domains/gpt2-tinystories-v44
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -78,6 +79,104 @@ def compute_process_quality(report: DomainReport) -> int:
     if len(tel.learnings) > 5: pq += 3
 
     return min(pq, 30)
+
+
+def detect_death_spiral(report: DomainReport) -> bool:
+    """
+    True if crash rate is accelerating OR rolling score mean is trending worse.
+    Death spiral = agents iterating into increasingly unstable territory.
+    """
+    all_exps = report.experiments
+    if len(all_exps) < 12:
+        return False
+
+    # Crash rate: last 10 vs prior 10
+    recent = all_exps[-10:]
+    prior = all_exps[-20:-10] if len(all_exps) >= 20 else all_exps[:-10]
+    if prior:
+        crash_recent = sum(1 for e in recent if e.score is None) / len(recent)
+        crash_prior = sum(1 for e in prior if e.score is None) / len(prior)
+        if crash_recent >= 0.4 and crash_recent > crash_prior * 2:
+            return True
+
+    # Rolling mean trend: linear regression on last 15 non-crash scores
+    scored = [e for e in all_exps if e.score is not None][-15:]
+    if len(scored) < 6:
+        return False
+    lower = report.score_direction == "lower"
+    scores = [e.score for e in scored]
+    # Flip so "improving" always means decreasing
+    if not lower:
+        scores = [-s for s in scores]
+    n = len(scores)
+    xs = list(range(n))
+    sx = sum(xs); sy = sum(scores)
+    sxy = sum(x * y for x, y in zip(xs, scores))
+    sx2 = sum(x * x for x in xs)
+    denom = n * sx2 - sx * sx
+    if denom == 0:
+        return False
+    slope = (n * sxy - sx * sy) / denom
+    # Spiral: mean rising by more than 1% of best per step, sustained over 15 exps
+    if report.best_score and report.best_score != 0:
+        threshold = abs(report.best_score) * 0.01
+        return slope > threshold
+    return False
+
+
+def detect_false_consensus(domain_dir: Path, report: DomainReport) -> str | None:
+    """
+    Returns the dominant design axis if 2+ distinct agents are all claiming wins
+    from the same design type in the last 15 blackboard CLAIM lines — without
+    independent cross-validation.
+    Returns None if no false consensus detected.
+    """
+    bb = domain_dir / "blackboard.md"
+    if not bb.exists():
+        return None
+
+    claim_pattern = re.compile(r"^CLAIM\s+(\S+):", re.IGNORECASE)
+    lines = bb.read_text().splitlines()
+
+    # Collect (agent, exp_id) pairs from last 15 CLAIM lines
+    claims = []
+    for line in lines:
+        m = claim_pattern.match(line.strip())
+        if m:
+            agent = m.group(1)
+            exp_m = re.search(r"exp\d+", line, re.IGNORECASE)
+            exp_id = exp_m.group(0).lower() if exp_m else None
+            claims.append((agent, exp_id))
+    recent_claims = claims[-15:]
+    if len(recent_claims) < 4:
+        return None
+
+    # Map exp_id → design from results
+    exp_design = {e.exp_id: e.design for e in report.experiments if e.design}
+
+    # Tally designs per agent from recent claims
+    agent_designs: dict[str, set] = {}
+    for agent, exp_id in recent_claims:
+        design = exp_design.get(exp_id, "") if exp_id else ""
+        if not design:
+            continue
+        agent_designs.setdefault(agent, set()).add(design)
+
+    if len(agent_designs) < 2:
+        return None
+
+    # Find design claimed by 2+ agents with no cross-design claims
+    from collections import Counter
+    all_designs = [d for ds in agent_designs.values() for d in ds]
+    counts = Counter(all_designs)
+    for design, count in counts.most_common():
+        if count >= 2:
+            # Check that agents claiming this design aren't also exploring others
+            exclusive = sum(1 for ds in agent_designs.values()
+                            if design in ds and len(ds) == 1)
+            if exclusive >= 2:
+                return design
+    return None
 
 
 def decide(report: DomainReport, domain_dir: Path) -> str:
@@ -144,11 +243,23 @@ def decide(report: DomainReport, domain_dir: Path) -> str:
     crash_streaks = [a for a in alerts if a.category == "crash_streak"]
     deep_stag = [a for a in alerts if a.category == "deep_stagnation"]
 
+    # --- v4.9.4: death spiral + false consensus ---
+    death_spiral = detect_death_spiral(report)
+    false_consensus_axis = detect_false_consensus(domain_dir, report)
+
     # --- Decision matrix ---
 
     # Low PQ after enough experiments = hacking
     if pq < 10 and total > 15:
         return "STOP_HACKING"
+
+    # Death spiral: crash rate accelerating or rolling mean worsening
+    if death_spiral and pq >= 10:
+        return "NUDGE"
+
+    # False consensus: 2+ agents locked on same axis without cross-validation
+    if false_consensus_axis and pq >= 10:
+        return "NUDGE"
 
     # Crash streak alert = something is fundamentally broken
     if crash_streaks and pq >= 10:
@@ -208,6 +319,9 @@ def main():
     print(f"[diagnose.py] Telemetry: {len(report.telemetry.desires)} desires, "
           f"{len(report.telemetry.mistakes)} mistakes, "
           f"{len(report.telemetry.learnings)} learnings", file=sys.stderr)
+    _ds = detect_death_spiral(report)
+    _fc = detect_false_consensus(domain_dir, report)
+    print(f"[diagnose.py] Death spiral: {_ds} | False consensus: {_fc}", file=sys.stderr)
 
     # Decide
     decision = decide(report, domain_dir)
@@ -244,6 +358,8 @@ def main():
         "tool_issues": tool_issues,
         "dominant_axis": dominant_axis,
         "stagnation": report.stagnation_depth,
+        "death_spiral": _ds,
+        "false_consensus_axis": _fc,
     }
     nudge_path = domain_dir / ".nudge_data.json"
     nudge_path.write_text(_json.dumps(nudge_data, indent=2))
