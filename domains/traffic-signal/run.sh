@@ -30,10 +30,39 @@ else
     exit 1
 fi
 
-RUN_LOG="$LOGS_DIR/${METHOD}_${AGENT}_$(date +%s).log"
-SNAPSHOT="$LOGS_DIR/${METHOD}_${AGENT}_$(date +%s)_config.yaml"
+TS=$(date +%s)
+RUN_LOG="$LOGS_DIR/${METHOD}_${AGENT}_${TS}.log"
+SNAPSHOT="$LOGS_DIR/${METHOD}_${AGENT}_${TS}_config.yaml"
 cp "$CONFIG_FILE" "$SNAPSHOT"
 CONFIG_HASH=$(md5sum "$SNAPSHOT" 2>/dev/null | cut -d' ' -f1 || md5 -q "$SNAPSHOT" 2>/dev/null || echo "nohash")
+
+# Generate EXP_ID early (needed for pre-flight logging)
+LAST_N=$(grep -oE 'exp[0-9]+' "$RESULTS_TSV" 2>/dev/null | grep -oE '[0-9]+' | sort -n | tail -1 || echo 0)
+NEXT_N=$(printf "%03d" $((10#${LAST_N:-0} + 1)))
+EXP_ID="exp${NEXT_N}"
+
+# v4.9.2: Pre-flight reviewer (opt-in via RRMA_PREFLIGHT=1)
+REPO_ROOT="$(cd "$DOMAIN_DIR/../.." && pwd)"
+PREFLIGHT_SCRIPT="$REPO_ROOT/tools/preflight_reviewer.py"
+if [ "${RRMA_PREFLIGHT:-0}" = "1" ] && [ -f "$PREFLIGHT_SCRIPT" ]; then
+    PREFLIGHT=$(python3 "$PREFLIGHT_SCRIPT" \
+        "$DOMAIN_DIR" "$SNAPSHOT" "$EXP_ID" "$DESCRIPTION" "$DESIGN" 2>/dev/null \
+        || echo "PROCEED")
+    if [[ "$PREFLIGHT" == SKIP_* ]]; then
+        SKIP_REASON="${PREFLIGHT#SKIP_}"
+        echo "[preflight] $EXP_ID REJECTED: $SKIP_REASON"
+        # Log rejection to MISTAKES.md
+        printf '\n[%s] PRE-FLIGHT REJECTION: %s\nDescription: %s\n' \
+            "$EXP_ID" "$SKIP_REASON" "$DESCRIPTION" >> "$DOMAIN_DIR/MISTAKES.md"
+        # Log to results.tsv as skip so EXP_ID is consumed and agents can see it
+        printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+            "$EXP_ID" "skip" "0" "0" "skip" \
+            "$DESCRIPTION (preflight: $SKIP_REASON)" \
+            "$AGENT" "$DESIGN" "0" "0" >> "$RESULTS_TSV"
+        exit 0
+    fi
+    echo "[preflight] $EXP_ID approved: $PREFLIGHT"
+fi
 
 echo "[run.sh] $METHOD | agent=$AGENT | config=$CONFIG_FILE"
 
@@ -60,11 +89,6 @@ if [ "$EXIT_CODE" -ne 0 ] || [ -z "$SCORE" ] || [ "$SUCCESS" != "True" ]; then
     EW_DELAY="0"
     STATUS="crash"
 fi
-
-# Generate EXP-ID
-LAST_N=$(grep -oE 'exp[0-9]+' "$RESULTS_TSV" 2>/dev/null | grep -oE '[0-9]+' | sort -n | tail -1 || echo 0)
-NEXT_N=$(printf "%03d" $((10#${LAST_N:-0} + 1)))
-EXP_ID="exp${NEXT_N}"
 
 # keep if lower avg_delay than current best
 if [ "$STATUS" != "crash" ]; then
