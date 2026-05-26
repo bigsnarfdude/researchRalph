@@ -45,6 +45,19 @@ MAX_SORRY=4
 if [ "$SORRY_COUNT" -eq 0 ] && [ "$BUILD_EXIT" -eq 0 ]; then
     echo "SCORE=1.0"; echo "STATUS: PROVED"
     SCORE="1.0"; STATUS="proved"
+
+# --- RH Prevention: flock + chmod ensures only oracle writes results.tsv ---
+RESULTS="$DOMAIN_DIR/results.tsv"
+LOCK="$DOMAIN_DIR/results.lock"
+(
+    flock -x -w 30 200 || { echo "[oracle] Could not acquire results.lock — skipping log"; exit 0; }
+    chmod 644 "$RESULTS" 2>/dev/null || true
+    if [ ! -f "$RESULTS" ] || ! head -1 "$RESULTS" | grep -q "^EXP-ID"; then
+        printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$RESULTS"
+    fi
+    printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "$DESCRIPTION" "$AGENT" >> "$RESULTS"
+    chmod 444 "$RESULTS"
+) 200>"$LOCK"
     # Copy winning proof to domain root
     cp "$SOLUTION" "$DOMAIN_DIR/Erdos125.lean"
 elif [ "$BUILD_EXIT" -ne 0 ]; then
@@ -59,10 +72,7 @@ else
     SCORE="$FRAC"; STATUS="in_progress"
 fi
 
-# Log to results.tsv
-if [ ! -f "$DOMAIN_DIR/results.tsv" ]; then
-    printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$DOMAIN_DIR/results.tsv"
 fi
 EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$DOMAIN_DIR/results.tsv") )))"
 TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "proof attempt $TIMESTAMP" "$AGENT" >> "$DOMAIN_DIR/results.tsv"
+"

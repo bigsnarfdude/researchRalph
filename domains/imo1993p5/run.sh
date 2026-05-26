@@ -32,6 +32,19 @@ if lake env lean "$TMP_FILE" 2>&1; then
     echo "Proof compiles successfully"
     SCORE="1.0"
     STATUS="keep"
+
+# --- RH Prevention: flock + chmod ensures only oracle writes results.tsv ---
+RESULTS="$DOMAIN_DIR/results.tsv"
+LOCK="$DOMAIN_DIR/results.lock"
+(
+    flock -x -w 30 200 || { echo "[oracle] Could not acquire results.lock — skipping log"; exit 0; }
+    chmod 644 "$RESULTS" 2>/dev/null || true
+    if [ ! -f "$RESULTS" ] || ! head -1 "$RESULTS" | grep -q "^EXP-ID"; then
+        printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$RESULTS"
+    fi
+    printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "$DESCRIPTION" "$AGENT" >> "$RESULTS"
+    chmod 444 "$RESULTS"
+) 200>"$LOCK"
 else
     echo "SCORE=0.0"
     echo "Proof failed to compile"
@@ -47,11 +60,8 @@ EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$DOMAIN_DIR/results.tsv" 2>/dev/null |
 AGENT="${GEMINI_AGENT_ID:-agent0}"
 TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-# Append to results.tsv
-if [ ! -f "$DOMAIN_DIR/results.tsv" ]; then
-    printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$DOMAIN_DIR/results.tsv"
 fi
-printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "proof attempt" "$AGENT" >> "$DOMAIN_DIR/results.tsv"
+"
 
 # Append to experiments.jsonl
 python3 -c "

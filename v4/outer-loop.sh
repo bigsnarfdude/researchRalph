@@ -40,6 +40,11 @@ TASTE="$SCRIPT_DIR/taste.md"
 source "$(cd "$(dirname "$0")" && pwd)/env.sh"
 
 LOG="$DOMAIN_DIR/outer-loop.log"
+# --- RH Prevention: lock results.tsv so only run.sh (oracle) can write ---
+touch "$DOMAIN_DIR/results.tsv"
+chmod 444 "$DOMAIN_DIR/results.tsv"
+log "results.tsv locked (read-only). Only oracle (run.sh) may write via flock."
+
 # Select diagnoser: lean_proof domains use diagnose_lean.py
 DOMAIN_TYPE=$(grep '^domain_type:' "$DOMAIN_DIR/config.yaml" 2>/dev/null | awk '{print $2}')
 if [ "$DOMAIN_TYPE" = "lean_proof" ] && [ -f "$SCRIPT_DIR/diagnose_lean.py" ]; then
@@ -227,6 +232,7 @@ NUDGE_EOF
     POST_EXP=$(awk -F'\t' 'NR>1{n++} END{print n+0}' "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 0)
     NEW_EXP=$((POST_EXP - PRE_EXP))
 
+    bash "$SCRIPT_DIR/validate_claims.sh" "$DOMAIN_DIR" 2>&1 | tee -a "$LOG"
     log "Generation $gen complete: $NEW_EXP new experiments, best=$POST_BEST (was $PRE_BEST)"
 
     # --- Step 5: Generate meta-blackboard distillation ---

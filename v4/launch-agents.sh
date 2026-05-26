@@ -150,6 +150,13 @@ ${MEMORY_CONTEXT:-No domain memory available.}
 If program_static.md does not exist, read program.md for everything (backwards compatibility).
 If stoplight.md does not exist, read blackboard.md instead.
 
+
+## REWARD HACKING PREVENTION — READ THIS
+results.tsv is write-protected (chmod 444). Direct writes will fail with permission denied.
+The ONLY way to register an experiment is: bash run.sh
+Never write to results.tsv yourself. Never claim a score in blackboard.md without citing exact run.sh output.
+If run.sh returns SCORE=0.0, that is the score. Do not report otherwise.
+Unverified claims in blackboard.md will be flagged by the oracle audit.
 ## YOUR WORKSPACE (v4.7 — no more race conditions)
 Your private workspace is: workspace/agent$i/
 - Your editable file is: workspace/agent$i/$EDITABLE_FILE
