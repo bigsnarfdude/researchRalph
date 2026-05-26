@@ -1,0 +1,58 @@
+No results yet.
+exp001_LpToolkit	0.0380	1166	0	keep	LpFunctionToolkit sorry-free: scalar_cauchy_to_limit via Lp completeness, exists_pi_limit via component-wise scalar limits	agent2	tactic	2026-04-08T03:38:16Z
+exp001_foundations	0.0371	1167	0	keep	Proved 4 sorries: eLpNorm_pi_le_sum_component in LpFunctionToolkit, lintegral_biUnion_finset_le_sum + exists_maximal_separated_subfinset + ae_on_set + lintegralOn_le_sum in FiniteCover	agent1	tactic	2026-04-08T03:38:21Z
+exp001_foundations	0.0454	1157	0	keep	Proved SolutionInterfaces(2), MoserConstants(6), MeasureBounds(7), fixed EllipticCoefficients build	agent3	tactic	2026-04-08T03:48:26Z
+exp002_foundations_v2	0.0800	1115	0	keep	Fixed lintegral_biUnion proof, proved volumeReal_ball_eq, exists_finite_inner_ball_cover in FiniteCover	agent1	tactic	2026-04-08T04:45:40Z
+exp002_build_fixes	0.0833	1111	0	keep	Fixed build errors (FiniteCover, WholeSpaceSobolev, BallScaling, Witnesses, MeasureBounds), proved aestronglyMeasurable_euclidean_of_components + fderiv_eq_zero_of_notMem_tsupport	agent2	tactic	2026-04-08T04:57:10Z
+exp003_foundations	0.1056	1084	1	keep	Proved 128 sorries: MoserIteration/Sequences (16), Oscillation/BMO (3), Localization (3), Harnack arithmetic/geometry (20+), Witnesses (4), EllipticCoeff (1), plus fixes from other agents	agent0	tactic	2026-04-08T05:20:35Z
+exp004_weakderiv_restrict	0.1592	1019	0	keep	Proved HasWeakPartialDeriv.restrict in WeakDerivatives.lean (support-based set integral conversion)	agent1	agent1	2026-04-08T06:08:32Z
+exp004_bmo_geometry	0.1667	1010	0	keep	Proved BMO geometry+volume lemmas, superEpsSeq arithmetic, crossover volume scaling, fixed ExactRegularization build	agent0	agent0	2026-04-08T06:15:21Z
+agent2_campanato_localization	0.1980	972	0	keep	Campanato, Localization wrappers, WeakHarnack constants, StampacchiaTruncation fixes	agent2	tactic	2026-04-08T06:31:51Z
+degiorgi_v1	0.1980	972	0	keep	no description	agent0	tactic	2026-04-08T06:32:04Z
+degiorgi_v1	0.2046	964	0	keep	no description	agent1	tactic	2026-04-08T06:36:19Z
+degiorgi_v1	0.2030	966	0	keep	no description	agent0	tactic	2026-04-08T06:43:21Z
+agent3_exp1	0.2063	962	0	keep	Proved 20+ sorries: OscillationDecay (ae lemmas, essSup/essInf const, nlinarith), Profiles (smoothClip, moserReg, moserExact), fixed build errors (StampacchiaTruncation, Campanato, WeakHarnack, Basics)	agent3	tactic	2026-04-08T06:57:21Z
+agent2_exp5	0.2096	958	0	keep	ExponentialIntegrability+WeakHarnack+Linfty: crossover_bmo_scale_nonneg, crossoverC'/pos/le_one, rpow_le_rpow_of_exponent, integral proofs, positivePartSub identity, moserRadius_gt_half, Classical.choose_spec wrappers	agent2	tactic	2026-04-08T06:58:49Z
+degiorgi_v1	0.2269	937	0	keep	no description	agent1	tactic	2026-04-08T07:02:54Z
+degiorgi_v1	0.2533	905	0	keep	no description	agent1	tactic	2026-04-08T07:11:10Z
+agent3_exp2	0.2781	875	0	keep	Proved 12+ sorries: shrinkingBump arithmetic (rIn_pos, rIn_lt_rOut), tendsto_shrinkingBump_rOut, zero_outside_of_tsupport, fderiv_apply_zero_outside, fderiv_apply_eq_zero_on_cthickening, memW01p_of_global_approx_supported, abs_fderiv_apply_le_norm_fderiv, volumeReal_ball_halves, volume_fivefold, moserCloseoutExponent_tendsto_atTop, moserLinftyBoundPow_nonneg, recipApprox_zero, moserExponentSeq_forward_target_eq, stampacchia_congr_ae (linter)	agent3	agent3	2026-04-08T10:48:21Z
+degiorgi_v1	0.2781	875	0	keep	no description	agent3	tactic	2026-04-08T10:51:26Z
+degiorgi_v1	0.2830	869	0	keep	no description	agent3	tactic	2026-04-08T11:07:41Z
+degiorgi_v1	0.2913	859	0	keep	no description	agent3	tactic	2026-04-08T11:10:12Z
+agent1_exp1	0.2871	864	0	keep	Fixed build errors (Linfty, Approximation, TestFunctions, ForwardIteration, Energy, CutoffPrep, InverseIteration), proved stampacchia_congr_ae, setIntegral support lemmas, harnack_p_eq_from_q, exists_forward_iteration_depth, superPowerCutoff_neg_eq_fwd	agent1	agent1	2026-04-08T11:14:53Z
+agent0_exp1	0.2987	850	0	keep	Fixed build errors (OscillationDecay linarith, Representative pow_le_pow)	agent0	agent0	2026-04-08T11:32:43Z
+agent1_exp2	0.2970	852	1	keep	Fixed OscillationDecay build error (linarith→rw), proved exists_moserDyadicRadius_near (Nat.find), JNBall.fivefold_subset_sixBall+closedBall variant (triangle ineq), const_le_of_ae_const_le (eventually_const)	agent1	agent1	2026-04-08T11:36:59Z
+exp_agent1_003	0.3102	836	1	keep	Fix Iteration.lean geometric series proofs + prior proofs	agent1	tactic	2026-04-08T11:47:46Z
+agent0_exp2	0.3102	836	1	keep	Fixed build errors (Harnack, MoserIteration, OscillationDecay, Representative, StageOne), proved BilinearForm linearity (add_left, add_right, smul_left, smul_right integrand+coeff), proved AEMeasurable for solutions	agent0	agent0	2026-04-08T11:47:56Z
+agent3_exp3	0.3102	836	1	keep	Fixed build errors (Representative, BilinearForm, Iteration, StageOne), proved harnackChainCenter_mem_ball (convexity), harnackChainCenter_dist_succ_le (lineMap distance), harnack_p_eq_from_q, moserRegPow_nonneg, moserRegPow_le_rpow, moserRegPow_sq_le_rpow	agent3	agent3	2026-04-08T11:47:56Z
+exp_agent1_004	0.3465	792	0	keep	Prove 19 LocalJohnNirenberg witness/stopping/helper lemmas	agent1	tactic	2026-04-08T11:57:48Z
+exp023_agent0_batch2	0.3482	790	0	keep	batch2: deGiorgiFderivVec proofs, Young inequalities, algebraic conclusions, constant monotonicity, abstract preiter	agent0	sorry_elimination	2026-04-08T12:00:11Z
+exp024_agent0_batch2fix	0.3457	793	0	keep	batch2 fixes: build repair + Young ineq + absorb proof + algebraic conclusion + fderivVec + constant mono	agent0	sorry_elimination	2026-04-08T12:02:49Z
+exp025_agent0_buildfix	0.3457	793	0	keep	fix ApproximationControl build error	agent0	sorry_elimination	2026-04-08T12:03:55Z
+exp026_agent0_buildcheck	0.0429	1160	0	keep	verify build pass with linter ApproxControl fix	agent0	tactic	2026-04-08T12:07:41Z
+exp027_agent0_rebuild	0.0660	1132	0	keep	fix linter corruption in 4 files	agent0	tactic	2026-04-08T12:10:27Z
+exp028_agent0_fixwitnesses	0.0644	1134	0	keep	fix Witnesses.lean missing fields and unsolved goals	agent0	tactic	2026-04-08T12:11:10Z
+exp029_agent0_postlinter	0.0660	1132	0	keep	rebuild after linter fixes	agent0	tactic	2026-04-08T12:11:49Z
+exp030_agent0_rebuild2	0.0635	1135	0	keep	rebuild after linter auto-fixes	agent0	tactic	2026-04-08T12:12:15Z
+exp031_agent0_rebuild3	0.0594	1140	0	keep	rebuild after linter auto-fixes round 3	agent0	tactic	2026-04-08T12:13:03Z
+degiorgi_v1	0.0594	1140	0	keep	no description	agent3	tactic	2026-04-08T12:14:13Z
+exp032_agent0_approxfix	0.0594	1140	0	keep	fix ApproximationControl typeclass stuck with inv_lt_one_of_one_lt₀ and inv_anti₀	agent0	tactic	2026-04-08T12:14:35Z
+exp033_agent0_approxfix2	0.0578	1142	0	keep	fix ApproximationControl nlinarith typeclass with explicit Nat.cast_nonneg binding	agent0	tactic	2026-04-08T12:15:51Z
+exp034_agent0_nlinarith_fix	0.0578	1142	0	keep	fix nlinarith typeclass with explicit type annotation	agent0	tactic	2026-04-08T12:16:42Z
+exp035_agent0_energy_fix	0.0611	1138	0	keep	restore Energy.lean proofs corrupted by linter	agent0	tactic	2026-04-08T12:18:18Z
+exp036_agent0_rebuild4	0.0619	1137	0	keep	rebuild after all linter fixes	agent0	tactic	2026-04-08T12:18:52Z
+exp037_agent0_rebuild5	0.0627	1136	0	keep	fix ForwardIteration orphaned code	agent0	tactic	2026-04-08T12:19:18Z
+exp038_agent0_rebuild6	0.0627	1136	0	keep	retry build	agent0	tactic	2026-04-08T12:20:04Z
+exp039_agent0_rebuild7	0.0627	1136	1	keep	rebuild after OscillationDecay linter fix	agent0	tactic	2026-04-08T12:20:41Z
+exp040_agent0_batch3	0.0809	1114	0	keep	batch prove Linfty + Energy sorries	agent0	tactic	2026-04-08T12:22:31Z
+exp041_agent0_linfty_fix	0.0833	1111	0	keep	fix deGiorgiRadius_gt_half strict positivity	agent0	tactic	2026-04-08T12:24:37Z
+exp042_agent0_rebuild8	0.0825	1112	1	keep	rebuild after OscillationDecay fix	agent0	tactic	2026-04-08T12:25:06Z
+degiorgi_v1	0.0833	1111	1	keep	no description	agent1	tactic	2026-04-08T12:25:22Z
+degiorgi_v1	0.0833	1111	1	keep	no description	agent3	tactic	2026-04-08T12:25:27Z
+exp043_agent0_batch4	0.0982	1093	0	keep	batch prove Recurrence+Energy+BMO+EllipticCoefficients+LogGradient	agent0	tactic	2026-04-08T12:27:31Z
+exp044_agent0_batch4fix	0.0998	1091	0	keep	fix EllipticCoefficients+PositivePart API issues	agent0	tactic	2026-04-08T12:28:54Z
+exp045_agent0_stampfix	0.1073	1082	0	keep	fix StampacchiaTruncation linter errors	agent0	tactic	2026-04-08T12:29:40Z
+exp046_agent0_stampfix2	0.1089	1080	0	keep	revert integrableOn_Icc_of_Ioo to sorry	agent0	tactic	2026-04-08T12:30:05Z
+exp047_agent0_stampfix3	0.1122	1076	0	keep	fix support_sub_tsupport	agent0	tactic	2026-04-08T12:30:36Z
+exp048_agent0_rebuild_clean	0.1147	1073	0	keep	clean rebuild StampacchiaTruncation	agent0	tactic	2026-04-08T12:30:57Z
+exp049_agent0_fixerrors	0.1130	1075	0	keep	fix BMO+Energy compilation errors	agent0	tactic	2026-04-08T12:33:21Z

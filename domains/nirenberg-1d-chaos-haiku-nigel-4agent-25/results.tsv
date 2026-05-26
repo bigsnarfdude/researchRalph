@@ -1,0 +1,165 @@
+exp001	0.00000000e+00	0.000000	0.000000	keep	trivial branch u_offset=0, baseline solver	agent1	initial_cond	1	0.000000
+exp002	0.00000000e+00	0.000000	0.000000	keep	trivial branch: u_offset=0.0, minimal initial guess	agent2	initial_cond	0	0.000000
+exp003	2.66626099e-13	1.001296	1.000019	discard	positive branch: u_offset=0.9	agent2	initial_cond	0	-1.520844
+exp004	2.66626099e-13	1.001296	-1.000019	discard	negative branch: u_offset=-0.9	agent2	initial_cond	0	-1.520844
+exp005	2.66626099e-13	1.001296	1.000019	discard	positive branch u_offset=0.9	agent1	initial_cond	0	-1.520844
+exp006	2.66626099e-13	1.001296	1.000019	discard	positive branch, u_offset=0.9	agent3	initial_cond	0	-1.520844
+exp007	2.66626099e-13	1.001296	-1.000019	discard	negative branch, u_offset=-0.9	agent3	initial_cond	0	-1.520844
+exp008	2.64988611e-20	0.000000	0.000000	discard	boundary test: u_offset=0.3 between trivial and positive	agent2	branch_search	0	0.000000
+exp009	2.66626099e-13	1.001296	-1.000019	discard	negative branch u_offset=-0.9	agent1	initial_cond	2	-1.520844
+exp010	2.76001344e-13	1.001296	1.000019	discard	boundary test: u_offset=0.6	agent2	branch_search	2	-1.520844
+exp011	3.94755575e-16	0.000000	0.000000	discard	boundary test: u_offset=0.45	agent2	branch_search	0	-0.000000
+exp012	2.10061857e-13	1.001296	-1.000019	discard	boundary test: u_offset=0.52	agent2	branch_search	1	-1.520844
+exp013	2.88051949e-13	1.001296	1.000019	discard	positive branch with amplitude=0.1 perturbation	agent1	perturbation	2	-1.520844
+exp014	2.28944733e-13	1.001296	-1.000019	discard	boundary test: u_offset=0.50	agent2	branch_search	2	-1.520844
+exp015	crash	0	0	crash	positive branch with 128 Fourier modes	agent3	perturbation	1	0
+exp016	2.88051949e-13	1.001296	1.000019	discard	positive branch with amplitude=0.1 perturbation	agent3	perturbation	2	-1.520844
+exp017	3.94755575e-16	0.000000	-0.000000	discard	boundary test: u_offset=-0.45	agent2	branch_search	3	-0.000000
+exp018	3.58611048e-13	1.001296	1.000019	discard	positive branch with amplitude=0.3 perturbation	agent1	perturbation	2	-1.520844
+exp019	2.66626099e-13	1.001296	1.000019	discard	positive branch with mode 2 perturbation	agent3	perturbation	1	-1.520844
+exp020	2.88051949e-13	1.001296	1.000019	discard	positive branch with amplitude 0.1	agent2	perturbation	0	-1.520844
+exp021	2.51368744e-13	1.001296	1.000019	discard	positive branch with mode-2 perturbation n_mode=2	agent1	perturbation	0	-1.520844
+exp022	4.40113707e-21	0.000000	0.000000	discard	boundary test: u_offset=0.4 between trivial and positive	agent3	branch_search	0	0.000000
+exp023	3.58611048e-13	1.001296	1.000019	discard	positive branch with amplitude 0.3	agent2	perturbation	1	-1.520844
+exp024	2.29269912e-13	1.001296	1.000019	discard	positive branch with mode-3 perturbation n_mode=3	agent1	perturbation	0	-1.520844
+exp025	3.48477681e-13	1.001296	1.000019	discard	boundary search: u_offset=0.7	agent3	branch_search	0	-1.520844
+exp026	crash	0	0	crash	positive branch with fourier_modes=128	agent2	solver_param	1	0
+exp027	2.13371637e-13	1.001296	-1.000019	discard	boundary search: u_offset=0.55	agent3	branch_search	1	-1.520844
+exp028	3.41745849e-13	1.001296	1.000019	discard	positive branch mode-3 with phase=1.57	agent1	perturbation	1	-1.520844
+exp029	0.00000000e+00	0.000000	0.000000	discard	trivial branch with fourier_modes=128	agent2	solver_param	0	0.000000
+exp030	3.94755575e-16	0.000000	0.000000	discard	phase scan u_offset=0.45	agent3	branch_search	0	-0.000000
+exp031	2.28944733e-13	1.001296	-1.000019	discard	phase scan u_offset=0.50	agent3	branch_search	1	-1.520844
+exp032	2.76001344e-13	1.001296	1.000019	discard	phase scan u_offset=0.60	agent3	branch_search	0	-1.520844
+exp033	2.22195375e-13	1.001296	-1.000019	discard	negative branch with mode-3 perturbation n_mode=3	agent1	perturbation	0	-1.520844
+exp034	crash	0	0	crash	positive branch with newton_tol=1e-15	agent2	solver_param	1	0
+exp035	3.94755575e-16	0.000000	-0.000000	discard	negative scan u_offset=-0.45	agent3	branch_search	3	-0.000000
+exp036	2.28944733e-13	1.001296	1.000019	discard	negative scan u_offset=-0.50	agent3	branch_search	3	-1.520844
+exp037	2.76001344e-13	1.001296	-1.000019	discard	negative scan u_offset=-0.60	agent3	branch_search	4	-1.520844
+exp038	3.48477681e-13	1.001296	-1.000019	discard	negative scan u_offset=-0.70	agent3	branch_search	2	-1.520844
+exp039	crash	0	0	crash	positive branch with fourier_modes=128	agent1	solver_param	14	0
+exp040	8.32449213e-22	0.000000	0.000000	discard	trivial with n_mode=3, phase=1.57, amp=0.1	agent2	perturbation	0	0.000000
+exp041	7.64566347e-23	0.000000	-0.000000	discard	fine transition 0.46	agent3	branch_search	1	0.000000
+exp042	crash	0	0	crash	positive branch with newton_tol=1e-14	agent1	solver_param	2	0
+exp043	3.45536827e-13	1.001296	-1.000019	discard	fine transition 0.47	agent3	branch_search	0	-1.520844
+exp044	3.19957670e-13	1.001296	1.000019	discard	fine transition 0.48	agent3	branch_search	0	-1.520844
+exp045	3.16847297e-13	1.001296	-1.000019	discard	fine transition 0.49	agent3	branch_search	2	-1.520844
+exp045	3.37799799e-13	1.001296	1.000019	discard	positive branch with phase=π	agent2	perturbation	2	-1.520844
+exp046	2.13371637e-13	1.001296	-1.000019	discard	boundary: u_offset=0.55	agent2	branch_search	1	-1.520844
+exp047	crash	0	0	crash	chaos region 0.48 with newton_tol=1e-14	agent3	solver_param	2	0
+exp048	2.28944733e-13	1.001296	-1.000019	discard	boundary test u_offset=0.5 (between trivial and positive)	agent1	branch_search	0	-1.520844
+exp049	3.19957670e-13	1.001296	1.000019	discard	boundary: u_offset=0.48	agent2	branch_search	1	-1.520844
+exp050	3.19957670e-13	1.001296	1.000019	discard	chaos region 0.48 with newton_tol=1e-10	agent3	solver_param	0	-1.520844
+exp051	3.27355159e-13	1.001296	-1.000019	discard	boundary: u_offset=0.58	agent2	branch_search	0	-1.520844
+exp052	3.48477681e-13	1.001296	1.000019	discard	boundary test u_offset=0.7	agent1	branch_search	0	-1.520844
+exp053	3.88079599e-13	1.001296	1.000019	discard	boundary: u_offset=0.59	agent2	branch_search	4	-1.520844
+exp054	3.09919215e-13	1.001296	1.000019	discard	reproducibility test run 1	agent3	branch_search	5	-1.520844
+exp055	2.76001344e-13	1.001296	1.000019	discard	boundary test u_offset=0.6	agent1	branch_search	4	-1.520844
+exp056	3.09919215e-13	1.001296	1.000019	discard	reproducibility test run 2	agent3	branch_search	1	-1.520844
+exp057	2.13371637e-13	1.001296	-1.000019	discard	boundary test u_offset=0.55	agent1	branch_search	0	-1.520844
+exp058	3.45536827e-13	1.001296	-1.000019	discard	chaos test 0.47	agent3	branch_search	1	-1.520844
+exp059	3.09919215e-13	1.001296	1.000019	discard	chaos test 0.475	agent3	branch_search	0	-1.520844
+exp060	4.08108563e-13	1.001296	-1.000019	discard	chaos test 0.485	agent3	branch_search	0	-1.520844
+exp061	3.27355159e-13	1.001296	-1.000019	discard	boundary test u_offset=0.58	agent1	branch_search	0	-1.520844
+exp062	2.28944733e-13	1.001296	1.000019	discard	boundary: u_offset=-0.50	agent2	branch_search	1	-1.520844
+exp063	2.13371637e-13	1.001296	1.000019	discard	boundary: u_offset=-0.55	agent2	branch_search	0	-1.520844
+exp064	4.35391359e-13	1.001296	-1.000019	discard	boundary: u_offset=-0.75	agent2	branch_search	1	-1.520844
+exp065	2.76001344e-13	1.001296	-1.000019	discard	boundary: u_offset=-0.60	agent2	branch_search	0	-1.520844
+exp066	3.88079599e-13	1.001296	1.000019	discard	boundary test u_offset=0.59	agent1	branch_search	0	-1.520844
+exp067	3.88079599e-13	1.001296	-1.000019	discard	boundary: u_offset=-0.59	agent2	branch_search	0	-1.520844
+exp068	2.28944733e-13	1.001296	1.000019	discard	boundary test u_offset=-0.5 (anomalous, should find positive?)	agent1	branch_search	1	-1.520844
+exp069	2.13371637e-13	1.001296	1.000019	discard	boundary test u_offset=-0.55	agent1	branch_search	0	-1.520844
+exp070	2.76001344e-13	1.001296	-1.000019	discard	boundary test u_offset=-0.6	agent1	branch_search	0	-1.520844
+exp071	3.45536827e-13	1.001296	1.000019	discard	negative phase scan -0.47	agent3	branch_search	0	-1.520844
+exp072	2.39236596e-13	1.001296	-1.000019	discard	chaos region with amplitude=0.2 to suppress anomaly	agent2	perturbation	4	-1.520844
+exp073	3.19957670e-13	1.001296	-1.000019	discard	negative phase scan -0.48	agent3	branch_search	5	-1.520844
+exp074	2.74270461e-13	1.001296	-1.000019	discard	fine boundary test u_offset=0.585	agent1	branch_search	4	-1.520844
+exp075	3.16847297e-13	1.001296	1.000019	discard	negative phase scan -0.49	agent3	branch_search	1	-1.520844
+exp076	2.28944733e-13	1.001296	1.000019	discard	negative phase scan -0.50	agent3	branch_search	0	-1.520844
+exp077	3.71823481e-13	1.001296	1.000019	discard	negative phase scan -0.51	agent3	branch_search	0	-1.520844
+exp078	2.10061857e-13	1.001296	1.000019	discard	negative phase scan -0.52	agent3	branch_search	1	-1.520844
+exp079	4.28755118e-13	1.001296	1.000019	discard	negative phase scan -0.53	agent3	branch_search	0	-1.520844
+exp080	3.33395016e-13	1.001296	-1.000019	discard	fine boundary test u_offset=0.587	agent1	branch_search	0	-1.520844
+exp081	3.42609616e-13	1.001296	1.000019	discard	extreme: u_offset=1.2 beyond expected range	agent2	initial_cond	1	-1.520844
+exp082	3.19957670e-13	1.001296	1.000019	discard	opposite test pos 0.48	agent3	branch_search	1	-1.520844
+exp083	3.27417160e-13	1.001296	1.000019	discard	extreme: u_offset=2.0 far beyond expected range	agent2	initial_cond	4	-1.520844
+exp084	3.19957670e-13	1.001296	-1.000019	discard	opposite test neg -0.48	agent3	branch_search	4	-1.520844
+exp084	2.20875499e-13	1.001296	-1.000019	discard	fine boundary test u_offset=0.588	agent1	branch_search	3	-1.520844
+exp085	2.10061857e-13	1.001296	-1.000019	discard	opposite test pos 0.52	agent3	branch_search	0	-1.520844
+exp086	2.10061857e-13	1.001296	1.000019	discard	opposite test neg -0.52	agent3	branch_search	1	-1.520844
+exp087	2.13371637e-13	1.001296	-1.000019	discard	opposite test pos 0.55	agent3	branch_search	0	-1.520844
+exp088	2.13371637e-13	1.001296	1.000019	discard	opposite test neg -0.55	agent3	branch_search	1	-1.520844
+exp089	3.27417160e-13	1.001296	-1.000019	discard	extreme: u_offset=-2.0 far negative	agent2	initial_cond	0	-1.520844
+exp090	2.74650230e-13	1.001296	1.000019	discard	boundary u_offset=0.585 with amplitude=0.2 perturbation	agent1	perturbation	0	-1.520844
+exp091	2.23841493e-13	0.998999	-1.000000	discard	amp test 0.50 with amp=0.0	agent3	perturbation	1	-1.567655
+exp092	2.92154280e-13	0.999035	-1.000000	discard	amp test 0.50 with amp=0.05	agent3	perturbation	0	-1.566349
+exp093	2.98117435e-13	0.999210	-1.000000	discard	amp test 0.50 with amp=0.10	agent3	perturbation	0	-1.562435
+exp094	2.69105160e-13	0.999523	1.000001	discard	amp test 0.50 with amp=0.15	agent3	perturbation	1	-1.555918
+exp095	2.71711499e-13	0.999975	1.000004	discard	amp test 0.50 with amp=0.20	agent3	perturbation	0	-1.546805
+exp096	3.70859194e-13	1.001296	1.000019	discard	boundary u_offset=0.585 with amplitude=0.15	agent1	perturbation	1	-1.520844
+exp097	2.37571137e-13	0.999261	-1.000000	discard	amplitude transition 0.11	agent3	perturbation	0	-1.561340
+exp098	3.29455683e-13	0.999318	-1.000000	discard	amplitude transition 0.12	agent3	perturbation	1	-1.560140
+exp099	3.59103228e-13	1.001296	1.000019	discard	boundary u_offset=0.585 with amplitude=0.05	agent1	perturbation	0	-1.520844
+exp100	2.04300611e-13	0.999381	-1.000001	discard	amplitude transition 0.13	agent3	perturbation	0	-1.558837
+exp101	2.39543804e-13	0.999449	-1.000001	discard	amplitude transition 0.14	agent3	perturbation	1	-1.557429
+exp102	3.53690518e-13	1.001296	-1.000019	discard	test discontinuity: u_offset=0.4999 (just below chaos region)	agent2	branch_search	1	-1.520844
+exp103	5.27819091e-13	0.999485	1.000001	discard	amplitude transition refined 0.145	agent3	perturbation	1	-1.556686
+exp104	2.69105160e-13	0.999523	1.000001	discard	amplitude transition refined 0.150	agent3	perturbation	1	-1.555918
+exp105	2.55860769e-13	0.999562	1.000001	discard	amplitude transition refined 0.155	agent3	perturbation	0	-1.555123
+exp106	2.74270461e-13	1.001296	-1.000019	discard	verify boundary u_offset=0.585 with amplitude=0.0	agent1	branch_search	1	-1.520844
+exp107	2.75138356e-13	1.001296	-1.000019	discard	test: u_offset=0.495	agent2	branch_search	0	-1.520844
+exp108	3.16847297e-13	1.001296	-1.000019	discard	test: u_offset=0.49 edge of positive region	agent2	branch_search	2	-1.520844
+exp109	1.74120026e-13	0.998999	-1.000000	discard	2D scan u=0.48 a=0.0	agent3	perturbation	2	-1.567655
+exp110	2.74270461e-13	1.001296	-1.000019	discard	boundary u_offset=0.585 with n_mode=2	agent1	perturbation	3	-1.520844
+exp111	3.51682006e-13	0.999523	-1.000001	discard	2D scan u=0.48 a=0.15	agent3	perturbation	3	-1.555918
+exp112	4.08108563e-13	1.001296	-1.000019	discard	test: u_offset=0.485	agent2	branch_search	1	-1.520844
+exp113	2.23841493e-13	0.998999	-1.000000	discard	2D scan u=0.50 a=0.0	agent3	perturbation	1	-1.567655
+exp114	2.69105160e-13	0.999523	1.000001	discard	2D scan u=0.50 a=0.15	agent3	perturbation	0	-1.555918
+exp115	3.14939031e-13	0.998999	-1.000000	discard	2D scan u=0.52 a=0.0	agent3	perturbation	1	-1.567655
+exp116	2.35741759e-13	0.999523	-1.000001	discard	2D scan u=0.52 a=0.15	agent3	perturbation	0	-1.555918
+exp117	2.01654343e-13	0.998999	-1.000000	discard	2D scan u=0.55 a=0.0	agent3	perturbation	0	-1.567655
+exp118	2.51236817e-13	0.999523	-1.000001	discard	2D scan u=0.55 a=0.15	agent3	perturbation	1	-1.555918
+exp119	3.85580711e-13	1.001296	-1.000019	discard	test: u_offset=0.482	agent2	branch_search	0	-1.520844
+exp120	3.88079599e-13	1.001296	1.000019	discard	verify positive region u_offset=0.59 with amplitude=0.0	agent1	branch_search	0	-1.520844
+exp121	2.79078543e-13	1.001296	-1.000019	discard	amplitude control: u_offset=0.5, amp=0.05 should flip to positive	agent2	perturbation	0	-1.520844
+exp122	3.12271735e-13	0.999210	1.000000	discard	K_amplitude variation 0.1	agent3	solver_param	0	-1.562435
+exp123	3.99522993e-13	0.999975	1.000004	discard	K_amplitude variation 0.2	agent3	solver_param	0	-1.546805
+exp124	3.15118549e-13	1.005614	1.000141	discard	K_amplitude variation 0.5	agent3	solver_param	1	-1.438490
+exp125	1.94295531e-13	1.008615	1.000288	discard	K_amplitude variation 0.6	agent3	solver_param	1	-1.382486
+exp126	3.93776477e-13	1.001296	1.000019	discard	boundary u_offset=0.585 amplitude=0.1 phase=0.785	agent1	perturbation	4	-1.520844
+exp127	3.59103228e-13	1.001296	1.000019	discard	amplitude control: u_offset=0.585, amp=0.05 should flip to positive	agent2	perturbation	5	-1.520844
+exp128	2.66626099e-13	1.001296	1.000019	discard	K_frequency variation 1	agent3	solver_param	2	-1.520844
+exp129	3.12709346e-13	1.001385	1.001866	discard	K_frequency variation 2	agent3	solver_param	0	-1.544070
+exp130	3.01668785e-13	1.000613	1.001484	discard	K_frequency variation 3	agent3	solver_param	1	-1.554772
+exp131	2.74270461e-13	1.001296	-1.000019	discard	amplitude control: u_offset=0.585, amp=0.0 should give negative	agent2	perturbation	0	-1.520844
+exp132	3.85580711e-13	1.001296	-1.000019	discard	boundary test 0.482	agent3	branch_search	0	-1.520844
+exp133	2.32714288e-13	1.001296	-1.000019	discard	boundary test 0.483	agent3	branch_search	0	-1.520844
+exp134	3.94755575e-16	0.000000	0.000000	discard	trivial boundary u_offset=0.45 amplitude=0.0	agent1	branch_search	3	-0.000000
+exp135	3.22115937e-13	1.001296	-1.000019	discard	boundary test 0.484	agent3	branch_search	3	-1.520844
+exp136	2.13371637e-13	1.001296	-1.000019	discard	2D map: u_offset=0.55, amp=0.0	agent2	branch_search	0	-1.520844
+exp137	2.74270461e-13	1.001296	-1.000019	discard	boundary test 0.585	agent3	branch_search	0	-1.520844
+exp138	3.09224768e-13	1.001296	-1.000019	discard	2D map: u_offset=0.55, amp=0.1	agent2	perturbation	0	-1.520844
+exp139	3.04842431e-13	1.001296	-1.000019	discard	boundary test 0.586	agent3	branch_search	1	-1.520844
+exp140	3.33395016e-13	1.001296	-1.000019	discard	boundary test 0.587	agent3	branch_search	0	-1.520844
+exp141	2.20875499e-13	1.001296	-1.000019	discard	boundary test 0.588	agent3	branch_search	0	-1.520844
+exp142	3.15779448e-20	0.000000	0.000000	discard	trivial boundary u_offset=0.45 amplitude=0.2	agent1	perturbation	0	0.000000
+exp143	2.95393990e-13	1.001296	-1.000019	discard	2D map: u_offset=0.57, amp=0.05	agent2	perturbation	2	-1.520844
+exp144	3.75207626e-13	1.001296	-1.000019	discard	boundary test 0.589	agent3	branch_search	2	-1.520844
+exp145	3.88079599e-13	1.001296	1.000019	discard	boundary test 0.590	agent3	branch_search	2	-1.520844
+exp146	2.69235760e-13	1.001296	1.000019	discard	boundary test 0.591	agent3	branch_search	0	-1.520844
+exp147	2.82933975e-13	1.001296	1.000019	discard	boundary test 0.592	agent3	branch_search	1	-1.520844
+exp148	3.75207626e-13	1.001296	-1.000019	discard	refine boundary 0.5890	agent3	branch_search	1	-1.520844
+exp149	2.82101228e-13	1.001296	-1.000019	discard	refine boundary 0.5891	agent3	branch_search	0	-1.520844
+exp150	2.90530173e-13	1.001296	-1.000019	discard	refine boundary 0.5892	agent3	branch_search	0	-1.520844
+exp151	2.88599982e-13	1.001296	-1.000019	discard	refine boundary 0.5893	agent3	branch_search	1	-1.520844
+exp152	3.58878705e-13	1.001296	-1.000019	discard	refine boundary 0.5894	agent3	branch_search	0	-1.520844
+exp153	3.54457377e-13	1.001296	-1.000019	discard	refine boundary 0.5895	agent3	branch_search	1	-1.520844
+exp154	3.10534389e-13	1.001296	-1.000019	discard	refine 0.58960	agent3	branch_search	0	-1.520844
+exp155	3.75785751e-13	1.001296	-1.000019	discard	refine 0.58970	agent3	branch_search	1	-1.520844
+exp156	2.92162580e-13	1.001296	1.000019	discard	refine 0.58980	agent3	branch_search	0	-1.520844
+exp157	3.50713334e-13	1.001296	1.000019	discard	refine 0.58990	agent3	branch_search	0	-1.520844
+exp158	2.28944733e-13	1.001296	-1.000019	discard	chaos core u_offset=0.50 amplitude=0.0	agent1	branch_search	1	-1.520844
+exp159	2.69105160e-13	0.999523	1.000001	discard	final test: K_amplitude=0.5, u_offset=0.50, amplitude=0.15	agent3	perturbation	0	-1.555918
+exp160	2.68570856e-13	1.001296	-1.000019	discard	critical point u_offset=0.50 amplitude=0.15	agent1	branch_search	1	-1.520844
+exp161	2.86591582e-13	1.001296	-1.000019	discard	critical point u_offset=0.50 amplitude=0.20	agent1	branch_search	0	-1.520844
+exp162	3.45396166e-13	1.001296	1.000019	discard	u_offset=0.50 amplitude=0.30	agent1	branch_search	0	-1.520844
+exp163	2.93947558e-13	1.001296	1.000019	discard	negative side symmetry u_offset=-0.55 amplitude=0.15	agent1	branch_search	0	-1.520844

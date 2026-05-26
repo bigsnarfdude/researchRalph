@@ -1,0 +1,154 @@
+exp_id	score	norm	status	description	agent	design	elapsed_s	solution_energy	wall_time
+exp001	0.00000000e+00	0.000000	keep	increasing n_nodes from 100 to 150 for better mesh resolution	agent0	solver_param	1	0.000000	2026-04-03T23:04:34Z
+exp002	3.61191662e-13	1.001296	discard	changing u_offset to 1.0 to avoid trivial solution	agent0	initial_cond	1	-1.520844	2026-04-03T23:04:47Z
+exp003	2.28944733e-13	1.001296	discard	trying u_offset=0.5	agent0	initial_cond	1	-1.520844	2026-04-03T23:05:07Z
+exp004	2.28944733e-13	1.001296	discard	reducing solver_tol to 1e-10	agent0	solver_param	1	-1.520844	2026-04-03T23:05:19Z
+exp005	1.51138516e-21	0.000000	discard	adding oscillation amplitude 0.2	agent0	initial_cond	0	0.000000	2026-04-03T23:05:43Z
+exp006	0.00000000e+00	0.000000	discard	Increasing n_nodes from 150 to 200 for better mesh resolution	agent1	solver_param	0	0.000000	2026-04-03T23:06:07Z
+exp007	3.42609616e-13	1.001296	discard	trying u_offset=1.2 to find non-trivial solution	agent0	initial_cond	1	-1.520844	2026-04-03T23:06:13Z
+exp008	3.61191662e-13	1.001296	discard	Trying u_offset = -1.0 to find a non-trivial solution	agent1	initial_cond	0	-1.520844	2026-04-03T23:06:19Z
+exp009	0.00000000e+00	0.000000	discard	trying n_mode=2	agent0	initial_cond	0	0.000000	2026-04-03T23:06:28Z
+exp010	2.54516128e-13	1.001296	discard	Increasing amplitude to 0.2 to find non-trivial solution	agent1	initial_cond	0	-1.520844	2026-04-03T23:06:28Z
+exp011	2.54516128e-13	1.001296	discard	Increasing n_nodes to 300	agent1	solver_param	0	-1.520844	2026-04-03T23:06:37Z
+exp012	3.61191662e-13	1.001296	discard	trying u_offset=-1.0	agent0	initial_cond	0	-1.520844	2026-04-03T23:06:40Z
+exp013	3.33114394e-13	1.001296	discard	Changing n_mode to 2	agent1	initial_cond	0	-1.520844	2026-04-03T23:06:42Z
+exp014	2.08864454e-13	1.001296	discard	Changing n_mode to 3	agent1	initial_cond	1	-1.520844	2026-04-03T23:06:46Z
+exp015	3.04122322e-13	1.001296	discard	Changing phase to pi	agent1	initial_cond	1	-1.520844	2026-04-03T23:06:52Z
+exp016	2.94651313e-13	1.001296	discard	Trying u_offset = 1.5 to find a different branch	agent1	initial_cond	1	-1.520844	2026-04-03T23:07:03Z
+exp016	0.00000000e+00	0.000000	discard	trying phase=pi	agent0	initial_cond	0	0.000000	2026-04-03T23:07:04Z
+exp017	3.03093033e-13	1.001296	discard	Increasing amplitude to 0.5	agent1	initial_cond	0	-1.520844	2026-04-03T23:07:07Z
+exp018	3.01219234e-13	1.001296	discard	trying u_offset=1.5	agent0	initial_cond	1	-1.520844	2026-04-03T23:07:15Z
+exp019	3.03093033e-13	1.001296	discard	Reducing solver_tol to 1e-10	agent1	solver_param	1	-1.520844	2026-04-03T23:07:21Z
+exp020	8.46250684e-18	0.000000	discard	trying amplitude=0.4 to find non-trivial solution	agent0	initial_cond	0	-0.000000	2026-04-03T23:07:50Z
+exp021	3.59291016e-13	1.001296	discard	trying u_offset=1.0 with amplitude=0.4	agent0	initial_cond	0	-1.520844	2026-04-03T23:08:03Z
+exp022	1.10310398e-21	0.000000	discard	Small u_offset to try to find a different branch	agent1	initial_cond	0	0.000000	2026-04-03T23:08:13Z
+exp023	3.59291016e-13	1.001296	discard	lowering solver_tol to 1e-12 with u_offset=1.0 and amplitude=0.4	agent0	solver_param	0	-1.520844	2026-04-03T23:08:15Z
+exp024	4.67111019e-13	1.001296	discard	Trying u_offset = -0.5	agent1	initial_cond	0	-1.520844	2026-04-03T23:08:22Z
+exp025	crash	0	crash	lowering newton_tol to 1e-14	agent0	solver_param	0	0	2026-04-03T23:08:27Z
+exp026	4.67111019e-13	1.001296	discard	Trying n_nodes = 250	agent1	solver_param	0	-1.520844	2026-04-03T23:08:28Z
+exp027	2.34987826e-13	1.001296	discard	Trying phase = pi/2	agent1	initial_cond	1	-1.520844	2026-04-03T23:08:32Z
+exp028	crash	0	crash	trying newton_tol=1e-13	agent0	solver_param	0	0	2026-04-03T23:08:39Z
+exp029	5.93816307e-23	0.000000	discard	Trying u_offset=0 with high amplitude	agent1	initial_cond	0	0.000000	2026-04-03T23:08:41Z
+exp030	crash	0	crash	increasing fourier_modes to 128	agent0	solver_param	0	0	2026-04-03T23:08:52Z
+exp031	0.00000000e+00	0.000000	discard	increasing n_nodes to 200	agent0	solver_param	0	0.000000	2026-04-03T23:09:03Z
+exp032	2.28944733e-13	1.001296	discard	Increasing n_nodes to 300 with n_mode=3	agent1	solver_param	1	-1.520844	2026-04-03T23:09:08Z
+exp033	3.61191662e-13	1.001296	discard	u_offset=1.0 with n_nodes=200	agent0	initial_cond	0	-1.520844	2026-04-03T23:09:15Z
+exp034	2.28944733e-13	1.001296	discard	Reducing solver_tol to 1e-10 with n_nodes=300 and n_mode=3	agent1	solver_param	1	-1.520844	2026-04-03T23:09:17Z
+exp035	3.61191662e-13	1.001296	discard	Trying u_offset=1.0 with n_nodes=300, n_mode=3, solver_tol=1e-10	agent1	initial_cond	0	-1.520844	2026-04-03T23:09:22Z
+exp036	2.69034227e-13	1.001296	discard	Trying amplitude 0.1	agent1	initial_cond	0	-1.520844	2026-04-03T23:09:29Z
+exp037	3.36706053e-13	1.001296	discard	Trying u_offset = -1.5 and n_mode = 1	agent1	initial_cond	1	-1.520844	2026-04-03T23:09:46Z
+exp038	3.38763631e-22	0.000000	discard	Trying u_offset=0.1, amplitude=0.4	agent1	initial_cond	0	0.000000	2026-04-03T23:09:53Z
+exp039	3.34592515e-13	1.001296	discard	Trying u_offset=1.2	agent1	initial_cond	0	-1.520844	2026-04-03T23:10:03Z
+exp040	3.63175551e-13	1.001296	discard	Trying u_offset=0.5, amplitude=0.5, n_mode=1	agent1	initial_cond	0	-1.520844	2026-04-03T23:10:10Z
+exp041	3.54387306e-13	1.001296	discard	trying amplitude=0.3	agent0	initial_cond	0	-1.520844	2026-04-03T23:10:11Z
+exp042	0.00000000e+00	0.000000	discard	trying n_mode=3	agent0	initial_cond	0	0.000000	2026-04-03T23:10:29Z
+exp043	3.61191662e-13	1.001296	discard	n_mode=3 and u_offset=1.0	agent0	initial_cond	1	-1.520844	2026-04-03T23:10:41Z
+exp044	3.63175551e-13	1.001296	discard	Increasing amplitude to 0.2 with n_nodes=300 and solver_tol=1e-10	agent1	initial_cond	0	-1.520844	2026-04-03T23:11:02Z
+exp045	3.61191662e-13	1.001296	discard	increasing n_nodes to 300	agent0	solver_param	0	-1.520844	2026-04-03T23:11:11Z
+exp046	2.87469364e-13	1.001296	discard	trying amplitude=0.5	agent0	initial_cond	0	-1.520844	2026-04-03T23:11:23Z
+exp047	2.28944733e-13	1.001296	discard	Changing n_mode to 2 to explore possible different solutions	agent1	initial_cond	0	-1.520844	2026-04-03T23:11:33Z
+exp048	2.28944733e-13	1.001296	discard	Trying negative u_offset	agent1	initial_cond	0	-1.520844	2026-04-03T23:11:40Z
+exp049	1.74862376e-17	0.000000	discard	Trying zero offset with max amplitude	agent1	initial_cond	0	-0.000000	2026-04-03T23:11:50Z
+exp050	3.19965973e-13	1.001296	discard	trying u_offset=-0.5 and amplitude=0.1	agent0	initial_cond	0	-1.520844	2026-04-03T23:11:56Z
+exp051	1.89547184e-14	0.070536	discard	Trying phase=1.0	agent1	initial_cond	1	0.000099	2026-04-03T23:12:05Z
+exp052	1.89547184e-14	0.070536	discard	Increasing amplitude with phase 1.0	agent1	initial_cond	0	0.000099	2026-04-03T23:12:14Z
+exp053	2.04079574e-22	0.000000	discard	trying u_offset=0.0 and amplitude=0.5	agent0	initial_cond	0	0.000000	2026-04-03T23:12:18Z
+exp054	3.01219234e-13	1.001296	discard	trying u_offset=1.5	agent0	initial_cond	0	-1.520844	2026-04-03T23:12:33Z
+exp055	4.33006439e-14	0.070536	discard	Trying u_offset=0.1 with phase=1.0 to explore the new branch	agent1	initial_cond	0	0.000099	2026-04-03T23:12:40Z
+exp056	2.60112685e-13	1.001296	discard	trying u_offset=-1.5, amplitude=0.5, n_mode=2	agent0	initial_cond	0	-1.520844	2026-04-03T23:12:50Z
+exp057	2.01472417e-14	0.070536	discard	Changing n_mode to 1 for the new branch	agent1	initial_cond	0	0.000099	2026-04-03T23:13:01Z
+exp058	3.88684792e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.3, n_mode=3	agent0	initial_cond	0	-1.520844	2026-04-03T23:13:06Z
+exp059	3.08562028e-13	1.001296	discard	High offset and high amplitude	agent1	initial_cond	0	-1.520844	2026-04-03T23:13:20Z
+exp060	3.41305496e-20	0.000000	discard	trying u_offset=0.0, amplitude=0.1, n_mode=2	agent0	initial_cond	0	0.000000	2026-04-03T23:13:25Z
+exp061	5.94970823e-20	0.000000	discard	Small offset and small amplitude	agent1	initial_cond	0	-0.000000	2026-04-03T23:13:37Z
+exp062	3.56681400e-13	1.001296	discard	trying u_offset=1.0, amplitude=0.1, n_nodes=300, solver_tol=1e-10	agent0	solver_param	0	-1.520844	2026-04-03T23:13:43Z
+exp063	7.86427199e-14	0.070536	discard	Small offset and small amplitude with phase 1.0	agent1	initial_cond	0	0.000099	2026-04-03T23:13:56Z
+exp064	3.63175551e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.5, n_mode=1	agent0	initial_cond	0	-1.520844	2026-04-03T23:14:03Z
+exp065	3.73243090e-20	0.000000	discard	Very small offset and amplitude with phase 1.0	agent1	initial_cond	1	0.000000	2026-04-03T23:14:12Z
+exp066	1.33530863e-22	0.000000	discard	trying u_offset=-0.5, amplitude=0.5, n_mode=1	agent0	initial_cond	1	0.000000	2026-04-03T23:14:19Z
+exp067	3.32795317e-14	0.070536	discard	Exploring small solution with different phase	agent1	initial_cond	1	0.000099	2026-04-03T23:14:29Z
+exp068	2.71242001e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.4, n_mode=2	agent0	initial_cond	0	-1.520844	2026-04-03T23:14:36Z
+exp069	1.91406864e-16	0.000000	discard	Small solution with phase 0.0	agent1	initial_cond	0	-0.000000	2026-04-03T23:14:48Z
+exp070	3.11912449e-13	1.001296	discard	trying u_offset=1.0, amplitude=0.2, n_mode=1	agent0	perturbation	0	-1.520844	2026-04-03T23:14:55Z
+exp071	3.07911712e-14	0.070536	discard	Small solution with phase 1.1	agent1	initial_cond	0	0.000099	2026-04-03T23:15:04Z
+exp072	crash	0	crash	increasing fourier_modes to 256	agent0	solver_param	1	0	2026-04-03T23:15:11Z
+exp073	crash	0	crash	n_nodes=300, solver_tol=1e-10, fourier_modes=128	agent0	solver_param	1	0	2026-04-03T23:15:28Z
+exp074	2.82506169e-13	1.001296	discard	trying u_offset=1.1, amplitude=0.1	agent0	initial_cond	0	-1.520844	2026-04-03T23:15:44Z
+exp075	3.07911712e-14	0.070536	discard	Reducing solver_tol to 1e-12 for the 0.07 branch	agent1	solver_param	1	0.000099	2026-04-03T23:15:50Z
+exp076	3.59777036e-13	1.001296	discard	trying u_offset=1.1, amplitude=0.2	agent0	initial_cond	0	-1.520844	2026-04-03T23:16:08Z
+exp077	6.18806352e-15	0.000000	discard	Changing n_mode to 3 for the 0.07 branch	agent1	initial_cond	0	0.000000	2026-04-03T23:16:21Z
+exp078	3.59777036e-13	1.001296	discard	increasing n_nodes to 300	agent0	solver_param	0	-1.520844	2026-04-03T23:16:28Z
+exp079	3.45905643e-14	0.070536	discard	Changing n_mode to 2 for the 0.07 branch	agent1	initial_cond	0	0.000099	2026-04-03T23:16:38Z
+exp080	crash	0	crash	increasing fourier_modes to 128	agent0	solver_param	0	0	2026-04-03T23:16:44Z
+exp081	2.20521578e-13	1.001296	discard	Trying mid offset and mid amplitude	agent1	initial_cond	1	-1.520844	2026-04-03T23:16:54Z
+exp082	3.59777036e-13	1.001296	discard	increasing n_nodes to 300 and lowering solver_tol to 1e-12	agent0	solver_param	0	-1.520844	2026-04-03T23:17:00Z
+exp083	4.99679559e-19	0.000000	discard	Small offset with mode 2	agent1	initial_cond	1	-0.000000	2026-04-03T23:17:12Z
+exp084	3.08562028e-13	1.001296	discard	trying u_offset=1.5 and amplitude=0.5	agent0	initial_cond	0	-1.520844	2026-04-03T23:17:18Z
+exp085	2.65225269e-13	1.001296	discard	Trying u_offset=0.3, n_mode=2	agent1	initial_cond	1	-1.520844	2026-04-03T23:17:28Z
+exp086	3.20766009e-14	0.070536	discard	Trying u_offset=0.05 to find the 0.07 branch	agent1	initial_cond	1	0.000099	2026-04-03T23:17:45Z
+exp087	crash	0	crash	trying u_offset=0.5, amplitude=0.5, n_nodes=300, solver_tol=1e-12, fourier_modes=128	agent0	solver_param	1	0	2026-04-03T23:17:50Z
+exp088	1.60213199e-14	0.070536	discard	Trying u_offset=0.2 to find other branches	agent1	initial_cond	0	0.000099	2026-04-03T23:18:02Z
+exp089	3.05421974e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.1, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	solver_param	0	-1.520844	2026-04-03T23:18:09Z
+exp090	2.85955427e-13	1.001296	discard	Trying u_offset=0.8	agent1	initial_cond	0	-1.520844	2026-04-03T23:18:19Z
+exp091	2.86591582e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.2, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	0	-1.520844	2026-04-03T23:18:25Z
+exp092	crash	0	crash	Trying newton_tol=1e-14 for the 0.07 branch	agent1	solver_param	0	0	2026-04-03T23:18:40Z
+exp093	3.45396166e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.3, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	0	-1.520844	2026-04-03T23:18:41Z
+exp094	2.01472417e-14	0.070536	discard	Increasing newton_maxiter to 100	agent1	solver_param	1	0.000099	2026-04-03T23:18:56Z
+exp095	3.28879506e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.25, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	0	-1.520844	2026-04-03T23:18:57Z
+exp096	2.01472417e-14	0.070536	discard	Increasing newton_maxiter to 200	agent1	solver_param	1	0.000099	2026-04-03T23:19:12Z
+exp096	1.84301466e-13	0.000000	discard	trying u_offset=0.4, amplitude=0.2, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	1	-0.000000	2026-04-03T23:19:12Z
+exp097	3.15779448e-20	0.000000	discard	trying u_offset=0.45, amplitude=0.2, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	1	0.000000	2026-04-03T23:19:28Z
+exp097	2.01472417e-14	0.070536	discard	Trying newton_tol=1e-13 for the 0.07 branch	agent1	solver_param	1	0.000099	2026-04-03T23:19:28Z
+exp098	2.98107712e-13	1.001296	discard	trying u_offset=0.55, amplitude=0.2, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	0	-1.520844	2026-04-03T23:19:44Z
+exp099	2.51622698e-13	1.001296	discard	trying u_offset=0.6, amplitude=0.2, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	1	-1.520844	2026-04-03T23:19:57Z
+exp100	crash	0	crash	Increasing fourier_modes to 128 for the 0.07 branch	agent1	solver_param	0	0	2026-04-03T23:20:01Z
+exp101	4.03543405e-13	1.001296	discard	trying u_offset=0.7, amplitude=0.2, n_nodes=300, solver_tol=1e-12, fourier_modes=64	agent0	initial_cond	1	-1.520844	2026-04-03T23:20:11Z
+exp102	3.64565990e-14	0.070536	discard	Increasing fourier_modes to 96 for the 0.07 branch	agent1	solver_param	0	0.000099	2026-04-03T23:20:20Z
+exp103	2.59897516e-14	0.070536	discard	Very small u_offset for the 0.07 branch	agent1	initial_cond	0	0.000099	2026-04-03T23:20:37Z
+exp104	1.74509894e-14	0.070536	discard	n_mode 2 with u_offset 0.1 for small branch	agent1	initial_cond	0	0.000099	2026-04-03T23:20:58Z
+exp105	2.15717239e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.3, n_mode=1	agent0	initial_cond	1	-1.520844	2026-04-03T23:20:59Z
+exp106	3.43816401e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.35, n_mode=1	agent0	initial_cond	1	-1.520844	2026-04-03T23:21:11Z
+exp107	1.75374564e-14	0.070536	discard	n_mode 2 with u_offset 0.05 and phase 1.5	agent1	initial_cond	0	0.000099	2026-04-03T23:21:13Z
+exp108	4.51191040e-13	1.001296	discard	trying u_offset=0.75, amplitude=0.3, n_mode=1	agent0	initial_cond	0	-1.520844	2026-04-03T23:21:26Z
+exp109	3.74302292e-14	0.070536	discard	n_mode 2 with fourier_modes 96 for small branch	agent1	solver_param	0	0.000099	2026-04-03T23:21:29Z
+exp110	3.60282831e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.25, n_mode=1	agent0	initial_cond	0	-1.520844	2026-04-03T23:21:40Z
+exp111	2.01472417e-14	0.070536	discard	Reducing solver_tol to 1e-14 for the 0.07 branch	agent1	solver_param	0	0.000099	2026-04-03T23:21:48Z
+exp112	2.92882685e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.2, n_mode=3	agent0	initial_cond	0	-1.520844	2026-04-03T23:21:55Z
+exp113	3.07750801e-14	0.070536	discard	Increasing fourier_modes to 80 for the 0.07 branch	agent1	solver_param	0	0.000099	2026-04-03T23:22:03Z
+exp114	3.17769232e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.1, n_mode=3	agent0	initial_cond	0	-1.520844	2026-04-03T23:22:09Z
+exp115	crash	0	crash	Increasing fourier_modes to 128 for the large branch	agent1	solver_param	1	0	2026-04-03T23:22:20Z
+exp116	2.70663685e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.2, n_mode=3	agent0	initial_cond	0	-1.520844	2026-04-03T23:22:23Z
+exp117	crash	0	crash	Increasing fourier_modes to 96 for the large branch	agent1	solver_param	0	0	2026-04-03T23:22:35Z
+exp118	2.15717239e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.3, n_nodes=300, solver_tol=1e-10	agent0	solver_param	0	-1.520844	2026-04-03T23:22:43Z
+exp119	crash	0	crash	Large branch with low tolerance	agent1	solver_param	0	0	2026-04-03T23:22:52Z
+exp120	crash	0	crash	increasing fourier_modes to 128	agent0	solver_param	3	0	2026-04-03T23:22:57Z
+exp121	3.00050338e-14	0.070536	discard	Amplitude 0.1 for small branch	agent1	initial_cond	0	0.000099	2026-04-03T23:23:07Z
+exp122	crash	0	crash	increasing fourier_modes to 128	agent0	solver_param	0	0	2026-04-03T23:23:12Z
+exp123	2.38573553e-14	0.070536	discard	Amplitude 0.4 for small branch	agent1	initial_cond	1	0.000099	2026-04-03T23:23:21Z
+exp124	3.50399651e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.28, n_mode=1	agent0	initial_cond	1	-1.520844	2026-04-03T23:23:27Z
+exp125	2.98111061e-14	0.000000	discard	u_offset 0.1, amp 0 for small branch	agent1	initial_cond	0	-0.000000	2026-04-03T23:23:39Z
+exp126	2.97514421e-13	1.001296	discard	trying u_offset=0.81, amplitude=0.3, n_mode=1	agent0	initial_cond	1	-1.520844	2026-04-03T23:23:41Z
+exp127	3.06717607e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.3, n_mode=2	agent0	initial_cond	0	-1.520844	2026-04-03T23:24:00Z
+exp128	3.56569435e-13	1.001296	discard	trying u_offset=0.8, amplitude=0.3, n_mode=1, phase=1.0	agent0	initial_cond	0	-1.520844	2026-04-03T23:24:18Z
+exp129	2.64132800e-14	0.070536	discard	Trying u_offset=0.05 with n_mode=2 for the small branch	agent1	initial_cond	0	0.000099	2026-04-03T23:24:27Z
+exp130	2.78453649e-13	1.001296	discard	trying u_offset=0.85, amplitude=0.3, n_mode=1	agent0	initial_cond	0	-1.520844	2026-04-03T23:24:35Z
+exp131	1.98281006e-14	0.070536	discard	Trying u_offset=0.15 with n_mode=2 for the small branch	agent1	initial_cond	0	0.000099	2026-04-03T23:24:42Z
+exp132	2.69040542e-14	0.070536	discard	Trying phase=0.9 for the small branch	agent1	initial_cond	1	0.000099	2026-04-03T23:24:56Z
+exp133	1.46736390e-22	0.000000	discard	trying small u_offset and amplitude to find the small branch mentioned by agent1	agent0	initial_cond	0	0.000000	2026-04-03T23:25:04Z
+exp134	3.45905643e-14	0.070536	discard	n_mode 2 with phase 1.1 for small branch	agent1	initial_cond	1	0.000099	2026-04-03T23:25:12Z
+exp135	2.58904622e-19	0.000000	discard	trying u_offset=0.07 and amplitude=0.07	agent0	initial_cond	0	-0.000000	2026-04-03T23:25:20Z
+exp136	1.74509894e-14	0.070536	discard	Very low solver_tol for the small branch	agent1	solver_param	0	0.000099	2026-04-03T23:25:30Z
+exp137	1.28005278e-13	0.000000	discard	trying u_offset=0.2 and amplitude=0.2	agent0	initial_cond	1	-0.000000	2026-04-03T23:25:34Z
+exp138	crash	0	crash	Extremely low tolerances for the small branch	agent1	solver_param	2	0	2026-04-03T23:25:45Z
+exp139	3.38763631e-22	0.000000	discard	trying u_offset=0.1 and amplitude=0.4	agent0	initial_cond	0	0.000000	2026-04-03T23:25:51Z
+exp140	2.51760827e-13	1.001296	discard	trying u_offset=0.5, amplitude=0.5, n_mode=3	agent0	initial_cond	1	-1.520844	2026-04-03T23:26:06Z
+exp141	1.77554597e-14	0.000000	discard	perturbing trivial solution with mode 3	agent0	perturbation	0	-0.000000	2026-04-03T23:26:22Z
+exp142	2.35176594e-23	0.000000	discard	trying u_offset=0.0, amplitude=0.1, n_mode=3	agent0	initial_cond	1	0.000000	2026-04-03T23:26:39Z
+exp143	crash	0	crash	Increasing fourier_modes to 80 for the small branch	agent1	solver_param	1	0	2026-04-03T23:26:53Z
+exp144	3.41305496e-20	0.000000	discard	trying u_offset=0.0, amplitude=0.1, n_mode=2	agent0	initial_cond	1	0.000000	2026-04-03T23:26:54Z
+exp145	crash	0	crash	Increasing n_nodes to 400 for the small branch	agent1	solver_param	0	0	2026-04-03T23:27:08Z
+exp146	7.04901082e-18	0.000000	discard	trying u_offset=0.3, amplitude=0.3, n_mode=2	agent0	initial_cond	0	-0.000000	2026-04-03T23:27:09Z
+exp147	2.83038924e-19	0.000000	discard	trying u_offset=0.15, amplitude=0.1	agent0	initial_cond	0	-0.000000	2026-04-03T23:27:25Z
+exp148	crash	0	crash	Increasing fourier_modes to 72 for the small branch	agent1	solver_param	1	0	2026-04-03T23:28:11Z
+exp149	1.91406864e-16	0.000000	discard	trying u_offset=0.1, amplitude=0.5	agent0	initial_cond	0	-0.000000	2026-04-03T23:28:20Z
+exp150	crash	0	crash	Increasing fourier_modes to 68 for the small branch	agent1	solver_param	0	0	2026-04-03T23:28:26Z

@@ -1,0 +1,172 @@
+exp001	0.00000000e+00	0.000000	0.000000	keep	baseline trivial branch, u_offset=0	agent0	initial_cond	0	0.000000
+exp002	2.66626099e-13	1.001296	1.000019	keep	baseline positive branch, u_offset=0.9	agent0	initial_cond	1	-1.520844
+exp003	2.66626099e-13	1.001296	-1.000019	discard	baseline negative branch, u_offset=-0.9	agent0	initial_cond	1	-1.520844
+exp004	0.00000000e+00	0.000000	0.000000	keep	trivial branch baseline, u_offset=0.0	agent1	initial_cond	0	0.000000
+exp005	2.66626099e-13	1.001296	1.000019	discard	positive branch, u_offset=0.9	agent1	initial_cond	1	-1.520844
+exp006	2.28944733e-13	1.001296	-1.000019	discard	test trivial/positive transition, u_offset=0.5	agent0	initial_cond	0	-1.520844
+exp007	2.64988611e-20	0.000000	0.000000	discard	basin boundary exploration, u_offset=0.3	agent0	initial_cond	1	0.000000
+exp008	9.02401735e-20	0.000000	0.000000	discard	basin boundary exploration, u_offset=0.2	agent0	initial_cond	0	-0.000000
+exp009	2.98111061e-14	0.000000	0.000000	discard	basin boundary exploration, u_offset=0.1	agent0	initial_cond	1	-0.000000
+exp010	2.64988611e-20	0.000000	-0.000000	discard	basin boundary exploration, u_offset=-0.3	agent0	initial_cond	2	0.000000
+exp011	crash	0	0	crash	positive branch, tighter tol (newton_tol=1e-14)	agent1	solver_param	3	0
+exp012	2.28944733e-13	1.001296	1.000019	discard	basin boundary exploration, u_offset=-0.5	agent0	initial_cond	0	-1.520844
+exp013	3.48477681e-13	1.001296	-1.000019	discard	basin boundary exploration, u_offset=-0.7	agent0	initial_cond	0	-1.520844
+exp014	crash	0	0	crash	positive branch, moderate tightening (newton_tol=1e-13, newton_maxiter=150)	agent1	solver_param	1	0
+exp015	2.47269696e-13	1.001296	-1.000019	discard	fourier modes test: 32 modes, u_offset=0.5	agent0	solver_param	0	-1.520844
+exp016	2.28944733e-13	1.001296	-1.000019	discard	fourier modes test: 64 modes, u_offset=0.5	agent0	solver_param	1	-1.520844
+exp017	crash	0	0	crash	fourier modes test: 128 modes, u_offset=0.5	agent0	solver_param	0	0
+exp018	crash	0	0	crash	fourier modes test: 256 modes, u_offset=0.5	agent0	solver_param	1	0
+exp019	3.91271965e-13	1.001296	1.000019	discard	positive branch with mode-2 perturbation (amp=0.15, phase=1.57)	agent1	perturbation	0	-1.520844
+exp020	2.66626099e-13	1.001296	-1.000019	discard	negative branch baseline, u_offset=-0.9	agent1	initial_cond	1	-1.520844
+exp021	2.76001344e-13	1.001296	1.000019	discard	fine basin sweep, u_offset=0.6	agent0	initial_cond	0	-1.520844
+exp022	3.48477681e-13	1.001296	1.000019	discard	fine basin sweep, u_offset=0.7	agent0	initial_cond	0	-1.520844
+exp023	4.35391359e-13	1.001296	1.000019	discard	fine basin sweep, u_offset=0.75	agent0	initial_cond	1	-1.520844
+exp024	2.80411917e-13	1.001296	1.000019	discard	fine basin sweep, u_offset=0.8	agent0	initial_cond	0	-1.520844
+exp025	3.37581097e-13	1.001296	1.000019	discard	fine basin sweep, u_offset=0.85	agent0	initial_cond	0	-1.520844
+exp026	crash	0	0	crash	negative branch with fourier_modes=128	agent1	solver_param	1	0
+exp027	2.10061857e-13	1.001296	-1.000019	discard	precise boundary, u_offset=0.52	agent0	initial_cond	0	-1.520844
+exp028	2.90918247e-13	1.001296	-1.000019	discard	precise boundary, u_offset=0.54	agent0	initial_cond	1	-1.520844
+exp029	2.13371637e-13	1.001296	-1.000019	discard	precise boundary, u_offset=0.55	agent0	initial_cond	0	-1.520844
+exp030	3.80842526e-13	1.001296	-1.000019	discard	precise boundary, u_offset=0.56	agent0	initial_cond	0	-1.520844
+exp031	3.27355159e-13	1.001296	-1.000019	discard	precise boundary, u_offset=0.58	agent0	initial_cond	1	-1.520844
+exp032	3.05421974e-13	1.001296	-1.000019	discard	exploring basin boundary, u_offset=0.5, amp=0.1	agent1	branch_search	0	-1.520844
+exp033	3.88079599e-13	1.001296	1.000019	discard	boundary search, u_offset=0.59	agent0	initial_cond	0	-1.520844
+exp034	3.71823481e-13	1.001296	-1.000019	discard	boundary search, u_offset=0.51	agent0	initial_cond	0	-1.520844
+exp035	3.16847297e-13	1.001296	-1.000019	discard	boundary search, u_offset=0.49	agent0	initial_cond	1	-1.520844
+exp036	3.19957670e-13	1.001296	1.000019	discard	boundary search, u_offset=0.48	agent0	initial_cond	0	-1.520844
+exp037	3.45536827e-13	1.001296	-1.000019	discard	boundary search, u_offset=0.47	agent0	initial_cond	1	-1.520844
+exp038	2.60011944e-19	0.000000	-0.000000	discard	trivial branch with larger perturbation, u_offset=0.2, amp=0.3	agent1	perturbation	0	-0.000000
+exp039	3.24619878e-13	1.001296	1.000019	discard	positive branch with mode-3 (u_offset=0.95, mode=3, amp=0.05)	agent1	perturbation	0	-1.520844
+exp040	2.28944733e-13	1.001296	-1.000019	discard	amplitude effect, amp=0.0 u_offset=0.5	agent0	perturbation	0	-1.520844
+exp041	2.79078543e-13	1.001296	-1.000019	discard	amplitude effect, amp=0.05 u_offset=0.5	agent0	perturbation	0	-1.520844
+exp042	3.05421974e-13	1.001296	-1.000019	discard	amplitude effect, amp=0.1 u_offset=0.5	agent0	perturbation	1	-1.520844
+exp043	2.68570856e-13	1.001296	-1.000019	discard	amplitude effect, amp=0.15 u_offset=0.5	agent0	perturbation	0	-1.520844
+exp044	2.86591582e-13	1.001296	-1.000019	discard	amplitude effect, amp=0.2 u_offset=0.5	agent0	perturbation	0	-1.520844
+exp045	3.45396166e-13	1.001296	1.000019	discard	amplitude effect, amp=0.3 u_offset=0.5	agent0	perturbation	1	-1.520844
+exp046	2.10061857e-13	1.001296	-1.000019	discard	positive at boundary u_offset=0.52, baseline config	agent1	initial_cond	0	-1.520844
+exp047	2.28944733e-13	1.001296	-1.000019	discard	phase effect, phase=0.0	agent0	perturbation	0	-1.520844
+exp048	2.28944733e-13	1.001296	-1.000019	discard	phase effect, phase=1.57	agent0	perturbation	1	-1.520844
+exp049	2.28944733e-13	1.001296	-1.000019	discard	phase effect, phase=3.14	agent0	perturbation	0	-1.520844
+exp050	2.28944733e-13	1.001296	-1.000019	discard	phase effect, phase=4.71	agent0	perturbation	0	-1.520844
+exp051	2.28944733e-13	1.001296	-1.000019	discard	phase effect, phase=6.28	agent0	perturbation	0	-1.520844
+exp052	4.28755118e-13	1.001296	-1.000019	discard	positive refine boundary u_offset=0.53	agent1	initial_cond	0	-1.520844
+exp053	2.28944733e-13	1.001296	-1.000019	discard	n_mode effect, mode=1	agent0	perturbation	0	-1.520844
+exp054	2.28944733e-13	1.001296	-1.000019	discard	n_mode effect, mode=2	agent0	perturbation	0	-1.520844
+exp055	2.28944733e-13	1.001296	-1.000019	discard	n_mode effect, mode=3	agent0	perturbation	1	-1.520844
+exp056	2.19509230e-13	1.001296	1.000019	discard	positive with tiny phase perturbation (amp=0.01, phase=π/2)	agent1	perturbation	0	-1.520844
+exp057	3.85777826e-13	1.001296	1.000019	discard	positive with phase=π/4	agent1	perturbation	0	-1.520844
+exp058	2.66626099e-13	1.001296	1.000019	discard	solver_tol=1.0e-8, u_offset=0.9	agent0	solver_param	1	-1.520844
+exp059	2.66626099e-13	1.001296	1.000019	discard	solver_tol=1.0e-10, u_offset=0.9	agent0	solver_param	0	-1.520844
+exp060	2.66626099e-13	1.001296	1.000019	discard	solver_tol=1.0e-12, u_offset=0.9	agent0	solver_param	0	-1.520844
+exp061	2.66626099e-13	1.001296	1.000019	discard	solver_tol=1.0e-14, u_offset=0.9	agent0	solver_param	0	-1.520844
+exp062	3.28066171e-13	1.001296	1.000019	discard	positive with amp=0.02, phase=π/2	agent1	perturbation	0	-1.520844
+exp063	4.33120352e-10	1.001296	1.000019	discard	newton_tol=1.0e-8	agent0	solver_param	0	-1.520844
+exp064	2.66626099e-13	1.001296	1.000019	discard	newton_tol=1.0e-10	agent0	solver_param	0	-1.520844
+exp065	2.66626099e-13	1.001296	1.000019	discard	newton_tol=1.0e-12	agent0	solver_param	1	-1.520844
+exp066	crash	0	0	crash	newton_tol=1.0e-14	agent0	solver_param	0	0
+exp067	2.98929389e-13	1.001296	1.000019	discard	positive with u_offset=0.88	agent1	initial_cond	0	-1.520844
+exp068	9.02401735e-20	0.000000	0.000000	discard	basin map, u_offset=0.20	agent0	initial_cond	0	-0.000000
+exp069	3.85467696e-14	0.000000	0.000000	discard	basin map, u_offset=0.25	agent0	initial_cond	1	-0.000000
+exp070	2.64988611e-20	0.000000	0.000000	discard	basin map, u_offset=0.30	agent0	initial_cond	0	0.000000
+exp071	8.93804578e-22	0.000000	-0.000000	discard	basin map, u_offset=0.35	agent0	initial_cond	0	0.000000
+exp072	4.40113707e-21	0.000000	0.000000	discard	basin map, u_offset=0.40	agent0	initial_cond	1	0.000000
+exp073	3.94755575e-16	0.000000	0.000000	discard	basin map, u_offset=0.45	agent0	initial_cond	0	-0.000000
+exp074	2.28944733e-13	1.001296	-1.000019	discard	basin map, u_offset=0.50	agent0	initial_cond	0	-1.520844
+exp075	2.13371637e-13	1.001296	-1.000019	discard	basin map, u_offset=0.55	agent0	initial_cond	1	-1.520844
+exp076	2.76001344e-13	1.001296	1.000019	discard	basin map, u_offset=0.60	agent0	initial_cond	0	-1.520844
+exp077	2.93208080e-13	1.001296	1.000019	discard	basin map, u_offset=0.65	agent0	initial_cond	0	-1.520844
+exp078	3.48477681e-13	1.001296	1.000019	discard	basin map, u_offset=0.70	agent0	initial_cond	1	-1.520844
+exp079	4.35391359e-13	1.001296	1.000019	discard	basin map, u_offset=0.75	agent0	initial_cond	0	-1.520844
+exp080	2.80411917e-13	1.001296	1.000019	discard	basin map, u_offset=0.80	agent0	initial_cond	0	-1.520844
+exp081	3.37581097e-13	1.001296	1.000019	discard	basin map, u_offset=0.85	agent0	initial_cond	1	-1.520844
+exp082	2.66626099e-13	1.001296	1.000019	discard	basin map, u_offset=0.90	agent0	initial_cond	0	-1.520844
+exp083	2.86976398e-13	1.001296	1.000019	discard	basin map, u_offset=0.95	agent0	initial_cond	0	-1.520844
+exp084	3.61191662e-13	1.001296	1.000019	discard	basin map, u_offset=1.00	agent0	initial_cond	1	-1.520844
+exp085	3.94755575e-16	0.000000	0.000000	discard	detailed boundary, u_offset=0.45	agent0	initial_cond	0	-0.000000
+exp086	3.45536827e-13	1.001296	-1.000019	discard	detailed boundary, u_offset=0.47	agent0	initial_cond	0	-1.520844
+exp087	3.16847297e-13	1.001296	-1.000019	discard	detailed boundary, u_offset=0.49	agent0	initial_cond	0	-1.520844
+exp088	3.71823481e-13	1.001296	-1.000019	discard	detailed boundary, u_offset=0.51	agent0	initial_cond	0	-1.520844
+exp089	4.28755118e-13	1.001296	-1.000019	discard	detailed boundary, u_offset=0.53	agent0	initial_cond	0	-1.520844
+exp090	2.13371637e-13	1.001296	-1.000019	discard	detailed boundary, u_offset=0.55	agent0	initial_cond	0	-1.520844
+exp091	4.20232224e-13	1.001296	-1.000019	discard	detailed boundary, u_offset=0.57	agent0	initial_cond	0	-1.520844
+exp092	3.88079599e-13	1.001296	1.000019	discard	detailed boundary, u_offset=0.59	agent0	initial_cond	0	-1.520844
+exp093	2.87496000e-13	1.001296	1.000019	discard	positive with mode-2 tiny perturbation (amp=0.005)	agent1	perturbation	0	-1.520844
+exp094	3.01399753e-13	1.001296	-1.000019	discard	negative branch with phase perturbation (amp=0.01, phase=π/2)	agent1	perturbation	0	-1.520844
+exp095	3.86113062e-13	1.001296	-1.000019	discard	negative branch symmetric to positive best (u_offset=-0.88)	agent1	initial_cond	1	-1.520844
+exp096	3.28236058e-13	1.001296	1.000019	discard	positive refine: amp=0.015, phase=π/2	agent1	perturbation	1	-1.520844
+exp097	2.72562319e-13	1.001296	1.000019	discard	verify agent1 claim: u=0.9, amp=0.01, phase=π/2	agent0	perturbation	1	-1.520844
+exp098	2.72562319e-13	1.001296	1.000019	discard	verify agent1 claim: u=0.9, amp=0.01, phase=π/2	agent0	perturbation	0	-1.520844
+exp099	2.72562319e-13	1.001296	1.000019	discard	verify agent1 claim: u=0.9, amp=0.01, phase=π/2	agent0	perturbation	0	-1.520844
+exp100	2.74611564e-13	1.001296	1.000019	discard	positive refine: amp=0.008, phase=π/2	agent1	perturbation	0	-1.520844
+exp101	3.52371907e-13	1.001296	1.000019	discard	amplitude variation, amp=0.005	agent0	perturbation	1	-1.520844
+exp101	4.03011687e-13	1.001296	1.000019	discard	positive refine: phase=1.5	agent1	perturbation	1	-1.520844
+exp102	2.72562319e-13	1.001296	1.000019	discard	amplitude variation, amp=0.01	agent0	perturbation	0	-1.520844
+exp103	2.36128590e-13	1.001296	1.000019	discard	amplitude variation, amp=0.015	agent0	perturbation	0	-1.520844
+exp104	2.67236852e-13	1.001296	1.000019	discard	amplitude variation, amp=0.02	agent0	perturbation	1	-1.520844
+exp105	2.71816336e-13	1.001296	1.000019	discard	amplitude variation, amp=0.05	agent0	perturbation	0	-1.520844
+exp106	3.21744271e-13	1.001296	1.000019	discard	positive refine: phase=1.6	agent1	perturbation	0	-1.520844
+exp107	2.72562319e-13	1.001296	1.000019	discard	fine amplitude tune, amp=0.010	agent0	perturbation	0	-1.520844
+exp108	3.51390650e-13	1.001296	1.000019	discard	fine amplitude tune, amp=0.012	agent0	perturbation	1	-1.520844
+exp109	3.15087524e-13	1.001296	1.000019	discard	fine amplitude tune, amp=0.014	agent0	perturbation	0	-1.520844
+exp110	2.36128590e-13	1.001296	1.000019	discard	fine amplitude tune, amp=0.015	agent0	perturbation	0	-1.520844
+exp111	2.70278954e-13	1.001296	1.000019	discard	fine amplitude tune, amp=0.016	agent0	perturbation	1	-1.520844
+exp112	2.97538886e-13	1.001296	1.000019	discard	fine amplitude tune, amp=0.018	agent0	perturbation	0	-1.520844
+exp113	2.67236852e-13	1.001296	1.000019	discard	fine amplitude tune, amp=0.020	agent0	perturbation	0	-1.520844
+exp114	3.29108809e-13	1.001296	1.000019	discard	phase test: 0 degrees	agent0	perturbation	0	-1.520844
+exp115	2.96902981e-13	1.001296	1.000019	discard	phase test: 30 degrees	agent0	perturbation	1	-1.520844
+exp116	3.14148333e-13	1.001296	1.000019	discard	phase test: 45 degrees	agent0	perturbation	0	-1.520844
+exp117	3.74385427e-13	1.001296	1.000019	discard	phase test: 60 degrees	agent0	perturbation	0	-1.520844
+exp118	3.27368915e-13	1.001296	1.000019	discard	phase test: 90 degrees	agent0	perturbation	1	-1.520844
+exp119	3.84035316e-13	1.001296	1.000019	discard	phase test: 120 degrees	agent0	perturbation	0	-1.520844
+exp120	3.25868969e-13	1.001296	1.000019	discard	phase test: 135 degrees	agent0	perturbation	0	-1.520844
+exp121	2.35121913e-13	1.001296	1.000019	discard	phase test: 150 degrees	agent0	perturbation	1	-1.520844
+exp122	3.45465766e-13	1.001296	1.000019	discard	phase test: 180 degrees	agent0	perturbation	0	-1.520844
+exp123	3.28236058e-13	1.001296	1.000019	discard	positive with amp=0.015, phase=π/2	agent1	perturbation	0	-1.520844
+exp124	3.53025526e-13	1.001296	1.000019	discard	positive with amp=0.015, phase=0	agent1	perturbation	0	-1.520844
+exp125	3.01219234e-13	1.001296	-1.000019	discard	extreme offset, u_offset=-1.5	agent0	initial_cond	0	-1.520844
+exp126	3.42609616e-13	1.001296	-1.000019	discard	extreme offset, u_offset=-1.2	agent0	initial_cond	1	-1.520844
+exp127	3.42609616e-13	1.001296	1.000019	discard	extreme offset, u_offset=1.2	agent0	initial_cond	0	-1.520844
+exp128	3.01219234e-13	1.001296	1.000019	discard	extreme offset, u_offset=1.5	agent0	initial_cond	1	-1.520844
+exp129	2.96830919e-13	1.001296	1.000019	discard	positive with amp=0.015, phase=0.8	agent1	perturbation	1	-1.520844
+exp130	3.35746625e-13	1.001296	1.000019	discard	positive with amp=0.015, phase=0.3	agent1	perturbation	0	-1.520844
+exp131	3.28440192e-13	1.001296	-1.000019	discard	large amplitude, amp=0.25	agent0	perturbation	0	-1.520844
+exp132	3.50173499e-13	1.001296	-1.000019	discard	large amplitude, amp=0.35	agent0	perturbation	0	-1.520844
+exp133	3.09086659e-13	1.001296	-1.000019	discard	large amplitude, amp=0.45	agent0	perturbation	1	-1.520844
+exp134	3.09717817e-13	1.001296	-1.000019	discard	large amplitude, amp=0.50	agent0	perturbation	0	-1.520844
+exp135	2.94338507e-13	1.001296	1.000019	discard	positive branch u_offset=0.92 search	agent1	initial_cond	1	-1.520844
+exp136	1.72181628e-21	0.000000	-0.000000	discard	multi-mode IC, mode=2 u=0.3	agent0	perturbation	1	0.000000
+exp137	2.99693148e-18	0.000000	0.000000	discard	multi-mode IC, mode=3 u=0.3	agent0	perturbation	0	-0.000000
+exp138	1.49571075e-17	0.000000	0.000000	discard	multi-mode IC, mode=4 u=0.3	agent0	perturbation	0	-0.000000
+exp139	3.46276345e-13	1.001296	1.000019	discard	multi-mode IC, mode=2 u=0.7	agent0	perturbation	2	-1.520844
+exp140	2.68895634e-13	1.001296	1.000019	discard	multi-mode IC, mode=3 u=0.7	agent0	perturbation	0	-1.520844
+exp141	3.02952458e-13	1.001296	1.000019	discard	multi-mode IC, mode=4 u=0.7	agent0	perturbation	0	-1.520844
+exp142	2.64988611e-20	0.000000	0.000000	discard	2D map, u=0.3 a=0.0	agent0	perturbation	1	0.000000
+exp143	6.69306133e-20	0.000000	-0.000000	discard	2D map, u=0.3 a=0.1	agent0	perturbation	0	-0.000000
+exp144	1.02867350e-16	0.000000	-0.000000	discard	2D map, u=0.3 a=0.2	agent0	perturbation	0	-0.000000
+exp145	2.28944733e-13	1.001296	-1.000019	discard	2D map, u=0.5 a=0.0	agent0	perturbation	1	-1.520844
+exp146	3.05421974e-13	1.001296	-1.000019	discard	2D map, u=0.5 a=0.1	agent0	perturbation	0	-1.520844
+exp147	2.86591582e-13	1.001296	-1.000019	discard	2D map, u=0.5 a=0.2	agent0	perturbation	0	-1.520844
+exp148	3.48477681e-13	1.001296	1.000019	discard	2D map, u=0.7 a=0.0	agent0	perturbation	1	-1.520844
+exp149	3.65784025e-13	1.001296	1.000019	discard	2D map, u=0.7 a=0.1	agent0	perturbation	0	-1.520844
+exp150	4.03543405e-13	1.001296	1.000019	discard	2D map, u=0.7 a=0.2	agent0	perturbation	0	-1.520844
+exp151	2.66626099e-13	1.001296	1.000019	discard	2D map, u=0.9 a=0.0	agent0	perturbation	1	-1.520844
+exp152	2.88051949e-13	1.001296	1.000019	discard	2D map, u=0.9 a=0.1	agent0	perturbation	0	-1.520844
+exp153	3.79436503e-13	1.001296	1.000019	discard	2D map, u=0.9 a=0.2	agent0	perturbation	0	-1.520844
+exp154	2.87729752e-13	1.001296	1.000019	discard	positive with mode-3, amp=0.02	agent1	perturbation	0	-1.520844
+exp155	2.72682892e-13	1.001296	-1.000019	discard	negative with mode-2, amp=0.02	agent1	perturbation	1	-1.520844
+exp156	2.66626099e-13	1.001296	1.000019	discard	positive positive baseline with n_nodes=200	agent1	solver_param	1	-1.520844
+exp157	2.28944733e-13	1.001296	-1.000019	discard	final mode test at critical u_offset=0.5, mode=1	agent0	perturbation	0	-1.520844
+exp158	2.28944733e-13	1.001296	-1.000019	discard	final mode test at critical u_offset=0.5, mode=2	agent0	perturbation	0	-1.520844
+exp159	2.28944733e-13	1.001296	-1.000019	discard	final mode test at critical u_offset=0.5, mode=3	agent0	perturbation	1	-1.520844
+exp160	2.28944733e-13	1.001296	-1.000019	discard	final mode test at critical u_offset=0.5, mode=4	agent0	perturbation	0	-1.520844
+exp161	2.28944733e-13	1.001296	-1.000019	discard	final mode test at critical u_offset=0.5, mode=5	agent0	perturbation	0	-1.520844
+exp162	0.00000000e+00	0.000000	0.000000	discard	robustness: baseline_trivial	agent0	initial_cond	1	0.000000
+exp163	2.64988611e-20	0.000000	0.000000	discard	robustness: trivial_offset	agent0	initial_cond	0	0.000000
+exp164	2.28944733e-13	1.001296	-1.000019	discard	robustness: boundary_chaos	agent0	initial_cond	0	-1.520844
+exp165	2.66626099e-13	1.001296	1.000019	discard	robustness: baseline_positive	agent0	initial_cond	1	-1.520844
+exp166	2.66626099e-13	1.001296	-1.000019	discard	robustness: baseline_negative	agent0	initial_cond	0	-1.520844
+exp167	3.85467696e-14	0.000000	0.000000	discard	robustness: trivial_robust	agent0	initial_cond	0	-0.000000
+exp168	4.35391359e-13	1.001296	1.000019	discard	robustness: positive_robust	agent0	initial_cond	1	-1.520844
+exp169	2.28944733e-13	1.001296	1.000019	discard	robustness: neg_transition	agent0	initial_cond	0	-1.520844
+exp170	3.01219234e-13	1.001296	1.000019	discard	robustness: extreme_pos	agent0	initial_cond	0	-1.520844
+exp171	3.42609616e-13	1.001296	-1.000019	discard	robustness: extreme_neg	agent0	initial_cond	1	-1.520844

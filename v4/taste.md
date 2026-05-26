@@ -62,3 +62,21 @@ The outer agent reads this before every monitoring check and redesign decision.
 ## Generation lessons (auto-appended by outer agent)
 
 _None yet. This section will grow as the system runs._
+
+Error: Reached max turns (1)
+
+Error: Reached max turns (1)
+
+
+
+### Generation 1 (2026-04-02)
+- Scaffold change: Initial run — blind chaos domain (no oracle), 8 agents with 1 chaos agent (agent7), herd immunity scaling test
+- Effect on process quality: Low — only 5 experiments logged in stoplight despite 80 total, meta-agent hit max turns (3), stagnation detected after just 4 experiments
+- Key process insight: When the monitor's max_turns is too low (3), the meta-agent can't complete diagnosis or intervention, leaving stagnation unaddressed even when the agents themselves are productive.
+
+
+
+### Generation 1 (2026-04-07)
+- Scaffold change: Initial run — bottom-up strategy (leaf modules first), oracle hints seeded, 2 agents with 3 max turns
+- Effect on process quality: High — agents immediately productive, 45 sorries resolved in 3 experiments with no crashes or stagnation
+- Key process insight: For formal proof domains, seeding oracle hints about type-level pitfalls (e.g., typeclass blowup) prevents agents from wasting entire experiments on compilation errors.

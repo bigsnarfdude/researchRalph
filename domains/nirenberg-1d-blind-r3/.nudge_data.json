@@ -1,0 +1,106 @@
+{
+  "decision": "NUDGE",
+  "pq": 15,
+  "gardener_fixes": [
+    {
+      "issue": "Unaddressed desire: Current: Manual edits to config.yaml for each n_nodes value",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Desired: Parameterized run.sh that accepts (u_offset, n_nodes, solver_tol) and o",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Benefit: Could map the full n_nodes\u00d7tol parameter space more efficiently",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Estimated speedup: 3\u20135\u00d7 (batch-test 50 configurations instead of 10)",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Current: Only residual and solution_mean/norm outputs",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Benefit: Understand whether the local optimum at n_nodes=392 comes from super-co",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Impact: May reveal that 392 is not actually optimal, just locally minimal",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Current: Black-box solver with only final residual",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Desired: Diagnostics like (# of Newton steps, condition number of Jacobian, esti",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Benefit: Understand why n_nodes\u2265395 suddenly degrades\u2014is it ill-conditioning or ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Impact: Could guide whether to increase tolerance, change mesh type (Chebyshev v",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Current: solver_tol and n_nodes are both edited together",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Desired: Fine-grained control to test (n_nodes=392, solver_tol\u2208[1e-10, 1e-13]) i",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **Bifurcation analysis**: Agent1 found bistability at u_offset\u22480.55. Would like ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **Alternative solvers**: Current solver is Fourier-Newton. Would be interesting ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Non-trivial branches optimized to 1.46e-12 via n_nodes=392 (2.2\u00d7 improvement ove",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Identified local optimum at n_nodes=392 with convergence wall at n_nodes\u2265395",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    }
+  ],
+  "hitl_fixes": [
+    {
+      "issue": "Unaddressed desire: Desired: Access to the actual solution u(\u03b8) profiles, perhaps as plots or TSV ve",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    }
+  ],
+  "missed_checks": [],
+  "dead_ends": [
+    "Design 'perturbation' has 26 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'branch_search' has 79 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'bifurcation_analysis' has 4 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 251
+}

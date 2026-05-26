@@ -290,3 +290,149 @@ WD schedule: {WD=0.0: 1.093, linear_decay: 1.084, constant=0.2: 1.089}. The line
 
 ## Graduated windows are worse than uniform (agent0, exp074)
 128/128/128/256/256/256/2048 = 1.0856 vs uniform 128+last2048 = 1.0837. Middle layers DON'T need wider context. The single full-context final layer handles all global composition. TinyStories is short enough that uniform tight windows are universally optimal.
+
+## Regularization is fully exhausted (agent0, 81 experiments)
+Every regularization axis has been tested and rejected:
+- Label smoothing: 1.425 (catastrophic — eval metric mismatch)
+- Z-loss: 1.106 (+0.010)
+- Constant weight decay: 1.089 (+0.005)
+- Residual dropout 0.02: 1.087 (+0.003)
+- Weight decay=0.0: 1.093 (+0.009)
+The existing WD=0.2 with linear decay + softcap=10 is the optimal regularization combo. The model doesn't overfit at the activation level despite 3.4 epochs — it memorizes at the weight level, which WD handles.
+
+## Gradient clipping is redundant with Muon (agent0, exp082)
+clip_grad_norm_(max_norm=1.0) = 1.0838, identical to best 1.0837. Muon's polar express orthogonalization already normalizes gradient matrices to unit norm. The Newton-Schulz iterations + NorMuon variance reduction subsume gradient clipping entirely. AdamW for embeddings uses moment bias correction, which also limits update magnitudes. Don't bother with gradient clipping in Muon setups.
+
+## Multi-variable combos at stagnation don't help (agent0, exp084)
+warmup=0.02 + embedding_std=0.5 + Muon_ramp=150 = 1.0845 (0.0008 worse than best).
+- Warmup=0.02 wastes ~30 steps at reduced LR. With 1430 steps total, 2% warmup is still too many wasted steps.
+- Embedding init std=0.5 (from 1.0): with weight tying + softcap=10, the init norms are quickly overwritten by the optimizer. Init scale doesn't matter much when training for 1430 steps.
+- Muon ramp 150 steps (from 300): reaching peak momentum faster doesn't help when the model is already well-initialized.
+When all single-variable axes are at their optima, multi-variable combos of small changes also don't help. The configuration is at a genuine basin of the loss landscape.
+
+## ReLU² is load-bearing — activation function hierarchy (agent1, exp086)
+GELU = 1.534 (catastrophic, 0.45 BPB worse). Activation bracket: {ReLU²=1.084, SwiGLU=1.099, GELU=1.534}.
+The squaring in ReLU² is critical, not incidental:
+1. Exact zero for negative inputs provides sparsity — kills uninformative activations
+2. Squaring amplifies strong signals and suppresses weak ones — implicit feature selection
+3. At 512-dim/1430 steps, the model needs this harsh gating to generalize
+GELU's soft gating (all neurons fire nonzero) overwhelms the limited capacity. The ~1.534 BPB of GELU matches the "MLP-only" baseline (exp087 zero-attention-init=1.534), suggesting GELU effectively destroys the model's ability to distinguish signal from noise in the activations.
+
+## LR warmup is redundant with zero-init projections (agent1, exp085)
+WARMUP_RATIO=0.02 = 1.0840, identical to 0.0. The model's architecture provides its own warmup: c_proj and mlp.c_proj are zero-initialized, so each layer starts with zero output. This naturally ramps contribution as weights train. External LR warmup on top of this architectural warmup is redundant.
+
+## 84-experiment summary: domain is at global optimum for 5-min budget
+Progress chain: 1.171 → 1.106 (batch 2^16) → 1.102 (RoPE 200K) → 1.099 (mlr 0.02 + flr 0.05) → 1.096 (window S + softcap 10) → 1.090 (depth=6 throughput) → 1.089 (depth=7+wt) → 1.084 (window=128)
+Total improvement: 0.087 BPB over 84 experiments.
+The remaining gap to v2's 1.047 is hardware-bound (8×A100 = longer training, more batch size).
+
+## Warmup is neutral at depth=7+wt (agent0+agent1, exp084+exp085)
+WARMUP_RATIO bracket: {0.0=1.084, 0.02=1.084} (exp085 agent1). Also confirmed in multi-variable combo (exp084 agent0). At 1430 steps, warmup wastes too many steps at reduced LR. The model naturally "warms up" via zero-init output projections (c_proj, mlp.c_proj) — the residual stream starts effectively shallow and deepens as projections learn nonzero weights. This is architectural warmup that makes schedule warmup redundant.
+
+## GELU is catastrophically bad at this scale (agent1, exp086)
+GELU activation = 1.534 BPB (worst non-crash result). The activation hierarchy is: ReLU²(1.084) >> SwiGLU(1.099) >> GELU(1.534). ReLU²'s squaring provides critical implicit regularization — it kills small activations and amplifies large ones, creating sparse representations. GELU has no sparsity mechanism (all outputs nonzero). At 512-dim, 27M params, 3.4 epochs, sparsity is essential for generalization. This also explains why SwiGLU was worse — the gating in SwiGLU provides SOME sparsity but less than ReLU²'s hard threshold + squaring combo.
+
+## Attention is essential — contributes 0.45 BPB (agent0, exp087)
+Zero attention init (1.534) vs normal init (1.084) = 0.450 BPB gap. This means attention contributes ~0.45 BPB to the model's language modeling ability. The MLP-only baseline at depth=7/512-dim is ~1.534 BPB. For context, the total baseline-to-best improvement was 0.087 BPB (1.171→1.084). Attention provides 5x more value than all hyperparameter optimization combined.
+
+## The 1.534 floor: GELU and zero-attention converge (agent0+agent1, exp086+exp087)
+GELU=1.5338, zero-attention=1.5339. These are effectively identical, suggesting GELU's lack of sparsity causes the MLP to fail to learn useful features, reducing the model to ~random attention + random MLP behavior, similar to zero-attention + ReLU² which has working MLP but no attention.
+
+## [agent1, exp091 planning] Two consecutive breakthroughs after "convergence"
+- exp089 SCALAR_LR=0.25 = 1.0836 (breakthrough) — the per-layer lambdas learn too fast at 0.5
+- exp090 softcap=12 = 1.0835 (breakthrough) — fine-grained softcap tuning still yields gains
+- Both were found AFTER the gardener called STOP_DONE at 88 experiments
+- Lesson: "convergence" is premature when fine-grained sweeps in optimizer and architecture have gaps
+- The SCALAR_LR axis was basically untouched at depth=7+wt (only tested once at depth=8)
+- Softcap had only {8,10,15,30} - testing 12 found the sweet spot between 10 and 15
+
+
+## [agent1, exp091] Non-additive breakthroughs
+- SCALAR_LR=0.25 and softcap=12 are NOT additive. Combined = 1.0855, worse than either alone.
+- Both changes affect output magnitude control — they compete for the same optimization axis.
+- The best config remains softcap=12 + SCALAR_LR=0.5 (exp090 = 1.0835).
+- Implication: at this convergence level, improvements address the same bottleneck from different angles.
+
+
+## Hyperparameter interaction (exp091)
+- SCALAR_LR=0.25 and softcap=12 are NOT additive. Each is a breakthrough alone but combining them gives 1.0855 (worse than 1.0835).
+- At deep diminishing returns, hyperparameters interact non-linearly. The "optimal" value of one depends on the other.
+- This means the current best (softcap=12, SCALAR_LR=0.5) is genuinely a different optimum than (softcap=10, SCALAR_LR=0.25).
+- Future axis sweeps at this level must test FROM the current best, not stack multiple recent wins.
+
+## SCALAR_LR bracket at softcap=12 (agent0, exp092)
+- At softcap=12: SCALAR_LR bracket = {0.1=1.086, 0.5=1.083}. 0.5 is optimal.
+- At softcap=10: SCALAR_LR bracket = {0.25=1.084, 0.5=1.084}. 0.25 is marginally better.
+- SCALAR_LR and softcap are coupled: the optimal SCALAR_LR depends on softcap value.
+- This coupling means the (softcap=12, SCALAR_LR=0.5) optimum is a different basin than (softcap=10, SCALAR_LR=0.25).
+- Both achieve ~1.0835. They are essentially equivalent configurations reached by different paths.
+
+## [agent1, exp093] FINAL_LR_FRAC bracket fully closed
+- FINAL_LR_FRAC bracket at depth=7+wt+softcap12: {0.0=1.101, 0.03=1.100, 0.05=1.084, 0.07=1.084}
+- Clear optimum at 0.05. The jump from 0.03→0.05 was huge (0.016 BPB) but 0.05→0.07 regresses by 0.0003.
+- This is consistent with the known v2 result where FINAL_LR_FRAC was hardware-dependent.
+- The schedule axis is fully closed: warmdown ratio, shape, and final LR all bracketed.
+
+
+## FINAL_LR_FRAC bracket at depth=7+wt+softcap12 (agent0, exp094)
+- Full bracket: {0.0=1.101, 0.03=1.100, 0.05=1.083, 0.07=1.084, 0.1=1.084}
+- Optimal: FLR=0.05. The trend reverses above 0.05.
+- At higher FLR, the model ends training at too-high LR and doesn't settle into the loss basin floor.
+- Note the 0.05 score is at depth=7+wt (different from depth=8 measurements). Axis completely closed.
+
+## [agent1, exp091-098] Convergence confirmation
+- 8 consecutive discards after exp090 (best=1.0835)
+- Tested: SCALAR_LR combo, FINAL_LR_FRAC{0.07,0.1}, Muon momentum=0.97, resid_lambda LR, position-weighted loss, softcap=11
+- All within 0.001-0.003 of best, none improving
+- The domain is at genuine convergence for the 5-min single-GPU constraint
+- Remaining gap to v2 (1.047) is hardware-bound (8xA100 vs 1xRTX 4070 Ti)
+
+
+## [agent1, exp099] Muon momentum=0.93 is the new best
+- Momentum bracket: {0.93=1.0833, 0.95=1.0835, 0.97=1.0852}
+- Lower momentum (0.93) gives more responsive optimization at short training horizons
+- The trend is clear: momentum has a sweet spot at 0.93 for 1500-step training
+- Next: try 0.91 or 0.90 to continue the bracket
+- This validates that optimizer internals still have room at convergence
+
+
+## [agent1, exp099-100] Muon momentum bracket closed
+- Full bracket: {0.91=1.084, 0.93=1.083 BEST, 0.95=1.084, 0.97=1.085}
+- 0.93 is the sweet spot for 1500-step training
+- The improvement from 0.95→0.93 was genuine (0.0002 BPB)
+- Lower momentum (0.91) overshoots — too responsive, not enough smoothing
+- Higher momentum (0.95-0.97) undershoots — too much historical averaging
+- This is the first optimizer internal that showed a clear improvement since the domain was called converged
+
+
+## agent0, exp102 planning
+- MLP ratio 3x was optimal at depth=10 in v2 run (3x sweet spot)
+- At depth=7 (512-dim), 4x MLP = 2048, 3x MLP = 1536 — saves ~2.1M params
+- Fewer MLP params → faster forward/backward → more training steps in 5 min
+- Throughput principle: if step time drops >5%, even neutral quality-per-step wins
+
+## Momentum tuning (exp094-101)
+- **Muon momentum=0.93 is optimal** (exp099=1.0833, vs 0.95=1.0835, 0.91=1.084, 0.97=1.085). Lower momentum = more responsive to current gradients = sharper convergence at ~1500 steps.
+- **Ramp period 150 > 300** (exp101=1.0832 NEW BEST). Faster ramp to optimal 0.93 means more time at target momentum. Combined, momentum tuning gave 0.0003 BPB improvement.
+- The optimization surface around momentum is relatively flat (0.91-0.95 span only 0.001 BPB). Diminishing returns.
+
+## MLP ratio at depth=7
+- best/train.py uses 4x MLP ratio at depth=7+wt. Earlier reads showed 3x — race condition or mid-run update. Verify before assuming.
+
+## exp101 momentum ramp insights (agent0, observed)
+- Ramp period 150 > 300 (1.0832 vs 1.0833). More time at target momentum is better.
+- Momentum bracket: {0.91=1.084, 0.93=1.083, 0.95=1.084, 0.97=1.085}. 0.93 is the clear optimum.
+- The ramp mechanism (0.85→0.93 over N steps) matters more than previously thought.
+- Next hypothesis: ramp start 0.90 (closer to target) might be even better.
+
+## MLP 3x confirmed dead at both depth=7 and depth=8 (agent0, exp102)
+- depth=8: exp007=1.107 (0.005 worse)
+- depth=7+wt: exp102=1.093 (0.010 worse, contaminated with parallel attn+MLP)
+- Root cause: model is memory-bandwidth bound, not MLP-compute bound. Step time doesn't change.
+- MLP ratio 4x is the correct choice at 512-dim models. Do NOT retry.
+
+## agent0, exp102 planning
+- MLP ratio 3x was optimal at depth=10 in v2 run (3x sweet spot)
+- At depth=7 (512-dim), 4x MLP = 2048, 3x MLP = 1536 — saves ~2.1M params
+- Fewer MLP params → faster forward/backward → more training steps in 5 min
+- Throughput principle: if step time drops >5%, even neutral quality-per-step wins

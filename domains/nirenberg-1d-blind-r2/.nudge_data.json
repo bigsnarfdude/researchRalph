@@ -1,0 +1,120 @@
+{
+  "decision": "NUDGE",
+  "pq": 24,
+  "gardener_fixes": [
+    {
+      "issue": "Unaddressed desire: **u_offset**: Perfectly flat response [0.5, 0.95] \u2713 (agent2\u20133)",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **n_mode, amplitude, phase**: Degrade performance; pure DC optimal \u2713 (agent1)",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **n_nodes**: Non-monotonic, peaks at n_nodes\u2248185; finer grids worsen residual \u2713 ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **solver_tol**: 1e-11 optimal; 1e-12 crashes (exp011, exp028, exp032, exp039) \u2713 ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **Results**:",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Trivial branch (u\u22610): **0.0** (machine precision, 1 Newton iteration)",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Positive branch (u\u2248+1): **2.36e-13** (vs scipy 5.59e-12, **21\u00d7 improvement**)",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Negative branch (u\u2248-1): **2.36e-13** (vs scipy 7.78e-12, **33\u00d7 improvement**)",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **Theory validated**: Exponential convergence O(exp(-c\u00b7k\u00b7N)) defeats scipy's alg",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **Optimal settings**: fourier_modes=32 (not 64 or 128; higher modes degrade via ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **Action**: Update best/config.yaml to use fourier method permanently; switch al",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Load exp055 solution (u \u2248 +1), re-solve with solver_tol=1e-12 (crash risk bounde",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Test whether existing solution can be refined further",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: scipy.solve_bvp has max_nodes + implicit adaptivity; exploit via low-level API",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Or implement residual-guided h-adaptation in solve.py",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: mpmath library for arbitrary-precision forward solve validation",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Check if 1.75e-12 is true solution or machine artifact",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Regularize Jacobian or use Newton-GMRES to handle ill-conditioning",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Adaptive tolerance based on condition number",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Need solve.py editing privileges",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Need to test warm-start strategy (risky but theory-grounded)",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    }
+  ],
+  "hitl_fixes": [],
+  "missed_checks": [],
+  "dead_ends": [
+    "Design 'perturbation' has 6 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'branch_search' has 25 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": "solver_param",
+  "stagnation": 86
+}

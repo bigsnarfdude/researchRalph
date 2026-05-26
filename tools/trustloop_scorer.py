@@ -36,6 +36,11 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Literal
 
+try:
+    import yaml
+except ImportError:
+    yaml = None
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Data models
@@ -202,8 +207,47 @@ def detect_score_direction(domain_name: str, descriptions: list[str]) -> str:
 # Results parsing
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def parse_results_tsv(path: Path) -> list[dict]:
-    """Parse results.tsv with flexible header detection."""
+def load_domain_config(domain_dir: Path) -> dict:
+    """Load domain config.yaml and return trustloop settings."""
+    config_path = domain_dir / "config.yaml"
+    if not config_path.exists():
+        return {}
+
+    try:
+        if yaml is not None:
+            with open(config_path) as f:
+                config = yaml.safe_load(f) or {}
+        else:
+            # Minimal YAML parsing for trustloop section if yaml not available
+            import re as re_mod
+            with open(config_path) as f:
+                content = f.read()
+            config = {}
+            # Extract trustloop section
+            match = re_mod.search(r'trustloop:\s*\n((?:\s{2}\w+:.*\n?)*)', content)
+            if match:
+                trustloop_text = match.group(1)
+                config['trustloop'] = {}
+                for line in trustloop_text.split('\n'):
+                    if ':' in line:
+                        key, val = line.split(':', 1)
+                        key = key.strip()
+                        val = val.strip().strip('#').strip()
+                        # Remove quotes
+                        val = val.strip("'\"")
+                        config['trustloop'][key] = val
+        return config
+    except Exception:
+        return {}
+
+
+def parse_results_tsv(path: Path, score_column: str = "score") -> list[dict]:
+    """Parse results.tsv with flexible header detection.
+
+    Args:
+        path: Path to results.tsv
+        score_column: Which column contains the score (e.g., 'score', 'residual')
+    """
     rows = []
     with open(path) as f:
         text = f.read().strip()
@@ -213,7 +257,7 @@ def parse_results_tsv(path: Path) -> list[dict]:
     lines = text.split("\n")
     # Detect header
     first = lines[0].split("\t")
-    if any(h in first for h in ["exp_id", "EXP-ID", "score"]):
+    if any(h in first for h in ["exp_id", "EXP-ID", "score", "residual"]):
         header = [h.strip().lower().replace("-", "_") for h in first]
         data_lines = lines[1:]
     else:
@@ -227,6 +271,12 @@ def parse_results_tsv(path: Path) -> list[dict]:
         row = {}
         for i, h in enumerate(header):
             row[h] = fields[i].strip() if i < len(fields) else ""
+
+        # Normalize score column name to 'score' for downstream processing
+        score_col_lower = score_column.lower().replace("-", "_")
+        if score_col_lower in row and score_col_lower != "score":
+            row["score"] = row[score_col_lower]
+
         rows.append(row)
     return rows
 
@@ -1097,13 +1147,22 @@ def score_domain(domain_dir: Path, with_traces: bool = False) -> DomainReport:
     if not results_path.exists():
         return DomainReport(domain=domain_dir.name)
 
-    rows = parse_results_tsv(results_path)
+    # Load config to get score_column and score_direction
+    config = load_domain_config(domain_dir)
+    trustloop_cfg = config.get("trustloop", {})
+    score_column = trustloop_cfg.get("score_column", "score")
+    config_direction = trustloop_cfg.get("score_direction")  # Can override detected direction
+
+    rows = parse_results_tsv(results_path, score_column=score_column)
     if not rows:
         return DomainReport(domain=domain_dir.name)
 
-    # Detect score direction
-    descriptions = [r.get("description", "") for r in rows]
-    direction = detect_score_direction(domain_dir.name, descriptions)
+    # Detect score direction (use config if available, else auto-detect)
+    if config_direction:
+        direction = config_direction
+    else:
+        descriptions = [r.get("description", "") for r in rows]
+        direction = detect_score_direction(domain_dir.name, descriptions)
 
     # Classify experiments
     experiments = classify_experiments(rows, direction)

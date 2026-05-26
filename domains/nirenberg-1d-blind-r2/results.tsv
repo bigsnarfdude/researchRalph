@@ -1,0 +1,173 @@
+exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	5.63592552e-11	0.000000	-0.000000	keep	trivial branch baseline, u_offset=0	agent0	initial_cond	0	-0.000000
+exp002	5.63592552e-11	0.000000	-0.000000	discard	positive branch, u_offset=0.9	agent0	initial_cond	0	-0.000000
+exp003	5.72745888e-09	1.002503	1.000218	discard	positive branch, u_offset=0.9	agent0	initial_cond	1	-1.523848
+exp004	2.41595655e-09	1.002503	-1.000218	discard	negative branch, u_offset=-0.9	agent0	initial_cond	0	-1.523848
+exp005	5.63592552e-11	0.000000	-0.000000	discard	trivial branch (u≈0) baseline with u_offset=0.0	agent1	initial_cond	1	-0.000000
+exp006	5.72745888e-09	1.002503	1.000218	discard	positive branch (u≈+1) with u_offset=0.9	agent1	initial_cond	1	-1.523848
+exp007	2.41595655e-09	1.002503	-1.000218	discard	negative branch (u≈-1) with u_offset=-0.9	agent1	initial_cond	1	-1.523848
+exp008	8.95295950e-11	1.002503	-1.000218	discard	negative branch with solver_tol=1e-10	agent1	solver_param	1	-1.523848
+exp009	8.95295950e-11	1.002503	1.000218	discard	positive branch with solver_tol=1e-10	agent1	solver_param	0	-1.523848
+exp010	2.98031263e-13	0.000000	-0.000000	keep	trivial branch with solver_tol=1e-10	agent1	solver_param	0	-0.000000
+exp011	2.98031263e-13	0.000000	-0.000000	discard	trivial branch with solver_tol=1e-12	agent1	solver_param	0	-0.000000
+exp012	2.62635931e-11	1.002503	1.000218	discard	positive branch with tighter tolerance (1e-10) and finer mesh (150 nodes)	agent2	initial_cond	0	-1.523848
+exp013	8.95295950e-11	1.002503	-1.000218	discard	negative branch with solver_tol=1e-12	agent1	solver_param	1	-1.523848
+exp014	8.95295950e-11	1.002503	1.000218	discard	positive branch with tighter solver_tol=1e-10	agent0	solver_param	0	-1.523848
+exp015	8.81934685e-11	1.002503	-1.000218	discard	negative branch with n_nodes=200, solver_tol=1e-10	agent1	solver_param	1	-1.523848
+exp016	8.81934684e-11	1.002503	1.000218	discard	positive branch with n_nodes=200 + solver_tol=1e-10	agent0	solver_param	0	-1.523848
+exp017	8.81934684e-11	1.002503	1.000218	discard	positive branch with n_nodes=200, solver_tol=1e-10	agent1	solver_param	0	-1.523848
+exp018	8.58922841e-11	1.002503	-1.000218	discard	negative branch with n_nodes=300, solver_tol=1e-10	agent1	solver_param	0	-1.523848
+exp018	8.81934685e-11	1.002503	-1.000218	discard	negative branch with n_nodes=200 + solver_tol=1e-10	agent0	solver_param	0	-1.523848
+exp019	2.60019365e-11	1.002503	1.000218	discard	positive branch with n_nodes=300, solver_tol=1e-10	agent1	solver_param	0	-1.523848
+exp020	2.62635931e-11	1.002503	-1.000218	discard	negative branch with tighter tolerance (1e-10) and finer mesh (150 nodes)	agent2	initial_cond	0	-1.523848
+exp021	8.81934684e-11	1.002503	1.000218	discard	positive branch, amplitude=0.2, n_nodes=200, solver_tol=1e-10	agent0	perturbation	0	-1.523848
+exp022	8.77448544e-11	1.002503	-1.000218	discard	negative branch with n_nodes=300, solver_tol=1e-10, amplitude=0.05	agent1	perturbation	0	-1.523848
+exp023	2.60019365e-11	1.002503	-1.000218	discard	negative branch with n_nodes=300, solver_tol=1e-10, amplitude=0.0	agent1	perturbation	0	-1.523848
+exp024	9.99977750e-12	1.002503	1.000218	discard	positive branch with even tighter tolerance (1e-11) and more mesh (200 nodes)	agent2	solver_param	0	-1.523848
+exp025	8.95295950e-11	1.002503	1.000218	discard	positive branch with smaller amplitude (0.05)	agent3	perturbation	0	-1.523848
+exp026	9.99977750e-12	1.002503	-1.000218	discard	negative branch with even tighter tolerance (1e-11) and more mesh (200 nodes)	agent2	solver_param	0	-1.523848
+exp027	8.95295950e-11	1.002503	1.000218	discard	positive branch with minimal amplitude (0.02)	agent3	perturbation	1	-1.523848
+exp028	crash	0	0	crash	positive branch with ultra-tight tolerance (1e-12) and finer mesh (250 nodes)	agent2	solver_param	1	0
+exp029	8.95295950e-11	1.002503	1.000218	discard	positive branch with mode-2 perturbation	agent3	perturbation	1	-1.523848
+exp030	9.99840186e-12	1.002503	1.000218	discard	positive branch: ultra-fine mesh (n_nodes=400) + tighter tol (1e-11)	agent4	solver_param	0	-1.523848
+exp031	9.99977750e-12	1.002503	1.000218	discard	positive branch with amplitude=0.0 (no oscillation, pure DC offset)	agent2	initial_cond	1	-1.523848
+exp032	crash	0	0	crash	positive branch with 200 nodes and solver_tol=1e-12	agent3	solver_param	0	0
+exp033	9.99977750e-12	1.002503	-1.000218	discard	negative branch with amplitude=0.0 (no oscillation, pure DC offset)	agent2	initial_cond	0	-1.523848
+exp034	7.78244459e-12	1.002503	1.000218	discard	positive branch with 150 nodes and solver_tol=1e-11	agent3	solver_param	0	-1.523848
+exp035	4.50208716e-11	1.002503	1.000218	discard	positive branch, u_offset=0.95, n_nodes=250	agent5	branch_search	0	-1.523848
+exp036	9.99840186e-12	1.002503	-1.000218	discard	negative branch: ultra-fine mesh (n_nodes=400) + tighter tol (1e-11)	agent4	solver_param	1	-1.523848
+exp037	7.78244459e-12	1.002503	-1.000218	discard	negative branch with 150 nodes and solver_tol=1e-11	agent3	solver_param	1	-1.523848
+exp038	9.99977750e-12	1.002503	-1.000218	discard	negative branch with 200 nodes and solver_tol=1e-11	agent3	solver_param	1	-1.523848
+exp039	crash	0	0	crash	positive branch: n_nodes=400 + very tight tol (1e-12)	agent4	solver_param	1	0
+exp040	9.99840186e-12	1.002503	1.000218	discard	positive branch, ultra-fine: n_nodes=400, tol=1e-11	agent5	branch_search	1	-1.523848
+exp041	5.59439569e-12	1.002503	1.000218	discard	positive branch: ultra-fine mesh (n_nodes=500) + tol=1e-11	agent4	solver_param	0	-1.523848
+exp042	9.99840186e-12	1.002503	-1.000218	discard	negative branch, ultra-fine: n_nodes=400, tol=1e-11	agent5	branch_search	0	-1.523848
+exp043	8.75323952e-11	1.002503	-1.000218	discard	negative branch with n_nodes=400, solver_tol=1e-10	agent6	solver_param	0	-1.523848
+exp044	5.59439878e-12	1.002503	-1.000218	discard	negative branch: ultra-fine mesh (n_nodes=500) + tol=1e-11	agent4	solver_param	0	-1.523848
+exp045	9.99840186e-12	1.002503	1.000218	discard	positive branch, phase=pi, n_nodes=400, tol=1e-11	agent5	branch_search	0	-1.523848
+exp046	2.98031263e-13	0.000000	-0.000000	discard	diagnostic: verify harness outputs valid residuals	agent7	initial_cond	1	-0.000000
+exp047	9.99840186e-12	1.002503	1.000218	discard	positive branch, mode2, amplitude=0.05, n_nodes=400, tol=1e-11	agent5	branch_search	1	-1.523848
+exp048	9.99977750e-12	1.002503	1.000218	discard	positive branch with n_nodes=200, solver_tol=1e-11	agent6	solver_param	1	-1.523848
+exp049	9.99840186e-12	1.002503	-1.000218	discard	boundary exploration: u_offset=0.50, n_nodes=400, tol=1e-11	agent5	branch_search	0	-1.523848
+exp050	9.99840186e-12	1.002503	1.000218	discard	boundary: u_offset=0.70, n_nodes=400, tol=1e-11	agent5	branch_search	0	-1.523848
+exp051	4.88774326e-12	1.002503	1.000218	discard	positive branch with n_nodes=175, solver_tol=1e-11	agent6	solver_param	1	-1.523848
+exp052	9.99840186e-12	1.002503	1.000218	discard	boundary: u_offset=0.60, n_nodes=400, tol=1e-11	agent5	branch_search	0	-1.523848
+exp053	5.33365326e-12	1.002503	1.000218	discard	positive branch with n_nodes=170, solver_tol=1e-11	agent6	solver_param	0	-1.523848
+exp054	1.89688828e-12	1.002503	1.000218	discard	positive branch with n_nodes=180, solver_tol=1e-11	agent6	solver_param	0	-1.523848
+exp055	1.74959781e-12	1.002503	1.000218	discard	positive branch with n_nodes=185, solver_tol=1e-11	agent6	solver_param	1	-1.523848
+exp056	0.00000000e+00	0.000000	0.000000	keep	trivial branch: solver_tol=1e-11, n_nodes=200 (pushing beyond exp010 best)	agent7	solver_param	0	0.000000
+exp057	9.99977750e-12	1.002503	1.000218	discard	Higher-order Fourier mode-2 initialization, positive branch	agent1	initial_cond	0	-1.523848
+exp058	9.99977750e-12	1.002503	1.000218	discard	Mode-3 initialization, positive branch	agent1	initial_cond	1	-1.523848
+exp059	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.85 (left edge)	agent2	branch_search	0	-1.523848
+exp060	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.87	agent2	branch_search	0	-1.523848
+exp061	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.89	agent2	branch_search	0	-1.523848
+exp062	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.91	agent2	branch_search	0	-1.523848
+exp063	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.93	agent2	branch_search	0	-1.523848
+exp064	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.95	agent2	branch_search	1	-1.523848
+exp065	9.99977750e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.90 (baseline confirm)	agent3	branch_search	0	-1.523848
+exp066	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.80 (lower boundary)	agent2	branch_search	1	-1.523848
+exp067	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.70 (far boundary)	agent2	branch_search	0	-1.523848
+exp068	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.90 (confirmed baseline, n_nodes=185)	agent3	branch_search	0	-1.523848
+exp069	1.74959781e-12	1.002503	-1.000218	discard	branch structure scan: u_offset=0.50 (branch transition)	agent2	branch_search	1	-1.523848
+exp070	0.00000000e+00	0.000000	0.000000	discard	Fourier spectral method: trivial branch (u_offset=0.0, fourier_modes=64, newton_tol=1e-14)	agent4	solver_param	0	0.000000
+exp071	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.91	agent3	branch_search	0	-1.523848
+exp072	8.10450608e-12	1.002503	1.000218	discard	Spectral convergence study: n_nodes=50, positive branch	agent1	initial_cond	0	-1.523848
+exp073	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.93	agent3	branch_search	0	-1.523848
+exp074	0.00000000e+00	0.000000	0.000000	discard	Fourier spectral method on trivial branch (baseline)	agent5	solver_param	0	0.000000
+exp075	crash	0	0	crash	Fourier spectral: positive branch (u_offset=0.9, fourier_modes=64, newton_tol=1e-14)	agent4	solver_param	0	0
+exp076	3.31697173e-12	1.002503	1.000218	discard	Spectral convergence study: n_nodes=100, positive branch	agent1	initial_cond	1	-1.523848
+exp077	1.74959781e-12	1.002503	1.000218	discard	branch structure scan: u_offset=0.95 (right edge)	agent3	branch_search	0	-1.523848
+exp078	5.62802405e-12	1.002503	1.000218	discard	Spectral convergence study: n_nodes=250, positive branch	agent1	initial_cond	1	-1.523848
+exp079	3.25175408e-12	1.002503	1.000218	discard	Spectral convergence study: n_nodes=300, positive branch	agent1	initial_cond	0	-1.523848
+exp080	1.74959781e-12	1.002503	1.000218	discard	positive branch baseline reproduction (diagnostic exp)	agent0	diagnosis	0	-1.523848
+exp081	crash	0	0	crash	Fourier spectral method on positive branch (u_offset=0.9)	agent5	solver_param	0	0
+exp082	2.66626099e-13	1.001296	1.000019	discard	Fourier spectral: positive branch (u_offset=0.9, fourier_modes=64, newton_tol=1e-11)	agent4	solver_param	0	-1.520844
+exp083	4.50208716e-11	1.002503	1.000218	discard	diagnosis: looser tolerance (1e-10) with finer mesh (250 nodes)	agent0	diagnosis	0	-1.523848
+exp084	crash	0	0	crash	Fourier spectral: positive branch with newton_maxiter=200	agent5	solver_param	1	0
+exp085	2.66626099e-13	1.001296	1.000019	discard	Fourier spectral: positive branch (newton_tol=1e-12)	agent5	solver_param	0	-1.520844
+exp086	5.62802405e-12	1.002503	1.000218	discard	Mesh refinement: n_nodes=250 on positive branch	agent7	solver_param	0	-1.523848
+exp087	2.35974309e-13	1.001296	1.000019	discard	Fourier positive branch: fourier_modes=32 (ablate spectral resolution)	agent4	solver_param	0	-1.520844
+exp088	crash	0	0	crash	Tighter tolerance: solver_tol=1e-12, baseline mesh	agent7	solver_param	1	0
+exp089	1.61211386e-12	1.001296	1.000019	discard	Fourier positive branch: fourier_modes=128 (fine spectral resolution)	agent4	solver_param	0	-1.520844
+exp090	9.99977750e-12	1.002503	1.000218	discard	Default mesh: n_nodes=200 (from best/config)	agent7	solver_param	1	-1.523848
+exp091	1.74959781e-12	1.002503	1.000218	discard	Phase shift test: π/2 on positive branch, u_offset=0.9	agent1	initial_cond	0	-1.523848
+exp092	2.35974309e-13	1.001296	-1.000019	discard	Fourier negative branch: u_offset=-0.9, fourier_modes=32, newton_tol=1e-11	agent4	solver_param	0	-1.520844
+exp093	1.74959781e-12	1.002503	1.000218	discard	Positive branch baseline: u_offset=0.9, n_nodes=185, tol=1e-11 (reproduce exp055)	agent6	solver_param	0	-1.523848
+exp094	7.78244459e-12	1.002503	1.000218	discard	Coarser mesh: n_nodes=150	agent7	solver_param	0	-1.523848
+exp095	2.66626099e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch (u_offset=-0.9)	agent5	solver_param	1	-1.520844
+exp096	1.74959781e-12	1.002503	-1.000218	discard	Negative branch: u_offset=-0.9, n_nodes=185, tol=1e-11 (test symmetry)	agent6	solver_param	1	-1.523848
+exp097	2.35974309e-13	1.001296	1.000019	discard	Fourier spectral: positive branch with fourier_modes=32 (lower resolution)	agent5	solver_param	1	-1.520844
+exp098	crash	0	0	crash	Fourier spectral: positive branch with fourier_modes=128 (high resolution)	agent5	solver_param	0	0
+exp099	2.66626099e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch (u_offset=-0.9, fourier_modes=64, newton_tol=1e-11)	agent3	solver_param	1	-1.520844
+exp100	0.00000000e+00	0.000000	0.000000	discard	Trivial branch with tighter tolerance: u_offset=0.0, n_nodes=185, tol=1e-12 (probe limit)	agent6	solver_param	0	0.000000
+exp101	crash	0	0	crash	Positive branch with tighter tolerance: u_offset=0.9, n_nodes=185, tol=1e-12 (probe crash)	agent6	solver_param	0	0
+exp102	6.53001650e-13	1.001296	1.000019	discard	Fourier spectral: positive branch with fourier_modes=96 (higher resolution)	agent3	solver_param	1	-1.520844
+exp103	2.35974309e-13	1.001296	1.000019	discard	Fourier spectral: positive branch with fourier_modes=32 (ablate resolution, reproduce exp087)	agent3	solver_param	1	-1.520844
+exp104	0.00000000e+00	0.000000	0.000000	discard	K_mode=sine: trivial branch (u_offset=0.0, fourier_modes=32, newton_tol=1e-11)	agent4	solver_param	0	0.000000
+exp105	2.35974309e-13	1.001296	1.000019	discard	Fourier spectral: 32 modes, tighter newton_tol=1e-12	agent3	solver_param	0	-1.520844
+exp106	6.03463222e-14	1.001506	1.000019	discard	K_mode=sine: positive branch (u_offset=0.9, fourier_modes=32, newton_tol=1e-11)	agent4	solver_param	1	-1.520769
+exp107	1.74959781e-12	1.002503	-1.000218	discard	Fourier spectral: negative branch (u_offset=-0.9, fourier_modes=32, newton_tol=1e-12)	agent2	branch_search	1	-1.523848
+exp108	6.03463222e-14	1.001506	-1.000019	discard	K_mode=sine: negative branch (u_offset=-0.9, fourier_modes=32, newton_tol=1e-11)	agent4	solver_param	0	-1.520769
+exp109	1.74959781e-12	1.002503	1.000218	discard	Fourier spectral: positive branch (u_offset=0.9, fourier_modes=32, newton_tol=1e-12, verify)	agent2	branch_search	0	-1.523848
+exp110	5.03136422e-14	1.004324	1.000093	discard	K_mode=multipole: positive branch (u_offset=0.9, fourier_modes=32, newton_tol=1e-11)	agent4	solver_param	0	-1.462826
+exp111	5.03136422e-14	1.004324	-1.000093	discard	K_mode=multipole: negative branch (u_offset=-0.9, fourier_modes=32, newton_tol=1e-11)	agent4	solver_param	0	-1.462826
+exp112	0.00000000e+00	0.000000	0.000000	discard	Fourier spectral with optimal settings: trivial branch (fourier_modes=32, newton_tol=1e-11)	agent5	solver_param	1	0.000000
+exp113	2.35974309e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=32, newton_tol=1e-11 (test spectral method)	agent6	solver_param	0	-1.520844
+exp114	2.35974309e-13	1.001296	-1.000019	discard	Negative branch + Fourier spectral (modes=32, optimal)	agent7	branch_search	0	-1.520844
+exp115	1.79742650e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=48, newton_tol=1e-11 (test resolution increase)	agent6	solver_param	0	-1.520844
+exp116	2.66626099e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=64, newton_tol=1e-11 (test convergence ceiling)	agent6	solver_param	0	-1.520844
+exp117	0.00000000e+00	0.000000	0.000000	discard	Trivial branch + Fourier spectral (modes=32)	agent7	solver_param	1	0.000000
+exp118	2.10749927e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=56, newton_tol=1e-11 (refine sweet spot)	agent6	solver_param	0	-1.520844
+exp119	1.89221377e-13	1.001296	1.000019	discard	Fourier spectral: positive branch, fourier_modes=52, newton_tol=1e-11 (narrow sweet spot)	agent6	solver_param	0	-1.520844
+exp120	2.66626099e-13	1.001296	1.000019	discard	Fourier spectral: positive branch (u_offset=0.9, method=fourier, fourier_modes=64, newton_tol=1e-11)	agent2	solver_param	0	-1.520844
+exp121	2.66626099e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch (u_offset=-0.9, method=fourier, fourier_modes=64, newton_tol=1e-11)	agent2	solver_param	1	-1.520844
+exp122	1.79742650e-13	1.001296	-1.000019	discard	Fourier spectral: negative branch, fourier_modes=48, newton_tol=1e-11 (validate symmetry)	agent6	solver_param	0	-1.520844
+exp123	2.66626099e-13	1.001296	1.000019	discard	Positive branch Fourier modes=64 (test vs optimal 32)	agent7	solver_param	0	-1.520844
+exp124	1.33401968e-14	1.004324	1.000093	discard	Multipole: fourier_modes=16 (test coarser resolution)	agent4	solver_param	0	-1.462826
+exp125	4.61400212e-14	1.004324	1.000093	discard	Multipole: fourier_modes=24 (test medium resolution)	agent4	solver_param	0	-1.462826
+exp126	2.30031757e-15	1.004324	1.000093	discard	Multipole: fourier_modes=8 (very coarse resolution)	agent4	solver_param	0	-1.462826
+exp127	6.41117431e-16	1.004324	1.000093	discard	Multipole: fourier_modes=4 (extremely coarse)	agent4	solver_param	1	-1.462826
+exp128	3.61888431e-16	1.004334	1.000123	discard	Multipole: fourier_modes=2 (absolute minimum)	agent4	solver_param	1	-1.463212
+exp129	0.00000000e+00	0.000000	0.000000	discard	Fourier spectral: trivial branch, fourier_modes=48, newton_tol=1e-11 (test zero solution)	agent6	solver_param	1	0.000000
+exp130	5.03136422e-14	1.004324	-1.000093	discard	Negative branch + Fourier + multipole K_mode (agent4 breakthrough)	agent7	solver_param	0	-1.462826
+exp131	0.00000000e+00	0.000000	0.000000	discard	Trivial branch + Fourier + multipole K_mode	agent7	solver_param	0	0.000000
+exp132	3.99522993e-13	0.999975	1.000004	discard	Fourier spectral robustness test: K_amplitude=0.2 (positive branch)	agent2	solver_param	1	-1.546805
+exp133	3.15118549e-13	1.005614	1.000141	discard	Fourier spectral robustness test: K_amplitude=0.5 (positive branch)	agent2	solver_param	1	-1.438490
+exp134	2.85726220e-12	0.999210	1.000000	discard	Fourier spectral robustness test: K_amplitude=0.1 (positive branch)	agent2	solver_param	0	-1.562435
+exp135	3.61888431e-16	1.004334	-1.000123	discard	Multipole K_mode: negative branch, fourier_modes=2, newton_tol=1e-11 (validate symmetry at machine epsilon)	agent6	solver_param	0	-1.463212
+exp136	0.00000000e+00	0.000000	0.000000	discard	Multipole K_mode: trivial branch, fourier_modes=2 (test all three branches at machine epsilon)	agent6	solver_param	0	0.000000
+exp137	5.51351218e-14	1.004455	1.000245	discard	Multipole K_mode: positive branch, fourier_modes=1 (test minimum modes)	agent6	solver_param	1	-1.463207
+exp138	3.61888431e-16	1.004334	1.000123	discard	Machine-epsilon validation: positive branch multipole fourier_modes=2	agent7	solver_param	1	-1.463212
+exp139	3.61888431e-16	1.004334	1.000123	discard	FINAL VALIDATION: Positive branch with optimal multipole+2 config	agent6	solver_param	0	-1.463212
+exp140	3.61888431e-16	1.004334	-1.000123	discard	Machine-epsilon validation: negative branch	agent7	solver_param	0	-1.463212
+exp141	3.61888431e-16	1.004334	-1.000123	discard	FINAL VALIDATION: Negative branch with optimal config	agent6	solver_param	0	-1.463212
+exp142	0.00000000e+00	0.000000	0.000000	discard	FINAL VALIDATION: Trivial branch with optimal config	agent6	solver_param	0	0.000000
+exp143	3.61888431e-16	1.004334	1.000123	discard	Baseline: multipole K_mode, positive branch, fourier_modes=2	agent0	problem_formulation	0	-1.463212
+exp144	3.61888431e-16	1.004334	1.000123	discard	Final validation: multipole+fourier_modes=2, negative branch test	agent1	solver_param	1	-1.463212
+exp145	2.00148302e-16	1.001508	1.000025	discard	Test: sine perturbation K(θ)=K_amplitude·sin(θ), positive branch	agent0	problem_formulation	0	-1.520846
+exp146	3.61888431e-16	1.004334	-1.000123	discard	Final validation: multipole+fourier_modes=2, negative branch confirmation	agent1	solver_param	0	-1.463212
+exp147	2.00148302e-16	1.001298	1.000025	discard	Test: cosine perturbation K(θ)=K_amplitude·cos(θ), positive branch	agent0	problem_formulation	0	-1.520921
+exp148	0.00000000e+00	0.000000	0.000000	discard	Final validation: multipole+fourier_modes=2, trivial branch confirmation	agent1	solver_param	0	0.000000
+exp149	2.00148302e-16	1.001508	-1.000025	discard	Test: sine perturbation on negative branch (u ≈ -1)	agent0	problem_formulation	0	-1.520846
+exp150	0.00000000e+00	0.000000	0.000000	discard	Test: sine perturbation on trivial branch (u ≈ 0)	agent0	problem_formulation	0	0.000000
+exp151	5.51351218e-14	1.004455	1.000245	discard	fourier_modes=1, positive branch, spectral convergence study	agent2	validation	0	-1.463207
+exp152	3.61888431e-16	1.004334	1.000123	discard	K_amplitude=0.3 baseline, positive branch, Fourier validation	agent7	problem_formulation	0	-1.463212
+exp153	2.00148302e-16	1.001298	1.000025	discard	K_amplitude=0.2 weaker coupling, positive branch	agent7	problem_formulation	0	-1.520921
+exp154	9.34670194e-14	1.008642	1.000379	discard	K_amplitude=0.4 stronger coupling, positive branch	agent7	problem_formulation	0	-1.383677
+exp155	5.84352102e-16	1.014227	1.000896	discard	K_amplitude=0.5 very strong coupling, positive branch	agent7	problem_formulation	0	-1.283451
+exp156	5.01823570e-15	1.006329	1.000225	discard	K_amplitude=0.35 bracketing anomaly, positive branch	agent7	problem_formulation	0	-1.426107
+exp157	1.38713397e-12	1.011275	1.000598	discard	K_amplitude=0.45 testing recovery, positive branch	agent7	problem_formulation	0	-1.336072
+exp158	9.63482347e-16	1.005094	1.000158	discard	K_amplitude=0.32 narrowing lower boundary, positive branch	agent7	problem_formulation	0	-1.449018
+exp159	3.52452098e-16	1.013008	1.000766	discard	K_amplitude=0.48 narrowing upper boundary, positive branch	agent7	problem_formulation	1	-1.305091
+exp160	9.34670194e-14	1.008642	-1.000379	discard	K_amplitude=0.4 negative branch, testing bifurcation symmetry	agent7	problem_formulation	0	-1.383677
+exp161	2.62079662e-14	1.073040	1.072111	discard	K_frequency=0.5 subharmonic, K_amplitude=0.3	agent7	problem_formulation	0	-1.481736
+exp162	3.61888431e-16	1.004334	1.000123	discard	K_frequency=1.0 baseline, K_amplitude=0.3	agent7	problem_formulation	0	-1.463212
+exp163	3.61888431e-16	1.004334	1.000123	discard	K_frequency=1.5 superharmonic, K_amplitude=0.3	agent7	problem_formulation	0	-1.463212
+exp164	5.68820034e-16	1.002066	1.000582	discard	K_frequency=2.0 second harmonic, K_amplitude=0.3	agent7	problem_formulation	0	-1.511631
+exp165	3.53270803e-16	1.004334	1.000123	discard	K_frequency=3.0 third harmonic, K_amplitude=0.3	agent7	problem_formulation	1	-1.463212
+exp166	2.62079662e-14	1.073040	1.072111	discard	K_frequency=0.75 between subharmonic and baseline, K_amplitude=0.3	agent7	problem_formulation	0	-1.481736
+exp167	2.62079662e-14	1.073040	1.072111	discard	K_frequency=0.9 approaching baseline, K_amplitude=0.3	agent7	problem_formulation	0	-1.481736
+exp168	2.62079662e-14	1.073040	1.072111	discard	K_frequency=0.95 near boundary, K_amplitude=0.3	agent7	problem_formulation	0	-1.481736
+exp169	2.62079662e-14	1.073040	1.072111	discard	K_frequency=0.99 very close to boundary, K_amplitude=0.3	agent7	problem_formulation	0	-1.481736
+exp170	1.97178508e-14	1.073038	1.072106	discard	K_frequency=0.5 + fourier_modes=4 rescue test, K_amplitude=0.3	agent7	problem_formulation	1	-1.481673
+exp171	1.98040493e-14	1.073038	1.072106	discard	K_frequency=0.5 + fourier_modes=8 aggressive rescue test, K_amplitude=0.3	agent7	problem_formulation	1	-1.481673

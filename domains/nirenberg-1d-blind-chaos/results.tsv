@@ -1,1 +1,383 @@
-exp_id	residual	solution_norm	status	description	agent	design	elapsed_s	solution_energy
+exp001	2.80498569e-21	0.000000	keep	default config u_offset=0 amp=0.1 mode=1	agent0	initial_cond	0	0.000000
+exp002	2.80498569e-21	0.000000	keep	default config u_offset=0	agent1	initial_cond	1	0.000000
+exp003	3.56681400e-13	1.001296	discard	u_offset=1.0 positive branch	agent0	initial_cond	0	-1.520844
+exp004	3.37911550e-13	1.001296	discard	u_offset=-1.0 negative branch	agent0	initial_cond	0	-1.520844
+exp005	2.88051949e-13	1.001296	discard	u_offset=0.9 positive branch	agent1	initial_cond	1	-1.520844
+exp006	crash	0	crash	u_offset=1.0 fourier_modes=128 improve residual	agent0	solver_param	0	0
+exp007	3.53361730e-13	1.001296	discard	u_offset=-0.9 negative branch	agent1	initial_cond	0	-1.520844
+exp008	crash	0	crash	u_offset=1.0 f128 maxiter=200	agent0	solver_param	0	0
+exp009	2.88051949e-13	1.001296	discard	u_offset=0.9 n_nodes=200 tol=1e-10 positive branch optimization	agent1	solver_param	0	-1.520844
+exp010	3.59806124e-13	1.001296	discard	u_offset=1.0 mode=2 amp=0.3	agent0	initial_cond	1	-1.520844
+exp011	1.74862376e-17	0.000000	discard	u_offset=0 mode=2 amp=0.5 oscillatory	agent0	initial_cond	0	-0.000000
+exp012	crash	0	crash	u_offset=0.9 fourier_modes=128 newton_tol=1e-14 high precision	agent1	solver_param	1	0
+exp013	2.89130324e-13	1.001296	discard	u_offset=0.5 mode=1 amp=0.5 phase=pi/2	agent0	initial_cond	0	-1.520844
+exp014	crash	0	crash	u_offset=0.9 fourier_modes=64 newton_tol=1e-14 maxiter=100	agent1	solver_param	0	0
+exp015	3.29242240e-13	1.001296	discard	u_offset=1.5 mode=3 amp=0.1	agent0	initial_cond	0	-1.520844
+exp016	8.81934684e-11	1.002503	discard	u_offset=0.9 scipy solver n_nodes=200 tol=1e-10	agent1	solver_param	1	-1.523848
+exp017	crash	0	crash	u_offset=1.0 newton_tol=1e-14 maxiter=100 tighter convergence	agent0	solver_param	2	0
+exp018	crash	0	crash	u_offset=0.9 fourier_modes=96 amp=0.15 better initial guess	agent1	solver_param	0	0
+exp019	8.81934684e-11	1.002503	discard	scipy solver u_offset=1.0 tol=1e-10 n=200	agent0	solver_param	0	-1.523848
+exp020	6.69306133e-20	0.000000	discard	u_offset=0.3 branch boundary sweep	agent1	branch_search	0	-0.000000
+exp021	3.05421974e-13	1.001296	discard	u_offset=0.5 branch boundary sweep	agent1	branch_search	1	-1.520844
+exp022	6.06963967e-15	0.000000	discard	u_offset=0.4 binary search boundary	agent1	branch_search	0	-0.000000
+exp023	0.00000000e+00	0.000000	keep	u_offset=0 amplitude=0 pure zero initial guess trivial branch	agent1	initial_cond	1	0.000000
+exp024	3.55499743e-13	1.001296	discard	u_offset=1.0 amp=0.15 mode=1 phase=0 optimized positive branch	agent1	initial_cond	1	-1.520844
+exp025	crash	0	crash	u_offset=1.0 amp=0.15 newton_tol=1e-15 maxiter=100 tight positive branch	agent1	initial_cond	0	0
+exp026	crash	0	crash	u_offset=1.0 amp=0.15 fourier_modes=96 positive branch	agent1	initial_cond	1	0
+exp027	crash	0	crash	u_offset=1.0 amp=0.15 fourier_modes=96 maxiter=80 positive branch	agent1	initial_cond	1	0
+exp028	2.80498569e-21	0.000000	discard	no description	manual	initial_cond	0	0.000000
+exp029	2.80498569e-21	0.000000	discard	no description	manual	initial_cond	0	0.000000
+exp030	2.80498569e-21	0.000000	discard	no description	manual	initial_cond	1	0.000000
+exp031	2.80498569e-21	0.000000	discard	no description	manual	initial_cond	0	0.000000
+exp032	2.80498569e-21	0.000000	discard	no description	manual	initial_cond	0	0.000000
+exp033	2.80498569e-21	0.000000	discard	no description	manual	initial_cond	0	0.000000
+exp034	2.80498569e-21	0.000000	discard	no description	manual	initial_cond	0	0.000000
+exp035	2.80498569e-21	0.000000	discard	initial_cond	manual	initial_cond	1	0.000000
+exp036	crash	0	crash	initial_cond	agent0	initial_cond	0	0
+exp037	crash	0	crash	initial_cond	agent0	initial_cond	1	0
+exp038	3.61191662e-13	1.001296	discard	initial_cond	agent0	initial_cond	0	-1.520844
+exp039	2.70270424e-13	1.001296	discard	initial_cond	agent0	initial_cond	0	-1.520844
+exp040	crash	0	crash	initial_cond	agent0	initial_cond	1	0
+exp041	crash	0	crash	initial_cond	agent0	initial_cond	0	0
+exp042	2.70270424e-13	1.001296	discard	initial_cond	agent0	initial_cond	0	-1.520844
+exp043	3.56681400e-13	1.001296	discard	initial_cond	agent0	initial_cond	0	-1.520844
+exp044	3.11912449e-13	1.001296	discard	initial_cond	agent0	initial_cond	0	-1.520844
+exp045	2.80498569e-21	0.000000	discard	u_offset=1.0_amp=0.2_mode=1_phase=0	manual	initial_cond	1	0.000000
+exp046	2.79182823e-13	1.001296	discard	initial_cond	agent0	initial_cond	0	-1.520844
+exp047	2.79182823e-13	1.001296	discard	u_offset=1.0_amp=0.2_mode=1_phase=0	agent0	initial_cond	1	-1.520844
+exp048	2.33686534e-13	1.001296	discard	initial_cond	agent0	initial_cond	1	-1.520844
+exp049	4.23810757e-13	1.001296	discard	u_offset=1.0_amp=0.2_phase=0.1	agent0	initial_cond	0	-1.520844
+exp050	3.10117338e-13	1.001296	discard	u_offset=1.0_amp=0.2_phase=-0.1	agent0	initial_cond	1	-1.520844
+exp051	3.54387306e-13	1.001296	discard	u_offset=1.0_amp=0.3_phase=0.0	agent0	initial_cond	0	-1.520844
+exp052	3.56681400e-13	1.001296	discard	u_offset=1.0_amp=0.1_phase=0.0	agent0	initial_cond	1	-1.520844
+exp053	2.90573483e-13	1.001296	discard	u_offset=1.0_amp=0.2_phase=0.01	agent0	initial_cond	0	-1.520844
+exp054	3.11756225e-13	1.001296	discard	u_offset=1.0_amp=0.2_phase=-0.01	agent0	initial_cond	1	-1.520844
+exp055	crash	0	crash	u_offset=1.0_amp=0.2_mode=1_phase=0_nodes=200_f128	agent0	initial_cond	1	0
+exp056	3.56681400e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp057	3.61191662e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp058	3.24985211e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp059	2.70270424e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp060	3.62024838e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp061	3.32491597e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp062	3.31113119e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp063	3.24106891e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp064	2.75432733e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp065	3.53585467e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp066	2.41063341e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp067	2.95139396e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp068	2.94755763e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp069	3.12105526e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp070	2.41063341e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp071	2.43032365e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp072	2.60712641e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp073	2.94755763e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp074	3.40438886e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp075	3.36252254e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp076	3.50839417e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp077	2.77334066e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp078	2.41063341e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp079	crash	0	crash	no description	agent0	initial_cond	0	0
+exp080	3.59170749e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp081	3.27992631e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp082	crash	0	crash	no description	agent0	initial_cond	0	0
+exp083	2.41063341e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp084	2.46428338e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp085	3.84325423e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp086	3.23089520e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp087	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp088	3.09468882e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp089	3.06749498e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp090	3.62024838e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp091	crash	0	crash	no description	agent0	initial_cond	0	0
+exp092	crash	0	crash	no description	agent0	initial_cond	0	0
+exp093	crash	0	crash	no description	agent0	initial_cond	7	0
+exp094	crash	0	crash	no description	agent0	initial_cond	0	0
+exp095	3.65784025e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp096	3.05421974e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp097	3.11912449e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp098	1.24756266e-23	0.000000	discard	no description	agent0	initial_cond	1	0.000000
+exp099	2.04079574e-22	0.000000	discard	no description	agent0	initial_cond	1	0.000000
+exp100	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp101	2.73533188e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp102	2.95397925e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp103	3.94130938e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp104	2.94469579e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp105	4.03670144e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp106	3.40094482e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp107	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp108	crash	0	crash	no description	agent0	initial_cond	1	0
+exp109	crash	0	crash	no description	agent0	initial_cond	0	0
+exp110	2.41063341e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp111	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp112	crash	0	crash	no description	agent0	initial_cond	0	0
+exp113	2.70270424e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp114	3.05421974e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp115	3.11912449e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp116	crash	0	crash	no description	agent0	initial_cond	1	0
+exp117	crash	0	crash	no description	agent0	initial_cond	0	0
+exp118	crash	0	crash	no description	agent0	initial_cond	1	0
+exp119	3.59170749e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp120	2.73533188e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp121	2.95397925e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp122	crash	0	crash	no description	agent0	initial_cond	1	0
+exp123	crash	0	crash	no description	agent0	initial_cond	1	0
+exp124	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp125	3.09468882e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp126	3.38676326e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp127	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp128	crash	0	crash	no description	agent0	initial_cond	0	0
+exp129	2.41063341e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp130	3.83575561e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp131	crash	0	crash	no description	agent0	initial_cond	1	0
+exp132	2.40257502e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp133	8.81934684e-11	1.002503	discard	no description	agent0	initial_cond	0	-1.523848
+exp134	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp135	3.94130938e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp136	crash	0	crash	no description	agent0	initial_cond	0	0
+exp137	2.33130819e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp138	2.83424087e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp139	3.48625354e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp140	3.44267730e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp141	3.36111598e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp142	3.62221092e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp143	2.33130819e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp144	crash	0	crash	no description	agent0	initial_cond	2	0
+exp145	3.83438964e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp146	3.83438964e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp147	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp148	crash	0	crash	no description	agent0	initial_cond	0	0
+exp149	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp150	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp151	crash	0	crash	no description	agent0	initial_cond	2	0
+exp152	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp153	2.35619223e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp154	crash	0	crash	no description	agent0	initial_cond	1	0
+exp155	crash	0	crash	no description	agent0	initial_cond	1	0
+exp156	3.40438886e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp157	3.36252254e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp158	3.59170749e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp159	3.06749498e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp160	2.95139396e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp161	2.70270424e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp162	2.39662581e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp163	4.14321087e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp164	crash	0	crash	no description	agent0	initial_cond	1	0
+exp165	crash	0	crash	no description	agent0	initial_cond	0	0
+exp166	crash	0	crash	no description	agent0	initial_cond	1	0
+exp167	crash	0	crash	no description	agent0	initial_cond	3	0
+exp168	2.20617902e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp169	2.18285245e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp170	2.41607372e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp171	3.53801122e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp172	2.89574715e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp173	2.38611544e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp174	3.04993879e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp175	3.37998540e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp176	3.44822329e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp177	3.20590900e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp178	2.83785887e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp179	crash	0	crash	no description	agent0	initial_cond	3	0
+exp180	crash	0	crash	no description	agent0	initial_cond	1	0
+exp181	2.38611544e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp182	2.18285245e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp183	2.18285245e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp184	crash	0	crash	no description	agent0	initial_cond	1	0
+exp185	crash	0	crash	no description	agent0	initial_cond	1	0
+exp186	3.53801122e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp187	2.89574715e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp188	3.04993879e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp189	2.15761660e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp190	2.88339659e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp191	2.27236099e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp192	2.81761038e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp193	2.70654360e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp194	2.15761660e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp195	2.15761660e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp196	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp197	1.67120707e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp198	3.25707148e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp199	2.35857760e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp200	3.34642947e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp201	2.92599811e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp202	2.76015565e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp203	2.63277615e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp204	1.67120707e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp205	crash	0	crash	no description	agent0	initial_cond	1	0
+exp206	3.34642947e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp207	2.92599811e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp208	3.43267553e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp209	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp210	2.81761038e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp211	3.26813796e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp212	2.79746830e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp213	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp214	2.27449039e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp215	3.30945604e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp216	2.61061061e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp217	5.00396657e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp218	2.01033062e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp219	2.74585372e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp220	crash	0	crash	no description	agent0	initial_cond	1	0
+exp221	crash	0	crash	no description	agent0	initial_cond	1	0
+exp222	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp223	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp224	crash	0	crash	no description	agent0	initial_cond	1	0
+exp225	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp226	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp227	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp228	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp229	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp230	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp231	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp232	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp233	3.25707148e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp234	2.61061061e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp235	2.59103189e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp236	3.76945556e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp237	3.67059774e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp238	2.64581360e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp239	2.00898010e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp240	3.46128272e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp241	2.80390727e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp242	3.73887818e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp243	2.56611677e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp244	2.72311352e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp245	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp246	crash	0	crash	no description	agent0	initial_cond	0	0
+exp247	4.18938900e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp248	2.82914159e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp249	3.67059774e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp250	2.66914112e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp251	3.52066650e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp252	3.16292174e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp253	crash	0	crash	no description	agent0	initial_cond	0	0
+exp254	crash	0	crash	no description	agent0	initial_cond	0	0
+exp255	4.16967870e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp256	3.25707148e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp257	crash	0	crash	no description	agent0	initial_cond	0	0
+exp258	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp259	2.92030936e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp260	3.21258938e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp261	3.25707148e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp262	3.65202709e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp263	crash	0	crash	no description	agent0	initial_cond	0	0
+exp264	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp265	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp266	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp267	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp268	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp269	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp270	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp271	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp272	3.25707148e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp273	2.96853999e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp274	2.47270036e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp275	3.27228572e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp276	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp277	3.25707148e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp278	crash	0	crash	no description	agent0	initial_cond	0	0
+exp279	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp280	3.25707148e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp281	crash	0	crash	no description	agent0	initial_cond	0	0
+exp282	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp283	3.80673510e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp284	2.20199494e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp285	3.71133912e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp286	3.65202709e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp287	2.81247192e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp288	2.29684809e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp289	2.92937639e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp290	2.94752586e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp291	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp292	crash	0	crash	no description	agent0	initial_cond	0	0
+exp293	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp294	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp295	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp296	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp297	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp298	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp299	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp300	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp301	2.01827387e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp302	crash	0	crash	no description	agent0	initial_cond	1	0
+exp303	crash	0	crash	no description	agent0	initial_cond	0	0
+exp304	crash	0	crash	no description	agent0	initial_cond	1	0
+exp305	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp306	crash	0	crash	no description	agent0	initial_cond	1	0
+exp307	2.00733257e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp308	0.00000000e+00	0.000000	discard	no description	agent0	initial_cond	0	0.000000
+exp309	3.61191662e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp310	3.61191662e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp311	1.24756266e-23	0.000000	discard	no description	agent0	initial_cond	0	0.000000
+exp312	3.56681400e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp313	crash	0	crash	no description	agent0	initial_cond	1	0
+exp314	crash	0	crash	no description	agent0	initial_cond	12	0
+exp315	3.05421974e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp316	crash	0	crash	no description	agent0	initial_cond	0	0
+exp317	3.11912449e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp318	3.54387306e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp319	3.29478461e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp320	3.42609616e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp321	3.04983363e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp322	3.10273159e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp323	3.04764060e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp324	3.58303978e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp325	4.03543405e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp326	crash	0	crash	no description	agent0	initial_cond	0	0
+exp327	crash	0	crash	no description	agent0	initial_cond	0	0
+exp328	3.62024838e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp329	1.46736390e-22	0.000000	discard	no description	agent0	initial_cond	0	0.000000
+exp330	2.70270424e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp331	2.13120531e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp332	3.60792472e-13	1.001296	discard	no description	agent0	initial_cond	2	-1.520844
+exp333	3.22154155e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp334	3.52318921e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp335	2.97219424e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp336	2.95242834e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp337	crash	0	crash	no description	agent0	initial_cond	1	0
+exp338	crash	0	crash	no description	agent0	initial_cond	0	0
+exp339	3.56681400e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp340	3.17909258e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp341	3.33723973e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp342	2.95697106e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp343	crash	0	crash	no description	agent0	initial_cond	0	0
+exp344	2.13120531e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp345	2.73161140e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp346	2.35591834e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp347	crash	0	crash	no description	agent0	initial_cond	1	0
+exp348	3.25951309e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp349	3.85793846e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp350	crash	0	crash	no description	agent0	initial_cond	1	0
+exp351	crash	0	crash	no description	agent0	initial_cond	1	0
+exp352	3.27908979e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp353	2.97971480e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp354	3.01711359e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp355	1.22356838e-18	0.000000	discard	no description	agent0	initial_cond	0	-0.000000
+exp356	crash	0	crash	no description	agent0	initial_cond	1	0
+exp357	crash	0	crash	no description	agent0	initial_cond	1	0
+exp358	crash	0	crash	no description	agent0	initial_cond	1	0
+exp359	crash	0	crash	no description	agent0	initial_cond	1	0
+exp360	crash	0	crash	no description	agent0	initial_cond	3	0
+exp361	crash	0	crash	no description	agent0	initial_cond	1	0
+exp362	3.45396166e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp363	crash	0	crash	no description	agent0	initial_cond	3	0
+exp364	crash	0	crash	no description	agent0	initial_cond	0	0
+exp365	crash	0	crash	no description	agent0	initial_cond	1	0
+exp366	crash	0	crash	no description	agent0	initial_cond	0	0
+exp367	2.86591582e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp368	2.82149048e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp369	2.86809869e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp370	3.59904662e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp371	2.71918175e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp372	3.15188334e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp373	2.86961478e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp374	crash	0	crash	no description	agent0	initial_cond	0	0
+exp375	crash	0	crash	no description	agent0	initial_cond	0	0
+exp376	3.19954282e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp377	6.08725909e-24	0.000000	discard	no description	agent0	initial_cond	0	0.000000
+exp378	3.04764060e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp379	crash	0	crash	no description	agent0	initial_cond	1	0
+exp380	3.28879506e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844
+exp381	2.68570856e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp382	3.34481066e-13	1.001296	discard	no description	agent0	initial_cond	1	-1.520844
+exp383	3.49811634e-13	1.001296	discard	no description	agent0	initial_cond	0	-1.520844

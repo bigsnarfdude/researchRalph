@@ -93,3 +93,43 @@ The last 10 experiments (exp046-055) ALL optimized one lever: more gradient step
 - **CLOSED BRACKET (x0_lambda):** x0_lambda=0.2 is 0.004 worse (exp076=1.088). Default 0.1 optimal.
 - **CLOSED BRACKET (weight_decay schedule):** {0.0=1.093, linear_decay=1.084, constant=1.089}. Linear decay optimal.
 - **STAGNATION GUIDANCE:** Best=1.0837 held for 5 experiments. Focus on high-variance bets (>0.003 expected delta).
+
+## Constraints [gardener, 2026-03-31 18:55]
+
+## PART 2: Constraints to append
+
+```
+## Constraints [gardener, 2026-03-31 18:35]
+
+- **CONSTRAINT (throughput):** Muon's gradient quality depends critically on NS iterations. 5 is the minimum for proper orthogonalization. Do NOT reduce ns_steps below 5 — never trade gradient quality for marginal throughput.
+- **CONSTRAINT (VE removal):** When removing value embeddings, must also disable ve_gate by making has_ve() return False. Emptying value_embeds dict alone causes crashes (EXP-020).
+- **CONSTRAINT (race conditions):** Another agent may be modifying train.py concurrently. ALWAYS diff train.py against best/train.py before submitting. Verify key params (softcap, HEAD_DIM, SCALAR_LR, window) match your intent.
+- **CLOSED BRACKET (SCALAR_LR at softcap=12):** {0.1=1.086, 0.5=1.084}. SCALAR_LR=0.5 is optimal at softcap=12. The SCALAR_LR=0.25 win was specific to softcap=10 — do NOT apply it at softcap=12.
+- **CLOSED BRACKET (FINAL_LR_FRAC):** {0.0=1.101, 0.03=1.100, 0.05=1.084, 0.07=1.084}. Optimum is 0.05. Fully bracketed, do NOT retest.
+- **CLOSED BRACKET (softcap fine-grain):** {8, 10, 12, 15, 30}. Best=12 by 0.0002 over 10. Testing 11 or 13 is noise-level — deprioritize.
+- **INTERACTION WARNING:** Single-axis breakthroughs <0.001 BPB are NOT additive. exp091 proved SCALAR_LR and softcap interact. Do NOT combine multiple marginal wins without testing — always start from actual best config.
+- Do NOT attempt `regularization` experiments — 5 experiments, 0 keeps. This axis is exhausted.
+- **DEPRIORITIZED desires (require infrastructure/hardware changes, not agent-actionable):** Per-agent train.py copies, longer time budget (10-15 min), multi-GPU, curriculum learning, gradient norm logging. These are real limitations but outside the harness scope.
+- **STAGNATION REGIME:** Best=1.0835 has held for 3+ experiments. The domain is at genuine convergence for the 5-min single-GPU constraint. If agents continue, focus ONLY on high-variance architectural bets with >0.003 expected delta (e.g., different attention mechanisms, novel positional encodings, mixture approaches). Micro-sweeps of existing params will not break through.
+```
+
+## Constraints [gardener, 2026-03-31 19:16]
+
+**PART 2 (constraints to append to program.md):**
+
+```
+## Constraints [gardener, 2026-03-31 19:30]
+
+- **CLOSED BRACKET (Muon momentum):** {0.95=1.084, 0.97=1.085}. Default 0.95 optimal. Do NOT retest.
+- **CLOSED BRACKET (FINAL_LR_FRAC complete):** {0.0=1.101, 0.03=1.100, 0.05=1.084, 0.07=1.084, 0.1=1.084}. Optimum=0.05. Fully bracketed at softcap=12, do NOT retest.
+- **CLOSED BRACKET (softcap fine-grain):** {10=1.084, 11=1.084, 12=1.084}. All within noise. Softcap axis COMPLETELY closed — do NOT test 9, 13, or any other value.
+- **CLOSED BRACKET (resid_lambda LR):** {0.01x=1.084, 0.1x=1.085}. Default 0.01x optimal. Faster resid_lambda learning hurts.
+- **CLOSED BRACKET (SCALAR_LR at softcap=12):** {0.1=1.086, 0.25=1.086, 0.5=1.084}. SCALAR_LR=0.5 is optimal at softcap=12. Do NOT fine-sweep 0.125 or 0.375 — the curve is monotonic.
+- **RESOLVED DESIRE (graduated windows):** Tested exp074, worse than uniform. Marked resolved in DESIRES.md.
+- **RESOLVED DESIRE (softcap fine-grain):** Tested exp096 (softcap=11=1.0835). Noise-level difference from 12. Bracket closed.
+- **RESOLVED DESIRE (SCALAR_LR fine sweep):** Bracket {0.1, 0.25, 0.5} tested at softcap=12. 0.5 wins. Axis closed.
+- **DEPRIORITIZED (infrastructure/hardware, not agent-actionable):** Per-agent train.py copies, longer time budget (10-15 min), multi-GPU, curriculum learning, gradient norm logging. These are real limitations but require harness or hardware changes.
+- **DEPRIORITIZED (not actionable):** Gradient norm distribution logging — would need train.py instrumentation outside experiment scope.
+- **CONVERGENCE REGIME:** Best=1.0835 has held for 7 experiments. ALL optimizer, schedule, and fine-grain architecture axes are exhausted. The ONLY remaining path is **high-variance architectural bets** that fundamentally change the model (e.g., mixture-of-experts layers, state-space hybrid blocks, novel positional encodings like ALiBi/xPos, grouped-query attention, different normalization). Do NOT run any more single-param micro-sweeps — they cannot break through.
+- Do NOT attempt `regularization` experiments — 5 experiments, 0 keeps. This axis is exhausted.
+```

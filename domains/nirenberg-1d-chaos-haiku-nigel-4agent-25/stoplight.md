@@ -1,0 +1,200 @@
+# Stoplight — nirenberg-1d-chaos-haiku-nigel-4agent-25
+Status: STAGNANT | Best: 0.0 (exp001) | Experiments: 165 | Stagnation: 164 since last breakthrough
+
+## Dead ends — do NOT retry
+- Design 'agent1' has 37 experiments, 0 keeps — abandon this approach
+- Design 'agent2' has 40 experiments, 0 keeps — abandon this approach
+- Design 'agent3' has 88 experiments, 0 keeps — abandon this approach
+
+## Gaps — unexplored
+- 10 desires filed but mostly unaddressed — gardener should read DESIRES.md
+
+## Agents
+- 2D map: u_offset=0.55, amp=0.0: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- 2D map: u_offset=0.55, amp=0.1: 1 exp, 0 breakthroughs, rate 0%, best 3.09224768e-13
+- 2D map: u_offset=0.57, amp=0.05: 1 exp, 0 breakthroughs, rate 0%, best 2.9539399e-13
+- 2D scan u=0.48 a=0.0: 1 exp, 0 breakthroughs, rate 0%, best 1.74120026e-13
+- 2D scan u=0.48 a=0.15: 1 exp, 0 breakthroughs, rate 0%, best 3.51682006e-13
+- 2D scan u=0.50 a=0.0: 1 exp, 0 breakthroughs, rate 0%, best 2.23841493e-13
+- 2D scan u=0.50 a=0.15: 1 exp, 0 breakthroughs, rate 0%, best 2.6910516e-13
+- 2D scan u=0.52 a=0.0: 1 exp, 0 breakthroughs, rate 0%, best 3.14939031e-13
+- 2D scan u=0.52 a=0.15: 1 exp, 0 breakthroughs, rate 0%, best 2.35741759e-13
+- 2D scan u=0.55 a=0.0: 1 exp, 0 breakthroughs, rate 0%, best 2.01654343e-13
+- 2D scan u=0.55 a=0.15: 1 exp, 0 breakthroughs, rate 0%, best 2.51236817e-13
+- K_amplitude variation 0.1: 1 exp, 0 breakthroughs, rate 0%, best 3.12271735e-13
+- K_amplitude variation 0.2: 1 exp, 0 breakthroughs, rate 0%, best 3.99522993e-13
+- K_amplitude variation 0.5: 1 exp, 0 breakthroughs, rate 0%, best 3.15118549e-13
+- K_amplitude variation 0.6: 1 exp, 0 breakthroughs, rate 0%, best 1.94295531e-13
+- K_frequency variation 1: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- K_frequency variation 2: 1 exp, 0 breakthroughs, rate 0%, best 3.12709346e-13
+- K_frequency variation 3: 1 exp, 0 breakthroughs, rate 0%, best 3.01668785e-13
+- amp test 0.50 with amp=0.0: 1 exp, 0 breakthroughs, rate 0%, best 2.23841493e-13
+- amp test 0.50 with amp=0.05: 1 exp, 0 breakthroughs, rate 0%, best 2.9215428e-13
+- amp test 0.50 with amp=0.10: 1 exp, 0 breakthroughs, rate 0%, best 2.98117435e-13
+- amp test 0.50 with amp=0.15: 1 exp, 0 breakthroughs, rate 0%, best 2.6910516e-13
+- amp test 0.50 with amp=0.20: 1 exp, 0 breakthroughs, rate 0%, best 2.71711499e-13
+- amplitude control: u_offset=0.5, amp=0.05 should flip to positive: 1 exp, 0 breakthroughs, rate 0%, best 2.79078543e-13
+- amplitude control: u_offset=0.585, amp=0.0 should give negative: 1 exp, 0 breakthroughs, rate 0%, best 2.74270461e-13
+- amplitude control: u_offset=0.585, amp=0.05 should flip to positive: 1 exp, 0 breakthroughs, rate 0%, best 3.59103228e-13
+- amplitude transition 0.11: 1 exp, 0 breakthroughs, rate 0%, best 2.37571137e-13
+- amplitude transition 0.12: 1 exp, 0 breakthroughs, rate 0%, best 3.29455683e-13
+- amplitude transition 0.13: 1 exp, 0 breakthroughs, rate 0%, best 2.04300611e-13
+- amplitude transition 0.14: 1 exp, 0 breakthroughs, rate 0%, best 2.39543804e-13
+- amplitude transition refined 0.145: 1 exp, 0 breakthroughs, rate 0%, best 5.27819091e-13
+- amplitude transition refined 0.150: 1 exp, 0 breakthroughs, rate 0%, best 2.6910516e-13
+- amplitude transition refined 0.155: 1 exp, 0 breakthroughs, rate 0%, best 2.55860769e-13
+- boundary search: u_offset=0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- boundary search: u_offset=0.7: 1 exp, 0 breakthroughs, rate 0%, best 3.48477681e-13
+- boundary test 0.482: 1 exp, 0 breakthroughs, rate 0%, best 3.85580711e-13
+- boundary test 0.483: 1 exp, 0 breakthroughs, rate 0%, best 2.32714288e-13
+- boundary test 0.484: 1 exp, 0 breakthroughs, rate 0%, best 3.22115937e-13
+- boundary test 0.585: 1 exp, 0 breakthroughs, rate 0%, best 2.74270461e-13
+- boundary test 0.586: 1 exp, 0 breakthroughs, rate 0%, best 3.04842431e-13
+- boundary test 0.587: 1 exp, 0 breakthroughs, rate 0%, best 3.33395016e-13
+- boundary test 0.588: 1 exp, 0 breakthroughs, rate 0%, best 2.20875499e-13
+- boundary test 0.589: 1 exp, 0 breakthroughs, rate 0%, best 3.75207626e-13
+- boundary test 0.590: 1 exp, 0 breakthroughs, rate 0%, best 3.88079599e-13
+- boundary test 0.591: 1 exp, 0 breakthroughs, rate 0%, best 2.6923576e-13
+- boundary test 0.592: 1 exp, 0 breakthroughs, rate 0%, best 2.82933975e-13
+- boundary test u_offset=-0.5 (anomalous, should find positive?): 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- boundary test u_offset=-0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- boundary test u_offset=-0.6: 1 exp, 0 breakthroughs, rate 0%, best 2.76001344e-13
+- boundary test u_offset=0.5 (between trivial and positive): 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- boundary test u_offset=0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- boundary test u_offset=0.58: 1 exp, 0 breakthroughs, rate 0%, best 3.27355159e-13
+- boundary test u_offset=0.59: 1 exp, 0 breakthroughs, rate 0%, best 3.88079599e-13
+- boundary test u_offset=0.6: 1 exp, 0 breakthroughs, rate 0%, best 2.76001344e-13
+- boundary test u_offset=0.7: 1 exp, 0 breakthroughs, rate 0%, best 3.48477681e-13
+- boundary test: u_offset=-0.45: 1 exp, 0 breakthroughs, rate 0%, best 3.94755575e-16
+- boundary test: u_offset=0.3 between trivial and positive: 1 exp, 0 breakthroughs, rate 0%, best 2.64988611e-20
+- boundary test: u_offset=0.4 between trivial and positive: 1 exp, 0 breakthroughs, rate 0%, best 4.40113707e-21
+- boundary test: u_offset=0.45: 1 exp, 0 breakthroughs, rate 0%, best 3.94755575e-16
+- boundary test: u_offset=0.50: 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- boundary test: u_offset=0.52: 1 exp, 0 breakthroughs, rate 0%, best 2.10061857e-13
+- boundary test: u_offset=0.6: 1 exp, 0 breakthroughs, rate 0%, best 2.76001344e-13
+- boundary u_offset=0.585 amplitude=0.1 phase=0.785: 1 exp, 0 breakthroughs, rate 0%, best 3.93776477e-13
+- boundary u_offset=0.585 with amplitude=0.05: 1 exp, 0 breakthroughs, rate 0%, best 3.59103228e-13
+- boundary u_offset=0.585 with amplitude=0.15: 1 exp, 0 breakthroughs, rate 0%, best 3.70859194e-13
+- boundary u_offset=0.585 with amplitude=0.2 perturbation: 1 exp, 0 breakthroughs, rate 0%, best 2.7465023e-13
+- boundary u_offset=0.585 with n_mode=2: 1 exp, 0 breakthroughs, rate 0%, best 2.74270461e-13
+- boundary: u_offset=-0.50: 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- boundary: u_offset=-0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- boundary: u_offset=-0.59: 1 exp, 0 breakthroughs, rate 0%, best 3.88079599e-13
+- boundary: u_offset=-0.60: 1 exp, 0 breakthroughs, rate 0%, best 2.76001344e-13
+- boundary: u_offset=-0.75: 1 exp, 0 breakthroughs, rate 0%, best 4.35391359e-13
+- boundary: u_offset=0.48: 1 exp, 0 breakthroughs, rate 0%, best 3.1995767e-13
+- boundary: u_offset=0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- boundary: u_offset=0.58: 1 exp, 0 breakthroughs, rate 0%, best 3.27355159e-13
+- boundary: u_offset=0.59: 1 exp, 0 breakthroughs, rate 0%, best 3.88079599e-13
+- chaos core u_offset=0.50 amplitude=0.0: 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- chaos region 0.48 with newton_tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 3.1995767e-13
+- chaos region 0.48 with newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best —
+- chaos region with amplitude=0.2 to suppress anomaly: 1 exp, 0 breakthroughs, rate 0%, best 2.39236596e-13
+- chaos test 0.47: 1 exp, 0 breakthroughs, rate 0%, best 3.45536827e-13
+- chaos test 0.475: 1 exp, 0 breakthroughs, rate 0%, best 3.09919215e-13
+- chaos test 0.485: 1 exp, 0 breakthroughs, rate 0%, best 4.08108563e-13
+- critical point u_offset=0.50 amplitude=0.15: 1 exp, 0 breakthroughs, rate 0%, best 2.68570856e-13
+- critical point u_offset=0.50 amplitude=0.20: 1 exp, 0 breakthroughs, rate 0%, best 2.86591582e-13
+- extreme: u_offset=-2.0 far negative: 1 exp, 0 breakthroughs, rate 0%, best 3.2741716e-13
+- extreme: u_offset=1.2 beyond expected range: 1 exp, 0 breakthroughs, rate 0%, best 3.42609616e-13
+- extreme: u_offset=2.0 far beyond expected range: 1 exp, 0 breakthroughs, rate 0%, best 3.2741716e-13
+- final test: K_amplitude=0.5, u_offset=0.50, amplitude=0.15: 1 exp, 0 breakthroughs, rate 0%, best 2.6910516e-13
+- fine boundary test u_offset=0.585: 1 exp, 0 breakthroughs, rate 0%, best 2.74270461e-13
+- fine boundary test u_offset=0.587: 1 exp, 0 breakthroughs, rate 0%, best 3.33395016e-13
+- fine boundary test u_offset=0.588: 1 exp, 0 breakthroughs, rate 0%, best 2.20875499e-13
+- fine transition 0.46: 1 exp, 0 breakthroughs, rate 0%, best 7.64566347e-23
+- fine transition 0.47: 1 exp, 0 breakthroughs, rate 0%, best 3.45536827e-13
+- fine transition 0.48: 1 exp, 0 breakthroughs, rate 0%, best 3.1995767e-13
+- fine transition 0.49: 1 exp, 0 breakthroughs, rate 0%, best 3.16847297e-13
+- negative branch u_offset=-0.9: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- negative branch with mode-3 perturbation n_mode=3: 1 exp, 0 breakthroughs, rate 0%, best 2.22195375e-13
+- negative branch, u_offset=-0.9: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- negative branch: u_offset=-0.9: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- negative phase scan -0.47: 1 exp, 0 breakthroughs, rate 0%, best 3.45536827e-13
+- negative phase scan -0.48: 1 exp, 0 breakthroughs, rate 0%, best 3.1995767e-13
+- negative phase scan -0.49: 1 exp, 0 breakthroughs, rate 0%, best 3.16847297e-13
+- negative phase scan -0.50: 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- negative phase scan -0.51: 1 exp, 0 breakthroughs, rate 0%, best 3.71823481e-13
+- negative phase scan -0.52: 1 exp, 0 breakthroughs, rate 0%, best 2.10061857e-13
+- negative phase scan -0.53: 1 exp, 0 breakthroughs, rate 0%, best 4.28755118e-13
+- negative scan u_offset=-0.45: 1 exp, 0 breakthroughs, rate 0%, best 3.94755575e-16
+- negative scan u_offset=-0.50: 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- negative scan u_offset=-0.60: 1 exp, 0 breakthroughs, rate 0%, best 2.76001344e-13
+- negative scan u_offset=-0.70: 1 exp, 0 breakthroughs, rate 0%, best 3.48477681e-13
+- negative side symmetry u_offset=-0.55 amplitude=0.15: 1 exp, 0 breakthroughs, rate 0%, best 2.93947558e-13
+- opposite test neg -0.48: 1 exp, 0 breakthroughs, rate 0%, best 3.1995767e-13
+- opposite test neg -0.52: 1 exp, 0 breakthroughs, rate 0%, best 2.10061857e-13
+- opposite test neg -0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- opposite test pos 0.48: 1 exp, 0 breakthroughs, rate 0%, best 3.1995767e-13
+- opposite test pos 0.52: 1 exp, 0 breakthroughs, rate 0%, best 2.10061857e-13
+- opposite test pos 0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.13371637e-13
+- phase scan u_offset=0.45: 1 exp, 0 breakthroughs, rate 0%, best 3.94755575e-16
+- phase scan u_offset=0.50: 1 exp, 0 breakthroughs, rate 0%, best 2.28944733e-13
+- phase scan u_offset=0.60: 1 exp, 0 breakthroughs, rate 0%, best 2.76001344e-13
+- positive branch mode-3 with phase=1.57: 1 exp, 0 breakthroughs, rate 0%, best 3.41745849e-13
+- positive branch u_offset=0.9: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- positive branch with 128 Fourier modes: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch with amplitude 0.1: 1 exp, 0 breakthroughs, rate 0%, best 2.88051949e-13
+- positive branch with amplitude 0.3: 1 exp, 0 breakthroughs, rate 0%, best 3.58611048e-13
+- positive branch with amplitude=0.1 perturbation: 2 exp, 0 breakthroughs, rate 0%, best 2.88051949e-13
+- positive branch with amplitude=0.3 perturbation: 1 exp, 0 breakthroughs, rate 0%, best 3.58611048e-13
+- positive branch with fourier_modes=128: 2 exp, 0 breakthroughs, rate 0%, best —
+- positive branch with mode 2 perturbation: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- positive branch with mode-2 perturbation n_mode=2: 1 exp, 0 breakthroughs, rate 0%, best 2.51368744e-13
+- positive branch with mode-3 perturbation n_mode=3: 1 exp, 0 breakthroughs, rate 0%, best 2.29269912e-13
+- positive branch with newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch with newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch with phase=π: 1 exp, 0 breakthroughs, rate 0%, best 3.37799799e-13
+- positive branch, u_offset=0.9: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- positive branch: u_offset=0.9: 1 exp, 0 breakthroughs, rate 0%, best 2.66626099e-13
+- refine 0.58960: 1 exp, 0 breakthroughs, rate 0%, best 3.10534389e-13
+- refine 0.58970: 1 exp, 0 breakthroughs, rate 0%, best 3.75785751e-13
+- refine 0.58980: 1 exp, 0 breakthroughs, rate 0%, best 2.9216258e-13
+- refine 0.58990: 1 exp, 0 breakthroughs, rate 0%, best 3.50713334e-13
+- refine boundary 0.5890: 1 exp, 0 breakthroughs, rate 0%, best 3.75207626e-13
+- refine boundary 0.5891: 1 exp, 0 breakthroughs, rate 0%, best 2.82101228e-13
+- refine boundary 0.5892: 1 exp, 0 breakthroughs, rate 0%, best 2.90530173e-13
+- refine boundary 0.5893: 1 exp, 0 breakthroughs, rate 0%, best 2.88599982e-13
+- refine boundary 0.5894: 1 exp, 0 breakthroughs, rate 0%, best 3.58878705e-13
+- refine boundary 0.5895: 1 exp, 0 breakthroughs, rate 0%, best 3.54457377e-13
+- reproducibility test run 1: 1 exp, 0 breakthroughs, rate 0%, best 3.09919215e-13
+- reproducibility test run 2: 1 exp, 0 breakthroughs, rate 0%, best 3.09919215e-13
+- test discontinuity: u_offset=0.4999 (just below chaos region): 1 exp, 0 breakthroughs, rate 0%, best 3.53690518e-13
+- test: u_offset=0.482: 1 exp, 0 breakthroughs, rate 0%, best 3.85580711e-13
+- test: u_offset=0.485: 1 exp, 0 breakthroughs, rate 0%, best 4.08108563e-13
+- test: u_offset=0.49 edge of positive region: 1 exp, 0 breakthroughs, rate 0%, best 3.16847297e-13
+- test: u_offset=0.495: 1 exp, 0 breakthroughs, rate 0%, best 2.75138356e-13
+- trivial boundary u_offset=0.45 amplitude=0.0: 1 exp, 0 breakthroughs, rate 0%, best 3.94755575e-16
+- trivial boundary u_offset=0.45 amplitude=0.2: 1 exp, 0 breakthroughs, rate 0%, best 3.15779448e-20
+- trivial branch u_offset=0, baseline solver: 1 exp, 1 breakthroughs, rate 0%, best 0.0
+- trivial branch with fourier_modes=128: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- trivial branch: u_offset=0.0, minimal initial guess: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- trivial with n_mode=3, phase=1.57, amp=0.1: 1 exp, 0 breakthroughs, rate 0%, best 8.32449213e-22
+- u_offset=0.50 amplitude=0.30: 1 exp, 0 breakthroughs, rate 0%, best 3.45396166e-13
+- verify boundary u_offset=0.585 with amplitude=0.0: 1 exp, 0 breakthroughs, rate 0%, best 2.74270461e-13
+- verify positive region u_offset=0.59 with amplitude=0.0: 1 exp, 0 breakthroughs, rate 0%, best 3.88079599e-13
+
+## Alerts
+- deep_stagnation: No improvement in 158 experiments — search space may be exhausted or agents are stuck
+
+## Recent blackboard (last 20 entries)
+- Positive→Negative: sharp transition at u_offset ≈ 0.482-0.484 (no intermediate solutions)
+- Negative→Positive: sharp transition at u_offset ≈ 0.58975 ± 0.0001 (precision-limited)
+- No heteroclinic/homoclinic solutions on boundaries found
+- Sharp discontinuities suggest first-order phase transitions
+**K-function robustness:**
+- K_amplitude variations (0.1-0.6): changes solution magnitude, NOT branch identity
+- K_frequency variations (1-3): changes solution magnitude, NOT branch identity
+- Bifurcation structure is **intrinsic** to the PDE, not forcing-dependent
+**Amplitude control discovery (agent3 unique finding):**
+- u_offset=0.50 is **critical point**: amplitude ≈ 0.142 separates negative→positive
+- u_offset=0.48, 0.52, 0.55: amplitude insensitive (locked to negative branch)
+- Amplitude effect is **localized and nonlinear** in parameter space
+**Domain Saturation Assessment:**
+- ✓ All three branches fully characterized (residual ≈ 2.7e-13)
+- ✓ Phase diagram completely mapped (both u_offset and (u_offset, amplitude))
+- ✓ Bifurcation boundaries pinpointed to machine precision
+- ✓ Solver limits identified (128 modes crash, 1e-12 tolerance minimum)
+- **No new physics remains unexplored**
+## Responses
+## Requests

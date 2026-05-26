@@ -1,0 +1,93 @@
+exp001	7.64566347e-23	0.000000	-0.000000	keep	baseline trivial branch u_offset=0.46	agent1	initial_cond	0	0.000000
+exp002	7.64566347e-23	0.000000	-0.000000	keep	positive branch u_offset=0.9	agent1	initial_cond	0	0.000000
+exp003	0.00000000e+00	0.000000	0.000000	keep	baseline trivial branch u_offset=0.0	agent0	initial_cond	1	0.000000
+exp004	2.66626099e-13	1.001296	1.000019	discard	positive branch u_offset=0.9	agent1	initial_cond	0	-1.520844
+exp005	2.66626099e-13	1.001296	-1.000019	discard	negative branch u_offset=-0.9	agent1	initial_cond	0	-1.520844
+exp006	2.66626099e-13	1.001296	1.000019	discard	positive branch u_offset=0.9	agent0	initial_cond	0	-1.520844
+exp007	2.66626099e-13	1.001296	-1.000019	discard	negative branch u_offset=-0.9	agent0	initial_cond	0	-1.520844
+exp008	crash	0	0	crash	positive branch, higher Fourier modes (128)	agent1	solver_param	2	0
+exp009	2.51368744e-13	1.001296	1.000019	discard	positive branch with mode-2 perturbation amplitude=0.1	agent0	perturbation	1	-1.520844
+exp010	2.66626099e-13	1.001296	1.000019	discard	positive branch, more Newton iterations (200)	agent1	solver_param	1	-1.520844
+exp011	2.43563245e-13	1.001296	-1.000019	discard	negative branch with mode-3 perturbation amplitude=0.2	agent0	perturbation	2	-1.520844
+exp012	crash	0	0	crash	positive branch, tighter Newton tolerance (1e-14)	agent1	solver_param	2	0
+exp013	3.42609616e-13	1.001296	1.000019	discard	explore u_offset=1.2 beyond nominal range	agent0	branch_search	0	-1.520844
+exp014	3.79436503e-13	1.001296	1.000019	discard	positive branch with amplitude=0.2 perturbation	agent1	perturbation	0	-1.520844
+exp015	2.28944733e-13	1.001296	-1.000019	discard	boundary between trivial and positive u_offset=0.5	agent1	branch_search	0	-1.520844
+exp016	2.76001344e-13	1.001296	1.000019	discard	explore transition region u_offset=0.6	agent0	branch_search	1	-1.520844
+exp017	3.48477681e-13	1.001296	1.000019	discard	u_offset=0.7 boundary exploration	agent1	branch_search	0	-1.520844
+exp018	2.13371637e-13	1.001296	-1.000019	discard	u_offset=0.55 basin boundary	agent1	branch_search	1	-1.520844
+exp019	4.40113707e-21	0.000000	0.000000	discard	test u_offset=0.4 boundary	agent0	branch_search	1	0.000000
+exp020	2.76001344e-13	1.001296	1.000019	discard	u_offset=0.6 basin boundary	agent1	branch_search	0	-1.520844
+exp021	2.28944733e-13	1.001296	1.000019	discard	u_offset=-0.5 basin boundary	agent1	branch_search	1	-1.520844
+exp022	3.94755575e-16	0.000000	0.000000	discard	binary search u_offset=0.45	agent0	branch_search	1	-0.000000
+exp023	3.48477681e-13	1.001296	-1.000019	discard	u_offset=-0.7 basin boundary	agent1	branch_search	1	-1.520844
+exp024	3.64598910e-13	1.001296	1.000019	discard	positive branch with phase shift pi	agent0	perturbation	0	-1.520844
+exp025	9.02401735e-20	0.000000	-0.000000	discard	u_offset=-0.2 basin boundary	agent1	branch_search	0	-0.000000
+exp026	2.76001344e-13	1.001296	-1.000019	discard	u_offset=-0.6 basin boundary refinement	agent1	branch_search	0	-1.520844
+exp027	2.13371637e-13	1.001296	1.000019	discard	u_offset=-0.55 basin boundary refinement	agent1	branch_search	1	-1.520844
+exp028	2.10061857e-13	1.001296	-1.000019	discard	fine-grained boundary u_offset=0.52	agent0	branch_search	0	-1.520844
+exp029	3.71823481e-13	1.001296	-1.000019	discard	u_offset=0.51	agent0	branch_search	0	-1.520844
+exp030	3.27355159e-13	1.001296	-1.000019	discard	verify basin boundary u_offset=0.58	agent0	branch_search	0	-1.520844
+exp031	2.10061857e-13	1.001296	-1.000019	discard	u_offset=0.52 boundary refinement	agent1	branch_search	0	-1.520844
+exp032	3.88079599e-13	1.001296	1.000019	discard	fine-tune negative-positive boundary u_offset=0.59	agent0	branch_search	0	-1.520844
+exp033	3.80842526e-13	1.001296	-1.000019	discard	u_offset=0.56 boundary refinement	agent1	branch_search	1	-1.520844
+exp034	3.27355159e-13	1.001296	-1.000019	discard	u_offset=0.58 boundary refinement	agent1	branch_search	4	-1.520844
+exp035	3.88079599e-13	1.001296	-1.000019	discard	symmetric test u_offset=-0.59	agent0	branch_search	5	-1.520844
+exp036	3.27355159e-13	1.001296	1.000019	discard	u_offset=-0.58 basin boundary	agent1	branch_search	0	-1.520844
+exp037	3.27355159e-13	1.001296	1.000019	discard	symmetric boundary test u_offset=-0.58	agent0	branch_search	0	-1.520844
+exp038	4.36015501e-23	0.000000	0.000000	discard	mode-2 perturbation (n_mode=2, amplitude=0.3, u_offset=0)	agent1	perturbation	0	0.000000
+exp039	1.74862376e-17	0.000000	-0.000000	discard	maximum mode-2 perturbation (n_mode=2, amplitude=0.5)	agent1	perturbation	0	-0.000000
+exp040	2.28944733e-13	1.001296	1.000019	discard	verify u_offset=-0.5 → positive	agent0	branch_search	0	-1.520844
+exp041	3.27417160e-13	1.001296	-1.000019	discard	test u_offset=-2.0	agent0	branch_search	1	-1.520844
+exp042	3.27417160e-13	1.001296	1.000019	discard	test u_offset=2.0	agent0	branch_search	0	-1.520844
+exp043	2.64988611e-20	0.000000	0.000000	discard	test u_offset=0.3	agent0	branch_search	1	0.000000
+exp044	7.64566347e-23	0.000000	-0.000000	discard	test trivial boundary u_offset=0.46	agent0	branch_search	0	0.000000
+exp045	3.19957670e-13	1.001296	1.000019	discard	test boundary u_offset=0.48	agent0	branch_search	1	-1.520844
+exp046	3.45536827e-13	1.001296	-1.000019	discard	fine-tune trivial-positive boundary u_offset=0.47	agent0	branch_search	1	-1.520844
+exp047	1.74848692e-21	0.000000	-0.000000	discard	boundary sweep u=0.455	agent0	branch_search	0	0.000000
+exp048	3.27530323e-13	1.001296	-1.000019	discard	boundary sweep u=0.465	agent0	branch_search	0	-1.520844
+exp049	3.09919215e-13	1.001296	1.000019	discard	boundary sweep u=0.475	agent0	branch_search	1	-1.520844
+exp050	4.08108563e-13	1.001296	-1.000019	discard	boundary sweep u=0.485	agent0	branch_search	0	-1.520844
+exp051	2.75138356e-13	1.001296	-1.000019	discard	boundary sweep u=0.495	agent0	branch_search	0	-1.520844
+exp052	3.21762455e-13	1.001296	-1.000019	discard	boundary sweep u=0.505	agent0	branch_search	1	-1.520844
+exp053	3.21625657e-13	1.001296	-1.000019	discard	boundary sweep u=0.515	agent0	branch_search	0	-1.520844
+exp054	2.64300288e-13	1.001296	-1.000019	discard	boundary sweep u=0.525	agent0	branch_search	0	-1.520844
+exp055	3.40610546e-13	1.001296	-1.000019	discard	boundary sweep u=0.535	agent0	branch_search	1	-1.520844
+exp056	3.89521167e-13	1.001296	-1.000019	discard	boundary sweep u=0.545	agent0	branch_search	0	-1.520844
+exp057	2.96298403e-13	1.001296	-1.000019	discard	boundary sweep u=0.555	agent0	branch_search	0	-1.520844
+exp058	2.63956274e-13	1.001296	-1.000019	discard	boundary sweep u=0.565	agent0	branch_search	1	-1.520844
+exp059	3.15762366e-13	1.001296	-1.000019	discard	boundary sweep u=0.575	agent0	branch_search	0	-1.520844
+exp060	2.74270461e-13	1.001296	-1.000019	discard	boundary sweep u=0.585	agent0	branch_search	0	-1.520844
+exp061	3.45690858e-13	1.001296	1.000019	discard	u_offset=5.0 extreme range test	agent1	branch_search	0	-1.520844
+exp062	3.45690858e-13	1.001296	-1.000019	discard	u_offset=-5.0 extreme range test	agent1	branch_search	0	-1.520844
+exp063	1.55185023e-20	0.000000	-0.000000	discard	fine boundary 0.456	agent0	branch_search	0	0.000000
+exp064	1.49867325e-19	0.000000	0.000000	discard	fine boundary 0.457	agent0	branch_search	0	-0.000000
+exp065	3.86087749e-17	0.000000	0.000000	discard	fine boundary 0.458	agent0	branch_search	0	-0.000000
+exp066	1.25495454e-14	0.000000	0.000000	discard	fine boundary 0.459	agent0	branch_search	0	-0.000000
+exp067	7.64566347e-23	0.000000	-0.000000	discard	fine boundary 0.460	agent0	branch_search	1	0.000000
+exp068	3.45536827e-13	1.001296	-1.000019	discard	fine boundary 0.470	agent0	branch_search	0	-1.520844
+exp069	2.44226482e-13	1.001296	1.000019	discard	fine boundary 0.471	agent0	branch_search	1	-1.520844
+exp070	2.56891459e-13	1.001296	1.000019	discard	fine boundary 0.472	agent0	branch_search	0	-1.520844
+exp071	3.02835649e-13	1.001296	1.000019	discard	fine boundary 0.473	agent0	branch_search	0	-1.520844
+exp072	3.56989009e-13	1.001296	1.000019	discard	fine boundary 0.474	agent0	branch_search	1	-1.520844
+exp073	2.12360418e-13	1.001296	1.000019	discard	fine boundary 0.476	agent0	branch_search	0	-1.520844
+exp074	2.83930391e-13	1.001296	1.000019	discard	fine boundary 0.477	agent0	branch_search	0	-1.520844
+exp075	3.53231783e-13	1.001296	1.000019	discard	fine boundary 0.478	agent0	branch_search	1	-1.520844
+exp076	2.49586559e-13	1.001296	1.000019	discard	fine boundary 0.479	agent0	branch_search	0	-1.520844
+exp077	2.76529316e-13	1.001296	-1.000019	discard	u_offset=0.5 with mode-3, phase=π perturbation	agent1	perturbation	3	-1.520844
+exp078	3.19957670e-13	1.001296	1.000019	discard	fine boundary 0.480	agent0	branch_search	3	-1.520844
+exp079	2.67382054e-13	1.001296	-1.000019	discard	fine boundary 0.481	agent0	branch_search	0	-1.520844
+exp080	3.85580711e-13	1.001296	-1.000019	discard	fine boundary 0.482	agent0	branch_search	0	-1.520844
+exp081	2.32714288e-13	1.001296	-1.000019	discard	fine boundary 0.483	agent0	branch_search	1	-1.520844
+exp082	3.22115937e-13	1.001296	-1.000019	discard	fine boundary 0.484	agent0	branch_search	0	-1.520844
+exp083	2.94890043e-19	0.000000	0.000000	discard	ultra-fine 0.461	agent0	branch_search	0	-0.000000
+exp084	8.41309148e-20	0.000000	0.000000	discard	ultra-fine 0.462	agent0	branch_search	0	-0.000000
+exp085	3.48600772e-13	1.001296	-1.000019	discard	ultra-fine 0.463	agent0	branch_search	1	-1.520844
+exp086	2.40826858e-13	1.001296	-1.000019	discard	ultra-fine 0.464	agent0	branch_search	0	-1.520844
+exp087	3.27530323e-13	1.001296	-1.000019	discard	ultra-fine 0.465	agent0	branch_search	0	-1.520844
+exp088	5.37582978e-13	1.001296	1.000019	discard	ultra-fine 0.466	agent0	branch_search	0	-1.520844
+exp089	3.71669874e-13	1.001296	-1.000019	discard	ultra-fine 0.467	agent0	branch_search	0	-1.520844
+exp090	2.66689992e-13	1.001296	-1.000019	discard	ultra-fine 0.468	agent0	branch_search	1	-1.520844
+exp091	3.38007998e-13	1.001296	-1.000019	discard	ultra-fine 0.469	agent0	branch_search	0	-1.520844
+exp092	3.76437590e-13	1.001296	1.000019	discard	ultra-fine 0.4705	agent0	branch_search	0	-1.520844
+exp093	0.00000000e+00	0.000000	0.000000	discard	final validation: trivial branch baseline	agent1	initial_cond	0	0.000000

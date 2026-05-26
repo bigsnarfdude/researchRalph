@@ -29,6 +29,7 @@ MAX_GENERATIONS="${2:-5}"
 NUM_AGENTS="${3:-4}"
 MAX_TURNS="${4:-200}"
 MONITOR_INTERVAL="${5:-20}"  # minutes between diagnose checks
+MODEL="${6:-}"  # e.g. claude-opus-4-6 (passed through to launch-agents.sh)
 
 DOMAIN_DIR="$(cd "$DOMAIN_DIR" && pwd)"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -39,6 +40,13 @@ TASTE="$SCRIPT_DIR/taste.md"
 source "$(cd "$(dirname "$0")" && pwd)/env.sh"
 
 LOG="$DOMAIN_DIR/outer-loop.log"
+# Select diagnoser: lean_proof domains use diagnose_lean.py
+DOMAIN_TYPE=$(grep '^domain_type:' "$DOMAIN_DIR/config.yaml" 2>/dev/null | awk '{print $2}')
+if [ "$DOMAIN_TYPE" = "lean_proof" ] && [ -f "$SCRIPT_DIR/diagnose_lean.py" ]; then
+    DIAGNOSER="python3 $SCRIPT_DIR/diagnose_lean.py"
+else
+    DIAGNOSER="python3 $SCRIPT_DIR/diagnose.py"
+fi
 
 log() {
     local msg="[outer $(date '+%Y-%m-%d %H:%M:%S')] $1"
@@ -69,7 +77,7 @@ command -v screen >/dev/null 2>&1 || { echo "Error: screen not found"; exit 1; }
 log "=== RRMA v4.6 Outer Loop Starting ==="
 log "Domain: $DOMAIN_DIR"
 log "Max generations: $MAX_GENERATIONS"
-log "Agents: $NUM_AGENTS, turns: $MAX_TURNS, monitor: ${MONITOR_INTERVAL}m"
+log "Agents: $NUM_AGENTS, turns: $MAX_TURNS, monitor: ${MONITOR_INTERVAL}m, model: ${MODEL:-default}"
 log ""
 
 # --- Generation loop ---
@@ -90,7 +98,7 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
 
     # --- Step 1: Launch meta-RRMA ---
     log "Step 1: Launching $NUM_AGENTS workers + meta-agent..."
-    bash "$SCRIPT_DIR/launch-agents.sh" "$DOMAIN_DIR" "$NUM_AGENTS" "$MAX_TURNS" 30 2>&1 | tee -a "$LOG"
+    bash "$SCRIPT_DIR/launch-agents.sh" "$DOMAIN_DIR" "$NUM_AGENTS" "$MAX_TURNS" 30 "$MODEL" 2>&1 | tee -a "$LOG"
 
     # --- Step 2: Monitor loop ---
     DECISION="CONTINUE"
@@ -108,7 +116,7 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         ALIVE="${ALIVE:-0}"
         if [ "$ALIVE" -eq 0 ]; then
             log "All workers finished (used all $MAX_TURNS turns). Running final diagnosis."
-            DECISION=$(python3 "$SCRIPT_DIR/diagnose.py" "$DOMAIN_DIR" 2>>"$LOG")
+            DECISION=$($DIAGNOSER "$DOMAIN_DIR" 2>>"$LOG")
             # If workers are done, treat CONTINUE/NUDGE as STOP_DONE
             if [ "$DECISION" = "CONTINUE" ] || [ "$DECISION" = "TOO_EARLY" ] || [ "$DECISION" = "NUDGE" ]; then
                 DECISION="STOP_DONE"
@@ -120,7 +128,7 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         python3 "$REPO_ROOT/tools/refresh_context.py" "$DOMAIN_DIR" 2>>"$LOG" || true
 
         # Run diagnosis
-        DECISION=$(python3 "$SCRIPT_DIR/diagnose.py" "$DOMAIN_DIR" 2>>"$LOG")
+        DECISION=$($DIAGNOSER "$DOMAIN_DIR" 2>>"$LOG")
         log "Diagnosis: $DECISION (check $MONITOR_COUNT, workers alive: $ALIVE)"
 
         # --- v4.5: Handle NUDGE (observation + program.md patch) ---
@@ -416,7 +424,7 @@ REEVAL_EOF
                 # Don't stop — continue to next generation with the nudge
                 log "Continuing to generation $((gen + 1)) with nudge applied."
                 # Relaunch workers
-                bash "$SCRIPT_DIR/launch-agents.sh" "$DOMAIN_DIR" "$NUM_AGENTS" "$MAX_TURNS" 30 2>&1 | tee -a "$LOG"
+                bash "$SCRIPT_DIR/launch-agents.sh" "$DOMAIN_DIR" "$NUM_AGENTS" "$MAX_TURNS" 30 "$MODEL" 2>&1 | tee -a "$LOG"
                 continue
             fi
 

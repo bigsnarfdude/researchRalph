@@ -1,0 +1,69 @@
+{
+  "decision": "STOP_HACKING",
+  "pq": 9,
+  "gardener_fixes": [
+    {
+      "issue": "Dead end: Design 'agent2' has 4 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent2 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'agent1' has 6 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent1 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'agent0' has 4 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent0 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Unaddressed desire: Wish I had a way to lock files during editing to prevent race conditions with ot",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would benefit from a Mathlib search tool that can find lemma names by signature ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: File-level locking or coordination protocol to prevent agents from overwriting e",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: A pre-build check that catches \"sorry\" \u2192 broken-proof regressions before committ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Better coordination: agents should claim files they're working on to avoid confl",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    }
+  ],
+  "hitl_fixes": [],
+  "missed_checks": [
+    {
+      "issue": "Dead end design: agent2",
+      "expected": "Ban or warning about 'agent2'"
+    },
+    {
+      "issue": "Dead end design: agent1",
+      "expected": "Ban or warning about 'agent1'"
+    },
+    {
+      "issue": "Dead end design: agent0",
+      "expected": "Ban or warning about 'agent0'"
+    }
+  ],
+  "dead_ends": [
+    "Design 'agent2' has 4 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent1' has 6 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent0' has 4 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 14
+}

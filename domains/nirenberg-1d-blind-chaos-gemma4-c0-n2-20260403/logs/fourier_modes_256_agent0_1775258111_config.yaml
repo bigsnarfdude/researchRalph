@@ -1,0 +1,34 @@
+# Nirenberg 1D — Initial condition parameters
+# Agents edit this file to control the BVP solver's initial guess.
+#
+# Equation: u''(theta) = u^3 - (1 + K(theta))*u,  2*pi-periodic
+# K(theta) = K_amplitude * cos(K_frequency * theta)
+#
+# Score = residual (lower is better, 0 = exact solution)
+
+# --- Initial guess (EDIT THESE) ---
+u_offset: 1.0         # DC offset of initial guess (-1.5 to +1.5)
+amplitude: 0.1        # Oscillation amplitude of initial guess (0.0-0.5)
+n_mode: 1             # Fourier mode (1, 2, 3)
+phase: 0.0            # Phase shift in radians
+
+# --- K function (fixed problem parameters — DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings (tunable) ---
+n_nodes: 100          # Initial mesh nodes (50-300)
+solver_tol: 1.0e-8    # BVP tolerance
+
+# --- Method ---
+method: fourier        # Use Fourier spectral solver
+fourier_modes: 256    # Number of Fourier modes
+newton_tol: 1.0e-12    # Newton convergence tolerance
+newton_maxiter: 50     # Newton max iterations
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

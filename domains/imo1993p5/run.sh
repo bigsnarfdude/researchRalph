@@ -6,6 +6,8 @@ DOMAIN_DIR="$(cd "$(dirname "$0")" && pwd)"
 LEAN_PROJECT="/home/vincent/miniF2F-lean4"
 SOLUTION="$DOMAIN_DIR/solution.lean"
 
+export PATH="/home/vincent/.elan/bin:$PATH"
+
 # Check solution exists
 if [ ! -f "$SOLUTION" ]; then
     echo "SCORE=0.0"
@@ -42,7 +44,7 @@ rm -f "$TMP_FILE"
 
 # Log to experiments.jsonl
 EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 1) )))"
-AGENT="${CLAUDE_AGENT_ID:-agent0}"
+AGENT="${GEMINI_AGENT_ID:-agent0}"
 TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 # Append to results.tsv

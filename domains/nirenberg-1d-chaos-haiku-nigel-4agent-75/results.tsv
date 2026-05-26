@@ -1,0 +1,106 @@
+exp001	0.00000000e+00	0.000000	0.000000	keep	baseline trivial branch u_offset=0	agent0	initial_cond	0	0.000000
+exp002	2.66626099e-13	1.001296	1.000019	keep	positive branch u_offset=0.9	agent0	initial_cond	0	-1.520844
+exp003	0.00000000e+00	0.000000	0.000000	keep	trivial branch u_offset=0	agent1	initial_cond	0	0.000000
+exp004	2.66626099e-13	1.001296	-1.000019	discard	negative branch u_offset=-0.9	agent0	initial_cond	1	-1.520844
+exp005	crash	0	0	crash	positive branch u_offset=0.9 with newton_tol=1e-14	agent1	solver_param	1	0
+exp006	3.56461016e-13	1.001296	-1.000019	discard	positive branch with mode-2 perturbation amplitude=0.1	agent0	perturbation	0	-1.520844
+exp007	crash	0	0	crash	positive branch u_offset=0.9 with fourier_modes=128	agent1	solver_param	1	0
+exp008	5.28434663e-13	1.001296	-1.000019	discard	positive branch u_offset=0.9 with small amplitude=0.05	agent0	perturbation	0	-1.520844
+exp009	2.28944733e-13	1.001296	-1.000019	discard	basin boundary search u_offset=0.5	agent2	initial_cond	1	-1.520844
+exp010	3.56461016e-13	1.001296	-1.000019	discard	negative branch u_offset=-0.9 with mode-2 amplitude=0.1	agent0	perturbation	1	-1.520844
+exp010	0.00000000e+00	0.000000	0.000000	discard	trivial branch with fourier_modes=128	agent3	solver_param	1	0.000000
+exp011	2.66626099e-13	1.001296	1.000019	discard	positive branch u_offset=0.9 with phase=pi	agent0	initial_cond	0	-1.520844
+exp012	2.64988611e-20	0.000000	0.000000	discard	basin boundary u_offset=0.3	agent2	initial_cond	0	0.000000
+exp013	crash	0	0	crash	positive branch u_offset=0.9 with newton_tol=1e-14	agent0	solver_param	0	0
+exp014	4.40113707e-21	0.000000	0.000000	discard	transition u_offset=0.4	agent2	initial_cond	0	0.000000
+exp015	crash	0	0	crash	positive branch u_offset=0.9 with fourier_modes=128	agent0	solver_param	0	0
+exp016	3.94755575e-16	0.000000	0.000000	discard	narrowing transition u_offset=0.45	agent2	initial_cond	1	-0.000000
+exp017	2.28944733e-13	1.001296	-1.000019	discard	basin boundary u_offset=0.5 between trivial and positive	agent3	branch_search	0	-1.520844
+exp018	2.28944733e-13	1.001296	1.000019	discard	symmetry test u_offset=-0.5	agent2	initial_cond	0	-1.520844
+exp019	3.35932291e-13	1.001296	1.000019	discard	intermediate basin u_offset=0.45 with small perturbation	agent1	branch_search	4	-1.520844
+exp020	2.76001344e-13	1.001296	1.000019	discard	basin boundary u_offset=0.6	agent3	branch_search	5	-1.520844
+exp021	crash	0	0	crash	positive branch with fourier_modes=128 newton_maxiter=200	agent0	solver_param	4	0
+exp022	2.13371637e-13	1.001296	-1.000019	discard	basin boundary u_offset=0.55	agent3	branch_search	1	-1.520844
+exp023	3.60057049e-13	1.001296	1.000019	discard	positive branch u_offset=0.9 with mode-3 perturbation amplitude=0.05	agent1	perturbation	0	-1.520844
+exp024	crash	0	0	crash	intermediate u_offset=0.5	agent0	initial_cond	1	0
+exp025	4.20232224e-13	1.001296	-1.000019	discard	basin boundary u_offset=0.57	agent3	branch_search	1	-1.520844
+exp026	3.27355159e-13	1.001296	-1.000019	discard	basin boundary u_offset=0.58	agent3	branch_search	0	-1.520844
+exp027	2.93174744e-13	1.001296	1.000019	discard	positive branch u_offset=0.9 with phase=pi/2 amplitude=0.08	agent1	perturbation	1	-1.520844
+exp027	2.28944733e-13	1.001296	-1.000019	discard	intermediate u_offset=0.5	agent0	initial_cond	1	-1.520844
+exp028	3.88079599e-13	1.001296	1.000019	discard	basin boundary u_offset=0.59	agent3	branch_search	0	-1.520844
+exp029	2.64988611e-20	0.000000	0.000000	discard	u_offset=0.3	agent0	initial_cond	1	0.000000
+exp030	3.40505905e-13	1.001296	1.000019	discard	positive branch u_offset=0.85 with small amplitude=0.02	agent1	initial_cond	0	-1.520844
+exp031	3.48477681e-13	1.001296	1.000019	discard	u_offset=0.7	agent0	initial_cond	0	-1.520844
+exp032	2.76001344e-13	1.001296	1.000019	discard	u_offset=0.6	agent0	initial_cond	0	-1.520844
+exp033	2.76001344e-13	1.001296	-1.000019	discard	u_offset=-0.6	agent0	initial_cond	1	-1.520844
+exp034	2.52336260e-13	0.000000	0.000000	discard	fine search u_offset=0.42	agent2	initial_cond	0	-0.000000
+exp035	2.28944733e-13	1.001296	1.000019	discard	u_offset=-0.5	agent0	initial_cond	0	-1.520844
+exp036	3.19957670e-13	1.001296	1.000019	discard	fine search u_offset=0.48	agent2	initial_cond	1	-1.520844
+exp037	crash	0	0	crash	positive branch u_offset=0.55 with fourier_modes=128 newton_maxiter=200	agent1	initial_cond	1	0
+exp038	2.13371637e-13	1.001296	1.000019	discard	u_offset=-0.55	agent0	initial_cond	0	-1.520844
+exp039	3.48477681e-13	1.001296	-1.000019	discard	u_offset=-0.7	agent0	initial_cond	2	-1.520844
+exp040	2.74270461e-13	1.001296	-1.000019	discard	basin boundary u_offset=0.585 at critical transition	agent3	branch_search	3	-1.520844
+exp041	7.64566347e-23	0.000000	-0.000000	discard	transition search u_offset=0.46	agent2	initial_cond	3	0.000000
+exp042	crash	0	0	crash	u_offset=0.55 with fourier_modes=96 newton_maxiter=150	agent1	initial_cond	2	0
+exp043	3.45536827e-13	1.001296	-1.000019	discard	narrowing bifurcation u_offset=0.47	agent2	initial_cond	0	-1.520844
+exp044	crash	0	0	crash	positive branch with mode-2 perturbation and tighter newton_tol=1e-14	agent3	perturbation	0	0
+exp045	2.10061857e-13	1.001296	-1.000019	discard	intermediate u_offset=0.52	agent1	branch_search	1	-1.520844
+exp046	3.71823481e-13	1.001296	-1.000019	discard	boundary u_offset=0.51	agent1	branch_search	1	-1.520844
+exp047	3.11639442e-13	1.001296	1.000019	discard	positive branch u_offset=0.9 with mode-3 perturbation and phase shift	agent3	perturbation	1	-1.520844
+exp048	4.28755118e-13	1.001296	-1.000019	discard	boundary u_offset=0.53	agent1	branch_search	0	-1.520844
+exp049	2.88051949e-13	1.001296	1.000019	discard	positive branch u_offset=0.9 with amplitude=0.1	agent2	perturbation	0	-1.520844
+exp050	3.36048208e-13	1.001296	-1.000019	discard	negative branch u_offset=-0.85 with mode-2 perturbation	agent3	perturbation	0	-1.520844
+exp051	3.58611048e-13	1.001296	1.000019	discard	positive u_offset=0.9 with strong amplitude=0.3	agent2	perturbation	0	-1.520844
+exp052	3.21625657e-13	1.001296	-1.000019	discard	u_offset=0.515 fine-tuning	agent1	branch_search	1	-1.520844
+exp053	2.10061857e-13	1.001296	-1.000019	discard	u_offset=0.520 fine-tuning	agent1	branch_search	0	-1.520844
+exp054	2.64300288e-13	1.001296	-1.000019	discard	u_offset=0.525 fine-tuning	agent1	branch_search	0	-1.520844
+exp055	3.43012684e-13	1.001296	-1.000019	discard	u_offset=0.519 fine-tuning v2	agent1	branch_search	5	-1.520844
+exp056	3.09919215e-13	1.001296	1.000019	discard	chaotic basin u_offset=0.475	agent3	branch_search	6	-1.520844
+exp057	2.74270461e-13	1.001296	-1.000019	discard	u_offset=0.585 fine boundary	agent0	branch_search	6	-1.520844
+exp058	3.05211315e-13	1.001296	-1.000019	discard	u_offset=0.521 fine-tuning v2	agent1	branch_search	2	-1.520844
+exp059	3.59231609e-13	1.001296	-1.000019	discard	bifurcation region u_offset=0.47 with amplitude=0.2	agent2	perturbation	6	-1.520844
+exp060	2.20875499e-13	1.001296	-1.000019	discard	u_offset=0.588 ultrafine boundary	agent0	branch_search	0	-1.520844
+exp061	3.27530323e-13	1.001296	-1.000019	discard	chaotic basin u_offset=0.465	agent3	branch_search	1	-1.520844
+exp062	3.75207626e-13	1.001296	-1.000019	discard	u_offset=0.589 transition zone	agent0	branch_search	0	-1.520844
+exp063	3.45536827e-13	1.001296	-1.000019	discard	chaotic basin u_offset=0.47	agent3	branch_search	5	-1.520844
+exp064	2.10061857e-13	1.001296	1.000019	discard	symmetric test: u_offset=-0.52	agent1	branch_search	4	-1.520844
+exp065	3.45536827e-13	1.001296	-1.000019	discard	bifurcation u_offset=0.47 with n_mode=2	agent2	perturbation	7	-1.520844
+exp066	3.88079599e-13	1.001296	1.000019	discard	u_offset=0.590 exact boundary	agent0	branch_search	8	-1.520844
+exp067	3.19957670e-13	1.001296	1.000019	discard	chaotic basin u_offset=0.48	agent3	branch_search	1	-1.520844
+exp068	0.00000000e+00	0.000000	0.000000	discard	trivial branch with K_amplitude=0.5	agent0	solver_param	0	0.000000
+exp069	3.15118549e-13	1.005614	1.000141	discard	positive branch with K_amplitude=0.5	agent0	initial_cond	1	-1.438490
+exp070	3.51850000e-13	1.005614	1.000141	discard	K_amplitude=0.5 u_offset=0.5	agent0	initial_cond	1	-1.438490
+exp071	3.81883593e-13	1.001296	-1.000019	discard	negative branch u_offset=0.52 with f80 n150 solver improvements	agent1	solver_param	1	-1.520844
+exp072	3.54878793e-13	0.000000	0.000000	discard	K_amplitude=0.5 u_offset=0.3	agent0	initial_cond	1	-0.000000
+exp073	3.27530323e-13	1.001296	-1.000019	discard	ultra-fine u_offset=0.465	agent2	initial_cond	0	-1.520844
+exp074	3.14603048e-13	1.001296	-1.000019	discard	u_offset=0.52 with mode-2 amplitude=0.02	agent1	perturbation	1	-1.520844
+exp075	7.02160774e-14	0.000000	0.000000	discard	u_offset=0.59 amplitude=0.01 mode=1	agent0	perturbation	0	-0.000000
+exp076	2.94890043e-19	0.000000	0.000000	discard	fine u_offset=0.461	agent2	initial_cond	0	-0.000000
+exp077	2.64988611e-20	0.000000	0.000000	discard	K_amplitude=0.3 u_offset=0.59 (verify baseline)	agent0	initial_cond	0	0.000000
+exp078	7.64566347e-23	0.000000	-0.000000	discard	bifurcation zone u_offset=0.46	agent3	branch_search	1	0.000000
+exp079	3.88470596e-13	1.001296	-1.000019	discard	u_offset=0.52 with amplitude=0.005 phase=0.79	agent1	perturbation	1	-1.520844
+exp080	1.25495454e-14	0.000000	0.000000	discard	bifurcation zone u_offset=0.459	agent3	branch_search	1	-0.000000
+exp081	2.94890043e-19	0.000000	0.000000	discard	bifurcation zone u_offset=0.461	agent3	branch_search	0	-0.000000
+exp082	2.86976398e-13	1.001296	1.000019	discard	positive branch u_offset=0.95	agent1	initial_cond	0	-1.520844
+exp083	7.64566347e-23	0.000000	-0.000000	discard	bifurcation zone u_offset=0.460	agent3	branch_search	0	0.000000
+exp084	3.42985743e-20	0.000000	0.000000	discard	sine K function trivial branch u_offset=0	agent0	initial_cond	1	0.000000
+exp085	4.35391359e-13	1.001296	1.000019	discard	positive branch u_offset=0.75	agent1	initial_cond	0	-1.520844
+exp086	2.96113574e-21	0.000000	-0.000000	discard	bifurcation zone u_offset=0.4605	agent3	branch_search	0	0.000000
+exp087	3.03538023e-13	1.001506	1.000019	discard	sine K function positive branch u_offset=0.9	agent0	initial_cond	0	-1.520769
+exp088	2.93208080e-13	1.001296	1.000019	discard	positive branch u_offset=0.65	agent1	initial_cond	1	-1.520844
+exp089	3.56602501e-13	1.001506	1.000019	discard	sine K function u_offset=0.59	agent0	branch_search	0	-1.520769
+exp090	2.22358488e-22	0.000000	-0.000000	discard	bifurcation zone u_offset=0.4602	agent3	branch_search	1	0.000000
+exp091	2.90918247e-13	1.001296	-1.000019	discard	u_offset=0.54	agent1	branch_search	1	-1.520844
+exp092	3.03538023e-13	1.001506	-1.000019	discard	sine K function negative branch u_offset=-0.9	agent0	initial_cond	1	-1.520769
+exp093	5.63066242e-22	0.000000	-0.000000	discard	bifurcation zone u_offset=0.4603	agent3	branch_search	1	0.000000
+exp094	2.59614863e-13	1.001506	-1.000019	discard	sine K function u_offset=0.5	agent0	branch_search	0	-1.520769
+exp095	3.94755575e-16	0.000000	0.000000	discard	cosine K trivial boundary u_offset=0.45	agent0	initial_cond	0	-0.000000
+exp096	3.16847297e-13	1.001296	-1.000019	discard	trivial-chaos boundary u_offset=0.49	agent0	branch_search	1	-1.520844
+exp097	3.45536827e-13	1.001296	-1.000019	discard	u_offset=0.47	agent0	branch_search	0	-1.520844
+exp098	7.64566347e-23	0.000000	-0.000000	discard	u_offset=0.46 trivial/chaos boundary	agent0	branch_search	2	0.000000
+exp099	3.27530323e-13	1.001296	-1.000019	discard	u_offset=0.465 fine trivial boundary	agent0	branch_search	0	-1.520844
+exp100	2.22358488e-22	0.000000	-0.000000	discard	refining global optimum u_offset=0.4602	agent2	initial_cond	1	0.000000
+exp101	8.02176996e-23	0.000000	-0.000000	discard	fine-tune u_offset=0.46005	agent2	initial_cond	2	0.000000
+exp102	0.00000000e+00	0.000000	0.000000	discard	K_frequency=2 trivial branch	agent0	initial_cond	0	0.000000
+exp103	3.12709346e-13	1.001385	1.001866	discard	K_frequency=2 positive branch	agent0	initial_cond	0	-1.544070
+exp104	3.12709346e-13	1.001385	1.001866	discard	trivial branch with n_mode=2	agent0	initial_cond	1	-1.544070

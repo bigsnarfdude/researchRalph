@@ -1,12 +1,30 @@
-exp_id	residual	solution_norm	status	description	agent	design	elapsed_s	solution_energy
-exp001	2.80498569e-21	0.000000	keep	u_offset=0.0 amplitude=0.1 default config	agent0	initial_cond	1	0.000000
-exp002	2.88051949e-13	1.001296	discard	u_offset=0.9 positive branch	agent0	initial_cond	0	-1.520844
-exp003	2.80498569e-21	0.000000	discard	u_offset=0 amplitude=0.1 default fourier	agent1	initial_cond	1	0.000000
-exp004	3.53361730e-13	1.001296	discard	u_offset=-0.9 negative branch	agent0	initial_cond	1	-1.520844
-exp005	3.53361730e-13	1.001296	discard	u_offset=-0.9 negative branch search	agent1	initial_cond	1	-1.520844
-exp006	crash	0	crash	u_offset=0.9 fourier_modes=128 positive branch	agent0	solver_param	1	0
-exp007	crash	0	crash	u_offset=0.9 fourier_modes=128 newton_tol=1e-14 optimize positive branch	agent1	solver_param	0	0
-exp008	crash	0	crash	u_offset=1.0 fourier_modes=128 maxiter=200	agent0	solver_param	1	0
-exp009	crash	0	crash	u_offset=0.9 fourier=128 tol=1e-14 maxiter=200	agent1	solver_param	0	0
-exp010	3.55499743e-13	1.001296	discard	u_offset=1.0 amp=0.15 better IC for positive	agent0	initial_cond	0	-1.520844
-exp011	crash	0	crash	u_offset=1.0 closer to true positive branch mean	agent1	initial_cond	0	0
+exp001	2.80498569e-21	0.000000	keep	baseline u_offset=0 amp=0.1 mode1 fourier64	agent0	initial_cond	0	0.000000
+exp002	2.88051949e-13	1.001296	keep	u_offset=0.9 positive branch search	agent0	initial_cond	1	-1.520844
+exp003	3.53361730e-13	1.001296	discard	u_offset=-0.9 negative branch search	agent0	initial_cond	1	-1.520844
+exp004	2.80498569e-21	0.000000	keep	u_offset=0.0 trivial branch baseline	agent1	initial_cond	0	0.000000
+exp005	crash	0	crash	u_offset=0.9 positive branch	agent1	initial_cond	1	0
+exp006	crash	0	crash	u_offset=0.9 fourier128 newtol1e-14 pos branch optimize	agent0	solver_param	1	0
+exp007	crash	0	crash	u_offset=0.9 fourier128 newtol1e-12 maxiter200	agent0	solver_param	1	0
+exp008	2.41595655e-09	1.002503	discard	u_offset=1.0 scipy positive branch	agent1	initial_cond	0	-1.523848
+exp009	5.72745859e-09	1.002503	discard	u_offset=-1.0 scipy negative branch	agent1	initial_cond	0	-1.523848
+exp010	2.99966388e-13	1.001296	discard	u_offset=0.9 amp=0.15 closer to true perturbation	agent0	initial_cond	0	-1.520844
+exp011	crash	0	crash	u_offset=0.9 fourier96 modes pos branch	agent0	solver_param	0	0
+exp012	crash	0	crash	u_offset=1.0 amp=0.15 fourier positive branch	agent1	initial_cond	2	0
+exp013	crash	0	crash	u_offset=0.9 fourier96 maxiter200 pos branch	agent0	solver_param	0	0
+exp014	crash	0	crash	u_offset=1.0 fourier_modes=16 positive branch	agent1	initial_cond	0	0
+exp015	8.81934685e-11	1.002503	discard	u_offset=1.0 scipy n_nodes=200 tol=1e-10 positive	agent1	solver_param	0	-1.523848
+exp016	8.77448543e-11	1.002503	discard	u_offset=1.0 scipy n_nodes=300 tol=1e-10	agent1	solver_param	0	-1.523848
+exp017	2.70270424e-13	1.001296	discard	u_offset=1.0 amp=0.05 better initial guess pos	agent0	initial_cond	0	-1.520844
+exp018	crash	0	crash	u_offset=1.0 scipy n_nodes=200 tol=1e-12	agent1	solver_param	1	0
+exp019	3.55289665e-13	1.001296	discard	u_offset=1.001 amp=0 constant near-exact IC	agent0	initial_cond	0	-1.520844
+exp020	8.81934685e-11	1.002503	discard	u_offset=-1.0 scipy n_nodes=200 tol=1e-10 negative	agent1	solver_param	1	-1.523848
+exp021	3.37911550e-13	1.001296	discard	u_offset=-1.0 amp=0.1 neg branch optimize	agent0	initial_cond	1	-1.520844
+exp022	2.88051949e-13	1.001296	discard	u_offset=0.9 fourier64 newton_tol=1e-12 maxiter=50 pos	agent1	initial_cond	0	-1.520844
+exp023	8.81934684e-11	1.002503	discard	u_offset=1.0 scipy solver tol1e-10 200nodes pos branch	agent0	solver_param	0	-1.523848
+exp024	crash	0	crash	u_offset=0.9 fourier128 newton_tol=1e-12 pos optimize	agent1	solver_param	0	0
+exp025	1.27904990e-12	1.001296	discard	u_offset=0.9 fourier128 newton_tol=1e-10 pos	agent1	solver_param	0	-1.520844
+exp026	6.69306133e-20	0.000000	discard	u_offset=0.3 branch boundary sweep	agent0	branch_search	0	-0.000000
+exp027	3.05421974e-13	1.001296	discard	u_offset=0.5 branch boundary sweep	agent0	branch_search	2	-1.520844
+exp028	crash	0	crash	u_offset=0.9 fourier64 newton_tol=1e-14 maxiter=500 deep converge	agent1	solver_param	3	0
+exp029	6.06963967e-15	0.000000	discard	u_offset=0.4 branch boundary bisect	agent0	branch_search	0	-0.000000
+exp030	3.30235937e-13	1.001296	discard	u_offset=0.45 branch boundary bisect	agent0	branch_search	1	-1.520844

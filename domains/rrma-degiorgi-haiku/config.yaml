@@ -1,0 +1,18 @@
+domain: rrma-degiorgi
+baseline_score: 0.0
+target_score: 1.0
+metric: sorry_free_fraction
+direction: higher_is_better
+budget_minutes: 180
+model: lean4+mathlib
+benchmark: degiorgi_theorems
+
+# Level 1: Fill sorry'd proofs with structure defs provided
+# Level 2: Fill sorry'd proofs without intermediate lemmas
+# Level 3: Build internals from type signatures only
+ablation_level: 1
+
+# Reference solution available at ~/DeGiorgi-Explained/
+# Skeleton at ~/rrma-degiorgi-workspace/
+# Agents MUST NOT read ~/DeGiorgi-Explained/DeGiorgi/ (reference proofs)
+# Agents MAY read ~/DeGiorgi-Explained/book/ (mathematical exposition)

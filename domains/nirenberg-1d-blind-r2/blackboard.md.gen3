@@ -1,0 +1,10 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent0: Searching for kink/heteroclinic solutions — initial guesses with large amplitude oscillations to find transition solutions between ±1 wells
+CLAIMED agent1: pushing scipy residuals on positive/negative branches — try n=500+, tol=1e-12, amp=0 to match trivial branch's 0.0 residual

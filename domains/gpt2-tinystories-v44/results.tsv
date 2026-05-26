@@ -77,3 +77,29 @@ exp075	1.088946	10299.4	discard	constant WEIGHT_DECAY=0.2 (no linear decay) — 
 exp076	1.088087	10299.4	discard	x0_lambda init=0.2 (from 0.1) at depth=7+wt+window128 — stronger skip-to-input connection, never swept	agent0	architecture	5
 exp077	1.087547	6952.6	discard	depth=6+wt+window128 — combine throughput advantage (2358 steps) with window improvement, test if additive	agent1	architecture	5
 exp078	1.085770	10299.4	discard	Adam beta1=0.9 (from 0.8) for embeddings — slower momentum for weight-tied config, completely untested	agent1	optimizer	5
+exp079	1.130037	10299.4	discard	ALL layers use 128 window (no full-context final layer) at depth=7+wt — test if global context is needed at all	agent0	architecture	5
+exp080	1.087187	10747.4	discard	residual dropout=0.02 — light regularization at depth=7+wt, model sees 3.4 epochs so may overfit	agent1	regularization	5
+exp081	1.087090	10747.4	discard	residual dropout=0.02 in Block.forward (attn+MLP) — activation-level regularization, genuinely new axis, depth=7+wt+window128	agent1	regularization	5
+exp082	1.083849	10299.4	discard	gradient clipping max_norm=1.0 before optimizer.step() at depth=7+wt+window128 — stabilize training from gradient spikes	agent0	optimizer	5
+exp083	1.086134	10299.4	discard	gradient clipping max_norm=1.0 before optimizer.step() — stabilize early gradient spikes	agent0	optimizer	5
+exp084	1.084483	10299.4	discard	warmup=0.02 + embedding_std=0.5 + Muon ramp 150 steps — multi-variable early training dynamics combo	agent0	optimizer	5
+exp085	1.084022	10299.4	discard	WARMUP_RATIO=0.02 (from 0.0) at depth=7+wt+window128 — never tested at this operating point, 30 steps warmup to stabilize early Muon	agent1	schedule	5
+exp086	1.533772	10299.4	discard	GELU activation (from ReLU²) at depth=7+wt+window128 — smoother gradient flow, genuinely untested activation	agent1	architecture	5
+exp087	1.533855	10299.4	discard	zero attention Q/K/V init — start as pure MLP network, let attention learn from scratch	agent0	architecture	5
+exp088	1.085151	10299.4	discard	WEIGHT_DECAY=0.3 (from 0.2) at depth=7+wt+window128 — only {0.0, 0.2} tested, extrapolate monotonic improvement	agent1	hyperparam	5
+exp089	1.083550	10299.4	keep	SCALAR_LR=0.25 (from 0.5) at depth=7+wt+window128 — slower per-layer lambda tuning, untested at this operating point	agent1	optimizer	5
+exp090	1.083462	10299.4	keep	softcap=12 (from 10) at depth=7+wt+window128 — bracket was {8,10,15} at depth=8, 12 never tested	agent1	architecture	5
+exp091	1.085494	10299.4	discard	SCALAR_LR=0.25 + softcap=12 combo — stack two independent breakthroughs	agent1	optimizer	5
+exp092	1.086321	10299.4	discard	SCALAR_LR=0.1 (from 0.5) at depth=7+wt+softcap12+window128 — continue SCALAR_LR bracket, 0.25 was breakthrough	agent0	optimizer	5
+exp093	1.083791	10299.4	discard	FINAL_LR_FRAC=0.07 (from 0.05) at depth=7+wt+softcap12+window128 — push final LR bracket higher	agent1	schedule	5
+exp094	1.084164	10299.4	discard	FINAL_LR_FRAC=0.1 (from 0.05) at depth=7+wt+softcap12+window128 — monotonic trend {0.0,0.03,0.05}, extending to 0.1	agent0	schedule	5
+exp095	1.085206	10299.4	discard	Muon momentum target=0.97 (from 0.95) at depth=7+wt+softcap12+window128 — higher final momentum, never tested	agent1	optimizer	5
+exp096	1.083475	10299.4	discard	softcap=11 (from 12) at depth=7+wt+window128 — fine-grain between 10 and 12, both good	agent0	architecture	5
+exp097	1.084591	10299.4	discard	resid_lambda LR multiplier=0.1 (from 0.01) at depth=7+wt+softcap12+window128 — 10x faster per-layer residual scaling, completely untested	agent1	optimizer	5
+exp098	1.086957	10299.4	discard	position-weighted loss (0.5+0.5*t/T) at depth=7+wt+softcap12+window128 — focus on later tokens, never tested	agent1	hyperparam	5
+exp099	1.083339	10299.4	keep	Muon momentum target=0.93 (from 0.95) at depth=7+wt+softcap12+window128 — lower momentum for sharper convergence	agent1	optimizer	5
+exp100	1.083962	10299.4	discard	Muon momentum target=0.91 (from 0.93) — continue momentum bracket, 0.93 was new best	agent1	optimizer	5
+exp101	1.083230	10299.4	keep	Muon momentum ramp period=150 (from 300) — faster ramp to optimal 0.93 momentum	agent1	optimizer	5
+exp102	1.093390	8473.1	discard	MLP ratio 3x (from 4x) at depth=7+wt+softcap12+window128+momentum0.93 — fewer MLP params, faster steps, more training steps	agent0	architecture	5
+exp103	1.093475	9401.7	discard	PaLM-style parallel attn+MLP — both sublayers read from same norm(x) instead of sequential	agent1	architecture	5
+exp104	1.084825	10299.4	discard	z-loss regularization (alpha=1e-4) at depth=7+wt+softcap12+window128+mom0.93 — penalize large logit magnitudes	agent0	architecture	5

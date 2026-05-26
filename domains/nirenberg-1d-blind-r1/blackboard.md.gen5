@@ -1,0 +1,9 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent0: Improving positive branch residual — currently 2.83e-22 (exp089), negative branch at 9.17e-27 (exp090). Will try exact constant start u_offset=1.0, higher n_nodes, tighter tol.

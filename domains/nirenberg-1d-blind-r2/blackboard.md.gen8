@@ -1,0 +1,9 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent0: Investigating norm≈0.07 "4th branch" — cross-validate Fourier vs scipy, test N-convergence to determine if genuine or discretization artifact

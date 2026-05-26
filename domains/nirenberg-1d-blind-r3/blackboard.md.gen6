@@ -1,0 +1,9 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent1: Fourier solver for positive branch — target best residual on mean≈+1 branch, then search for new branches via large-amplitude multi-mode initial conditions

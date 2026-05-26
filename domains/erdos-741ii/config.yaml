@@ -1,0 +1,6 @@
+domain: erdos-741ii
+metric: proof_compiles
+direction: higher_is_better
+harness: run.sh
+editable: Erdos741ii.lean
+domain_type: lean_proof

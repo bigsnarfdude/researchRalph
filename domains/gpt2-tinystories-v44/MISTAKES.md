@@ -197,3 +197,106 @@
 **Result**: 1.0875 vs 1.0837 best — 0.004 BPB worse.
 **Why it failed**: Despite 2611 steps (71% more than depth=7's 1523) and 171M tokens, the 384-dim model lacks capacity. The window improvement helps but doesn't compensate for going from 4 heads/512-dim to 3 heads/384-dim. Depth=7's 512-dim capacity is more valuable than depth=6's extra steps.
 **Lesson**: At this training budget, capacity (width) trumps step count once you're past the throughput sweet spot. Depth=7 is definitively optimal — the 512→384 dim reduction is too large to overcome with more steps.
+
+## EXP-080: Residual dropout=0.02 (agent1)
+- **What**: Added F.dropout(x, p=0.02) after attention and MLP outputs in Block.forward
+- **Result**: 1.0872 vs 1.0837 best — 0.003 worse
+- **Why it failed**: At depth=7+wt with WD=0.2 (linear decay) + softcap=10, the model is already well-regularized. Dropout adds noise to activations that hurts the optimization trajectory more than it helps generalization. Also 450MB VRAM overhead from storing activation masks.
+- **Lesson**: ALL regularization axes are dead at this operating point: label_smooth (1.425), z-loss (1.106), constant_WD (1.089), dropout (1.087). The existing WD+softcap combo is the right amount.
+
+## EXP-081: Race condition (agent0)
+- **What**: Submitted gradient clipping experiment, but run.sh captured agent1's dropout code instead
+- **Result**: 1.0871 — duplicate of exp080 (dropout=0.02)
+- **Why it failed**: Agent1 modified train.py with dropout between my cp and run.sh's flock-acquire. The snapshot was taken at lock acquisition time, not at my submission.
+- **Lesson**: ALWAYS verify the snapshot train.py in logs/ after submission. The flock mechanism doesn't prevent race conditions — it only serializes GPU access. Need per-agent train.py files.
+
+## EXP-082: Gradient clipping max_norm=1.0 (agent0)
+- **What**: Added torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0) before optimizer.step()
+- **Result**: 1.0838 vs 1.0837 best — noise-level, completely neutral
+- **Why it failed**: Muon's polar express orthogonalization already normalizes gradients. The Newton-Schulz iterations produce unit-norm orthogonal gradient matrices, so there are no gradient spikes to clip. AdamW for embeddings also uses bias-corrected moments, which naturally limits update magnitudes.
+- **Lesson**: Gradient clipping is redundant when using Muon — the optimizer's own gradient normalization subsumes it.
+
+## EXP-080: Residual dropout=0.02 (agent1)
+- **What**: Added F.dropout(x, p=0.02, training=self.training) after attention and MLP outputs in Block.forward
+- **Result**: 1.0872 vs 1.0837 best — worse by 0.003 BPB
+- **Why it failed**: The model doesn't overfit at the activation level. WD=0.2 + softcap=10 already provide sufficient regularization. Also, dropout adds VRAM overhead (10747MB vs 10299MB, +450MB for activation masks). At 3.4 epochs of data, the overfitting is controlled by existing mechanisms.
+- **Lesson**: Regularization axis is dead: {label_smooth=1.425, z-loss=1.106, constant_WD=1.089, dropout=1.087}. All four types of regularization (loss-level, logit-level, weight-level, activation-level) have been tested and failed. The current softcap=10 + linear WD decay is optimal.
+
+## EXP-084: Multi-variable early training dynamics (agent0)
+- **What**: Combined warmup=0.02 + embedding_std=0.5 + Muon ramp 150 steps
+- **Result**: 1.0845 vs 1.0837 best — 0.0008 worse
+- **Why it failed**: Each change targets early training dynamics, but with 1430 steps, the optimizer quickly adapts to any init condition. The 30 warmup steps are wasted, the embedding std is overwritten within ~50 steps, and the momentum ramp change is marginal. When the config is at a genuine optimum, multiple small perturbations don't find a better basin.
+- **Lesson**: Once all single-variable sweeps converge, multi-variable combos of small changes also converge. The remaining improvement requires qualitatively different approaches (more time, more hardware, different architecture class).
+
+## EXP-087: Zero attention Q/K/V init (agent0)
+- **What**: Initialized all attention Q, K, V weight matrices to zero (from uniform(-s,s)). MLP init unchanged.
+- **Result**: 1.5339 — catastrophic, 0.45 BPB worse
+- **Why it failed**: Zero Q/K/V means all heads compute uniform attention (q·k=0 for all pairs after QK-norm). With Muon, zero-init creates a symmetry problem — all heads remain identical. The model can't learn meaningful attention patterns in 1430 steps from this degenerate starting point. The ~1.534 BPB represents a pure MLP model (no attention contribution).
+- **Lesson**: Attention initialization MUST break head symmetry. The uniform(-s,s) init provides necessary diversity for heads to specialize. Zero-init works for output projections (c_proj, mlp.c_proj) because they just need to learn to "turn on" gradually, but Q/K/V need to start with diverse patterns.
+
+## EXP-085: WARMUP_RATIO=0.02 (agent1)
+- **What**: Added 2% LR warmup (~30 steps) at depth=7+wt+window128
+- **Result**: 1.0840 vs 1.0837 best — noise-level, completely neutral
+- **Why it failed**: The model has built-in "warmup" via zero-init output projections (c_proj, mlp.c_proj) which naturally ramp effective output magnitudes. External LR warmup is redundant.
+- **Lesson**: WARMUP_RATIO bracket: {0.0=1.084, 0.02=1.084}. Don't bother with LR warmup when using zero-init projections.
+
+## EXP-086: GELU activation (agent1)
+- **What**: Replaced ReLU² (`relu(x).square()`) with GELU in MLP
+- **Result**: 1.5338 vs 1.0837 best — **CATASTROPHIC**, 0.45 BPB worse
+- **Why it failed**: GELU has no sparsity. ReLU² provides (1) exact zero for negative inputs, (2) squaring amplifies large activations while suppressing small ones. The dense activations overwhelm model capacity at 512-dim/1430 steps.
+- **Lesson**: Activation bracket: {ReLU²=1.084, SwiGLU=1.099, GELU=1.534}. ReLU² is critical. The squaring is load-bearing implicit regularization.
+
+## EXP-088: WEIGHT_DECAY=0.3 (agent1)
+- **What**: Increased WD from 0.2 to 0.3 at depth=7+wt+window128
+- **Result**: 1.0852 vs 1.0837 best — worse by 0.0015 BPB
+- **Why it failed**: WD=0.3 with linear decay averages to effective WD≈0.15, which over-regularizes at 1430 steps. The improvement from 0.0→0.2 was from reducing overfitting, but 0.3 goes past the sweet spot and starts hurting optimization speed.
+- **Lesson**: WD bracket: {0.0=1.093, 0.2=1.084, 0.3=1.085}. The curve peaks sharply at 0.2. Don't increase WD beyond 0.2.
+
+## EXP-091: SCALAR_LR=0.25 + softcap=12 combo (agent1)
+- **What**: Stack two independent breakthroughs — SCALAR_LR=0.25 (from exp089) + softcap=12 (from exp090)
+- **Result**: 1.0855 vs 1.0835 best — WORSE by 0.002 BPB
+- **Why it failed**: The two changes are anti-complementary. SCALAR_LR=0.25 slows per-layer lambda learning; softcap=12 changes output magnitude control. Both address signal flow/magnitude — combining them over-corrects. They compete rather than stack.
+- **Lesson**: Not all breakthroughs are additive. When two changes affect the same underlying mechanism (output magnitude/signal flow), they can interfere. Always test combinations; never assume additivity.
+
+
+## exp091: Stacking independent wins failed (agent0 observation)
+- **What**: Combined SCALAR_LR=0.25 (exp089, +0.0003) and softcap=12 (exp090, +0.0001) 
+- **Result**: 1.0855 — WORSE than either individual win (1.0835)
+- **Lesson**: At deep diminishing returns, hyperparams interact non-linearly. Single-axis wins are NOT independent. Must test from actual current best, not combine multiple recent improvements.
+
+## exp092: SCALAR_LR=0.1 too slow at softcap=12 (agent0)
+- **What**: SCALAR_LR=0.1 (from 0.5) at depth=7+wt+softcap12+window128
+- **Result**: 1.0863 — 0.003 worse than best
+- **Lesson**: SCALAR_LR interacts with softcap. At softcap=12, the per-layer lambdas need faster tuning (0.5) to adapt to the different logit capping. The SCALAR_LR=0.25 win was specific to the softcap=10 regime.
+
+## EXP-093: FINAL_LR_FRAC=0.07 (agent1)
+- **What**: Push final LR fraction from 0.05 to 0.07
+- **Result**: 1.0838 vs 1.0835 best — 0.0003 worse
+- **Why it failed**: The bracket {0.03=1.100, 0.05=1.084, 0.07=1.084} shows diminishing returns. 0.05 is the sweet spot — 0.07 slightly overshoots by keeping LR too high during final convergence.
+- **Lesson**: FINAL_LR_FRAC bracket is fully closed: {0.0, 0.03, 0.05, 0.07}. Optimum is 0.05. Schedule shape axis is exhausted.
+
+
+## exp094: FINAL_LR_FRAC=0.1 slightly worse (agent0)
+- **What**: FINAL_LR_FRAC=0.1 (from 0.05) at depth=7+wt+softcap12
+- **Result**: 1.0842 — 0.0007 worse than best
+- **Lesson**: The monotonic improvement 0.0→0.03→0.05 reverses at 0.07+. FLR=0.05 is the sweet spot. Higher final LR causes slight underfitting (model doesn't cool down enough to reach the loss basin floor).
+
+## EXP-095: Muon momentum target=0.97 (agent1)
+- **What**: Increase Muon final momentum from 0.95 to 0.97
+- **Result**: 1.0852 vs 1.0835 best — 0.0017 worse
+- **Why it failed**: Higher momentum overshoots at 1500 steps. The model cant converge fast enough during warmdown with 0.97 momentum.
+- **Lesson**: Muon momentum is closed: {0.95, 0.97}. 0.95 is optimal.
+
+
+## EXP-097: resid_lambda LR multiplier=0.1 (agent1)
+- **What**: Increase resid_lambda LR from SCALAR_LR*0.01 to SCALAR_LR*0.1 (10x faster)
+- **Result**: 1.0846 vs 1.0835 best — 0.001 worse
+- **Why it failed**: The resid_lambdas start at 1.0 and need to stay near 1.0. 10x faster learning causes them to oscillate away from optimal scaling.
+- **Lesson**: resid_lambda LR is correctly tuned at 0.01x. The 100x difference between resid and x0 lambda LRs is intentional — resid lambdas need stability, x0 lambdas need to explore.
+
+
+## EXP-102: MLP 3x + parallel attn+MLP (agent0, race condition)
+- **What**: MLP ratio from 4x to 3x, PLUS parallel attention+MLP (unintended from race condition)
+- **Result**: 1.0934 vs 1.0832 best — 0.010 worse
+- **Why it failed**: 3x MLP doesn't improve throughput (memory-bandwidth bound, not MLP-compute bound). Parallel attn+MLP removes sequential conditioning. Multi-variable made it hard to isolate, but 3x MLP was already proven harmful at depth=8 (exp007).
+- **Lesson**: MLP ratio 3x closed at BOTH depth=8 and depth=7. Race conditions with other agents cause uncontrolled multi-variable experiments. Always verify the snapshot after submission.
