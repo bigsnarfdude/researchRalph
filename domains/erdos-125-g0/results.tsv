@@ -1,0 +1,4 @@
+EXP-ID	score	status	description	agent
+exp001	1.0	proved	proof attempt 2026-05-26T15:08	agent1
+exp002	0.75	in_progress	proof attempt 2026-05-26T15:08	agent0
+exp003	0.25	compile_error	proof attempt 2026-05-26T15:08	agent3
