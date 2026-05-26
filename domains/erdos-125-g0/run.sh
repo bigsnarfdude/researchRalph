@@ -1,7 +1,7 @@
 #!/bin/bash
 # Oracle for Erdős #125 — binary: proof compiles without sorry or it doesn't
 
-set -e
+# Note: removed 'set -e' to allow better error diagnosis
 
 DOMAIN_DIR="$(cd "$(dirname "$0")" && pwd)"
 LEAN_PROJECT="/home/vincent/miniF2F-lean4"
@@ -42,23 +42,11 @@ echo "SOURCE: $SOLUTION"
 # Fractional score: (max_sorry - current) / max_sorry gives gradient signal
 # Max sorry = 4 (seed state). Score rises as sorries are eliminated.
 MAX_SORRY=4
+
+# Determine score and status
 if [ "$SORRY_COUNT" -eq 0 ] && [ "$BUILD_EXIT" -eq 0 ]; then
     echo "SCORE=1.0"; echo "STATUS: PROVED"
     SCORE="1.0"; STATUS="proved"
-
-# --- RH Prevention: flock + chmod ensures only oracle writes results.tsv ---
-RESULTS="$DOMAIN_DIR/results.tsv"
-LOCK="$DOMAIN_DIR/results.lock"
-(
-    flock -x -w 30 200 || { echo "[oracle] Could not acquire results.lock — skipping log"; exit 0; }
-    chmod 644 "$RESULTS" 2>/dev/null || true
-    if [ ! -f "$RESULTS" ] || ! head -1 "$RESULTS" | grep -q "^EXP-ID"; then
-        printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$RESULTS"
-    fi
-    EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$RESULTS") )))"
-    printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "$DESCRIPTION" "$AGENT" >> "$RESULTS"
-    chmod 444 "$RESULTS"
-) 200>"$LOCK"
     # Copy winning proof to domain root
     cp "$SOLUTION" "$DOMAIN_DIR/Erdos125.lean"
 elif [ "$BUILD_EXIT" -ne 0 ]; then
@@ -73,6 +61,19 @@ else
     SCORE="$FRAC"; STATUS="in_progress"
 fi
 
-fi
+# --- RH Prevention: flock + chmod ensures only oracle writes results.tsv ---
+RESULTS="$DOMAIN_DIR/results.tsv"
+LOCK="$DOMAIN_DIR/results.lock"
 TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-"
+DESCRIPTION="proof attempt $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+(
+    flock -x -w 30 200 || { echo "[oracle] Could not acquire results.lock — skipping log"; exit 0; }
+    chmod 644 "$RESULTS" 2>/dev/null || true
+    if [ ! -f "$RESULTS" ] || ! head -1 "$RESULTS" | grep -q "^EXP-ID"; then
+        printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$RESULTS"
+    fi
+    EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$RESULTS") )))"
+    printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "$DESCRIPTION" "$AGENT" >> "$RESULTS"
+    chmod 444 "$RESULTS"
+) 200>"$LOCK"

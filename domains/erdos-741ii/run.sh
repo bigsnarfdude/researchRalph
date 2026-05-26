@@ -41,7 +41,6 @@ else
     echo "$BUILD_OUT" | grep 'error:\|warning:' | head -20
 fi
 
-EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 1) - 1 + 1 )))"
 AGENT="${CLAUDE_AGENT_ID:-agent0}"
 DESCRIPTION="proof attempt $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 

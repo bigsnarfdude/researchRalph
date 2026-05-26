@@ -4,7 +4,13 @@ set -e
 
 DOMAIN_DIR="$(cd "$(dirname "$0")" && pwd)"
 LEAN_PROJECT="/home/vincent/miniF2F-lean4"
-SOLUTION="$DOMAIN_DIR/solution.lean"
+
+# Workspace isolation: prefer agent workspace file
+if [ -n "$CLAUDE_AGENT_ID" ] && [ -f "$DOMAIN_DIR/workspace/$CLAUDE_AGENT_ID/solution.lean" ]; then
+    SOLUTION="$DOMAIN_DIR/workspace/$CLAUDE_AGENT_ID/solution.lean"
+else
+    SOLUTION="$DOMAIN_DIR/solution.lean"
+fi
 
 export PATH="/home/vincent/.elan/bin:$PATH"
 
@@ -32,19 +38,6 @@ if lake env lean "$TMP_FILE" 2>&1; then
     echo "Proof compiles successfully"
     SCORE="1.0"
     STATUS="keep"
-
-# --- RH Prevention: flock + chmod ensures only oracle writes results.tsv ---
-RESULTS="$DOMAIN_DIR/results.tsv"
-LOCK="$DOMAIN_DIR/results.lock"
-(
-    flock -x -w 30 200 || { echo "[oracle] Could not acquire results.lock — skipping log"; exit 0; }
-    chmod 644 "$RESULTS" 2>/dev/null || true
-    if [ ! -f "$RESULTS" ] || ! head -1 "$RESULTS" | grep -q "^EXP-ID"; then
-        printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$RESULTS"
-    fi
-    printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "$DESCRIPTION" "$AGENT" >> "$RESULTS"
-    chmod 444 "$RESULTS"
-) 200>"$LOCK"
 else
     echo "SCORE=0.0"
     echo "Proof failed to compile"
@@ -55,13 +48,23 @@ fi
 # Clean up
 rm -f "$TMP_FILE"
 
-# Log to experiments.jsonl
-EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 1) )))"
-AGENT="${GEMINI_AGENT_ID:-agent0}"
+# Log to results.tsv
+AGENT="${CLAUDE_AGENT_ID:-agent0}"
 TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-fi
-"
+# --- RH Prevention: flock + chmod ensures only oracle writes results.tsv ---
+RESULTS="$DOMAIN_DIR/results.tsv"
+LOCK="$DOMAIN_DIR/results.lock"
+(
+    flock -x -w 30 200 || { echo "[oracle] Could not acquire results.lock — skipping log"; exit 0; }
+    chmod 644 "$RESULTS" 2>/dev/null || true
+    if [ ! -f "$RESULTS" ] || ! head -1 "$RESULTS" | grep -q "^EXP-ID"; then
+        printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$RESULTS"
+    fi
+    EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$RESULTS") )))"
+    printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "$DESCRIPTION" "$AGENT" >> "$RESULTS"
+    chmod 444 "$RESULTS"
+) 200>"$LOCK"
 
 # Append to experiments.jsonl
 python3 -c "

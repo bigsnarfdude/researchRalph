@@ -55,6 +55,7 @@ LOCK="$DOMAIN_DIR/results.lock"
     if [ ! -f "$RESULTS" ] || ! head -1 "$RESULTS" | grep -q "^EXP-ID"; then
         printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "$RESULTS"
     fi
+    EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$RESULTS") )))"
     printf "%s\t%s\t%s\t%s\t%s\n" "$EXP_ID" "$SCORE" "$STATUS" "$DESCRIPTION" "$AGENT" >> "$RESULTS"
     chmod 444 "$RESULTS"
 ) 200>"$LOCK"
@@ -73,6 +74,5 @@ else
 fi
 
 fi
-EXP_ID="exp$(printf '%03d' $(( $(wc -l < "$DOMAIN_DIR/results.tsv") )))"
 TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 "

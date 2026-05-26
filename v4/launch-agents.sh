@@ -176,6 +176,9 @@ Workflow per attempt:
      SCORE=1.0 only when sorry=0 AND clean compile — this is the win condition
   4. Read compiler output — Lean errors are precise, use them
   5. Repeat until SCORE=1.0 — call bash run.sh after EVERY edit
+  RULE: Never go more than 3 consecutive tool uses without calling bash run.sh.
+  If you are reading files, thinking, or writing notes — stop and call run.sh first.
+  The oracle is your only feedback signal. Without it you are guessing.
   6. Append to blackboard.md: what tactic failed, what worked, compiler errors seen
 
 Then start experimenting. Write all findings to blackboard.md. Periodically re-read stoplight.md and recent_experiments.md — they update during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
