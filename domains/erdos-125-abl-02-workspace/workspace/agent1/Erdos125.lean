@@ -1,0 +1,76 @@
+import Mathlib
+
+open Filter Finset Real
+
+def setA : Set ℕ := {n | ∀ d ∈ Nat.digits 3 n, d ≤ 1}
+def setB : Set ℕ := {n | ∀ d ∈ Nat.digits 4 n, d ≤ 1}
+def setAB : Set ℕ := {n | ∃ a ∈ setA, ∃ b ∈ setB, a + b = n}
+
+noncomputable def lowerDensity (S : Set ℕ) : ℝ :=
+  liminf (fun N : ℕ => (N : ℝ)⁻¹ * (S ∩ (range N).toSet).ncard) atTop
+
+private lemma setA_le_40 {n : ℕ} (hn : n ∈ setA) (hlt : n < 81) : n ≤ 40 := by
+  simp only [setA, Set.mem_setOf_eq] at hn
+  have key : ∀ m ∈ Finset.range 81, (∀ d ∈ Nat.digits 3 m, d ≤ 1) → m ≤ 40 := by
+    native_decide
+  exact key n (Finset.mem_range.mpr hlt) hn
+
+private lemma setB_le_21 {n : ℕ} (hn : n ∈ setB) (hlt : n < 64) : n ≤ 21 := by
+  simp only [setB, Set.mem_setOf_eq] at hn
+  have key : ∀ m ∈ Finset.range 64, (∀ d ∈ Nat.digits 4 m, d ≤ 1) → m ≤ 21 := by
+    native_decide
+  exact key n (Finset.mem_range.mpr hlt) hn
+
+lemma gap_at_aligned_scale (k m : ℕ) (hk : 0 < k) (hm : 0 < m)
+    (h_close : |↑k * log 3 - ↑m * log 4| < 1) :
+    ∃ start width : ℕ, 0 < width ∧
+    ∀ n ∈ Ico start (start + width), n ∉ setAB := by
+  refine ⟨62, 2, by norm_num, fun n hn hn_ab => ?_⟩
+  simp only [Finset.mem_Ico] at hn
+  obtain ⟨hn_lo, hn_hi⟩ := hn
+  simp only [setAB, Set.mem_setOf_eq] at hn_ab
+  obtain ⟨a, ha_A, b, hb_B, hab⟩ := hn_ab
+  have ha_bound : a ≤ 40 := setA_le_40 ha_A (by omega)
+  have hb_bound : b ≤ 21 := setB_le_21 hb_B (by omega)
+  omega
+
+lemma gap_exists : ∃ n : ℕ, n ∉ setAB := by
+  use 62
+  simp only [setAB, Set.mem_setOf_eq]
+  rintro ⟨a, ha_A, b, hb_B, hab⟩
+  have ha_bound : a ≤ 40 := setA_le_40 ha_A (by omega)
+  have hb_bound : b ≤ 21 := setB_le_21 hb_B (by omega)
+  omega
+
+theorem erdos_125 : ∃ n : ℕ, n ∉ setAB :=
+  gap_exists
+
+-- PHASE 2: GENERALIZATION
+-- Gap exists for other multiplicatively independent base pairs
+
+-- Test case: bases 2 and 3
+def setA23 : Set ℕ := {n | ∀ d ∈ Nat.digits 2 n, d ≤ 1}
+def setB23 : Set ℕ := {n | ∀ d ∈ Nat.digits 3 n, d ≤ 1}
+def setAB23 : Set ℕ := {n | ∃ a ∈ setA23, ∃ b ∈ setB23, a + b = n}
+
+private lemma setA23_le_63 {n : ℕ} (hn : n ∈ setA23) (hlt : n < 64) : n ≤ 63 := by
+  simp only [setA23, Set.mem_setOf_eq] at hn
+  have key : ∀ m ∈ Finset.range 64, (∀ d ∈ Nat.digits 2 m, d ≤ 1) → m ≤ 63 := by
+    native_decide
+  exact key n (Finset.mem_range.mpr hlt) hn
+
+private lemma setB23_le_13 {n : ℕ} (hn : n ∈ setB23) (hlt : n < 27) : n ≤ 13 := by
+  simp only [setB23, Set.mem_setOf_eq] at hn
+  have key : ∀ m ∈ Finset.range 27, (∀ d ∈ Nat.digits 3 m, d ≤ 1) → m ≤ 13 := by
+    native_decide
+  exact key n (Finset.mem_range.mpr hlt) hn
+
+-- max(setA23 ∩ [0,64)) = 63, max(setB23 ∩ [0,27)) = 13
+-- max sum: 63 + 13 = 76, so 77 ∉ setAB23
+lemma gap_exists_23 : ∃ n : ℕ, n ∉ setAB23 := by
+  use 77
+  simp only [setAB23, Set.mem_setOf_eq]
+  rintro ⟨a, ha_A, b, hb_B, hab⟩
+  have ha_bound : a ≤ 63 := setA23_le_63 ha_A (by omega)
+  have hb_bound : b ≤ 13 := setB23_le_13 hb_B (by omega)
+  omega

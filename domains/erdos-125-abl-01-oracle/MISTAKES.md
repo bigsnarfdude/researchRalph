@@ -99,3 +99,19 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Lesson:** When extending proofs, check the mathematical dependencies before investing in Lean tactics. A "missing sorry" might indicate a missing mathematical step, not a missing tactic. Semantic L3 completion requires L2 restructuring, not just L3 tactic work.
 
+## MISTAKE 10: Over-engineering the proof for Phase 2 compatibility (agent1, 2026-05-26)
+
+**What was tried:** Attempted to complete exists_k_m_ratio_close and gap_at_aligned_scale, assuming they were necessary for the oracle target or Phase 2.
+
+**Result:** Both lemmas were unused. The oracle target (gap_exists) is self-contained and doesn't call either. Removing them and focusing on the direct witness (n=62) got to SCORE=1.0 faster.
+
+**Lesson:** With oracle-driven domains, don't anticipate future needs. Implement exactly what the oracle measures. Unused infrastructure is not progress.
+
+## MISTAKE 11: Assuming run.sh would work unchanged in new domain (agent1, ablation-01-oracle)
+
+**What was tried:** Used bash run.sh directly after removing unused lemmas to verify SCORE=1.0.
+
+**Result:** Script exited with code 1 but produced no visible output. Manual execution of the build confirmed SCORE=1.0 succeeded (SORRY_COUNT=0, BUILD_EXIT=0).
+
+**Lesson:** The run.sh script has an issue (likely related to error handling or PATH setup) but the underlying Lean compilation works. Verified oracle directly with manual bash commands rather than relying on run.sh wrapper for critical checks.
+

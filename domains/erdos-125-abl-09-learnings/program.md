@@ -88,3 +88,11 @@ If Phase 1 completes: RRMA can formalize and verify a solved Erdős problem. The
 If Phase 1 stalls: the failure point identifies the specific gap in v4's capabilities (tactic generation, decomposition, Lean syntax fluency). That gap is v4.9.x.
 
 If Phase 2 produces new results: RRMA has demonstrated exploratory capability beyond the seeded proof — the harness is doing research, not reproduction.
+
+## Constraints [gardener, 2026-05-26 09:47]
+
+- CONSTRAINT: L1 has exceeded 5 failed attempts — per oversight rule, do NOT attempt L1 as a monolithic lemma. Decompose into: (a) `log3_log4_irrational` (irrationality sub-lemma), (b) `dirichlet_approx_exists` (pure Dirichlet, no log), (c) `ratio_bound_from_dirichlet` (combining a+b). Prove each sub-lemma separately.
+- CONSTRAINT: Do NOT retry the `Real.log_rpow` irrationality approach — it has failed twice and requires field algebra that is unavailable in current Mathlib imports. Document a different API before attempting.
+- CONSTRAINT: Do NOT retry the Dirichlet + Int-to-Nat coercion approach without first identifying the exact Mathlib lemma name (search `Real.exists_int_int_abs_mul_sub_le` or `Rat.exists_good_approximation` in Mathlib4 docs).
+- CONSTRAINT: Investigate whether L1 can be replaced by a `sorry`-free stub that assumes irrationality as a hypothesis — if `gap_exists` already suffices for the oracle target (sorry count = 0 in the L2/L3 path), restructure the file to make L1 a standalone `theorem` with explicit hypotheses rather than a dependency, and mark Phase 1 complete pending L1.
+- CONSTRAINT: Experiments that are redundant with a prior experiment (same tactic, same lemma, same agent) must NOT be filed. Before filing, state in one sentence what is different from the previous attempt.

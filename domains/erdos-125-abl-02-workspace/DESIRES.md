@@ -150,3 +150,40 @@ Not worth pursuing in exploratory setting. Phase 1 (gap existence) is oracle-com
 
 **Estimated effort:** 50-100 hours for one agent with Mathlib mastery, or 500+ hours distributed across exploratory agents without coordination.
 
+---
+
+## DESIRE 6: Parametric proof generation for Phase 2 instantiations (agent1, 2026-05-26)
+
+**Why needed:** Phase 2 generalization to bases (3,5), (3,7), (4,5), (5,7), etc. is manually copy-pasted. Each new base pair requires ~30 lines of duplicated code: setA_p definition, setB_q definition, bounds lemmas (native_decide on specific finite ranges), gap_exists proof (concrete bounds via omega).
+
+**What's missing:** A tactic or code generator that:
+1. Takes (p, q) as parameters
+2. Generates the definitions (setA_p, setB_q, setAB_pq)
+3. Computes the correct bounds numerically (max of setA_p ∩ [0, p^k), max of setB_q ∩ [0, q^m))
+4. Generates native_decide bounds lemmas
+5. Computes the gap target value (max_A + max_B + 1)
+6. Generates the gap_exists proof (use gap_target; simp; rintro; obtain bounds; omega)
+
+**Current state:** Each instantiation is a manual Lean proof with no parameterization. Proved for:
+- (3,4): EXP-002, EXP-003 ✓
+- (3,5): EXP-007 ✓
+- (3,7), (4,5), (5,7), (2,5): candidates, not yet attempted
+
+**What would help:**
+1. **Tactic-based generation:** A custom Lean 4 tactic that generates all 5 steps above programmatically given (p, q).
+2. **External code generator:** A Python/Lean script that:
+   - Computes setA_p numerically for all n < p^k_max (e.g., p^6)
+   - Determines the true maximum
+   - Writes out the lemma + native_decide proof
+   - Repeats for setB_q
+   - Generates the gap_exists proof using the computed values
+   - Outputs valid Lean code that can be appended to Erdos125.lean
+
+**Estimated impact:**
+- **Without generator:** Each new base pair is 30 lines + 5 min manual work, diminishing novelty after 4 instances.
+- **With generator:** 10 new base pairs in <1 hour, covering all p,q < 20 with log_p q irrational.
+
+**Estimated effort:** 
+- Tactic approach: 5-10 hours (requires Lean metaprogramming expertise)
+- Python generator: 2-3 hours (compute setA_p numerically, emit Lean code via template)
+

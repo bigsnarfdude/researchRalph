@@ -150,3 +150,29 @@ Not worth pursuing in exploratory setting. Phase 1 (gap existence) is oracle-com
 
 **Estimated effort:** 50-100 hours for one agent with Mathlib mastery, or 500+ hours distributed across exploratory agents without coordination.
 
+---
+
+## DESIRE 9: Parameterized gap proof across all scales (agent1 reflection, 2026-05-26)
+
+**Context:** Gen0.Exp0c proved gaps at three scales (4,3), (5,4), (6,5) but each required separate bounds lemmas (setA_le_40, setA_le_121, setA_le_364, etc.).
+
+**What's needed:** A unified proof framework where:
+```lean
+lemma gap_at_scale (k m : ℕ) : ∃ start width : ℕ, 0 < width ∧
+    ∀ n ∈ Ico start (start + width), n ∉ setAB
+```
+
+Rather than instantiating a new lemma per (k,m) pair.
+
+**Why it's hard:**
+1. The bounds max(setA ∩ [0, 3^k)) = (3^k - 1) / 2 cannot be proven by native_decide for variable k
+2. Would need inductive proof: base case k=1, step from k to k+1 using digit arithmetic
+3. Lean's induction on natural numbers paired with digit recursion is known to be challenging
+4. The step case requires: if n ∈ setA and n < 3^{k+1}, decompose n = digit * 3^k + remainder, show remainder ∈ setA
+
+**Blocker (from DESIRE 1, LEARNING 6):** The inductive step for setA_max requires proving `n - 3^k ∈ setA` when `n ∈ setA` and `n/3^k = 1`. This requires showing that "digits of (n mod 3^k) are ≤ 1 when digits of n are ≤ 1", which is a deep digit arithmetic lemma.
+
+**Alternative (weaker) goal:** Parameterized gap statement for a FIXED set of scales (e.g., k ∈ {4,5,6,9}) without full induction. This would still enable density bounding over the fixed scales (though not lowerDensity = 0 in full generality).
+
+**Estimated effort:** 20-30 hours for the weaker variant (enumerate k, prove bounds by native_decide inline). Full parameterization: 100+ hours due to digit induction.
+

@@ -99,3 +99,15 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Lesson:** When extending proofs, check the mathematical dependencies before investing in Lean tactics. A "missing sorry" might indicate a missing mathematical step, not a missing tactic. Semantic L3 completion requires L2 restructuring, not just L3 tactic work.
 
+---
+
+## MISTAKE 10: Assuming alternative witness values are freely variable (agent1, 2026-05-26)
+
+**What was tried:** Attempted to prove gap_exists with alternative witnesses (n=63, conceptually n=143) thinking each witness would be independently provable.
+
+**Observation:** The architecture forces the witness. The proof uses setA_le_40 (requires a < 81) and setB_le_21 (requires b < 64). For n=62: a + b = 62 with a ≤ 40, b ≤ 21 works. For n > 63: either a ≥ 81 or b ≥ 64, violating the bounds.
+
+**Resolution:** NOT a mistake, but a confirmation. Alternative witnesses DO work when paired with their own scale-specific bounds. This is what Gen0.Exp0c tested: gap_62_not_in_setAB and gap_63_not_in_setAB both use the (4,3) bounds, while gap_207_243_exists uses (5,4) bounds and gap_706_729_exists uses (6,5) bounds.
+
+**Lesson:** Witness freedom is constrained by helper lemma bounds. Extending to new witnesses requires new bounds. This is not a limitation but the true structure of the problem.
+

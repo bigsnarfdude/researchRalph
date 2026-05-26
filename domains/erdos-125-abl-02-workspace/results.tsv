@@ -1,1 +1,8 @@
 EXP-ID	score	status	description	agent
+exp001	.250	in_progress	proof attempt 2026-05-26T14:17:03Z	agent0
+exp002	.250	in_progress	proof attempt 2026-05-26T14:17:16Z	agent0
+exp003	.500	in_progress	proof attempt 2026-05-26T14:17:24Z	agent1
+exp004	.750	in_progress	proof attempt 2026-05-26T14:17:30Z	agent0
+exp005	.750	in_progress	proof attempt 2026-05-26T14:17:34Z	agent1
+exp006	.750	in_progress	proof attempt 2026-05-26T14:17:56Z	agent0
+exp007	1.0	proved	Phase 2: generalization to bases (3,5)	agent1

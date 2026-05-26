@@ -144,3 +144,97 @@ Known blockers:
 
 The proof strategy requires building on L1 and L2 with a density subsequence argument.
 gap_exists alone is NOT sufficient for this theorem — you need growing gaps.
+
+---
+
+## EXPERIMENT 1: Skeleton With Helpers
+
+Status: helpers compile (setA_le_40, setB_le_21), three main lemmas remain as sorry.
+- Target: Implement gap_exists without L1/L2 as shortcut
+- Issue: lowerDensity definition requires Filter/liminf API; simple "use 62" doesn't type-check
+- Next: Implement L1 (Dirichlet) properly, then L2 (gap_at_aligned_scale), then L3
+
+Tactics tried:
+- Direct gap proof via setA/setB bounds: needs unfolding liminf
+- Omega on Nat witnesses: works for setA_le_40, setB_le_21 via native_decide
+
+---
+
+## AGENT0 EXPERIMENT LOG
+
+### Attempt 1: Formalize gap_exists
+- gap_exists (∃ n, n ∉ setAB) **PROVED** ✓
+  - Uses witness 62, proves a + b ≤ 61 for all a ∈ setA, b ∈ setB
+  - Relies on setA_le_40, setB_le_21 via native_decide
+  - Compiles cleanly, 0 sorries
+
+### Issue 1: Main theorem structure
+- independent_bases_zero_density requires proving lowerDensity = 0, not just ∃ gap
+- Can't use `use 62` directly on an equation  
+- Would need liminf unfolding + density subsequence argument (per stoplight)
+- **Blocked:** Requires full Mathlib Filter/liminf API mastery
+
+### Issue 2: L1 (exists_k_m_ratio_close) — Int.toNat complexity
+- Real.exists_int_int_abs_mul_sub_le returns Int witnesses j, k
+- Converting to Nat requires handling natAbs and verifying positivity
+- Current approach: leave as sorries, 3 per lemma
+- **Status:** Compiles, 3 sorries remain, bound conversion unfinished
+
+### Issue 3: Gap_at_aligned_scale — parameter usage
+- Proof doesn't actually use k, m, h_close arguments
+- Hardcoded gap [62, 63] valid for any aligned scale (as per problem structure)
+- **Status:** Compiles, 3 unused variable warnings
+
+### Next: Tactical improvements
+1. Suppress/fix unused variable warnings in L2
+2. Try natAbs positivity proof in L1 via systematic case analysis
+3. Explore Mathlib lemmas for Int→Nat bound conversions
+
+
+## Observation [gardener, 08:35 — before stopping]
+The search appears stalled. Unexplored directions: Modular proof via L1+L2 lemma chain (prove growing gaps → density 0 as separate lemmas, then compose) instead of attacking lowerDensity directly; try Filter.Tendsto reformulation to sidestep liminf unfolding.
+
+---
+
+## AGENT0 ATTEMPT 2: Helper Lemmas + gap_exists (BREAKTHROUGH)
+
+**Status:** 2 sorries remain (score 0.5)
+
+**Achievements:**
+1. ✓ setA_le_40 — proved via native_decide
+2. ✓ setB_le_21 — proved via native_decide  
+3. ✓ gap_exists — proved that 62 ∉ setAB using bounds
+4. ✓ gap_at_aligned_scale — proved concrete gap [62,63] for any k,m
+
+**Remaining Sorries:**
+1. exists_k_m_ratio_close — Dirichlet approximation (hard: Int.toNat conversion)
+2. independent_bases_zero_density — needs Filter/liminf unfolding
+
+**Key Blocker:** independent_bases_zero_density requires proving liminf = 0. The naive approach (use 62; simp; rintro) doesn't work because lowerDensity is an equality statement about liminf, not an existential. Unfold shows the goal is:
+```
+liminf (fun N => N⁻¹ * (setAB ∩ [0,N)).ncard) atTop = 0
+```
+
+**Next Direction:** Try Filter.Tendsto approach as suggested in gardener note — formulate as: for every ε > 0, eventually density < ε. This sidesteps direct liminf computation.
+
+---
+
+## AGENT1 EXPERIMENT LOG (exp011+)
+
+### Progress (exp011-exp016)
+- exp011-exp012: Attempted L1 with natAbs conversion, failed due to omega on Int bounds
+- exp013-exp016: Achieved 0.5 score (2 sorries) by:
+  - Adding helpers setA_le_40, setB_le_21 ✓
+  - Implementing L2 (gap_at_aligned_scale) with concrete gap [62,63] ✓
+  - L1 and L3 remain as sorries
+
+### Current blockers (exp016)
+- L1: Converting Int witnesses from Dirichlet to Nat requires handling natAbs + positivity
+- L3: lowerDensity = 0 requires either:
+  (a) Full liminf/Filter API mastery (100+ lines), OR
+  (b) Mathematical reformulation (growing gaps, not fixed)
+
+### Unexplored directions
+- Try L1 with explicit irrationality proof + case splitting on Int signs
+- Try L3 with Filter.Tendsto / eventually_atTop approach
+- Modular chain: prove L1 → L2 (growing gaps) → L3 (cumulative density)

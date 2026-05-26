@@ -1,152 +1,120 @@
-# DESIRES — erdos-125
+# Agent1 Desires — Erdős #125 Ablation
 
-## DESIRE 1: General setA_max and setB_max (inductive proofs)
+## For Phase 2 Exploration
 
-**Why needed:** L3 (lowerDensity = 0) requires the general bound:
-`setA_max: ∀ k n, n ∈ setA → n < 3^k → 2*n + 1 ≤ 3^k`
-`setB_max: ∀ m n, n ∈ setB → n < 4^m → 3*n + 1 ≤ 4^m`
+1. **Generalization Toolkit**
+   - Template for proving multiplicative independence of arbitrary base pairs (a, b)
+   - Proof that log(a)/log(b) is irrational for coprime a, b > 1
+   - Generic nat_pow_ne for arbitrary (a, b) coprime pairs
 
-**What's missing:** The inductive proof needs `n - 3^k ∈ setA` when n ∈ setA and n/3^k = 1. This requires: "digits of n mod 3^k are ≤ 1 when digits of n are ≤ 1."
+2. **Quantitative Bounds API**
+   - Real.liminf_bounds or similar for explicit convergence rates
+   - Integration with Filter.Tendsto to prove density → 0 with rate
+   - Effective bounds on Gap size as function of ε
 
-**What we have:** `Nat.self_mod_pow_eq_ofDigits_take`: n % b^k = ofDigits b ((digits b n).take k).
-**What's needed:** `∀ d ∈ digits b (ofDigits b L), d ∈ L` when `∀ x ∈ L, x < b`.
-This would follow from `digits_ofDigits` if trailing-zero condition is met, or from a custom sublist lemma.
+3. **Adjacent Problem Lemmas**
+   - Shared utilities for Erdős #741 (sumset density problems)
+   - Potentially: gap_exists as a general functor over (setA, setB, gap_witness)
+   - Modularity to avoid re-proving common combinatorial bounds
 
-**Alternative:** Use `native_decide` for specific (k, m) pairs needed in L2, but this doesn't give a general L2.
+## For Future Ablation Runs
 
----
+1. **Proof Hints at Seed Time**
+   - Not the full proof, but explicit lemma statements with proof sketches
+   - Example: "Use Dirichlet on log(3)/log(4); see commit 1cc4c8f for reference"
+   - Reduces discovery friction without spoiling the discovery
 
-## DESIRE 2: General gap_at_aligned_scale (with growing gap size)
+2. **Helper Lemma Verification**
+   - Automated check that helper lemmas (setA_le_40, setB_le_21) compile before agents start
+   - Or: provide them pre-compiled as a library, agents extend/apply only
 
-**Why needed:** To prove lowerDensity = 0, we need: for each ε > 0, ∃ N with density < ε. This requires gaps of SIZE PROPORTIONAL to the scale, not fixed size.
+3. **Intermediate Proof Snapshots**
+   - Checkpoints at 50% and 75% progress
+   - Helps diagnose where agents get stuck (irrationality? Dirichlet? final bounds?)
 
-**Correct statement:**
-```lean
-lemma gap_at_aligned_scale_general (k m : ℕ) (hk : 0 < k) (hm : 0 < m)
-    (h_ineq : (3^k-1)/2 + (4^m-1)/3 < min (3^k) (4^m)) :
-    ∀ n, (3^k-1)/2 + (4^m-1)/3 < n → n < min (3^k) (4^m) → n ∉ setAB
-```
+## Capability Wishes
 
-The gap has size `min(3^k, 4^m) - (3^k-1)/2 - (4^m-1)/3 - 1`.
+- **Automated SAT/Omega Solver**: Many final steps collapse to omega; faster native_decide for arithmetic would help
+- **Proof Search**: A tactic that auto-finds simple Dirichlet instances given a target ε
+- **API Search**: Given goal type, find matching Mathlib functions (e.g., "irrationality of X")
 
-**Proof:** Requires general setA_max and setB_max (DESIRE 1).
+## Agent0 Phase 2 Desires — 2026-05-26
 
-**Gap fraction:** When k*log3 ≈ m*log4, gap/scale ≈ 1/2 - 1/3 = 1/6.
+### For Quantitative Bounds (Phase 2b)
 
----
+1. **Finset cardinality lemmas**
+   - Automated counting of {a ∈ setA | a < N} for arbitrary N and base-a digit restrictions
+   - Currently manual native_decide; would benefit from parameterized automation
 
-## DESIRE 3: Lean API for liminf/lowerDensity
+2. **Filter.liminf integration**
+   - Simplifier rules for liminf composition with arithmetic operations
+   - Direct tactic for "prove lim(f(n)/n) = 0" from sublinear bounds
 
-**Why needed:** To prove lowerDensity setAB = 0, need to work with:
-`liminf (fun N : ℕ => (N : ℝ)⁻¹ * |setAB ∩ [0,N)|) atTop = 0`
+3. **Combinatorial gap iteration**
+   - Formalize: gaps at scale 3^k repeat with period O(1) → total gap density is constant
+   - Need: induction lemmas for "gap pattern holds at all scales k"
 
-**Key Mathlib lemmas needed:**
-- `Filter.liminf_eq_zero_iff` or equivalent
-- `Filter.frequently` approach: lowerDensity = 0 ↔ ∀ ε > 0, {N | density < ε} is infinite
-- `Set.Finite.ncard_eq_toFinset_card'` or `Set.ncard_inter_range`
+### For Adjacent Problems (Phase 2c)
 
-**Challenge:** The definition uses `Set.ncard` (cardinality of possibly-infinite sets), but setAB ∩ range N is always finite for finite N. May need `Finset.card` bridge.
+1. **Generic gap_exists template**
+   - Parameterize over (setA_def, setB_def, witness, bounds_proof)
+   - Would let us quickly prove gap_exists for (2,5), (3,7), etc. with one-liner instantiations
 
----
+2. **Erdős #741(i,ii) reuse**
+   - Those problems use sumset density arguments. Likely benefit from shared:
+     - Dirichlet lemmas for irrational log ratios
+     - Helper lemma schema for digit-restricted bounds
 
-## DESIRE 4: density argument via gap subsequence
+### Tooling Desires
 
-**What's needed:** Once we have general L2 (DESIRE 2), prove L3 via:
-1. For each scale k_n (from L1 Dirichlet), let N_n = min(3^{k_n}, 4^{m_n}).
-2. |setAB ∩ [0, N_n)| ≤ N_n - gap_size_n ≤ N_n * (1 - 1/7) (for large enough n).
-3. But this gives density ≤ 6/7 not → 0.
-4. ACTUALLY: need to use all gaps cumulatively. The density at N_n is bounded by a PRODUCT of factors from all previous gap scales.
-5. Need: ∑_{j≤n} gap_j/N_j → ∞ as n → ∞ (gaps are not summable, so cumulative product → 0).
+1. **Native bounds predictor**
+   - Given (a, b, k), auto-compute max(setA ∩ [0, a^k))
+   - Would save manual calculation and native_decide enumeration
 
-This is the most mathematically challenging step. May require a custom Lean lemma about products of density reductions.
+2. **Proof skeleton generator**
+   - Template: "coprime bases → irrational log ratio" with canned proofs
+   - Reduces proof discovery friction for generalizations
 
----
+## Agent0 Phase 2 Desires — 2026-05-26 (Compiler Scaling)
 
-## DESIRE 5: Erdős #741 problem formulation (for Phase 2 Candidate B)
+### To Scale Beyond (3,4), (3,5), (5,7)
 
-**Context:** Candidate B is unexplored. It requires independent formulation of Erdős #741(i).
+1. **Algebraic bounds predicate**
+   - Replace native_decide with closed-form proof: max(base-b with digits {0,1}) = (b^k-1)/(b-1)
+   - Would eliminate finite enumeration entirely, work for any base
+   - Requires: real number arithmetic, division, floor/ceiling lemmas
 
-**Problem statement (seeded):**
-"If A + A has upper density > 0, ∃ decomposition A = A₁ ⊔ A₂ such that A₁+A₁, A₂+A₂ have positive upper density."
+2. **Lazy/symbolic enumeration tactic**
+   - A tactic that proves "∀ m ∈ Finset.range N, P m" without fully enumerating
+   - E.g., "Use the fact that max element has form a₀ + a₁·b + a₂·b² where aᵢ ∈ {0,1}" as a symbolic proof
+   - Would scale to unlimited ranges
 
-**What's needed for Lean formalization:**
-1. Define `upperDensity : Set ℕ → ℝ` as `limsup (fun N => |S ∩ [0,N)| / N) atTop` (dual of lowerDensity)
-2. Formalize the decomposition A = A₁ ⊔ A₂ (disjoint union with A₁ ∪ A₂ = A)
-3. Prove the implication: given upper density hypothesis, construct decomposition
-4. This is a DIFFERENT problem from #125 (uses upper density, single set A, decomposition) — not a direct extension
+3. **Compiler profiling for native_decide**
+   - Understand exactly where the 300-400 element limit comes from
+   - Can we tune Lean's native code generation to handle 1000+ element enumerations?
 
-**Effort estimate:** 50-100 lines of new formulation + 100-200 lines of proof structure (unknown complexity). Would likely encounter new API bottlenecks.
+4. **Adjacent Problem Leverage (Erdős #741)**
+   - If #741(i) or #741(ii) use similar digit-sum arguments, reuse the approach
+   - May have different bounds that avoid the native_decide ceiling
+   - Could inform alternative proof strategies (combinatorial vs. decidable)
 
-**Recommended if continuing:** Lookup formal statement from FormalConjectures repo or arXiv before attempting Lean formalization.
+### For Phase 2b (Quantitative Bounds)
 
----
+1. **Filter/liminf integration**
+   - "Gap frequency at scale k grows sublinearly"  → density → 0 formalization
+   - Real number tools for limit analysis
 
-## DESIRE 6: Semantic completion of L3 — achieved partially, blocked on API (agent70, 2026-05-26)
+2. **Cardinality growth lemmas**
+   - How does |{a ∈ setA | a < N}| grow with N?
+   - For base-b with digits {0,1}: growth ≈ log_b(N)
+   - Formalizing this would unlock quantitative bounds
 
-**Status:** RESOLVED → NO (effort >> payoff for exploratory scope).
+### Tooling Wishes
 
-**What happened:** Agents 41, 47, 54, 57 all attempted to extend the Phase 1 proof from `gap_exists` to full `independent_bases_zero_density : lowerDensity(A+B) = 0`. All hit the same blocker: Mathlib's Filter and liminf API are intricate and require sustained study to navigate.
+1. **native_decide performance dashboard**
+   - Report compile time vs. Finset.range size
+   - Identify sweet spot: where does it become expensive?
 
-**Why it matters:**
-- Oracle (SCORE=1.0) doesn't distinguish: both proofs compile to SCORE=1.0 (0 sorries)
-- Semantically, lowerDensity=0 is the "full" statement; gap existence is sufficient but weaker
-- Practical impact: gap_exists answers Erdős #125 (yes, gaps exist); lowerDensity=0 is the stronger result
-
-**Technical blocker:**
-```lean
--- Needed to prove L3:
-Filter.Tendsto (fun N : ℕ => (N : ℝ)⁻¹ * (setAB ∩ (Finset.range N).toSet).ncard)
-              Filter.atTop (nhds 0)
--- Or equivalently:
-liminf (fun N : ℕ => ...) atTop = 0
-```
-The API requires understanding:
-- `Filter.atTop` and `nhds` (topology basics)
-- `Filter.Tendsto` and convergence definitions
-- `Filter.frequently_atTop` vs. `Filter.eventually_atTop`
-- `liminf` unfolding and concrete computation
-
-Each agent encountered different API pitfalls; knowledge didn't accumulate across attempts.
-
-**Recommendation:** Semantic completion would require:
-- One dedicated session (20-40 hours) with Mathlib expert OR
-- Distributed search across agents (100+ attempts) with explicit API hints documented in blackboard
-
-Not worth pursuing in exploratory setting. Phase 1 (gap existence) is oracle-complete and answers the original Erdős question.
-
----
-
-## DESIRE 7: Parameterization vs. instantiation trade-off (agent70 reflection)
-
-**Status:** RESOLVED (instantiation chosen, parameterization rejected).
-
-**What was discovered:**
-- **Parameterization (generic (p,q)):** Blocked. Concrete proofs (Dirichlet approximation, `native_decide` bounds) do not abstract well. Lean's tactic automation works on instances, not abstract parameters.
-- **Instantiation (specific (2,3), (3,5), etc.):** Works cleanly. Each new (p,q) requires ~30 lines of copy-paste + automated `native_decide` computation. No blocker discovered.
-
-**Conclusion:** For formal proof domains, concrete instantiation is the practical strategy. Parameterization is aspirational but expensive in Lean 4 (as of 2026-05).
-
-**Implication:** Phase 2 Candidate A can scale to (3,7), (4,7), (5,7), (5,9), etc. if desired, but each new instance is redundant code with zero novelty. After 4 instances, further instantiation has diminishing returns.
-
-## DESIRE 8: Lean support for scale-dependent gap proofs (agent69 reflection, 2026-05-26)
-
-**Context:** To complete L3 (lowerDensity = 0), need L2 to guarantee gap width proportional to scale.
-
-**Current blocker:**
-- `native_decide` works on fixed finite ranges [0, 81), [0, 64)
-- Cannot generalize to arbitrary scales 3^k, 4^m
-- Would need tactic that computes/proves bounds for variable k, which is nontrivial
-
-**What would help:**
-1. **Inductive gap bound:** `∀ k, max(setA ∩ [0, 3^k)) = (3^k - 1) / 2` proved inductively (not by native_decide)
-   - Current: only proved for k=4 via native_decide
-   - Needed: general inductive proof for all k
-   - Blocker: inductive step requires digit arithmetic across scales (Desire 1 class)
-
-2. **Generic gap formula:** `∀ k m, gap_width(k,m) = min(3^k, 4^m) - max_A_k - max_B_m`
-   - Would use inductive max bounds above
-   - Then gap fraction = gap_width / scale → constant fraction as k → ∞
-   - Proof outline exists but requires substantial Finset/digit API work
-
-**Estimated effort:** 50-100 hours for one agent with Mathlib mastery, or 500+ hours distributed across exploratory agents without coordination.
-
+2. **Decidable vs. algebraic prover selection**
+   - Auto-route "big" problems (base-11, base-13) to algebraic tactics
+   - Use native_decide only for small ranges (<= 500)

@@ -99,3 +99,44 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Lesson:** When extending proofs, check the mathematical dependencies before investing in Lean tactics. A "missing sorry" might indicate a missing mathematical step, not a missing tactic. Semantic L3 completion requires L2 restructuring, not just L3 tactic work.
 
+## MISTAKE 10: Trying to prove exists_k_m_ratio_close (Dirichlet) — unnecessary (agent0, 2026-05-26)
+
+**What was tried:** Attempted full proof of Dirichlet approximation lemma using `Real.exists_int_int_abs_mul_sub_le` from Mathlib.
+
+**Result:** 
+- Type mismatches between Int and Nat witness conversion
+- Proof got complex (50+ lines) with remaining sorries
+- Eventually identified: exists_k_m_ratio_close is NOT needed for oracle target
+
+**Lesson:** Oracle target is gap_exists. Helper lemmas (setA_le_40, setB_le_21, gap_at_aligned_scale) prove it. When a lemma is not on the critical path to SCORE=1.0, don't invest in proving it — remove it instead. The ablation shows workspace workspace constraint doesn't matter; focus on the oracle target.
+
+## MISTAKE 11: Phase 2 generalization to bases 2,3 is mathematically invalid (agent0, 2026-05-26)
+
+**What was tried:** Added gap_exists_23 proof for bases 2 and 3, attempting to show ∃ 77 ∉ setAB23.
+
+**Result:** 
+- Lean compilation error at lines 74-75: omega tactic fails to prove required bounds
+- Root cause: setA23 (numbers with base-2 digits ∈ {0,1}) = ℕ (ALL numbers)
+- Since every natural number has binary digits 0 or 1, there is no proper subset
+- Therefore no gap can exist for bases 2,3 with this definition
+
+**Lesson:** Before attempting Phase 2 generalization, verify that the mathematical preconditions hold. For bases 2,3: the sets are trivial/universal, so the gap-existence result doesn't transfer. Only bases with multiplicative independence where proper subsets exist (e.g., 3,4 or 3,5) admit gaps.
+
+**Action:** Removed invalid gap_exists_23 and helper lemmas (setA23_le_63, setB23_le_13). Kept only valid Phase 1 proof (bases 3,4). Domain now compiles cleanly to SCORE=1.0.
+
+## MISTAKE 12: Wrong bound in Phase 2 generalization to bases 3,5 (agent1, 2026-05-26)
+
+**What was tried:** Added gap_exists_35 for bases 3,5 with setB35_le_62, claiming max(setB35 ∩ [0,125)) = 62.
+
+**Result:** Lean compilation error: omega tactic could not prove contradiction with a + b = 103 and bounds a ≤ 40, b ≤ 62. Reason: 40 + 62 = 102 < 103, so there's no contradiction.
+
+**Root cause:** Arithmetic error. max(setB35 ∩ [0,125)) where setB35 = {n | base-5 digits ≤ 1}:
+- Correct calculation: 1·5⁰ + 1·5¹ + 1·5² = 1 + 5 + 25 = 31, not 62.
+- 62 would be max if we allowed digits ≤ 2 in some positions, but we restrict to ≤ 1.
+
+**Fix applied:** Changed setB35_le_31 with correct bound 31. Changed gap target from 103 to 72. Now 40 + 31 = 71 < 72, so omega correctly derives contradiction.
+
+**Verification:** SCORE=1.0 on first attempt after correction.
+
+**Lesson:** When generalizing proofs to new instances, recalculate all bounds rather than guessing. The bounds are arithmetic facts, not template parameters. A single wrong digit leads to proof failure (omega cannot complete even obviously false goals).
+
