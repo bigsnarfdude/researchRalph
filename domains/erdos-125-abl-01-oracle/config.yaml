@@ -1,0 +1,6 @@
+domain: erdos-125-abl-01-oracle
+metric: proof_compiles
+direction: higher_is_better
+harness: run.sh
+editable: Erdos125.lean
+domain_type: lean_proof
