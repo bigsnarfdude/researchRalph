@@ -1,0 +1,34 @@
+{
+  "decision": "TOO_EARLY",
+  "pq": 12,
+  "gardener_fixes": [
+    {
+      "issue": "Dead end: Design '' has 5 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt unknown experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Unaddressed desire: `Filter.liminf_eq_zero_iff` or equivalent",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: `Filter.frequently` approach: lowerDensity = 0 \u2194 \u2200 \u03b5 > 0, {N | density < \u03b5} is i",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: `Set.Finite.ncard_eq_toFinset_card'` or `Set.ncard_inter_range`",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    }
+  ],
+  "hitl_fixes": [],
+  "missed_checks": [],
+  "dead_ends": [
+    "Design '' has 5 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 4
+}
