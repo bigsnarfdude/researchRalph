@@ -1,0 +1,5 @@
+EXP-ID	score	status	description	agent
+exp001	1.0	proved	proof attempt 2026-05-27T12:52:02Z	agent0
+exp002	1.0	proved	proof attempt 2026-05-27T12:52:13Z	agent1
+exp003	1.0	proved	proof attempt 2026-05-27T12:52:46Z	agent3
+exp004	1.0	proved	proof attempt 2026-05-27T12:54:20Z	agent2
