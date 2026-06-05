@@ -11,83 +11,68 @@ namespace Erdos741OAI
 def IsSyndetic (S : Set ℕ) : Prop :=
   ∃ C : ℕ, ∀ x : ℕ, ∃ m ∈ S, m ∈ Icc x (x + C)
 
--- Construction: Q(k) = 5^k
+-- CONSTRUCTION
 def Q (k : ℕ) : ℕ := 5 ^ k
 
--- Stage k components
 def ck (k : ℕ) : ℕ := 4 * Q k
 def Bk (k : ℕ) : Set ℕ := Icc (5 * Q k) (6 * Q k - 1)
 def Fk (k : ℕ) : Set ℕ := Icc (10 * Q k - 1) (15 * Q k)
 def Jk (k : ℕ) : Set ℕ := Ico (9 * Q k) (10 * Q k)
 
--- Cumulative set Akn(k) = {2,3} ∪ ⋃_{j≤k} (ck(j) ∪ Bk(j) ∪ Fk(j))
+def setA : Set ℕ := {2, 3} ∪ ⋃ k, {ck k} ∪ Bk k ∪ Fk k
+
 def Akn : ℕ → Set ℕ
   | 0 => {2, 3}
   | k + 1 => Akn k ∪ {ck k} ∪ Bk k ∪ Fk k
 
--- The full set A
-def setA : Set ℕ := ⋃ k, Akn k
-
--- Basic lemmas
+-- HELPER LEMMAS
 lemma Q_pos (k : ℕ) : 0 < Q k := by
   unfold Q
-  exact pow_pos (by norm_num : 0 < 5) k
+  apply pow_pos
+  norm_num
 
 lemma Q_succ (k : ℕ) : Q (k + 1) = 5 * Q k := by
-  simp [Q, pow_succ, mul_comm]
+  calc Q (k + 1) = 5 ^ (k + 1) := rfl
+    _ = 5 * 5 ^ k := by ring
+    _ = 5 * Q k := rfl
 
-lemma akn_mono (k : ℕ) : Akn k ⊆ Akn (k + 1) := by
-  intro x _; simp only [Akn]
-  match k with
-  | 0 => simp; tauto
-  | n + 1 => simp; tauto
+lemma akn_mono {k₁ k₂ : ℕ} (h : k₁ ≤ k₂) : Akn k₁ ⊆ Akn k₂ := by sorry
 
-lemma Q_one : Q 1 = 5 := by norm_num [Q]
+-- Akn is a subset of setA
+lemma akn_sub_setA (k : ℕ) : Akn k ⊆ setA := by sorry
 
-lemma Q_mono (j k : ℕ) (hjk : j ≤ k) : Q j ≤ Q k := by
-  simp only [Q]
-  exact Nat.pow_le_pow_right (by norm_num : 1 ≤ 5) hjk
+-- BASIS LEMMA: every n ∈ [4, 6*Q k] is a sum of two elements from Akn(k+1)
+lemma basis_lem (k : ℕ) : Icc 4 (6 * Q k) ⊆ Akn (k + 1) + Akn (k + 1) := by
+  induction k with
+  | zero =>
+    intro n hn
+    simp only [mem_Icc, Q, Set.mem_add] at *
+    have hn_lo : 4 ≤ n := hn.1
+    have hn_hi : n ≤ 6 := by omega
+    interval_cases n
+    · exact ⟨2, by left; norm_num [Akn], 2, by left; norm_num [Akn], by norm_num⟩
+    · exact ⟨2, by left; norm_num [Akn], 3, by left; norm_num [Akn], by norm_num⟩
+    · exact ⟨3, by left; norm_num [Akn], 3, by left; norm_num [Akn], by norm_num⟩
+  | succ k ih =>
+    intro n hn
+    -- Apply the inductive hypothesis for Akn k to get some elements that sum to values in [4, 6*Q k]
+    -- Then use these to build sums for values in [4, 6*Q(k+1)]
+    -- Case analysis on which interval n falls into
+    sorry
 
-lemma Q_stage_bound (k : ℕ) : Q k ≤ 5 * Q k := by omega
-
-lemma Bk_prop (k : ℕ) (x : ℕ) (hx : x ∈ Bk k) : 5 * Q k ≤ x ∧ x ≤ 6 * Q k - 1 := by
-  unfold Bk at hx
-  exact mem_Icc.mp hx
-
-lemma Fk_prop (k : ℕ) (x : ℕ) (hx : x ∈ Fk k) : 10 * Q k - 1 ≤ x ∧ x ≤ 15 * Q k := by
-  unfold Fk at hx
-  exact mem_Icc.mp hx
-
--- Helper: ck k is always in setA
-lemma ck_mem_setA (k : ℕ) : ck k ∈ setA := by sorry
-
--- Basis lemma (proof sketch: eight pair types cover [4*Qk, 30*Qk])
-lemma basis_lem (k : ℕ) (x : ℕ) (hx : 4 ≤ x ∧ x ≤ 6 * Q (k + 1)) :
-    ∃ a ∈ Akn (k + 1), ∃ b ∈ Akn (k + 1), a + b = x := by
-  sorry
-
--- Rigidity: elements in Jk(k) sums decompose uniquely
-lemma rigidity_stage (k : ℕ) (n : ℕ) (hn : n ∈ Jk k) (a b : ℕ) (ha : a ∈ setA) (hb : b ∈ setA) (hab : a + b = n) :
+-- RIGIDITY LEMMA: for n ∈ Jk(k), the only way to write n as a sum from A is with ck(k)
+lemma rigidity_lem (k : ℕ) : ∀ n ∈ Jk k, ∀ a ∈ setA, ∀ b ∈ setA, a + b = n →
     (a = ck k ∧ b ∈ Bk k) ∨ (b = ck k ∧ a ∈ Bk k) := by
   sorry
 
--- Gap lemma: if ck(k) ∉ T, then Jk(k) ∩ (T+T) = ∅
-lemma gap_lem (k : ℕ) (T : Set ℕ) (hT : T ⊆ setA) (hck : ck k ∉ T) :
+-- Helper: large enough k gives us the bounds we need
+lemma Q_large_enough (C k : ℕ) (h : C < Q k) : 9 * Q k + C < 10 * Q k := by
+  omega
+
+-- GAP LEMMA: if ck(k) ∉ T, then Jk(k) ∩ (T + T) = ∅
+lemma gap_lem (k : ℕ) (T : Set ℕ) (hT_sub : T ⊆ setA) (hck : ck k ∉ T) :
     Jk k ∩ (T + T) = ∅ := by
-  by_contra h
-  push_neg at h
-  -- There exists some x ∈ Jk k ∩ (T + T)
-  have : ∃ x, x ∈ Jk k ∧ x ∈ T + T := h
-  obtain ⟨x, hx_jk, ⟨a, ha_mem, b, hb_mem, hab_sum⟩⟩ := this
-  -- By rigidity, a + b = x ∈ Jk k forces (a = ck k ∧ b ∈ Bk k) ∨ (b = ck k ∧ a ∈ Bk k)
-  rw [← hab_sum] at hx_jk
-  have ha_setA : a ∈ setA := hT ha_mem
-  have hb_setA : b ∈ setA := hT hb_mem
-  have hrig := rigidity_stage k (a + b) hx_jk a b ha_setA hb_setA rfl
-  -- But both cases contradict hck
-  rcases hrig with ⟨ha_eq, hb_Bk⟩ | ⟨hb_eq, ha_Bk⟩
-  · rw [ha_eq] at ha_mem; exact hck ha_mem
-  · rw [hb_eq] at hb_mem; exact hck hb_mem
+  sorry
 
 theorem erdos_741_ii :
     ∃ A : Set ℕ,
@@ -99,61 +84,65 @@ theorem erdos_741_ii :
       ¬ (IsSyndetic (A₁ + A₁) ∧ IsSyndetic (A₂ + A₂)) := by
   use setA
   constructor
-  · -- A is a basis: every n ≥ 4 is a sum of two elements from A
+  · -- Basis: every n ≥ 4 is a sum of two elements from setA
     intro n hn
-    sorry
-  · -- No partition of A into two sets can have both sumsets syndetic
+    -- Find k such that n ∈ [4, 6*Q k]
+    have : ∃ k, n ∈ Icc 4 (6 * Q k) := by sorry
+    rcases this with ⟨k, hk⟩
+    -- Use basis_lem to find elements from Akn(k+1)
+    have : n ∈ Akn (k + 1) + Akn (k + 1) := basis_lem k hk
+    -- Akn(k+1) ⊆ setA
+    have hAkn_sub : Akn (k + 1) ⊆ setA := by sorry
+    -- Therefore n ∈ setA + setA
+    exact Set.add_subset_add hAkn_sub hAkn_sub this
+  · -- Partition rigidity
     intro A₁ A₂ hA₁ hA₂ hpart hdisj
     intro ⟨⟨C₁, hC₁⟩, ⟨C₂, hC₂⟩⟩
-
-    -- Pick any large k, say k = C₁ + C₂ (or max(C₁, C₂))
-    let k := C₁ + C₂
-
-    -- ck k ∈ setA by construction
-    have hck_mem : ck k ∈ setA := ck_mem_setA k
-
-    -- By partition, ck k is in exactly one of A₁, A₂
-    have hck_cases : ck k ∈ A₁ ∨ ck k ∈ A₂ := hpart (ck k) hck_mem
-
-    cases hck_cases with
-    | inl hck1 =>
-      -- ck k ∈ A₁, so ck k ∉ A₂
-      have hck_not2 : ck k ∉ A₂ := by
-        intro hcontra
-        have : ck k ∈ A₁ ∩ A₂ := ⟨hck1, hcontra⟩
-        simp [hdisj] at this
-
-      -- By gap_lem, Jk k ∩ (A₂ + A₂) = ∅
-      have hgap := gap_lem k A₂ hA₂ hck_not2
-
-      -- By syndeticity of A₂ + A₂, taking x = 9*Qk
-      have hsynd := hC₂ (9 * Q k)
-      obtain ⟨m, hm_mem, hm_in_icc⟩ := hsynd
-
-      -- So m ∈ A₂ + A₂ and m ∈ [9*Qk, 9*Qk + C₂]
-      have hm_in_interval : m ∈ Icc (9 * Q k) (9 * Q k + C₂) := hm_in_icc
-
-      -- We need to show m ∈ Jk k
-      -- We have m ∈ [9*Qk, 9*Qk + C₂]
-      -- For Jk k = [9*Qk, 10*Qk), we need 9*Qk + C₂ < 10*Qk
-      -- This is true when C₂ < Qk, which holds for k = C₁ + C₂
-      -- since Qk = 5^k grows much faster than linear C₂
-      -- For now, we'll assume this holds
-      have hm_in_jk : m ∈ Jk k := by
-        unfold Jk Ico
-        obtain ⟨hlo, hhi⟩ := mem_Icc.mp hm_in_interval
+    -- One of A₁, A₂ doesn't contain ck(max(C₁, C₂)+1)
+    let k := max C₁ C₂ + 1
+    have hQk_bound : max C₁ C₂ < Q k := by sorry
+    have hck_in : ck k ∈ setA := by sorry
+    have hck_part : ck k ∈ A₁ ∨ ck k ∈ A₂ := hpart (ck k) hck_in
+    rcases hck_part with hck_A₁ | hck_A₂
+    · -- ck k ∈ A₁, so ck k ∉ A₂
+      have hck_not_A₂ : ck k ∉ A₂ := by
+        intro h
+        have : ck k ∈ A₁ ∩ A₂ := ⟨hck_A₁, h⟩
+        rw [hdisj] at this
+        simp at this
+      have hgap : Jk k ∩ (A₂ + A₂) = ∅ := gap_lem k A₂ hA₂ hck_not_A₂
+      have : ∃ m ∈ A₂ + A₂, m ∈ Icc (9 * Q k) (9 * Q k + C₂) := hC₂ (9 * Q k)
+      rcases this with ⟨m, hm_sum, hm_Icc⟩
+      have hm_in_Jk : m ∈ Jk k := by
+        unfold Jk
+        simp only [mem_Ico]
+        obtain ⟨hlo, hhi⟩ := hm_Icc
         constructor
         · exact hlo
-        · sorry
-
-      -- But m ∈ A₂ + A₂ and m ∈ Jk k
-      have hmem : m ∈ Jk k ∩ (A₂ + A₂) := Set.mem_inter hm_in_jk hm_mem
-
-      -- This contradicts hgap : Jk k ∩ (A₂ + A₂) = ∅
-      simp [hgap] at hmem
-
-    | inr hck2 =>
-      -- ck k ∈ A₂, symmetric argument
-      sorry
+        · have : 9 * Q k + C₂ < 10 * Q k := Q_large_enough C₂ k (by omega : C₂ < Q k)
+          omega
+      have hmem : m ∈ Jk k ∩ (A₂ + A₂) := Set.mem_inter hm_in_Jk hm_sum
+      rw [hgap] at hmem
+      simp at hmem
+    · -- ck k ∈ A₂, so ck k ∉ A₁
+      have hck_not_A₁ : ck k ∉ A₁ := by
+        intro h
+        have : ck k ∈ A₁ ∩ A₂ := ⟨h, hck_A₂⟩
+        rw [hdisj] at this
+        simp at this
+      have hgap : Jk k ∩ (A₁ + A₁) = ∅ := gap_lem k A₁ hA₁ hck_not_A₁
+      have : ∃ m ∈ A₁ + A₁, m ∈ Icc (9 * Q k) (9 * Q k + C₁) := hC₁ (9 * Q k)
+      rcases this with ⟨m, hm_sum, hm_Icc⟩
+      have hm_in_Jk : m ∈ Jk k := by
+        unfold Jk
+        simp only [mem_Ico]
+        obtain ⟨hlo, hhi⟩ := hm_Icc
+        constructor
+        · exact hlo
+        · have : 9 * Q k + C₁ < 10 * Q k := Q_large_enough C₁ k (by omega : C₁ < Q k)
+          omega
+      have hmem : m ∈ Jk k ∩ (A₁ + A₁) := Set.mem_inter hm_in_Jk hm_sum
+      rw [hgap] at hmem
+      simp at hmem
 
 end Erdos741OAI

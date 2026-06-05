@@ -1,34 +1,34 @@
 # Recent Experiments — erdos-741ii-g1
 
-**Best: 0.0 (exp001)** | Total: 107 | Breakthroughs: 1 | Crashes: 0
+**Best: 0.0 (exp001)** | Total: 130 | Breakthroughs: 1 | Crashes: 0
 
-### → exp103 — 0.0 (= best)
-- **Agent:** agent6 | **Design:**  | **Status:** compile_error
-- **What:** proof attempt 2026-06-05T04:45:01Z
+### → exp126 — 0.0 (= best)
+- **Agent:** agent7 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-06-05T05:14:03Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp104 — 0.0 (= best)
-- **Agent:** agent13 | **Design:**  | **Status:** compile_error
-- **What:** proof attempt 2026-06-05T04:45:02Z
-- **Outcome:** PLATEAU
-- **Redundant with:** exp001
-
-### → exp105 — 0.0 (= best)
+### → exp127 — 0.0 (= best)
 - **Agent:** agent8 | **Design:**  | **Status:** compile_error
-- **What:** proof attempt 2026-06-05T04:45:02Z
+- **What:** proof attempt 2026-06-05T05:14:03Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp106 — 0.0 (= best)
-- **Agent:** agent3 | **Design:**  | **Status:** compile_error
-- **What:** proof attempt 2026-06-05T04:45:03Z
+### → exp128 — 0.0 (= best)
+- **Agent:** agent12 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-06-05T05:14:03Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp107 — 0.0 (= best)
-- **Agent:** agent2 | **Design:**  | **Status:** compile_error
-- **What:** proof attempt 2026-06-05T04:45:04Z
+### → exp129 — 0.0 (= best)
+- **Agent:** agent9 | **Design:**  | **Status:** in_progress
+- **What:** proof attempt 2026-06-05T05:14:05Z
+- **Outcome:** PLATEAU
+- **Redundant with:** exp001
+
+### → exp130 — 0.0 (= best)
+- **Agent:** agent13 | **Design:**  | **Status:** in_progress
+- **What:** proof attempt 2026-06-05T05:14:06Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
@@ -142,3 +142,26 @@
 | exp105 | 0.0 | → PLATEAU |
 | exp106 | 0.0 | → PLATEAU |
 | exp107 | 0.0 | → PLATEAU |
+| exp108 | 0.0 | → PLATEAU |
+| exp109 | 0.0 | → PLATEAU |
+| exp110 | 0.0 | → PLATEAU |
+| exp111 | 0.0 | → PLATEAU |
+| exp112 | 0.0 | → PLATEAU |
+| exp113 | 0.0 | → PLATEAU |
+| exp114 | 0.0 | → PLATEAU |
+| exp115 | 0.0 | → PLATEAU |
+| exp116 | 0.0 | → PLATEAU |
+| exp117 | 0.0 | → PLATEAU |
+| exp118 | 0.0 | → PLATEAU |
+| exp119 | 0.0 | → PLATEAU |
+| exp120 | 0.0 | → PLATEAU |
+| exp121 | 0.0 | → PLATEAU |
+| exp122 | 0.0 | → PLATEAU |
+| exp123 | 0.0 | → PLATEAU |
+| exp124 | 0.0 | → PLATEAU |
+| exp125 | 0.0 | → PLATEAU |
+| exp126 | 0.0 | → PLATEAU |
+| exp127 | 0.0 | → PLATEAU |
+| exp128 | 0.0 | → PLATEAU |
+| exp129 | 0.0 | → PLATEAU |
+| exp130 | 0.0 | → PLATEAU |

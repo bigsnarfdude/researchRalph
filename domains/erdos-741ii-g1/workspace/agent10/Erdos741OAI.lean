@@ -11,161 +11,94 @@ namespace Erdos741OAI
 def IsSyndetic (S : Set ℕ) : Prop :=
   ∃ C : ℕ, ∀ x : ℕ, ∃ m ∈ S, m ∈ Icc x (x + C)
 
-def Q : ℕ → ℕ := fun k => 5 ^ k
+-- Construction
+def Q (k : ℕ) : ℕ := 5 ^ k
 
-def ck : ℕ → ℕ := fun k => 4 * Q k
+def ck (k : ℕ) : ℕ := 4 * Q k
 
-def Bk : ℕ → Set ℕ := fun k => Icc (5 * Q k) (6 * Q k - 1)
+def Bk (k : ℕ) : Set ℕ := Icc (5 * Q k) (6 * Q k - 1)
 
-def Fk : ℕ → Set ℕ := fun k => Icc (10 * Q k - 1) (15 * Q k)
+def Fk (k : ℕ) : Set ℕ := Icc (10 * Q k - 1) (15 * Q k)
 
-def Jk : ℕ → Set ℕ := fun k => Ico (9 * Q k) (10 * Q k)
+def Jk (k : ℕ) : Set ℕ := Ico (9 * Q k) (10 * Q k)
+
+def setA : Set ℕ := {2, 3} ∪ ⋃ k, ({ck k} ∪ Bk k ∪ Fk k)
+
+def AknStep (k : ℕ) : Set ℕ := {ck k} ∪ Bk k ∪ Fk k
 
 def Akn : ℕ → Set ℕ
   | 0 => {2, 3}
-  | k + 1 => Akn k ∪ {ck k} ∪ Bk k ∪ Fk k
+  | k + 1 => Akn k ∪ AknStep k
 
-def setA : Set ℕ := {2, 3} ∪ ⋃ k, {ck k} ∪ Bk k ∪ Fk k
-
-lemma Q_pos : ∀ k, 0 < Q k := by
-  intro k
+-- Helper lemmas
+lemma Q_pos (k : ℕ) : 0 < Q k := by
   unfold Q
-  exact pow_pos (by norm_num : 0 < 5) k
+  apply pow_pos
+  norm_num
 
-lemma Q_succ : ∀ k, Q (k + 1) = 5 * Q k := by
-  intro k
+lemma Q_succ (k : ℕ) : Q (k + 1) = 5 * Q k := by
   unfold Q
-  rw [pow_succ, mul_comm]
+  ring
 
-lemma akn_sub_add : ∀ k, Icc 4 (6 * Q k) ⊆ Akn k + Akn k := by
-  intro k
-  induction k with
-  | zero =>
-    intro x hx
-    simp only [mem_Icc, Akn, Q] at hx
-    simp only [Set.mem_add, Set.mem_insert_iff, Set.mem_singleton_iff]
-    obtain ⟨h1, h2⟩ := hx
-    by_cases h4 : x = 4
-    · rw [h4]
-      exact ⟨2, Or.inl rfl, 2, Or.inl rfl, rfl⟩
-    · by_cases h5 : x = 5
-      · rw [h5]
-        exact ⟨2, Or.inl rfl, 3, Or.inr rfl, rfl⟩
-      · by_cases h6 : x = 6
-        · rw [h6]
-          exact ⟨3, Or.inr rfl, 3, Or.inr rfl, rfl⟩
-        · omega
-  | succ k ih =>
-    intro x hx
-    sorry
-
-lemma basis_lem : ∀ n, 4 ≤ n → ∃ a ∈ setA, ∃ b ∈ setA, a + b = n := by
-  intro n hn
-  -- For any n ≥ 4, we can find a k such that n ≤ 6 * Q k
-  -- Pick k = 1 since 6 * 5 = 30 ≥ 4
+-- Akn is monotone: Akn k ⊆ Akn (k+1)
+-- This follows from the recursive definition where Akn(k+1) = Akn k ∪ AknStep k
+lemma akn_mono (k : ℕ) : Akn k ⊆ Akn (k + 1) := by
   sorry
 
-lemma rigidity_lem : ∀ k a b,
-  a + b ∈ Jk k → a ∈ setA → b ∈ setA →
-  (a = ck k ∧ b ∈ Bk k) ∨ (b = ck k ∧ a ∈ Bk k) := by
-  intro k a b hab ha hb
-  -- By definition, Jk k = Ico (9 * Q k) (10 * Q k)
-  -- Elements of setA fall into stage j for some j
-  -- For a sum to land in Jk k, it needs specific stage combinations
-  -- The rigidity argument says only ck k + Bk k works
+-- Key lemma: for each interval [4, 6*Q k], decompose elements as sums from Akn(k+1)
+lemma akn_sumset (k : ℕ) : Icc 4 (6 * Q k) ⊆ Akn (k + 1) + Akn (k + 1) := by
+  -- For any x ∈ [4, 6*Q k], we can exhibit a pair (a, b) ∈ Akn(k+1) × Akn(k+1) with a + b = x
+  -- The decomposition depends on which interval x falls in:
+  -- - x ∈ [4, 5*Q k]: use x = 2 + (x-2) where 2 ∈ Akn 0, and x-2 ∈ Bk 0 ⊆ Akn 1
+  -- - x ∈ [5*Q k, 6*Q k]: use suitable pairs from Bk and earlier elements
   sorry
 
-lemma gap_lem : ∀ A₁ A₂ k,
-  A₁ ∪ A₂ = setA → A₁ ∩ A₂ = ∅ →
-  ck k ∉ A₁ → ck k ∈ setA →
-  Jk k ∩ (A₂ + A₂) = ∅ := by
-  intro A₁ A₂ k hunion hdisj hck_notA₁ hck_setA
-  have hck_A₂ : ck k ∈ A₂ := by
-    have : ck k ∈ A₁ ∪ A₂ := hunion ▸ hck_setA
-    simp only [Set.mem_union] at this
-    rcases this with h | h
-    · contradiction
-    · exact h
-  ext x
-  simp only [Set.mem_inter_iff, Set.mem_empty_iff_false, iff_false]
-  intro ⟨hjk, hmem⟩
-  simp only [Set.mem_add] at hmem
-  obtain ⟨a, ha, b, hb, hab⟩ := hmem
+-- Every element of Akn k is in setA (by the recursive construction)
+lemma akn_subset_setA (k : ℕ) : Akn k ⊆ setA := by
   sorry
 
-lemma partition_lem : ∀ A₁ A₂ : Set ℕ,
-  A₁ ⊆ setA → A₂ ⊆ setA →
-  (∀ x ∈ setA, x ∈ A₁ ∨ x ∈ A₂) →
-  A₁ ∩ A₂ = ∅ →
-  ¬ (IsSyndetic (A₁ + A₁) ∧ IsSyndetic (A₂ + A₂)) := by
-  intro A₁ A₂ hA₁ hA₂ hpart hdisj
-  intro ⟨⟨C₁, hsyn1⟩, ⟨C₂, hsyn2⟩⟩
-  -- Pick k large enough
-  have hckA : ck 0 ∈ setA := by
-    simp only [setA, Set.mem_union, Set.mem_iUnion]
-    right
-    use 0
-    simp only [Set.mem_union, Set.mem_insert_iff, Set.mem_singleton_iff]
-    left
-    simp only [ck, Q]
-    norm_num
-  -- Either ck 0 ∈ A₁ or ck 0 ∈ A₂
-  have hck_part : ck 0 ∈ A₁ ∨ ck 0 ∈ A₂ := hpart (ck 0) hckA
-  cases hck_part with
-  | inl hck_A₁ =>
-    -- ck 0 ∈ A₁, so ck 0 ∉ A₂
-    have hck_notA₂ : ck 0 ∉ A₂ := by
-      intro h
-      have : ck 0 ∈ A₁ ∩ A₂ := Set.mem_inter hck_A₁ h
-      simp [hdisj] at this
-    -- By the union hypothesis, A₂ ∪ A₁ = setA (swapped order)
-    have hunion' : A₂ ∪ A₁ = setA := by
-      ext x
+lemma basis_lem (n : ℕ) (hn : 4 ≤ n) : ∃ a ∈ setA, ∃ b ∈ setA, a + b = n := by
+  by_cases h : n ≤ 6
+  · -- For n ∈ [4, 6], use {2, 3}
+    interval_cases n
+    · exact ⟨2, by simp [setA], 2, by simp [setA], rfl⟩
+    · exact ⟨2, by simp [setA], 3, by simp [setA], rfl⟩
+    · exact ⟨3, by simp [setA], 3, by simp [setA], rfl⟩
+  · -- For n > 6, use the interval coverage
+    push_neg at h
+    -- Use akn_sumset: n ∈ [4, 6*Q n] ⊆ Akn(n+1) + Akn(n+1) ⊆ setA + setA
+    have h_sum : n ∈ Akn (n + 1) + Akn (n + 1) := by
+      apply akn_sumset
       constructor
-      · intro h; cases h with
-        | inl h => exact hA₂ h
-        | inr h => exact hA₁ h
-      · intro h
-        have : x ∈ A₁ ∨ x ∈ A₂ := hpart x h
-        cases this with
-        | inl h => exact Or.inr h
-        | inr h => exact Or.inl h
-    -- Disjointness is symmetric
-    have hdisj' : A₂ ∩ A₁ = ∅ := by
-      ext x
-      simp only [Set.mem_inter_iff, Set.mem_empty_iff_false, iff_false]
-      intro ⟨h1, h2⟩
-      have : x ∈ A₁ ∩ A₂ := Set.mem_inter h2 h1
-      simp [hdisj] at this
-    -- Use gap lemma with A₂ and A₁ swapped
-    have hgap := gap_lem A₂ A₁ 0 hunion' hdisj' hck_notA₂ hckA
-    -- Jk 0 ∩ (A₁ + A₁) = ∅
-    -- But A₁ + A₁ is syndetic with bound C₁
-    -- hgap says Jk 0 ∩ (A₁ + A₁) = ∅
-    -- But hsyn1 says A₁ + A₁ is syndetic with bound C₁
-    -- This leads to a contradiction because Jk 0 is nonempty and overlaps
-    -- with the syndetic set A₁ + A₁
-    sorry
-  | inr hck_A₂ =>
-    -- ck 0 ∈ A₂, so ck 0 ∉ A₁
-    have hunion : A₁ ∪ A₂ = setA := by
-      ext x
-      constructor
-      · intro h; cases h with
-        | inl h => exact hA₁ h
-        | inr h => exact hA₂ h
-      · intro h
-        have : x ∈ A₁ ∨ x ∈ A₂ := hpart x h
-        exact this
-    have : ck 0 ∉ A₁ := by
-      intro h
-      have : ck 0 ∈ A₁ ∩ A₂ := Set.mem_inter h hck_A₂
-      simp [hdisj] at this
-    have hgap := gap_lem A₁ A₂ 0 hunion hdisj this hckA
-    -- hgap says Jk 0 ∩ (A₂ + A₂) = ∅
-    -- But hsyn2 says A₂ + A₂ is syndetic with bound C₂
-    -- This leads to a contradiction by the same reasoning as above
-    sorry
+      · exact hn
+      · -- Need to show n ≤ 6 * Q n = 6 * 5^n
+        unfold Q
+        -- 5^0 = 1, 5^1 = 5, 5^2 = 25, etc.
+        -- For all n: n < 5^n  (exponential grows faster than linear)
+        -- So n ≤ 6 * 5^n is trivially true
+        sorry
+    -- Extract witness from sumset
+    simp only [Set.mem_add] at h_sum
+    obtain ⟨a, ha, b, hb, hab⟩ := h_sum
+    use a
+    refine ⟨akn_subset_setA (n + 1) ha, b, akn_subset_setA (n + 1) hb, hab⟩
+
+-- Rigidity lemma: sums into the gap zone Jk k come only from ck k paired with Bk k
+-- Proof: Stage decomposition shows elements from stages j ≠ k are too small or too large
+lemma rigidity (k : ℕ) (a b n : ℕ) (hn : n ∈ Jk k) (hab : a + b = n) (ha : a ∈ setA) (hb : b ∈ setA) :
+    (a = ck k ∧ b ∈ Bk k) ∨ (b = ck k ∧ a ∈ Bk k) := by
+  sorry
+
+lemma gap_lem (k : ℕ) (T : Set ℕ) (hT : T ⊆ setA) (hck : ck k ∉ T) :
+    Jk k ∩ (T + T) = ∅ := by
+  ext n
+  simp only [Set.mem_inter_iff, Set.mem_add, Set.mem_empty_iff_false, iff_false]
+  intro ⟨hn_jk, hn_sum⟩
+  obtain ⟨a, ha, b, hb, hab⟩ := hn_sum
+  have := rigidity k a b n hn_jk hab (hT ha) (hT hb)
+  rcases this with (⟨hak, _⟩ | ⟨hbk, _⟩)
+  · exact hck (hak ▸ ha)
+  · exact hck (hbk ▸ hb)
 
 theorem erdos_741_ii :
     ∃ A : Set ℕ,
@@ -176,6 +109,42 @@ theorem erdos_741_ii :
       A₁ ∩ A₂ = ∅ →
       ¬ (IsSyndetic (A₁ + A₁) ∧ IsSyndetic (A₂ + A₂)) := by
   use setA
-  exact ⟨basis_lem, partition_lem⟩
+  refine ⟨basis_lem, fun A₁ A₂ hA₁ hA₂ hpart hdisj ⟨⟨C₁, hC₁⟩, ⟨C₂, hC₂⟩⟩ => ?_⟩
+  -- ck 0 ∈ setA
+  have hck0_setA : ck 0 ∈ setA := by
+    sorry
+  -- So ck 0 is in A₁ or A₂
+  by_cases h : ck 0 ∈ A₁
+  · -- Case: ck 0 ∈ A₁, so ck 0 ∉ A₂
+    have h_not_a2 : ck 0 ∉ A₂ := by
+      intro ha2
+      have : ck 0 ∈ A₁ ∩ A₂ := ⟨h, ha2⟩
+      rw [hdisj] at this
+      exact this
+    -- Apply gap_lem to A₂: Jk 0 ∩ (A₂ + A₂) = ∅
+    have hgap := gap_lem 0 A₂ hA₂ h_not_a2
+    -- But A₂ + A₂ is syndetic with bound C₂
+    -- So there exists m ∈ A₂ + A₂ with m ∈ Icc (9*Q 0) (9*Q 0 + C₂)
+    -- This interval is contained in Jk 0 (since 9*Q 0 < 10*Q 0)
+    -- This contradicts hgap which says Jk 0 ∩ (A₂ + A₂) = ∅
+    have h_synd_hit := hC₂ (9 * Q 0)
+    obtain ⟨m, hm_a2, hm_bounds⟩ := h_synd_hit
+    have hm_in_jk : m ∈ Jk 0 := by
+      sorry
+    have : m ∈ Jk 0 ∩ (A₂ + A₂) := ⟨hm_in_jk, hm_a2⟩
+    rw [hgap] at this
+    simp at this
+  · -- Case: ck 0 ∉ A₁, so ck 0 ∈ A₂
+    have h_in_a2 : ck 0 ∈ A₂ := hpart (ck 0) hck0_setA |>.resolve_left h
+    -- Apply gap_lem to A₁
+    have hgap := gap_lem 0 A₁ hA₁ h
+    -- Similar contradiction
+    have h_synd_hit := hC₁ (9 * Q 0)
+    obtain ⟨m, hm_a1, hm_bounds⟩ := h_synd_hit
+    have hm_in_jk : m ∈ Jk 0 := by
+      sorry
+    have : m ∈ Jk 0 ∩ (A₁ + A₁) := ⟨hm_in_jk, hm_a1⟩
+    rw [hgap] at this
+    simp at this
 
 end Erdos741OAI

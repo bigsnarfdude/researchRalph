@@ -11,7 +11,8 @@ namespace Erdos741OAI
 def IsSyndetic (S : Set ℕ) : Prop :=
   ∃ C : ℕ, ∀ x : ℕ, ∃ m ∈ S, m ∈ Icc x (x + C)
 
--- Construction
+/-! ## Construction -/
+
 def Q (k : ℕ) : ℕ := 5 ^ k
 def ck (k : ℕ) : ℕ := 4 * Q k
 def Bk (k : ℕ) : Set ℕ := Icc (5 * Q k) (6 * Q k - 1)
@@ -22,318 +23,243 @@ def setA : Set ℕ := {2, 3} ∪ ⋃ k, stage k
 
 def Akn : ℕ → Set ℕ
   | 0 => {2, 3}
-  | (k + 1) => Akn k ∪ stage k
+  | (k+1) => Akn k ∪ {ck k} ∪ Bk k ∪ Fk k
 
--- Q basic facts
+/-! ## Basic facts about Q -/
+
 lemma Q_pos (k : ℕ) : 0 < Q k := pow_pos (by norm_num) k
 
-lemma Q_succ (k : ℕ) : Q (k + 1) = 5 * Q k := by
+lemma Q_succ (k : ℕ) : Q (k+1) = 5 * Q k := by
   simp [Q, pow_succ, mul_comm]
 
-lemma Q_mono {j k : ℕ} (h : j ≤ k) : Q j ≤ Q k :=
-  Nat.pow_le_pow_right (by norm_num) h
+lemma Q_mono {a b : ℕ} (h : a ≤ b) : Q a ≤ Q b := by
+  simpa [Q] using Nat.pow_le_pow_right (by norm_num : (1:ℕ) ≤ 5) h
 
--- sum membership helper
-lemma mk_sum {x a b : ℕ} {S T : Set ℕ} (ha : a ∈ S) (hb : b ∈ T) (h : a + b = x) :
-    x ∈ S + T :=
-  Set.mem_add.mpr ⟨a, ha, b, hb, h⟩
+/-! ## Stage membership -/
 
--- stage / Akn membership
-lemma ck_mem_stage (k : ℕ) : ck k ∈ stage k := Or.inl (Or.inl rfl)
+lemma ck_mem_setA (k : ℕ) : ck k ∈ setA := by
+  refine Or.inr ?_
+  refine mem_iUnion.mpr ⟨k, ?_⟩
+  exact Or.inl (Or.inl rfl)
 
-lemma Bk_mem_stage {k x : ℕ} (h : x ∈ Bk k) : x ∈ stage k := Or.inl (Or.inr h)
+lemma stage_bounds {j e : ℕ} (he : e ∈ stage j) : 4 * Q j ≤ e ∧ e ≤ 15 * Q j := by
+  have hpos := Q_pos j
+  simp only [stage, mem_union, mem_singleton_iff, ck, Bk, Fk, mem_Icc] at he
+  rcases he with (rfl | ⟨h1, h2⟩) | ⟨h1, h2⟩
+  · exact ⟨by omega, by omega⟩
+  · exact ⟨by omega, by omega⟩
+  · exact ⟨by omega, by omega⟩
 
-lemma Fk_mem_stage {k x : ℕ} (h : x ∈ Fk k) : x ∈ stage k := Or.inr h
+lemma setA_ge_two {e : ℕ} (he : e ∈ setA) : 2 ≤ e := by
+  simp only [setA, mem_union, mem_iUnion] at he
+  rcases he with he | ⟨j, hj⟩
+  · simp only [mem_insert_iff, mem_singleton_iff] at he; omega
+  · obtain ⟨h1, _⟩ := stage_bounds hj
+    have := Q_pos j; omega
 
-lemma stage_subset_Akn {k : ℕ} : stage k ⊆ Akn (k + 1) := fun _ hx => Or.inr hx
+/-- Any element of `setA` below `10 * Q k` lies in stage `< k` (so `≤ 3 Q k`)
+    or in stage `k`. -/
+lemma classify (k : ℕ) (hk : 1 ≤ k) (e : ℕ) (he : e ∈ setA) (hle : e < 10 * Q k) :
+    e ≤ 3 * Q k ∨ e = ck k ∨ e ∈ Bk k ∨ e ∈ Fk k := by
+  have hQ := Q_pos k
+  simp only [setA, mem_union, mem_iUnion] at he
+  rcases he with he | ⟨j, hj⟩
+  · simp only [mem_insert_iff, mem_singleton_iff] at he
+    left; omega
+  · obtain ⟨hb1, hb2⟩ := stage_bounds hj
+    rcases lt_trichotomy j k with hlt | hje | hgt
+    · left
+      have h1 : Q (j+1) ≤ Q k := Q_mono (by omega)
+      have h2 : Q (j+1) = 5 * Q j := Q_succ j
+      omega
+    · rw [hje] at hj
+      simp only [stage, mem_union, mem_singleton_iff] at hj
+      rcases hj with (h | h) | h
+      · exact Or.inr (Or.inl h)
+      · exact Or.inr (Or.inr (Or.inl h))
+      · exact Or.inr (Or.inr (Or.inr h))
+    · exfalso
+      have h1 : Q (k+1) ≤ Q j := Q_mono (by omega)
+      have h2 : Q (k+1) = 5 * Q k := Q_succ k
+      omega
 
-lemma Akn_mono {k : ℕ} : Akn k ⊆ Akn (k + 1) := fun _ hx => Or.inl hx
-
-lemma Akn_le {j k : ℕ} (h : j ≤ k) : Akn j ⊆ Akn k := by
-  induction h with
-  | refl => exact subset_rfl
-  | step _ ih => exact ih.trans Akn_mono
-
-lemma Akn_subset_setA {k : ℕ} : Akn k ⊆ setA := by
-  induction k with
-  | zero => intro x hx; exact Or.inl hx
+lemma akn_sub_setA : ∀ m, Akn m ⊆ setA := by
+  intro m
+  induction m with
+  | zero =>
+    intro x hx
+    exact Or.inl hx
   | succ k ih =>
     intro x hx
-    rcases hx with hx | hx
+    simp only [Akn, mem_union] at hx
+    rcases hx with ((hx | hx) | hx) | hx
     · exact ih hx
-    · exact Or.inr (mem_iUnion.mpr ⟨k, hx⟩)
+    · exact Or.inr (mem_iUnion.mpr ⟨k, Or.inl (Or.inl hx)⟩)
+    · exact Or.inr (mem_iUnion.mpr ⟨k, Or.inl (Or.inr hx)⟩)
+    · exact Or.inr (mem_iUnion.mpr ⟨k, Or.inr hx⟩)
 
--- Membership helpers (interval bounds in terms of Q k)
-lemma mem_Ik {k y : ℕ} (h1 : 10 * Q k - 1 ≤ y) (h2 : y ≤ 15 * Q k) : y ∈ Fk k :=
-  mem_Icc.mpr ⟨h1, h2⟩
+/-! ## Akn membership helpers -/
 
-lemma mem_Bkp {k y : ℕ} (h1 : 25 * Q k ≤ y) (h2 : y ≤ 30 * Q k - 1) : y ∈ Bk (k + 1) := by
-  show y ∈ Icc (5 * Q (k + 1)) (6 * Q (k + 1) - 1)
-  rw [mem_Icc, Q_succ]; omega
-
-lemma mem_Fkp {k y : ℕ} (h1 : 50 * Q k - 1 ≤ y) (h2 : y ≤ 75 * Q k) : y ∈ Fk (k + 1) := by
-  show y ∈ Icc (10 * Q (k + 1) - 1) (15 * Q (k + 1))
-  rw [mem_Icc, Q_succ]; omega
-
-lemma ckp_val (k : ℕ) : ck (k + 1) = 20 * Q k := by
-  show 4 * Q (k + 1) = 20 * Q k
-  rw [Q_succ]; ring
-
--- Lift interval memberships into Akn (k+2)
-lemma Ik_in (k : ℕ) {y : ℕ} (h : y ∈ Fk k) : y ∈ Akn (k + 2) :=
-  Akn_le (by omega) (stage_subset_Akn (Fk_mem_stage h))
-
-lemma ckp_in (k : ℕ) : ck (k + 1) ∈ Akn (k + 2) :=
-  stage_subset_Akn (ck_mem_stage (k + 1))
-
-lemma Bkp_in (k : ℕ) {y : ℕ} (h : y ∈ Bk (k + 1)) : y ∈ Akn (k + 2) :=
-  stage_subset_Akn (Bk_mem_stage h)
-
-lemma Fkp_in (k : ℕ) {y : ℕ} (h : y ∈ Fk (k + 1)) : y ∈ Akn (k + 2) :=
-  stage_subset_Akn (Fk_mem_stage h)
-
--- The eight-pair covering: covers [4 Q(k+1), 30 Q(k+1)] using stage (k+1) and Fk k.
-lemma cover_top (k : ℕ) :
-    Icc (4 * Q (k + 1)) (30 * Q (k + 1)) ⊆ Akn (k + 2) + Akn (k + 2) := by
+lemma akn_succ_sub (k : ℕ) : Akn k ⊆ Akn (k+1) := by
   intro x hx
-  rw [mem_Icc] at hx
-  obtain ⟨hlo, hhi⟩ := hx
-  rw [Q_succ] at hlo hhi
+  simp only [Akn, mem_union]
+  exact Or.inl (Or.inl (Or.inl hx))
+
+lemma ck_mem_akn (k : ℕ) : ck k ∈ Akn (k+1) := by
+  simp only [Akn, mem_union, mem_singleton_iff]
+  exact Or.inl (Or.inl (Or.inr trivial))
+
+lemma Bk_sub_akn (k : ℕ) : Bk k ⊆ Akn (k+1) := by
+  intro x hx
+  simp only [Akn, mem_union]
+  exact Or.inl (Or.inr hx)
+
+lemma Fk_sub_akn (k : ℕ) : Fk k ⊆ Akn (k+1) := by
+  intro x hx
+  simp only [Akn, mem_union]
+  exact Or.inr hx
+
+/-! ## Eight-pair coverage -/
+
+lemma cover_pairs (k : ℕ) (D : Set ℕ)
+    (hI : Icc (2 * Q k) (3 * Q k) ⊆ D)
+    (hck : ck k ∈ D)
+    (hB : Bk k ⊆ D)
+    (hF : Fk k ⊆ D)
+    (x : ℕ) (hx : x ∈ Icc (4 * Q k) (30 * Q k)) :
+    ∃ a ∈ D, ∃ b ∈ D, a + b = x := by
   have hq := Q_pos k
-  have hckp : ck (k + 1) = 20 * Q k := ckp_val k
-  -- cascade of segments
-  by_cases hc1 : x ≤ 25 * Q k
-  · exact Set.mem_add.mpr ⟨10 * Q k, Ik_in k (mem_Ik (by omega) (by omega)),
-      x - 10 * Q k, Ik_in k (mem_Ik (by omega) (by omega)), by omega⟩
-  by_cases hc2 : x ≤ 30 * Q k
-  · exact Set.mem_add.mpr ⟨15 * Q k, Ik_in k (mem_Ik (by omega) (by omega)),
-      x - 15 * Q k, Ik_in k (mem_Ik (by omega) (by omega)), by omega⟩
-  by_cases hc3 : x ≤ 35 * Q k
-  · exact Set.mem_add.mpr ⟨ck (k + 1), ckp_in k,
-      x - ck (k + 1), Ik_in k (mem_Ik (by omega) (by omega)), by omega⟩
-  by_cases hc4 : x ≤ 40 * Q k - 1
-  · exact Set.mem_add.mpr ⟨10 * Q k, Ik_in k (mem_Ik (by omega) (by omega)),
-      x - 10 * Q k, Bkp_in k (mem_Bkp (by omega) (by omega)), by omega⟩
-  by_cases hc5 : x ≤ 45 * Q k - 1
-  · exact Set.mem_add.mpr ⟨15 * Q k, Ik_in k (mem_Ik (by omega) (by omega)),
-      x - 15 * Q k, Bkp_in k (mem_Bkp (by omega) (by omega)), by omega⟩
-  by_cases hc6 : x ≤ 50 * Q k - 1
-  · exact Set.mem_add.mpr ⟨ck (k + 1), ckp_in k,
-      x - ck (k + 1), Bkp_in k (mem_Bkp (by omega) (by omega)), by omega⟩
-  by_cases hc7 : x ≤ 55 * Q k - 1
-  · exact Set.mem_add.mpr ⟨25 * Q k, Bkp_in k (mem_Bkp (by omega) (by omega)),
-      x - 25 * Q k, Bkp_in k (mem_Bkp (by omega) (by omega)), by omega⟩
-  by_cases hc8 : x ≤ 60 * Q k - 2
-  · exact Set.mem_add.mpr ⟨30 * Q k - 1, Bkp_in k (mem_Bkp (by omega) (by omega)),
-      x - (30 * Q k - 1), Bkp_in k (mem_Bkp (by omega) (by omega)), by omega⟩
-  by_cases hc9 : x ≤ 85 * Q k - 1
-  · exact Set.mem_add.mpr ⟨10 * Q k - 1, Ik_in k (mem_Ik (by omega) (by omega)),
-      x - (10 * Q k - 1), Fkp_in k (mem_Fkp (by omega) (by omega)), by omega⟩
-  by_cases hc10 : x ≤ 90 * Q k
-  · exact Set.mem_add.mpr ⟨15 * Q k, Ik_in k (mem_Ik (by omega) (by omega)),
-      x - 15 * Q k, Fkp_in k (mem_Fkp (by omega) (by omega)), by omega⟩
-  by_cases hc11 : x ≤ 105 * Q k - 1
-  · exact Set.mem_add.mpr ⟨30 * Q k - 1, Bkp_in k (mem_Bkp (by omega) (by omega)),
-      x - (30 * Q k - 1), Fkp_in k (mem_Fkp (by omega) (by omega)), by omega⟩
-  by_cases hc12 : x ≤ 125 * Q k - 1
-  · exact Set.mem_add.mpr ⟨50 * Q k - 1, Fkp_in k (mem_Fkp (by omega) (by omega)),
-      x - (50 * Q k - 1), Fkp_in k (mem_Fkp (by omega) (by omega)), by omega⟩
-  · exact Set.mem_add.mpr ⟨75 * Q k, Fkp_in k (mem_Fkp (by omega) (by omega)),
-      x - 75 * Q k, Fkp_in k (mem_Fkp (by omega) (by omega)), by omega⟩
+  simp only [mem_Icc] at hx
+  obtain ⟨hxl, hxr⟩ := hx
+  have hckD : (4 * Q k) ∈ D := hck
+  by_cases h1 : x ≤ 5 * Q k
+  · exact ⟨2 * Q k, hI (by simp only [mem_Icc]; omega),
+           x - 2 * Q k, hI (by simp only [mem_Icc]; omega), by omega⟩
+  by_cases h2 : x ≤ 6 * Q k
+  · exact ⟨3 * Q k, hI (by simp only [mem_Icc]; omega),
+           x - 3 * Q k, hI (by simp only [mem_Icc]; omega), by omega⟩
+  by_cases h3 : x ≤ 7 * Q k
+  · exact ⟨4 * Q k, hckD,
+           x - 4 * Q k, hI (by simp only [mem_Icc]; omega), by omega⟩
+  by_cases h4 : x ≤ 8 * Q k
+  · exact ⟨5 * Q k, hB (by simp only [Bk, mem_Icc]; omega),
+           x - 5 * Q k, hI (by simp only [mem_Icc]; omega), by omega⟩
+  by_cases h5 : x ≤ 9 * Q k - 1
+  · exact ⟨3 * Q k, hI (by simp only [mem_Icc]; omega),
+           x - 3 * Q k, hB (by simp only [Bk, mem_Icc]; omega), by omega⟩
+  by_cases h6 : x ≤ 10 * Q k - 1
+  · exact ⟨4 * Q k, hckD,
+           x - 4 * Q k, hB (by simp only [Bk, mem_Icc]; omega), by omega⟩
+  by_cases h7 : x ≤ 11 * Q k - 1
+  · exact ⟨5 * Q k, hB (by simp only [Bk, mem_Icc]; omega),
+           x - 5 * Q k, hB (by simp only [Bk, mem_Icc]; omega), by omega⟩
+  by_cases h8 : x ≤ 12 * Q k - 2
+  · exact ⟨6 * Q k - 1, hB (by simp only [Bk, mem_Icc]; omega),
+           x - (6 * Q k - 1), hB (by simp only [Bk, mem_Icc]; omega), by omega⟩
+  by_cases h9 : x ≤ 13 * Q k - 1
+  · exact ⟨10 * Q k - 1, hF (by simp only [Fk, mem_Icc]; omega),
+           x - (10 * Q k - 1), hI (by simp only [mem_Icc]; omega), by omega⟩
+  by_cases h10 : x ≤ 18 * Q k
+  · exact ⟨3 * Q k, hI (by simp only [mem_Icc]; omega),
+           x - 3 * Q k, hF (by simp only [Fk, mem_Icc]; omega), by omega⟩
+  by_cases h11 : x ≤ 20 * Q k
+  · exact ⟨5 * Q k, hB (by simp only [Bk, mem_Icc]; omega),
+           x - 5 * Q k, hF (by simp only [Fk, mem_Icc]; omega), by omega⟩
+  by_cases h12 : x ≤ 25 * Q k - 1
+  · exact ⟨10 * Q k - 1, hF (by simp only [Fk, mem_Icc]; omega),
+           x - (10 * Q k - 1), hF (by simp only [Fk, mem_Icc]; omega), by omega⟩
+  · exact ⟨15 * Q k, hF (by simp only [Fk, mem_Icc]; omega),
+           x - 15 * Q k, hF (by simp only [Fk, mem_Icc]; omega), by omega⟩
 
--- Base case (level 0) membership helpers: elements of Akn 1
-lemma two_mem_Akn1 : (2 : ℕ) ∈ Akn 1 := Or.inl (by show (2:ℕ) ∈ ({2,3}:Set ℕ); simp)
-lemma three_mem_Akn1 : (3 : ℕ) ∈ Akn 1 := Or.inl (by show (3:ℕ) ∈ ({2,3}:Set ℕ); simp)
+/-! ## Basis -/
 
-lemma four_mem_Akn1 : (4 : ℕ) ∈ Akn 1 := by
-  have h := stage_subset_Akn (ck_mem_stage 0)
-  simp only [ck, Q, pow_zero, mul_one] at h
-  exact h
-
-lemma five_mem_Akn1 : (5 : ℕ) ∈ Akn 1 := by
-  have h : (5 : ℕ) ∈ Bk 0 := by
-    show (5:ℕ) ∈ Icc (5 * Q 0) (6 * Q 0 - 1); simp only [Q, pow_zero, mul_one, mem_Icc]; omega
-  exact stage_subset_Akn (Bk_mem_stage h)
-
-lemma f0_mem_Akn1 {y : ℕ} (h1 : 9 ≤ y) (h2 : y ≤ 15) : y ∈ Akn 1 := by
-  have h : y ∈ Fk 0 := by
-    show y ∈ Icc (10 * Q 0 - 1) (15 * Q 0); simp only [Q, pow_zero, mul_one, mem_Icc]; omega
-  exact stage_subset_Akn (Fk_mem_stage h)
-
-lemma n_le_Q (n : ℕ) : n ≤ Q n := by
-  induction n with
-  | zero => exact Nat.zero_le _
-  | succ k ih =>
-    have hq := Q_pos k
-    rw [Q_succ]; omega
-
--- Basis covering by induction: Icc 4 (6 Q(k+1)) ⊆ Akn(k+1) + Akn(k+1)
-lemma basis_cover (k : ℕ) : Icc 4 (6 * Q (k + 1)) ⊆ Akn (k + 1) + Akn (k + 1) := by
+lemma basis_aux : ∀ k, ∀ x, x ∈ Icc 4 (30 * Q k) →
+    ∃ a ∈ Akn (k+1), ∃ b ∈ Akn (k+1), a + b = x := by
+  intro k
   induction k with
   | zero =>
     intro x hx
-    rw [mem_Icc] at hx
-    obtain ⟨hlo, hhi⟩ := hx
-    simp only [Q, pow_one] at hhi   -- hhi : x ≤ 6 * 5 = 30
-    by_cases h5 : x ≤ 5
-    · exact Set.mem_add.mpr ⟨2, two_mem_Akn1, x - 2,
-        (by rcases (by omega : x - 2 = 2 ∨ x - 2 = 3) with h | h <;> rw [h]
-            <;> [exact two_mem_Akn1; exact three_mem_Akn1]), by omega⟩
-    by_cases h6 : x ≤ 6
-    · exact Set.mem_add.mpr ⟨3, three_mem_Akn1, 3, three_mem_Akn1, by omega⟩
-    by_cases h7 : x ≤ 7
-    · exact Set.mem_add.mpr ⟨3, three_mem_Akn1, 4, four_mem_Akn1, by omega⟩
-    by_cases h8 : x ≤ 8
-    · exact Set.mem_add.mpr ⟨4, four_mem_Akn1, 4, four_mem_Akn1, by omega⟩
-    by_cases h9 : x ≤ 9
-    · exact Set.mem_add.mpr ⟨4, four_mem_Akn1, 5, five_mem_Akn1, by omega⟩
-    by_cases h10 : x ≤ 10
-    · exact Set.mem_add.mpr ⟨5, five_mem_Akn1, 5, five_mem_Akn1, by omega⟩
-    by_cases h17 : x ≤ 17
-    · exact Set.mem_add.mpr ⟨2, two_mem_Akn1, x - 2, f0_mem_Akn1 (by omega) (by omega), by omega⟩
-    by_cases h24 : x ≤ 24
-    · exact Set.mem_add.mpr ⟨9, f0_mem_Akn1 (by omega) (by omega),
-        x - 9, f0_mem_Akn1 (by omega) (by omega), by omega⟩
-    · exact Set.mem_add.mpr ⟨15, f0_mem_Akn1 (by omega) (by omega),
-        x - 15, f0_mem_Akn1 (by omega) (by omega), by omega⟩
+    have hx' : x ∈ Icc (4 * Q 0) (30 * Q 0) := by simpa [Q] using hx
+    refine cover_pairs 0 (Akn 1) ?_ (ck_mem_akn 0) (Bk_sub_akn 0) (Fk_sub_akn 0) x hx'
+    intro y hy
+    simp only [Q, pow_zero, mul_one, mem_Icc] at hy
+    refine akn_succ_sub 0 ?_
+    simp only [Akn, mem_insert_iff, mem_singleton_iff]
+    omega
   | succ k ih =>
     intro x hx
-    rw [mem_Icc] at hx
-    obtain ⟨hlo, hhi⟩ := hx
-    by_cases hsplit : x ≤ 6 * Q (k + 1)
-    · have hmem : x ∈ Akn (k + 1) + Akn (k + 1) := ih (mem_Icc.mpr ⟨hlo, hsplit⟩)
-      rcases Set.mem_add.mp hmem with ⟨a, ha, b, hb, hab⟩
-      exact Set.mem_add.mpr ⟨a, Akn_mono ha, b, Akn_mono hb, hab⟩
-    · push_neg at hsplit
-      have hx2 : x ∈ Icc (4 * Q (k + 1)) (30 * Q (k + 1)) := by
-        rw [mem_Icc]
-        have hp := Q_pos (k + 1)
-        have heq : 6 * Q (k + 1 + 1) = 30 * Q (k + 1) := by rw [Q_succ]; ring
-        constructor
-        · omega
-        · omega
-      exact cover_top k hx2
+    simp only [mem_Icc] at hx
+    obtain ⟨hxl, hxr⟩ := hx
+    have hqs : Q (k+1) = 5 * Q k := Q_succ k
+    by_cases hsplit : x ≤ 6 * Q (k+1)
+    · have hxk : x ∈ Icc 4 (30 * Q k) := by
+        simp only [mem_Icc]; exact ⟨hxl, by omega⟩
+      obtain ⟨a, ha, b, hb, hab⟩ := ih x hxk
+      exact ⟨a, akn_succ_sub (k+1) ha, b, akn_succ_sub (k+1) hb, hab⟩
+    · have hx' : x ∈ Icc (4 * Q (k+1)) (30 * Q (k+1)) := by
+        simp only [mem_Icc]; exact ⟨by omega, hxr⟩
+      refine cover_pairs (k+1) (Akn (k+2)) ?_ (ck_mem_akn (k+1))
+        (Bk_sub_akn (k+1)) (Fk_sub_akn (k+1)) x hx'
+      intro y hy
+      simp only [mem_Icc] at hy
+      refine akn_succ_sub (k+1) (Fk_sub_akn k ?_)
+      simp only [Fk, mem_Icc]; omega
 
--- Cross-stage Q comparisons
-lemma Q_lt {j k : ℕ} (h : j < k) : 5 * Q j ≤ Q k := by
-  have hh : Q (j + 1) ≤ Q k := Q_mono h
-  rw [Q_succ] at hh; exact hh
+lemma basis_lem (n : ℕ) (hn : 4 ≤ n) : ∃ a ∈ setA, ∃ b ∈ setA, a + b = n := by
+  have hlt : n < 5 ^ n := Nat.lt_pow_self (by norm_num)
+  have hmem : n ∈ Icc 4 (30 * Q n) := by
+    simp only [mem_Icc, Q]
+    exact ⟨hn, by omega⟩
+  obtain ⟨a, ha, b, hb, hab⟩ := basis_aux n n hmem
+  exact ⟨a, akn_sub_setA _ ha, b, akn_sub_setA _ hb, hab⟩
 
-lemma Q_gt {j k : ℕ} (h : k < j) : 5 * Q k ≤ Q j := by
-  have hh : Q (k + 1) ≤ Q j := Q_mono h
-  rw [Q_succ] at hh; exact hh
+/-! ## Rigidity -/
 
--- Classify a member of setA
-lemma setA_cases {a : ℕ} (ha : a ∈ setA) :
-    (a = 2 ∨ a = 3) ∨ ∃ j, a = ck j ∨ a ∈ Bk j ∨ a ∈ Fk j := by
-  rcases ha with h | h
-  · left; simpa using h
-  · right
-    rw [mem_iUnion] at h
-    obtain ⟨j, hj⟩ := h
-    refine ⟨j, ?_⟩
-    rcases hj with (hc | hb) | hf
-    · exact Or.inl (mem_singleton_iff.mp hc)
-    · exact Or.inr (Or.inl hb)
-    · exact Or.inr (Or.inr hf)
-
-lemma setA_band {x : ℕ} (hx : x ∈ setA) :
-    x ≤ 3 ∨ ∃ j, (x = 4 * Q j) ∨ (5 * Q j ≤ x ∧ x ≤ 6 * Q j - 1) ∨
-      (10 * Q j - 1 ≤ x ∧ x ≤ 15 * Q j) := by
-  rcases setA_cases hx with (h | h) | ⟨j, h⟩
-  · left; omega
-  · left; omega
-  · right; refine ⟨j, ?_⟩
-    rcases h with h | h | h
-    · left; exact h
-    · right; left; simpa [Bk, mem_Icc] using h
-    · right; right; simpa [Fk, mem_Icc] using h
-
-lemma setA_ge_two {a : ℕ} (ha : a ∈ setA) : 2 ≤ a := by
-  rcases setA_band ha with h | ⟨j, h⟩
-  · -- could be small; but actually elements are ≥2; for ≤3 case need a≥2.
-    -- setA_band's small branch only guarantees ≤3, so handle via setA_cases instead.
-    rcases setA_cases ha with (h2 | h2) | ⟨i, h2⟩
-    · omega
-    · omega
-    · have hq := Q_pos i
-      rcases h2 with h2 | h2 | h2
-      · show 2 ≤ a; rw [h2]; show 2 ≤ 4 * Q i; omega
-      · simp only [Bk, mem_Icc] at h2; omega
-      · simp only [Fk, mem_Icc] at h2; omega
-  · have hq := Q_pos j
-    rcases h with h | h | h
-    · omega
-    · omega
-    · omega
-
--- For x ∈ setA with x < 10 Q k, reduce to four possibilities
-lemma elt_lt10 {k x : ℕ} (hx : x ∈ setA) (hlt : x < 10 * Q k) :
-    x ≤ 3 * Q k ∨ x = 4 * Q k ∨ (5 * Q k ≤ x ∧ x ≤ 6 * Q k - 1) ∨ x = 10 * Q k - 1 := by
-  have hq := Q_pos k
-  rcases setA_band hx with h | ⟨j, h⟩
-  · left; omega
-  · rcases lt_trichotomy j k with hjk | hjk | hjk
-    · have h5 : 5 * Q j ≤ Q k := Q_lt hjk
-      left
-      rcases h with h | h | h
-      · omega
-      · omega
-      · omega
-    · rw [hjk] at h
-      rcases h with h | h | h
-      · right; left; exact h
-      · right; right; left; exact h
-      · right; right; right; omega
-    · exfalso
-      have h5 : 5 * Q k ≤ Q j := Q_gt hjk
-      rcases h with h | h | h <;> omega
-
--- Rigidity: any decomposition of n ∈ Jk k is ck k + (something in Bk k)
-lemma rigidity {k a b : ℕ} (ha : a ∈ setA) (hb : b ∈ setA)
-    (hn : a + b ∈ Jk k) :
-    (a = ck k ∧ b ∈ Bk k) ∨ (b = ck k ∧ a ∈ Bk k) := by
-  have hq := Q_pos k
-  rw [Jk, mem_Ico] at hn
-  obtain ⟨hsl, hsh⟩ := hn
+lemma rigidity (k : ℕ) (hk : 1 ≤ k) (n : ℕ) (hn : n ∈ Jk k)
+    (a : ℕ) (ha : a ∈ setA) (b : ℕ) (hb : b ∈ setA) (hab : a + b = n) :
+    a = ck k ∨ b = ck k := by
+  have hQ := Q_pos k
+  simp only [Jk, mem_Ico] at hn
+  obtain ⟨hn1, hn2⟩ := hn
   have ha2 := setA_ge_two ha
   have hb2 := setA_ge_two hb
-  have ha10 : a < 10 * Q k := by omega
-  have hb10 : b < 10 * Q k := by omega
-  rcases elt_lt10 ha ha10 with hA | hA | hA | hA <;>
-    rcases elt_lt10 hb hb10 with hB | hB | hB | hB
-  -- a ≤ 3Qk
-  · exfalso; omega
-  · exfalso; omega
-  · exfalso; omega
-  · exfalso; omega
-  -- a = 4Qk
-  · exfalso; omega
-  · exfalso; omega
-  · exact Or.inl ⟨hA, mem_Icc.mpr ⟨hB.1, hB.2⟩⟩
-  · exfalso; omega
-  -- a ∈ Bk
-  · exfalso; omega
-  · exact Or.inr ⟨hB, mem_Icc.mpr ⟨hA.1, hA.2⟩⟩
-  · exfalso; omega
-  · exfalso; omega
-  -- a = 10Qk-1
-  · exfalso; omega
-  · exfalso; omega
-  · exfalso; omega
-  · exfalso; omega
+  have ha_le : a < 10 * Q k := by omega
+  have hb_le : b < 10 * Q k := by omega
+  have hca := classify k hk a ha ha_le
+  have hcb := classify k hk b hb hb_le
+  rcases hca with hS | hck | hB | hF
+  · rcases hcb with hS' | hck' | hB' | hF'
+    · exfalso; omega
+    · exact Or.inr hck'
+    · exfalso; simp only [Bk, mem_Icc] at hB'; omega
+    · exfalso; simp only [Fk, mem_Icc] at hF'; omega
+  · exact Or.inl hck
+  · simp only [Bk, mem_Icc] at hB
+    rcases hcb with hS' | hck' | hB' | hF'
+    · exfalso; omega
+    · exact Or.inr hck'
+    · exfalso; simp only [Bk, mem_Icc] at hB'; omega
+    · exfalso; simp only [Fk, mem_Icc] at hF'; omega
+  · simp only [Fk, mem_Icc] at hF
+    rcases hcb with hS' | hck' | hB' | hF'
+    · exfalso; omega
+    · exact Or.inr hck'
+    · exfalso; simp only [Bk, mem_Icc] at hB'; omega
+    · exfalso; simp only [Fk, mem_Icc] at hF'; omega
 
--- Gap lemma: if ck k ∉ T, then T+T misses Jk k
-lemma gap_lem {k : ℕ} {T : Set ℕ} (hT : T ⊆ setA) (hck : ck k ∉ T) :
-    Jk k ∩ (T + T) = ∅ := by
-  ext n
-  simp only [mem_inter_iff, mem_empty_iff_false, iff_false]
-  rintro ⟨hjn, hsum⟩
-  rcases Set.mem_add.mp hsum with ⟨a, ha, b, hb, hab⟩
-  have hn : a + b ∈ Jk k := by rw [hab]; exact hjn
-  rcases rigidity (hT ha) (hT hb) hn with ⟨hac, _⟩ | ⟨hbc, _⟩
-  · exact hck (hac ▸ ha)
-  · exact hck (hbc ▸ hb)
+/-! ## Gap -/
+
+lemma gap_lem (k : ℕ) (hk : 1 ≤ k) (T : Set ℕ) (hT : T ⊆ setA) (hck : ck k ∉ T) :
+    ∀ m, m ∈ Jk k → m ∉ T + T := by
+  intro m hm hmem
+  obtain ⟨a, ha, b, hb, hab⟩ := Set.mem_add.mp hmem
+  have ha' := hT ha
+  have hb' := hT hb
+  rcases rigidity k hk m hm a ha' b hb' hab with h | h
+  · exact hck (h ▸ ha)
+  · exact hck (h ▸ hb)
+
+/-! ## Main theorem -/
 
 theorem erdos_741_ii :
     ∃ A : Set ℕ,
@@ -343,53 +269,43 @@ theorem erdos_741_ii :
       (∀ x ∈ A, x ∈ A₁ ∨ x ∈ A₂) →
       A₁ ∩ A₂ = ∅ →
       ¬ (IsSyndetic (A₁ + A₁) ∧ IsSyndetic (A₂ + A₂)) := by
-  refine ⟨setA, ?_, ?_⟩
-  · -- basis property
-    intro n hn
-    have hmem : n ∈ Icc 4 (6 * Q (n + 1)) := by
-      rw [mem_Icc]
-      refine ⟨hn, ?_⟩
-      have h1 : n ≤ Q n := n_le_Q n
-      have h2 : Q n ≤ Q (n + 1) := Q_mono (by omega)
-      have h3 := Q_pos (n + 1)
-      omega
-    have hcov := basis_cover n hmem
-    rcases Set.mem_add.mp hcov with ⟨a, ha, b, hb, hab⟩
-    exact ⟨a, Akn_subset_setA ha, b, Akn_subset_setA hb, hab⟩
-  · -- no partition is both-syndetic
-    intro A₁ A₂ h1 h2 hcov hdisj
-    rintro ⟨⟨C₁, hC1⟩, ⟨C₂, hC2⟩⟩
-    set k := C₁ + C₂ + 1 with hk
-    have hkk : k ≤ Q k := n_le_Q k
-    have hckA : ck k ∈ setA := Or.inr (mem_iUnion.mpr ⟨k, ck_mem_stage k⟩)
-    rcases hcov (ck k) hckA with hin | hin
-    · have hnotin : ck k ∉ A₂ := by
-        intro hcon
-        have hmm : ck k ∈ A₁ ∩ A₂ := ⟨hin, hcon⟩
-        rw [hdisj] at hmm; exact hmm
-      have hgap := gap_lem h2 hnotin
-      obtain ⟨m, hmS, hmI⟩ := hC2 (9 * Q k)
-      rw [mem_Icc] at hmI
-      have hmJ : m ∈ Jk k := by
-        rw [Jk, mem_Ico]
-        refine ⟨by omega, ?_⟩
-        have hlt : C₂ < Q k := by omega
-        omega
-      have hcontra : m ∈ Jk k ∩ (A₂ + A₂) := ⟨hmJ, hmS⟩
-      rw [hgap] at hcontra; exact hcontra
-    · have hnotin : ck k ∉ A₁ := by
-        intro hcon
-        have hmm : ck k ∈ A₁ ∩ A₂ := ⟨hcon, hin⟩
-        rw [hdisj] at hmm; exact hmm
-      have hgap := gap_lem h1 hnotin
-      obtain ⟨m, hmS, hmI⟩ := hC1 (9 * Q k)
-      rw [mem_Icc] at hmI
-      have hmJ : m ∈ Jk k := by
-        rw [Jk, mem_Ico]
-        refine ⟨by omega, ?_⟩
-        have hlt : C₁ < Q k := by omega
-        omega
-      have hcontra : m ∈ Jk k ∩ (A₁ + A₁) := ⟨hmJ, hmS⟩
-      rw [hgap] at hcontra; exact hcontra
+  refine ⟨setA, basis_lem, ?_⟩
+  rintro A₁ A₂ h1 h2 hcov hdisj ⟨⟨C₁, hC₁⟩, ⟨C₂, hC₂⟩⟩
+  -- pick k with Q k > C₁, C₂ and k ≥ 1
+  set k := C₁ + C₂ + 1 with hk_def
+  have hk1 : 1 ≤ k := by omega
+  have hkbig : C₁ + C₂ + 1 < Q k := by
+    have : k < 5 ^ k := Nat.lt_pow_self (by norm_num)
+    simpa [Q, hk_def] using this
+  have hC1lt : C₁ < Q k := by omega
+  have hC2lt : C₂ < Q k := by omega
+  -- ck k is in A, goes to one side
+  have hckA : ck k ∈ setA := ck_mem_setA k
+  rcases hcov (ck k) hckA with hc1 | hc2
+  · -- ck k ∈ A₁, so ck k ∉ A₂
+    have hcknot : ck k ∉ A₂ := by
+      intro h
+      have : ck k ∈ A₁ ∩ A₂ := ⟨hc1, h⟩
+      rw [hdisj] at this
+      exact this
+    -- A₂ + A₂ syndetic with C₂ misses Jk k
+    obtain ⟨m, hmem, hmIcc⟩ := hC₂ (9 * Q k)
+    have hmJ : m ∈ Jk k := by
+      simp only [mem_Icc] at hmIcc
+      simp only [Jk, mem_Ico]
+      exact ⟨hmIcc.1, by omega⟩
+    exact gap_lem k hk1 A₂ h2 hcknot m hmJ hmem
+  · -- ck k ∈ A₂, so ck k ∉ A₁
+    have hcknot : ck k ∉ A₁ := by
+      intro h
+      have : ck k ∈ A₁ ∩ A₂ := ⟨h, hc2⟩
+      rw [hdisj] at this
+      exact this
+    obtain ⟨m, hmem, hmIcc⟩ := hC₁ (9 * Q k)
+    have hmJ : m ∈ Jk k := by
+      simp only [mem_Icc] at hmIcc
+      simp only [Jk, mem_Ico]
+      exact ⟨hmIcc.1, by omega⟩
+    exact gap_lem k hk1 A₁ h1 hcknot m hmJ hmem
 
 end Erdos741OAI
