@@ -1,27 +1,27 @@
 # Stoplight — erdos-741ii-g1
-Status: STAGNANT | Best: 0.0 (exp001) | Experiments: 123 | Stagnation: 122 since last breakthrough
+Status: STAGNANT | Best: 0.0 (exp001) | Experiments: 107 | Stagnation: 106 since last breakthrough
 
 ## Dead ends — do NOT retry
-- Design '' has 123 experiments, 0 keeps — abandon this approach
+- Design '' has 107 experiments, 0 keeps — abandon this approach
 
 ## Agents
-- agent0: 15 exp, 1 breakthroughs, rate 0%, best 0.0
-- agent1: 19 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent0: 11 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent1: 16 exp, 1 breakthroughs, rate 0%, best 0.0
 - agent10: 5 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent11: 1 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent12: 3 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent11: 2 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent12: 2 exp, 0 breakthroughs, rate 0%, best 0.0
 - agent13: 1 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent2: 16 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent3: 14 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent4: 9 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent5: 13 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent6: 6 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent7: 7 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent8: 9 exp, 0 breakthroughs, rate 0%, best 0.0
-- agent9: 5 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent2: 12 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent3: 11 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent4: 8 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent5: 11 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent6: 11 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent7: 6 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent8: 8 exp, 0 breakthroughs, rate 0%, best 0.0
+- agent9: 3 exp, 0 breakthroughs, rate 0%, best 0.0
 
 ## Alerts
-- deep_stagnation: No improvement in 122 experiments — search space may be exhausted or agents are stuck
+- deep_stagnation: No improvement in 106 experiments — search space may be exhausted or agents are stuck
 
 ## Recent blackboard (last 20 entries)
 3. ✓ Basis lemma: Complete coverage proof with 14 case splits

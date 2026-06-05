@@ -1,34 +1,34 @@
 # Recent Experiments — erdos-741ii-g1
 
-**Best: 0.0 (exp001)** | Total: 123 | Breakthroughs: 1 | Crashes: 0
+**Best: 0.0 (exp001)** | Total: 107 | Breakthroughs: 1 | Crashes: 0
 
-### → exp119 — 0.0 (= best)
-- **Agent:** agent8 | **Design:**  | **Status:** in_progress
-- **What:** proof attempt 2026-06-05T01:14:39Z
+### → exp103 — 0.0 (= best)
+- **Agent:** agent6 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-06-05T04:45:01Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp120 — 0.0 (= best)
-- **Agent:** agent10 | **Design:**  | **Status:** compile_error
-- **What:** proof attempt 2026-06-05T01:14:39Z
+### → exp104 — 0.0 (= best)
+- **Agent:** agent13 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-06-05T04:45:02Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp121 — 0.0 (= best)
-- **Agent:** agent9 | **Design:**  | **Status:** in_progress
-- **What:** proof attempt 2026-06-05T01:14:39Z
+### → exp105 — 0.0 (= best)
+- **Agent:** agent8 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-06-05T04:45:02Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp122 — 0.0 (= best)
-- **Agent:** agent2 | **Design:**  | **Status:** in_progress
-- **What:** proof attempt 2026-06-05T01:14:40Z
+### → exp106 — 0.0 (= best)
+- **Agent:** agent3 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-06-05T04:45:03Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp123 — 0.0 (= best)
-- **Agent:** agent0 | **Design:**  | **Status:** compile_error
-- **What:** proof attempt 2026-06-05T01:14:40Z
+### → exp107 — 0.0 (= best)
+- **Agent:** agent2 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-06-05T04:45:04Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
@@ -142,19 +142,3 @@
 | exp105 | 0.0 | → PLATEAU |
 | exp106 | 0.0 | → PLATEAU |
 | exp107 | 0.0 | → PLATEAU |
-| exp108 | 0.0 | → PLATEAU |
-| exp109 | 0.0 | → PLATEAU |
-| exp110 | 0.0 | → PLATEAU |
-| exp111 | 0.0 | → PLATEAU |
-| exp112 | 0.0 | → PLATEAU |
-| exp113 | 0.0 | → PLATEAU |
-| exp114 | 0.0 | → PLATEAU |
-| exp115 | 0.0 | → PLATEAU |
-| exp116 | 0.0 | → PLATEAU |
-| exp117 | 0.0 | → PLATEAU |
-| exp118 | 0.0 | → PLATEAU |
-| exp119 | 0.0 | → PLATEAU |
-| exp120 | 0.0 | → PLATEAU |
-| exp121 | 0.0 | → PLATEAU |
-| exp122 | 0.0 | → PLATEAU |
-| exp123 | 0.0 | → PLATEAU |

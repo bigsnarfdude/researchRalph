@@ -8,92 +8,63 @@ open scoped Pointwise Classical BigOperators
 
 namespace Erdos741OAI
 
--- YOUR TASK: implement the construction described in program.md and prove the theorem below.
--- Read mathlib_hints.md before you start — it lists the exact Mathlib lemmas you need.
-
 def IsSyndetic (S : Set ℕ) : Prop :=
   ∃ C : ℕ, ∀ x : ℕ, ∃ m ∈ S, m ∈ Icc x (x + C)
 
-def Q (k : ℕ) : ℕ := 5 ^ k
+-- Construction
+def Q : ℕ → ℕ := fun k => 5 ^ k
 
-def ck (k : ℕ) : ℕ := 4 * Q k
+def ck : ℕ → ℕ := fun k => 4 * Q k
 
-def Bk (k : ℕ) : Set ℕ := Icc (5 * Q k) (6 * Q k - 1)
+def Bk : ℕ → Set ℕ := fun k => {n : ℕ | 5 * Q k ≤ n ∧ n ≤ 6 * Q k - 1}
 
-def Fk (k : ℕ) : Set ℕ := Icc (10 * Q k - 1) (15 * Q k)
+def Fk : ℕ → Set ℕ := fun k => {n : ℕ | 10 * Q k - 1 ≤ n ∧ n ≤ 15 * Q k}
 
-def Jk (k : ℕ) : Set ℕ := Ico (9 * Q k) (10 * Q k)
+def Jk : ℕ → Set ℕ := fun k => {n : ℕ | 9 * Q k ≤ n ∧ n < 10 * Q k}
 
-def setA : Set ℕ := {2, 3} ∪ ⋃ k, {ck k} ∪ Bk k ∪ Fk k
+def stagek : ℕ → Set ℕ := fun k => {n : ℕ | n = ck k ∨ n ∈ Bk k ∨ n ∈ Fk k}
 
+def setA : Set ℕ := {x : ℕ | x = 2 ∨ x = 3 ∨ ∃ k, x ∈ stagek k}
+
+-- Partial union for induction
 def Akn : ℕ → Set ℕ
-  | 0 => {2, 3}
-  | k + 1 => Akn k ∪ {ck k} ∪ Bk k ∪ Fk k
+  | 0 => {x : ℕ | x = 2 ∨ x = 3}
+  | k + 1 => Akn k ∪ stagek k
 
-lemma Q_pos : ∀ k, 0 < Q k := fun k => by
+-- Helper lemmas
+lemma Q_pos (k : ℕ) : 0 < Q k := by
   unfold Q
-  norm_num
+  exact pow_pos (by norm_num : 0 < 5) k
 
-lemma Q_one : Q 1 = 5 := by
+lemma Q_one : Q 1 = 5 := by norm_num [Q, pow_succ]
+
+lemma Q_succ (k : ℕ) : Q (k + 1) = 5 * Q k := by
   unfold Q
-  norm_num
+  ring
 
-lemma Q_succ : ∀ k, Q (k + 1) = 5 * Q k := fun k => by
-  unfold Q
-  simp [pow_succ, mul_comm]
+-- Akn is monotone and unions to form setA
+lemma akn_mono (k : ℕ) : Akn k ⊆ Akn (k + 1) := by
+  simp only [Akn]
+  exact fun x hx => Or.inl hx
 
-lemma akn_subset : ∀ k, Akn k ⊆ setA := by
-  intro k
-  induction k with
-  | zero =>
-    intro x hx
-    unfold Akn at hx
-    unfold setA
-    left
-    exact hx
-  | succ k ih =>
-    intro x hx
-    unfold Akn at hx
-    unfold setA
-    cases hx with
-    | inl h =>
-      left
-      exact ih h
-    | inr h =>
-      right
-      exact ⟨k, h⟩
-
-lemma basis_lem : ∀ k, Icc 4 (6 * Q (k + 1)) ⊆ Akn (k + 1) + Akn (k + 1) := by
-  intro k x hx
-  simp only [mem_Icc] at hx
-  obtain ⟨hlo, hhi⟩ := hx
-  rw [Set.mem_add]
-  unfold Akn
-  simp only [Set.mem_union, Set.mem_singleton_iff]
-  -- x ∈ [4, 6*Q(k+1)], must write as sum from Akn(k) ∪ {ck(k)} ∪ Bk(k) ∪ Fk(k)
+-- Every element of Akn is in setA
+lemma akn_in_setA (k : ℕ) : Akn k ⊆ setA := by
   sorry
 
-lemma rigidity_lem : ∀ k,
-    ∀ n ∈ Jk k, ∀ a ∈ setA, ∀ b ∈ setA,
-    a + b = n → (a = ck k ∧ b ∈ Bk k) ∨ (b = ck k ∧ a ∈ Bk k) := by
-  intro k
+-- Basis lemma (main content)
+-- Every n ≥ 4 is a sum of two elements from setA
+-- Proof: By strong induction, show n ∈ Icc 4 (6 * Q k) for some k,
+-- then cover by 8 pair types (I+I, I+ck, I+Bk, ck+Bk, Bk+Bk, I+Fk, Bk+Fk, Fk+Fk)
+lemma basis_lem (n : ℕ) (hn : 4 ≤ n) : ∃ a ∈ setA, ∃ b ∈ setA, a + b = n := by
   sorry
 
-lemma gap_lem : ∀ k, ∀ T ⊆ setA,
-    ck k ∉ T →
+lemma rigidity (k : ℕ) (n : ℕ) (hn : n ∈ Jk k) (a b : ℕ) (ha : a ∈ setA) (hb : b ∈ setA) (hab : a + b = n) :
+    (a = ck k ∧ b ∈ Bk k) ∨ (b = ck k ∧ a ∈ Bk k) := by
+  sorry
+
+lemma gap_lem (k : ℕ) (T : Set ℕ) (hT : T ⊆ setA) (hck : ck k ∉ T) :
     Jk k ∩ (T + T) = ∅ := by
-  intro k T hT hck
   sorry
-
-lemma basis_covers : ∀ n : ℕ, 4 ≤ n → ∃ k, n ≤ 6 * Q (k + 1) := by
-  intro n hn
-  by_cases h : n ≤ 30
-  · use 0
-    unfold Q
-    omega
-  · push_neg at h
-    -- For n > 30, keep doubling k until n ≤ 6*Q(k+1)
-    sorry
 
 theorem erdos_741_ii :
     ∃ A : Set ℕ,
@@ -105,14 +76,10 @@ theorem erdos_741_ii :
       ¬ (IsSyndetic (A₁ + A₁) ∧ IsSyndetic (A₂ + A₂)) := by
   use setA
   constructor
-  · intro n hn
-    obtain ⟨k, hk⟩ := basis_covers n hn
-    have hmem : n ∈ Icc 4 (6 * Q (k + 1)) := ⟨hn, hk⟩
-    have := basis_lem k hmem
-    obtain ⟨a, ha, b, hb, hab⟩ := this
-    refine ⟨a, akn_subset (k + 1) a ha, b, akn_subset (k + 1) b hb, hab⟩
-  · intro A₁ A₂ hA₁ hA₂ hpart hdisj
-    intro ⟨⟨C₁, hC₁⟩, ⟨C₂, hC₂⟩⟩
+  · exact basis_lem
+  · intro A₁ A₂ _hA₁ _hA₂ hpart hdisj h
+    obtain ⟨C₁, hC₁⟩ := h.1
+    obtain ⟨C₂, hC₂⟩ := h.2
     sorry
 
 end Erdos741OAI
