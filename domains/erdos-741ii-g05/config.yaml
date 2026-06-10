@@ -1,0 +1,7 @@
+domain: erdos-741ii-g05
+domain_type: lean_proof
+metric: proof_compiles
+direction: higher_is_better
+harness: run.sh
+editable: Erdos741OAI.lean
+scaffold: g05
