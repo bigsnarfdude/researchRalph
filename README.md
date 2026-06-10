@@ -41,7 +41,9 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 | v4.9 | Preflight gate, zero-oracle watchdog, adviser pattern (strong model writes pre-verified patches for stuck workers), evidence-grounded PQ | None | Erdős 741(ii) friction ladder: Fable 5 cold start 3/4 proved in <15 min (Opus 0/12); see v4/README.md |
 | v4.3 | + real literature search, agent self-telemetry, stream-json trace capture, multi-box parallel generation | None | rrma-lean: 0.6230 on MiniF2F (244 problems), climbing |
 | v4.4 | + gardener reads DESIRES/MISTAKES/LEARNINGS — agent requests feed scaffold redesign | None | rrma-lean: 0.8811 (215/244), above Goedel-V2-8B (84.6%) |
-| **v4.5** | **+ TrustLoop forensic pipeline, MCP servers, structured experiment logging** | **None** | **SFT datasets from traces, MCP introspection** |
+| v4.5 | TrustLoop forensic pipeline, MCP servers, structured experiment logging | None | SFT datasets from traces, MCP introspection |
+| **v4.9** | **+ Advisor Pattern** | **None** | **Seeks advice from biggest model** |
+
 
 v2 proved multi-agent collaboration works. v3 proved less protocol = better science. v4 asks: can the human who redesigned v1→v3 be replaced by a process quality monitor? v4.4 asks: can agents tell the gardener what they need?
 
