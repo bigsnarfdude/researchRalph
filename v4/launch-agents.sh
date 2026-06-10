@@ -24,12 +24,33 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/env.sh"
 CLAUDE_BIN="$(command -v claude)"
 
+# Screen session prefix — set RRMA_PREFIX to run concurrent fleets on one host
+PREFIX="${RRMA_PREFIX:-rrma}"
+
+# v4.9: Resolve the worker workflow section by domain type.
+# Priority: domain-local worker_prompt.md > v4/prompts/<domain_type>.md > ml_default.md
+# This is what keeps a Lean workflow out of ML agents' prompts (and vice versa).
+DOMAIN_TYPE="$(grep '^domain_type:' "$DOMAIN_DIR/config.yaml" 2>/dev/null | awk '{print $2}')"
+if [ -f "$DOMAIN_DIR/worker_prompt.md" ]; then
+    WORKFLOW_TEMPLATE="$DOMAIN_DIR/worker_prompt.md"
+elif [ -n "$DOMAIN_TYPE" ] && [ -f "$SCRIPT_DIR/prompts/$DOMAIN_TYPE.md" ]; then
+    WORKFLOW_TEMPLATE="$SCRIPT_DIR/prompts/$DOMAIN_TYPE.md"
+elif [ -f "$SCRIPT_DIR/prompts/ml_default.md" ]; then
+    WORKFLOW_TEMPLATE="$SCRIPT_DIR/prompts/ml_default.md"
+    echo "Warning: no workflow template for domain_type='${DOMAIN_TYPE:-unset}' — using ml_default.md"
+else
+    echo "Error: no worker workflow template found (worker_prompt.md or $SCRIPT_DIR/prompts/)"
+    exit 1
+fi
+
 echo "Domain: $DOMAIN_DIR"
 echo "Workers: $NUM_AGENTS"
 echo "Max turns per worker: $MAX_TURNS"
 echo "Meta-agent interval: ${META_INTERVAL}m"
 echo "Claude: $CLAUDE_BIN"
 echo "Model: ${MODEL:-default}"
+echo "Session prefix: $PREFIX"
+echo "Workflow template: $WORKFLOW_TEMPLATE"
 echo ""
 
 # Check required files (flexible — not all domains have sae.py or engine.py)
@@ -94,8 +115,10 @@ CLAUDE_DIR="$(dirname "$CLAUDE_BIN")"
 EXTRA_PATH="$CLAUDE_DIR:$HOME/.local/bin"
 
 # --- Launch worker agents ---
+mkdir -p "$DOMAIN_DIR/.agent_prompts"
+
 for i in $(seq 0 $((NUM_AGENTS - 1))); do
-    SESSION="rrma-worker$i"
+    SESSION="${PREFIX}-worker$i"
     screen -S "$SESSION" -X quit 2>/dev/null
 
     # v4.8: Pre-generate verified memory context for this agent
@@ -124,16 +147,13 @@ except: pass
 " 2>/dev/null)
     fi
 
-    screen -dmS "$SESSION" bash -c "
-        export PATH=\"$EXTRA_PATH:\$PATH\"
-        cd $DOMAIN_DIR
-        export AGENT_ID=agent$i
-        export CLAUDE_AGENT_ID=agent$i
-        claude --output-format stream-json --verbose \
-            --dangerously-skip-permissions \
-            ${MODEL:+--model $MODEL} \
-            --max-turns $MAX_TURNS \
-            -p 'You are agent$i. Read these files in order:
+    # v4.9: Assemble the worker prompt from universal scaffolding + the domain-type
+    # workflow template. Written to a file so it's auditable and the screen command
+    # avoids quoting hell.
+    PROMPT_FILE="$DOMAIN_DIR/.agent_prompts/agent$i.md"
+    {
+        cat <<UNIVERSAL_EOF
+You are agent$i. Read these files in order:
 
 1. program_static.md — immutable rules, harness protocol, scoring, lifecycle (read ONCE, do not re-read)
 2. program.md — dynamic guidance, current regime, closed brackets, constraints (re-read when stuck)
@@ -142,7 +162,7 @@ except: pass
 5. If best/$EDITABLE_FILE exists, read it — current best proof/config (READ ONLY)
 6. If meta-blackboard.md exists, read it — compressed observations from previous cycles.
 7. If calibration.md exists, read it — known results from the literature.
-8. Re-read blackboard.md every 5 oracle calls — the overseer drops hints mid-run. If BLACKBOARD_UPDATED exists in the domain dir, re-read blackboard.md immediately before your next edit.
+8. Re-read blackboard.md every 5 oracle calls — the overseer drops hints mid-run. If workspace/agent$i/BLACKBOARD_UPDATED exists, re-read blackboard.md immediately, then delete that flag file.
 
 ## Verified Memory (auto-loaded, checked against live sources)
 ${MEMORY_CONTEXT:-No domain memory available.}
@@ -164,24 +184,24 @@ Your private workspace is: workspace/agent$i/
 - run.sh automatically picks up your workspace file (CLAUDE_AGENT_ID is set for you)
 - Other agents cannot see or modify your workspace
 
-## WORKFLOW — LEAN PROOF DOMAIN
-This domain uses a Lean 4 compiler oracle. There is no train.py, no design_type.
-Goal: eliminate all 'sorry' from workspace/agent$i/$EDITABLE_FILE until SCORE=1.0.
+UNIVERSAL_EOF
+        sed -e "s|{{AGENT_ID}}|agent$i|g" -e "s|{{EDITABLE_FILE}}|$EDITABLE_FILE|g" "$WORKFLOW_TEMPLATE"
+        cat <<'FOOTER_EOF'
 
-Workflow per attempt:
-  1. Read blackboard.md — check FAILURE LOG for hints on each sorry
-  2. Edit workspace/agent$i/$EDITABLE_FILE — replace one sorry with a real proof
-  3. Run: bash run.sh
-     Oracle reads YOUR file, compiles it, prints SORRY_COUNT + compiler errors + SCORE
-     SCORE=1.0 only when sorry=0 AND clean compile — this is the win condition
-  4. Read compiler output — Lean errors are precise, use them
-  5. Repeat until SCORE=1.0 — call bash run.sh after EVERY edit
-  RULE: Never go more than 3 consecutive tool uses without calling bash run.sh.
-  If you are reading files, thinking, or writing notes — stop and call run.sh first.
-  The oracle is your only feedback signal. Without it you are guessing.
-  6. Append to blackboard.md: what tactic failed, what worked, compiler errors seen
+Then start experimenting. Write all findings to blackboard.md. Periodically re-read stoplight.md and recent_experiments.md — they update during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.
+FOOTER_EOF
+    } > "$PROMPT_FILE"
 
-Then start experimenting. Write all findings to blackboard.md. Periodically re-read stoplight.md and recent_experiments.md — they update during the run. After every experiment append to: MISTAKES.md (tactics that failed and why), DESIRES.md (tools or context you wish you had), LEARNINGS.md (discoveries about the environment). Never stop. IMPORTANT: Only read files in the current directory. Do not read files from other domains or directories in this repository.' \
+    screen -dmS "$SESSION" bash -c "
+        export PATH=\"$EXTRA_PATH:\$PATH\"
+        cd $DOMAIN_DIR
+        export AGENT_ID=agent$i
+        export CLAUDE_AGENT_ID=agent$i
+        claude --output-format stream-json --verbose \
+            --dangerously-skip-permissions \
+            ${MODEL:+--model $MODEL} \
+            --max-turns $MAX_TURNS \
+            -p \"\$(cat $PROMPT_FILE)\" \
             > $DOMAIN_DIR/logs/agent${i}.jsonl 2>&1
     "
     echo "Started $SESSION (screen -r $SESSION)"
@@ -193,7 +213,7 @@ Then start experimenting. Write all findings to blackboard.md. Periodically re-r
 done
 
 # --- Launch meta-agent ---
-SESSION="rrma-meta"
+SESSION="${PREFIX}-meta"
 screen -S "$SESSION" -X quit 2>/dev/null
 
 screen -dmS "$SESSION" bash -c "
@@ -205,8 +225,8 @@ echo "Started $SESSION (screen -r $SESSION)"
 echo ""
 echo "All running. Monitor with:"
 echo "  screen -ls                          # list sessions"
-echo "  screen -r rrma-worker0              # attach to worker 0"
-echo "  screen -r rrma-meta                 # attach to meta-agent"
+echo "  screen -r ${PREFIX}-worker0         # attach to worker 0"
+echo "  screen -r ${PREFIX}-meta            # attach to meta-agent"
 echo "  tail -f $DOMAIN_DIR/results.tsv     # watch scores"
 echo "  cat $DOMAIN_DIR/meta-blackboard.md  # read meta reflections"
 echo ""

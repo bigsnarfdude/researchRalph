@@ -40,6 +40,23 @@ TASTE="$SCRIPT_DIR/taste.md"
 source "$(cd "$(dirname "$0")" && pwd)/env.sh"
 
 LOG="$DOMAIN_DIR/outer-loop.log"
+
+log() {
+    local msg="[outer $(date '+%Y-%m-%d %H:%M:%S')] $1"
+    echo "$msg" | tee -a "$LOG"
+}
+
+# Signal workers to re-read blackboard.md. Each agent deletes its own flag
+# after re-reading, so one agent acting doesn't hide the signal from the rest.
+notify_agents() {
+    for ws in "$DOMAIN_DIR"/workspace/agent*/; do
+        [ -d "$ws" ] && touch "${ws}BLACKBOARD_UPDATED"
+    done
+}
+
+# Screen session prefix — wrappers set RRMA_PREFIX to run concurrent fleets
+export RRMA_PREFIX="${RRMA_PREFIX:-rrma}"
+
 # --- RH Prevention: lock results.tsv so only run.sh (oracle) can write ---
 touch "$DOMAIN_DIR/results.tsv"
 chmod 444 "$DOMAIN_DIR/results.tsv"
@@ -52,11 +69,6 @@ if [ "$DOMAIN_TYPE" = "lean_proof" ] && [ -f "$SCRIPT_DIR/diagnose_lean.py" ]; t
 else
     DIAGNOSER="python3 $SCRIPT_DIR/diagnose.py"
 fi
-
-log() {
-    local msg="[outer $(date '+%Y-%m-%d %H:%M:%S')] $1"
-    echo "$msg" | tee -a "$LOG"
-}
 
 # --- Pre-flight checks ---
 # Required files
@@ -78,6 +90,15 @@ fi
 
 command -v claude >/dev/null 2>&1 || { echo "Error: claude CLI not found"; exit 1; }
 command -v screen >/dev/null 2>&1 || { echo "Error: screen not found"; exit 1; }
+
+# --- Automated deployment checklist (oracle reads workspace, logs to results.tsv,
+#     prompt template exists). Skip with RRMA_SKIP_PREFLIGHT=1. ---
+if [ "${RRMA_SKIP_PREFLIGHT:-0}" != "1" ]; then
+    if ! bash "$SCRIPT_DIR/preflight.sh" "$DOMAIN_DIR" 2>&1 | tee -a "$LOG"; then
+        log "PREFLIGHT FAILED — refusing to launch agents. Fix the issues above (or set RRMA_SKIP_PREFLIGHT=1 to override)."
+        exit 1
+    fi
+fi
 
 log "=== RRMA v4.6 Outer Loop Starting ==="
 log "Domain: $DOMAIN_DIR"
@@ -117,8 +138,29 @@ for gen in $(seq 1 "$MAX_GENERATIONS"); do
         MONITOR_COUNT=$((MONITOR_COUNT + 1))
 
         # Check if any workers are still alive
-        ALIVE=$(screen -ls 2>/dev/null | grep -c "rrma-worker" || true)
+        ALIVE=$(screen -ls 2>/dev/null | grep -c "${RRMA_PREFIX}-worker" || true)
         ALIVE="${ALIVE:-0}"
+
+        # Zero-oracle watchdog: workers alive but no experiment ever logged this
+        # generation means agents are burning turns without calling run.sh
+        # (the erdos-125 failure mode: 300+ turns, $14, 0 experiments).
+        # Lean oracles respond in minutes (2 checks); ML training runs need
+        # longer before the first row lands (4 checks). Override with
+        # RRMA_WATCHDOG_CHECKS.
+        if [ "$DOMAIN_TYPE" = "lean_proof" ]; then
+            WATCHDOG_CHECKS="${RRMA_WATCHDOG_CHECKS:-2}"
+        else
+            WATCHDOG_CHECKS="${RRMA_WATCHDOG_CHECKS:-4}"
+        fi
+        CUR_EXP=$(awk -F'\t' 'NR>1{n++} END{print n+0}' "$DOMAIN_DIR/results.tsv" 2>/dev/null || echo 0)
+        if [ "$ALIVE" -gt 0 ] && [ "$CUR_EXP" -le "$PRE_EXP" ] && [ "$MONITOR_COUNT" -ge "$WATCHDOG_CHECKS" ]; then
+            log "WATCHDOG: $MONITOR_COUNT checks ($((MONITOR_COUNT * MONITOR_INTERVAL))m) with $ALIVE workers alive and ZERO new experiments in results.tsv."
+            log "WATCHDOG: agents are not calling the oracle. Stopping run before more budget burns."
+            log "WATCHDOG: check that run.sh works ('CLAUDE_AGENT_ID=agent0 bash run.sh') and that the worker prompt tells agents how to call it."
+            bash "$SCRIPT_DIR/stop-agents.sh" 2>&1 | tee -a "$LOG"
+            exit 1
+        fi
+
         if [ "$ALIVE" -eq 0 ]; then
             log "All workers finished (used all $MAX_TURNS turns). Running final diagnosis."
             DECISION=$($DIAGNOSER "$DOMAIN_DIR" 2>>"$LOG")
@@ -194,6 +236,7 @@ NUDGE_EOF
                         echo "" >> "$DOMAIN_DIR/blackboard.md"
                         echo "## Observation [gardener, $(date '+%H:%M')]" >> "$DOMAIN_DIR/blackboard.md"
                         echo "$OBSERVATION" >> "$DOMAIN_DIR/blackboard.md"
+                        notify_agents
                         log "Nudge observation: $(echo "$OBSERVATION" | head -1)"
                     fi
 
@@ -287,8 +330,8 @@ PROMPT
 
             # Reset blackboard but keep meta-blackboard (cross-generation memory)
             cp "$DOMAIN_DIR/blackboard.md" "$DOMAIN_DIR/blackboard.md.gen$gen"
-            cat > "$DOMAIN_DIR/blackboard.md" <<'EOF'
-# Blackboard — sae-bench
+            cat > "$DOMAIN_DIR/blackboard.md" <<EOF
+# Blackboard — $(basename "$DOMAIN_DIR")
 
 Shared lab notebook. Write what you tried, what happened, and why.
 Read before starting to avoid duplicating work.
@@ -356,38 +399,9 @@ PROMPT
 )"
             claude -p "$REDESIGN_PROMPT" --dangerously-skip-permissions --max-turns 3 > "/tmp/redesign-gen$gen.json" 2>/dev/null
 
-            # Parse and apply (simplified — just extract new_program_md if present)
-            if grep -q '"new_program_md"' "/tmp/redesign-gen$gen.json"; then
-                # Extract the program.md content between quotes after new_program_md
-                # This is fragile but workable for a v1 of the outer loop
-                cp "$DOMAIN_DIR/program.md" "$DOMAIN_DIR/program.md.gen$gen"
-
-                # Let Claude do the extraction
-                claude -p "Extract ONLY the value of new_program_md from this JSON. Output the raw content, no JSON wrapping, no quotes. If null, output the word NULL.
-
-$(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 3 > "/tmp/new-program-$gen.md" 2>/dev/null
-
-                if ! grep -q "NULL" "/tmp/new-program-$gen.md"; then
-                    mv "/tmp/new-program-$gen.md" "$DOMAIN_DIR/program.md"
-                    log "Updated program.md (backed up to program.md.gen$gen)"
-                else
-                    log "No program.md change needed"
-                fi
-            fi
-
-            # Append diagnosis to blackboard
-            if grep -q '"add_to_blackboard"' "/tmp/redesign-gen$gen.json"; then
-                claude -p "Extract ONLY the value of add_to_blackboard from this JSON. Output the raw content, no JSON wrapping. If null, output NULL.
-
-$(cat /tmp/redesign-gen$gen.json)" --dangerously-skip-permissions --max-turns 3 >> "/tmp/bb-append-$gen.md" 2>/dev/null
-
-                if ! grep -q "NULL" "/tmp/bb-append-$gen.md"; then
-                    echo "" >> "$DOMAIN_DIR/blackboard.md"
-                    echo "## Outer agent observation (generation $gen)" >> "$DOMAIN_DIR/blackboard.md"
-                    cat "/tmp/bb-append-$gen.md" >> "$DOMAIN_DIR/blackboard.md"
-                    log "Appended outer agent observation to blackboard"
-                fi
-            fi
+            # Parse the JSON and apply changes deterministically (no model calls)
+            python3 "$SCRIPT_DIR/apply_redesign.py" "/tmp/redesign-gen$gen.json" "$DOMAIN_DIR" "$gen" 2>&1 | tee -a "$LOG"
+            notify_agents
             ;;
 
         STOP_DONE)
@@ -426,6 +440,7 @@ REEVAL_EOF
                 echo "" >> "$DOMAIN_DIR/blackboard.md"
                 echo "## Observation [gardener, $(date '+%H:%M') — before stopping]" >> "$DOMAIN_DIR/blackboard.md"
                 echo "The search appears stalled. Unexplored directions: $NUDGE_TEXT" >> "$DOMAIN_DIR/blackboard.md"
+                notify_agents
 
                 # Don't stop — continue to next generation with the nudge
                 log "Continuing to generation $((gen + 1)) with nudge applied."
