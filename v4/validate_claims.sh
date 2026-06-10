@@ -12,12 +12,13 @@ RESULTS="$DOMAIN_DIR/results.tsv"
 
 # Collect oracle-verified 1.0 experiment IDs
 VERIFIED=$(awk -F'\t' 'NR>1 && $2=="1.0" {print $1}' "$RESULTS" 2>/dev/null | sort)
-VERIFIED_COUNT=$(echo "$VERIFIED" | grep -c . 2>/dev/null || echo 0)
+# grep -c prints "0" itself on no match (with exit 1) — use || true, not || echo 0
+VERIFIED_COUNT=$(echo "$VERIFIED" | grep -c . 2>/dev/null || true)
 
 # Find score claim lines in blackboard
 CLAIM_LINES=$(grep -n -iE 'score.*1\.0|SCORE=1\.0|proved|success.*proof|proof.*success' "$BLACKBOARD" 2>/dev/null | grep -v "ORACLE AUDIT" || true)
 
-CLAIM_COUNT=$(echo "$CLAIM_LINES" | grep -c . 2>/dev/null || echo 0)
+CLAIM_COUNT=$(echo "$CLAIM_LINES" | grep -c . 2>/dev/null || true)
 
 if [ "$CLAIM_COUNT" -eq 0 ]; then
     echo "[validate] No score claims in blackboard. Clean."

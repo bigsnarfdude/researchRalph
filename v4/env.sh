@@ -4,6 +4,8 @@
 # Sources this to ensure claude CLI is on PATH.
 # Checks common install locations. Override with CLAUDE_BIN env var.
 
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS="${CLAUDE_CODE_MAX_OUTPUT_TOKENS:-100000}"
+
 if command -v claude &>/dev/null; then
     return 0 2>/dev/null || true
 fi

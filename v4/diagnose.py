@@ -15,6 +15,7 @@ Usage:
     python3 v4/diagnose.py domains/gpt2-tinystories-v44
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -30,54 +31,73 @@ from trustloop_scorer import (
 )
 
 
-def compute_process_quality(report: DomainReport) -> int:
-    """Compute PQ 0-30 from scorer data (replaces bash grep counts)."""
+# Numbers that appear next to a score-ish keyword in blackboard prose
+SCORE_CLAIM_RE = re.compile(
+    r"(?:score|bpb|f1|loss|auroc|accuracy)\s*[:=]?\s*(\d+\.\d+)", re.IGNORECASE
+)
+
+
+def compute_process_quality(report: DomainReport, domain_dir: Path) -> int:
+    """Compute PQ 0-30 from oracle-verifiable evidence.
+
+    v4.9: the old version counted keywords in blackboard.md ("arxiv",
+    "because", "ablation"...), which the agents being policed could satisfy
+    with prose alone. PQ is now grounded in results.tsv — design breadth,
+    iteration, multi-agent coverage — and in cross-checking blackboard score
+    claims against logged rows. Prose/telemetry signals are capped at 6/30
+    so they can never carry a run past the STOP_HACKING threshold (10).
+    """
     pq = 0
-    tel = report.telemetry
-
-    # Papers cited — check blackboard for academic references
-    domain_dir = Path(report.domain) if Path(report.domain).exists() else REPO_ROOT / "domains" / report.domain
-    bb_path = domain_dir / "blackboard.md"
+    bb_path = Path(domain_dir) / "blackboard.md"
     bb_text = bb_path.read_text().lower() if bb_path.exists() else ""
+    exps = report.experiments
 
-    papers = sum(1 for kw in ["arxiv", "paper", "et al.", "neurips", "icml", "iclr"]
-                 if kw in bb_text)
-    if papers > 0: pq += 3
-    if papers > 3: pq += 3
+    # --- A. Evidence from results.tsv (max 15) — written by the oracle, not agents ---
+    design_counts: dict = {}
+    for e in exps:
+        if e.design:
+            design_counts[e.design] = design_counts.get(e.design, 0) + 1
+    if len(design_counts) > 5:
+        pq += 3  # breadth: many distinct designs tried
+    if sum(1 for c in design_counts.values() if c >= 2) >= 2:
+        pq += 3  # iteration: at least two axes revisited, not one-shot scatter
+    if any(c >= 3 for c in design_counts.values()):
+        pq += 3  # depth: some axis pursued systematically
+    if len({e.agent for e in exps if e.agent}) >= 2:
+        pq += 3  # coverage: more than one agent actually logging experiments
+    outcomes = {e.outcome_class for e in exps}
+    if ({"BREAKTHROUGH", "INCREMENTAL"} & outcomes) and ({"PLATEAU", "REGRESSION"} & outcomes):
+        pq += 3  # real exploration produces both wins and losses
 
-    # Explanatory reasoning
-    explanations = sum(1 for kw in ["because", "mechanism", "why ", "hypothesis",
-                                     "key insight", "observation", "confirms", "suggests"]
-                       if kw in bb_text)
-    if explanations > 3: pq += 3
-    if explanations > 10: pq += 3
+    # --- B. Blackboard claims cross-checked against the oracle (max 9, penalty below) ---
+    claims = [float(c) for c in SCORE_CLAIM_RE.findall(bb_text)]
+    logged = {e.score for e in exps if e.score is not None}
+    if claims and logged:
+        # 0.5% relative tolerance so honest rounding ("1.05" for 1.048) still matches
+        verified = sum(
+            1 for c in claims
+            if any(abs(c - s) <= max(5e-4, 0.005 * abs(s)) for s in logged)
+        )
+        frac = verified / len(claims)
+        if frac >= 0.8:
+            pq += 9
+        elif frac >= 0.5:
+            pq += 4
+        elif len(claims) >= 3:
+            pq -= 6  # most cited scores match nothing the oracle logged — fabrication signal
 
-    # Ablations
-    ablations = sum(1 for kw in ["ablation", "vs ", "compared to", "worse than",
-                                  "better than", "no improvement", "sweep"]
-                    if kw in bb_text)
-    if ablations > 0: pq += 3
-    if ablations > 3: pq += 3
+    # --- C. Prose + telemetry signals (capped at 6 — gameable, so never decisive) ---
+    prose = 0
+    explanations = sum(bb_text.count(kw) for kw in ["because", "mechanism", "hypothesis", "suggests"])
+    if explanations > 5:
+        prose += 2
+    if any(kw in bb_text for kw in ["ablation", "compared to", "vs baseline"]):
+        prose += 2
+    if len(report.telemetry.learnings) > 5 or len(report.telemetry.mistakes) > 3:
+        prose += 2
+    pq += min(prose, 6)
 
-    # Simplifications
-    simplifications = sum(1 for kw in ["simpler", "removed", "dropped", "fewer",
-                                        "simplified", "unnecessary"]
-                          if kw in bb_text)
-    if simplifications > 0: pq += 3
-
-    # Unique designs
-    designs = set(e.design for e in report.experiments if e.design)
-    if len(designs) > 5: pq += 3
-
-    # Blackboard depth
-    bb_lines = bb_text.count("\n")
-    if bb_lines > 100: pq += 3
-
-    # Telemetry quality (v4.5 upgrade — actual content, not just counts)
-    if len(tel.desires) > 0: pq += 3
-    if len(tel.learnings) > 5: pq += 3
-
-    return min(pq, 30)
+    return max(0, min(pq, 30))
 
 
 def decide(report: DomainReport, domain_dir: Path) -> str:
@@ -87,7 +107,7 @@ def decide(report: DomainReport, domain_dir: Path) -> str:
     if total < 8:
         return "TOO_EARLY"
 
-    pq = compute_process_quality(report)
+    pq = compute_process_quality(report, domain_dir)
 
     # --- Stagnation and flatness ---
     stagnation = report.stagnation_depth
@@ -201,7 +221,7 @@ def main():
     print(format_report(report), file=sys.stderr)
 
     # Print PQ details
-    pq = compute_process_quality(report)
+    pq = compute_process_quality(report, domain_dir)
     print(f"\n[diagnose.py] PQ: {pq}/30", file=sys.stderr)
     print(f"[diagnose.py] Anomalies: {len(report.anomalies)}", file=sys.stderr)
     print(f"[diagnose.py] Workflow: {sum(1 for c in report.workflow_checks if c.passed)}/{len(report.workflow_checks)}", file=sys.stderr)

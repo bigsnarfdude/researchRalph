@@ -8,7 +8,17 @@ A multi-agent research framework (v4.6) where Claude Code agents run experiments
 
 ```bash
 # v4.6: Context-optimized agents + smart gardener + TrustLoop scoring
-bash v4/outer-loop.sh domains/<domain> [max_gens] [num_agents] [max_turns] [monitor_min]
+bash v4/outer-loop.sh domains/<domain> [max_gens] [num_agents] [max_turns] [monitor_min] [model]
+
+# v4.9: Deployment checklist, automated (runs inside outer-loop.sh too)
+bash v4/preflight.sh domains/<domain>     # oracle reads workspace? logs to results.tsv? prompt template exists?
+
+# Model variants are thin wrappers over the canonical scripts (do NOT fork logic):
+#   outer-loop-haiku.sh / outer-loop-sonnet.sh — set model + RRMA_PREFIX only.
+# RRMA_PREFIX namespaces screen sessions so concurrent fleets don't collide.
+# RRMA_SKIP_PREFLIGHT=1 bypasses the preflight gate; RRMA_WATCHDOG_CHECKS tunes
+# the zero-oracle watchdog (stops the run if workers are alive but results.tsv
+# gains no rows — the erdos-125 failure mode).
 
 # v2: Multi-agent with operator control
 ./core/launch.sh domains/<domain> N [--gpu]
@@ -110,7 +120,10 @@ Note: train.py on nigel uses PyTorch SDPA (no flash_attn package needed). run.sh
 
 ## Critical Files
 
-- `v4/diagnose.py` — Smart diagnosis via TrustLoop scorer (replaces diagnose.sh)
+- `v4/preflight.sh` — Automated deployment checklist; outer-loop refuses to launch if it fails
+- `v4/prompts/<domain_type>.md` — Worker workflow templates ({{AGENT_ID}}/{{EDITABLE_FILE}} placeholders). A domain-local `worker_prompt.md` overrides. Launched prompts are written to `<domain>/.agent_prompts/agentN.md` for audit.
+- `v4/apply_redesign.py` — Parses the gardener's REDESIGN JSON and applies it (no model calls)
+- `v4/diagnose.py` — Smart diagnosis via TrustLoop scorer (replaces diagnose.sh). PQ is grounded in results.tsv evidence + blackboard-claim cross-checks, not keyword counts.
 - `v4/taste.md` — The gardener's principles. Human-seeded, auto-updated.
 - `tools/trustloop_scorer.py` — Classification, anomaly detection, telemetry parsing, insights
 - `tools/refresh_context.py` — v4.6 context optimizer: generates stoplight.md + recent_experiments.md
