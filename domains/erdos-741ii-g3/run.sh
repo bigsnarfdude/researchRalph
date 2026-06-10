@@ -23,7 +23,7 @@ fi
 SORRY_COUNT=$(grep -v '^\s*--' "$SOLUTION" | grep -c "sorry" 2>/dev/null) || true
 SORRY_COUNT=${SORRY_COUNT:-0}
 
-TMP_FILE="$LEAN_PROJECT/Erdos741OAITest.lean"
+TMP_FILE="$LEAN_PROJECT/Erdos741OAITest_${AGENT}_$$.lean"
 cp "$SOLUTION" "$TMP_FILE"
 cd "$LEAN_PROJECT"
 BUILD_OUT=$(lake env lean "$TMP_FILE" 2>&1)
