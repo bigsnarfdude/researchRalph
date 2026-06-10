@@ -1,4 +1,4 @@
-# researchRalph v4.9.3 — Adivsor Pattern Edition
+# researchRalph v4.9.3 — Advisor Pattern Edition
 
 ResearchRalph Multi-Agent (RRMA) Claude Code agents that do research autonomously.
 TrustLoop — Observability for autonomous agents. Watch your agents, experiments, and scaffolds in one place. Know immediately when something stalls, breaks, wastes compute, or wins — and why.
@@ -38,11 +38,10 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 | v2 | Multi-agent blackboard + structured memory | Launch, steer with operator.sh | GPT-2: 1.048 BPB, 64% hit rate (8×A100) |
 | v3 | Stripped protocol, plain blackboard, Ralph Wiggum loop | Review + redesign between runs | SAE-bench: 0.9894 F1, 135 experiments, beat 0.97 probe ceiling |
 | v4 | Self-recursive: gardener monitors process quality, stops/redesigns automatically | None | SAE-bench: 0.8170 F1 in 38 exp, hacking detection validated |
-| v4.9 | Preflight gate, zero-oracle watchdog, adviser pattern (strong model writes pre-verified patches for stuck workers), evidence-grounded PQ | None | Erdős 741(ii) friction ladder: Fable 5 cold start 3/4 proved in <15 min (Opus 0/12); see v4/README.md |
 | v4.3 | + real literature search, agent self-telemetry, stream-json trace capture, multi-box parallel generation | None | rrma-lean: 0.6230 on MiniF2F (244 problems), climbing |
 | v4.4 | + gardener reads DESIRES/MISTAKES/LEARNINGS — agent requests feed scaffold redesign | None | rrma-lean: 0.8811 (215/244), above Goedel-V2-8B (84.6%) |
-| v4.5 | TrustLoop forensic pipeline, MCP servers, structured experiment logging | None | SFT datasets from traces, MCP introspection |
-| **v4.9** | **+ Advisor Pattern** | **None** | **Seeks advice from biggest model** |
+| v4.5 | + TrustLoop forensic pipeline, MCP servers, structured experiment logging | None | SFT datasets from traces, MCP introspection |
+| **v4.9** | **+ Advisor Pattern (strong model writes pre-verified patches for stuck workers), preflight gate, zero-oracle watchdog, evidence-grounded PQ** | **None** | **Erdős 741(ii) friction ladder: Fable 5 cold start 3/4 proved in <15 min (Opus 0/12); see v4/README.md** |
 
 
 v2 proved multi-agent collaboration works. v3 proved less protocol = better science. v4 asks: can the human who redesigned v1→v3 be replaced by a process quality monitor? v4.4 asks: can agents tell the gardener what they need?
@@ -243,15 +242,15 @@ After every experiment, update:
 
 Before launching a generation, the gardener searches for current SOTA, known techniques, and relevant papers. Agents start with actual literature context, not just training data cutoff knowledge.
 
-### 1. Process quality scoring (diagnose.sh)
+### 1. Process quality scoring (diagnose.py)
 
-Measures research quality from artifacts (0-30 scale):
+Measures research quality from oracle-verifiable evidence (0-30 scale, v4.9.3 —
+the old keyword scorer was gameable by the agents it policed):
 
 ```
-Papers cited:         0 → hacking    5+ → researching
-Architecture classes: 1 → tuning    10+ → inventing
-Ablation experiments: 0 → blind     5+ → understanding why
-Simplification moves: 0 → piling on  1+ → mature
+results.tsv evidence (max 15): design breadth, iteration, depth, agent coverage, win/loss mix
+Claim verification (max 9):    blackboard scores cross-checked vs logged rows; −6 if fabricated
+Prose/telemetry (capped at 6): reasoning, ablations, LEARNINGS/MISTAKES — never decisive alone
 ```
 
 ### 2. Stopping rules
@@ -260,8 +259,10 @@ Simplification moves: 0 → piling on  1+ → mature
 |---|---|---|---|
 | LOW | any | any | **STOP_HACKING** — gaming the metric |
 | HIGH | improving | any | **CONTINUE** |
+| HIGH | stagnant / crash streaks | any | **NUDGE** — constraints appended to program.md (3 nudges → REDESIGN) |
 | HIGH | flat 15+ exp | nonempty | **REDESIGN** scaffold |
 | HIGH | flat 15+ exp | empty | **STOP_DONE** |
+| any | workers alive, 0 oracle calls | any | **WATCHDOG STOP** — agents not calling run.sh |
 
 ### 3. Scaffold editing
 
@@ -374,9 +375,13 @@ researchRalph/
 │   ├── operator.sh            # Steer agents mid-run
 │   └── conductor.sh           # Orchestrator
 ├── v4/                        # Self-recursive layer (the gardener)
-│   ├── outer-loop.sh          # Generation loop (calls diagnose.py every 20m)
-│   ├── diagnose.py            # v4.5 smart diagnosis via TrustLoop scorer
-│   ├── diagnose.sh            # v4.4 legacy bash diagnosis (fallback)
+│   ├── outer-loop.sh          # Generation loop (preflight → calibrate → launch → monitor)
+│   ├── preflight.sh           # Deployment checklist gate (v4.9.3)
+│   ├── diagnose.py            # Evidence-grounded diagnosis via TrustLoop scorer
+│   ├── diagnose_lean.py       # Lean-domain decision engine
+│   ├── apply_redesign.py      # Deterministic REDESIGN applier (no model calls)
+│   ├── prompts/               # Worker workflow templates by domain_type
+│   ├── *-haiku.sh / *-sonnet.sh  # Thin model wrappers (RRMA_PREFIX, never forked)
 │   ├── calibrate.sh           # Literature search
 │   ├── taste.md               # Inherited principles
 │   ├── meta-loop.sh           # Live meta-agent (blackboard compression)
@@ -408,7 +413,7 @@ researchRalph/
 │   ├── finetune.py            # Fine-tuning script
 │   ├── eval_signal.py / validate_signal.py  # Signal evaluation
 │   └── DATASET_CARD.md        # HuggingFace dataset card
-├── domains/                   # 26 optimization targets
+├── domains/                   # 115 dirs: optimization targets + archived run evidence
 │   ├── template/              # Start here
 │   ├── rrma-lean/             # Lean 4 theorem proving (MiniF2F 0.8811)
 │   ├── gpt2-tinystories/      # GPT-2 training (8×A100, 1.047 BPB)
