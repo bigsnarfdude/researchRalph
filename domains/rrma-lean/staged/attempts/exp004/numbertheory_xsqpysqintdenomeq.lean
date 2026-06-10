@@ -1,0 +1,14 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem numbertheory_xsqpysqintdenomeq (x y : ℚ) (h₀ : (x ^ 2 + y ^ 2).den = 1) : x.den = y.den := by
+  first
+    | ring
+    | norm_num
+    | omega
+    | linarith
+    | simp_all
+    | decide

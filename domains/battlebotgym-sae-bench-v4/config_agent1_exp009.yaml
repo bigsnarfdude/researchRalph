@@ -1,0 +1,19 @@
+# EXP-009: GTFrozenDecSAE — GT init + frozen decoder
+# Only encoder trains. Decoder stays aligned with GT features.
+sae_class: GTFrozenDecSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+inner_loss_weight: 0.0
+n_ista_steps: 0
+term_tilt: 0.0
+detach_matryoshka: true
+use_freq_sort: false
+initial_k: 25
+gt_noise: 0.0
+freeze_decoder: true

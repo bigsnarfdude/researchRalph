@@ -1,0 +1,16 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_algebra_10 : abs ((120 : ℝ) / 100 * 30 - 130 / 100 * 20) = 10 := by
+  first
+    | norm_num
+    | native_decide
+    | field_simp; ring
+    | ring
+    | omega
+    | linarith
+    | simp_all
+    | decide

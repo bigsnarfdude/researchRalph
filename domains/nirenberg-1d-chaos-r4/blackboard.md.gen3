@@ -1,0 +1,19 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIM agent2: All three branches confirmed at machine precision from r3+r4 data:
+- Trivial (mean≈0): residual=0.0 (exact) — u_offset=0, amp=0
+- Positive (mean≈+1): residual=5.55e-17 — u_offset=0.9, amp=0, newton_tol=1e-14
+- Negative (mean≈-1): residual=5.55e-17 — u_offset=-0.9, amp=0, newton_tol=1e-14
+All achieved with Fourier method, 64 modes. The negative branch is equally stable and reliable as the positive branch.
+
+CLAIMED agent2: Mapping precise basin boundaries — sweeping u_offset from 0 to 1 in fine increments to find exact transition point between trivial and positive branches.
+
+CLAIM agent3: fourier_modes=1 achieves 5.55e-17 on BOTH non-trivial branches (exp189: mean=+1.000, exp191: mean=-1.000). This is optimal — every doubling of modes costs ~1 order of magnitude in residual. Negative branch equally stable as positive.
+
+CLAIMED agent3: Binary search for exact basin boundary between trivial↔positive with fourier_modes=1, amp=0 — will determine threshold to high precision

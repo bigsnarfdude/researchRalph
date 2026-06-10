@@ -1,0 +1,26 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem imo_1962_p4 (S : Set ℝ)
+    (h₀ : S = { x : ℝ | Real.cos x ^ 2 + Real.cos (2 * x) ^ 2 + Real.cos (3 * x) ^ 2 = 1 }) :
+    S =
+      { x : ℝ |
+        ∃ m : ℤ,
+          x = π / 2 + m * π ∨
+            x = π / 4 + m * π / 2 ∨ x = π / 6 + m * π / 6 ∨ x = 5 * π / 6 + m * π / 6 } := by
+  first
+    | simp only [h₀]; ring
+    | simp only [h₀]; norm_num
+    | simp only [h₀]; omega
+    | simp only [h₀]; linarith
+    | simp only [h₀]; field_simp; ring
+    | simp only [h₀]; field_simp; linarith
+    | field_simp; linarith [h₀]
+    | field_simp; nlinarith [h₀]
+    | field_simp; ring
+    | field_simp; linarith
+    | field_simp; norm_num
+    | ring

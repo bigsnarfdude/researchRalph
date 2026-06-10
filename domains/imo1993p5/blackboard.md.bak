@@ -1,0 +1,42 @@
+# Blackboard — imo1993p5
+
+Shared research log. Write what you tried, what compiled, what the error was.
+
+## Problem
+
+IMO 1993 P5: Find f: ℕ → ℕ with f(1)=2, f(f(n))=f(n)+n, strictly increasing.
+
+## Known approaches (from literature)
+
+1. Golden ratio: f(n) = ⌊φn⌋ where φ=(1+√5)/2
+2. Zeckendorf representation: shift Fibonacci indices
+3. Direct construction via Beatty sequence
+
+## Attempts
+
+### EXP-001: Zeckendorf shift proof (agent0) — SCORE 1.0
+
+**Strategy**: Define `imo_f` via the greedy Fibonacci (Zeckendorf) decomposition, shifting each Fibonacci index up by 1. Formally:
+- `imo_f 0 = 0`
+- `imo_f (m+1) = fib(greatestFib(m+1) + 1) + imo_f((m+1) - fib(greatestFib(m+1)))`
+
+This corresponds to: write n in Zeckendorf representation (sum of non-consecutive Fibonacci numbers), then replace each `fib(k)` with `fib(k+1)`.
+
+**Key lemmas proved**:
+1. `imo_f_bound`: If `n < fib k` then `imo_f n < fib (k+1)`. Proved by strong induction — the Fibonacci shift preserves range bounds.
+2. `imo_f_functional`: `imo_f (imo_f n) = imo_f n + n`. Uses the bound to show `greatestFib(f(n)) = greatestFib(n) + 1`, then applies the IH to the remainder and uses `fib_add_two`.
+3. `imo_f_lt_succ`: `imo_f n < imo_f (n+1)`. Two cases: if n+1 crosses a Fibonacci boundary, uses the bound; otherwise reduces to IH on the remainder.
+
+**Mathlib ingredients used**:
+- `Nat.fib`, `Nat.greatestFib` from `Mathlib.Data.Nat.Fib.Basic` and `Mathlib.Data.Nat.Fib.Zeckendorf`
+- `fib_greatestFib_le`, `lt_fib_greatestFib_add_one`, `le_greatestFib`, `greatestFib_lt`, `greatestFib_fib`
+- `fib_lt_fib`, `fib_mono`, `fib_pos`, `fib_add_two`, `fib_add_two_sub_fib_add_one`
+- Tactics: `omega`, `native_decide`, `ring`, strong induction via `Nat.strongRecOn`
+
+**Key difficulties overcome**:
+- WF recursive functions in Lean 4.24 are `@[irreducible]`, so `rfl`/`unfold` don't work. Used `imo_f.eq_unfold` via `conv_lhs => rw [imo_f.eq_unfold]`.
+- `omega` treats `fib(k+1+1)` and `fib(k+2)` as different opaque symbols. Fixed by providing `@fib_add_two (n := k)` with the exact syntactic form `fib(k+1+1)`.
+- `fib 1 = fib 2 = 1` complicates strict monotonicity of `fib`. All arguments restricted to indices ≥ 2 via `greatestFib`.
+- Lean 4.24 doesn't need explicit `decreasing_by` for this recursion (auto-proved).
+
+**Proof size**: ~130 lines of Lean 4.

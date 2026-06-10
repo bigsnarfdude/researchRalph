@@ -1,0 +1,24 @@
+# Nirenberg 1D — scipy n=128 with tol=8e-12 for positive branch
+# Experiment: n=128 showed anomalous sweet spot per L6. Try with tighter tol.
+
+# --- Initial guess ---
+u_offset: 0.9
+amplitude: 0.0
+n_mode: 1
+phase: 0.0
+
+# --- K function (DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings ---
+method: scipy
+n_nodes: 128
+solver_tol: 8.0e-12
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

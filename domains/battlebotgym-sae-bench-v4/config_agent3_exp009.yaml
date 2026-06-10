@@ -1,0 +1,22 @@
+# EXP-009a3: DisentangledSAE k=25 with decoder orthogonality loss
+# Building on EXP-003a3 (0.6861 F1) + adding ortho loss for precision
+sae_class: DisentangledSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.012
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 100
+inner_loss_weight: 0.5
+ortho_weight: 0.005
+ortho_warmup_frac: 0.1
+ortho_sample_size: 256
+normalize_decoder: true

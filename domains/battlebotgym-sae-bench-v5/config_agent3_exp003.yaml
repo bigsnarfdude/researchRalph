@@ -1,0 +1,18 @@
+sae_class: AnnealedTermRefStyleSAE
+k: 35
+d_sae: 8192
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [64, 256, 1024, 2048, 4096, 8192]
+n_ista_steps: 1
+ista_step_size: 0.25
+term_tilt: 0.012
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 100
+inner_loss_weight: 0.5
+term_start: 0.015
+term_end: 0.008

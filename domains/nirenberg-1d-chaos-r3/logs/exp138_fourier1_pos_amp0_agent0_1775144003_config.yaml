@@ -1,0 +1,27 @@
+# Nirenberg 1D — Initial condition parameters
+# Experiment: fourier 1-mode, positive branch, flat IC (amp=0)
+
+# --- Initial guess ---
+u_offset: 0.9
+amplitude: 0.0
+n_mode: 1
+phase: 0.0
+
+# --- K function (DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings ---
+method: fourier
+fourier_modes: 1
+newton_tol: 1.0e-12
+newton_maxiter: 100
+n_nodes: 196
+solver_tol: 1.0e-12
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

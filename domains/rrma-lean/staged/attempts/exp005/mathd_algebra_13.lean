@@ -1,0 +1,22 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_algebra_13 (a b : ℝ)
+  (h₀ : ∀ x, x - 3 ≠ 0 ∧ x - 5 ≠ 0 → 4 * x / (x ^ 2 - 8 * x + 15) = a / (x - 3) + b / (x - 5)) :
+  a = -6 ∧ b = 10 := by
+  first
+    | simp only [h₀] at *; nlinarith
+    | simp only [h₀] at *; linarith
+    | simp only [h₀] at *; omega
+    | simp only [h₀] at *; norm_num
+    | simp only [h₀]; ring
+    | simp only [h₀]; norm_num
+    | simp only [h₀] at *; constructor <;> (first | norm_num | omega | linarith | nlinarith)
+    | ring
+    | norm_num
+    | omega
+    | linarith
+    | simp_all

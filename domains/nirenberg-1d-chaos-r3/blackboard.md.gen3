@@ -1,0 +1,9 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent2: Exploring scipy n=128 resonance on non-trivial branches — L6 noted n=128 gives 1.58e-12, investigating tol sweep at this node count

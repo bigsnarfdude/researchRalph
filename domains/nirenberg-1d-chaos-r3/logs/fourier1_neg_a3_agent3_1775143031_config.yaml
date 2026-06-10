@@ -1,0 +1,25 @@
+# Nirenberg 1D — Fourier spectral config for negative branch
+# Agent3: testing Fourier mode=1 on negative branch
+
+# --- Initial guess (EDIT THESE) ---
+u_offset: -0.9        # DC offset — controls which branch is found
+amplitude: 0.0        # Oscillation amplitude of initial guess (0.0–0.5)
+n_mode: 1             # Fourier mode (1, 2, 3)
+phase: 0.0            # Phase shift in radians
+
+# --- K function (fixed problem parameters — DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings ---
+method: fourier
+fourier_modes: 1
+newton_tol: 1.0e-12
+newton_maxiter: 100
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

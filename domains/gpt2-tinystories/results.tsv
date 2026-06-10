@@ -1,0 +1,2 @@
+commit	score	memory_gb	status	description	agent	design
+nigel001	1.169722	11.7	keep	batch2^17+rope200k+windowS+matrixlr0.06+depth8	nigel	blackboard

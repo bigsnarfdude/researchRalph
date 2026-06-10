@@ -1,0 +1,26 @@
+# EXP-016 (agent0): SupervisedEvalISTASAE + stronger GT supervision
+# Higher cls_weight (0.2 vs 0.05), higher fp_weight (5.0 vs 2.0)
+# Uses temperature=1.0 for softer sigmoid (better gradients)
+sae_class: SupervisedEvalISTASAE
+k: 25
+d_sae: 4096
+lr: 1e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+eval_ista_steps: 5
+eval_ista_step_size: 0.25
+cls_weight: 0.2
+cls_warmup_frac: 0.15
+gt_model: decoderesearch/synth-sae-bench-16k-v1
+gt_threshold: 0.1
+fp_weight: 5.0

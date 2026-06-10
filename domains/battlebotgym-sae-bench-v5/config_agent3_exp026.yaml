@@ -1,0 +1,23 @@
+# EXP-026 (agent3): eval_ista_step_size=0.5 + k=30
+# Combining two findings:
+# - eval_step=0.5 → F1=0.812 (breakthrough!)
+# - k=30 → MCC=0.755 (best correlation)
+# If the better MCC at k=30 combines with the better eval step, F1 could exceed 0.812
+sae_class: EvalISTARefStyleSAE
+k: 30
+d_sae: 4096
+lr: 1e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+eval_ista_steps: 5
+eval_ista_step_size: 0.5

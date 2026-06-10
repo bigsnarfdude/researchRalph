@@ -1,0 +1,20 @@
+# SwiGLU MLP patch
+# Replace class MLP with:
+#
+# class MLP(nn.Module):
+#     def __init__(self, config):
+#         super().__init__()
+#         hidden = int(2.67 * config.n_embd)
+#         hidden = ((hidden + 63) // 64) * 64  # round to 64 for GPU efficiency
+#         self.c_gate = nn.Linear(config.n_embd, hidden, bias=False)
+#         self.c_up = nn.Linear(config.n_embd, hidden, bias=False)
+#         self.c_proj = nn.Linear(hidden, config.n_embd, bias=False)
+#
+#     def forward(self, x):
+#         return self.c_proj(F.silu(self.c_gate(x)) * self.c_up(x))
+#
+# And in init_weights, replace:
+#   torch.nn.init.uniform_(block.mlp.c_fc.weight, -s, s)
+# with:
+#   torch.nn.init.uniform_(block.mlp.c_gate.weight, -s, s)
+#   torch.nn.init.uniform_(block.mlp.c_up.weight, -s, s)

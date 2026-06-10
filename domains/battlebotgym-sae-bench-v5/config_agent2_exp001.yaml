@@ -1,0 +1,22 @@
+# EXP-001 (agent2): 200M + EvalISTARefStyleSAE + lr=2e-4 (bracket test)
+# Hypothesis: lr=3e-4 failed at 200M, lr=1e-4 is safe — lr=2e-4 tests the middle ground
+# If 2e-4 works, it converges faster than 1e-4. If not, we bracket the optimal LR.
+# Uses proven v4 best hyperparameters otherwise.
+sae_class: EvalISTARefStyleSAE
+k: 25
+d_sae: 4096
+lr: 2e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+eval_ista_steps: 5
+eval_ista_step_size: 0.25

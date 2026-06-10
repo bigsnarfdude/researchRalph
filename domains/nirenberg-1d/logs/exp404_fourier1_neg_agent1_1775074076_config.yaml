@@ -1,0 +1,13 @@
+K_amplitude: 0.3
+K_frequency: 1
+K_mode: cosine
+method: fourier
+fourier_modes: 1
+newton_tol: 1.0e-14
+newton_maxiter: 200
+amplitude: 0.0
+n_mode: 1
+n_nodes: 200
+phase: 0.0
+solver_tol: 1.0e-11
+u_offset: -1.0

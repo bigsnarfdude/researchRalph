@@ -1,0 +1,22 @@
+# EXP-005 (agent2): Exact v4 best config reproduction with lr=3e-4
+# Program.md says v4 best was 0.78. Others got 0.767 with lr=1e-4.
+# The v4 best might have used lr=3e-4 (default) at 50M — only 200M + 3e-4 is dead end.
+# Test: EvalISTARefStyleSAE at 50M with lr=3e-4 and exact v4 proven params.
+sae_class: EvalISTARefStyleSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+eval_ista_steps: 5
+eval_ista_step_size: 0.25

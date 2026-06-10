@@ -1,0 +1,15 @@
+# EXP-012: JumpRefSAE — per-feature thresholds (no TopK)
+# Each feature independently fires when activation exceeds its learned threshold.
+# More similar to the logistic regression probe (0.97 ceiling) paradigm.
+sae_class: JumpRefSAE
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+jumprelu_init_threshold: 0.01
+jumprelu_bandwidth: 0.05
+jumprelu_sparsity_loss_mode: tanh
+l0_coefficient: 1.0
+l0_warm_up_steps: 1000

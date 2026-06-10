@@ -1,0 +1,21 @@
+# EXP-026 (agent0): BatchRefStyleSAE + 200M + inner_loss_weight=0.7
+# EXP-025 showed 0.5 >> 0.3 (+0.039). Testing if even higher matryoshka helps.
+sae_class: BatchRefStyleSAE
+k: 25
+d_sae: 4096
+lr: 1e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.003
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.7
+k_schedule: cosine
+term_start: 0.003
+term_end: 0.003

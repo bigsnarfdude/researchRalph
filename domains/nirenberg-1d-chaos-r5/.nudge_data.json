@@ -1,0 +1,89 @@
+{
+  "decision": "NUDGE",
+  "pq": 12,
+  "gardener_fixes": [
+    {
+      "issue": "Dead end: Design 'agent2' has 25 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent2 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'agent3' has 15 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent3 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'agent4' has 11 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent4 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'agent5' has 16 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent5 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'agent6' has 7 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent6 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'agent7' has 7 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt agent7 experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Unaddressed desire: Would like to know the exact solution for non-trivial branches to construct bett",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Want continuation/homotopy solver to smoothly trace from trivial to non-trivial ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Error logging from solve.py would help diagnose Newton divergence vs LinAlg cras",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    }
+  ],
+  "hitl_fixes": [],
+  "missed_checks": [
+    {
+      "issue": "Dead end design: agent2",
+      "expected": "Ban or warning about 'agent2'"
+    },
+    {
+      "issue": "Dead end design: agent3",
+      "expected": "Ban or warning about 'agent3'"
+    },
+    {
+      "issue": "Dead end design: agent4",
+      "expected": "Ban or warning about 'agent4'"
+    },
+    {
+      "issue": "Dead end design: agent5",
+      "expected": "Ban or warning about 'agent5'"
+    },
+    {
+      "issue": "Dead end design: agent6",
+      "expected": "Ban or warning about 'agent6'"
+    },
+    {
+      "issue": "Dead end design: agent7",
+      "expected": "Ban or warning about 'agent7'"
+    }
+  ],
+  "dead_ends": [
+    "Design 'agent2' has 25 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent3' has 15 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent4' has 11 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent5' has 16 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent6' has 7 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent7' has 7 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 80
+}

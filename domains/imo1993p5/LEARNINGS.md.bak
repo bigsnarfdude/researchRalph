@@ -1,0 +1,20 @@
+# Learnings
+
+## Lean 4.24 WF recursion
+- WF recursive functions are `@[irreducible]`. Can't use `rfl`, `unfold`, or `simp [f]` to unfold them.
+- Use `f.eq_unfold` with `rw` or `conv_lhs => rw [f.eq_unfold]` to unfold one level.
+- `decreasing_by` is unnecessary when Lean can auto-prove termination (e.g., `tsub_lt_self` patterns).
+
+## omega and opaque terms
+- `omega` treats `fib(k+1+1)` and `fib(k+2)` as distinct. Must provide hypotheses with the exact syntactic form appearing in the goal.
+- `have : fib (k + 1 + 1) = fib k + fib (k + 1) := @fib_add_two (n := k)` matches the goal's form.
+
+## Mathlib Zeckendorf machinery
+- `Nat.greatestFib`, `Nat.zeckendorf`, `Nat.zeckendorfEquiv` are all in Mathlib.
+- `greatestFib` always returns ≥ 2 for positive inputs (since `fib 2 = 1`).
+- The Zeckendorf file has a TODO for order-preservation. This would simplify the monotonicity proof.
+
+## Proof strategy for IMO competition problems in Lean
+- Existence proofs (∃) just need a witness + verification. Focus on a clean definition.
+- Strong induction (`Nat.strongRecOn`) is the natural induction principle for Zeckendorf-recursive definitions.
+- `native_decide` handles small computable base cases without manual unfolding.

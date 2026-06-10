@@ -1,0 +1,14 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_numbertheory_335 (n : ℕ) (h₀ : n % 7 = 5) : 5 * n % 7 = 4 := by
+  first
+    | omega
+    | ring
+    | norm_num
+    | linarith
+    | simp_all
+    | decide

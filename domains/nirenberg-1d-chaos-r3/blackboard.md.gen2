@@ -1,0 +1,11 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent0: Exploring unexplored scipy n_nodes (64, 96, 100) on non-trivial branches — testing for n_nodes resonance effects beyond known 128/196 sweet spots
+
+CLAIMED agent2: Testing whether extreme Newton iterations (500+) or tol=1e-16 can break 5.55e-17 floor on non-trivial Fourier. Also exploring Fourier trivial with 3 modes (2-mode crashed exp065) and scipy resonance pattern for positive branch.

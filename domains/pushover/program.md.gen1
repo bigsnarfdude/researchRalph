@@ -1,0 +1,89 @@
+# Current guidance — nirenberg-1d-blind
+
+## Research standards (MANDATORY)
+
+Before running ANY experiment, you MUST:
+1. **State a hypothesis** — what do you expect to happen and WHY, based on the
+   mathematics of this PDE (u'' = u³ - (1+K)u, periodic on S¹).
+2. **Cite reasoning** — reference bifurcation theory, spectral methods literature,
+   or a specific observation from prior experiments that motivates this test.
+3. **Design an ablation** — if you add or change component X, plan a control run
+   without that change so you can attribute the effect.
+
+Experiments without hypotheses are wasted compute. Write your reasoning on the
+blackboard BEFORE running.
+
+## Problem structure to reason about
+
+This is a **nonlinear periodic BVP with double-well potential** (u³ - u term).
+Think about:
+- **Bifurcation theory**: How many solution branches exist? At what parameter
+  values do branches appear/disappear? What determines branch stability?
+- **Solution topology**: The equation on S¹ has symmetry. What does that imply
+  about the solution space? Are there solutions related by symmetry operations?
+- **Spectral properties**: K(θ) = 0.3·cos(θ) breaks some symmetry. How does this
+  asymmetry affect which branches exist and their residuals?
+- **Initial guess geometry**: The Fourier initial guess shape determines which
+  basin of attraction Newton converges to. What initial guess structures lead
+  to fundamentally different solutions?
+
+## Active direction
+
+Investigate the **solution branch structure** of this PDE. The goal is not to
+tune parameters on a single solution — it is to understand which distinct
+solution types exist and find the one with lowest residual.
+
+## Unexplored research axes (pick from these)
+
+1. **Mode structure**: n_mode controls the wavenumber of the initial guess.
+   Modes 2 and 3 are almost untested. Higher modes seed different solution branches.
+   What does the theory predict about multi-mode solutions?
+
+2. **Amplitude as a bifurcation parameter**: Amplitude 0.1 has been tested
+   extensively. What happens in the range 0.2–0.5? Are there amplitude thresholds
+   where new branches appear?
+
+3. **Phase space**: Phase has never been varied from 0. On S¹ with asymmetric K(θ),
+   the phase of the initial guess relative to K matters. Sweep it.
+
+4. **Negative u_offset regime**: u_offset < 0 has been barely explored. The
+   double-well potential is symmetric in u → −u (before K breaks it). The negative
+   branch may have distinct and potentially better solutions.
+
+5. **Low-mode + tight-tolerance combinations**: High fourier_modes (128+) crash
+   Newton. But low modes (32) with tight tolerance have not been tried. Is there
+   a sweet spot?
+
+## Anomaly to investigate (HIGH PRIORITY)
+
+**exp011**: n_mode=2, amplitude=0.5 achieved residual **1.74e-17** (near machine
+epsilon!) but was discarded because solution_norm ≈ 0. Before moving on:
+- Is this a genuine near-exact solution or a numerical artifact?
+- What happens with n_mode=2 at slightly different amplitudes (0.3, 0.4, 0.6)?
+- Does this reveal a solution branch that mode=1 cannot access?
+
+Understanding this anomaly is worth more than 10 parameter sweeps.
+
+## Closed brackets (do NOT re-test)
+
+- **solver_param tuning on known configs**: 9 experiments, 0 improvements.
+  Changing newton_tol, solver_tol, n_nodes on existing solutions is exhausted.
+- **branch_search via u_offset boundary sweep**: 3 experiments, all regressed.
+  Sweeping u_offset in small steps finds the same branches repeatedly.
+- **fourier_modes ≥ 128**: Causes Newton divergence consistently. Do not retry
+  without a fundamentally different Newton damping strategy.
+
+## Current ceiling estimate
+
+Best residual: 8.82e-11. But exp011 hit 1.74e-17 with an unexplored mode
+structure. The theoretical floor is 0 (exact solution). There is likely
+**5+ orders of magnitude** still available if agents find the right branch.
+
+## How to use the blackboard
+
+Write your hypothesis and reasoning BEFORE each experiment. After, write:
+- What you observed (not just the score — describe the solution character)
+- Whether it confirmed or refuted your hypothesis
+- What this implies for the next experiment
+
+The blackboard is your lab notebook, not a scoreboard.

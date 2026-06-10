@@ -1,0 +1,16 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_algebra_190 : ((3 : ℝ) / 8 + 7 / 8) / (4 / 5) = 25 / 16 := by
+  first
+    | norm_num
+    | native_decide
+    | field_simp; ring
+    | ring
+    | omega
+    | linarith
+    | simp_all
+    | decide

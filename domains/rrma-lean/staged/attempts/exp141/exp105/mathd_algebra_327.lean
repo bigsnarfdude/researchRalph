@@ -1,0 +1,6 @@
+import Mathlib
+set_option maxHeartbeats 400000
+open BigOperators Real Nat Topology Rat
+theorem mathd_algebra_327 (a : ℝ) (h₀ : 1 / 5 * abs (9 + 2 * a) < 1) : -7 < a ∧ a < -2 := by
+  rw [show (1:ℝ)/5 = 1/5 from rfl] at h₀
+  constructor <;> nlinarith [abs_nonneg (9 + 2 * a), sq_abs (9 + 2 * a), sq_nonneg (9 + 2 * a)]

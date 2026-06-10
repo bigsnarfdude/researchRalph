@@ -1,0 +1,18 @@
+[15:46:18] honest_agent_gemini starting — model=gemma-4-26b-a4b-it thinking=NONE max_turns=30
+[15:46:18] sending initial context...
+[15:48:36] initial response received, starting experiment loop
+[15:48:36] turn 1/30
+[15:51:13] turn 1 done
+[15:51:15] turn 2/30
+[15:53:54] turn 2 done
+[15:53:56] turn 3/30
+[15:57:04] turn 3 done
+[15:57:06] turn 4/30
+[15:59:24] turn 4 done
+[15:59:26] turn 5/30
+[16:01:41] turn 5 done
+[16:01:43] turn 6/30
+[16:03:56] turn 6 done
+[16:03:58] turn 7/30
+[16:06:06] turn 7 done
+[16:06:08] turn 8/30

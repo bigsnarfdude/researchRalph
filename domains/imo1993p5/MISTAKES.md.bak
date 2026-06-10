@@ -1,0 +1,26 @@
+# Mistakes
+
+## Attempt 1: Using `unfold imo_f` for WF recursive functions
+- **What**: Tried `unfold imo_f` to unfold the Zeckendorf shift function.
+- **Why it failed**: In Lean 4.24, WF recursive functions are marked `@[irreducible]`. `unfold` and `simp [imo_f]` don't work.
+- **Fix**: Use `conv_lhs => rw [imo_f.eq_unfold]` or `rw [imo_f.eq_unfold]`.
+
+## Attempt 1: Using `simp [imo_f.eq_unfold]`
+- **What**: Tried simp with the equation unfold lemma.
+- **Why it failed**: `imo_f.eq_unfold` is self-referential (RHS contains `imo_f`), causing `simp` to loop.
+- **Fix**: Use `rw` instead of `simp` for self-referential equation lemmas.
+
+## Attempt 1: Using `linarith` for Nat subtraction
+- **What**: Tried `linarith` with Fibonacci equations to close Nat arithmetic goals.
+- **Why it failed**: `linarith` doesn't handle Nat truncated subtraction well.
+- **Fix**: Use `omega` instead — it natively handles Nat subtraction.
+
+## Attempt 1: Assuming `fib(k+2)` and `fib(k+1+1)` are the same to omega
+- **What**: Provided `@fib_add_two (n := k)` which says `fib(k+2) = fib k + fib(k+1)`, but the goal had `fib(k+1+1)`.
+- **Why it failed**: `omega` treats these as distinct opaque function applications.
+- **Fix**: Provide the hypothesis matching the exact syntactic form in the goal.
+
+## Attempt 1: Providing `decreasing_by` explicitly
+- **What**: Wrote explicit `decreasing_by` proof for the WF recursion.
+- **Why it failed**: Lean 4.24's termination prover solved it automatically, causing "No goals to be solved".
+- **Fix**: Omit `decreasing_by` when Lean can auto-prove termination.

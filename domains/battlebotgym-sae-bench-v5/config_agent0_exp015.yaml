@@ -1,0 +1,21 @@
+# EXP-015 (agent0): EvalISTARefStyleSAE + 50M + k=20 (lower k for better precision)
+# Hypothesis: k=25 may be too many features, causing false positives
+# k=20 forces more selective feature recovery, should improve precision
+sae_class: EvalISTARefStyleSAE
+k: 20
+d_sae: 4096
+lr: 1e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 50
+inner_loss_weight: 0.3
+eval_ista_steps: 5
+eval_ista_step_size: 0.25

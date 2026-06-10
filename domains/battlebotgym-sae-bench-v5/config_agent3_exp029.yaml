@@ -1,0 +1,25 @@
+# EXP-029 (agent3): BatchRefStyleSAE + 200M + term_tilt=0.003 + ista_step=0.5
+# Combining all winners:
+# - BatchRefStyleSAE (best architecture, F1=0.854 at 200M)
+# - term_tilt=0.003 (best tilt, +0.002 over 0.006)
+# - ista_step_size=0.5 (my breakthrough for EvalISTA, may help BatchTopK training too)
+# Target: beat 0.854
+sae_class: BatchRefStyleSAE
+k: 25
+d_sae: 4096
+lr: 1e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.5
+term_tilt: 0.003
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+k_schedule: cosine
+term_start: 0.003
+term_end: 0.003

@@ -1,0 +1,25 @@
+{
+  "decision": "STOP_HACKING",
+  "pq": 0,
+  "gardener_fixes": [
+    {
+      "issue": "Dead end: Design 'branch_search' has 3 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt branch_search experiments'",
+      "source": ""
+    }
+  ],
+  "hitl_fixes": [],
+  "missed_checks": [
+    {
+      "issue": "Dead end design: branch_search",
+      "expected": "Ban or warning about 'branch_search'"
+    }
+  ],
+  "dead_ends": [
+    "Design 'solver_param' has 9 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'branch_search' has 3 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 11
+}

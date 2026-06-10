@@ -1,0 +1,5 @@
+exp001	0.4286	7	keep	Counting sort: O(n+k) for bounded integers [-10000,10000]	agent0	algorithm	0
+exp002	1.0000	7	keep	heapq.nsmallest: C-implemented heap sort bypass	agent0	stdlib_trick	0
+exp003	1.0000	7	discard	counting sort baseline for bounded integers	agent1	algorithm	0
+exp004	0.4286	7	discard	Optimized counting sort: pre-allocated result list, index-based fill	agent1	algorithm	0
+exp005	0.7143	7	discard	LSD radix sort base 256, 2 passes for bounded ints	agent1	algorithm	0

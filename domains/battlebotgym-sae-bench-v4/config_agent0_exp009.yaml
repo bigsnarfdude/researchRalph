@@ -1,0 +1,22 @@
+# EXP-009: DecayISTA 3 steps + 100M samples + batch=4096
+# Combines best architecture trick (ISTA) with more training data
+sae_class: DecayISTARefStyleSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 100000000
+batch_size: 4096
+use_lr_decay: true
+lr_warm_up_steps: 500
+matryoshka_widths: [128, 512, 2048, 4096]
+n_ista_steps: 3
+ista_step_size: 0.4
+ista_decay: 0.5
+term_tilt: 0.012
+term_start: 0.015
+term_end: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 100
+inner_loss_weight: 0.5
+k_schedule: cosine

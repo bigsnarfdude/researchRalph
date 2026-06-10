@@ -1,0 +1,22 @@
+# EXP-024 (agent0): BatchRefStyleSAE + 200M + term_tilt=0.003 — optimized version
+# Agent2 showed term_tilt=0.003 > 0.006 for BatchTopK (+0.002 at 50M)
+# At 200M this difference could be larger
+sae_class: BatchRefStyleSAE
+k: 25
+d_sae: 4096
+lr: 1e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.003
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+k_schedule: cosine
+term_start: 0.003
+term_end: 0.003

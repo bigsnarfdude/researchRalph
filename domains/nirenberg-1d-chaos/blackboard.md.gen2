@@ -1,0 +1,12 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIM agent1: residual=1.30e-12 mean=1.000019 norm=1.001296 (evidence: exp036) — branch=positive, 128 modes. 128 modes converge but give WORSE residual than 64 modes due to higher condition number.
+CLAIM agent1: Newton max-norm floor is ~1.37e-12 for ±1 branches at 64 modes. RMS residual floor ~3e-13. Cannot improve without solver changes.
+CLAIM agent1: residual=3.61e-13 mean=-1.000019 (evidence: exp045) — branch=negative, u_offset=-1.0, confirming floor.
+CLAIMED agent1: Basin boundary mapping — sweeping u_offset to find bifurcation between trivial/positive/negative basins.

@@ -1,0 +1,119 @@
+# SAE-Bench — Agent Instructions
+
+## Task
+Improve a Sparse Autoencoder (SAE) to **maximize F1 score** on the SynthSAEBench-16k synthetic benchmark.
+
+You start from a vanilla BatchTopK SAE (**0.61 F1 baseline**). The current best is **0.6861 F1** (2-ISTA + initial_k=100 + matryoshka). The theoretical ceiling is ~0.97 F1 (logistic regression probe). There is a large gap still to close.
+
+## Harness
+```bash
+# Run one experiment (~5 min at 50M samples):
+bash run.sh config.yaml
+# Score (F1 0.0–1.0) is printed to stdout
+# Training progress is printed to stderr
+```
+
+For detailed results:
+```bash
+python3 engine.py config.yaml --json --matches 1
+```
+
+## What you edit
+
+### config.yaml — Hyperparameters
+The starting config is minimal:
+| Parameter | Range | Default | Effect |
+|-----------|-------|---------|--------|
+| k | 10–60 | 25 | TopK sparsity (L0 target) |
+| d_sae | 4096 | 4096 | SAE width (FIXED — do not change) |
+| lr | 1e-5–1e-3 | 3e-4 | Learning rate |
+| training_samples | 10M–200M | 50M | Training data |
+| batch_size | 256–4096 | 1024 | Batch size |
+| use_lr_decay | bool | true | Decay LR in final 1/3 |
+
+You can add new config parameters. The engine passes the full config dict to `build_sae()`.
+
+### sae.py — SAE architecture
+The default SAE is a vanilla BatchTopK from sae_lens.
+
+Edit sae.py to define custom SAE classes. Set `sae_class: YourClassName` in config.yaml to use them. See sae.py for the interface.
+
+## What you NEVER edit
+- `run.sh` — the harness (read-only)
+- `engine.py` — the training/eval loop (read-only)
+
+## Scoring
+- Metric: **F1 score** on SynthSAEBench-16k (0.0 to 1.0)
+- Direction: **higher is better**
+- Secondary metric: **MCC** (mean cosine similarity to ground-truth features)
+- Baseline (vanilla BatchTopK, 50M): **0.61 F1**
+- Current best (2-ISTA + matryoshka, 50M): **0.6861 F1**
+- Ceiling (logistic regression probe): **~0.97 F1**
+- At 50M samples, scores may be ~2-5% lower than 200M. That's fine for exploration.
+
+## Benchmark Rules (MUST follow)
+1. d_sae = 4096 (fixed width)
+2. lr = 3e-4 (for counting runs)
+3. Model = decoderesearch/synth-sae-bench-16k-v1 (fixed)
+4. Iterate with 50M samples for speed. Use 200M for final validation of breakthroughs.
+
+## Known Dead Ends (DO NOT repeat these)
+
+These axes have been exhausted across 20+ experiments. They all plateau at ~0.68 F1:
+
+| Approach | Best F1 | Why it failed |
+|----------|---------|---------------|
+| k tuning (k=15,25,35,40) | 0.69 @ k=25 | k=25 is optimal; lower kills recall, higher kills precision |
+| ISTA steps (1–5) | 0.69 @ 2 steps | Diminishing returns; 3+ steps are worse; step_size > 0.25 unstable |
+| Decoder orthogonality loss | 0.67 | Can't make 4096 columns orthogonal in 768D |
+| Encoder-decoder coherence loss | 0.68 | Loss was tiny, no effect |
+| Deep encoder (non-linear hidden) | 0.001 | Breaks ISTA gradient computation entirely |
+| JumpReLU per-feature thresholds | 0.21 | Thresholds diverge, kills features |
+| GT-feature decoder init | 0.51 | Norm scaling incompatible with TopK dynamics |
+| Matryoshka removal | 0.65 | Matryoshka helps ~+0.03; keep it |
+| Decaying ISTA step sizes | 0.68 | Same as uniform ISTA, 3x slower |
+
+**The common thread**: all of these only modify encoder/decoder architecture while keeping the same MSE reconstruction loss and 50M single-layer data pipeline.
+
+## Unexplored Directions (high priority)
+
+The 0.97 ceiling uses per-feature binary classifiers — a fundamentally different training signal. To close the gap, you need to change **what the SAE optimizes for**, not just how the encoder/decoder are shaped.
+
+### 1. Change the training signal (most promising)
+- **Contrastive/triplet loss**: Teach the SAE what "different features" means by contrasting positive/negative pairs. The GT model is available — use it to construct supervision signal.
+- **GT-supervised classification loss**: Add auxiliary loss where each latent is trained as a binary classifier for its best-matched GT feature. This directly optimizes the F1 metric. (Note: a focal BCE version is queued as EXP-014 — build on or vary this.)
+- **Bimodal activation loss**: Push pre-TopK activations toward clearly on/off (penalize ambiguous values near zero). Makes TopK binary decision sharper.
+
+### 2. Data scaling (cheap gains likely)
+- **200M+ samples with best architecture**: 100M vanilla matched 2-ISTA at 50M (both ~0.686). Data and ISTA may stack — test 200M + 2-ISTA + batch=1024 (more gradient steps).
+- **Multi-epoch or curriculum**: Train on easy-to-separate features first, then full distribution.
+
+### 3. Eval-time refinement
+- **ISTA at eval time**: Current ISTA only runs during training (`self.training` gate). Running ISTA at eval could sharpen feature selection at scoring time for free.
+- **Dual-path scoring**: Blend encoder scores with decoder-transpose scores for TopK selection.
+
+### 4. Loss function engineering
+- **Weighted reconstruction**: Weight MSE by feature importance or frequency, not uniform.
+- **Feature-level losses**: Per-latent precision/recall tracking with adaptive loss weighting.
+
+## Strategy Guidance
+- **Start from the current best config** (2-ISTA, initial_k=100, matryoshka, k=25, 50M) and change ONE axis at a time.
+- **Read the blackboard** before starting — it has detailed diagnostics on every experiment.
+- **The bottleneck is precision** (0.82 precision, 0.64 recall at baseline; but higher k trades precision for recall badly). Improving decoder column alignment (MCC) is necessary but not sufficient.
+- **The structural problem**: 16384 GT features in 768D space, SAE has 4096 latents. Each latent inevitably fires for similar-but-wrong features. You need the training signal to teach the SAE to discriminate, not just reconstruct.
+
+## File Protocol
+
+### results.tsv (append-only, shared)
+```
+commit<tab>score<tab>memory_gb<tab>status<tab>description<tab>agent<tab>design
+```
+- Score = F1 score
+- `status`: keep / discard / crash
+- ALWAYS append with `>>`, never overwrite
+
+### best/ (update only when you beat the global best)
+```bash
+cp config.yaml $(dirname $0)/best/config.yaml
+cp sae.py $(dirname $0)/best/sae.py
+```

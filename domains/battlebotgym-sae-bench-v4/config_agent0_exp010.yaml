@@ -1,0 +1,18 @@
+# EXP-010: 2-ISTA + 200M samples — test if data + ISTA stack
+# 2-ISTA alone = 0.6861, 100M alone = 0.6862. Does 200M + 2-ISTA break 0.70?
+sae_class: ReferenceStyleSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 200000000
+batch_size: 4096
+use_lr_decay: true
+lr_warm_up_steps: 500
+matryoshka_widths: [128, 512, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.012
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 100
+inner_loss_weight: 0.5

@@ -1,0 +1,9 @@
+K_amplitude: 0.3
+K_frequency: 1
+K_mode: cosine
+amplitude: 0.5
+n_mode: 1
+n_nodes: 300
+phase: 1.5707963
+solver_tol: 1.0e-14
+u_offset: 0.0

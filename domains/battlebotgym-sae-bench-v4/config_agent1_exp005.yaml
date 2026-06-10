@@ -1,0 +1,9 @@
+# EXP-005: Vanilla BatchTopK k=25 with 200M samples
+# Test whether more training alone improves feature quality
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000

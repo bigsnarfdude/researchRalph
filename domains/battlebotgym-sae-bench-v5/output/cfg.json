@@ -1,0 +1,1 @@
+{"metadata": {"sae_lens_version": "6.37.6", "sae_lens_training_version": "6.37.6"}, "d_sae": 4096, "normalize_activations": "none", "dtype": "float32", "device": "cuda", "reshape_activations": "none", "apply_b_dec_to_input": true, "d_in": 768, "architecture": "jumprelu"}

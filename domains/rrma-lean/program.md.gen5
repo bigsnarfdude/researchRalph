@@ -1,0 +1,124 @@
+# rrma-lean — Agent Instructions
+
+## Task
+
+Solve MiniF2F theorems in Lean 4. Each problem is a theorem statement with `sorry`.
+Your job: build a **proving system** that replaces `sorry` with valid Lean 4 proofs.
+
+Score = fraction of MiniF2F valid problems solved (244 problems).
+Baseline: 0.0. Current best: 0.62. Target: 0.75+.
+
+## How to run an experiment
+
+```bash
+# 1. Write or modify a proof-generation script (Python) that reads problem files
+#    and outputs proof attempts to:
+#    ~/researchRalph/domains/rrma-lean/attempts/<method_name>/<problem_name>.lean
+#
+# 2. Each attempt file must be a complete Lean 4 file:
+import Mathlib
+set_option maxHeartbeats 400000
+open BigOperators Real Nat Topology Rat
+
+theorem algebra_2varlineareq_xpeeq7_2xpeeq3_eeq11_xeqn4 (x e : ℂ)
+    (h₀ : x + e = 7) (h₁ : 2 * x + e = 3) : e = 11 ∧ x = -4 := by
+  constructor <;> linarith [h₀, h₁]
+
+# 3. Score it — THIS STEP IS MANDATORY. Do not skip.
+bash run.sh <method_name> "description of what you tried" design_type
+# run.sh auto-appends score to results.tsv. No manual editing needed.
+```
+
+## What counts as research (vs. not)
+
+**Research** (high process quality):
+- Building/improving a Python script that analyzes goal structure and generates proofs programmatically
+- Adding a new tactic-selection heuristic based on goal type (inequality → nlinarith, equality → ring, etc.)
+- Implementing error-driven retry: run Lean, parse error, adjust tactic, retry
+- Premise selection: finding relevant Mathlib lemmas to feed simp/rewrite
+- Analyzing failure patterns across unsolved problems to identify systematic gaps
+
+**Not research** (diminishing returns past 0.50):
+- Manually reading each unsolved problem and hand-writing its proof
+- Copy-pasting the same cascade with more hand-crafted special cases
+
+Hand-crafted proofs are fine for understanding problem structure, but the goal is to
+turn those insights into **algorithmic improvements** to your proof generator.
+
+## Proof generation approaches to explore
+
+### 1. Goal-conditioned tactic synthesis (current best axis)
+Parse the goal's AST (operators, types, quantifiers) to select tactic sequences.
+Existing: gen_proofs_v4.py does basic hypothesis extraction. Improve it:
+- Detect inequality goals → auto-generate `nlinarith [sq_nonneg (...)]` witnesses
+- Detect induction goals → auto-select induction variable and step tactic
+- Detect modular arithmetic → auto-insert `omega` or mod case splits
+
+### 2. Error-driven retry loop (unexplored)
+Run Lean on a candidate proof. If it fails, parse the error message to guide the
+next attempt. Many errors map to predictable fixes:
+- "unknown identifier" → wrong lemma name, try alternatives
+- "type mismatch" → insert cast (push_cast, exact_mod_cast)
+- "tactic failed" → try next tactic in priority list
+This turns O(1) attempts into O(k) attempts per problem.
+
+### 3. Premise selection (unexplored)
+Many problems fail because the right Mathlib lemma never enters scope.
+Build a lookup: for each goal type signature, find relevant lemmas.
+- Grep Mathlib source for lemma names matching goal patterns
+- Build a keyword→lemma mapping from hypothesis types
+- Inject selected lemmas into `simp only [...]` or `rw [...]`
+
+### 4. Proof search with backtracking (unexplored)
+Instead of one tactic sequence, try a tree of possibilities:
+- Apply tactic, check if goal changed, branch on alternatives
+- Use `lake env lean` to verify intermediate states
+- Depth-limited BFS over tactic space
+
+## Known effective tactics
+
+| Goal pattern | Tactic |
+|---|---|
+| Linear arithmetic (ℤ/ℕ) | `omega` |
+| Linear arithmetic (ℝ/ℚ/fields) | `linarith` |
+| Ring identities | `ring` |
+| Numerical computation | `norm_num` |
+| Nonlinear inequality | `nlinarith [sq_nonneg (...)]` |
+| Decidable/finite | `native_decide` |
+| Division/fractions | `field_simp` + closer |
+| Equality hypotheses | `subst_vars` |
+| Absolute value | `abs_of_neg`/`abs_of_nonneg` + `linarith` |
+| ℕ→ℝ coercion | `push_cast; linarith` |
+| Complex I² = -1 | `ring_nf; linear_combination k * Complex.I_sq` |
+
+## Problem categories in MiniF2F
+
+- `algebra_*` — polynomial identities, equations (easiest)
+- `amc*` — AMC competition problems
+- `aime_*` — AIME problems (harder)
+- `mathd_*` — MATH dataset problems
+- `imo_*` — IMO problems (hardest)
+
+## Scoring
+
+```
+score = problems_solved / total_valid_problems (244)
+```
+
+All 244 problems are always attempted. Score = solve rate over full set.
+
+## TrustLoop rules
+
+1. Proof must compile without `sorry`
+2. Score on valid set only (not test)
+3. No hardcoding answers — proof must be general
+4. **Must run bash run.sh** — experiments not in results.tsv don't count
+5. Write findings to blackboard.md after scoring — what worked, what failed, what to try next
+
+## Self-telemetry (append, never overwrite)
+
+After every experiment, update these three files:
+
+- **MISTAKES.md** — tactics you tried that failed and why
+- **DESIRES.md** — tools, context, or information you wish you had
+- **LEARNINGS.md** — anything discovered about the environment or problem structure

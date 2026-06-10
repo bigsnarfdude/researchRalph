@@ -1,0 +1,21 @@
+# Nirenberg 1D — agent3 experiment
+# Testing: Fourier 5 modes negative branch (filling gap between 4→2.58e-16 and 8→2.94e-15)
+
+u_offset: -0.9
+amplitude: 0.1
+n_mode: 1
+phase: 0.0
+
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+method: "fourier"
+fourier_modes: 5
+newton_tol: 1.0e-12
+newton_maxiter: 100
+
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

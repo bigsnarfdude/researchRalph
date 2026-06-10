@@ -1,0 +1,30 @@
+EXP-010	0.7210	2.5	discard	EvalISTARefStyleSAE 200M lr=1e-4 WORSE than 50M — EvalISTA does not scale to 200M	agent3	EvalISTARefStyleSAE
+EXP-013	0.7671	0.8	discard	SupervisedEvalISTASAE 50M GT cls loss no improvement cls_weight=0.05 too low	agent0	SupervisedEvalISTASAE
+EXP-014	0.7670	0.8	keep	EvalISTARefStyleSAE 50M v4 best params reproduced — confirms baseline ~0.77	agent3	EvalISTARefStyleSAE
+EXP-001	0.6833	1.3	discard	EvalISTARefStyleSAE 200M lr=2e-4 LR bracket test — confirmed 200M+EvalISTA dead end at all LRs	agent2	EvalISTARefStyleSAE
+EXP-003	0.7698	0.5	keep	SoftSupEvalISTASAE 50M differentiable GT-supervised loss — matches baseline	agent2	SoftSupEvalISTASAE
+EXP-004	0.7654	0.5	discard	SoftSupEvalISTASAE 50M aggressive cls_weight=0.2 — hurts vs baseline	agent2	SoftSupEvalISTASAE
+EXP-005	0.7394	0.3	discard	EvalISTARefStyleSAE 50M lr=3e-4 — worse than lr=1e-4 at 50M	agent2	EvalISTARefStyleSAE
+EXP-006	0.7063	0.3	discard	ResidualBoostSAE 50M boost_k=10 — residual features are noise	agent2	ResidualBoostSAE
+EXP-007	0.6980	0.3	discard	DampedEvalISTASAE 50M eval_ista=20 decay=0.7 — damped ISTA still hurts	agent2	DampedEvalISTASAE
+EXP-008	0.7167	0.3	discard	ShrinkEvalISTASAE 50M shrinkage=0.01 — kills real features too	agent2	ShrinkEvalISTASAE
+EXP-009	0.7000	0.4	discard	EvalISTARefStyleSAE 50M n_ista=5 train — more training ISTA hurts	agent2	EvalISTARefStyleSAE
+EXP-010	0.7468	0.5	discard	EvalISTARefStyleSAE 50M no matryoshka — matryoshka is beneficial	agent2	EvalISTARefStyleSAE
+EXP-010	0.7468	0.5	discard	EvalISTARefStyleSAE 50M no matryoshka — matryoshka is beneficial	agent2	EvalISTARefStyleSAE
+EXP-011	0.7356	0.4	discard	AvgEvalISTARefStyleSAE 50M Polyak avg last 2 ISTA — averaging hurts	agent2	AvgEvalISTARefStyleSAE
+EXP-012	0.7465	0.7	discard	EvalISTARefStyleSAE 50M cosineannealingwarmrestarts LR — worse than constant+decay	agent2	EvalISTARefStyleSAE
+EXP-014	0.7949	0.5	keep	EvalISTARefStyleSAE 50M eval_ista_step_size=0.75 — above baseline but below 0.5 optimum	agent2	EvalISTARefStyleSAE
+EXP-015	0.3533	0.5	discard	EvalISTARefStyleSAE 50M eval_ista_step_size=1.0 — ISTA diverges catastrophically	agent2	EvalISTARefStyleSAE
+EXP-016	0.7991	0.8	keep	EvalISTARefStyleSAE 50M eval_ista_step_size=0.4 — step size sweep	agent2	EvalISTARefStyleSAE
+EXP-017	0.8164	0.8	keep	EvalISTARefStyleSAE 50M eval_ista_step_size=0.6 — near-optimal step size	agent2	EvalISTARefStyleSAE
+EXP-019	0.8219	0.9	keep	BatchRefStyleSAE 50M term_tilt=0.003 — slight improvement over 0.006	agent2	BatchRefStyleSAE
+EXP-020	0.7422	0.9	discard	BatchRefStyleSAE 50M k=30 — higher k hurts even with BatchTopK	agent2	BatchRefStyleSAE
+EXP-021	0.8187	0.6	keep	BatchRefStyleSAE 50M term_tilt=0.001 — optimum at 0.003	agent2	BatchRefStyleSAE
+EXP-022	0.8550	2.7	keep	BatchRefStyleSAE 200M term_tilt=0.003 — new best for 200M (0.855 vs 0.854)	agent2	BatchRefStyleSAE
+EXP-023	0.8939	2.8	keep	BatchRefStyleSAE 200M inner_loss_weight=0.5 term_tilt=0.003 — confirms agent1 F1=0.894 BEST OVERALL	agent2	BatchRefStyleSAE
+EXP-024	0.8905	2.8	keep	BatchRefStyleSAE 200M inner_loss_weight=0.7 term_tilt=0.003 — 0.7 slightly worse than 0.5 (0.894)	agent2	BatchRefStyleSAE
+EXP-032	0.8998	10.0	keep	BatchRefStyleSAE 200M inner_loss_weight=0.6 term_tilt=0.003 NEW BEST	agent3	BatchRefStyleSAE
+EXP-025	0.8822	3.1	keep	BatchRefStyleSAE 200M n_ista=3 ilw=0.5 tilt=0.003 — more train ISTA hurts even BatchTopK	agent2	BatchRefStyleSAE
+EXP-034	0.8889	5.0	discard	BatchRefStyleSAE 200M warmup=2000 worse than warmup=1000	agent3	BatchRefStyleSAE
+EXP-035	0.8815	5.0	discard	BatchRefStyleSAE 200M initial_k=40 worse than 60	agent3	BatchRefStyleSAE
+EXP-036	0.8825	5.0	discard	BatchRefStyleSAE 500M over-training worse than 200M	agent3	BatchRefStyleSAE

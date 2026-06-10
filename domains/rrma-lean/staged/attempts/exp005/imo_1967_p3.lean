@@ -1,0 +1,22 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem imo_1967_p3 (k m n : ℕ) (c : ℕ → ℕ) (h₀ : 0 < k ∧ 0 < m ∧ 0 < n)
+  (h₁ : ∀ s, c s = s * (s + 1)) (h₂ : Nat.Prime (k + m + 1)) (h₃ : n + 1 < k + m + 1) :
+  (∏ i ∈ Finset.Icc 1 n, c i) ∣ ∏ i ∈ Finset.Icc 1 n, c (m + i) - c k := by
+  first
+    | omega
+    | native_decide
+    | decide
+    | simp [Finset.sum]; norm_num
+    | norm_num
+    | simp only [h₁] at *; nlinarith
+    | simp only [h₁] at *; linarith
+    | simp only [h₁] at *; omega
+    | simp only [h₁] at *; norm_num
+    | simp only [h₁]; ring
+    | simp only [h₁]; norm_num
+    | ring

@@ -1,0 +1,3 @@
+{"exp_id": "exp000", "score": 0.0, "status": "discard", "agent": "agent0", "timestamp": "2026-03-31T03:23:16Z"}
+{"exp_id": "exp001", "score": 0.0, "status": "discard", "agent": "agent0", "timestamp": "2026-03-31T03:23:27Z"}
+{"exp_id": "exp002", "score": 1.0, "status": "keep", "agent": "agent0", "timestamp": "2026-03-31T03:28:21Z"}

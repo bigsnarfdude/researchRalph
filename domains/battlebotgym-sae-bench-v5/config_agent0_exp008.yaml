@@ -1,0 +1,23 @@
+# EXP-008 (agent0): DecISTARefStyleSAE + k=20 + annealed term — precision-focused
+# Hypothesis: k=20 (not 25) with W_dec.T ISTA + strong term tilt → fewer FPs
+# Rationale: if avg GT active features < 25, k=25 forces false positives
+sae_class: DecISTARefStyleSAE
+k: 20
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.015
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 80
+inner_loss_weight: 0.5
+eval_ista_steps: 3
+eval_ista_step_size: 0.25
+ista_use_decoder: true
+eval_ista_use_decoder: true

@@ -1,0 +1,15 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_algebra_151 : Int.ceil (Real.sqrt 27) - Int.floor (Real.sqrt 26) = 1 := by
+  first
+    | norm_num
+    | native_decide
+    | ring
+    | omega
+    | linarith
+    | simp_all
+    | decide

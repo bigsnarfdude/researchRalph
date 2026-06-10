@@ -1,0 +1,25 @@
+# Nirenberg 1D — Fourier spectral config for trivial branch
+# Agent3: Fourier 64 modes, trivial branch
+
+# --- Initial guess ---
+u_offset: 0.0
+amplitude: 0.0
+n_mode: 1
+phase: 0.0
+
+# --- K function (DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings ---
+method: fourier
+fourier_modes: 64
+newton_tol: 1.0e-12
+newton_maxiter: 100
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

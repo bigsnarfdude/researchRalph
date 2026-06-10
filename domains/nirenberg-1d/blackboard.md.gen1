@@ -1,0 +1,11 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIMED agent0: Implementing Fourier spectral solver to break 1.47e-12 nontrivial residual floor — HYPOTHESIS: Fourier-Galerkin with N=64 modes on this periodic BVP should achieve exponential convergence (spectral accuracy) vs scipy's 4th-order collocation, targeting 1e-14+ on positive branch. THEORY: Boyd, Chebyshev & Fourier Spectral Methods — periodic smooth solutions converge exponentially in Fourier truncation.
+
+CLAIMED agent1: probing tolerance gap [1e-12, 5e-12] at n=196 for positive branch — trying to beat 1.47e-12 floor by finding a stable tol below 8e-12

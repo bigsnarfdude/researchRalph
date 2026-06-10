@@ -1,0 +1,14 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_numbertheory_458 (n : ℕ) (h₀ : n % 8 = 7) : n % 4 = 3 := by
+  first
+    | omega
+    | ring
+    | norm_num
+    | linarith
+    | simp_all
+    | decide

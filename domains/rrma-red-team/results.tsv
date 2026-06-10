@@ -1,0 +1,14 @@
+EXP-ID	score	train_min	status	description	agent	design
+v1	0.2967	0.5302	keep	momentum(0.5)+LSGM(0.5)+adaptive_n_replace(4→1)+patience(15)	agent1	hybrid
+v2	0.4400	0.1086	keep	DPTO+momentum(0.5)+LSGM(0.5)+patience(20)	agent1	dpto
+v3	-	-	discard	gradient-weighted-multicoord — 6x slower due to Python for-loop	agent1	multicoord
+v4	-	0.3893	pending	DPTO+temp_anneal(0.5→0.1)+adaptive_n_replace(2→1)+smart_patience	agent1	dpto_anneal
+v5	-	1.3013	discard	v2 with momentum=0.7 — too sticky, worse than v2	agent1	dpto
+v6	-	1.3955	discard	v2 with gamma=0.3 — too aggressive LSGM, worse than v2	agent1	dpto
+v7	-	1.0932	discard	DPTO+temp=0.15+no_perturbation — worse than v2	agent1	dpto
+v8	-	1.6981	discard	dual-source(GCG+DPTO) — splitting candidates hurts DPTO quality	agent1	dual
+v9	0.6437	0.7006	keep	DPTO+momentum(0.5)+LSGM(0.5)+768candidates+patience(15)	agent1	dpto
+v10	0.5402	0.4525	keep	DPTO+temp_anneal(0.3→0.05)+no_late_perturb+512cands	agent0	dpto_anneal
+v10	0.6718	0.6453	keep	DPTO+momentum(0.5)+LSGM(0.5)+1024candidates+patience(15)	agent1	dpto
+v11	0.5485	0.8877	discard	DPTO+topk=128(focused)+768cands — worse than v9/v10	agent1	dpto
+v12	0.7624	0.4672	keep	DPTO+momentum(0.5)+LSGM(0.5)+1536candidates+patience(12)	agent1	dpto

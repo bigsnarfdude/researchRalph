@@ -1,0 +1,7 @@
+import Mathlib
+set_option maxHeartbeats 400000
+open BigOperators Real Nat Topology Rat
+theorem algebra_2complexrootspoly_xsqp49eqxp7itxpn7i (x : ℂ) :
+    x ^ 2 + 49 = (x + 7 * Complex.I) * (x + -7 * Complex.I) := by
+  have : (x + 7 * Complex.I) * (x + -7 * Complex.I) = x ^ 2 + 49 * -(Complex.I ^ 2) := by ring
+  rw [this, Complex.I_sq]; ring

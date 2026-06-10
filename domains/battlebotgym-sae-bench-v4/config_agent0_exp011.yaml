@@ -1,0 +1,22 @@
+# EXP-011: BatchRefStyleSAE — variable per-sample L0
+# BatchTopK allows some samples to have <25 active features (precision boost)
+# while others have >25 (better recall for complex samples)
+sae_class: BatchRefStyleSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [128, 512, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.012
+term_start: 0.015
+term_end: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 100
+inner_loss_weight: 0.5
+k_schedule: cosine

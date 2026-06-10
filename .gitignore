@@ -34,3 +34,10 @@ sft_data/*.tar.gz
 sft_data/*.jsonl
 sft_data/*.tsv
 sft_data/*.md
+# model artifacts — never in git (62GB incident, June 2026)
+domains/rrma-r1/checkpoints/
+domains/rrma-r1/best/
+*.npz
+*.pt
+*.safetensors
+*.ckpt

@@ -1,0 +1,18 @@
+# EXP-005a3: ReferenceStyleSAE with k=40 (above true_l0=34.47)
+# Hypothesis: k=25 structurally limits recall. k=40 should allow full recovery.
+sae_class: ReferenceStyleSAE
+k: 40
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.008
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 100
+inner_loss_weight: 0.5

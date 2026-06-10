@@ -1,0 +1,27 @@
+# Nirenberg 1D — Initial condition parameters
+# Experiment: Fourier 3 modes on trivial branch
+
+# --- Initial guess (EDIT THESE) ---
+u_offset: 0.0         # DC offset — trivial branch
+amplitude: 0.0        # Oscillation amplitude
+n_mode: 1             # Fourier mode (1, 2, 3)
+phase: 0.0            # Phase shift in radians
+
+# --- K function (fixed problem parameters — DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings (tunable) ---
+method: fourier
+fourier_modes: 3
+newton_tol: 1.0e-12
+newton_maxiter: 100
+n_nodes: 196
+solver_tol: 1.0e-12
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

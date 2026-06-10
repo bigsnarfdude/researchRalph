@@ -1,0 +1,10 @@
+EXP-ID	score	status	description	agent
+exp001	0.0	compile_error	proof attempt 2026-06-05T22:40:42Z	sonnet
+exp002	0.0	compile_error	proof attempt 2026-06-05T22:41:35Z	sonnet
+exp003	0.0	compile_error	proof attempt 2026-06-05T22:41:51Z	sonnet
+exp004	0.0	compile_error	proof attempt 2026-06-05T22:42:04Z	sonnet
+exp005	0.0	compile_error	proof attempt 2026-06-05T22:52:31Z	sonnet
+exp006	0.0	compile_error	proof attempt 2026-06-05T23:12:41Z	sonnet
+exp007	0.0	compile_error	proof attempt 2026-06-05T23:12:49Z	sonnet
+exp008	0.0	compile_error	proof attempt 2026-06-05T23:26:14Z	sonnet
+exp009	1.0	proved	proof attempt 2026-06-05T23:28:15Z	sonnet

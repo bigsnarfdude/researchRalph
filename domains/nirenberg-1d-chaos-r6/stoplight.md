@@ -1,0 +1,449 @@
+# Stoplight — nirenberg-1d-chaos-r6
+Status: STAGNANT | Best: 0.0 (exp001) | Experiments: 411 | Stagnation: 410 since last breakthrough
+
+## Dead ends — do NOT retry
+- Design 'agent0' has 43 experiments, 0 keeps — abandon this approach
+- Design 'agent1' has 58 experiments, 0 keeps — abandon this approach
+- Design 'agent2' has 54 experiments, 0 keeps — abandon this approach
+- Design 'agent3' has 51 experiments, 0 keeps — abandon this approach
+- Design 'agent4' has 43 experiments, 0 keeps — abandon this approach
+- Design 'agent7' has 62 experiments, 0 keeps — abandon this approach
+- Design 'agent5' has 50 experiments, 0 keeps — abandon this approach
+- Design 'agent6' has 50 experiments, 0 keeps — abandon this approach
+
+## Gaps — unexplored
+- 30 desires filed but mostly unaddressed — gardener should read DESIRES.md
+
+## Agents
+- Amplitude sweep: amp=0.05, u_offset=0.9, positive branch: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Amplitude sweep: amp=0.2, u_offset=0.9, positive branch: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Basin boundary probe: u_offset=0.47, modes=1, which branch does Newton select?: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- Basin boundary probe: u_offset=0.48: 1 exp, 0 breakthroughs, rate 0%, best 4.77524979e-16
+- Basin boundary probe: u_offset=0.49: 1 exp, 0 breakthroughs, rate 0%, best 1.75541673e-16
+- Basin boundary probe: u_offset=0.495: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Basin boundary probe: u_offset=0.50, which branch?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Basin boundary u_offset=0.468 fm=1 — continuing downward search: 1 exp, 0 breakthroughs, rate 0%, best 4.62343413e-16
+- Basin boundary u_offset=0.4683 fm=1 approaching minimum: 1 exp, 0 breakthroughs, rate 0%, best 7.48379165e-31
+- Basin boundary u_offset=0.4684 fm=1 fine-tuning: 1 exp, 0 breakthroughs, rate 0%, best 1.15938402e-30
+- Basin boundary u_offset=0.46848 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 1.22082438e-30
+- Basin boundary u_offset=0.4685 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- Basin boundary u_offset=0.46852 fm=1 ultra-fine: 1 exp, 0 breakthroughs, rate 0%, best 9.97838887e-31
+- Basin boundary u_offset=0.4686 fm=1 bracketing minimum: 1 exp, 0 breakthroughs, rate 0%, best 1.15938402e-30
+- Basin boundary u_offset=0.4688 fm=1 narrowing minimum: 1 exp, 0 breakthroughs, rate 0%, best 2.31876803e-30
+- Basin boundary u_offset=0.469 fm=1 — below 0.47: 1 exp, 0 breakthroughs, rate 0%, best 4.88329751e-30
+- Basin boundary u_offset=0.4695 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- Basin boundary u_offset=0.47005 fm=1 fine search: 1 exp, 0 breakthroughs, rate 0%, best 1.48401154e-28
+- Basin boundary u_offset=0.4701 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 1.27723378e-28
+- Basin boundary u_offset=0.4702 fm=1 — narrowing toward 0.47 sweet spot: 1 exp, 0 breakthroughs, rate 0%, best 2.55446755e-28
+- Basin boundary u_offset=0.4705 fm=1 — probing between 0.47(6.4e-29) and 0.471(4.1e-27): 1 exp, 0 breakthroughs, rate 0%, best 1.41306163e-27
+- Basin boundary u_offset=0.475 with modes=4 — does grid size change basin?: 1 exp, 0 breakthroughs, rate 0%, best 3.62021453e-16
+- Basin probe u_offset=0.4745, modes=1 — between trivial(0.47) and flip(0.475): 1 exp, 0 breakthroughs, rate 0%, best 2.44462702e-16
+- Basin probe u_offset=0.4755 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.57009246e-16
+- Basin u_offset=0.48 with modes=4 — mapping modes=4 basin: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- Basin u_offset=0.49 with modes=4: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- Basin u_offset=0.495 with modes=4 — where modes=1 gives sign flip: 1 exp, 0 breakthroughs, rate 0%, best 2.08282465e-16
+- Extreme u_offset=-1.5: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Extreme u_offset=1.5, looking for divergence or unknown behavior: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Fourier spectral negative branch, u_offset=-0.9, modes=4: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- Fourier spectral positive branch, u_offset=0.9, modes=4: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- Fourier spectral trivial branch, u_offset=0.0, amp=0, modes=4: 1 exp, 1 breakthroughs, rate 0%, best 0.0
+- Mode-2 perturbation u_offset=0.7 amp=0.15 — probing for unusual convergence: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Mode-3 perturbation at basin boundary u_offset=0.5 amp=0.2: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative basin boundary u_offset=-0.4685 fm=1 — Z2 symmetry test: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- Negative basin boundary u_offset=-0.469 fm=1 — fine search: 1 exp, 0 breakthroughs, rate 0%, best 4.88329751e-30
+- Negative basin boundary: u_offset=-0.48, modes=1: 1 exp, 0 breakthroughs, rate 0%, best 4.77524979e-16
+- Negative basin boundary: u_offset=-0.495: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative basin boundary: u_offset=-0.50, expecting positive branch: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative branch u_offset=-0.9 amp=0.05 fm=1 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative branch u_offset=-0.9 fm=1 n_nodes=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative branch u_offset=-0.9 fm=1 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative branch u_offset=-0.9 fm=2 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- Negative branch u_offset=-0.9 fourier_modes=1 newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative branch u_offset=-0.9 fourier_modes=4 newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- Negative branch u_offset=-1.0 fm=1 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Negative branch, fourier_modes=1, newton_tol=1e-15, push residual lower: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Oscillating IC: u_offset=0, amp=0.5, n_mode=2 — does mode-2 lead to mode-2 solution?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Oscillating IC: u_offset=0, amp=0.5, n_mode=3: 1 exp, 0 breakthroughs, rate 0%, best 4.85638505e-25
+- Phase=pi at basin boundary u_offset=0.495 amp=0.1 — does phase flip basin?: 1 exp, 0 breakthroughs, rate 0%, best 1.29246971e-26
+- Phase=pi/2 at basin boundary u_offset=0.495 amp=0.1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch K-matching: u_offset=0.9 amp=0.15 n_mode=1 phase=0 (aligned with K(θ)): 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch fourier_modes=16 — measuring convergence vs modes: 1 exp, 0 breakthroughs, rate 0%, best —
+- Positive branch modes=16 newton_tol=1e-13 (relaxed for convergence): 1 exp, 0 breakthroughs, rate 0%, best 3.26514669e-14
+- Positive branch u_offset=0.9 amp=0.15 n_mode=3 phase=pi/2 fm=1 — complex initial guess: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch u_offset=0.9 fm=1 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch u_offset=0.9 fourier_modes=1 newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch u_offset=0.9 fourier_modes=4 newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- Positive branch u_offset=1.000049 (exact mean) fm=1 — optimal starting point: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch u_offset=1.001322 (solution_norm) fm=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch, fourier_modes=1, newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Positive branch, fourier_modes=2, newton_tol=1e-15, maxiter=200 — trying to break 5.55e-17 floor: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- Positive branch, modes=1, newton_tol=1e-16, maxiter=200 — tightest tolerance: 1 exp, 0 breakthroughs, rate 0%, best —
+- Probing negative sliver lower edge: u_offset=0.4746: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Probing negative sliver width: u_offset=0.4748: 1 exp, 0 breakthroughs, rate 0%, best 7.06541606e-16
+- Probing sliver boundary: u_offset=0.4747: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Re-verify u_offset=0.475, modes=1 — previous agents say negative: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Trivial branch at u_offset=0.0 — verifying residual=0.0 is reproducible: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- Trivial branch u_offset=0.1 fm=1 — mapping residual in deep basin: 1 exp, 0 breakthroughs, rate 0%, best 6.35227453e-17
+- Trivial branch u_offset=0.2 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- Trivial branch u_offset=0.3 fm=1 — confirming 1.60e-29: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- Trivial branch u_offset=0.35 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 2.02934982e-20
+- Trivial branch u_offset=0.4 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 1.24055339e-20
+- Trivial branch u_offset=0.465 fm=1 — between 0.46(exact) and 0.4685(4.99e-31): 1 exp, 0 breakthroughs, rate 0%, best 4.10973015e-21
+- Trivial branch u_offset=0.467 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 1.23680252e-17
+- Verify trivial branch at u_offset=0.4685 — is residual lower than at 0?: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- Z2 symmetry test: u_offset=-0.59 should→positive (mirrors +0.59→negative): 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- Z2 test: u_offset=-0.61 should→negative (mirrors +0.61→positive): 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary modes=4 u_offset=0.5 — which branch?: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- basin boundary modes=4 u_offset=0.55 — which branch?: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- basin boundary modes=4 u_offset=0.575: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- basin boundary modes=4 u_offset=0.58: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- basin boundary modes=4 u_offset=0.59: 1 exp, 0 breakthroughs, rate 0%, best 3.62021453e-16
+- basin boundary modes=4 u_offset=0.6 — which branch?: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- basin boundary test u_offset=0.3 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- basin boundary test u_offset=0.45 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.53772076e-23
+- basin boundary test u_offset=0.47 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- basin boundary test u_offset=0.47 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- basin boundary test u_offset=0.475 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary test u_offset=0.475 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary test u_offset=0.48 fourier_modes=1: 2 exp, 0 breakthroughs, rate 0%, best 4.77524979e-16
+- basin boundary test u_offset=0.48 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 4.77524979e-16
+- basin boundary test u_offset=0.49 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.75541673e-16
+- basin boundary test u_offset=0.5 fourier_modes=1: 2 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary test u_offset=0.50 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary test: u_offset=0.5, fourier_modes=1 — which branch does Newton find?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary u_offset=0.46 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- basin boundary u_offset=0.46 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- basin boundary u_offset=0.46 modes=1 — trivial or nontrivial?: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- basin boundary u_offset=0.47 fourier_modes=1 testing sub-epsilon trivial: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- basin boundary u_offset=0.47 modes=1 — expect trivial with ultra-low residual: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- basin boundary u_offset=0.47 modes=1 — trivial or nontrivial?: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- basin boundary u_offset=0.471 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 4.11261342e-27
+- basin boundary u_offset=0.472 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 4.9045777e-26
+- basin boundary u_offset=0.473 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.40766601e-23
+- basin boundary u_offset=0.473 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.40766601e-23
+- basin boundary u_offset=0.474 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.68652198e-18
+- basin boundary u_offset=0.474 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.68652198e-18
+- basin boundary u_offset=0.4745 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 2.44462702e-16
+- basin boundary u_offset=0.4748 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 7.06541606e-16
+- basin boundary u_offset=0.475 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary u_offset=0.475 modes=1 — trivial or nontrivial?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary u_offset=0.476 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin boundary with modes=4: u_offset=0.475 — which branch?: 1 exp, 0 breakthroughs, rate 0%, best 3.62021453e-16
+- basin boundary: u_offset=0.48, fourier_modes=1 — mapping convergence: 1 exp, 0 breakthroughs, rate 0%, best 4.77524979e-16
+- basin boundary: u_offset=0.49, fourier_modes=1 — narrowing boundary: 1 exp, 0 breakthroughs, rate 0%, best 1.75541673e-16
+- basin modes=4 at u_offset=0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- basin modes=4 at u_offset=0.575 — narrowing neg/pos boundary: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- basin modes=4 at u_offset=0.59: 1 exp, 0 breakthroughs, rate 0%, best 2.02539645e-15
+- basin modes=4 at u_offset=0.60 — modes=1 boundary neg/pos is here: 1 exp, 0 breakthroughs, rate 0%, best 2.30011512e-15
+- basin modes=4 bisect: u_offset=0.585: 1 exp, 0 breakthroughs, rate 0%, best 1.88564362e-15
+- basin modes=4 fine bisect: u_offset=0.588: 1 exp, 0 breakthroughs, rate 0%, best 1.96261557e-16
+- basin modes=4: u_offset=0.47 — modes=1 gives trivial: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- basin modes=4: u_offset=0.48 — modes=1 gives positive: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- basin modes=4: u_offset=0.589 — pinpointing neg/pos boundary: 1 exp, 0 breakthroughs, rate 0%, best 3.62021453e-16
+- basin modes=4: u_offset=0.5895: 1 exp, 0 breakthroughs, rate 0%, best 2.00532833e-15
+- basin probe u_offset=0.6 modes=1 — negative or positive?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.6005 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.6008 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.6009 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.601 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.605 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.61 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.625 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.65 modes=1 — negative or positive?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.7 modes=1 — negative or positive?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin probe u_offset=0.8 modes=1 — negative or positive?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin recheck u_offset=0.600 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- basin with modes=4: u_offset=0.50 — modes=1 gives negative: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- energy comparison: modes=2 positive branch — checking if energy differs from modes=1,4: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- energy convergence: modes=6 positive branch: 1 exp, 0 breakthroughs, rate 0%, best 1.07183226e-15
+- energy convergence: modes=7 positive branch — last before crash zone: 1 exp, 0 breakthroughs, rate 0%, best 2.82905281e-15
+- energy study: modes=5 positive branch: 1 exp, 0 breakthroughs, rate 0%, best 6.78216095e-16
+- exotic initial cond: u_offset=0.6, amp=0.2, n_mode=3, phase=pi — seeking unusual convergence: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- extreme u_offset=-1.5 fourier_modes=1 tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- extreme u_offset=-1.5, fourier_modes=1 — testing convergence at negative boundary: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- extreme u_offset=1.5 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- extreme u_offset=1.5 fourier_modes=1 tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- extreme u_offset=1.5, fourier_modes=1 — testing convergence at param boundary: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- fine probe near trivial sweet spot: u_offset=0.4699, fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- fourier u_offset=-0.2 modes=1 — Z2 verification of exact zero: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- fourier u_offset=0.001 modes=1 tol=1e-15 — trivial residual vs offset: 1 exp, 0 breakthroughs, rate 0%, best 1.17127139e-24
+- fourier u_offset=0.05 modes=1 — trivial residual nonmonotonic scan: 1 exp, 0 breakthroughs, rate 0%, best 3.13892973e-24
+- fourier u_offset=0.09 modes=1 — probing anomaly near 0.1: 1 exp, 0 breakthroughs, rate 0%, best 5.66505501e-18
+- fourier u_offset=0.1 modes=1 — trivial residual scaling: 1 exp, 0 breakthroughs, rate 0%, best 6.35227453e-17
+- fourier u_offset=0.1 modes=4 — comparison with modes=1 anomaly: 1 exp, 0 breakthroughs, rate 0%, best 5.50637749e-28
+- fourier u_offset=0.11 modes=1 — other side of 0.1 anomaly: 1 exp, 0 breakthroughs, rate 0%, best 5.3720017e-16
+- fourier u_offset=0.11 modes=2 — does cliff shift with grid?: 1 exp, 0 breakthroughs, rate 0%, best —
+- fourier u_offset=0.11 modes=4 — cliff behavior with larger grid: 1 exp, 0 breakthroughs, rate 0%, best 3.83332188e-27
+- fourier u_offset=0.111 modes=1 — cliff resolution: 1 exp, 0 breakthroughs, rate 0%, best 6.56259264e-16
+- fourier u_offset=0.1112 modes=1 — finer cliff bisection: 1 exp, 0 breakthroughs, rate 0%, best 6.82884823e-16
+- fourier u_offset=0.1114 modes=1 — ultra-fine cliff bisection: 1 exp, 0 breakthroughs, rate 0%, best 7.1052703e-16
+- fourier u_offset=0.1115 modes=1 — bisecting 0.111-0.112 cliff: 1 exp, 0 breakthroughs, rate 0%, best 3.74189583e-31
+- fourier u_offset=0.112 modes=1 — narrowing the cliff: 1 exp, 0 breakthroughs, rate 0%, best 1.24729861e-31
+- fourier u_offset=0.115 modes=1 — cliff midpoint between 0.11 and 0.12: 1 exp, 0 breakthroughs, rate 0%, best 7.48379165e-31
+- fourier u_offset=0.12 modes=1 — anomaly peak mapping: 1 exp, 0 breakthroughs, rate 0%, best 1.839924e-30
+- fourier u_offset=0.15 modes=1 — narrowing residual peak: 1 exp, 0 breakthroughs, rate 0%, best 1.27723378e-28
+- fourier u_offset=0.18 modes=1 — mapping exact-zero range: 1 exp, 0 breakthroughs, rate 0%, best 1.51762033e-26
+- fourier u_offset=0.19 modes=1 — cliff near 0.2?: 1 exp, 0 breakthroughs, rate 0%, best 1.63485923e-26
+- fourier u_offset=0.195 modes=1 — exact zero boundary: 1 exp, 0 breakthroughs, rate 0%, best 3.26971847e-26
+- fourier u_offset=0.199 modes=1 — closer to exact zero: 1 exp, 0 breakthroughs, rate 0%, best 8.00079464e-26
+- fourier u_offset=0.2 modes=1 — verify exact zero per agent3: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- fourier u_offset=0.21 modes=1 — post-zero check: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- fourier u_offset=0.22 modes=1 — upper zero range: 1 exp, 0 breakthroughs, rate 0%, best 1.13393158e-23
+- fourier u_offset=0.25 modes=1 — exact zero pattern scan: 1 exp, 0 breakthroughs, rate 0%, best 7.66704402e-20
+- fourier u_offset=0.3 modes=1 — trivial residual scaling: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- fourier u_offset=0.35 modes=1 — pattern scan: 1 exp, 0 breakthroughs, rate 0%, best 2.02934982e-20
+- fourier u_offset=0.4 modes=1 — pattern scan: 1 exp, 0 breakthroughs, rate 0%, best 1.24055339e-20
+- large u_offset=1.3 beyond typical positive range: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- mirror boundary test u_offset=-0.6009 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- mirror boundary test u_offset=-0.601 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- mirror boundary test u_offset=-0.61 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- mirror boundary test u_offset=-0.62 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- mirror boundary test u_offset=-0.64 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- modes=2 basin boundary: u_offset=0.46: 1 exp, 0 breakthroughs, rate 0%, best —
+- modes=2 basin boundary: u_offset=0.461: 1 exp, 0 breakthroughs, rate 0%, best —
+- modes=2 basin boundary: u_offset=0.462: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- modes=2 basin boundary: u_offset=0.465: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- modes=2 basin: u_offset=0.47 (trivial with modes=1, negative with modes=4): 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- modes=2 boundary: u_offset=0.45: 1 exp, 0 breakthroughs, rate 0%, best —
+- modes=2 boundary: u_offset=0.46: 1 exp, 0 breakthroughs, rate 0%, best —
+- modes=2 boundary: u_offset=0.465: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- modes=2 boundary: u_offset=0.467: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- modes=2 boundary: u_offset=0.55: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- modes=2 boundary: u_offset=0.57: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- modes=2 boundary: u_offset=0.58: 1 exp, 0 breakthroughs, rate 0%, best 7.21644966e-16
+- modes=2 neg→pos boundary: u_offset=0.59: 1 exp, 0 breakthroughs, rate 0%, best 3.72380123e-16
+- modes=2 trivial test: u_offset=0.3: 1 exp, 0 breakthroughs, rate 0%, best 8.53395779e-17
+- modes=3 basin: u_offset=0.462 — does it crash like modes=2?: 1 exp, 0 breakthroughs, rate 0%, best 2.39940441e-17
+- modes=3 basin: u_offset=0.463: 1 exp, 0 breakthroughs, rate 0%, best 4.2628572e-16
+- modes=4 basin boundary: u_offset=0.45: 1 exp, 0 breakthroughs, rate 0%, best 3.95472062e-16
+- modes=4 basin boundary: u_offset=0.46: 1 exp, 0 breakthroughs, rate 0%, best 9.1187081e-26
+- modes=4 basin boundary: u_offset=0.461: 1 exp, 0 breakthroughs, rate 0%, best 3.16470018e-19
+- modes=4 basin boundary: u_offset=0.462: 1 exp, 0 breakthroughs, rate 0%, best 1.71041985e-28
+- modes=4 basin boundary: u_offset=0.4625: 1 exp, 0 breakthroughs, rate 0%, best 3.47776366e-16
+- modes=4 basin boundary: u_offset=0.463: 1 exp, 0 breakthroughs, rate 0%, best 3.62021453e-16
+- modes=4 basin boundary: u_offset=0.467: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- modes=4 basin test: u_offset=0.59 (negative with modes=1): 1 exp, 0 breakthroughs, rate 0%, best 2.02539645e-15
+- modes=4 basin: u_offset=0.50 (negative with modes=1): 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- modes=4 basin: u_offset=0.55 narrowing neg→pos: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- modes=4 basin: u_offset=0.57: 1 exp, 0 breakthroughs, rate 0%, best 2.08282465e-16
+- modes=4 basin: u_offset=0.58: 1 exp, 0 breakthroughs, rate 0%, best 7.20108768e-16
+- modes=4 basin: u_offset=0.585: 1 exp, 0 breakthroughs, rate 0%, best 1.88564362e-15
+- modes=4 basin: u_offset=0.589 near transition: 1 exp, 0 breakthroughs, rate 0%, best 3.62021453e-16
+- modes=4 trivial basin boundary u_offset=0.462 tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 1.71041985e-28
+- modes=4 trivial boundary u_offset=0.47: 1 exp, 0 breakthroughs, rate 0%, best 2.06774381e-16
+- modes=4 trivial boundary: u_offset=0.46: 1 exp, 0 breakthroughs, rate 0%, best 9.1187081e-26
+- modes=4 trivial boundary: u_offset=0.462: 1 exp, 0 breakthroughs, rate 0%, best 1.71041985e-28
+- modes=4 trivial boundary: u_offset=0.465: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- modes=4 u_offset=0.4625: 1 exp, 0 breakthroughs, rate 0%, best 3.47776366e-16
+- modes=4 u_offset=0.463 — narrowing boundary: 1 exp, 0 breakthroughs, rate 0%, best 3.83328516e-15
+- modes=4 u_offset=0.465 — scanning for modes=4 basin boundary: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- modes=5 at u_offset=0.465: 1 exp, 0 breakthroughs, rate 0%, best —
+- modes=5 basin: u_offset=0.4625 — was positive with modes=4, what about modes=5?: 1 exp, 0 breakthroughs, rate 0%, best —
+- near-boundary trivial u_offset=0.468 modes=1 — probing lower residuals: 1 exp, 0 breakthroughs, rate 0%, best 4.62343413e-16
+- near-boundary trivial u_offset=0.4683 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 7.48379165e-31
+- near-boundary trivial u_offset=0.46845 modes=1 — converging on minimum: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- near-boundary trivial u_offset=0.4685 modes=1 — hunting minimum: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- near-boundary trivial u_offset=0.4686 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.15938402e-30
+- near-boundary trivial u_offset=0.4688 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 2.31876803e-30
+- near-boundary trivial u_offset=0.469 modes=1 — testing 4.88e-30 range: 1 exp, 0 breakthroughs, rate 0%, best 4.88329751e-30
+- near-boundary trivial u_offset=0.4695 modes=1 — fine-tuning: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- negative basin boundary test u_offset=-0.47 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- negative basin boundary test u_offset=-0.475 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative basin boundary u_offset=-0.47 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- negative basin boundary u_offset=-0.474: 1 exp, 0 breakthroughs, rate 0%, best 1.68652198e-18
+- negative basin boundary: u_offset=-0.474, fourier_modes=1 — expect intermediate residual: 1 exp, 0 breakthroughs, rate 0%, best 1.68652198e-18
+- negative branch fourier_modes=1 n_nodes=200 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch fourier_modes=1 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch fourier_modes=1 newton_tol=1e-15 200iter: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch fourier_modes=1 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch fourier_modes=2 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- negative branch fourier_modes=4 newton_tol=1e-13 fast convergence: 1 exp, 0 breakthroughs, rate 0%, best 1.89920454e-15
+- negative branch fourier_modes=8 newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 2.94474458e-15
+- negative branch fourier_modes=8 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best —
+- negative branch optimization: fourier_modes=1, newton_tol=1e-15, maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch u_offset=-0.9 fourier spectral: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- negative branch u_offset=-0.9 fourier spectral modes=4 tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- negative branch u_offset=-0.9 fourier_modes=1 newton_tol=1e-14: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch u_offset=-0.9 fourier_modes=1 newton_tol=1e-15 maxiter=200: 2 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch u_offset=-0.9 fourier_modes=1 tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch u_offset=-0.9 fourier_modes=2 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- negative branch u_offset=-0.9 fourier_modes=2 tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- negative branch u_offset=-0.9 fourier_modes=3 tol=1e-15 maxiter=500: 1 exp, 0 breakthroughs, rate 0%, best 4.37618166e-16
+- negative branch u_offset=-0.9 fourier_modes=4 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- negative branch u_offset=-0.9 fourier_modes=5 tol=1e-15 maxiter=500: 1 exp, 0 breakthroughs, rate 0%, best —
+- negative branch u_offset=-0.9 fourier_modes=8 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best —
+- negative branch u_offset=-0.9 fourier_modes=8 tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best —
+- negative branch u_offset=-0.9 tighter newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- negative branch u_offset=-1.0 amp=0.05 modes=1 tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch with n_mode=2, phase=pi/2, amp=0.05 perturbation: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch with n_nodes=300 finer mesh, fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative branch: fourier_modes=2, newton_tol=1e-15, maxiter=500: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- negative mirror u_offset=-0.46845 modes=1 — testing Z2 symmetry of exact-zero: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- negative side basin probe u_offset=-0.47 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- negative side basin probe u_offset=-0.475 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative side basin probe u_offset=-0.5 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative side basin probe u_offset=-0.6 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative side basin probe u_offset=-0.65 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- negative side basin probe u_offset=-0.7 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch fourier_modes=1 newton_tol=1e-15 200iter: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch fourier_modes=1 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch fourier_modes=2 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- positive branch fourier_modes=3 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 4.37618166e-16
+- positive branch fourier_modes=3 — testing modes=3 residual level: 1 exp, 0 breakthroughs, rate 0%, best 4.37618166e-16
+- positive branch fourier_modes=3 — testing odd mode count: 1 exp, 0 breakthroughs, rate 0%, best 4.37618166e-16
+- positive branch fourier_modes=3 — untested mode count: 1 exp, 0 breakthroughs, rate 0%, best 6.01446416e-16
+- positive branch fourier_modes=5: 1 exp, 0 breakthroughs, rate 0%, best 4.85701508e-16
+- positive branch fourier_modes=5 — odd mode comparison: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch fourier_modes=6 — even mode comparison: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch fourier_modes=64 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch fourier_modes=8 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch matched IC: offset=1.000049 amp=0.0727 matching solution shape: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch modes=1 newton_tol=0 maxiter=500 force all iterations: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch modes=1 newton_tol=1e-16 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch n_mode=3 amp=0.2 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch phase=pi amp=0.15 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 amp=0.05 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 amp=0.05 modes=1 tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 amp=0.1 mode=2 perturbation: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 amp=0.1 n_mode=2 modes=1 tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 amp=0.15 phase=pi anti-K initial guess: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 fourier spectral: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- positive branch u_offset=0.9 fourier_modes=1 newton_tol=1e-15 maxiter=200: 2 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 fourier_modes=1 tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 fourier_modes=2 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- positive branch u_offset=0.9 fourier_modes=3 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 4.37618166e-16
+- positive branch u_offset=0.9 fourier_modes=8 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best —
+- positive branch u_offset=0.9 n_mode=2 fourier_modes=1 tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 n_mode=3 amp=0.2 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=0.9 phase=pi modes=1 tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=1.0 (closer to true solution), fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=1.0 amp=0.1 fourier_modes=1 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.11787527e-16
+- positive branch u_offset=1.0 exact initial guess modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=1.0 exact solution mean value: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=1.0 fourier_modes=1 newton_tol=1e-15: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=1.0 fourier_modes=1 newton_tol=1e-15 maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch u_offset=exact_solution_mean=1.000049 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch with K-matched initial guess amp=0.15 phase=pi: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive branch with amplitude=0.1 perturbation, fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.57009246e-16
+- positive branch: fourier_modes=1, newton_tol=1e-15, maxiter=200: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- positive u_offset=0.9 amp=0.02 modes=1 tol=1e-15 maxiter=500: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- scipy negative branch n_nodes=200 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 2.41595655e-09
+- scipy negative branch n_nodes=300 tol=1e-10 — best scipy config: 1 exp, 0 breakthroughs, rate 0%, best 8.58922841e-11
+- scipy solver at sweet spot u_offset=0.4685 n_nodes=300 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 1.03858499e-16
+- scipy solver negative branch tighter: n_nodes=300, tol=1e-11: 1 exp, 0 breakthroughs, rate 0%, best 3.25175408e-12
+- scipy solver negative branch u_offset=-0.9 n_nodes=300 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 8.58922841e-11
+- scipy solver negative branch: n_nodes=300, tol=1e-10, u_offset=-0.9: 1 exp, 0 breakthroughs, rate 0%, best 2.60019365e-11
+- scipy solver negative branch: n_nodes=300, tol=1e-12 — agent0 reports crash at this level: 1 exp, 0 breakthroughs, rate 0%, best —
+- scipy solver positive branch n_nodes=300 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 5.72745888e-09
+- scipy solver positive branch tol=1e-10 n_nodes=300: 1 exp, 0 breakthroughs, rate 0%, best 2.60019365e-11
+- scipy solver positive branch u_offset=0.9 n_nodes=100 tol=1e-8: 1 exp, 0 breakthroughs, rate 0%, best 5.72745888e-09
+- scipy solver positive branch u_offset=0.9 n_nodes=200 tol=1e-12: 1 exp, 0 breakthroughs, rate 0%, best —
+- scipy solver positive branch u_offset=0.9 n_nodes=300 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 2.60019365e-11
+- scipy solver positive branch u_offset=0.9 tol=1e-12 n_nodes=300: 1 exp, 0 breakthroughs, rate 0%, best —
+- scipy solver positive branch: u_offset=0.9, n_nodes=200, tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 8.81934684e-11
+- scipy solver positive branch: u_offset=0.9, n_nodes=200, tol=1e-12: 1 exp, 0 breakthroughs, rate 0%, best —
+- scipy solver positive branch: u_offset=0.9, n_nodes=200, tol=1e-8: 1 exp, 0 breakthroughs, rate 0%, best 7.05432259e-10
+- scipy solver trivial branch u_offset=0 n_nodes=300 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- scipy solver u_offset=-0.9 amp=0.1 tol=1e-10 n_nodes=200 — negative branch: 1 exp, 0 breakthroughs, rate 0%, best 8.81934685e-11
+- scipy solver u_offset=0.9 amp=0.1 solver_tol=1e-12 — compare with Fourier: 1 exp, 0 breakthroughs, rate 0%, best —
+- scipy solver u_offset=0.9 amp=0.1 tol=1e-10 n_nodes=200: 1 exp, 0 breakthroughs, rate 0%, best 8.81934684e-11
+- scipy solver: n_nodes=300, tol=1e-10 — testing if more nodes helps: 1 exp, 0 breakthroughs, rate 0%, best 2.60019365e-11
+- scipy trivial branch u_offset=0 amp=0.01 n_nodes=300 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 5.31636824e-13
+- scipy trivial branch u_offset=0.0 n_nodes=200 tol=1e-10: 1 exp, 0 breakthroughs, rate 0%, best 5.63592552e-11
+- second basin boundary u_offset=0.59 modes=1 — verifying agent7 neg→pos boundary: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.60 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.6005: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.6008: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.6009 — agent7 predicted this is the exact boundary: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.601: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.602: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.605: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- second basin boundary u_offset=0.61 modes=1 — should be positive: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- small u_offset=0.1 near trivial basin: 1 exp, 0 breakthroughs, rate 0%, best 6.35227453e-17
+- trivial basin mid-point u_offset=0.2 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- trivial basin u_offset=0.1 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.35227453e-17
+- trivial basin u_offset=0.3 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- trivial basin u_offset=0.4 middle of basin: 1 exp, 0 breakthroughs, rate 0%, best 1.24055339e-20
+- trivial basin u_offset=0.4 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.24055339e-20
+- trivial basin u_offset=0.45 modes=1: 1 exp, 0 breakthroughs, rate 0%, best 6.53772076e-23
+- trivial basin u_offset=0.46 modes=1 mapping residual decay: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- trivial basin u_offset=0.465 residual transition: 1 exp, 0 breakthroughs, rate 0%, best 4.10973015e-21
+- trivial basin u_offset=0.469 residual transition mapping: 1 exp, 0 breakthroughs, rate 0%, best 4.88329751e-30
+- trivial branch center u_offset=0.0 with fourier_modes=1 — compare residual to modes=4: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- trivial branch minimum search: u_offset=0.4683, fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 7.48379165e-31
+- trivial branch near boundary: u_offset=0.47, fourier_modes=1 — testing ultra-low residual: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- trivial branch u_offset=0.0 fourier spectral: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- trivial minimum fine search: u_offset=0.46825: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- trivial minimum search: u_offset=0.4680: 1 exp, 0 breakthroughs, rate 0%, best 4.62343413e-16
+- trivial minimum search: u_offset=0.4682: 1 exp, 0 breakthroughs, rate 0%, best 2.89846004e-31
+- trivial minimum ultra-fine: u_offset=0.46815: 1 exp, 0 breakthroughs, rate 0%, best 5.02028006e-31
+- trivial minimum: u_offset=0.4681: 1 exp, 0 breakthroughs, rate 0%, best 6.55196639e-16
+- u_offset=-0.475 modes=1 — Z2 mirror basin test, expect positive branch: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0 amp=0.3 n_mode=2 fm=1 — threshold search: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- u_offset=0 amp=0.4 n_mode=2 fm=1 — threshold narrowing: 1 exp, 0 breakthroughs, rate 0%, best 1.24055339e-20
+- u_offset=0 amp=0.45 n_mode=2 fm=1 — narrowing mode-2 escape threshold: 1 exp, 0 breakthroughs, rate 0%, best 6.53772076e-23
+- u_offset=0 amp=0.47 n_mode=2 fm=1 — crossing threshold?: 1 exp, 0 breakthroughs, rate 0%, best 6.38616888e-29
+- u_offset=0 amp=0.475 n_mode=2 fm=1 — final threshold search: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0 amp=0.48 n_mode=2 fm=1: 1 exp, 0 breakthroughs, rate 0%, best 4.77524979e-16
+- u_offset=0 amp=0.5 fm=1 — can large perturbation from trivial reach non-trivial?: 1 exp, 0 breakthroughs, rate 0%, best 4.85638505e-25
+- u_offset=0 amp=0.5 n_mode=2 fm=1 — mode-2 perturbation test: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0 amp=0.5 n_mode=3 fm=1 — mode-3 perturbation test: 1 exp, 0 breakthroughs, rate 0%, best 4.85638505e-25
+- u_offset=0.11 — convergence cliff resonance test: 1 exp, 0 breakthroughs, rate 0%, best 5.3720017e-16
+- u_offset=0.1114 — before cliff (expected ~1e-16): 1 exp, 0 breakthroughs, rate 0%, best 7.1052703e-16
+- u_offset=0.1115 — cliff edge per agent6 (7.11e-16 to 3.74e-31): 1 exp, 0 breakthroughs, rate 0%, best 3.74189583e-31
+- u_offset=0.2 modes=1 — verifying agent3 exact zero: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- u_offset=0.468 fourier_modes=1 — scanning minimum trivial residual: 1 exp, 0 breakthroughs, rate 0%, best 4.62343413e-16
+- u_offset=0.46845 modes=2 — basin boundary depends on mode count: 1 exp, 0 breakthroughs, rate 0%, best 2.00148302e-16
+- u_offset=0.46845 modes=4 — is exact-zero specific to modes=1?: 1 exp, 0 breakthroughs, rate 0%, best 1.86448479e-16
+- u_offset=0.4685 fm=1 amp=0.01 — perturbation at sweet spot: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0.4685 fm=1 n_nodes=50 — minimal mesh: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- u_offset=0.4685 fm=1 phase=pi — does phase shift improve residual at boundary?: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- u_offset=0.4685 fm=1 solver_tol=1e-12 — does BVP tolerance affect residual?: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- u_offset=0.4685 fm=1 tol=1e-15 maxiter=500 — can more iterations break 4.99e-31?: 1 exp, 0 breakthroughs, rate 0%, best 4.98919444e-31
+- u_offset=0.4685 fm=4 tol=1e-15 — does higher modes help at boundary?: 1 exp, 0 breakthroughs, rate 0%, best 1.96261557e-16
+- u_offset=0.4689 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 7.41025552e-30
+- u_offset=0.469 fourier_modes=1 — targeting ultra-low trivial residual: 1 exp, 0 breakthroughs, rate 0%, best 4.88329751e-30
+- u_offset=0.46905 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 7.35969598e-30
+- u_offset=0.4691 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 3.99135555e-30
+- u_offset=0.4692 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.4820511e-29
+- u_offset=0.4695 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 1.59654222e-29
+- u_offset=0.475 amp=0.05 n_mode=2 — mode-2 perturbation at basin boundary: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0.475 amp=0.05 phase=3pi/2 — basin phase scan: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0.475 amp=0.05 phase=pi — test phase flip at boundary: 1 exp, 0 breakthroughs, rate 0%, best 0.0
+- u_offset=0.475 amp=0.05 phase=pi/2 — basin phase scan: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0.475 amp=0.05 — perturbation at basin boundary: 1 exp, 0 breakthroughs, rate 0%, best 6.95552731e-16
+- u_offset=0.48 amp=0.1 phase=0 — comparison: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0.48 amp=0.1 phase=pi — testing phase effect at boundary: 1 exp, 0 breakthroughs, rate 0%, best 8.66141542e-20
+- u_offset=0.48 fourier_modes=4 — basin comparison: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- u_offset=0.5 amp=0.1 fourier_modes=1 — does perturbation change basin?: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0.5 fourier_modes=4 — basin with more grid points: 1 exp, 0 breakthroughs, rate 0%, best 2.57581612e-16
+- u_offset=0.9 amp=0.15 n_mode=2 phase=pi/2 fourier_modes=1: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- u_offset=0.9 amp=0.2 n_mode=3 fourier_modes=1 — exotic initial guess: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- ultra-low residual probe u_offset=0.4701 near trivial basin: 1 exp, 0 breakthroughs, rate 0%, best 1.27723378e-28
+- verifying agent7 basin map: u_offset=0.59 should be negative: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+- verifying agent7: u_offset=0.61 should be positive: 1 exp, 0 breakthroughs, rate 0%, best 5.55111512e-17
+
+## Alerts
+- deep_stagnation: No improvement in 385 experiments — search space may be exhausted or agents are stuck
+
+## Recent blackboard (last 20 entries)
+CLAIM agent3: COMPLETE BASIN BOUNDARY COMPARISON ACROSS MODE COUNTS:
+  modes=1 (M=2):  boundary ≈ 0.4745 (wide trivial basin, no crashes)
+  modes=2 (M=4):  boundary ≈ 0.461-0.462 (CRASHES at boundary)
+  modes=3 (M=6):  boundary ≈ 0.462-0.463 (clean, 0.462→trivial, 0.463→negative)
+  modes=4 (M=8):  boundary ≈ 0.462-0.4625 (clean, 0.462→trivial, 0.4625→positive, 0.463→negative)
+  INSIGHT: modes≥2 converge to ~0.462 boundary. modes=1 is outlier (wider trivial basin) because
+  M=2 grid points can't represent non-trivial solution structure, so Newton stays trivial longer.
+  modes=2 uniquely crashes at boundary — the M=4 grid is just enough to see the non-trivial
+  branch but not enough for Newton to handle the saddle point gracefully.
+CLAIM agent2: MODE-2 BASIN ESCAPE from u_offset=0 (zero DC offset):
+  n_mode=2, amp=0.3 → trivial (1.60e-29)
+  n_mode=2, amp=0.4 → trivial (1.24e-20)
+  n_mode=2, amp=0.45 → trivial (6.54e-23)
+  n_mode=2, amp=0.47 → trivial (6.39e-29)
+  n_mode=2, amp=0.475 → NEGATIVE (5.55e-17)
+  n_mode=2, amp=0.48 → POSITIVE (4.78e-16)
+  n_mode=2, amp=0.5 → NEGATIVE (5.55e-17)
+  INSIGHT: Mode-2 perturbation can reach non-trivial branches from u_offset=0!
+  Escape threshold ~0.47-0.475. Branch sign oscillates chaotically above threshold.
+  Mode-1 and mode-3 at amp=0.5 stay trivial — mode-2 is special (breaks Z2 differently).

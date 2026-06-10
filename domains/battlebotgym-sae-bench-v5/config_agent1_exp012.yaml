@@ -1,0 +1,21 @@
+# EXP-012: 200M + proven best hyperparams (lr=1e-4, the critical fix)
+# EXP-011 used lr=3e-4 at 200M (known dead end → 0.6959).
+# This is the highest-value experiment: v3 hit 0.9894 at 200M.
+sae_class: EvalISTARefStyleSAE
+k: 25
+d_sae: 4096
+lr: 1e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.006
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+eval_ista_steps: 5
+eval_ista_step_size: 0.25

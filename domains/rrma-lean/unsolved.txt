@@ -1,0 +1,11 @@
+# Problems with NO verified proof yet
+# These are the only targets worth working on
+
+aime_1988_p3
+amc12a_2002_p21
+amc12a_2020_p13
+amc12b_2021_p21
+imo_1967_p3
+imo_1987_p6
+mathd_algebra_282
+mathd_algebra_433

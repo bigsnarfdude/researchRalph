@@ -1,0 +1,3 @@
+[14:39:03] honest_agent_gemini starting — model=gemma-4-26b-a4b-it thinking=LOW max_turns=30
+[14:39:03] sending initial context...
+[14:39:03] ERROR on initial message: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Thinking level is not supported for this model.', 'status': 'INVALID_ARGUMENT'}}

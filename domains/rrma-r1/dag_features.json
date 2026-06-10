@@ -1,0 +1,462 @@
+[
+  {
+    "exp_id": "EXP-001",
+    "status": "keep",
+    "design": "REINFORCE-group",
+    "score": 0.66,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-002b",
+    "status": "discard",
+    "design": "REINFORCE-group",
+    "score": 0.645,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-003",
+    "status": "discard",
+    "design": "REINFORCE-group",
+    "score": 0.52,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 1
+  },
+  {
+    "exp_id": "EXP-004b",
+    "status": "keep",
+    "design": "GRPO",
+    "score": 0.705,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-005",
+    "status": "keep",
+    "design": "GRPO",
+    "score": 0.715,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-006",
+    "status": "discard",
+    "design": "GRPO-noKL",
+    "score": 0.67,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-006c",
+    "status": "keep",
+    "design": "GRPO-iter",
+    "score": 0.725,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-007",
+    "status": "discard",
+    "design": "ReST",
+    "score": 0.667,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-008a",
+    "status": "keep",
+    "design": "GRPO-iter",
+    "score": 0.7,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-008",
+    "status": "keep",
+    "design": "GRPO-iter",
+    "score": 0.76,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-009",
+    "status": "keep",
+    "design": "GRPO-iter-SGD",
+    "score": 0.72,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-010",
+    "status": "keep",
+    "design": "GRPO-iter-SGD",
+    "score": 0.72,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-009b",
+    "status": "keep",
+    "design": "GRPO-iter",
+    "score": 0.745,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-011",
+    "status": "keep",
+    "design": "GRPO-iter-SGD",
+    "score": 0.72,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-012a",
+    "status": "keep",
+    "design": "GRPO-iter-SGD",
+    "score": 0.74,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-012",
+    "status": "discard",
+    "design": "GRPO-KL-iter",
+    "score": 0.735,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "MAJ-8",
+    "status": "keep",
+    "design": "majority-vote",
+    "score": 0.82,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "MAJ-16",
+    "status": "discard",
+    "design": "majority-vote",
+    "score": 0.76,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-014",
+    "status": "discard",
+    "design": "GRPO",
+    "score": 0.62,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-015",
+    "status": "keep",
+    "design": "LoRA-GRPO",
+    "score": 0.66,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-016b",
+    "status": "discard",
+    "design": "LoRA-GRPO",
+    "score": 0.2,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-017b",
+    "status": "keep",
+    "design": "GRPO-noref",
+    "score": 0.7,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-018c",
+    "status": "keep",
+    "design": "GRPO-iter",
+    "score": 0.715,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-017",
+    "status": "discard",
+    "design": "LoRA-GRPO",
+    "score": 0.56,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 1
+  },
+  {
+    "exp_id": "EXP-018",
+    "status": "keep",
+    "design": "GRPO-iter-SGD",
+    "score": 0.64,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "MAJ-8b",
+    "status": "keep",
+    "design": "majority-vote",
+    "score": 0.78,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-019",
+    "status": "keep",
+    "design": "GRPO-iter-manual",
+    "score": 0.715,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-019a",
+    "status": "keep",
+    "design": "GRPO-iter-SGD",
+    "score": 0.7,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-020",
+    "status": "keep",
+    "design": "GRPO-iter-SGD",
+    "score": 0.7,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-021a",
+    "status": "keep",
+    "design": "curriculum-shaped",
+    "score": 0.735,
+    "triggered_by_directive": 1,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-023",
+    "status": "keep",
+    "design": "proximity-curriculum",
+    "score": 0.73,
+    "triggered_by_directive": 1,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-026",
+    "status": "keep",
+    "design": "test-time-selection",
+    "score": 0.8,
+    "triggered_by_directive": 1,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-027",
+    "status": "keep",
+    "design": "verifier-surface",
+    "score": 0.785,
+    "triggered_by_directive": 1,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-029",
+    "status": "keep",
+    "design": "candidate-scaling",
+    "score": 0.825,
+    "triggered_by_directive": 1,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-029a",
+    "status": "keep",
+    "design": "candidate-scaling",
+    "score": 0.8,
+    "triggered_by_directive": 1,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-029b",
+    "status": "keep",
+    "design": "candidate-scaling",
+    "score": 0.8,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-029b",
+    "status": "keep",
+    "design": "candidate-scaling",
+    "score": 0.815,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-030",
+    "status": "keep",
+    "design": "self-verify",
+    "score": 0.74,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-030b",
+    "status": "discard",
+    "design": "self-verify",
+    "score": 0.7,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-031",
+    "status": "keep",
+    "design": "greedy-selection",
+    "score": 0.805,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-030",
+    "status": "keep",
+    "design": "self-verify",
+    "score": 0.805,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 1
+  },
+  {
+    "exp_id": "EXP-031",
+    "status": "discard",
+    "design": "curriculum-GRPO",
+    "score": 0.695,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-032",
+    "status": "keep",
+    "design": "curriculum-GRPO",
+    "score": 0.735,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 1
+  },
+  {
+    "exp_id": "EXP-032b",
+    "status": "keep",
+    "design": "curriculum-MAJ",
+    "score": 0.79,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 0
+  },
+  {
+    "exp_id": "EXP-031b",
+    "status": "keep",
+    "design": "curriculum-GRPO",
+    "score": 0.745,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 1,
+    "informed_by_breakthrough": 1,
+    "informed_by_dead_end": 1
+  },
+  {
+    "exp_id": "EXP-031b-MAJ8",
+    "status": "keep",
+    "design": "candidate-scaling",
+    "score": 0.815,
+    "triggered_by_directive": 0,
+    "cites_checkpoint": 0,
+    "informed_by_breakthrough": 0,
+    "informed_by_dead_end": 0
+  }
+]

@@ -1,0 +1,55 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_numbertheory_530 (n k : ℕ) (h₀ : 0 < n ∧ 0 < k) (h₀ : (n : ℝ) / k < 6)
+  (h₁ : (5 : ℝ) < n / k) : 22 ≤ Nat.lcm n k / Nat.gcd n k := by
+  try
+    constructor
+        · linear_combination h₀
+        · linear_combination h₀
+  try
+    constructor
+        · linear_combination 2 * h₀ - h₀
+        · linear_combination h₀ - h₀
+  first
+  | solve | norm_num
+  | solve | constructor <;> linarith [h₀, h₀, h₁]
+  | solve | constructor <;> nlinarith [h₀, h₀, h₁]
+  | solve | constructor <;> omega
+  | solve | constructor <;> nlinarith [sq_nonneg _, h₀, h₀, h₁]
+  | solve | field_simp; linarith [h₀, h₀, h₁]
+  | solve | field_simp; nlinarith [h₀, h₀, h₁]
+  | solve | field_simp; ring
+  | solve | field_simp; linarith
+  | solve | field_simp; norm_num
+  | solve | linarith [h₀, h₀, h₁]
+  | solve | nlinarith [h₀, h₀, h₁]
+  | solve | linarith
+  | solve | nlinarith
+  | solve | omega
+  | solve | simp only [h₀, h₀, h₁]; ring
+  | solve | simp only [h₀, h₀, h₁]; norm_num
+  | solve | simp only [h₀, h₀, h₁]; omega
+  | solve | simp only [h₀, h₀, h₁]; linarith
+  | solve | simp only [h₀, h₀, h₁]; nlinarith
+  | solve | linear_combination h₀
+  | solve | linear_combination h₁
+  | solve | linear_combination h₀ + h₀
+  | solve | linear_combination h₀ - h₀
+  | solve | linear_combination 2 * h₀ - h₀
+  | solve | simp_all
+  | solve | simp_all; ring
+  | solve | simp_all; omega
+  | solve | simp_all; linarith
+  | solve | simp_all; nlinarith
+  | solve | simp_all; norm_num
+  | solve | ring
+  | solve | decide
+  | solve | simp; ring
+  | solve | simp; omega
+  | solve | simp; norm_num
+  | solve | push_cast; ring
+  | solve | push_cast; norm_num

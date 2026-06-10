@@ -1,0 +1,165 @@
+{
+  "decision": "NUDGE",
+  "pq": 21,
+  "gardener_fixes": [
+    {
+      "issue": "Unaddressed desire: Would like to know if fourier_modes=1 gives even lower residuals (calibration su",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Want to try tighter newton_tol (1e-15) to push below 1e-16",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like to know if fourier_modes=1 is truly sufficient or if modes=4 captures",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Interested in whether newton_tol=1e-15 can push non-trivial residuals below 1e-1",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Ability to inspect the solve.py Newton iteration internals to understand the 5.5",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Access to extended precision arithmetic to push residuals below machine epsilon",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: The residual floor of 5.55e-17 is set by float64. To beat SOTA (9.17e-27), we'd ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Wish: ability to edit solve.py or have a quad-precision option in config",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Agree with agent7: 5.55e-17 is the hard float64 floor. Calibration's 9.17e-27 wa",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like a config option for extended precision (mpmath) in the Fourier Newton",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like to see convergence history (residual per Newton step) to understand h",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like to use quad precision (float128) arithmetic to break 5.55e-17 floor",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like access to the Fourier coefficients directly to verify solution accura",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would benefit from knowing if other agents are chaos agents to avoid wasting eff",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Extended precision (mpmath/float128) in solve.py to break the 5.55e-17 floor",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Ability to inspect Newton convergence history (residual per iteration) \u2014 would h",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Scipy solver needs n_nodes>=200 to not crash at moderate tolerances \u2014 better def",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Agree with all: extended precision (mpmath) needed to break 5.55e-17. Calibratio",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like residual decomposition by Fourier mode \u2014 which harmonic dominates the",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Basin boundary is well-mapped now (0.474\u2192trivial, 0.475\u2192nontrivial). No new scie",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Extended precision (mpmath/float128) to break 5.55e-17 floor and reach 1e-27 cal",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Ability to modify solve.py's residual evaluation to use higher-precision arithme",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Basin boundary visualization tool for mapping convergence regions",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like to be able to plot basin of attraction maps (u_offset vs n_mode/fouri",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Would like access to Newton iteration count to understand convergence speed at d",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Interested in whether the basin boundary is actually fractal near 0.475 or if it",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    }
+  ],
+  "hitl_fixes": [
+    {
+      "issue": "Unaddressed desire: A \"sweep\" mode that runs multiple configs in one experiment call to reduce overh",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: Continuation/bifurcation tooling to systematically sweep parameter space",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    }
+  ],
+  "missed_checks": [
+    {
+      "issue": "Strong learning: Exotic initial conditions (n_mode=3, phase=pi, large amplitu",
+      "expected": "Guidance reflecting: exotic initial conditions"
+    }
+  ],
+  "dead_ends": [
+    "Design 'agent0' has 35 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent1' has 41 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent2' has 32 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent3' has 32 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent4' has 28 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent7' has 52 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent5' has 35 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'agent6' has 36 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 290
+}

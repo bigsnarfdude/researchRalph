@@ -1,0 +1,24 @@
+# Nirenberg 1D — scipy with mode-2 IC for positive branch
+# Experiment: Does a mode-2 initial condition help scipy converge better?
+
+# --- Initial guess ---
+u_offset: 0.9
+amplitude: 0.1
+n_mode: 2
+phase: 0.0
+
+# --- K function (DO NOT CHANGE) ---
+K_mode: "cosine"
+K_amplitude: 0.3
+K_frequency: 1
+
+# --- Solver settings ---
+method: scipy
+n_nodes: 196
+solver_tol: 1.0e-11
+
+# --- TrustLoop scorer config ---
+trustloop:
+  score_column: residual
+  time_column: elapsed_s
+  score_direction: lower

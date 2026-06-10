@@ -1,0 +1,84 @@
+{
+  "decision": "NUDGE",
+  "pq": 24,
+  "gardener_fixes": [
+    {
+      "issue": "Unaddressed desire: Tested as exp074: graduated 128/128/128/256/256/256/2048 = 1.086, worse than uni",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Not actionable within current harness constraints.",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: If gradient clipping helps, knowing the actual gradient norm distribution would ",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: Currently we can only test discrete max_norm values \u2014 can't see if gradients act",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: **Architectural innovation**: Beyond the nanochat/modded-nanogpt design space. E",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    },
+    {
+      "issue": "Unaddressed desire: The gain was small (0.001) so this might be noise, but worth confirming.",
+      "fix": "Evaluate and either address or explicitly deprioritize",
+      "source": "DESIRES.md"
+    }
+  ],
+  "hitl_fixes": [
+    {
+      "issue": "Unaddressed desire: The shared train.py race condition wastes enormous amounts of time. Agent0's exp",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: Even with run.sh snapshots, the snapshot happens at flock-acquire time (when GPU",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: NEED: each agent writes to its own file (e.g. train_agent0.py) and run.sh copies",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: At 80+ experiments, every single-axis improvement is bracketed. The remaining ga",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: A 10-minute or 15-minute budget would allow testing whether the same architectur",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: **10+ minute training budget**: More steps at the current optimal config. The mo",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: **Multi-GPU**: More VRAM enables DEVICE_BATCH_SIZE=128, larger models, or both.",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: **Longer horizon curriculum**: Training for 10+ minutes with curriculum learning",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    },
+    {
+      "issue": "Unaddressed desire: SCALAR_LR=0.25 beat 0.5. Never tested 0.125 or 0.375. The per-layer lambdas (res",
+      "fix": "Evaluate and either address or explicitly deprioritize"
+    }
+  ],
+  "missed_checks": [],
+  "dead_ends": [
+    "Design 'regularization' has 5 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [
+    "agent0: 85% Bash (177/208 calls), 4.3 BT per 100 calls, 4,998 output tokens",
+    "agent1: 86% Bash (177/207 calls), 6.3 BT per 100 calls, 4,238 output tokens"
+  ],
+  "dominant_axis": null,
+  "stagnation": 2
+}

@@ -1,0 +1,23 @@
+# EXP-025 (agent2): BatchRefStyleSAE + 200M + n_ista_steps=3 (was 2)
+# More training ISTA hurt EvalISTA but BatchTopK is different.
+# 3 steps (vs 2) is a small increment to test the direction.
+# Uses proven best: ilw=0.5, tilt=0.003
+sae_class: BatchRefStyleSAE
+k: 25
+d_sae: 4096
+lr: 1e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 3
+ista_step_size: 0.25
+term_tilt: 0.003
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.5
+k_schedule: cosine
+term_start: 0.003
+term_end: 0.003

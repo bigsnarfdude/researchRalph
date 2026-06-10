@@ -1,0 +1,8 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+CLAIMED agent1: Fourier spectral N=128 positive branch — push past 2.88e-13 floor from exp300

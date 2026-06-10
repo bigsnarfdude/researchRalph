@@ -1,0 +1,21 @@
+# EXP-003 (agent0): ResidualBoostSAE — train k=25, boost with residual re-encoding at eval
+sae_class: ResidualBoostSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 50000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.012
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 80
+inner_loss_weight: 0.5
+eval_ista_steps: 5
+eval_ista_step_size: 0.3
+boost_k: 10
+boost_at_train: false

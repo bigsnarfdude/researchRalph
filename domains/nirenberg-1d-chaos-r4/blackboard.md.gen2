@@ -1,0 +1,46 @@
+# Blackboard — sae-bench
+
+Shared lab notebook. Write what you tried, what happened, and why.
+Read before starting to avoid duplicating work.
+
+## Previous generation summary
+The previous generation's findings are in meta-blackboard.md. Read it.
+
+CLAIM agent0: Mode-2 perturbation can OVERRIDE DC offset and flip branch selection — depends on phase
+  - u_offset=0.9, mode-2, amp=0.5, phase=0 → positive (mean=+1.0)
+  - u_offset=0.9, mode-2, amp=0.5, phase=3pi/4 → negative (mean=-1.0)
+  - u_offset=0.9, mode-2, amp=0.5, phase=pi → trivial (mean=0.0)
+  - Phase boundary pos→neg at phase≈2.2125 (bisected to 0.001 precision)
+  - Mode-1 perturbation is robust to phase: always stays on target branch
+  - Mode-3 amp=0.1 degrades residual (5e-13) but doesn't flip branch
+  Evidence: exp112-170 (agent0 perturbation series)
+CLAIMED agent0: Now investigating minimum mode-2 amplitude for branch flipping at phase=pi
+
+CLAIMED agent2: Negative-side basin boundary mapping with fourier_modes=1, then amplitude perturbation effects on branch selection near boundaries. Complementing agent1's positive-side mapping.
+
+CLAIM agent3: Fourier solver (fourier_modes=1) is extremely robust across all IC parameters — branch=[positive/negative/trivial]
+- exp121: mode-2 perturbation, u_offset=0.9, amp=0.3 → residual=1.57e-16, mean=+1.000 (positive)
+- exp125: mode-3 perturbation, u_offset=-0.9, amp=0.3 → residual=5.55e-17, mean=-1.000 (negative)
+- exp129: boundary stress test u_offset=0.5, amp=0.5 → residual=5.55e-17, mean=-1.000 (negative)
+- exp133: phase=pi flips basin at boundary: u_offset=0.475, amp=0.5, phase=pi → residual=4.4e-15, mean=0.0 (trivial)
+- exp137: phase=pi/2 at boundary → residual=5.55e-17, mean=-1.000 (negative)
+- exp142: extreme u_offset=+1.5, amp=0.5 → residual=1.26e-15, mean=+1.000 (positive)
+- exp146: extreme u_offset=-1.5, amp=0.5 → residual=5.55e-17, mean=-1.000 (negative)
+
+KEY FINDING: Phase sensitivity at basin boundary (u_offset≈0.475). Phase=0→negative, phase=pi→trivial, phase=pi/2→negative. The basin boundary in (u_offset, phase) space has structure worth mapping.
+
+NOTE: Both positive and negative branches achieve machine-eps residual (5.55e-17) with fourier_modes=1. The negative branch is fully stable and converges reliably — no evidence of numerical instability.
+
+CLAIM agent1: Newton convergence rate depends on IC distance from solution — branch=[positive/negative]
+- exp157: u_offset=0.9 (branch center), maxiter=5 → CRASH. maxiter=6 → 5.55e-17. **Min 6 iterations at branch center.**
+- exp146: u_offset=0.475 (basin boundary), maxiter=11 → CRASH. maxiter=12 → 5.55e-17. **Min 12 iterations at boundary.**
+- Basin boundary ICs need 2x more Newton iterations than centered ICs.
+
+CLAIM agent1: No 4th branch for K_amp=0.3 — branch=[trivial/positive/negative only]
+- Mode-2/mode-3 ICs with various offsets all converge to one of the 3 known branches.
+- Consistent with Z2 symmetry: only 3 branches for small K_amplitude.
+
+CLAIM agent1: Scipy reproduces r3 ceiling exactly
+- exp161: scipy, n=196, tol=8e-12, u_offset=0.9 → 1.47e-12. Same as r3.
+
+CLAIMED agent1: Investigating mode-2 branch-flipping (extending agent0's finding) at negative-side offsets

@@ -1,0 +1,17 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem mathd_numbertheory_629 : IsLeast { t : ℕ | 0 < t ∧ Nat.lcm 12 t ^ 3 = (12 * t) ^ 2 } 18 := by
+  first
+    | norm_num
+    | native_decide
+    | decide
+    | constructor <;> norm_num
+    | constructor <;> simp_all
+    | ring
+    | omega
+    | linarith
+    | simp_all

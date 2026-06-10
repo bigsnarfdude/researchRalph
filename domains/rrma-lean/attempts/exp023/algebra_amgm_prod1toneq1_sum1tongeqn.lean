@@ -1,0 +1,142 @@
+import Mathlib
+
+set_option maxHeartbeats 4000000
+
+open BigOperators Real Nat Topology Rat
+
+theorem algebra_amgm_prod1toneq1_sum1tongeqn (a : ℕ → NNReal) (n : ℕ)
+  (h₀ : Finset.prod (Finset.range n) a = 1) : Finset.sum (Finset.range n) a ≥ n := by
+  try
+  have hb : a ≤ 10 := by nlinarith [h₀]
+  interval_cases a <;> omega
+  try
+  have hb : a ≤ 10 := by nlinarith [h₀]
+  interval_cases a <;> simp_all <;> omega
+  try
+  have hb : a ≤ 20 := by nlinarith [h₀]
+  interval_cases a <;> omega
+  try
+  have hb : a ≤ 20 := by nlinarith [h₀]
+  interval_cases a <;> simp_all <;> omega
+  try
+  have hb : a ≤ 50 := by nlinarith [h₀]
+  interval_cases a <;> omega
+  try
+  have hb : a ≤ 50 := by nlinarith [h₀]
+  interval_cases a <;> simp_all <;> omega
+  try
+  have hb : a ≤ 100 := by nlinarith [h₀]
+  interval_cases a <;> omega
+  try
+  have hb : a ≤ 100 := by nlinarith [h₀]
+  interval_cases a <;> simp_all <;> omega
+  try
+  have hb : n ≤ 10 := by nlinarith [h₀]
+  interval_cases n <;> omega
+  try
+  have hb : n ≤ 10 := by nlinarith [h₀]
+  interval_cases n <;> simp_all <;> omega
+  try
+  have hb : n ≤ 20 := by nlinarith [h₀]
+  interval_cases n <;> omega
+  try
+  have hb : n ≤ 20 := by nlinarith [h₀]
+  interval_cases n <;> simp_all <;> omega
+  try
+  have hb : n ≤ 50 := by nlinarith [h₀]
+  interval_cases n <;> omega
+  try
+  have hb : n ≤ 50 := by nlinarith [h₀]
+  interval_cases n <;> simp_all <;> omega
+  try
+  have hb : n ≤ 100 := by nlinarith [h₀]
+  interval_cases n <;> omega
+  try
+  have hb : n ≤ 100 := by nlinarith [h₀]
+  interval_cases n <;> simp_all <;> omega
+  try
+  have hb1 : a ≤ 10 := by nlinarith [h₀]
+  have hb2 : n ≤ 10 := by nlinarith [h₀]
+  interval_cases a <;> interval_cases n <;> omega
+  try
+  have hb1 : a ≤ 10 := by nlinarith [h₀]
+  have hb2 : n ≤ 10 := by nlinarith [h₀]
+  interval_cases a <;> interval_cases n <;> simp_all <;> omega
+  try
+  have hb1 : a ≤ 20 := by nlinarith [h₀]
+  have hb2 : n ≤ 20 := by nlinarith [h₀]
+  interval_cases a <;> interval_cases n <;> omega
+  try
+  have hb1 : a ≤ 20 := by nlinarith [h₀]
+  have hb2 : n ≤ 20 := by nlinarith [h₀]
+  interval_cases a <;> interval_cases n <;> simp_all <;> omega
+  try
+  have hb1 : a ≤ 50 := by nlinarith [h₀]
+  have hb2 : n ≤ 50 := by nlinarith [h₀]
+  interval_cases a <;> interval_cases n <;> omega
+  try
+  have hb1 : a ≤ 50 := by nlinarith [h₀]
+  have hb2 : n ≤ 50 := by nlinarith [h₀]
+  interval_cases a <;> interval_cases n <;> simp_all <;> omega
+  first
+  | solve | linarith [h₀]
+  | solve | nlinarith [h₀]
+  | solve | omega
+  | solve | norm_num
+  | solve | ring
+  | solve | linarith
+  | solve | nlinarith
+  | solve | simp
+  | solve | simp_all
+  | solve | native_decide
+  | solve | decide
+  | solve | nlinarith [sq_nonneg a, h₀]
+  | solve | nlinarith [sq_nonneg (a - 1), h₀]
+  | solve | nlinarith [sq_nonneg n, h₀]
+  | solve | nlinarith [sq_nonneg (n - 1), h₀]
+  | solve | nlinarith [sq_nonneg (a - n), h₀]
+  | solve | nlinarith [sq_nonneg (a + n), h₀]
+  | solve | nlinarith [sq_nonneg (a - n), sq_nonneg (a + n), h₀]
+  | solve | nlinarith [sq_nonneg (2*a - n), sq_nonneg (a - 2*n), h₀]
+  | solve | nlinarith [sq_nonneg (a*n - 1), h₀]
+  | solve | simp only [h₀]; ring
+  | solve | simp [h₀]; ring
+  | solve | simp only [h₀]; norm_num
+  | solve | simp [h₀]; norm_num
+  | solve | simp only [h₀]; omega
+  | solve | simp [h₀]; omega
+  | solve | simp only [h₀]; linarith
+  | solve | simp [h₀]; linarith
+  | solve | simp only [h₀]; nlinarith
+  | solve | simp [h₀]; nlinarith
+  | solve | linear_combination h₀
+  | solve | push_cast; ring
+  | solve | norm_cast; ring
+  | solve | push_cast; omega
+  | solve | norm_cast; omega
+  | solve | push_cast; norm_num
+  | solve | norm_cast; norm_num
+  | solve | push_cast; linarith
+  | solve | norm_cast; linarith
+  | solve | ring_nf; omega
+  | solve | ring_nf; norm_num
+  | solve | ring_nf; ring
+  | solve | ring_nf; linarith
+  | solve | ring_nf; nlinarith
+  | solve | ring_nf; simp
+  | solve | simp_all; omega
+  | solve | simp_all; norm_num
+  | solve | simp_all; ring
+  | solve | simp_all; linarith
+  | solve | simp_all; nlinarith
+  | solve | simp_all; simp
+  | solve | push_cast; nlinarith
+  | solve | push_cast; simp
+  | solve | norm_cast; nlinarith
+  | solve | norm_cast; simp
+  | solve | field_simp; omega
+  | solve | field_simp; norm_num
+  | solve | field_simp; ring
+  | solve | field_simp; linarith
+  | solve | field_simp; nlinarith
+  | solve | field_simp; simp

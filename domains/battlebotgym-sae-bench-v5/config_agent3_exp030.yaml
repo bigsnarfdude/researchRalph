@@ -1,0 +1,23 @@
+# EXP-030 (agent3): BatchRefStyleSAE + 200M + term_tilt=0.003
+# Correct combination: BatchTopK + 200M + optimized tilt (0.003, not 0.006)
+# Agent0 got 0.854 with term_tilt=0.006. Agent1/2 showed 0.003 is better at 50M.
+# EXP-029 proved ista_step=0.5 kills training — keep at 0.25!
+sae_class: BatchRefStyleSAE
+k: 25
+d_sae: 4096
+lr: 1e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 2
+ista_step_size: 0.25
+term_tilt: 0.003
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 60
+inner_loss_weight: 0.3
+k_schedule: cosine
+term_start: 0.003
+term_end: 0.003

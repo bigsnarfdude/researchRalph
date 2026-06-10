@@ -1,0 +1,44 @@
+{
+  "decision": "STOP_HACKING",
+  "pq": 6,
+  "gardener_fixes": [
+    {
+      "issue": "Dead end: Design 'solver_param' has 10 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt solver_param experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'branch_search' has 131 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt branch_search experiments'",
+      "source": ""
+    },
+    {
+      "issue": "Dead end: Design 'perturbation' has 54 experiments, 0 keeps \u2014 abandon this approach",
+      "fix": "Add to program.md: 'Do not attempt perturbation experiments'",
+      "source": ""
+    }
+  ],
+  "hitl_fixes": [],
+  "missed_checks": [
+    {
+      "issue": "Dead end design: solver_param",
+      "expected": "Ban or warning about 'solver_param'"
+    },
+    {
+      "issue": "Dead end design: branch_search",
+      "expected": "Ban or warning about 'branch_search'"
+    },
+    {
+      "issue": "Dead end design: perturbation",
+      "expected": "Ban or warning about 'perturbation'"
+    }
+  ],
+  "dead_ends": [
+    "Design 'solver_param' has 10 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'branch_search' has 131 experiments, 0 keeps \u2014 abandon this approach",
+    "Design 'perturbation' has 54 experiments, 0 keeps \u2014 abandon this approach"
+  ],
+  "tool_issues": [],
+  "dominant_axis": null,
+  "stagnation": 248
+}

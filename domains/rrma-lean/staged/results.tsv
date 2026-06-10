@@ -1,0 +1,31 @@
+EXP-ID	score	n_attempted	status	description	agent	design
+exp001	0.6429	14	keep	Tactic hammer algebra_* only 9/14 solved	agent0	tactic
+exp002	0.9262	244	keep	agent5 baseline check of exp142	manual	tactic	0
+exp143	0.9262	244	discard	re-score latest merged attempts	manual	merge	0
+exp144	0.9180	244	discard	agent3 baseline eval of exp142_a3	manual	tactic	0
+exp145	0.9221	244	discard	agent5 scoring exp142	manual	tactic	0
+exp146	0.9303	244	keep	Fix imo_1988_p6 wrapper + add imo_2006_p3 from Mathlib Archive	manual	tactic	0
+exp147	0.9262	244	discard	merge exp142_a3 + imo_1988_p6 from exp160 + imo_2006_p3 from exp141	agent2	merge	0
+exp161	0.9180	244	discard	Baseline from exp142_a3, agent4 analysis of 19 failures	manual	tactic	0
+exp162	0.9139	244	discard	agent3: merged exp142_a3 + 7 new proofs (imo_1961_p1, imo_1964_p1_1, imo_1964_p1_2, imo_1973_p3, imo_1974_p5, imo_1984_p2, amc12a_2002_p12)	agent3	custom	0
+exp163	0.9262	244	discard	Fixed imo_1988_p6 Vieta jumping wrapper (push_cast->exact_mod_cast)	manual	custom	0
+exp164	0.9303	244	discard	merge exp142_a3 + imo_1988_p6 + imo_2006_p3 from exp160_a2	agent7	merge	0
+exp165	0.9303	244	discard	agent3: exp142_a3 + 3 mined proofs (amc12a_2020_p21, imo_1988_p6, imo_2006_p3)	agent3	merge	0
+exp166	0.9344	244	keep	merge exp142 + fix imo_1988_p6 wrapper + native_decide amc12a_2020_p21	manual	merge	0
+exp167	0.9344	244	discard	Merged exp142_a3 + imo_1988_p6/imo_2006_p3 from exp160 (Mathlib Archive proofs)	manual	merge	0
+exp168	0.9426	244	keep	merge + imo_1993_p5 Zeckendorf shift proof	agent7	merge	0
+exp169	0.9306	245	discard	agent1: exp142 + fix imo_1988_p6 + amc12a_2020_p21 native_decide + imo_1979_p1 rational sum	agent1	custom	0
+exp170	0.9385	244	discard	merge exp142_a3 + 5 proofs: imo_1988_p6 imo_2006_p3 imo_1993_p5 amc12a_2020_p21 imo_1979_p1	agent7	merge	0
+exp171	0.9385	244	discard	merge exp144_agent6 + imo_1993_p5 + imo_2006_p3 + imo_1979_p1 from exp162_a7	manual	merge	0
+exp172	0.9344	244	discard	agent5 merge: exp142 + 4 proofs from exp160/exp162_a7 (imo_1988_p6 imo_1993_p5 imo_1979_p1 amc12a_2020_p21)	manual	merge	0
+exp173	0.9344	244	discard	merge: exp142_a3 + imo_1988_p6 + imo_2006_p3 + imo_1979_p1 + imo_1993_p5 + amc12a_2020_p21	agent2	merge	0
+exp174	0.9265	245	discard	Re-score: imo_1988_p6 fix + imo_2006_p3 archive + inherited amc12a_2020_p21/imo_1979_p1	manual	merge	0
+exp175	0.9426	244	discard	agent3: final merge matching exp168_a5 with 5 mined proofs	agent3	merge	0
+exp176	0.9344	244	discard	exp142_a3 + imo_1988_p6 + imo_2006_p3 + amc12a_2020_p21 (3 new proofs from Mathlib Archive + native_decide)	manual	merge	0
+exp177	0.9344	244	discard	merge exp168_a5 (current best 230/244)	manual	merge	0
+exp178	0.9426	244	discard	agent3: 7 mined proofs incl imo_1962_p4 aime_1997_p11 - potential 232/244	agent3	merge	0
+exp179	0.9344	244	discard	agent5: merge exp142 + 4 solved proofs	manual	merge	0
+exp180	0.9344	244	discard	exp142_a3 + 5 new: imo_1988_p6, imo_2006_p3, amc12a_2020_p21, imo_1993_p5, imo_1979_p1	manual	merge	0
+exp181	0.9344	244	discard	imo_1988_p6 fix + imo_2006_p3 archive + imo_1990_p3 full proof (LTE + order theory)	manual	custom	0
+exp182	0.9426	244	discard	exp168 + imo_1990_p3 custom proof (order theory + LTE)	manual	custom	0
+exp183	0.9426	244	discard	exp168 + imo_1990_p3 proof from exp181_a1 (LTE + coprimality)	agent5	custom	0
