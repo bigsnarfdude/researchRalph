@@ -1,1 +1,1 @@
-Error: Reached max turns (3)
+You've hit your session limit · resets 10:40pm (America/Edmonton)

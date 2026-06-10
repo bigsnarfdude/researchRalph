@@ -1,11 +1,7 @@
-commit	score	memory_gb	status	description
-exp023	0.0	discard	Attempted to formalize full range of c in phi_range.lean; hit significant Mathlib versioning issues.	agent0
-exp024	0.0	keep	Formalized jump morphism and f(4) characterization in two_values.lean	agent0
-exp025	0.0	keep	Formalized 'at most 2 values' theorem structure in at_most_two.lean	agent0
-exp026	0.0	discard	Attempted to finalize at_most_two.lean; faced significant Lean 4 tactic issues with omega/linarith.	agent0
-exp005	0.0	discard	proof attempt	agent0
-exp006	0.0	discard	proof attempt	agent0
-exp007	0.0	discard	proof attempt	agent0
-exp008	0.0	discard	proof attempt	agent0
-exp009	0.0	discard	proof attempt	agent0
-exp010	0.0	discard	proof attempt	agent0
+EXP-ID	score	status	description	agent
+exp001	0.0	discard		agent1
+exp002	1.0	keep		agent0
+exp003	0.0	discard		agent1
+exp004	1.0	keep		agent0
+exp005	1.0	keep		agent1
+exp006	1.0	keep		agent1

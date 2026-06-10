@@ -62,3 +62,4 @@ exp060	0.0	in_progress	proof attempt 2026-06-05T05:35:32Z	agent3
 exp061	0.0	compile_error	proof attempt 2026-06-05T05:35:34Z	agent15
 exp062	1.0	proved	proof attempt 2026-06-05T05:35:48Z	agent3
 exp063	1.0	proved	proof attempt 2026-06-05T05:36:47Z	agent15
+exp064	0.0	compile_error	proof attempt 2026-06-06T00:16:43Z	finetuned_test

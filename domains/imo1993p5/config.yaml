@@ -3,3 +3,4 @@ metric: proof_compiles
 direction: higher_is_better
 harness: run.sh
 editable: solution.lean
+domain_type: lean_proof

@@ -1,30 +1,30 @@
 # Recent Experiments — gpt2-tinystories-v44
 
-**Best: 1.083695 (exp071)** | Total: 78 | Breakthroughs: 19 | Crashes: 6
+**Best: 1.083339 (exp099)** | Total: 100 | Breakthroughs: 22 | Crashes: 6
 
-### → exp074 — 1.085638 (Δ +0.0019 from best)
+### → exp096 — 1.083475 (Δ +0.0001 from best)
 - **Agent:** agent0 | **Design:** architecture | **Status:** discard
-- **What:** graduated windows (128/128/128/256/256/256/2048) at depth=7+wt — hierarchical attention: tight early, wider late
+- **What:** softcap=11 (from 12) at depth=7+wt+window128 — fine-grain between 10 and 12, both good
 - **Outcome:** PLATEAU
 
-### → exp075 — 1.088946 (Δ +0.0053 from best)
+### → exp097 — 1.084591 (Δ +0.0013 from best)
 - **Agent:** agent1 | **Design:** optimizer | **Status:** discard
-- **What:** constant WEIGHT_DECAY=0.2 (no linear decay) — model overfits at depth=7+wt, keep regularization through warmdown
+- **What:** resid_lambda LR multiplier=0.1 (from 0.01) at depth=7+wt+softcap12+window128 — 10x faster per-layer residual scaling, completely untested
 - **Outcome:** PLATEAU
 
-### → exp076 — 1.088087 (Δ +0.0044 from best)
-- **Agent:** agent0 | **Design:** architecture | **Status:** discard
-- **What:** x0_lambda init=0.2 (from 0.1) at depth=7+wt+window128 — stronger skip-to-input connection, never swept
+### → exp098 — 1.086957 (Δ +0.0036 from best)
+- **Agent:** agent1 | **Design:** hyperparam | **Status:** discard
+- **What:** position-weighted loss (0.5+0.5*t/T) at depth=7+wt+softcap12+window128 — focus on later tokens, never tested
 - **Outcome:** PLATEAU
 
-### → exp077 — 1.087547 (Δ +0.0039 from best)
-- **Agent:** agent1 | **Design:** architecture | **Status:** discard
-- **What:** depth=6+wt+window128 — combine throughput advantage (2358 steps) with window improvement, test if additive
-- **Outcome:** PLATEAU
+### ★ exp099 — 1.083339 (= best)
+- **Agent:** agent1 | **Design:** optimizer | **Status:** keep
+- **What:** Muon momentum target=0.93 (from 0.95) at depth=7+wt+softcap12+window128 — lower momentum for sharper convergence
+- **Outcome:** BREAKTHROUGH
 
-### → exp078 — 1.08577 (Δ +0.0021 from best)
+### → exp100 — 1.083962 (Δ +0.0006 from best)
 - **Agent:** agent1 | **Design:** optimizer | **Status:** discard
-- **What:** Adam beta1=0.9 (from 0.8) for embeddings — slower momentum for weight-tied config, completely untested
+- **What:** Muon momentum target=0.91 (from 0.93) — continue momentum bracket, 0.93 was new best
 - **Outcome:** PLATEAU
 
 ## Score trajectory (all)
@@ -108,3 +108,25 @@
 | exp076 | 1.088087 | → PLATEAU |
 | exp077 | 1.087547 | → PLATEAU |
 | exp078 | 1.08577 | → PLATEAU |
+| exp079 | 1.130037 | ↓ REGRESSION |
+| exp080 | 1.087187 | → PLATEAU |
+| exp081 | 1.08709 | → PLATEAU |
+| exp082 | 1.083849 | → PLATEAU |
+| exp083 | 1.086134 | → PLATEAU |
+| exp084 | 1.084483 | → PLATEAU |
+| exp085 | 1.084022 | → PLATEAU |
+| exp086 | 1.533772 | ↓ REGRESSION |
+| exp087 | 1.533855 | ↓ REGRESSION |
+| exp088 | 1.085151 | → PLATEAU |
+| exp089 | 1.08355 | ★ BREAKTHROUGH |
+| exp090 | 1.083462 | ★ BREAKTHROUGH |
+| exp091 | 1.085494 | → PLATEAU |
+| exp092 | 1.086321 | → PLATEAU |
+| exp093 | 1.083791 | → PLATEAU |
+| exp094 | 1.084164 | → PLATEAU |
+| exp095 | 1.085206 | → PLATEAU |
+| exp096 | 1.083475 | → PLATEAU |
+| exp097 | 1.084591 | → PLATEAU |
+| exp098 | 1.086957 | → PLATEAU |
+| exp099 | 1.083339 | ★ BREAKTHROUGH |
+| exp100 | 1.083962 | → PLATEAU |

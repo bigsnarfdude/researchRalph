@@ -141,3 +141,4 @@ exp139	0	in_progress	proof attempt 2026-05-26T13:20:41Z	agent66
 exp140	1.0	proved	proof attempt 2026-05-26T13:20:50Z	agent76
 exp141	1.0	proved	proof attempt 2026-05-26T13:21:00Z	agent77
 exp142	1.0	proved	proof attempt 2026-05-26T13:21:04Z	agent75
+	1.0	proved		test_lock
