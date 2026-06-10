@@ -1,4 +1,4 @@
-# researchRalph v4.5 — Agent Responsibly Edition
+# researchRalph v4.9.3 — Agent Responsibly Edition
 
 ResearchRalph Multi-Agent (RRMA) Claude Code agents that do research autonomously.
 TrustLoop — Observability for autonomous agents. Watch your agents, experiments, and scaffolds in one place. Know immediately when something stalls, breaks, wastes compute, or wins — and why.
@@ -38,6 +38,7 @@ git clone https://github.com/bigsnarfdude/researchRalph.git && cd researchRalph
 | v2 | Multi-agent blackboard + structured memory | Launch, steer with operator.sh | GPT-2: 1.048 BPB, 64% hit rate (8×A100) |
 | v3 | Stripped protocol, plain blackboard, Ralph Wiggum loop | Review + redesign between runs | SAE-bench: 0.9894 F1, 135 experiments, beat 0.97 probe ceiling |
 | v4 | Self-recursive: gardener monitors process quality, stops/redesigns automatically | None | SAE-bench: 0.8170 F1 in 38 exp, hacking detection validated |
+| v4.9 | Preflight gate, zero-oracle watchdog, adviser pattern (strong model writes pre-verified patches for stuck workers), evidence-grounded PQ | None | Erdős 741(ii) friction ladder: Fable 5 cold start 3/4 proved in <15 min (Opus 0/12); see v4/README.md |
 | v4.3 | + real literature search, agent self-telemetry, stream-json trace capture, multi-box parallel generation | None | rrma-lean: 0.6230 on MiniF2F (244 problems), climbing |
 | v4.4 | + gardener reads DESIRES/MISTAKES/LEARNINGS — agent requests feed scaffold redesign | None | rrma-lean: 0.8811 (215/244), above Goedel-V2-8B (84.6%) |
 | **v4.5** | **+ TrustLoop forensic pipeline, MCP servers, structured experiment logging** | **None** | **SFT datasets from traces, MCP introspection** |

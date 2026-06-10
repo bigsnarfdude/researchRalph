@@ -109,7 +109,9 @@ v4/
 | v4.6 | context optimization: stoplight.md + recent_experiments.md + static/dynamic program split |
 | v4.7 | per-agent workspaces (race elimination), memory system |
 | v4.8 | skeptical memory (claims verified against live sources) |
-| v4.9 | preflight gate, zero-oracle watchdog, deforked model wrappers, prompt templates, evidence-grounded PQ, deterministic redesign |
+| v4.9.1 | launch-cell.sh parametrized fleets (concurrent model arms), per-agent+PID oracle temp files (race fix) |
+| v4.9.2 | adviser pattern: stronger model reads a stuck worker's proof state, writes pre-verified patch.md (compiles it before advising) — see domains/erdos-741ii-sonnet-opus-adviser |
+| v4.9.3 | preflight gate, zero-oracle watchdog, deforked model wrappers, prompt templates, evidence-grounded PQ, deterministic redesign |
 
 ## Comparison to core/
 
