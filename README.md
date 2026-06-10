@@ -1,4 +1,4 @@
-# researchRalph v4.9.3 — Agent Responsibly Edition
+# researchRalph v4.9.3 — Adivsor Pattern Edition
 
 ResearchRalph Multi-Agent (RRMA) Claude Code agents that do research autonomously.
 TrustLoop — Observability for autonomous agents. Watch your agents, experiments, and scaffolds in one place. Know immediately when something stalls, breaks, wastes compute, or wins — and why.
