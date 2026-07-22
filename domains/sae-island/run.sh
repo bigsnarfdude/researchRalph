@@ -44,11 +44,12 @@ fi
 echo "SOURCE: $WS/sae.py"
 
 log_row() {  # $1=score $2=elapsed_seconds
-    local N EXP
+    local N EXP STATUS
+    STATUS="keep"; [ -n "${SAE_SMOKE:-}" ] && STATUS="smoke"   # fidelity tag — smoke rows are excluded from plateau/best metrics
     N=$(awk 'NR>1' "$DIR/results.tsv" | wc -l | tr -d ' ')
     EXP=$(printf "EXP-%03d" $((N+1)))
     chmod 644 "$DIR/results.tsv"
-    printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\n" "$EXP" "$1" "$2" "keep" "$DESC" "$AGENT" "$NAME" >> "$DIR/results.tsv"
+    printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\n" "$EXP" "$1" "$2" "$STATUS" "$DESC" "$AGENT" "$NAME" >> "$DIR/results.tsv"
     chmod 444 "$DIR/results.tsv"
     echo "SCORE: $1"
     echo "ELAPSED: ${2}s"

@@ -10,6 +10,7 @@
 # Score: word count of the workspace answer file, capped at 1.0. No model, no GPU.
 
 AGENT="${CLAUDE_AGENT_ID:-agent0}"
+NAME="${1:-mock}"
 DESC="${2:-mock experiment}"
 DIR="$(cd "$(dirname "$0")" && pwd)"
 WS="$DIR/workspace/$AGENT/answer.txt"
@@ -25,7 +26,7 @@ SCORE=$(python3 -c "print(round(min(1.0, $WORDS/100), 4))")
 
 N=$(awk 'NR>1' "$DIR/results.tsv" | wc -l | tr -d ' ')
 EXP=$(printf "EXP-%03d" $((N+1)))
-printf "%s\t%s\t0.0\tkeep\t%s\t%s\tmock\n" "$EXP" "$SCORE" "$DESC" "$AGENT" >> "$DIR/results.tsv"
+printf "%s\t%s\t0.0\tkeep\t%s\t%s\t%s\n" "$EXP" "$SCORE" "$DESC" "$AGENT" "$NAME" >> "$DIR/results.tsv"
 
 echo "SCORE: $SCORE"
 echo "LOGGED: $EXP -> results.tsv"

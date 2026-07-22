@@ -1,0 +1,9 @@
+SOURCE: /Users/vincent/development/researchRalph/domains/cartpole-island-isl-a/workspace/agent0/params.yaml
+--- CartPole Summary ---
+Score: 0.3729 (avg 186.4 / 500 steps)
+Perfect episodes: 0/50
+Steps range: 173–201
+Terminations — angle: 0, position: 50, success: 0
+0.3729
+SCORE: 0.3729
+LOGGED: EXP-001 -> results.tsv

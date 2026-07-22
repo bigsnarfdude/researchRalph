@@ -12,7 +12,7 @@ while true; do
         for i in a b; do
             d="$REPO/domains/sae-island-isl-$i"
             rows=$(awk 'NR>1' "$d/results.tsv" 2>/dev/null | wc -l | tr -d ' ')
-            best=$(awk -F'\t' 'NR>1{print $2}' "$d/results.tsv" 2>/dev/null | sort -rn | head -1)
+            best=$(awk -F'\t' 'NR>1{print $2}' "$d/results.tsv" 2>/dev/null | sort -rn | head -n 1)
             bl=$(wc -l < "$d/blackboard.md" 2>/dev/null | tr -d ' ')
             flag=""
             [ -f "$d/BOARD_OVER_BUDGET" ] && flag=" OVER_BUDGET"
