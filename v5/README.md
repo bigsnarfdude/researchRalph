@@ -86,7 +86,37 @@ angle_bias defect), 2 islands × 2 haiku workers, 25-turn cap, meta-agents off.
   workers exit on completion despite "Never stop" (harder domains or outer-loop
   relaunch needed for sustained runs); results.tsv append race untested under load
 
-## Not yet wired (v5.1+)
+## v5.1 — short-session lifecycle (built + tested 2026-07-21)
+
+The sae-island run's lesson, mechanized: marathon worker sessions die (turn
+exhaustion, CLI notification crashes, wait-by-stopping) and burn cost on cache
+re-reads. v5.1 makes the OUTER LOOP the durable unit and model sessions
+disposable — one experiment per session, the blackboard is the only memory.
+
+| File | Role |
+|---|---|
+| `loop.sh <island>` | per-island lifecycle engine: collect → short session → wait (free) → tally → repeat. Owns ALL kill criteria: MAX_EXPS, shared COST_CAP ledger, WALL_CAP_H, stagnation→BOARD_DISTILL |
+| `session_default.md` | the one-experiment session contract (domain override: `session_prompt.md`) |
+| `launch-islands.sh <base> [K]` | make-islands + one setsid loop per island; `RESET=1` for clean start |
+| `mock-session.sh` | scripted session stand-in for tests (`MOCK_PLAN="improve flat nosubmit"`) |
+| `loop-preflight.sh` | 16-test lifecycle suite (anchor, ledger, distill, cost-cap, error-framing, idempotence) — $0 |
+| `cost_ledger.tsv` | shared cross-island spend ledger (created on first run) |
+
+Key mechanisms:
+- **Loop-owned anchor**: the untouched seed is scored as the first row
+  deterministically (the sae run's skipped-anchor bug can't recur).
+- **BOARD_DISTILL**: on stagnation (STAG_N full-fidelity rows, no new best) the
+  advisor replaces the board with ≤80 lines of verified/exhausted/frontier —
+  the synthetic version of the fresh-board effect that broke the v3 lock-in.
+  Old board preserved as `blackboard.md.pre-distill-<ts>`. `ADVISOR_STUB` seam
+  for tests; live path uses `ADVISOR_MODEL`.
+- **Fidelity hygiene**: SAE_SMOKE oracle rows now log status=`smoke`;
+  paradigm-tag plateau/best metrics skip them.
+- Status 2026-07-21: loop-preflight 16/16 twice + island-preflight 28/28
+  regression; live micro-test on cartpole (haiku): anchor 0.3729 → session
+  improved to 0.4292 in 19 turns, $0.16, clean stop. Portability lint clean.
+
+## Not yet wired (v5.2+)
 
 - outer-loop NUDGE → migrate.sh trigger (T5 tests the migration unit directly)
 - live advisor digest authoring (migrate.sh fails loud without ADVISOR_STUB)

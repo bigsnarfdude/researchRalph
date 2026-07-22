@@ -23,7 +23,7 @@ BASE_NAME="$(basename "$DOMAIN_DIR")"
 PARENT="$(dirname "$DOMAIN_DIR")"
 
 # Fresh results.tsv keeps the base domain's header row if it has one
-HEADER="$(head -1 "$DOMAIN_DIR/results.tsv" 2>/dev/null || true)"
+HEADER="$(head -n 1 "$DOMAIN_DIR/results.tsv" 2>/dev/null || true)"
 [ -n "$HEADER" ] || HEADER=$'exp_id\tscore\ttime\tstatus\tdescription\tagent\tdesign'
 
 for i in $(seq 0 $((K-1))); do

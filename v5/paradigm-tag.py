@@ -143,11 +143,15 @@ def main() -> int:
             absent.append(fam)
         print(f"  {fam:<16} {status}")
 
-    # Plateau: longest streak of experiments that never improved best-so-far
+    # Plateau: longest streak of experiments that never improved best-so-far.
+    # Smoke-fidelity rows (status == "smoke") are skipped — they are wiring
+    # tests, not comparable scores.
     best = None
     last_improve = 0
     longest = (0, 0, 0)  # (length, start_idx, end_idx)
     for idx, r in enumerate(rows, 1):
+        if len(r) > 3 and r[3] == "smoke":
+            continue
         try:
             s = float(r[1])
         except ValueError:
