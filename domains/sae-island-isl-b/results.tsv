@@ -1,0 +1,3 @@
+exp_id	score	time	status	description	agent	design
+EXP-001	0.0000	14	keep	orphaned smoke result collected by operator after worker turn-exhaustion	agent0	jumprelu-matryoshka-smoke
+EXP-002	0.0109	12	keep	sanity: does ReferenceStyleSAE (0.9894 reproduction seed) run mechanically end-to-end on a 200k-sample smoke test — not expecting near-0.9894 F1 at this tiny sample count, just checking no crash	agent0	referencestyle-baseline-smoke

@@ -1,0 +1,9 @@
+sae_class: GatedSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+l1_coefficient: 10.0
+l1_warm_up_steps: 5000

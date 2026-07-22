@@ -1,0 +1,16 @@
+exp_id	score	time	status	description	agent	design
+EXP-001	0.0468	11	keep	smoke test: JumpReLU SAE mechanics check	agent0	jumprelu-smoke
+EXP-002	0.0331	1473	keep	JumpReLU SAE (new method family): per-feature learned threshold + L0 penalty vs fixed global-k TopK/Matryoshka family. Hypothesis: adaptive per-feature sparsity better recovers rare GT features than shared k budget.	agent0	jumprelu-v1
+EXP-003	0.0469	11	keep	smoke-calib: l0_coefficient=0.1 (100x EXP-002), checking resulting L0 before full run	agent0	jumprelu-smoke-l0-0p1
+EXP-004	0.0060	151	keep	calibration (not a real F1 attempt): l0_coefficient=0.1, training_samples reduced to 20M (10% of full) just to read off converged L0 fast before committing a full run	agent0	jumprelu-calib-0p1-20M
+EXP-005	0.4743	1481	keep	JumpReLU calibration: l0_coefficient=1.0 (1000x EXP-002's 1e-3), full 200M samples. Goal: find coefficient landing L0 near baseline's k=25 before comparing F1 to 0.9894.	agent0	jumprelu-v2-l0-1p0
+EXP-006	0.1534	1479	keep	JumpReLU calibration round 3: l0_coefficient=0.4 (log-log interpolated from 1e-3->L0=2730 and 1.0->L0=12.9 to target L0~25), full 200M samples.	agent0	jumprelu-v3-l0-0p4
+EXP-007	0.3733	1483	keep	JumpReLU calibration round 4: l0_coefficient=2.0 (2x EXP-005). Testing whether F1 continues improving past L0=12.9 as coefficient rises further (F1 trend so far monotonically increasing with coefficient: 1e-3->0.033, 0.4->0.153, 1.0->0.474).	agent0	jumprelu-v4-l0-2p0
+EXP-008	0.7019	1478	keep	JumpReLU calibration round 5: l0_coefficient=0.7, refining around the peak found at coeff=1.0 (F1=0.4743, L0=12.9), bracketed by 0.4 (F1=0.153) and 2.0 (F1=0.373).	agent0	jumprelu-v5-l0-0p7
+EXP-009	0.6493	1479	keep	JumpReLU calibration round 6: l0_coefficient=0.6, tightening bracket around the 0.7 peak (F1=0.7019, L0=22.5, very close to baseline k=25).	agent0	jumprelu-v6-l0-0p6
+EXP-010	0.6018	1479	keep	JumpReLU calibration round 7: l0_coefficient=0.8, checking if peak is between 0.7 (F1=0.7019) and 1.0 (F1=0.4743) rather than at 0.7 exactly.	agent0	jumprelu-v7-l0-0p8
+EXP-011	0.3136	11	keep	smoke-calib: GatedSAE l1_coefficient=5.0, checking mechanics + rough L0 before full run	agent0	gated-smoke-l1-5
+EXP-012	0.0064	12	keep	smoke-calib: GatedSAE l1_coefficient=20.0 (4x prior), checking L0 trend	agent0	gated-smoke-l1-20
+EXP-013	0.0085	12	keep	smoke-calib: GatedSAE l1_coefficient=30.0, bracketing toward L0~25 target (5->L0=511.5, 20->L0=52.0)	agent0	gated-smoke-l1-30
+EXP-014	0.1067	11	keep	smoke-calib: GatedSAE l1_coefficient=12.0, between 5 (L0=511.5) and 20 (L0=52.0, plateaued through 30)	agent0	gated-smoke-l1-12
+EXP-015	0.4287	1586	keep	Gated SAE full 200M train, l1 from smoke bracket — operator-collected after worker crash	agent0	gated-v1-full
