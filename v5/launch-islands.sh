@@ -26,6 +26,10 @@ for i in $(seq 0 $((K-1))); do
     [ -d "$ISL" ] || { echo "ERROR: $ISL missing (run with RESET=1?)" >&2; exit 1; }
     LOG="$ISL/logs/loop.out"
     mkdir -p "$ISL/logs"
+    # advisory: surface contamination risk before launch (non-blocking — most
+    # domains won't declare ground_truth/sensitive_pattern; loop.sh snapshots
+    # + verifies the oracle regardless)
+    bash "$SCRIPT_DIR/guard.sh" audit-contamination "$ISL" 2>&1 | sed 's/^/[launch-islands] audit: /' || true
     setsid nohup bash "$SCRIPT_DIR/loop.sh" "$ISL" >> "$LOG" 2>&1 &
     echo "[launch-islands] loop for $(basename "$ISL") -> pid $! (log: $LOG)"
 done

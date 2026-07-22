@@ -116,6 +116,38 @@ Key mechanisms:
   regression; live micro-test on cartpole (haiku): anchor 0.3729 → session
   improved to 0.4292 in 19 turns, $0.16, clean stop. Portability lint clean.
 
+## Reward-hack guards + SFT ingestion gate (branch v5-hack-gates, 2026-07-22)
+
+Response to the OpenAI/HF incident + RRMA's own observed harness-seeking. Two
+halves: model-free runtime guards, and the gate that stops a hacked run from
+becoming training data. See `highlevel_rrma-reward-hacking_2026-07-22.html`.
+
+| File | Role |
+|---|---|
+| `guard.sh` | `oracle-snapshot`/`oracle-verify` (SHA the canonical run.sh+engine.py; halt on drift), `scan-trace` (flag network egress / out-of-island writes / sibling-island reads in a session trace), `audit-contamination` (fail-loud unless the domain declares `ground_truth:`/`sensitive_pattern:`; flag reachable ground truth) |
+| `bootstrap/verify_filter_ml.py` | the ML analog of the Lean compile gate: for each logged experiment, re-run the oracle on the ARCHIVED artifact in a throwaway domain copy; admit the trace to SFT only if the independent score reproduces the claim within tol AND the trace is scan-clean. A poisoned oracle aborts the gate. |
+| `guard-preflight.sh` | 16-test suite (hash, scanner, contamination, gate reproduce/forge/trace-violation, loop halt) — $0 |
+
+Wiring:
+- `loop.sh` snapshots the oracle at start, `oracle-verify`s each cycle, and
+  `scan-trace`s each session BEFORE collecting its result — any violation writes
+  `GUARD_HALT` and stops the loop. `GUARD=0` disables (escape hatch).
+- oracles (`island-mock`, `sae-island`) archive each scored artifact to
+  `runs/<EXP>/` so the gate has something to independently re-verify.
+- `launch-islands.sh` runs an advisory contamination audit per island at launch.
+
+Why this order matters: the SFT gate re-runs the oracle, so the oracle-integrity
+hash is load-bearing — a poisoned oracle would launder a hack straight through
+re-verification. The Lean pipeline already has this property for free (a hacked
+trace can't compile); this gives ML/agentic domains the equivalent before v5.2
+closes the traces→SFT loop.
+
+Not yet done (tracked): Tier-2 blast-radius (dedicated unprivileged `rrma` user,
+no-network sessions) is nigel ops, not code. Harvesting rejected traces as a
+hack-classifier training set (the probe line) is v5.2-era.
+Status 2026-07-22: guard-preflight 16/16, loop-preflight 16/16 + island-preflight
+28/28 regressions green, twice from clean resets.
+
 ## Not yet wired (v5.2+)
 
 - outer-loop NUDGE → migrate.sh trigger (T5 tests the migration unit directly)
