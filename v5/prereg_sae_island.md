@@ -106,3 +106,21 @@ live results + board-sim(a,b). All numbers logged to v5/run_watch.log on nigel.
   time with foreground `sleep 300` calls (1 turn/5 min), no background
   run.sh. isl-a's in-flight EXP-010 and isl-b's queued diagnostic both
   survived under setsid and are collectable by the new sessions.
+- 2026-07-21 ~18:40 — isl-a's third session died with the same signature as
+  isl-b's (hard exit while receiving a background-task notification; 127
+  turns). Hypothesis: CLI crash bug on task-notification handling when a
+  timed-out foreground call is auto-moved to background. Not fixable from
+  the harness side.
+- 2026-07-21 ~18:55 — **RUN CLOSED BY OPERATOR** (rationale: primary
+  criterion met and verified; jumprelu secondary complete at 0.7019 plateau;
+  repeated substrate crashes make further sessions churn, not research).
+  Final in-flight gated training collected as EXP-015 (0.4287, 1586s).
+  Final record: isl-a 15 exps (jumprelu 1-10, gated 11-15 — TWO detector
+  families with full-fidelity scores), isl-b 2 exps (crash recovery only).
+  board-sim(a,b) 0.404 (decorrelated). Cost $18.32 of $40. GPU time ≈ 5.5h.
+  Neither new family approached 0.9894 — consistent with "new families
+  explore readily but do not beat a 135-experiment evolved incumbent in
+  single-digit experiment counts." Data committed on nigel (bb5b0d3).
+  v5.1 priority from this run: outer-loop-driven short worker sessions
+  (one experiment per session) instead of marathon sessions — eliminates
+  turn-budget deaths, notification-crash exposure, and polling burn.
