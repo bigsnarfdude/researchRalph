@@ -1,0 +1,95 @@
+# v5 — island layer (v5.0 scaffolding)
+
+Islands = decorrelated sub-swarms with separate blackboards, gardener-mediated
+migration of distilled findings, and a line budget that forces board curation.
+Attacks the documented v3/v4 failure mode: paradigm lock-in from one fully
+shared board (22-experiment LISTA plateau, inference-time methods never explored).
+
+## Design decision: islands are sibling domain clones
+
+An island is a full clone of the domain (`<domain>-isl-a`, `-isl-b`, ...), not a
+subdirectory. Reasons, from reading the v4 harness:
+
+- worker prompts already confine agents to the current directory — isolation by construction
+- `v4/preflight.sh`, `v4/diagnose.py`, and the launcher all take a domain dir —
+  they work per-island **unchanged** (zero modifications to existing code)
+- the repo's own idiom for variants is cloned domain dirs (erdos-741ii-g1-*, chaos runs)
+
+Island identity derives from the directory name; aggregation adds the island
+column at read time (see T2 in the suite).
+
+## Files
+
+| File | Role |
+|---|---|
+| `make-islands.sh <domain> [K] [--force]` | clone domain into K islands, fresh boards/results/workspaces |
+| `board-budget.sh <island> [cap]` | line budget (default 300): warn + `BOARD_OVER_BUDGET` flag, never reject |
+| `migrate.sh --from <isl> --to <isl>...` | append advisor digest to target boards; idempotent; no self-migration; charges budget. `ADVISOR_STUB=<file>` for canned digests (live advisor = v5.1) |
+| `mock-worker.sh` | stub agent: one board write, one workspace edit, one oracle call |
+| `island-preflight.sh [base-domain]` | the T0–T5 mechanics suite (below) |
+| `fixtures/canned_digest.md` | canned advisor output for T5 |
+| `../domains/island-mock/` | fixture domain: instant oracle following the full v4.9.3 contract |
+
+## The suite
+
+```
+bash v5/island-preflight.sh        # ~15s, $0 of agent spend, exit 0 = safe
+```
+
+- **T0** — v4/preflight.sh passes per island + live oracle reads workspace/agent0 and logs a row (the erdos-125 checks, re-armed)
+- **T1** — board isolation: marker grep across islands, zero leaks
+- **T2** — per-island results.tsv rows, agent-tagged, aggregate 2/2/2
+- **T3** — diagnose.py on island a byte-identical (decision + full report) with island b's board hidden
+- **T4** — line budget: over-cap board → exit 2 + flag, writes still succeed (warn+flag design), under-cap → clean
+- **T5** — migration: digest lands exactly once on each target, never on source, idempotent re-run, budgets charged
+
+Status 2026-07-21: 28/28 pass, twice in a row from clean fixture resets.
+
+## Step 2 — divergence metric, built on the v3 baseline (done 2026-07-21)
+
+- `paradigm-tag.py <results.tsv> [--json out]` — deterministic method-family tagger
+  (CamelCase design tokens + description regex, multi-label). On the v3 SAE run
+  (battlebotgym-sae-bench-v3, 135 exps, best 0.9894): **0 unmatched**, 12 families present.
+- `baseline_sae_paradigms.json` — the frozen baseline the island run is compared against.
+- **Divergence detectors, all 0/135 in baseline:** inference-time, gated, jumprelu,
+  crosscoder, transcoder. Island run success = any island logs ≥1 experiment in any
+  of these (existence proof, N=1-robust).
+- **Plateau metric validated:** longest mid-run plateau = 30 experiments (index 12–41),
+  ending at exactly exp 42 — the first TERM experiment. Paradigm entry is what breaks
+  plateaus; that is the island hypothesis in one row of data. Tail after final
+  improvement (exp 112): 23 experiments.
+- Baseline timeline is sequential paradigm eras (topk 2–37 → ista/matryoshka 5–65 →
+  term 42+ → reference-style 50+ → multi-width 82+) — single-threaded paradigm
+  hopping, the correlated-swarm signature islands are meant to break.
+- `board-sim.py fileA fileB | --matrix f1 f2 ...` — log-TF cosine, the re-correlation
+  detector. Calibration from real boards: same board 1.00; same board earlier in run
+  0.92–0.93; same field different run 0.57; different field 0.35. Strawman alarm:
+  sustained pairwise island similarity > 0.85 ⇒ migration is re-correlating.
+- Note for the budget cap: the v3 board ended at 1,227 lines — the 300-line budget
+  would have forced ~4× distillation of exactly this board.
+
+## Step 3 — real-agent pilot (done 2026-07-21, $1.44)
+
+`domains/cartpole-island/` (de-tuned seed 0.3729, known optimal 1.0, planted
+angle_bias defect), 2 islands × 2 haiku workers, 25-turn cap, meta-agents off.
+
+- 20 real experiments logged, zero oracle failures, zero reward-hack attempts —
+  the erdos-125 failure mode did not recur under real agents
+- both islands reached 1.0 within ~2 min by **different routes** from identical
+  seeds (isl-b: angle_bias removal first move; isl-a: weight rebalancing) —
+  decorrelation visible live
+- isolation clean (no cross-island references), boards 56/45 lines (under 300 cap)
+- live inter-island board similarity: **0.575** ≈ the "same field, different run"
+  calibration point (0.573). Alarm threshold 0.85 stands.
+- forced migration on real boards: digest landed once, idempotent, budget recharged
+- caveats: domain solved in ~2 min (easy by design — mechanics pilot, not research);
+  workers exit on completion despite "Never stop" (harder domains or outer-loop
+  relaunch needed for sustained runs); results.tsv append race untested under load
+
+## Not yet wired (v5.1+)
+
+- outer-loop NUDGE → migrate.sh trigger (T5 tests the migration unit directly)
+- live advisor digest authoring (migrate.sh fails loud without ADVISOR_STUB)
+- real-domain island run (next: cheap-domain pilot, then the pre-registered SAE rerun —
+  primary criterion: any island logs an experiment in a method family the
+  single-board baseline never touched)

@@ -1,0 +1,76 @@
+{
+  "source": "domains/battlebotgym-sae-bench-v3/results.tsv",
+  "n_experiments": 135,
+  "paradigms_present": {
+    "reference-style": {
+      "count": 79,
+      "first": 50,
+      "last": 135
+    },
+    "unrolled-ista": {
+      "count": 67,
+      "first": 5,
+      "last": 130
+    },
+    "term": {
+      "count": 64,
+      "first": 42,
+      "last": 135
+    },
+    "multi-width": {
+      "count": 51,
+      "first": 82,
+      "last": 135
+    },
+    "matryoshka": {
+      "count": 43,
+      "first": 6,
+      "last": 129
+    },
+    "freq-sort": {
+      "count": 11,
+      "first": 47,
+      "last": 65
+    },
+    "topk": {
+      "count": 7,
+      "first": 2,
+      "last": 37
+    },
+    "residual": {
+      "count": 4,
+      "first": 10,
+      "last": 125
+    },
+    "baseline": {
+      "count": 1,
+      "first": 1,
+      "last": 1
+    },
+    "supervised-loss": {
+      "count": 1,
+      "first": 30,
+      "last": 30
+    },
+    "tied-encoder": {
+      "count": 1,
+      "first": 38,
+      "last": 38
+    }
+  },
+  "unmatched": [],
+  "divergence_detectors_absent": [
+    "inference-time",
+    "gated",
+    "jumprelu",
+    "crosscoder",
+    "transcoder"
+  ],
+  "plateau": {
+    "longest": 30,
+    "start": 12,
+    "end": 41,
+    "tail_after_last_improvement": 23
+  },
+  "best_score": 0.9894
+}

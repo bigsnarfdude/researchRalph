@@ -1,0 +1,16 @@
+sae_class: ReferenceStyleSAE
+k: 25
+d_sae: 4096
+lr: 3e-4
+training_samples: 200000000
+batch_size: 1024
+use_lr_decay: true
+lr_warm_up_steps: 1000
+matryoshka_widths: [32, 128, 512, 1024, 2048, 4096]
+n_ista_steps: 1
+ista_step_size: 0.25
+term_tilt: 0.010
+detach_matryoshka: true
+use_freq_sort: true
+initial_k: 80
+inner_loss_weight: 0.5
