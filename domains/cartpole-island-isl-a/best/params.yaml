@@ -1,0 +1,8 @@
+angle_weight: 1.0
+angular_velocity_weight: 0.5
+position_weight: 0.6
+velocity_weight: 0.6
+angle_bias: 0.1
+response_sharpness: 0.5
+anticipation_horizon: 0.2
+position_centering: 0.3

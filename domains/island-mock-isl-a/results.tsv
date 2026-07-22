@@ -1,0 +1,4 @@
+exp_id	score	time	status	description	agent	design
+EXP-001	0.13	0.0	keep	mock experiment by mock-a-agent0	agent0	mock
+EXP-002	0.13	0.0	keep	mock experiment by mock-a-agent1	agent1	mock
+EXP-003	0.13	0.0	keep	mock experiment by mock-a-agent0	agent0	mock

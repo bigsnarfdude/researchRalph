@@ -1,0 +1,10 @@
+exp_id	score	time	status	description	agent	design
+EXP-001	0.9732	0.0	keep	Remove asymmetric angle_bias (0.1->0.0) to check if it was causing systematic drift	agent0	exp1-remove-bias
+EXP-002	0.4765	0.0	keep	Increase position_centering (0.3→0.6) to more aggressively pull cart back to center	agent0	exp2-center-0.6
+EXP-003	0.9732	0.0	keep	Remove angle_bias (0.1→0.0) + increase response_sharpness (0.5→1.0) for crisper control decisions	agent1	exp1-sharper-response
+EXP-004	0.9732	0.0	keep	Reduce response_sharpness (0.5→0.3) to smooth controller decisions, reduce oscillation	agent0	exp3-sharp-0.3
+EXP-005	1.0	0.0	keep	Increase position_weight (0.2→0.5) and velocity_weight (0.2→0.3) for better cart damping	agent0	exp4-pos-vel
+EXP-006	0.2753	0.0	keep	Increase position_centering (0.3→1.0) to prevent cart drift	agent1	exp2-stronger-centering
+EXP-007	0.9878	0.0	keep	Reduce angular_velocity_weight (0.3→0.2) to prevent over-damping	agent1	exp3-reduce-ang-vel
+EXP-008	0.0439	0.0	keep	Further reduce angular_velocity_weight (0.2→0.1) for even less damping	agent1	exp4-minimal-ang-vel
+EXP-009	0.9926	0.0	keep	Increase anticipation_horizon (0.2→0.5) to predict pole angle better	agent1	exp5-better-anticipation

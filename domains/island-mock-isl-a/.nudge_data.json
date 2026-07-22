@@ -1,0 +1,11 @@
+{
+  "decision": "TOO_EARLY",
+  "pq": 6,
+  "gardener_fixes": [],
+  "hitl_fixes": [],
+  "missed_checks": [],
+  "dead_ends": [],
+  "tool_issues": [],
+  "dominant_axis": "mock",
+  "stagnation": 1
+}

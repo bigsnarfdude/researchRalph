@@ -1,0 +1,12 @@
+exp_id	score	time	status	description	agent	design
+EXP-001	0.3729	0.0	keep	Test seed config to establish baseline	agent0	seed-baseline
+EXP-002	0.0191	0.0	keep	Increase position_weight and velocity_weight to prevent drift	agent0	h1-stronger-position
+EXP-003	0.7285	0.0	keep	Boost angular_velocity_weight for better pole damping, modest position increase	agent0	h2-balanced-damping
+EXP-004	1.0	0.0	keep	Increase position_weight and velocity_weight to 0.6, keep angular_velocity at 0.5	agent0	h3-stronger-position-v2
+EXP-005	0.3461	0.0	keep	Remove angle_bias and use position_centering=0.8 to stabilize cart position without competing with angle control	agent1	exp-003-centering
+EXP-006	0.5668	0.0	keep	Increase angle_weight to 2.0, angular_velocity_weight to 0.8, and response_sharpness to 1.0 to strengthen angle control while maintaining position centering	agent1	exp-004-stronger-angle
+EXP-007	0.815	0.0	keep	Increase angle_weight to 3.0, angular_velocity_weight to 1.2, anticipation_horizon to 0.3; dial back position_centering to 0.6 to reduce conflict	agent1	exp-005-angle-emphasis
+EXP-008	0.7072	0.0	keep	Increase position_centering to 0.9 and velocity_weight to 0.4 to reduce cart drift while maintaining angle control	agent1	exp-006-position-stability
+EXP-009	0.7853	0.0	keep	Fine-tune position_centering to 0.7 and velocity_weight to 0.3 for balance between angle and position control	agent1	exp-007-tuned-balance
+EXP-010	0.9988	0.0	keep	Increase position_weight to 0.5 to add raw position feedback without increasing position_centering conflict	agent1	exp-008-position-weight
+EXP-011	1.0	0.0	keep	Boost velocity_weight to 0.25 to add damping for the final position drift failures	agent1	exp-009-velocity-damp
