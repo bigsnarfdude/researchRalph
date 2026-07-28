@@ -8,7 +8,8 @@
 #
 # Subcommands (each exits 0 = ok, 3 = violation, 1 = usage/other):
 #   oracle-snapshot <island> [--force]   record sha of the canonical oracle files
-#   oracle-verify   <island>             fail if the oracle changed since snapshot
+#   oracle-verify   <island> [--allow-missing]  fail if the oracle changed OR the
+#                                        snapshot is gone (deletion is tampering)
 #   scan-trace      <session.jsonl> <island>   flag egress / out-of-scope actions
 #   audit-contamination <island>         fail if the oracle's ground truth is reachable
 #
@@ -37,13 +38,35 @@ oracle-snapshot)
     if [ -f "$SNAP" ] && [ "$FORCE" != "--force" ]; then
         echo "[guard] oracle snapshot already exists (use --force to reset): $SNAP"; exit 0
     fi
+    # Refuse to re-baseline an island that already tripped a guard. Otherwise
+    # `delete snapshot -> tamper oracle -> relaunch` silently adopts the tampered
+    # oracle as the new reference and every later verify passes clean.
+    if [ -f "$ISL/GUARD_HALT" ] && [ "$FORCE" != "--force" ]; then
+        echo "[guard] VIOLATION: refusing to snapshot an island with GUARD_HALT:" >&2
+        sed 's/^/[guard]   /' "$ISL/GUARD_HALT" >&2
+        echo "[guard]   Investigate, then clear GUARD_HALT and re-snapshot with --force." >&2
+        exit 3
+    fi
     oracle_files "$ISL" | sort | while read -r f; do sha_of "$f"; done | sed "s| $ISL/| |" > "$SNAP"
     echo "[guard] oracle snapshot written: $(wc -l < "$SNAP" | tr -d ' ') files -> $SNAP"; exit 0 ;;
 
 oracle-verify)
-    ISL="$(cd "${1:?island}" && pwd)"
+    ISL="$(cd "${1:?island}" && pwd)"; ALLOW_MISSING="${2:-}"
     SNAP="$ISL/.oracle_hash"
-    if [ ! -f "$SNAP" ]; then echo "[guard] FAIL: no oracle snapshot — run oracle-snapshot first" >&2; exit 1; fi
+    # A MISSING snapshot is a violation, not a usage error. Once a run has
+    # snapshotted its oracle, the only way the file goes away is deletion — and
+    # exiting non-3 here would let `rm .oracle_hash` walk straight through both
+    # call sites (loop.sh halts only on 3; verify_filter_ml warned and proceeded).
+    # Fail CLOSED. --allow-missing is the explicit opt-out for auditing legacy
+    # islands that predate the guard and were never snapshotted.
+    if [ ! -f "$SNAP" ]; then
+        if [ "$ALLOW_MISSING" = "--allow-missing" ]; then
+            echo "[guard] oracle-verify skipped: no snapshot (--allow-missing)" >&2; exit 0
+        fi
+        echo "[guard] VIOLATION: no oracle snapshot at $SNAP — deleted mid-run, or never taken." >&2
+        echo "[guard]   If this island predates the guard, re-run with --allow-missing." >&2
+        exit 3
+    fi
     NOW="$(oracle_files "$ISL" | sort | while read -r f; do sha_of "$f"; done | sed "s| $ISL/| |")"
     if [ "$NOW" = "$(cat "$SNAP")" ]; then
         echo "[guard] oracle-verify ok ($(wc -l < "$SNAP" | tr -d ' ') files unchanged)"; exit 0

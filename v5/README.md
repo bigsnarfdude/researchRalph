@@ -126,12 +126,30 @@ becoming training data. See `highlevel_rrma-reward-hacking_2026-07-22.html`.
 |---|---|
 | `guard.sh` | `oracle-snapshot`/`oracle-verify` (SHA the canonical run.sh+engine.py; halt on drift), `scan-trace` (flag network egress / out-of-island writes / sibling-island reads in a session trace), `audit-contamination` (fail-loud unless the domain declares `ground_truth:`/`sensitive_pattern:`; flag reachable ground truth) |
 | `bootstrap/verify_filter_ml.py` | the ML analog of the Lean compile gate: for each logged experiment, re-run the oracle on the ARCHIVED artifact in a throwaway domain copy; admit the trace to SFT only if the independent score reproduces the claim within tol AND the trace is scan-clean. A poisoned oracle aborts the gate. |
-| `guard-preflight.sh` | 16-test suite (hash, scanner, contamination, gate reproduce/forge/trace-violation, loop halt) — $0 |
+| `guard-preflight.sh` | 25-test suite (hash, evasive tamper, scanner, contamination, gate reproduce/forge/trace-violation/fail-closed, loop halt) — $0 |
 
 Wiring:
 - `loop.sh` snapshots the oracle at start, `oracle-verify`s each cycle, and
   `scan-trace`s each session BEFORE collecting its result — any violation writes
   `GUARD_HALT` and stops the loop. `GUARD=0` disables (escape hatch).
+
+**Fail closed (2026-07-28).** The first cut of these guards halted only on exit
+3 ("provably tampered") and treated every other nonzero as advisory. That left
+the guard open to an adversary who does not leave the evidence in place:
+`rm .oracle_hash` made `oracle-verify` exit 1, which `loop.sh` ignored and
+`verify_filter_ml.py` downgraded to a warning — so deleting one file walked
+through both gates. Now:
+- a missing snapshot is a **violation** (exit 3), not a usage error;
+  `oracle-verify --allow-missing` is the explicit opt-out for pre-guard islands
+- both `loop.sh` call sites halt on **any** nonzero — integrity *unknown* is
+  treated the same as integrity *broken*
+- `verify_filter_ml.py` aborts on any nonzero (`--allow-unsnapshotted` to
+  override) and **rejects** experiments whose session trace is missing, instead
+  of defaulting them to "clean"
+- `oracle-snapshot` refuses to re-baseline an island carrying `GUARD_HALT`,
+  closing the `delete → tamper → relaunch` laundering path
+- the loop-owned `anchor` row is no longer an SFT candidate (no agent session
+  behind it, so it was being admitted with empty reasoning)
 - oracles (`island-mock`, `sae-island`) archive each scored artifact to
   `runs/<EXP>/` so the gate has something to independently re-verify.
 - `launch-islands.sh` runs an advisory contamination audit per island at launch.
@@ -145,7 +163,7 @@ closes the traces→SFT loop.
 Not yet done (tracked): Tier-2 blast-radius (dedicated unprivileged `rrma` user,
 no-network sessions) is nigel ops, not code. Harvesting rejected traces as a
 hack-classifier training set (the probe line) is v5.2-era.
-Status 2026-07-22: guard-preflight 16/16, loop-preflight 16/16 + island-preflight
+Status 2026-07-28: guard-preflight 25/25, loop-preflight 16/16 + island-preflight
 28/28 regressions green, twice from clean resets.
 
 ## Not yet wired (v5.2+)

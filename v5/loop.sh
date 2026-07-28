@@ -249,8 +249,11 @@ while true; do
         log "STOP: WALL_CAP (${WALL_CAP_H}h)"; break
     fi
     if [ "$GUARD" = "1" ]; then
+        # Fail CLOSED: halt on ANY nonzero, not just 3. A missing snapshot, an
+        # unreadable island, a broken guard — all mean "integrity unknown", and
+        # continuing would reward a submission we can no longer vouch for.
         bash "$GUARD_SH" oracle-verify "$ISL" >/dev/null 2>"$ISL/logs/guard.err"; GV=$?
-        [ "$GV" -eq 3 ] && { guard_halt "oracle tampered: $(tr '\n' ' ' < "$ISL/logs/guard.err")"; break; }
+        [ "$GV" -ne 0 ] && { guard_halt "oracle integrity unverifiable (rc=$GV): $(tr '\n' ' ' < "$ISL/logs/guard.err")"; break; }
     fi
     if stagnant; then board_distill || true; fi
 
@@ -262,8 +265,10 @@ while true; do
     # out-of-scope actions must not have its submission rewarded.
     SLOG="$ISL/logs/exp$(printf '%03d' "$EXP_N")_session.jsonl"
     if [ "$GUARD" = "1" ] && [ -s "$SLOG" ]; then
+        # Fail CLOSED here too: a scanner that errored out has not cleared this
+        # session, and an uncleared session must not have its result collected.
         bash "$GUARD_SH" scan-trace "$SLOG" "$ISL" >/dev/null 2>"$ISL/logs/guard.err"; GS=$?
-        [ "$GS" -eq 3 ] && { guard_halt "out-of-scope session actions: $(tr '\n' ' ' < "$ISL/logs/guard.err")"; break; }
+        [ "$GS" -ne 0 ] && { guard_halt "session trace not cleared (rc=$GS): $(tr '\n' ' ' < "$ISL/logs/guard.err")"; break; }
     fi
 
     if [ -f "$WS/TRAINING.pid" ] || [ -f "$WS/RESULT" ] || [ -f "$WS/RESULT_ERROR" ]; then
