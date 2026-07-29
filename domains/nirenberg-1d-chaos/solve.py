@@ -22,6 +22,11 @@ import numpy as np
 from scipy.integrate import solve_bvp
 import yaml
 
+# np.trapezoid is numpy>=2.0; np.trapz is the <2.0 name and is deprecated in >=2.0.
+# nigel runs numpy 1.26.4, this Mac runs 1.26.4 — bind once so the domain is
+# portable across both without editing call sites.
+_trapz = getattr(np, "trapezoid", None) or np.trapz
+
 
 def make_K(K_mode, K_amplitude, K_frequency):
     if K_mode == "cosine":
@@ -252,7 +257,7 @@ def main():
         residual_fine = compute_residual_spectral(u_fine, theta_fine, K_fn)
         residual = min(residual, residual_fine)
 
-        solution_norm = float(np.sqrt(np.trapezoid(u_fine**2, theta_fine) / (2 * np.pi)))
+        solution_norm = float(np.sqrt(_trapz(u_fine**2, theta_fine) / (2 * np.pi)))
         solution_mean = float(np.mean(u_fine))
 
         # Compute derivative for energy
@@ -261,7 +266,7 @@ def main():
         du_fine_hat = 1j * k_fine * u_fine_hat
         du_fine = np.fft.ifft(du_fine_hat).real
 
-        solution_energy = float(np.trapezoid(
+        solution_energy = float(_trapz(
             0.5 * du_fine**2 + 0.25 * u_fine**4 - 0.5 * u_fine**2, theta_fine
         ))
 
@@ -292,9 +297,9 @@ def main():
         theta_fine = np.linspace(0, 2 * np.pi, 500)
         u_vals = result.sol(theta_fine)[0]
 
-        solution_norm = float(np.sqrt(np.trapezoid(u_vals**2, theta_fine) / (2 * np.pi)))
+        solution_norm = float(np.sqrt(_trapz(u_vals**2, theta_fine) / (2 * np.pi)))
         solution_mean = float(np.mean(u_vals))
-        solution_energy = float(np.trapezoid(0.5 * result.sol(theta_fine)[1]**2 +
+        solution_energy = float(_trapz(0.5 * result.sol(theta_fine)[1]**2 +
                                               0.25 * u_vals**4 - 0.5 * u_vals**2, theta_fine))
 
         print(f"success: True")

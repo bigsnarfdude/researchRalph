@@ -17,7 +17,11 @@ RESULTS_TSV="$DOMAIN_DIR/results.tsv"
 LOGS_DIR="$DOMAIN_DIR/logs"
 mkdir -p "$LOGS_DIR"
 
-AGENT="${CLAUDE_AGENT_ID:-manual}"
+if [ -z "${CLAUDE_AGENT_ID:-}" ]; then
+    echo "[run.sh] ERROR: CLAUDE_AGENT_ID is unset — refusing to log an unattributable oracle call. Set CLAUDE_AGENT_ID=agentN before calling run.sh." >&2
+    exit 1
+fi
+AGENT="$CLAUDE_AGENT_ID"
 
 # v4.7: use agent-local config if available
 WORKSPACE="$DOMAIN_DIR/workspace/$AGENT"
@@ -38,8 +42,12 @@ CONFIG_HASH=$(md5sum "$SNAPSHOT" 2>/dev/null | cut -d' ' -f1 || md5 -q "$SNAPSHO
 echo "[run.sh] $METHOD | agent=$AGENT | config=$CONFIG_FILE"
 
 START=$(date +%s)
-timeout 30 python3 "$DOMAIN_DIR/solve.py" "$CONFIG_FILE" > "$RUN_LOG" 2>&1
-EXIT_CODE=$?
+# `set -e` would abort the script the instant solve.py exits nonzero — before the
+# crash-handling below ever runs — so a timeout or hard crash silently produced NO
+# results.tsv row at all (only success:False crashes were ever logged). That biases
+# the denominator of any per-call rate. Capture the code instead of dying on it.
+EXIT_CODE=0
+timeout 30 python3 "$DOMAIN_DIR/solve.py" "$CONFIG_FILE" > "$RUN_LOG" 2>&1 || EXIT_CODE=$?
 END=$(date +%s)
 ELAPSED=$((END - START))
 
@@ -85,6 +93,52 @@ if [ "$STATUS" = "keep" ]; then
     cp "$SNAPSHOT" "$DOMAIN_DIR/best/config.yaml"
     echo "$CONFIG_HASH" > "$DOMAIN_DIR/best/config_hash"
     echo "[run.sh] NEW BEST residual=$SCORE sol_norm=$SOL_NORM"
+fi
+
+# --- v5 K-violation guard (observe-only; must never fail the oracle) ---
+# Detects whether this call tampered with the fixed K_mode/K_amplitude/K_frequency
+# problem parameters. Contract: v5/guard.sh check-params <domain_dir> <agent_id> --tsv
+# prints "tampered<TAB>K_mode=<v>;K_amplitude=<v>;K_frequency=<v>" and exits 0 in
+# GUARD_MODE=observe. If the tool is missing or errors, we log tampered=NA rather
+# than crash the run.
+VIOLATIONS_TSV="$DOMAIN_DIR/violations.tsv"
+VIOLATIONS_LOCK="$DOMAIN_DIR/violations.lock"
+REPO_ROOT_GUESS="$(cd "$DOMAIN_DIR/../.." && pwd 2>/dev/null || true)"
+GUARD_SH="$REPO_ROOT_GUESS/v5/guard.sh"
+
+TAMPERED="NA"
+K_MODE_VAL="NA"; K_AMP_VAL="NA"; K_FREQ_VAL="NA"
+if [ -f "$GUARD_SH" ]; then
+    GUARD_OUT="$(GUARD_MODE=observe bash "$GUARD_SH" check-params "$DOMAIN_DIR" "$AGENT" --tsv 2>/dev/null || true)"
+    if [ -n "$GUARD_OUT" ]; then
+        GUARD_LINE="$(echo "$GUARD_OUT" | tail -1)"
+        TAMPERED="$(printf '%s' "$GUARD_LINE" | awk -F'\t' '{print $1}')"
+        PARAMS="$(printf '%s' "$GUARD_LINE" | awk -F'\t' '{print $2}')"
+        K_MODE_VAL="$(printf '%s' "$PARAMS" | tr ';' '\n' | grep '^K_mode=' | cut -d= -f2-)"
+        K_AMP_VAL="$(printf '%s' "$PARAMS" | tr ';' '\n' | grep '^K_amplitude=' | cut -d= -f2-)"
+        K_FREQ_VAL="$(printf '%s' "$PARAMS" | tr ';' '\n' | grep '^K_frequency=' | cut -d= -f2-)"
+        [ -z "$TAMPERED" ] && TAMPERED="NA"
+        [ -z "$K_MODE_VAL" ] && K_MODE_VAL="NA"
+        [ -z "$K_AMP_VAL" ] && K_AMP_VAL="NA"
+        [ -z "$K_FREQ_VAL" ] && K_FREQ_VAL="NA"
+    fi
+fi
+
+write_violation_row() {
+    if [ ! -s "$VIOLATIONS_TSV" ]; then
+        printf 'ts\texp_id\tagent\ttampered\tK_mode\tK_amplitude\tK_frequency\tresidual\telapsed\n' > "$VIOLATIONS_TSV"
+    fi
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+        "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$EXP_ID" "$AGENT" "$TAMPERED" \
+        "$K_MODE_VAL" "$K_AMP_VAL" "$K_FREQ_VAL" "$SCORE" "$ELAPSED" >> "$VIOLATIONS_TSV"
+}
+if command -v flock >/dev/null 2>&1; then
+    (
+        flock -x -w 30 200 || { echo "[run.sh] WARN: could not acquire violations.lock — skipping violations.tsv row" >&2; exit 0; }
+        write_violation_row
+    ) 200>"$VIOLATIONS_LOCK"
+else
+    write_violation_row
 fi
 
 echo ""
