@@ -75,6 +75,7 @@ INFLIGHT=()
 INFLIGHT_START=()
 COMPLETED=()
 TIMED_OUT=()
+FAILED=()
 
 is_alive() {  # $1 = session name substring; true if screen knows about it
     screen -ls 2>/dev/null | grep -q "[.]${1}[[:space:]]"
@@ -124,8 +125,30 @@ while [ "${#PENDING[@]}" -gt 0 ] || [ "${#INFLIGHT[@]}" -gt 0 ]; do
         is_alive "$S1" && ALIVE=1
 
         if [ "$ALIVE" -eq 0 ]; then
-            COMPLETED+=("$CELL_DIR")
-            log "DONE $CELL_NAME elapsed_s=$ELAPSED"
+            # Screens gone is NOT the same as work done. The 2026-07-29 sweep
+            # reported "40 completed, 0 timed out" while 36 cells had died on an
+            # API 429 after ~1 turn — a dead worker and a finished worker look
+            # identical from the outside. Classify on evidence instead: oracle
+            # rows produced, plus the session's own terminal_reason.
+            ROWS=$(( $(wc -l < "$CELL_DIR/results.tsv" 2>/dev/null || echo 1) - 1 ))
+            APIERR=""
+            for J in "$CELL_DIR"/logs/agent0.jsonl "$CELL_DIR"/logs/agent1.jsonl; do
+                [ -f "$J" ] || continue
+                if tail -c 4000 "$J" 2>/dev/null | grep -q '"terminal_reason":"api_error"'; then
+                    APIERR="$(tail -c 4000 "$J" | grep -o '"api_error_status":[0-9]*' | tail -1)"
+                    break
+                fi
+            done
+            if [ -n "$APIERR" ]; then
+                FAILED+=("$CELL_DIR")
+                log "FAILED $CELL_NAME elapsed_s=$ELAPSED rows=$ROWS reason=api_error ${APIERR:-} — worker died, cell is NOT complete"
+            elif [ "$ROWS" -le 0 ]; then
+                FAILED+=("$CELL_DIR")
+                log "FAILED $CELL_NAME elapsed_s=$ELAPSED rows=0 — workers exited without logging a single oracle call"
+            else
+                COMPLETED+=("$CELL_DIR")
+                log "DONE $CELL_NAME elapsed_s=$ELAPSED rows=$ROWS"
+            fi
         elif [ "$ELAPSED" -ge $(( WALL_CAP_MIN * 60 )) ]; then
             screen -S "$S0" -X quit 2>/dev/null
             screen -S "$S1" -X quit 2>/dev/null
@@ -153,7 +176,7 @@ done
 SWEEP_END_EPOCH=$(date +%s)
 TOTAL_WALL_S=$(( SWEEP_END_EPOCH - SWEEP_START_EPOCH ))
 
-log "SWEEP_END completed=${#COMPLETED[@]} timed_out=${#TIMED_OUT[@]} total_wall_s=$TOTAL_WALL_S"
+log "SWEEP_END completed=${#COMPLETED[@]} timed_out=${#TIMED_OUT[@]} failed=${#FAILED[@]} total_wall_s=$TOTAL_WALL_S"
 
 echo ""
 echo "=== K-VIOLATION SWEEP SUMMARY ==="
@@ -161,8 +184,13 @@ echo "Prefix:        $PREFIX"
 echo "Cells total:   ${#ALL_CELLS[@]}"
 echo "Completed:     ${#COMPLETED[@]}"
 echo "Timed out:     ${#TIMED_OUT[@]}"
+echo "FAILED:        ${#FAILED[@]}"
 if [ "${#TIMED_OUT[@]}" -gt 0 ]; then
     for c in "${TIMED_OUT[@]}"; do echo "  - $(basename "$c")"; done
+fi
+if [ "${#FAILED[@]}" -gt 0 ]; then
+    echo "  failed cells (re-run these; they produced no usable data):"
+    for c in "${FAILED[@]}"; do echo "  - $(basename "$c")"; done
 fi
 echo "Total wall:    ${TOTAL_WALL_S}s"
 echo "Log:           $LOG_FILE"
