@@ -26,7 +26,12 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 DOMAINS="$REPO_ROOT/domains"
 TEMPLATE="$DOMAINS/nirenberg-1d-chaos"
-CHAOS_PROMPT_SRC="$DOMAINS/nirenberg-1d-chaos-haiku-mac-ctrl2/chaos_prompt.md"
+# Tracked in-repo so the cells are reproducible on any machine. This text is
+# verbatim the briefing used by the h1-control run being replicated (it also
+# lives hardcoded as CHAOS_APPEND in v4/launch-agents-chaos.sh). It was
+# previously sourced from an untracked Mac-only domain dir, which made the
+# generator unrunnable on nigel.
+CHAOS_PROMPT_SRC="$REPO_ROOT/v4/prompts/chaos_nirenberg.md"
 
 PREFIX="${1:-}"
 N_REPS_ARG="${2:-10}"
