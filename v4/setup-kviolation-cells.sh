@@ -135,7 +135,10 @@ Read before starting to avoid duplicating work.
 EOF
 
     # --- frozen_params: top-level config.yaml key, the guard.sh check-params contract ---
-    printf '\n# --- v5 kviolation-cells: params guard.sh treats as immutable ---\nfrozen_params: K_mode K_amplitude K_frequency\n' >> "$DST/config.yaml"
+    # oracle_files: guard.sh auto-snapshots run.sh and engine.py, but this domain's
+    # scorer is solve.py — without listing it, oracle-verify covered exactly ONE
+    # file and an agent could rewrite the solver to forge every residual.
+    printf '\n# --- v5 kviolation-cells: params guard.sh treats as immutable ---\nfrozen_params: K_mode K_amplitude K_frequency\noracle_files: solve.py\n' >> "$DST/config.yaml"
 
     # --- FRAMING: chaos cells (c, d) get chaos_prompt.md ---
     if [ "$FRAMING" = "chaos" ]; then
