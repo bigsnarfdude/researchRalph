@@ -12,6 +12,29 @@ result.json
 *.pyc
 __pycache__/
 
+# Per-run experiment output inside domains/. The harness regenerates all of it.
+# Domain scaffolding stays tracked — run.sh, program.md, program_static.md,
+# config.yaml, results.tsv, blackboard.md, and the DESIRES/MISTAKES/LEARNINGS
+# telemetry are the experiment record and belong in git.
+#
+# NOTE: ~4.8k files under these paths were committed before this rule existed and
+# remain tracked; .gitignore does not untrack them. This stops the pile growing.
+# Untracking the historical ones is a separate, deliberate decision.
+# ** rather than * — some domains nest runs one level deeper
+# (e.g. gemma4-april3/experiments/<run>/workspace/).
+domains/**/logs/
+domains/**/workspace/
+domains/**/.agent_prompts/
+domains/**/queue/
+domains/**/active/
+domains/**/done/
+**/.nudge_data.json
+
+# Ad-hoc analysis output at the repo root. The scripts that produce it are
+# trackable; the regenerable CSV/JSON they emit is not.
+gemma3_v_paradox_results*.csv
+gemma3_v_paradox_results*.json
+
 # Editor
 .DS_Store
 .vscode/
