@@ -9,7 +9,9 @@
 DOMAIN_DIR="${1:-.}"
 
 # Ensure claude is on PATH
-source "$(cd "$(dirname "$0")" && pwd)/env.sh"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPT_DIR/env.sh"
+source "$SCRIPT_DIR/meta_artifacts.sh"
 
 if [ ! -f "$DOMAIN_DIR/blackboard.md" ]; then
     echo "Error: no blackboard.md found in $DOMAIN_DIR"
@@ -83,26 +85,16 @@ if [ -f "$DOMAIN_DIR/meta-blackboard.md" ]; then
     echo "" >> "$PROMPT_FILE"
 fi
 
-echo "### blackboard.md" >> "$PROMPT_FILE"
-cat "$DOMAIN_DIR/blackboard.md" >> "$PROMPT_FILE"
-echo "" >> "$PROMPT_FILE"
+# v4.10: artifact assembly + validated write moved to meta_artifacts.sh, shared
+# with meta-loop.sh. Previously this redirected straight onto meta-blackboard.md,
+# so a failed model call destroyed the only cross-generation memory the run had.
+append_domain_artifacts "$DOMAIN_DIR" "$PROMPT_FILE"
 
-echo "### results.tsv" >> "$PROMPT_FILE"
-cat "$DOMAIN_DIR/results.tsv" >> "$PROMPT_FILE"
-echo "" >> "$PROMPT_FILE"
-
-echo "### best/config.yaml" >> "$PROMPT_FILE"
-cat "$DOMAIN_DIR/best/config.yaml" >> "$PROMPT_FILE"
-echo "" >> "$PROMPT_FILE"
-
-if [ -f "$DOMAIN_DIR/best/sae.py" ]; then
-    echo "### best/sae.py" >> "$PROMPT_FILE"
-    cat "$DOMAIN_DIR/best/sae.py" >> "$PROMPT_FILE"
-fi
-
-claude -p "$(cat "$PROMPT_FILE")" --dangerously-skip-permissions --max-turns 3 > "$DOMAIN_DIR/meta-blackboard.md"
+# Pipe via stdin, not argv — large blackboards + results.tsv blow past ARG_MAX.
+TMP_OUT="$DOMAIN_DIR/meta-blackboard.md.tmp.$$"
+claude --dangerously-skip-permissions --max-turns 3 < "$PROMPT_FILE" > "$TMP_OUT"
+CLAUDE_EXIT=$?
 
 rm -f "$PROMPT_FILE"
 
-echo "Generated: $DOMAIN_DIR/meta-blackboard.md"
-echo "Lines: $(wc -l < "$DOMAIN_DIR/meta-blackboard.md")"
+commit_meta_blackboard "$DOMAIN_DIR" "$TMP_OUT" "$CLAUDE_EXIT"

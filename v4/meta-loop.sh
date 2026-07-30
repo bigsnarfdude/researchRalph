@@ -21,7 +21,9 @@ DOMAIN_DIR="${1:-.}"
 INTERVAL="${2:-30}"  # minutes between sleep cycles
 
 # Ensure claude is on PATH
-source "$(cd "$(dirname "$0")" && pwd)/env.sh"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPT_DIR/env.sh"
+source "$SCRIPT_DIR/meta_artifacts.sh"
 
 DOMAIN_DIR="$(cd "$DOMAIN_DIR" && pwd)"
 
@@ -145,24 +147,20 @@ HEADER
         echo "" >> "$PROMPT_FILE"
     fi
 
-    echo "### best/config.yaml" >> "$PROMPT_FILE"
-    cat "$DOMAIN_DIR/best/config.yaml" >> "$PROMPT_FILE"
-    echo "" >> "$PROMPT_FILE"
-
-    if [ -f "$DOMAIN_DIR/best/sae.py" ]; then
-        echo "### best/sae.py" >> "$PROMPT_FILE"
-        cat "$DOMAIN_DIR/best/sae.py" >> "$PROMPT_FILE"
-        echo "" >> "$PROMPT_FILE"
-    fi
+    # v4.10: shared with generate-meta-blackboard.sh. Guards every read — best/
+    # shape is domain-specific and the old hardcoded config.yaml + sae.py pair
+    # silently skipped champions like best/train.py.
+    append_best_artifacts "$DOMAIN_DIR" "$PROMPT_FILE"
 
     # Run through Claude — pipe via stdin to avoid ARG_MAX limits on large prompts
-    claude --dangerously-skip-permissions --max-turns 3 < "$PROMPT_FILE" > "$DOMAIN_DIR/meta-blackboard.md.tmp"
+    TMP_OUT="$DOMAIN_DIR/meta-blackboard.md.tmp.$$"
+    claude --dangerously-skip-permissions --max-turns 3 < "$PROMPT_FILE" > "$TMP_OUT"
+    CLAUDE_EXIT=$?
 
-    # Atomic replace
-    mv "$DOMAIN_DIR/meta-blackboard.md.tmp" "$DOMAIN_DIR/meta-blackboard.md"
+    # Commit only if the refresh produced a usable cheat sheet; a failed cycle
+    # must not destroy the previous one.
+    commit_meta_blackboard "$DOMAIN_DIR" "$TMP_OUT" "$CLAUDE_EXIT" || true
 
-    LINES=$(wc -l < "$DOMAIN_DIR/meta-blackboard.md" | tr -d ' ')
-    echo "[meta] Wrote meta-blackboard.md ($LINES lines)"
     echo "[meta] Sleeping ${INTERVAL}m until next cycle..."
     echo ""
 
