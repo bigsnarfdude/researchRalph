@@ -20,6 +20,16 @@ __pycache__/
 # Conductor state
 .conductor/
 
+# v5 guard / loop transient state (never commit run scratch)
+**/GUARD_HALT
+**/.oracle_hash
+**/.mock_calls
+**/.distill_at_rows
+**/runs/
+v5/cost_ledger.tsv
+v5/.test_ledger.tsv
+v5/.live_ledger.tsv
+
 # Agent scratch (created at runtime in worktrees)
 memory/
 scratch/

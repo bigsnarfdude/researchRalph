@@ -51,6 +51,13 @@ log_row() {  # $1=score $2=elapsed_seconds
     chmod 644 "$DIR/results.tsv"
     printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\n" "$EXP" "$1" "$2" "$STATUS" "$DESC" "$AGENT" "$NAME" >> "$DIR/results.tsv"
     chmod 444 "$DIR/results.tsv"
+    # archive the scored artifact (non-smoke only) for the SFT ingestion gate
+    if [ -z "${SAE_SMOKE:-}" ]; then
+        RUN_DIR="$DIR/runs/$EXP"; mkdir -p "$RUN_DIR"
+        cp "$WS/sae.py" "$RUN_DIR/sae.py" 2>/dev/null
+        cp "$WS/train_config.yaml" "$RUN_DIR/train_config.yaml" 2>/dev/null
+        echo "$1" > "$RUN_DIR/claimed_score"
+    fi
     echo "SCORE: $1"
     echo "ELAPSED: ${2}s"
     echo "LOGGED: $EXP -> results.tsv"

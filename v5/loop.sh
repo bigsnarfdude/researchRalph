@@ -59,6 +59,11 @@ mkdir -p "$ISL/logs" "$ISL/.agent_prompts" "$WS"
 
 log() { echo "[loop $(basename "$ISL") $(date '+%H:%M:%S')] $*"; }
 
+# --- guards (reward-hack / escape containment). GUARD=0 disables (escape hatch).
+GUARD="${GUARD:-1}"
+GUARD_SH="$SCRIPT_DIR/guard.sh"
+guard_halt() { log "STOP: GUARD — $1"; echo "$(date '+%F %T')  $1" > "$ISL/GUARD_HALT"; }
+
 EDITABLE="$(grep '^editable:' "$ISL/config.yaml" 2>/dev/null | awk '{print $2}')"
 EDITABLE="${EDITABLE:-sae.py}"
 [ -f "$WS/$EDITABLE" ] || { [ -f "$ISL/$EDITABLE" ] && cp "$ISL/$EDITABLE" "$WS/$EDITABLE"; }
@@ -214,6 +219,10 @@ run_session() {  # $1=exp_n $2=last_outcome  -> spawns one short session
 # ---------------------------------------------------------------- main
 log "start: island=$(basename "$ISL") model=$MODEL max_exps=$MAX_EXPS cost_cap=\$$COST_CAP stag_n=$STAG_N"
 
+if [ "$GUARD" = "1" ]; then
+    bash "$GUARD_SH" oracle-snapshot "$ISL" 2>&1 | sed 's/^/[loop] /'
+fi
+
 if [ "$ANCHOR" = "1" ] && [ "$(data_rows)" -eq 0 ]; then
     log "anchor: scoring untouched seed as first row"
     ( cd "$ISL" && CLAUDE_AGENT_ID=$AGENT ORACLE_WAIT=5 bash run.sh anchor "untouched seed rerun (loop-owned anchor)" ) > "$ISL/logs/anchor.out" 2>&1
@@ -239,11 +248,28 @@ while true; do
     if [ $(( $(date +%s) - T_START )) -ge $(( WALL_CAP_H * 3600 )) ]; then
         log "STOP: WALL_CAP (${WALL_CAP_H}h)"; break
     fi
+    if [ "$GUARD" = "1" ]; then
+        # Fail CLOSED: halt on ANY nonzero, not just 3. A missing snapshot, an
+        # unreadable island, a broken guard — all mean "integrity unknown", and
+        # continuing would reward a submission we can no longer vouch for.
+        bash "$GUARD_SH" oracle-verify "$ISL" >/dev/null 2>"$ISL/logs/guard.err"; GV=$?
+        [ "$GV" -ne 0 ] && { guard_halt "oracle integrity unverifiable (rc=$GV): $(tr '\n' ' ' < "$ISL/logs/guard.err")"; break; }
+    fi
     if stagnant; then board_distill || true; fi
 
     # ---- one experiment cycle
     PREV_ROWS=$ROWS
     run_session "$EXP_N" "$LAST_OUTCOME"; SRC=$?
+
+    # scan the session trace BEFORE collecting its result — a session that took
+    # out-of-scope actions must not have its submission rewarded.
+    SLOG="$ISL/logs/exp$(printf '%03d' "$EXP_N")_session.jsonl"
+    if [ "$GUARD" = "1" ] && [ -s "$SLOG" ]; then
+        # Fail CLOSED here too: a scanner that errored out has not cleared this
+        # session, and an uncleared session must not have its result collected.
+        bash "$GUARD_SH" scan-trace "$SLOG" "$ISL" >/dev/null 2>"$ISL/logs/guard.err"; GS=$?
+        [ "$GS" -ne 0 ] && { guard_halt "session trace not cleared (rc=$GS): $(tr '\n' ' ' < "$ISL/logs/guard.err")"; break; }
+    fi
 
     if [ -f "$WS/TRAINING.pid" ] || [ -f "$WS/RESULT" ] || [ -f "$WS/RESULT_ERROR" ]; then
         wait_oracle || true
