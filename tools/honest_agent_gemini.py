@@ -214,7 +214,7 @@ def make_client() -> genai.Client:
     return genai.Client(api_key=api_key)
 
 
-def tally(response):
+def tally(response, event_id=None):
     """Accumulate token usage so the Gemini path can be costed like the
     Claude path (v5/loop.sh cost ledger). Without this there is no
     $/experiment number for a Gemini run at all."""
@@ -232,7 +232,7 @@ def tally(response):
         # Cached tokens still count against TPM, so reconcile on the full
         # prompt size, not just the billable remainder.
         if LIMITER:
-            LIMITER.record(pin + out + thoughts)
+            LIMITER.record(event_id, pin + out + thoughts)
     return response
 
 
@@ -250,14 +250,13 @@ def api_call(client, model, contents, system_instruction, max_retries=8):
         automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
     )
     for attempt in range(max_retries):
-        if LIMITER:
-            LIMITER.acquire(log=log)
+        event_id = LIMITER.acquire(log=log) if LIMITER else None
         try:
             return tally(client.models.generate_content(
                 model=model,
                 contents=contents,
                 config=config,
-            ))
+            ), event_id)
         except Exception as e:
             err = str(e)
             if "429" in err or "RESOURCE_EXHAUSTED" in err:
@@ -369,11 +368,18 @@ def build_initial_message(domain_dir: Path, agent_id: int) -> str:
         if content:
             parts.append(f"## {fname}\n{content}")
             break
-    for fname in ["stoplight.md", "blackboard.md"]:
-        content = read_file_safe(domain_dir / fname, 2000)
-        if content:
-            parts.append(f"## {fname}\n{content}")
-            break
+    # Stoplight AND blackboard tail — complements, not substitutes. The old
+    # first-hit break excluded the board entirely whenever a stoplight
+    # existed, and the per-turn context reset makes that acute: the board is
+    # now the ONLY cross-agent channel an agent sees each turn. Spending
+    # ~1k tokens/turn on the coordination substrate is the point of having
+    # TPM headroom. read_file_safe keeps the tail = most recent entries.
+    stoplight = read_file_safe(domain_dir / "stoplight.md", 2000)
+    if stoplight:
+        parts.append(f"## stoplight.md\n{stoplight}")
+    board = read_file_safe(domain_dir / "blackboard.md", 4000)
+    if board:
+        parts.append(f"## blackboard.md (most recent entries)\n{board}")
     recent = read_file_safe(domain_dir / "recent_experiments.md", 1500)
     if recent:
         parts.append(f"## recent_experiments.md\n{recent}")
@@ -391,19 +397,6 @@ def build_initial_message(domain_dir: Path, agent_id: int) -> str:
 
 You are agent{agent_id}. Your workspace is workspace/agent{agent_id}/.
 Start experimenting. Run as many experiments as you can. Give each run a descriptive name and description."""
-
-
-def build_refresh_message(domain_dir: Path) -> str:
-    parts = []
-    for fname in ["stoplight.md", "blackboard.md"]:
-        content = read_file_safe(domain_dir / fname, 2000)
-        if content:
-            parts.append(f"## {fname} (refreshed)\n{content}")
-            break
-    recent = read_file_safe(domain_dir / "recent_experiments.md", 1500)
-    if recent:
-        parts.append(f"## recent_experiments.md (refreshed)\n{recent}")
-    return "\n\n".join(parts) + "\n\nContext refreshed. Keep running experiments."
 
 
 # ---------------------------------------------------------------------------
@@ -531,9 +524,11 @@ def run_agent(domain_dir: Path, agent_id: int, max_turns: int):
         ]
         if turn > 0:
             contents.append(types.Content(role="user", parts=[
-                types.Part(text="Continue from the state above. Run the NEXT "
-                                "experiment — a new one, not a repeat of what "
-                                "recent_experiments.md already shows.")
+                types.Part(text="Continue from the state above. Check the "
+                                "blackboard section for what other agents have "
+                                "found, then run the NEXT experiment — a new "
+                                "one, not a repeat of what recent_experiments.md "
+                                "already shows.")
             ]))
 
         try:
@@ -542,6 +537,11 @@ def run_agent(domain_dir: Path, agent_id: int, max_turns: int):
             )
             log(f"turn {turn+1} done ({n_calls} tool calls) — {usage_report()}")
 
+        except gemini_quota.QuotaExhausted as e:
+            # Daily budget gone — every retry would fail identically. Stop
+            # loudly instead of spinning through the remaining turns.
+            log(f"FATAL: {e} — aborting run at turn {turn+1}/{max_turns}")
+            break
         except Exception as e:
             log(f"ERROR turn {turn+1}: {e}")
             time.sleep(15)

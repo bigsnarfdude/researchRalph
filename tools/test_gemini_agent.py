@@ -111,6 +111,20 @@ def t1_domain_wiring(domain: Path):
         ok(f"prompt names the correct editable file ({editable})")
     else:
         bad(f"prompt does not mention {editable}")
+
+    # Regression check: a stoplight.md must not shadow the blackboard. The
+    # board is the only cross-agent channel under per-turn context reset;
+    # the old first-hit break silently dropped it on every real domain.
+    marker = "BOARD-MARKER-7Q4"
+    with open(domain / "blackboard.md", "a") as f:
+        f.write(f"\n{marker}\n")
+    (domain / "stoplight.md").write_text("# stoplight\nstate: probe\n")
+    msg = H.build_initial_message(domain, 0)
+    (domain / "stoplight.md").unlink()
+    if marker in msg and "## stoplight.md" in msg:
+        ok("blackboard tail AND stoplight both reach the agent context")
+    else:
+        bad("blackboard is shadowed by stoplight in the agent context")
     return editable
 
 
@@ -162,11 +176,22 @@ def t2_guards(domain: Path, editable: str):
     else:
         bad("blocked rerun still logged a row to results.tsv")
 
-    # Guard 3: a real edit is allowed through.
+    # Guard 3: a real edit is allowed through. Perturb the first numeric
+    # parameter — the first line is not guaranteed to be one.
     text = target.read_text()
-    key, _, value = text.splitlines()[0].partition(":")
-    target.write_text(text.replace(text.splitlines()[0],
-                                   f"{key}: {float(value) + 0.01:.4f}", 1))
+    for line in text.splitlines():
+        key, sep, value = line.partition(":")
+        if not sep:
+            continue
+        try:
+            new_line = f"{key}: {float(value) + 0.01:.4f}"
+        except ValueError:
+            continue
+        target.write_text(text.replace(line, new_line, 1))
+        break
+    else:
+        bad(f"no numeric parameter found to perturb in {editable}")
+        return
     out = H.run_bash("bash run.sh guard_changed 'changed one parameter'")
     if "SCORE:" in out and data_rows(domain) == rows + 1:
         ok("changed editable file is allowed through and logs a row")

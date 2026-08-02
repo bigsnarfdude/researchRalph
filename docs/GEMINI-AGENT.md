@@ -63,6 +63,14 @@ domain files **are** the memory — `blackboard.md`, `stoplight.md`,
 `recent_experiments.md` are re-read every turn. That is the whole point of the
 v4.6 context split; the Gemini loop just never applied it.
 
+One consequence the reset makes acute: the board is the **only** cross-agent
+channel an agent sees each turn, so the context builder includes both the
+stoplight (compressed state) *and* the blackboard tail (last 4,000 chars =
+most recent entries). They are complements, not substitutes — an earlier
+first-hit `break` excluded the board entirely whenever a stoplight existed,
+which on real domains meant 0% of a 100k-char board reached the agent. The
+mechanics suite has a regression check for this.
+
 Before the fix, per-call input grew ~10k tokens/turn, linearly:
 
 | turn | avg input/call |

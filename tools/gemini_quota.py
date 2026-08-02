@@ -38,6 +38,10 @@ DEFAULT_SAFETY = 0.80
 BOOTSTRAP_TOKENS = 8_000
 
 
+class QuotaExhausted(RuntimeError):
+    """Daily request quota is gone — retrying cannot help; abort the run."""
+
+
 class QuotaLimiter:
     def __init__(self, state_path=None, rpm=None, tpm=None, rpd=None, safety=None):
         s = float(os.environ.get("GEMINI_QUOTA_SAFETY", safety or DEFAULT_SAFETY))
@@ -47,6 +51,7 @@ class QuotaLimiter:
         self.path = Path(state_path or os.environ.get(
             "GEMINI_QUOTA_STATE", "/tmp/rrma_gemini_quota.json"))
         self._recent = []  # this process's observed tokens/call, for estimation
+        self._seq = 0      # per-process event counter, for reconciliation ids
 
     # -- shared state -------------------------------------------------------
 
@@ -79,9 +84,17 @@ class QuotaLimiter:
     # -- public API ---------------------------------------------------------
 
     def acquire(self, log=None):
-        """Block until a call fits inside RPM, TPM and RPD. Returns waited secs."""
+        """Block until a call fits inside RPM, TPM and RPD.
+
+        Returns an event id to pass back to record(). Raises QuotaExhausted
+        when the daily budget is gone — that is not retryable within the run.
+        """
         est = self._estimate()
-        waited = 0.0
+        self._seq += 1
+        # pid alone is not unique: two limiter instances in one process
+        # (e.g. tests) would collide, and record() would reconcile the
+        # wrong slot — the exact bug this id exists to prevent.
+        event_id = f"{os.getpid()}-{id(self):x}-{self._seq}"
         while True:
             self.path.touch(exist_ok=True)
             with open(self.path, "r+") as fh:
@@ -92,7 +105,7 @@ class QuotaLimiter:
                     st["events"] = [e for e in st["events"] if now - e[0] < 60.0]
 
                     if st["day_count"] >= self.rpd:
-                        raise RuntimeError(
+                        raise QuotaExhausted(
                             f"daily request quota exhausted "
                             f"({st['day_count']}/{self.rpd} incl. safety margin)")
 
@@ -102,10 +115,10 @@ class QuotaLimiter:
                     over_tpm = tokens + est > self.tpm
 
                     if not (over_rpm or over_tpm):
-                        st["events"].append([now, est])
+                        st["events"].append([now, est, event_id])
                         st["day_count"] += 1
                         self._save(fh, st)
-                        return waited
+                        return event_id
 
                     oldest = min(e[0] for e in st["events"])
                     sleep_for = max(0.05, 60.0 - (now - oldest))
@@ -117,25 +130,27 @@ class QuotaLimiter:
                 log(f"  quota: {reason} ceiling reached "
                     f"({calls} calls / {tokens:,} tok in window), waiting {sleep_for:.1f}s")
             time.sleep(sleep_for)
-            waited += sleep_for
 
-    def record(self, actual_tokens):
-        """Reconcile the reservation against what the call actually cost."""
-        if not actual_tokens:
+    def record(self, event_id, actual_tokens):
+        """Reconcile OUR reservation against what the call actually cost.
+
+        Looks the event up by id — under concurrency the last event in the
+        window is frequently a sibling agent's reservation, and blindly
+        writing events[-1] would corrupt their slot.
+        """
+        if not actual_tokens or event_id is None:
             return
         self._recent.append(actual_tokens)
-        est = self._estimate()
-        delta = actual_tokens - est
-        if abs(delta) < 1:
-            return
         self.path.touch(exist_ok=True)
         with open(self.path, "r+") as fh:
             fcntl.flock(fh, fcntl.LOCK_EX)
             try:
                 st = self._load(fh)
-                if st["events"]:
-                    st["events"][-1][1] = actual_tokens
-                    self._save(fh, st)
+                for e in reversed(st["events"]):
+                    if len(e) > 2 and e[2] == event_id:
+                        e[1] = actual_tokens
+                        self._save(fh, st)
+                        break
             finally:
                 fcntl.flock(fh, fcntl.LOCK_UN)
 
