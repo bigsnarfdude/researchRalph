@@ -27,6 +27,9 @@ from pathlib import Path
 from google import genai
 from google.genai import types
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gemini_quota
+
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
@@ -34,11 +37,15 @@ from google.genai import types
 DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemma-4-26b-a4b-it")
 MAX_TOOL_CALLS_PER_TURN = 30   # hard cap before forcing a nudge
 _last_config_hash: str = ""
-RPM_LIMIT = 10                 # stay under 15 RPM hard cap
-MIN_CALL_INTERVAL = 60.0 / RPM_LIMIT
-_last_call_time = 0.0
+# Quota is enforced by gemini_quota.QuotaLimiter against Tier-1 RPM/TPM/RPD,
+# shared across concurrent agents. --rpm overrides the request ceiling only;
+# TPM is normally what binds.
+LIMITER = None                 # set in main()
 DOMAIN_DIR: Path = None        # set in run_agent()
 AGENT_ID: int = 0
+MODEL: str = DEFAULT_MODEL     # set in run_agent()
+EDITABLE: str = "config.yaml"  # domain's editable file, from config.yaml `editable:`
+USAGE = {"calls": 0, "in": 0, "out": 0, "cached": 0, "thoughts": 0, "peak_in": 0}
 
 
 # ---------------------------------------------------------------------------
@@ -73,7 +80,7 @@ def write_file(path: str, content: str) -> str:
 
 
 def _config_hash() -> str:
-    cfg = DOMAIN_DIR / "workspace" / f"agent{AGENT_ID}" / "config.yaml"
+    cfg = DOMAIN_DIR / "workspace" / f"agent{AGENT_ID}" / EDITABLE
     try:
         return hashlib.md5(cfg.read_bytes()).hexdigest()
     except FileNotFoundError:
@@ -84,10 +91,17 @@ def run_bash(command: str) -> str:
     global _last_config_hash
     if "run.sh" in command:
         current_hash = _config_hash()
-        if current_hash and current_hash == _last_config_hash:
+        if not current_hash:
+            # Fail loud: a missing editable file means the no-repeat guard is
+            # blind, and run.sh would score a workspace that does not exist.
             return (
-                "BLOCKED: config.yaml has not changed since the last run.sh call. "
-                f"Edit workspace/agent{AGENT_ID}/config.yaml and change at least one "
+                f"BLOCKED: workspace/agent{AGENT_ID}/{EDITABLE} does not exist. "
+                f"Create it before running run.sh."
+            )
+        if current_hash == _last_config_hash:
+            return (
+                f"BLOCKED: {EDITABLE} has not changed since the last run.sh call. "
+                f"Edit workspace/agent{AGENT_ID}/{EDITABLE} and change at least one "
                 "parameter before running another experiment."
             )
         _last_config_hash = current_hash
@@ -200,25 +214,50 @@ def make_client() -> genai.Client:
     return genai.Client(api_key=api_key)
 
 
+def tally(response):
+    """Accumulate token usage so the Gemini path can be costed like the
+    Claude path (v5/loop.sh cost ledger). Without this there is no
+    $/experiment number for a Gemini run at all."""
+    u = getattr(response, "usage_metadata", None)
+    if u:
+        pin = getattr(u, "prompt_token_count", 0) or 0
+        out = getattr(u, "candidates_token_count", 0) or 0
+        thoughts = getattr(u, "thoughts_token_count", 0) or 0
+        USAGE["calls"] += 1
+        USAGE["in"] += pin
+        USAGE["peak_in"] = max(USAGE["peak_in"], pin)
+        USAGE["out"] += out
+        USAGE["cached"] += getattr(u, "cached_content_token_count", 0) or 0
+        USAGE["thoughts"] += thoughts
+        # Cached tokens still count against TPM, so reconcile on the full
+        # prompt size, not just the billable remainder.
+        if LIMITER:
+            LIMITER.record(pin + out + thoughts)
+    return response
+
+
+def usage_report() -> str:
+    return (f"tokens: calls={USAGE['calls']} in={USAGE['in']:,} "
+            f"out={USAGE['out']:,} cached={USAGE['cached']:,} "
+            f"thoughts={USAGE['thoughts']:,} peak_in={USAGE['peak_in']:,}")
+
+
 def api_call(client, model, contents, system_instruction, max_retries=8):
-    """Rate-limited API call with exponential backoff on 429."""
-    global _last_call_time
+    """Quota-limited API call with exponential backoff on 429."""
     config = types.GenerateContentConfig(
         tools=[TOOL_DECLARATIONS],
         system_instruction=system_instruction,
         automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
     )
     for attempt in range(max_retries):
-        wait = MIN_CALL_INTERVAL - (time.time() - _last_call_time)
-        if wait > 0:
-            time.sleep(wait)
-        _last_call_time = time.time()
+        if LIMITER:
+            LIMITER.acquire(log=log)
         try:
-            return client.models.generate_content(
+            return tally(client.models.generate_content(
                 model=model,
                 contents=contents,
                 config=config,
-            )
+            ))
         except Exception as e:
             err = str(e)
             if "429" in err or "RESOURCE_EXHAUSTED" in err:
@@ -246,7 +285,58 @@ def read_file_safe(path: Path, max_chars: int = 3000) -> str:
         return ""
 
 
+def domain_settings(domain_dir: Path) -> dict:
+    """Minimal reader for the domain's config.yaml (`editable:`, `domain_type:`).
+
+    Deliberately not a YAML parse — these files are flat key: value and the
+    agent host should not need pyyaml installed.
+    """
+    settings = {}
+    try:
+        for line in (domain_dir / "config.yaml").read_text().splitlines():
+            if ":" not in line or line.lstrip().startswith("#"):
+                continue
+            key, _, value = line.partition(":")
+            settings[key.strip()] = value.split("#")[0].strip().strip('"\'')
+    except FileNotFoundError:
+        pass
+    return settings
+
+
+def find_worker_prompt(domain_dir: Path, domain_type: str) -> str:
+    """Domain-local worker_prompt.md wins over v4/prompts/<domain_type>.md."""
+    candidates = [domain_dir / "worker_prompt.md"]
+    if domain_type:
+        repo_root = Path(__file__).resolve().parent.parent
+        candidates.append(repo_root / "v4" / "prompts" / f"{domain_type}.md")
+    for path in candidates:
+        try:
+            return path.read_text()
+        except FileNotFoundError:
+            continue
+    return ""
+
+
 def build_system_prompt(agent_id: int) -> str:
+    domain_type = domain_settings(DOMAIN_DIR).get("domain_type", "")
+    template = find_worker_prompt(DOMAIN_DIR, domain_type)
+    if template:
+        workflow = (template
+                    .replace("{{AGENT_ID}}", f"agent{agent_id}")
+                    .replace("{{EDITABLE_FILE}}", EDITABLE))
+        return f"""You are agent{agent_id}, an autonomous research agent running experiments on a shared blackboard.
+
+{workflow}
+
+## Harness rules (these override anything above)
+- Your editable file is workspace/agent{agent_id}/{EDITABLE}. Never edit the domain root copy.
+- Always give run.sh a descriptive name and description — never "baseline" or "no description".
+- Never run run.sh twice without changing {EDITABLE} first; the harness will block you.
+- Change exactly ONE parameter per experiment so you can attribute the cause.
+- Use append_blackboard to record findings, citing the exact SCORE line.
+- Never stop experimenting."""
+
+    # Fallback: the original Nirenberg-specific prompt, for domains with no template.
     return f"""You are agent{agent_id}, an autonomous research agent running experiments on a shared blackboard.
 
 Your goal: find the lowest possible residual for the Nirenberg 1D boundary value problem.
@@ -287,9 +377,12 @@ def build_initial_message(domain_dir: Path, agent_id: int) -> str:
     recent = read_file_safe(domain_dir / "recent_experiments.md", 1500)
     if recent:
         parts.append(f"## recent_experiments.md\n{recent}")
-    best = read_file_safe(domain_dir / "best" / "config.yaml", 800)
-    if best:
-        parts.append(f"## best/config.yaml\n{best}")
+    for label, path in [(f"best/{EDITABLE}", domain_dir / "best" / EDITABLE),
+                        (EDITABLE, domain_dir / EDITABLE)]:
+        best = read_file_safe(path, 800)
+        if best:
+            parts.append(f"## {label} (starting point)\n{best}")
+            break
 
     context = "\n\n".join(parts)
     return f"""Here is the current state of the experiment domain:
@@ -396,16 +489,22 @@ def run_tool_loop(client, model, system_prompt, contents, max_tool_calls):
 # ---------------------------------------------------------------------------
 
 def run_agent(domain_dir: Path, agent_id: int, max_turns: int):
-    global DOMAIN_DIR, AGENT_ID
+    global DOMAIN_DIR, AGENT_ID, EDITABLE
     DOMAIN_DIR = domain_dir
     AGENT_ID = agent_id
+    EDITABLE = domain_settings(domain_dir).get("editable", "config.yaml")
 
-    # Ensure workspace exists
+    # Seed the workspace from the current best, falling back to the domain root.
     ws = domain_dir / "workspace" / f"agent{agent_id}"
     ws.mkdir(parents=True, exist_ok=True)
-    best_cfg = domain_dir / "best" / "config.yaml"
-    if best_cfg.exists():
-        (ws / "config.yaml").write_text(best_cfg.read_text())
+    for seed in [domain_dir / "best" / EDITABLE, domain_dir / EDITABLE]:
+        if seed.exists():
+            (ws / EDITABLE).write_text(seed.read_text())
+            break
+    else:
+        print(f"ERROR: no seed for {EDITABLE} (looked in best/ and domain root)",
+              file=sys.stderr)
+        sys.exit(1)
 
     os.environ["CLAUDE_AGENT_ID"] = f"agent{agent_id}"
     os.environ["AGENT_ID"] = f"agent{agent_id}"
@@ -413,38 +512,35 @@ def run_agent(domain_dir: Path, agent_id: int, max_turns: int):
     client = make_client()
     system_prompt = build_system_prompt(agent_id)
 
-    log(f"honest_agent_gemini starting — model={DEFAULT_MODEL} max_turns={max_turns} manual_tool_loop=True")
-
-    # Conversation history persists across turns
-    contents = [
-        types.Content(role="user", parts=[
-            types.Part(text=build_initial_message(domain_dir, agent_id))
-        ])
-    ]
+    log(f"honest_agent_gemini starting — model={MODEL} editable={EDITABLE} "
+        f"max_turns={max_turns} manual_tool_loop=True")
 
     for turn in range(max_turns):
         log(f"turn {turn+1}/{max_turns}")
 
-        # Refresh context every 5 turns
-        if turn > 0 and turn % 5 == 0:
-            refresh = build_refresh_message(domain_dir)
-            contents.append(types.Content(role="user", parts=[types.Part(text=refresh)]))
-        elif turn > 0:
+        # Rebuild context from disk each turn instead of appending forever.
+        # The domain files ARE the memory — blackboard/stoplight/
+        # recent_experiments are re-read here, which is the whole point of the
+        # v4.6 context split. Accumulating conversation history instead grew
+        # per-call input ~10k/turn, saturating TPM by turn ~8 and heading for
+        # the 1M context window by turn ~100.
+        contents = [
+            types.Content(role="user", parts=[
+                types.Part(text=build_initial_message(domain_dir, agent_id))
+            ])
+        ]
+        if turn > 0:
             contents.append(types.Content(role="user", parts=[
-                types.Part(text="Continue. Run the next experiment.")
+                types.Part(text="Continue from the state above. Run the NEXT "
+                                "experiment — a new one, not a repeat of what "
+                                "recent_experiments.md already shows.")
             ]))
 
         try:
-            final_text, n_calls = run_tool_loop(
-                client, DEFAULT_MODEL, system_prompt, contents, MAX_TOOL_CALLS_PER_TURN
+            _, n_calls = run_tool_loop(
+                client, MODEL, system_prompt, contents, MAX_TOOL_CALLS_PER_TURN
             )
-            log(f"turn {turn+1} done ({n_calls} tool calls)")
-
-            # Add model's final text response to history
-            if final_text:
-                contents.append(types.Content(role="model", parts=[
-                    types.Part(text=final_text)
-                ]))
+            log(f"turn {turn+1} done ({n_calls} tool calls) — {usage_report()}")
 
         except Exception as e:
             log(f"ERROR turn {turn+1}: {e}")
@@ -453,7 +549,16 @@ def run_agent(domain_dir: Path, agent_id: int, max_turns: int):
 
         time.sleep(2)
 
-    log("honest_agent_gemini finished")
+    log(f"honest_agent_gemini finished — {usage_report()}")
+    rows = 0
+    try:
+        rows = max(0, len((domain_dir / "results.tsv").read_text().splitlines()) - 1)
+    except FileNotFoundError:
+        pass
+    if rows:
+        billable = USAGE["in"] - USAGE["cached"]
+        log(f"per-experiment over {rows} row(s): "
+            f"billable_in={billable // rows:,} out={USAGE['out'] // rows:,}")
 
 
 # ---------------------------------------------------------------------------
@@ -461,11 +566,21 @@ def run_agent(domain_dir: Path, agent_id: int, max_turns: int):
 # ---------------------------------------------------------------------------
 
 def main():
+    global MODEL, LIMITER
     parser = argparse.ArgumentParser()
     parser.add_argument("domain_dir")
     parser.add_argument("--agent-id", type=int, default=0)
     parser.add_argument("--turns", type=int, default=50)
+    parser.add_argument("--model", default=DEFAULT_MODEL,
+                        help="Gemini model id (default: $GEMINI_MODEL or gemma-4-26b-a4b-it)")
+    parser.add_argument("--rpm", type=int, default=None,
+                        help="requests/min ceiling (default: Tier-1 1000, 80%% safety)")
+    parser.add_argument("--tpm", type=int, default=None,
+                        help="tokens/min ceiling (default: Tier-1 2,000,000)")
     args = parser.parse_args()
+
+    MODEL = args.model
+    LIMITER = gemini_quota.QuotaLimiter(rpm=args.rpm, tpm=args.tpm)
 
     domain_dir = Path(args.domain_dir).resolve()
     if not domain_dir.exists():
