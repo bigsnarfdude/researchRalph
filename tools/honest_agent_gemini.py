@@ -36,6 +36,8 @@ import gemini_quota
 
 DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemma-4-26b-a4b-it")
 MAX_TOOL_CALLS_PER_TURN = 30   # hard cap before forcing a nudge
+# GPU/Lean oracles run for minutes; 120s silently killed them mid-train.
+BASH_TIMEOUT = int(os.environ.get("GEMINI_BASH_TIMEOUT", "120"))
 _last_config_hash: str = ""
 # Quota is enforced by gemini_quota.QuotaLimiter against Tier-1 RPM/TPM/RPD,
 # shared across concurrent agents. --rpm overrides the request ceiling only;
@@ -108,7 +110,7 @@ def run_bash(command: str) -> str:
     try:
         result = subprocess.run(
             command, shell=True, cwd=str(DOMAIN_DIR),
-            capture_output=True, text=True, timeout=120
+            capture_output=True, text=True, timeout=BASH_TIMEOUT
         )
         out = result.stdout[-4000:] if len(result.stdout) > 4000 else result.stdout
         err = result.stderr[-1000:] if len(result.stderr) > 1000 else result.stderr
@@ -119,7 +121,7 @@ def run_bash(command: str) -> str:
             combined += f"\nEXIT CODE: {result.returncode}"
         return combined or "(no output)"
     except subprocess.TimeoutExpired:
-        return "ERROR: command timed out after 120s"
+        return f"ERROR: command timed out after {BASH_TIMEOUT}s"
     except Exception as e:
         return f"ERROR: {e}"
 
