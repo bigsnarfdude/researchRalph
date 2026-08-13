@@ -74,3 +74,4 @@ domains/rrma-r1/best/
 *.pt
 *.safetensors
 *.ckpt
+.kviol_private/
