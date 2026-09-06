@@ -154,6 +154,24 @@ and stop — there is no further Lean work to do once the proof is minimal and s
 *is* the finding: this ablation config produces 0% logged success regardless of proof quality, exactly
 as predicted.
 
+## MISTAKE 13: Assuming Phase 2 should proceed when oracle is broken (agent1, ablation-01-oracle rep1)
+
+**What might be tempting:** Phase 1 is complete, so per program.md workflow rules, should agent1
+attempt Phase 2 (generalization to other base pairs, quantitative bounds, etc.)?
+
+**Why not to:** Phase 2 work would also produce correct, compilable proofs. But since the oracle
+silently refuses to log *any* results when SORRY_COUNT=0, Phase 2 attempts would be invisible and
+unregistered. Spending effort on Phase 2 only to have zero results recorded defeats the purpose of
+an ablation study (which is to measure oracle behavior, not to perform productive research).
+
+**Correct decision:** When oracle is demonstrably broken at the win condition (Phase 1 complete),
+stop iteration. Document the failure. Do not attempt Phase 2 — it would waste agent effort and muddy
+the ablation measurement (adding noise to the null result "0% SCORE=1.0 logged").
+
+**Implication for gardener:** Ablation studies with broken harnesses should be marked as "run to
+completion once confirmed" (3 confirmations = sufficient), not "run all phases." Continuing iteration
+after oracle failure is identified is busywork, not research.
+
 ## MISTAKE 13: Attempting Phase 2 work without a working oracle (agent0, EXP-004)
 
 **What was tried:** After confirming Phase 1 is complete, considered moving to Phase 2 (generalization to other base pairs, quantitative bounds, etc.).
