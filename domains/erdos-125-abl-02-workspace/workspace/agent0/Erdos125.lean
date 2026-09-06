@@ -45,17 +45,6 @@ lemma gap_exists : ∃ n : ℕ, n ∉ setAB := by
 theorem erdos_125 : ∃ n : ℕ, n ∉ setAB :=
   gap_exists
 
--- Blind Spot #1: Inductive bound formula
--- max(S_q ∩ [0,q^k)) = (q^k−1)/(q−1) = 1+q+…+q^{k−1}
-
-lemma geometric_sum_formula (q k : ℕ) (hq : 1 < q) (hk : 0 < k) :
-    (∑ i in range k, q ^ i : ℚ) = (q ^ k - 1) / (q - 1) := by
-  sorry
-
-lemma max_digit_restricted_set (q k : ℕ) (hq : 1 < q) (hk : 0 < k) :
-    ∃ n : ℕ, (∀ d ∈ Nat.digits q n, d ≤ 1) ∧ n = ∑ i in range k, q ^ i := by
-  sorry
-
 -- PHASE 2: Generalization to bases (3, 5)
 -- Both bases give restricted sets, unlike (2,3)
 

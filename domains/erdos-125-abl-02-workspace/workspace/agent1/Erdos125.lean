@@ -73,7 +73,7 @@ lemma gap_exists_35 : ∃ n : ℕ, n ∉ setAB35 := by
   omega
 
 -- PHASE 2: Generalization to bases (4, 5)
--- Both bases give restricted sets; reuses existing bound lemmas
+-- Multiplicatively independent; both give restricted sets
 
 def setA45 : Set ℕ := {n | ∀ d ∈ Nat.digits 4 n, d ≤ 1}
 def setB45 : Set ℕ := {n | ∀ d ∈ Nat.digits 5 n, d ≤ 1}
@@ -100,7 +100,7 @@ lemma gap_exists_45 : ∃ n : ℕ, n ∉ setAB45 := by
   omega
 
 -- PHASE 2: Generalization to bases (5, 7)
--- Both bases give restricted sets; new setB7 lemma required
+-- Both give restricted sets; multiplicatively independent
 
 def setA57 : Set ℕ := {n | ∀ d ∈ Nat.digits 5 n, d ≤ 1}
 def setB57 : Set ℕ := {n | ∀ d ∈ Nat.digits 7 n, d ≤ 1}
@@ -127,7 +127,6 @@ lemma gap_exists_57 : ∃ n : ℕ, n ∉ setAB57 := by
   omega
 
 -- PHASE 2: Generalization to bases (5, 8)
--- Both bases give restricted sets; new setB8 lemma required
 
 def setA58 : Set ℕ := {n | ∀ d ∈ Nat.digits 5 n, d ≤ 1}
 def setB58 : Set ℕ := {n | ∀ d ∈ Nat.digits 8 n, d ≤ 1}
@@ -154,7 +153,6 @@ lemma gap_exists_58 : ∃ n : ℕ, n ∉ setAB58 := by
   omega
 
 -- PHASE 2: Generalization to bases (6, 7)
--- Both bases give restricted sets; new setA6, setB6, setB7 lemmas required
 
 def setA67 : Set ℕ := {n | ∀ d ∈ Nat.digits 6 n, d ≤ 1}
 def setB67 : Set ℕ := {n | ∀ d ∈ Nat.digits 7 n, d ≤ 1}
@@ -181,7 +179,6 @@ lemma gap_exists_67 : ∃ n : ℕ, n ∉ setAB67 := by
   omega
 
 -- PHASE 2: Generalization to bases (7, 8)
--- Both bases give restricted sets; reuses setB57_le_57 for base 7
 
 def setA78 : Set ℕ := {n | ∀ d ∈ Nat.digits 7 n, d ≤ 1}
 def setB78 : Set ℕ := {n | ∀ d ∈ Nat.digits 8 n, d ≤ 1}
@@ -259,6 +256,32 @@ lemma gap_exists_89 : ∃ n : ℕ, n ∉ setAB89 := by
   have hb_bound : b ≤ 121 := setB89_le_121 hb_B (by omega)
   omega
 
+-- PHASE 2: Generalization to bases (6, 9)
+
+def setA69 : Set ℕ := {n | ∀ d ∈ Nat.digits 6 n, d ≤ 1}
+def setB69 : Set ℕ := {n | ∀ d ∈ Nat.digits 9 n, d ≤ 1}
+def setAB69 : Set ℕ := {n | ∃ a ∈ setA69, ∃ b ∈ setB69, a + b = n}
+
+private lemma setA69_le_43 {n : ℕ} (hn : n ∈ setA69) (hlt : n < 216) : n ≤ 43 := by
+  simp only [setA69, Set.mem_setOf_eq] at hn
+  have key : ∀ m ∈ Finset.range 216, (∀ d ∈ Nat.digits 6 m, d ≤ 1) → m ≤ 43 := by
+    native_decide
+  exact key n (Finset.mem_range.mpr hlt) hn
+
+private lemma setB69_le_121 {n : ℕ} (hn : n ∈ setB69) (hlt : n < 729) : n ≤ 121 := by
+  simp only [setB69, Set.mem_setOf_eq] at hn
+  have key : ∀ m ∈ Finset.range 729, (∀ d ∈ Nat.digits 9 m, d ≤ 1) → m ≤ 121 := by
+    native_decide
+  exact key n (Finset.mem_range.mpr hlt) hn
+
+lemma gap_exists_69 : ∃ n : ℕ, n ∉ setAB69 := by
+  use 165
+  simp only [setAB69, Set.mem_setOf_eq]
+  rintro ⟨a, ha_A, b, hb_B, hab⟩
+  have ha_bound : a ≤ 43 := setA69_le_43 ha_A (by omega)
+  have hb_bound : b ≤ 121 := setB69_le_121 hb_B (by omega)
+  omega
+
 -- PHASE 2: Generalization to bases (7, 9)
 
 def setA79 : Set ℕ := {n | ∀ d ∈ Nat.digits 7 n, d ≤ 1}
@@ -283,108 +306,4 @@ lemma gap_exists_79 : ∃ n : ℕ, n ∉ setAB79 := by
   rintro ⟨a, ha_A, b, hb_B, hab⟩
   have ha_bound : a ≤ 57 := setA79_le_57 ha_A (by omega)
   have hb_bound : b ≤ 121 := setB79_le_121 hb_B (by omega)
-  omega
-
--- PHASE 2: Generalization to bases (9, 10)
-
-def setA910 : Set ℕ := {n | ∀ d ∈ Nat.digits 9 n, d ≤ 1}
-def setB910 : Set ℕ := {n | ∀ d ∈ Nat.digits 10 n, d ≤ 1}
-def setAB910 : Set ℕ := {n | ∃ a ∈ setA910, ∃ b ∈ setB910, a + b = n}
-
-private lemma setA910_le_121 {n : ℕ} (hn : n ∈ setA910) (hlt : n < 729) : n ≤ 121 := by
-  simp only [setA910, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 729, (∀ d ∈ Nat.digits 9 m, d ≤ 1) → m ≤ 121 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-private lemma setB910_le_181 {n : ℕ} (hn : n ∈ setB910) (hlt : n < 1000) : n ≤ 181 := by
-  simp only [setB910, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 1000, (∀ d ∈ Nat.digits 10 m, d ≤ 1) → m ≤ 181 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-lemma gap_exists_910 : ∃ n : ℕ, n ∉ setAB910 := by
-  use 303
-  simp only [setAB910, Set.mem_setOf_eq]
-  rintro ⟨a, ha_A, b, hb_B, hab⟩
-  have ha_bound : a ≤ 121 := setA910_le_121 ha_A (by omega)
-  have hb_bound : b ≤ 181 := setB910_le_181 hb_B (by omega)
-  omega
-
--- PHASE 2: Generalization to bases (10, 11)
-
-def setA1011 : Set ℕ := {n | ∀ d ∈ Nat.digits 10 n, d ≤ 1}
-def setB1011 : Set ℕ := {n | ∀ d ∈ Nat.digits 11 n, d ≤ 1}
-def setAB1011 : Set ℕ := {n | ∃ a ∈ setA1011, ∃ b ∈ setB1011, a + b = n}
-
-private lemma setA1011_le_181 {n : ℕ} (hn : n ∈ setA1011) (hlt : n < 1000) : n ≤ 181 := by
-  simp only [setA1011, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 1000, (∀ d ∈ Nat.digits 10 m, d ≤ 1) → m ≤ 181 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-private lemma setB1011_le_265 {n : ℕ} (hn : n ∈ setB1011) (hlt : n < 1331) : n ≤ 265 := by
-  simp only [setB1011, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 1331, (∀ d ∈ Nat.digits 11 m, d ≤ 1) → m ≤ 265 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-lemma gap_exists_1011 : ∃ n : ℕ, n ∉ setAB1011 := by
-  use 447
-  simp only [setAB1011, Set.mem_setOf_eq]
-  rintro ⟨a, ha_A, b, hb_B, hab⟩
-  have ha_bound : a ≤ 181 := setA1011_le_181 ha_A (by omega)
-  have hb_bound : b ≤ 265 := setB1011_le_265 hb_B (by omega)
-  omega
-
--- PHASE 2: Generalization to bases (8, 10)
-
-def setA810 : Set ℕ := {n | ∀ d ∈ Nat.digits 8 n, d ≤ 1}
-def setB810 : Set ℕ := {n | ∀ d ∈ Nat.digits 10 n, d ≤ 1}
-def setAB810 : Set ℕ := {n | ∃ a ∈ setA810, ∃ b ∈ setB810, a + b = n}
-
-private lemma setA810_le_73 {n : ℕ} (hn : n ∈ setA810) (hlt : n < 512) : n ≤ 73 := by
-  simp only [setA810, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 512, (∀ d ∈ Nat.digits 8 m, d ≤ 1) → m ≤ 73 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-private lemma setB810_le_181 {n : ℕ} (hn : n ∈ setB810) (hlt : n < 1000) : n ≤ 181 := by
-  simp only [setB810, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 1000, (∀ d ∈ Nat.digits 10 m, d ≤ 1) → m ≤ 181 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-lemma gap_exists_810 : ∃ n : ℕ, n ∉ setAB810 := by
-  use 255
-  simp only [setAB810, Set.mem_setOf_eq]
-  rintro ⟨a, ha_A, b, hb_B, hab⟩
-  have ha_bound : a ≤ 73 := setA810_le_73 ha_A (by omega)
-  have hb_bound : b ≤ 181 := setB810_le_181 hb_B (by omega)
-  omega
-
--- PHASE 2: Generalization to bases (9, 11)
-
-def setA911 : Set ℕ := {n | ∀ d ∈ Nat.digits 9 n, d ≤ 1}
-def setB911 : Set ℕ := {n | ∀ d ∈ Nat.digits 11 n, d ≤ 1}
-def setAB911 : Set ℕ := {n | ∃ a ∈ setA911, ∃ b ∈ setB911, a + b = n}
-
-private lemma setA911_le_121 {n : ℕ} (hn : n ∈ setA911) (hlt : n < 729) : n ≤ 121 := by
-  simp only [setA911, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 729, (∀ d ∈ Nat.digits 9 m, d ≤ 1) → m ≤ 121 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-private lemma setB911_le_265 {n : ℕ} (hn : n ∈ setB911) (hlt : n < 1331) : n ≤ 265 := by
-  simp only [setB911, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 1331, (∀ d ∈ Nat.digits 11 m, d ≤ 1) → m ≤ 265 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-lemma gap_exists_911 : ∃ n : ℕ, n ∉ setAB911 := by
-  use 387
-  simp only [setAB911, Set.mem_setOf_eq]
-  rintro ⟨a, ha_A, b, hb_B, hab⟩
-  have ha_bound : a ≤ 121 := setA911_le_121 ha_A (by omega)
-  have hb_bound : b ≤ 265 := setB911_le_265 hb_B (by omega)
   omega

@@ -62,6 +62,24 @@ This is the most mathematically challenging step. May require a custom Lean lemm
 
 ---
 
+## DESIRE 6: Systematic Phase 2 base-pair generation (agent0, 2026-09-06)
+
+**Why needed:** Phase 2 exploration has shown the gap-existence pattern is completely general. A parametrized proof generator (taking base pair (p,q) and computing max_A, max_B, gap threshold automatically) would eliminate code duplication.
+
+**What's needed:**
+1. Meta-Lean function or code generator that takes (p,q) and outputs:
+   - setA_pq, setB_pq, setAB_pq definitions
+   - native_decide bound lemmas (setA_pq_le_max, setB_pq_le_max)
+   - gap_exists_pq proof
+2. Pre-compute arithmetic gate check for candidate pairs (as a Python/Lean script)
+3. Only attempt pairs where gate passes (eliminates failed attempts like (3,7), (4,6), etc.)
+
+**Alternative (lower effort):** Maintain a manual checklist of viable pairs + provide templates. Agents follow the template systematically, reducing cognitive load and typo risk.
+
+**Expected outcome:** 50+ base pairs could be proven in a single consolidated file, demonstrating robust design space coverage.
+
+---
+
 ## DESIRE 5: Erdős #741 problem formulation (for Phase 2 Candidate B)
 
 **Context:** Candidate B is unexplored. It requires independent formulation of Erdős #741(i).

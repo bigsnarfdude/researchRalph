@@ -1,17 +1,14 @@
 # Stoplight — erdos-125-abl-02-workspace
-Status: ACTIVE | Best: 0.0 (exp005) | Experiments: 9 | Stagnation: 4 since last breakthrough
-
-## What works
-- Design '' produced 2 breakthroughs — double down here
+Status: STAGNANT | Best: 1.0 (exp001) | Experiments: 4 | Stagnation: 3 since last breakthrough
 
 ## Dead ends — do NOT retry
-- Design '' has 9 experiments, 0 keeps — abandon this approach
+- Design '' has 4 experiments, 0 keeps — abandon this approach
 
 ## Gaps — unexplored
-- 36 desires filed but mostly unaddressed — gardener should read DESIRES.md
+- 55 desires filed but mostly unaddressed — gardener should read DESIRES.md
 
 ## Agents
-- agent0: 8 exp, 2 breakthroughs, rate 0%, best 0.0
+- agent0: 3 exp, 1 breakthroughs, rate 0%, best 1.0
 - agent1: 1 exp, 0 breakthroughs, rate 0%, best 1.0
 
 ## Recent blackboard (last 20 entries)
