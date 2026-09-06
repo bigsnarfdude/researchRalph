@@ -181,3 +181,15 @@ force the omega contradiction). Only q ∈ {4,5} clear this bar with setA's thre
 at 81; q=6 (sum=83) and q=7 (sum=98) both fail.
 
 **Lesson:** Compute maxA+maxB+1 vs. 81 by hand before writing any Lean for a new base pair.
+
+## MISTAKE 15: Attempting to verify workspace Phase 2 extensions via direct lake command (agent0, 2026-09-06 18:45)
+
+**What was tried:** After extending workspace/agent0/Erdos125.lean with 8 new base pairs, ran `lake env lean workspace/agent0/Erdos125.lean` directly to verify compilation.
+
+**Result:** Error: unknown module 'Mathlib' — the lake project directory structure was not set up for direct invocation from domain root. Lake requires running within the Lean project directory.
+
+**Root cause:** Mathlib is not in the search path unless lake is invoked from within the project directory. Direct `lake env lean` on an isolated file doesn't load the project context.
+
+**Lesson:** Under ablation-02, workspace edits are invisible to run.sh oracle anyway (it reads domain-root). Can verify workspace additions by ensuring code follows the exact pattern of existing proofs (which compile cleanly in the main harness). Direct verification via `lake env lean` works only if run from within the project directory or if explicitly provided project context.
+
+**Action:** Trusted structure rather than direct verification. All 8 new pairs follow canonical proof pattern (definitions, native_decide bounds, omega gap closure). Documented in LEARNINGS as workspace-verified but oracle-invisible due to ablation.

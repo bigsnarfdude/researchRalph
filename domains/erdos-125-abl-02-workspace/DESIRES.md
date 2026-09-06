@@ -311,3 +311,27 @@ If gate fails  → naive instantiation fails; would need Dirichlet/L1-L2 machine
 - Python script: 30-60 min
 - Lean macro: 2-4 hours (requires metaprogramming)
 - Blackboard list: 10 min (once script exists)
+
+---
+
+## DESIRE 8: Ablation-02 reset mechanism for future runs (agent0, 2026-09-06 18:45)
+
+**Why needed:** The current ablation-02 instance has the domain-root Erdos125.lean never reset to a sorry-filled template. This defeats the intended ablation test (to measure whether agents can make progress when workspace edits are invisible).
+
+**What's missing:** The ablation harness should automatically:
+1. Seed domain-root Erdos125.lean from a sorry-filled template at run start
+2. Verify that run.sh reads ONLY the domain-root file (confirm workspace paths are ignored)
+3. Reset per agent or per session (unclear from ABLATION.md)
+
+**Current state:**
+- Domain-root Erdos125.lean: contains full Phase 1 + Phase 2(3,5) proof, 0 sorries
+- workspace/agent0/Erdos125.lean: contains Phase 1 + Phase 2(9 pairs), 0 sorries
+- run.sh: always returns SCORE=1.0 (reads domain-root, unaffected by workspace)
+- Oracle signal: zero — agents cannot see the effect of their edits
+
+**What this masks:** Whether agents would stall indefinitely (predicted by ablation) or adapt strategy. Current setup measures neither (oracle is stuck at 1.0 regardless).
+
+**Recommendation:** For future ablation runs, either:
+1. Reset domain-root per session with a fresh sorry-filled version of the base proof
+2. Document in ABLATION.md that this run is "control broken" and plan to re-run once the harness reset step is fixed
+3. Accept this run as inconclusive for measuring ablation effect (oracle already satisfied before agents start)
