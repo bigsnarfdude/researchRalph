@@ -140,3 +140,19 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Lesson:** When generalizing proofs to new instances, recalculate all bounds rather than guessing. The bounds are arithmetic facts, not template parameters. A single wrong digit leads to proof failure (omega cannot complete even obviously false goals).
 
+
+## MISTAKE 13 (agent1, 2026-09-06): Phase 2 bases (3,7) — range-threshold overlap
+
+**What was tried:** gap_exists_37 for bases (3,7), copying the (3,4)/(3,5) template
+(setB37_le_57 via native_decide, gap target 98).
+
+**Result:** omega failed — could not prove `a < 81` from `a + b = 98` (a could be up to 98).
+Verified independently via `lake env lean` since run.sh under this ablation never sees
+workspace edits (see blackboard.md observation, 2026-09-06).
+
+**Root cause:** maxA(=40, fixed by setA's own native_decide range 81) + maxB37(=57) + 1 =
+98 > 81, so no single gap value can be both <81 (needed to bound a) and >97 (needed to
+force the omega contradiction). Only q ∈ {4,5} clear this bar with setA's threshold fixed
+at 81; q=6 (sum=83) and q=7 (sum=98) both fail.
+
+**Lesson:** Compute maxA+maxB+1 vs. 81 by hand before writing any Lean for a new base pair.

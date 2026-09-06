@@ -225,3 +225,64 @@ Needed: scale-dependent gaps of size Ω(min(3^k, 4^m)) at aligned scales
 
 **Lesson:** When Phase 2 generalization works on the second base pair, the technique is likely robust. Subsequent attempts should focus on: (a) expanding the validated list, (b) proving a parameterized version (research effort), (c) exploring non-generalizability conditions to understand limits.
 
+---
+
+## Environment discovery: run.sh ignores workspace/ in this domain (ablation-02)
+
+`run.sh` here hardcodes `SOLUTION="$DOMAIN_DIR/Erdos125.lean"` — it never reads
+`workspace/$AGENT/Erdos125.lean` despite what the top-level workflow instructions say
+("run.sh automatically picks up your workspace file"). This is intentional per
+ABLATION.md (workspace-isolation removed). Edits to `workspace/agent0/Erdos125.lean`
+have zero effect on SCORE. To move SCORE, edit `Erdos125.lean` at the domain root.
+
+Also found: at session start the domain-root file was NOT a sorry-filled template as
+ABLATION.md predicted — it was already the fully-proved Phase1+Phase2(3,5) file, so
+`bash run.sh` returned SCORE=1.0 immediately (exp001). See blackboard.md
+"ABLATION-02 SETUP ANOMALY" for full detail — this likely means the domain wasn't reset
+between reps.
+
+
+## LEARNING 13 (agent1, 2026-09-06): Ablation abl-02 oracle is a one-way black hole this run, not a two-way one
+
+run.sh under this ablation reads only the domain-root Erdos125.lean, never
+workspace/agentN/Erdos125.lean (confirmed in run.sh source and by direct testing).
+ABLATION.md predicted this would manifest as "agents never reach SCORE=1.0." In practice,
+the domain-root file was already the fully-proved (0-sorry) Phase1+Phase2(3,5) proof when
+this run started, so run.sh returns SCORE=1.0 unconditionally regardless of any workspace
+edit — confirmed via `bash run.sh` with zero edits (exp002, SCORE=1.0). Net effect: the
+oracle gives agent1 zero signal about workspace changes in either direction this run.
+Real Lean feedback on workspace edits requires bypassing run.sh entirely: `lake env lean
+<workspace-file>` inside $HOME/rrma-lean (the LEAN_PROJECT run.sh itself uses), which is
+how MISTAKE 13's (3,7) failure was actually diagnosed.
+
+## LEARNING 14 (agent1, 2026-09-06): Bound-sum arithmetic gate for Phase 2 base-pair candidates
+
+For a candidate second base q (paired with base 3, using the existing setA/setA_le_40
+fixed at range 81 → max 40): the naive gap-existence trick (two independent native_decide
+range bounds + omega) only succeeds if max(setB_q ∩ [0, q^3)) + 40 + 1 < 81, i.e.
+max(setB_q ∩ [0,q^3)) < 40. Computed maxB_q values: q=4→21 (works), q=5→31 (works),
+q=6→43 (fails, sum 83), q=7→57 (fails, sum 98). This caps the naive-instantiation
+approach to q ∈ {4,5} only — matches [[erdos-125 phase2 base pairs]] candidate list, and
+explains why (3,7)/(3,8)/etc. all need real Dirichlet/L1-L2 machinery rather than
+copy-paste instantiation, contrary to the "just needs correct arithmetic" framing in
+LEARNING 12.
+
+## LEARNING 15 (agent1, 2026-09-06): (4,5) confirms the gate in LEARNING 14, and generalizes it
+
+The 81-ceiling in LEARNING 14 is specific to pairs that reuse setA (base 3, fixed at
+range 81, max 40) — it is NOT a universal constant. The real constraint per pair (p,q) is:
+maxB_p(range p^3) + maxB_q(range q^3) + 1 < min(range_p_used, range_q_used). For (4,5):
+21+31+1=53 < min(64,125) ✓ — confirmed compiling via direct `lake env lean` (see
+blackboard EXP, 2026-09-06). This pair required zero new lemmas, just recombining
+setB_le_21 and setB35_le_31. Before deriving new native_decide bounds for any pair,
+check whether existing bound lemmas already satisfy this gate in combination — cheaper
+than deriving from scratch.
+
+## LEARNING 16 (agent1, 2026-09-06): (5,7) shows the 81-ceiling was never universal — it's an artifact of setA specifically
+
+(3,7) failed because setA_le_40 is hard-pinned to range 81 (MISTAKE 13). (5,7) succeeds
+(31+57+1=89 < min(125,343)) precisely because it avoids setA/base-3 entirely and uses two
+bases whose own native_decide ranges (125, 343) are comfortably larger than the combined
+max. General rule: a pair (p,q) works via the naive trick iff maxB_p(range p^3) +
+maxB_q(range q^3) + 1 < min(range_p, range_q) -- check this per-pair, don't assume the 81
+ceiling from the base-3 pairs applies elsewhere.

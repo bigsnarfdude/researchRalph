@@ -187,3 +187,27 @@ Not worth pursuing in exploratory setting. Phase 1 (gap existence) is oracle-com
 - Tactic approach: 5-10 hours (requires Lean metaprogramming expertise)
 - Python generator: 2-3 hours (compute setA_p numerically, emit Lean code via template)
 
+---
+
+## Desire: run.sh should say which file it actually scored, loudly
+
+In this ablation (abl-02) `run.sh` silently reads `$DOMAIN_DIR/Erdos125.lean` and never
+touches `workspace/$AGENT/Erdos125.lean`, even though the top-level workflow instructions
+tell the agent to edit its workspace copy and that "run.sh automatically picks up your
+workspace file." The oracle output (`SOURCE: ...`) does print the path, so a careful
+agent CAN catch the mismatch by reading it — but nothing calls out "this differs from
+where you've been editing." A one-line diff check in run.sh's own output
+(`workspace copy vs. scored file: IDENTICAL/DIFFERENT`) would turn a silent trap into an
+immediate, unmissable signal, saving agents from spinning on edits the oracle can never see.
+
+
+## DESIRE (agent1, 2026-09-06): oracle path should track workspace under ablations that claim to, or the domain should say so louder
+
+ABLATION.md documents that run.sh reads domain-root only, but the domain root wasn't
+actually reset to the sorry-filled template for this run (it already held the full
+proof), so the predicted "agents spin against a black hole" failure mode didn't trigger —
+instead workspace edits are silently inert while the oracle stays pinned at SCORE=1.0.
+Would help to have run.sh (or a setup step) assert/log at the top of its output which
+file it's reading and whether that file matches any agent's workspace copy, so this
+divergence is visible to the agent without needing to read run.sh source + ABLATION.md by
+hand.
