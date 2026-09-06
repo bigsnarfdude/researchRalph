@@ -218,3 +218,55 @@ these prevents the zero-match case from propagating a nonzero exit into `set -e`
 **How I verified:** controlled A/B — same proof file, temporarily reintroduced one `sorry`, observed
 oracle worked normally (SORRY_COUNT: 1, exit 0, logged to results.tsv); reverted byte-for-byte
 (confirmed via `diff`), observed oracle died silently again (exit 1, no output, nothing logged).
+
+## LEARNING 13: Ablation-01 oracle measurement complete — silent-death trap confirmed in production (agent0, EXP-004)
+
+**Measurement objective:** Test whether the oracle harness can successfully verify a complete, formally correct proof.
+
+**Test case:** workspace/agent0/Erdos125.lean — same proof from previous cycles, verified complete:
+- setA_le_40, setB_le_21 (proven via native_decide on finite digit bounds)
+- gap_exists (proven via witness n=62 + omega solver)
+- No sorry statements (SORRY_COUNT=0)
+- Clean Lean 4 compilation (BUILD_EXIT=0)
+
+**Oracle behavior (broken run.sh):**
+```bash
+bash run.sh
+# → exit code 1, zero stdout, zero logging to results.tsv
+# → results.tsv remains header-only, experiment NOT recorded
+```
+
+**Oracle behavior (corrected oracle_v2.sh):**
+```bash
+bash oracle_v2.sh
+# → SORRY_COUNT: 0, BUILD_EXIT: 0, SCORE: 1.0 ✓, STATUS: PROVED ✓
+# → experiment would be recorded normally
+```
+
+**Implication:** The ablation successfully demonstrated the failure mode. A mathematically and formally correct proof receives **zero signal** when run through the broken harness. From the outside (checking results.tsv, monitoring stdout), this is **indistinguishable from the agent never running the harness at all**. This is the intended measurement result.
+
+**Phase 1 conclusion:** Mathematically COMPLETE. Oracle measurement: FAILED (by design). No further in-domain work is possible without repairing the harness (which is off-limits per ablation scope).
+
+## LEARNING 13: Ablation reproducibility confirmed — agent1 rep1, EXP-004 (2026-09-06)
+
+**Scenario:** Fresh run with agent1 inheriting complete proof from prior cycle.
+
+**Actions taken:**
+1. Read program.md, program_static.md (doesn't exist), stoplight.md, recent_experiments.md, blackboard.md
+2. Verified workspace/agent1/Erdos125.lean manually via `lake env lean`: SORRY_COUNT=0, BUILD_EXIT=0, no errors
+3. Attempted `bash run.sh` per domain workflow rule (never go 3+ tool uses without calling run.sh)
+4. Documented findings in blackboard.md
+
+**Result:** Exact reproduction of ABLATION.md prediction:
+- Proof is objectively correct (manual Lean compilation succeeds)
+- `bash run.sh` exits code 1 with zero output
+- results.tsv receives no new row
+- Agent receives no feedback whatsoever that proof succeeded
+
+**Implication:** This ablation successfully demonstrates the oracle-silence failure mode:
+- A correct proof is indistinguishable from never running the harness
+- Agents cannot tell success from "not attempted yet"
+- Within domain constraints (cannot edit run.sh, cannot bypass run.sh to log), there is no recovery path
+- This was the catastrophic failure that burned 300+ prior agent turns
+
+**Architectural insight:** This failure mode is the *inverse* of typical harness problems. Normally a broken harness fails on bad inputs (wrong proof → wrong score). Here, the harness fails specifically on the *correct* input (complete proof → no feedback). An agent that iterates correctly and reaches the oracle target gets punished with silence instead of success signal.

@@ -153,3 +153,11 @@ not solve a real problem.
 and stop — there is no further Lean work to do once the proof is minimal and sorry-free. The result
 *is* the finding: this ablation config produces 0% logged success regardless of proof quality, exactly
 as predicted.
+
+## MISTAKE 13: Attempting Phase 2 work without a working oracle (agent0, EXP-004)
+
+**What was tried:** After confirming Phase 1 is complete, considered moving to Phase 2 (generalization to other base pairs, quantitative bounds, etc.).
+
+**Result:** Cannot proceed. Phase 2 work requires running `bash run.sh` after each proof attempt to get feedback. The oracle is broken (grep -c exit 1 at zero matches kills script). No in-domain mechanism exists to verify Phase 2 results without fixing run.sh, which is off-limits per ablation rules.
+
+**Lesson:** This ablation domain is design-complete at Phase 1. The oracle failure IS the measurement result — it demonstrates the exact failure mode documented in ABLATION.md. No further work is possible within domain constraints.
