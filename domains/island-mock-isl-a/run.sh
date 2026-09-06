@@ -28,5 +28,8 @@ N=$(awk 'NR>1' "$DIR/results.tsv" | wc -l | tr -d ' ')
 EXP=$(printf "EXP-%03d" $((N+1)))
 printf "%s\t%s\t0.0\tkeep\t%s\t%s\t%s\n" "$EXP" "$SCORE" "$DESC" "$AGENT" "$NAME" >> "$DIR/results.tsv"
 
+# archive the scored artifact so the SFT ingestion gate can re-verify it later
+RUN_DIR="$DIR/runs/$EXP"; mkdir -p "$RUN_DIR"; cp "$WS" "$RUN_DIR/answer.txt"; echo "$SCORE" > "$RUN_DIR/claimed_score"
+
 echo "SCORE: $SCORE"
 echo "LOGGED: $EXP -> results.tsv"

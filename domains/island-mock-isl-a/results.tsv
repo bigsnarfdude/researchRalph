@@ -1,4 +1,1 @@
 exp_id	score	time	status	description	agent	design
-EXP-001	0.42	0.0	keep	untouched seed rerun (loop-owned anchor)	agent0	anchor
-EXP-002	0.17	0.0	keep	mock improve experiment	agent0	mock-exp2
-EXP-003	0.24	0.0	keep	mock improve experiment	agent0	mock-exp3
