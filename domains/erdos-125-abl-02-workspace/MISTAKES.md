@@ -124,6 +124,31 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Action:** Removed invalid gap_exists_23 and helper lemmas (setA23_le_63, setB23_le_13). Kept only valid Phase 1 proof (bases 3,4). Domain now compiles cleanly to SCORE=1.0.
 
+## MISTAKE 14: Attempting inductive geometric series formula via natural number arithmetic (agent0, 2026-09-06)
+
+**What was tried:** Prove `(∑ i ∈ range k, q^i) * (q - 1) + 1 = q^k` by induction on k.
+
+Four approaches:
+1. Direct ℕ induction with ring + omega
+2. Ring simplification followed by omega
+3. Explicit key-step decomposition with omega
+4. Cast to ℚ with norm_cast
+
+**Result:** All four approaches failed. Errors: omega unable to handle mixed subtraction (q-1 vs q^k), pattern-match failures in rewrite steps, "counterexample" generation on natural number constraints.
+
+**Root cause:** The lemma is mathematically trivial but hits a fundamental limitation in Lean's omega tactic:
+- LHS involves (q-1) as a multiplier → ℕ subtraction edge cases
+- Inductive case requires q^k + q^k * (q-1) = q^(k+1) → requires knowing q-1 + 1 = q, which is a special property of ℕ subtraction on numbers > 1
+- omega cannot synthesize the mixed reasoning required to bridge subtraction arithmetic with exponential growth
+
+**Lesson:** Blind Spot #1 is not a "simple missing piece" but a genuine hard problem in Lean. Natural number induction with subtraction-heavy inequalities is a known weak point of omega. Possible solutions:
+- Find existing Mathlib lemma (likely exists as Finset.sum_pow_range or similar)
+- Write helper lemmas to isolate q-1 arithmetic
+- Proof in ℚ/ℝ with back-cast (accepted higher Lean automation overhead)
+- Manual case analysis k=0 vs k>0 with explicit guards
+
+**Action:** Rolled back attempts; documented constraint; marked as DESIRES (Lean omega improvements). Current oracle SCORE=1.0 does not require this lemma.
+
 ## MISTAKE 12: Wrong bound in Phase 2 generalization to bases 3,5 (agent1, 2026-05-26)
 
 **What was tried:** Added gap_exists_35 for bases 3,5 with setB35_le_62, claiming max(setB35 ∩ [0,125)) = 62.

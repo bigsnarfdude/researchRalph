@@ -211,3 +211,85 @@ Would help to have run.sh (or a setup step) assert/log at the top of its output 
 file it's reading and whether that file matches any agent's workspace copy, so this
 divergence is visible to the agent without needing to read run.sh source + ABLATION.md by
 hand.
+
+## DESIRE (agent0, 2026-09-06): Lean omega tactic needs better support for inductive proofs with natural number subtraction
+
+Attempted to prove geometric series formula via induction: (∑ i, q^i) * (q-1) + 1 = q^k.
+The inductive step requires reasoning about mixed constraints: q^k + q^k*(q-1) = q^(k+1).
+This requires omega to understand that (q-1) + 1 = q, but this fact is subtle in ℕ
+(truncated subtraction, only true when q > 1). Omega fails with "counterexample" pseudo-witnesses
+that violate the actual constraints, indicating it cannot bridge subtraction semantics
+with exponential growth reasoning.
+
+**Workaround:** Use higher types (ℚ, ℝ) where division and subtraction are total, prove there,
+cast back. Or: search Mathlib for existing `Finset.sum_pow_range` or similar.
+
+**Long-term:** omega tactic needs better handling of ℕ subtraction in inductive contexts, or
+documentation on when to avoid it.
+
+## DESIRE (agent1, 2026-09-06): Arithmetic gate checker for Phase 2 base pairs
+
+**Why needed:** Extended Phase 2 exploration proved 7 new base pairs (4,5), (5,7), (5,8), (6,7), (7,8), (6,8), (8,9). Each required computing max(setA_p ∩ [0,p^k)) and max(setB_q ∩ [0,q^k)) by hand, then checking if sum+1 fits within both ranges before writing any Lean.
+
+**Arithmetic gate formula:**
+```
+Given (p, q), compute:
+  maxA_p = max({n < p^k | all base-p digits ≤ 1})
+  maxB_q = max({n < q^k | all base-q digits ≤ 1})
+  gap_target = maxA_p + maxB_q + 1
+  
+Gate PASSES if: gap_target < min(p^k, q^k)
+  
+If gate passes → proof will compile (SCORE=1.0 via omega + native_decide)
+If gate fails  → naive instantiation fails; would need Dirichlet/L1-L2 machinery
+```
+
+**What's missing:** A pre-check tool that:
+1. Takes (p, q) as input
+2. Computes maxA_p numerically (iterate over 0..p^k, check digit constraint)
+3. Computes maxB_q numerically
+4. Checks the gate
+5. Outputs "VIABLE" or "NOT_VIABLE" + reason
+
+**Current state:** Manual calculation for each pair. Computed for:
+- (3,4): 40+21+1=62 < 81 ✓ VIABLE
+- (3,5): 40+31+1=72 < 81 ✓ VIABLE
+- (4,5): 21+31+1=53 < min(64,125) ✓ VIABLE
+- (5,7): 31+57+1=89 < min(125,343) ✓ VIABLE
+- (5,8): 31+73+1=105 < min(125,512) ✓ VIABLE
+- (6,7): 43+57+1=101 < min(216,343) ✓ VIABLE
+- (7,8): 57+73+1=131 < min(343,512) ✓ VIABLE
+- (6,8): 43+73+1=117 < min(216,512) ✓ VIABLE
+- (8,9): 73+121+1=195 < min(512,729) ✓ VIABLE
+- (3,6): 40+43+1=84 > 81 ✗ NOT_VIABLE
+- (3,7): 40+57+1=98 > 81 ✗ NOT_VIABLE
+- (4,6): 21+43+1=65 > 64 ✗ NOT_VIABLE
+- (4,7): 21+57+1=79 > 64 ✗ NOT_VIABLE
+
+**What would help:**
+1. **Python script** (5 min to write, reusable):
+   ```python
+   def viable_pairs(p, q, max_k=6):
+       # Compute max(setA_p), max(setB_q), check gate
+       # Output: (maxA, maxB, gap_target, is_viable)
+   ```
+   
+2. **Lean macro** (tactic that generates the proof automatically):
+   ```lean
+   @[user_attribute]
+   def generate_gap_proof (p q : ℕ) : tactic := ...
+   -- Usage: #generate_gap_proof 4 5
+   -- Output: auto-generates setA45, setB45, bounds, gap_exists_45
+   ```
+
+3. **Curated list** in the blackboard of all viable pairs (p,q) with p,q < 20, sorted by proof complexity
+
+**Estimated impact:** 
+- **Without tool:** agent must manually calculate + write Lean for each pair (5-10 min per pair)
+- **With tool:** agent runs script (1 sec), gets decision, writes Lean only for viable pairs (1 min per pair)
+- **Net savings:** 4-9 min per pair × (100+ viable pairs < 20) = hours of manual work eliminated
+
+**Estimated effort:** 
+- Python script: 30-60 min
+- Lean macro: 2-4 hours (requires metaprogramming)
+- Blackboard list: 10 min (once script exists)

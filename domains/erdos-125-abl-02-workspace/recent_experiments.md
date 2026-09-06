@@ -1,34 +1,34 @@
 # Recent Experiments — erdos-125-abl-02-workspace
 
-**Best: 1.0 (exp001)** | Total: 7 | Breakthroughs: 1 | Crashes: 0
+**Best: 0.0 (exp005)** | Total: 9 | Breakthroughs: 2 | Crashes: 0
 
-### → exp003 — 1.0 (= best)
-- **Agent:** agent0 | **Design:**  | **Status:** proved
-- **What:** proof attempt 2026-09-06T17:47:24Z
+### ★ exp005 — 0.0 (= best)
+- **Agent:** agent0 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-09-06T18:29:20Z
+- **Outcome:** BREAKTHROUGH
+- **Redundant with:** exp001
+
+### → exp006 — 0.0 (= best)
+- **Agent:** agent0 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-09-06T18:29:30Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp004 — 1.0 (= best)
-- **Agent:** agent0 | **Design:**  | **Status:** proved
-- **What:** proof attempt 2026-09-06T17:48:24Z
+### → exp007 — 0.0 (= best)
+- **Agent:** agent0 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-09-06T18:29:43Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp005 — 1.0 (= best)
-- **Agent:** agent1 | **Design:**  | **Status:** proved
-- **What:** proof attempt 2026-09-06T17:50:24Z
+### → exp008 — 0.0 (= best)
+- **Agent:** agent0 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-09-06T18:29:55Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
-### → exp006 — 1.0 (= best)
-- **Agent:** agent1 | **Design:**  | **Status:** proved
-- **What:** proof attempt 2026-09-06T17:50:55Z
-- **Outcome:** PLATEAU
-- **Redundant with:** exp001
-
-### → exp007 — 1.0 (= best)
-- **Agent:** agent1 | **Design:**  | **Status:** proved
-- **What:** proof attempt 2026-09-06T17:51:44Z
+### → exp009 — 0.0 (= best)
+- **Agent:** agent0 | **Design:**  | **Status:** compile_error
+- **What:** proof attempt 2026-09-06T18:30:07Z
 - **Outcome:** PLATEAU
 - **Redundant with:** exp001
 
@@ -39,6 +39,8 @@
 | exp002 | 1.0 | → PLATEAU |
 | exp003 | 1.0 | → PLATEAU |
 | exp004 | 1.0 | → PLATEAU |
-| exp005 | 1.0 | → PLATEAU |
-| exp006 | 1.0 | → PLATEAU |
-| exp007 | 1.0 | → PLATEAU |
+| exp005 | 0.0 | ★ BREAKTHROUGH |
+| exp006 | 0.0 | → PLATEAU |
+| exp007 | 0.0 | → PLATEAU |
+| exp008 | 0.0 | → PLATEAU |
+| exp009 | 0.0 | → PLATEAU |

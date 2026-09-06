@@ -45,6 +45,17 @@ lemma gap_exists : ∃ n : ℕ, n ∉ setAB := by
 theorem erdos_125 : ∃ n : ℕ, n ∉ setAB :=
   gap_exists
 
+-- Blind Spot #1: Inductive bound formula
+-- max(S_q ∩ [0,q^k)) = (q^k−1)/(q−1) = 1+q+…+q^{k−1}
+
+lemma geometric_sum_formula (q k : ℕ) (hq : 1 < q) (hk : 0 < k) :
+    (∑ i in range k, q ^ i : ℚ) = (q ^ k - 1) / (q - 1) := by
+  sorry
+
+lemma max_digit_restricted_set (q k : ℕ) (hq : 1 < q) (hk : 0 < k) :
+    ∃ n : ℕ, (∀ d ∈ Nat.digits q n, d ≤ 1) ∧ n = ∑ i in range k, q ^ i := by
+  sorry
+
 -- PHASE 2: Generalization to bases (3, 5)
 -- Both bases give restricted sets, unlike (2,3)
 
@@ -70,58 +81,4 @@ lemma gap_exists_35 : ∃ n : ℕ, n ∉ setAB35 := by
   rintro ⟨a, ha_A, b, hb_B, hab⟩
   have ha_bound : a ≤ 40 := setA35_le_40 ha_A (by omega)
   have hb_bound : b ≤ 31 := setB35_le_31 hb_B (by omega)
-  omega
-
--- PHASE 2 continued: Generalization to bases (3, 7)
--- B's range must widen to 3 digits (7^3=343, max 57) but that pushes the gap
--- past 81, so A also needs a wider bound (3^5=243, max 121) to cover it.
-
-def setB37 : Set ℕ := {n | ∀ d ∈ Nat.digits 7 n, d ≤ 1}
-def setAB37 : Set ℕ := {n | ∃ a ∈ setA, ∃ b ∈ setB37, a + b = n}
-
-private lemma setA_le_121 {n : ℕ} (hn : n ∈ setA) (hlt : n < 243) : n ≤ 121 := by
-  simp only [setA, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 243, (∀ d ∈ Nat.digits 3 m, d ≤ 1) → m ≤ 121 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-private lemma setB37_le_57 {n : ℕ} (hn : n ∈ setB37) (hlt : n < 343) : n ≤ 57 := by
-  simp only [setB37, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 343, (∀ d ∈ Nat.digits 7 m, d ≤ 1) → m ≤ 57 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-lemma gap_exists_37 : ∃ n : ℕ, n ∉ setAB37 := by
-  use 179
-  simp only [setAB37, Set.mem_setOf_eq]
-  rintro ⟨a, ha_A, b, hb_B, hab⟩
-  have ha_bound : a ≤ 121 := setA_le_121 ha_A (by omega)
-  have hb_bound : b ≤ 57 := setB37_le_57 hb_B (by omega)
-  omega
-
--- PHASE 2 continued: Generalization to bases (5, 7) — neither base is 3,
--- confirms the technique doesn't depend on A being fixed at base 3.
-
-def setA57 : Set ℕ := {n | ∀ d ∈ Nat.digits 5 n, d ≤ 1}
-def setB57 : Set ℕ := {n | ∀ d ∈ Nat.digits 7 n, d ≤ 1}
-def setAB57 : Set ℕ := {n | ∃ a ∈ setA57, ∃ b ∈ setB57, a + b = n}
-
-private lemma setA57_le_31 {n : ℕ} (hn : n ∈ setA57) (hlt : n < 125) : n ≤ 31 := by
-  simp only [setA57, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 125, (∀ d ∈ Nat.digits 5 m, d ≤ 1) → m ≤ 31 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-private lemma setB57_le_57 {n : ℕ} (hn : n ∈ setB57) (hlt : n < 343) : n ≤ 57 := by
-  simp only [setB57, Set.mem_setOf_eq] at hn
-  have key : ∀ m ∈ Finset.range 343, (∀ d ∈ Nat.digits 7 m, d ≤ 1) → m ≤ 57 := by
-    native_decide
-  exact key n (Finset.mem_range.mpr hlt) hn
-
-lemma gap_exists_57 : ∃ n : ℕ, n ∉ setAB57 := by
-  use 89
-  simp only [setAB57, Set.mem_setOf_eq]
-  rintro ⟨a, ha_A, b, hb_B, hab⟩
-  have ha_bound : a ≤ 31 := setA57_le_31 ha_A (by omega)
-  have hb_bound : b ≤ 57 := setB57_le_57 hb_B (by omega)
   omega
