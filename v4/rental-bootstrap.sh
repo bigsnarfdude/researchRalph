@@ -20,7 +20,9 @@
 
 set -euo pipefail
 
-: "${ANTHROPIC_API_KEY:?export ANTHROPIC_API_KEY first}"
+# ANTHROPIC_API_KEY is optional: if the box has already been authenticated
+# interactively (`ssh -t <box> claude`, subscription auth), leave it unset. Stage 2
+# verifies auth either way before anything is queued.
 : "${GH_TOKEN:?export GH_TOKEN first (repo scope)}"
 
 REPO_URL="${RRMA_REPO:-github.com/bigsnarfdude/researchRalph}"
@@ -58,13 +60,28 @@ sudo apt-get install -y -qq build-essential curl git tmux python3 python3-pip \
 command -v flock >/dev/null || { say "FATAL: flock missing"; exit 1; }
 
 # ------------------------------------------------------------------ 2. claude CLI
-say "stage 2/6 — claude CLI"
+# Native installer, NOT npm. Ubuntu 24.04 ships nodejs v12; Claude Code needs 18+,
+# so `npm install -g @anthropic-ai/claude-code` fails and, under `set -e`, takes the
+# whole bootstrap down with it — observed on the 2026-09-06 A10 box, which is why
+# Lean never started on the first attempt. The native installer ships a prebuilt
+# binary into ~/.local/bin and never touches node.
+say "stage 2/6 — claude CLI (native installer)"
 if ! command -v claude >/dev/null; then
-  sudo npm install -g @anthropic-ai/claude-code >/dev/null 2>&1 || \
-    npm install -g @anthropic-ai/claude-code
+  curl -fsSL https://claude.ai/install.sh | bash
 fi
-export PATH="$HOME/.local/bin:$(npm bin -g 2>/dev/null || echo /usr/local/bin):$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+command -v claude >/dev/null || { say "FATAL: claude CLI not installed"; exit 1; }
 claude --version | tee -a "$STATUS"
+
+# Auth: interactive `claude` login (subscription) or ANTHROPIC_API_KEY (metered).
+# Verify headlessly here — this is the exact mode the workers use, and finding out
+# it is unauthenticated after twelve runs have been queued is expensive.
+if ! timeout 60 claude -p "Reply with exactly: AUTH_OK" 2>&1 | grep -q AUTH_OK; then
+  say "FATAL: claude is not authenticated. Run 'ssh -t <box> claude' and log in,"
+  say "       or export ANTHROPIC_API_KEY, then re-run."
+  exit 1
+fi
+say "claude auth: OK"
 
 # ------------------------------------------------------------- 3. Lean + Mathlib
 say "stage 3/6 — Lean $TOOLCHAIN + Mathlib (the long pole)"
