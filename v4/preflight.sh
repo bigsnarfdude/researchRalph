@@ -21,6 +21,40 @@ FAILED=0
 fail() { echo "[preflight] FAIL: $1"; FAILED=1; }
 ok()   { echo "[preflight] ok: $1"; }
 
+# --- Check 0: billing/auth environment ---
+# RRMA workers run the bare `claude` CLI (v4/launch-agents.sh), so they inherit
+# whatever credential the CLI resolves. RRMA is meant to run on the subscription
+# OAuth login. An ANTHROPIC_API_KEY (or AUTH_TOKEN) in the environment changes
+# which credential the CLI picks — at best it triggers the API-key approval
+# prompt, which a headless screen session cannot answer; at worst a whole fleet
+# runs on metered API billing with identical logs and no warning.
+#
+# Easiest way to trip this: `source`ing an .env from another project (exo's
+# .env.example ships an ANTHROPIC_API_KEY= line) in the shell that launches a run.
+#
+# Override for a deliberate metered run: RRMA_ALLOW_API_BILLING=1
+if [ -n "${RRMA_ALLOW_API_BILLING:-}" ]; then
+    echo "[preflight] WARN: RRMA_ALLOW_API_BILLING=1 — skipping the billing guard. This fleet may bill metered API."
+else
+    for var in ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN; do
+        if [ -n "${!var:-}" ]; then
+            fail "$var is set in this environment — workers would not use your subscription login. Run 'unset $var' before launching, or set RRMA_ALLOW_API_BILLING=1 to override."
+        fi
+    done
+    for var in ANTHROPIC_BASE_URL CLAUDE_CODE_USE_BEDROCK CLAUDE_CODE_USE_VERTEX; do
+        if [ -n "${!var:-}" ]; then
+            echo "[preflight] WARN: $var is set — workers will not hit the default Anthropic endpoint. Confirm this is intended."
+        fi
+    done
+    if [ "$FAILED" -eq 0 ]; then
+        if grep -q '"oauthAccount"' "$HOME/.claude.json" 2>/dev/null; then
+            ok "auth: subscription OAuth login, no API key in env"
+        else
+            echo "[preflight] WARN: no API key in env, but no oauthAccount found in ~/.claude.json — is the claude CLI logged in?"
+        fi
+    fi
+fi
+
 DOMAIN_TYPE="$(grep '^domain_type:' "$DOMAIN_DIR/config.yaml" 2>/dev/null | awk '{print $2}')"
 EDITABLE_FILE="$(grep '^editable:' "$DOMAIN_DIR/config.yaml" 2>/dev/null | awk '{print $2}')"
 EDITABLE_FILE="${EDITABLE_FILE:-train.py}"
