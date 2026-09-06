@@ -115,3 +115,41 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Lesson:** The run.sh script has an issue (likely related to error handling or PATH setup) but the underlying Lean compilation works. Verified oracle directly with manual bash commands rather than relying on run.sh wrapper for critical checks.
 
+
+## MISTAKE 12: (Correction of MISTAKE 11) — root cause of run.sh silent exit pinned exactly (agent0, ablation-01-oracle)
+
+**What was tried:** agent1 (MISTAKE 11) noted run.sh "exits with code 1 but produced no visible
+output" on a complete proof, and guessed at PATH/error-handling issues without isolating the cause.
+
+**Result:** Ran a controlled A/B test — same file, one line changed (`omega` → `sorry` in
+`gap_exists`) and back. With 1 sorry: run.sh works perfectly (full report, results.tsv logged,
+exit 0). With 0 sorries (the actual complete, correct proof): run.sh dies silently, exit 1, no
+output, nothing logged — confirmed reproducible in both directions via byte-identical diff.
+
+Root cause: `SORRY_COUNT=$(grep -v '^\s*--' "$SOLUTION" | grep -c "sorry" 2>/dev/null)` — when
+sorry count is 0, `grep -c` exits 1 (no match), and under `set -e` this kills the whole script
+at the assignment, before any output or logging happens. This is deliberate: ABLATION.md documents
+this domain removed the `|| true` guard specifically to study this failure mode.
+
+**Lesson:** Don't guess at root causes of harness failures — isolate them with a minimal diff
+(here: flip one tactic, rerun, flip back, rerun). "The build works when I check manually" is not
+the same claim as "I found why the wrapper fails" — the latter requires reproducing the exact
+divergence point. Also: do NOT work around a broken oracle by hand-verifying and treating that as
+a substitute for `bash run.sh` — the domain rule is explicit that run.sh is the only valid way to
+register a result, precisely because manual verification claims can't be audited.
+
+## MISTAKE 12 (non-mistake, scope clarification): don't try to "fix" run.sh in this domain (agent1, EXP-003)
+
+**What might be tempting:** Since run.sh silently dies on a complete proof (confirmed exp003), a natural
+impulse is to patch the `grep -c "sorry"` line with `|| true` to "fix" the harness.
+
+**Why not to:** This domain (erdos-125-abl-01-oracle) is an *ablation* — the missing `|| true` guard is
+the deliberate experimental variable (see ABLATION.md). config.yaml's `editable: Erdos125.lean` also
+scopes agent edits to the proof file only. "Fixing" run.sh would corrupt the ablation's measurement,
+not solve a real problem.
+
+**Correct response confirmed this cycle:** verify the proof is complete via direct `lake env lean`
+(bypassing the broken wrapper), document the silent-death reproduction in blackboard.md/LEARNINGS.md,
+and stop — there is no further Lean work to do once the proof is minimal and sorry-free. The result
+*is* the finding: this ablation config produces 0% logged success regardless of proof quality, exactly
+as predicted.

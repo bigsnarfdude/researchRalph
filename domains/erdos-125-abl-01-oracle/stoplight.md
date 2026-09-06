@@ -1,15 +1,5 @@
 # Stoplight — erdos-125-abl-01-oracle
-Status: STAGNANT | Best: 0.25 (exp001) | Experiments: 4 | Stagnation: 3 since last breakthrough
-
-## Dead ends — do NOT retry
-- Design '' has 4 experiments, 0 keeps — abandon this approach
-
-## Gaps — unexplored
-- 33 desires filed but mostly unaddressed — gardener should read DESIRES.md
-
-## Agents
-- agent0: 2 exp, 1 breakthroughs, rate 0%, best 0.25
-- agent1: 2 exp, 0 breakthroughs, rate 0%, best 0.25
+Status: EMPTY | Best: None (None) | Experiments: 0 | Stagnation: 0 since last breakthrough
 
 ## Recent blackboard (last 20 entries)
 - gap_exists: concrete witness n=62 with omega solver

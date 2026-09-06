@@ -187,3 +187,34 @@ Needed: scale-dependent gaps of size Ω(min(3^k, 4^m)) at aligned scales
 
 **Implication:** Ablation run can now proceed with confidence that the baseline proof is correct and minimal. Any Phase 2 work will start from this clean SCORE=1.0 state.
 
+
+## LEARNING 12: Ablation-01 reproduced cleanly — grep -c + set -e is a silent-death trap (agent1)
+
+**Context:** erdos-125-abl-01-oracle deliberately removes the `|| true` guard after `grep -c "sorry"` in run.sh, to test what happens to a correct proof when the oracle's own plumbing is broken.
+
+**Finding:** With a genuinely complete proof (SORRY_COUNT=0, BUILD_EXIT=0, verified manually), `bash run.sh` exits 1 with **no output at all** — not even a partial trace. `grep -c` returns exit code 1 when it finds zero matches (0 sorries), and under `set -e` a failing command substitution on the right side of a plain variable assignment (`VAR=$(...)`) terminates the script immediately, before the SCORE line, before the results.tsv write.
+
+**Implication for harness design:** any pipeline whose "success" case is "found zero matches" (grep -c, grep -q inverted checks, etc.) is a landmine under `set -e` unless explicitly guarded with `|| true` or `|| echo 0`. The failure is invisible to the agent — no error message distinguishes "oracle broken" from "agent hasn't run run.sh yet" from "proof still has sorries." This is worse than a wrong score: it's an absent one.
+
+**Verification method used:** don't trust run.sh's silence — manually `cp` the workspace file into the Lean project and run `lake env lean <file>` directly to check BUILD_EXIT and grep the source for sorry, bypassing the broken wrapper. This is how MISTAKE 11 (prior cycle) and this cycle both independently confirmed the proof was correct despite the harness giving zero signal.
+
+## LEARNING 12: `set -e` + `grep -c` inside a command-substitution assignment is a silent killswitch at the win condition (agent0, erdos-125-abl-01-oracle)
+
+**Confirmed mechanism:** In bash with `set -e`, `VAR=$(cmd1 | grep -c pattern)` aborts the script
+the instant `grep -c` matches zero lines, because the command substitution's exit status (that of
+the pipeline's last command) propagates to the assignment, and `set -e` treats a failing assignment
+as a failing simple command. `2>/dev/null` does not save you — it only silences stderr, not the
+exit code.
+
+**Why this generalizes:** Any oracle script that does `set -e` + counts occurrences of a target
+string (e.g. "sorry", "TODO", "FAIL") via `grep -c` will die silently precisely when the count hits
+zero — which is usually the success/win condition being measured. This is an inverted-failure trap:
+the harness is more fragile exactly where it matters most.
+
+**Verified safe pattern (what the removed guard was doing):** `grep -c "pattern" file || true`, or
+equivalently `grep -c "pattern" file || echo 0`, or piping through `grep -c ... ; true`. Any of
+these prevents the zero-match case from propagating a nonzero exit into `set -e`.
+
+**How I verified:** controlled A/B — same proof file, temporarily reintroduced one `sorry`, observed
+oracle worked normally (SORRY_COUNT: 1, exit 0, logged to results.tsv); reverted byte-for-byte
+(confirmed via `diff`), observed oracle died silently again (exit 1, no output, nothing logged).

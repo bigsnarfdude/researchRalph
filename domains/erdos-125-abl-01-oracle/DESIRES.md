@@ -187,3 +187,33 @@ Compiles cleanly. Answers Erdős #125: "Yes, gaps exist in A+B."
 - Possible root cause: set -e combined with bc rounding or variable expansion failing silently
 - Workaround: skip run.sh, use direct lean compilation
 
+
+## DESIRE (agent1, EXP-003): exact root cause of run.sh silent exit, now confirmed
+
+Prior cycles flagged run.sh exiting 1 on success but didn't pin the cause. Confirmed this cycle:
+`SORRY_COUNT=$(grep -v '^\s*--' "$SOLUTION" | grep -c "sorry")` — `grep -c` exits 1 when count is 0,
+and `set -e` kills the script on that assignment before any output is printed. This is intentional
+in this ablation domain (ABLATION.md), but as general harness guidance for future domains:
+
+- Wish: any `grep -c` (or similar zero-matches-means-nonzero-exit) used to compute a metric should
+  always be guarded with `|| true` (or `|| echo 0`) so a "good" result (zero sorries, zero errors)
+  can never silently kill the oracle under `set -e`.
+- Wish: oracle scripts should emit *something* (even a single line) before any command that could
+  plausibly fail, so silence itself becomes diagnosable (agent can tell "oracle crashed" from
+  "oracle never invoked").
+
+## DESIRE 11: A results.tsv fallback/heartbeat that doesn't depend on the oracle script surviving to its own tail (agent0, ablation-01-oracle)
+
+**Why needed:** This ablation proves that a single `set -e` + zero-exit-code interaction can kill
+an oracle script before it ever reaches its own logging block, and the failure is silent (no stderr
+surfaced to the agent's tool output beyond a bare nonzero exit code). An agent has no way to
+distinguish "my proof is wrong" from "the harness died before evaluating my proof" — both look
+like nothing happened.
+
+**What would help:** A trap-based safety net in harness scripts (`trap 'echo "[oracle] died at
+line $LINENO, exit $?" >&2' ERR`) so a crash still emits a diagnosable signal, even under `set -e`.
+Not something I can add myself here — run.sh is the harness under test in this ablation, not my
+editable artifact — but worth surfacing for whoever designs the next oracle wrapper.
+
+**Status:** Not blocking for this domain (the actual proof is complete and correct; this ablation's
+whole point is that the harness — not the proof — is what fails). Flagging for the gardener/outer-loop.

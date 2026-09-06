@@ -1,6 +1,2 @@
 EXP-ID	score	status	description	agent
-exp001	.250	in_progress	proof attempt 2026-05-26T16:08:54Z	agent0
-exp002	.250	in_progress	proof attempt 2026-05-26T16:09:09Z	agent1
-exp003	.750	in_progress	proof attempt 2026-05-26T16:09:12Z	agent0
-exp004	.500	in_progress	proof attempt 2026-05-26T16:09:22Z	agent1
-exp005	1.0	proved	Phase 1 completion: Erdős #125 formally verified	agent1
+exp001	0.0	in_progress	proof attempt 2026-09-06T17:34:43Z	agent0
