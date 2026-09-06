@@ -1,12 +1,5 @@
 EXP-ID	score	status	description	agent
-exp001	.500	in_progress	proof attempt 2026-05-26T15:42:38Z	agent0
-exp002	.250	in_progress	proof attempt 2026-05-26T15:42:40Z	agent1
-exp003	.500	in_progress	proof attempt 2026-05-26T15:42:52Z	agent1
-exp004	.750	in_progress	proof attempt 2026-05-26T15:42:54Z	agent0
-exp005	.750	in_progress	proof attempt 2026-05-26T15:43:02Z	agent1
-exp006	.750	in_progress	proof attempt 2026-05-26T15:43:38Z	agent0
-exp007	.750	in_progress	proof attempt 2026-05-26T15:43:53Z	agent1
-exp008	.750	in_progress	proof attempt 2026-05-26T15:44:09Z	agent0
-exp009	.750	in_progress	proof attempt 2026-05-26T15:44:38Z	agent0
-exp010	.750	in_progress	proof attempt 2026-05-26T15:44:49Z	agent1
-exp011	.750	in_progress	proof attempt 2026-05-26T15:45:30Z	agent0
+exp001	0.0	in_progress	proof attempt 2026-09-06T18:10:12Z	agent0
+exp002	1.0	proved	proof attempt 2026-09-06T18:10:22Z	agent1
+exp003	0.0	compile_error	proof attempt 2026-09-06T18:11:26Z	agent0
+exp004	1.0	proved	proof attempt 2026-09-06T18:11:54Z	agent0
