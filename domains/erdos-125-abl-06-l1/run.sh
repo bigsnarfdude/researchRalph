@@ -54,12 +54,23 @@ if [ "${RRMA_AXIOM_GATE:-0}" = "1" ] && [ "$SORRY_COUNT" -eq 0 ] && [ "$BUILD_EX
     GATE_OUT=$(lake env lean "$GATE_FILE" 2>&1)
     set -e
     rm -f "$GATE_FILE"
-    if echo "$GATE_OUT" | grep -q "ofReduceBool\|ofReduceNat" || \
-       echo "$GATE_OUT" | grep -qE "depends on axioms.*\b(sorryAx|[A-Za-z_]*_axiom)\b"; then
+    # Whitelist, not blacklist. A blacklist missed `exists_k_m_ratio_close`, the one
+    # real user axiom in the corpus (erdos-125-abl-07). Anything outside Lean's three
+    # standard axioms fails; native_decide's Lean.ofReduceBool fails with it.
+    if echo "$GATE_OUT" | grep -q "does not depend on any axioms"; then
+        echo "AXIOM_GATE: pass (no axioms)"
+    elif ! echo "$GATE_OUT" | grep -q "depends on axioms"; then
         AXIOM_OK=0
-        echo "AXIOM_GATE: FAIL — $(echo "$GATE_OUT" | grep 'depends on axioms' | head -1)"
+        echo "AXIOM_GATE: FAIL — no axiom report; gate file did not elaborate"
     else
-        echo "AXIOM_GATE: pass"
+        AXS=$(echo "$GATE_OUT" | sed -n 's/.*depends on axioms: \[\(.*\)\].*/\1/p' | tr -d ' ' | tr ',' '\n')
+        BAD=$(echo "$AXS" | grep -v '^$' | grep -vxE 'propext|Classical\.choice|Quot\.sound' || true)
+        if [ -n "$BAD" ]; then
+            AXIOM_OK=0
+            echo "AXIOM_GATE: FAIL — non-standard axioms: $(echo "$BAD" | tr '\n' ' ')"
+        else
+            echo "AXIOM_GATE: pass"
+        fi
     fi
 fi
 
