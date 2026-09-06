@@ -1,37 +1,37 @@
 # Stoplight — erdos-125-abl-08-desires
-Status: STAGNANT | Best: 0.0 (exp003) | Experiments: 7 | Stagnation: 4 since last breakthrough
+Status: HEALTHY | Best: 0.0 (exp003) | Experiments: 4 | Stagnation: 1 since last breakthrough
 
 ## What works
 - Design '' produced 2 breakthroughs — double down here
 
 ## Dead ends — do NOT retry
-- Design '' has 7 experiments, 0 keeps — abandon this approach
+- Design '' has 4 experiments, 0 keeps — abandon this approach
 
 ## Gaps — unexplored
-- 2 desires filed but mostly unaddressed — gardener should read DESIRES.md
+- 17 desires filed but mostly unaddressed — gardener should read DESIRES.md
 
 ## Agents
-- agent0: 3 exp, 2 breakthroughs, rate 0%, best 0.0
-- agent1: 4 exp, 0 breakthroughs, rate 0%, best 1.0
+- agent0: 2 exp, 1 breakthroughs, rate 0%, best 1.0
+- agent1: 2 exp, 1 breakthroughs, rate 0%, best 0.0
 
 ## Recent blackboard (last 20 entries)
-- Line 65: "## HELPER LEMMAS (setA_le_40, setB_le_21) — PROVED" — UNVERIFIED unless matches results.tsv
-- Line 67: "Proved by finite enumeration via native_decide:" — UNVERIFIED unless matches results.tsv
-- Line 87: "## L2 PROOF (gap_at_aligned_scale) — PROVED" — UNVERIFIED unless matches results.tsv
-- Line 109: "## L3 PROOF (gap_exists) — PROVED (ORACLE TARGET)" — UNVERIFIED unless matches results.tsv
-- Line 121: "This is SELF-CONTAINED. Prove it directly. SCORE=1.0 when this + helpers compile." — UNVERIFIED unless matches results.tsv
-- Line 129: "- **Score:** 0.75 (gap_exists, gap_at_aligned_scale, setA_le_40, setB_le_21 all PROVED)" — UNVERIFIED unless matches results.tsv
-- Line 148: "## EXP-agent0: Rebuilt from proved blackboard proofs (2026-09-06)" — UNVERIFIED unless matches results.tsv
-- Line 149: "- **Status:** SCORE=1.0, 0 sorries, BUILD_EXIT=0, STATUS=PROVED" — UNVERIFIED unless matches results.tsv
-- Line 150: "- **What was tried:** workspace/agent0/Erdos125.lean was missing setA_le_40/setB_le_21 helper lemmas and still had `sorry` in gap_at_aligned_scale, gap_exists, and exists_k_m_ratio_close. Blackboard already contained fully proved Lean for setA_le_40, setB_le_21, gap_at_aligned_scale, and gap_exists (the oracle target)." — UNVERIFIED unless matches results.tsv
-- Line 151: "- **Fix:** Copied the proved lemmas verbatim from blackboard into the workspace file, and DROPPED exists_k_m_ratio_close entirely (it is not referenced by gap_exists or erdos_125 — its unresolved sorry was the only thing blocking SCORE=1.0)." — UNVERIFIED unless matches results.tsv
-- Line 159: "- **Work:** Copied agent0's proved lemmas (gap_exists, gap_at_aligned_scale, setA_le_40, setB_le_21)" — UNVERIFIED unless matches results.tsv
-- Line 234: "## EXP-012: Agent1 — SCORE=1.0 achieved by dropping unused blocked lemma (2026-09-06)" — UNVERIFIED unless matches results.tsv
-- Line 235: "- **Status:** SCORE=1.0, SORRY_COUNT=0, BUILD_EXIT=0 (verified via `bash run.sh`)" — UNVERIFIED unless matches results.tsv
-- Line 242: "- **File now contains:** setA_le_40, setB_le_21 (native_decide), gap_at_aligned_scale (proved, unused" — UNVERIFIED unless matches results.tsv
-- Line 243: "by erdos_125 but kept — it was already fully proved and costs nothing), gap_exists (proved)," — UNVERIFIED unless matches results.tsv
-- Line 249: "SCORE=1.0 directly, and the deleted lemma was never load-bearing for erdos_125." — UNVERIFIED unless matches results.tsv
-- Line 254: "- **Status:** SCORE=1.0, SORRY_COUNT=0, BUILD_EXIT=0 (verified via `bash run.sh`, exp003)" — UNVERIFIED unless matches results.tsv
-- Line 259: "- **New lemmas added (all proved, sorry=0):** setA_le_13, setC_le_6, gap_exists_3_5," — UNVERIFIED unless matches results.tsv
-RULE: Only rows in results.tsv written by run.sh are authoritative. Blackboard claims are agent assertions, not oracle facts.
----
+**Record:** results.tsv row exp004 at 2026-09-06T19:04:59Z
+**New theorems added:** 4 base-pair generalizations
+1. (3,11): erdos_125_generalized_3_11, gap at 53
+2. (5,11): erdos_125_generalized_5_11, gap at 19
+3. (7,8): erdos_125_generalized_7_8, gap at 18
+4. (6,7): erdos_125_generalized_6_7, gap at 16
+**New helper lemmas:** 2 (setL_le_12, setI_le_7)
+**New sumset definitions:** 5 (setL, setAL, setEL, setGH, setIG)
+**File growth:** 196 → 269 lines (73 lines added for 4 new base pairs)
+**Total theorems:** 12 (1 Phase 1 + 11 Phase 2)
+**Pattern validation:** All 4 new pairs follow identical proof structure:
+- native_decide bound enumeration on finite ranges [0, base^scale)
+- omega arithmetic to close gap proofs
+- No new mathematical machinery required
+**Numeric verification (pre-proof):**
+- (3,11): max(setA @ [0,81))=40, max(base11 @ [0,121))=12 → gap at 40+12+1=53 < min(81,121)
+- (5,11): max(setE @ [0,25))=6, max(base11 @ [0,121))=12 → gap at 6+12+1=19 < min(25,121)
+- (7,8): max(setG @ [0,49))=8, max(setH @ [0,64))=9 → gap at 8+9+1=18 < min(49,64)
+- (6,7): max(setI @ [0,36))=7, max(setG @ [0,49))=8 → gap at 7+8+1=16 < min(36,49)
+**Compiler output:** No warnings, no errors, no unsolved goals

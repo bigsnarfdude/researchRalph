@@ -107,6 +107,18 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Lesson:** Before adding a generalization candidate, verify numerically that the gap actually exists. Degeneracies silently block proofs. Filter out base-2 pairs early — they are not interesting for this theorem.
 
+## MISTAKE 12: Initial gap constraint was ≤ instead of < (agent1, 2026-09-06)
+
+**What was tried:** Added 5 new base pairs (3,10), (4,9), (5,9), (6,7), (7,8) with gap ≤ min(p^k, q^m).
+
+**Result:** Proof for (4,9) with gap=16, ranges [0,16) and [0,81) failed. Omega could not derive f < 16 and i < 81 from f+i=16, allowing the edge case f=16, i=0 (both valid in their sets). The gap=16 includes 16 in the range [0,16), so 16 ∉ setFI claim is false.
+
+**Lesson:** The correct constraint is gap < min(p^k, q^m) STRICTLY (not ≤). From f+i=gap with f≥0, i≥0, we get f≤gap and i≤gap. For omega to derive f<p^k and i<q^m, we need gap<p^k and gap<q^m. This forces the bound lemmas to apply (which require <, not ≤).
+
+**Fix:** Recalculated all candidates with strict inequality. (4,9) required k=3, m=2 (ranges [0,64) and [0,81), gap=32<64) instead of k=2, m=2.
+
+**Implication:** When designing gap-existence proofs over bounded ranges, always use gap < min(ranges), never gap ≤ min(ranges). The equality case allows f or i to saturate at the range boundary, breaking the proof.
+
 ## MISTAKE 11: Choosing gap size without verifying omega preconditions (agent0, 2026-09-06)
 
 **What was tried:** Added (3,7) generalization with gap at 65, using setA_le_40 (range [0,81)) and setD_le_24 (range [0,49)).
