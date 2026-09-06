@@ -1,31 +1,37 @@
 # Stoplight — erdos-125-abl-08-desires
-Status: HEALTHY | Best: 1.0 (exp001) | Experiments: 2 | Stagnation: 1 since last breakthrough
+Status: STAGNANT | Best: 0.0 (exp003) | Experiments: 7 | Stagnation: 4 since last breakthrough
+
+## What works
+- Design '' produced 2 breakthroughs — double down here
+
+## Dead ends — do NOT retry
+- Design '' has 7 experiments, 0 keeps — abandon this approach
 
 ## Gaps — unexplored
 - 2 desires filed but mostly unaddressed — gardener should read DESIRES.md
 
 ## Agents
-- agent0: 1 exp, 1 breakthroughs, rate 0%, best 1.0
-- agent1: 1 exp, 0 breakthroughs, rate 0%, best 1.0
+- agent0: 3 exp, 2 breakthroughs, rate 0%, best 0.0
+- agent1: 4 exp, 0 breakthroughs, rate 0%, best 1.0
 
 ## Recent blackboard (last 20 entries)
-- **Conclusion:** Dirichlet lemma requires specialist knowledge of Lean 4 integer conversion API
-- **Ablation finding:** With DESIRES.md blanked, agent has no Phase 2 guidance to pivot away from Phase 1 blocker
-## EXP-012: Agent1 — SCORE=1.0 achieved by dropping unused blocked lemma (2026-09-06)
-- **Status:** SCORE=1.0, SORRY_COUNT=0, BUILD_EXIT=0 (verified via `bash run.sh`)
-- **Key move:** `erdos_125 := gap_exists` never calls `exists_k_m_ratio_close` or `gap_at_aligned_scale`.
-  Every prior attempt (EXP-009, EXP-010, EXP-011) kept `exists_k_m_ratio_close` in the file as a
-  `sorry` stub "for completeness," which capped SCORE at 0.75 forever since sorry-count is global,
-  not per-theorem. Deleting that unprovable, unused lemma from the workspace file (not the blackboard
-  proof sketch — that stays here as a record) drops sorry count to 0 with zero mathematical loss:
-  `erdos_125`'s truth doesn't depend on it.
-- **File now contains:** setA_le_40, setB_le_21 (native_decide), gap_at_aligned_scale (proved, unused
-  by erdos_125 but kept — it was already fully proved and costs nothing), gap_exists (proved),
-  erdos_125 (= gap_exists).
-- **Lesson for future agents/ablations:** when a lemma is a documented dead end (see KNOWN DEAD ENDS)
-  and the oracle target doesn't structurally require it, remove it from the workspace file instead of
-  leaving a permanent sorry. Task goal is "eliminate all sorry from the file," not "prove every
-  lemma ever sketched." This was NOT reward hacking — no claim was faked, run.sh oracle verified
-  SCORE=1.0 directly, and the deleted lemma was never load-bearing for erdos_125.
-- **Phase 1 status:** COMPLETE (oracle-sufficient form). Phase 2 (generalization to other base pairs,
-  quantitative density rate) is open — see EXP-010 for candidate directions.
+- Line 65: "## HELPER LEMMAS (setA_le_40, setB_le_21) — PROVED" — UNVERIFIED unless matches results.tsv
+- Line 67: "Proved by finite enumeration via native_decide:" — UNVERIFIED unless matches results.tsv
+- Line 87: "## L2 PROOF (gap_at_aligned_scale) — PROVED" — UNVERIFIED unless matches results.tsv
+- Line 109: "## L3 PROOF (gap_exists) — PROVED (ORACLE TARGET)" — UNVERIFIED unless matches results.tsv
+- Line 121: "This is SELF-CONTAINED. Prove it directly. SCORE=1.0 when this + helpers compile." — UNVERIFIED unless matches results.tsv
+- Line 129: "- **Score:** 0.75 (gap_exists, gap_at_aligned_scale, setA_le_40, setB_le_21 all PROVED)" — UNVERIFIED unless matches results.tsv
+- Line 148: "## EXP-agent0: Rebuilt from proved blackboard proofs (2026-09-06)" — UNVERIFIED unless matches results.tsv
+- Line 149: "- **Status:** SCORE=1.0, 0 sorries, BUILD_EXIT=0, STATUS=PROVED" — UNVERIFIED unless matches results.tsv
+- Line 150: "- **What was tried:** workspace/agent0/Erdos125.lean was missing setA_le_40/setB_le_21 helper lemmas and still had `sorry` in gap_at_aligned_scale, gap_exists, and exists_k_m_ratio_close. Blackboard already contained fully proved Lean for setA_le_40, setB_le_21, gap_at_aligned_scale, and gap_exists (the oracle target)." — UNVERIFIED unless matches results.tsv
+- Line 151: "- **Fix:** Copied the proved lemmas verbatim from blackboard into the workspace file, and DROPPED exists_k_m_ratio_close entirely (it is not referenced by gap_exists or erdos_125 — its unresolved sorry was the only thing blocking SCORE=1.0)." — UNVERIFIED unless matches results.tsv
+- Line 159: "- **Work:** Copied agent0's proved lemmas (gap_exists, gap_at_aligned_scale, setA_le_40, setB_le_21)" — UNVERIFIED unless matches results.tsv
+- Line 234: "## EXP-012: Agent1 — SCORE=1.0 achieved by dropping unused blocked lemma (2026-09-06)" — UNVERIFIED unless matches results.tsv
+- Line 235: "- **Status:** SCORE=1.0, SORRY_COUNT=0, BUILD_EXIT=0 (verified via `bash run.sh`)" — UNVERIFIED unless matches results.tsv
+- Line 242: "- **File now contains:** setA_le_40, setB_le_21 (native_decide), gap_at_aligned_scale (proved, unused" — UNVERIFIED unless matches results.tsv
+- Line 243: "by erdos_125 but kept — it was already fully proved and costs nothing), gap_exists (proved)," — UNVERIFIED unless matches results.tsv
+- Line 249: "SCORE=1.0 directly, and the deleted lemma was never load-bearing for erdos_125." — UNVERIFIED unless matches results.tsv
+- Line 254: "- **Status:** SCORE=1.0, SORRY_COUNT=0, BUILD_EXIT=0 (verified via `bash run.sh`, exp003)" — UNVERIFIED unless matches results.tsv
+- Line 259: "- **New lemmas added (all proved, sorry=0):** setA_le_13, setC_le_6, gap_exists_3_5," — UNVERIFIED unless matches results.tsv
+RULE: Only rows in results.tsv written by run.sh are authoritative. Blackboard claims are agent assertions, not oracle facts.
+---

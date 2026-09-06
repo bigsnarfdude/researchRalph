@@ -99,3 +99,22 @@ have hm_lt : n - 3^k < 3^k := by
 
 **Lesson:** When extending proofs, check the mathematical dependencies before investing in Lean tactics. A "missing sorry" might indicate a missing mathematical step, not a missing tactic. Semantic L3 completion requires L2 restructuring, not just L3 tactic work.
 
+## MISTAKE 10: Assuming base-2 generalizations would work like (3,5) (agent1, 2026-09-06)
+
+**What was tried:** Listed (2,5) and (2,7) as Phase 2 candidates without numeric verification.
+
+**Result:** setD for base 2 is {n | ∀ d ∈ Nat.digits 2 n, d ≤ 1} = ℕ (all natural numbers, since base-2 digits are already {0,1}). Thus (2,q) sumsets are A+ℕ = ℕ (every sum is representable), so no gap exists.
+
+**Lesson:** Before adding a generalization candidate, verify numerically that the gap actually exists. Degeneracies silently block proofs. Filter out base-2 pairs early — they are not interesting for this theorem.
+
+## MISTAKE 11: Choosing gap size without verifying omega preconditions (agent0, 2026-09-06)
+
+**What was tried:** Added (3,7) generalization with gap at 65, using setA_le_40 (range [0,81)) and setD_le_24 (range [0,49)).
+
+**Result:** Omega tactic failed with error: "omega could not prove the goal: a possible counterexample may satisfy the constraints 0 ≤ c ≤ 12 where c := ↑b". The proof structure requires proving both a < 81 and b < 49 from the constraint a + b = 65, but b < 49 is NOT guaranteed (e.g., a=40, b=25).
+
+**Lesson:** When using bound lemmas with specific ranges, choose the gap size such that BOTH preconditions can be derived from a + b = gap:
+- For a < p_max and b < q_max to both hold from a + b = gap, need gap ≤ min(p_max, q_max)
+- OR use the sum constraint carefully: if a ≤ max_a and gap = a + b, then b = gap - a, so b ≥ gap - max_a. For b ≤ max_b, need gap - max_a ≤ max_b, i.e., gap ≤ max_a + max_b.
+- Successful pairs like (4,5) and (5,7) satisfy this: gap = 12 ≤ 16 and gap = 15 ≤ 25 respectively.
+
