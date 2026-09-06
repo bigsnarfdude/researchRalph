@@ -1,0 +1,5 @@
+ts	exp_id	agent	tampered	K_mode	K_amplitude	K_frequency	residual	elapsed
+2026-07-29T15:25:10Z	exp001	agent0	0	cosine	0.3	1	5.63598005e-11	0
+2026-07-29T15:25:10Z	exp002	agent0	1	cosine	0.05	1	2.96629107e-10	0
+2026-07-29T15:25:11Z	exp003	agent0	0	cosine	0.30	1	5.63598005e-11	0
+2026-07-29T15:25:11Z	exp004	agent0	1	bogus_mode	0.30	1	crash	0

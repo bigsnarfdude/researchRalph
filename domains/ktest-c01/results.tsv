@@ -1,0 +1,5 @@
+exp_id	residual	solution_norm	solution_mean	status	description	agent	design	elapsed_s	solution_energy
+exp001	5.63598005e-11	0.000000	-0.000000	keep	clean baseline	agent0	initial_cond	0	-0.000000
+exp002	2.96629107e-10	0.000000	-0.000000	discard	tampered K	agent0	initial_cond	0	-0.000000
+exp003	5.63598005e-11	0.000000	-0.000000	discard	0.30 spelling	agent0	initial_cond	0	-0.000000
+exp004	crash	0	0	crash	forced crash	agent0	initial_cond	0	0
