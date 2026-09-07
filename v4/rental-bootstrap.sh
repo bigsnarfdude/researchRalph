@@ -14,6 +14,8 @@
 #   B=fix/erdos-125-oracle-repair   # or 'main' once this is merged
 #   curl -fsSL "https://raw.githubusercontent.com/bigsnarfdude/researchRalph/$B/v4/rental-bootstrap.sh" -o bootstrap.sh
 #   RRMA_SRC_BRANCH=$B tmux new -s rrma "bash bootstrap.sh 2>&1 | tee ~/bootstrap.log"
+#   # stages 1-5 build the box and gate on preflight; stage 6 execs v4/ladder-rerun.sh.
+#   # RRMA_BOOTSTRAP_ONLY=1 stops after stage 5 so you can launch the run by hand.
 #   # then safely: Ctrl-b d, close the laptop, come back later
 #
 # Secrets are read from the environment and never written into the repo.
@@ -31,23 +33,11 @@ REPO_URL="${RRMA_REPO:-github.com/bigsnarfdude/researchRalph}"
 SRC_BRANCH="${RRMA_SRC_BRANCH:-fix/erdos-125-oracle-repair}"
 # Branch the results are pushed to (created from SRC_BRANCH).
 BRANCH="${RRMA_BRANCH:-rerun/reverse-ladder-$(date -u +%Y%m%d)}"
-MODEL="${RRMA_MODEL:-claude-sonnet-5}"
-REPS="${RRMA_REPS:-3}"
+MODEL="${RRMA_MODEL:-claude-haiku-4-5-20251001}"   # the May ladder ran haiku; match it
 TOOLCHAIN="${RRMA_TOOLCHAIN:-leanprover/lean4:v4.29.0-rc8}"
 LEAN_PROJECT="${RRMA_LEAN_PROJECT:-$HOME/rrma-lean}"
-WALL_CAP_MIN="${RRMA_WALL_CAP_MIN:-45}"     # per-rung wall-clock budget
-AGENTS=2; TURNS=200; MONITOR=10; GENS=1
-
-# The four rungs worth rerunning. 01 and 02 are void (harness ablations that never
-# fired); 08 and 09 were pre-registered as the LOWEST-impact ablations and both
-# measured 0% in 3-11 minute windows. 03/04/06/07 gave usable signal — left alone.
-RUNGS="${RRMA_RUNGS:-erdos-125-abl-01-oracle erdos-125-abl-02-workspace erdos-125-abl-08-desires erdos-125-abl-09-learnings}"
-
-# Rungs whose ablation is IN THE HARNESS: preflight's live oracle test must fail
-# on them by design (01 kills the oracle at zero sorries; 02 reads the domain root
-# rather than workspace/agent0). Skipping the gate for these is correct, not a
-# shortcut — for every other rung the gate stays armed.
-HARNESS_ABLATED="erdos-125-abl-01-oracle erdos-125-abl-02-workspace"
+# Queue, reps, caps, and the per-rep seed restore all live in v4/ladder-rerun.sh,
+# which stage 6 hands off to. Nothing about the runs is configured here.
 
 STATUS="$HOME/run_status.log"
 say(){ echo "[bootstrap $(date -u +%H:%M:%S)] $*" | tee -a "$STATUS"; }
@@ -123,6 +113,9 @@ export RRMA_LEAN_PROJECT="$LEAN_PROJECT"
 # Canary on a rung whose harness is NOT ablated. If this fails, nothing launches —
 # that is the whole point (26 May had no such gate).
 say "stage 5/6 — preflight canary on erdos-125-abl-08-desires"
+# The May workspaces are tracked in git; preflight prefers an existing workspace file
+# over the seed and would test a four-month-old artifact (it did, on 2026-09-06).
+rm -rf domains/erdos-125-abl-08-desires/workspace
 if ! bash v4/preflight.sh domains/erdos-125-abl-08-desires 2>&1 | tee -a "$STATUS"; then
   say "FATAL: preflight failed. Not launching. Most likely cause: Mathlib drift"
   say "       broke the seed proof. Set RRMA_MATHLIB_REV and re-run stage 3."
@@ -130,50 +123,15 @@ if ! bash v4/preflight.sh domains/erdos-125-abl-08-desires 2>&1 | tee -a "$STATU
 fi
 
 # --------------------------------------------------------------------- 6. the runs
-# Archival is chained onto each rung with && per REMOTE_RUN_PROTOCOL.md, so results
-# reach GitHub the moment a rung finishes rather than when a human notices.
-archive(){
-  local rung="$1" rep="$2" stamp; stamp="$(date -u +%Y%m%dT%H%M%SZ)"
-  local d="domains/$rung"
-  # workspace/ and logs/ are gitignored, and they are exactly what an integrity
-  # audit needs (abl-02's bypass was only visible in the workspace files).
-  # Tar them so the ignore rules do not silently discard the evidence.
-  tar czf "$d/archive-rep${rep}-${stamp}.tgz" \
-      -C "$d" workspace logs 2>/dev/null || true
-  git add -A "$d" 2>/dev/null || true
-  git add -f "$d/results.tsv" "$d/blackboard.md" 2>/dev/null || true
-  git commit -q -m "rerun: $rung rep$rep ($stamp)
-
-Reverse-ladder rerun on repaired oracle. Original 26 May run executed against a
-run.sh that does not parse; these rows are the first from a verified harness.
-
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_01QdAnE5Hjw7C9J1vkXCqpnQ" || true
-  git push -q -u origin "$BRANCH" \
-    && echo "ARCHIVED $rung rep$rep $stamp" >> "$STATUS"
-}
-
-say "stage 6/6 — running ${REPS} reps x $(echo $RUNGS | wc -w) rungs"
-for rep in $(seq 1 "$REPS"); do
-  for rung in $RUNGS; do
-    say "=== $rung rep$rep ==="
-    # Reset to a clean rung state so reps are independent.
-    rm -rf "domains/$rung/workspace" "domains/$rung/logs"
-    chmod 644 "domains/$rung/results.tsv" 2>/dev/null || true
-    printf "EXP-ID\tscore\tstatus\tdescription\tagent\n" > "domains/$rung/results.tsv"
-
-    SKIP=0
-    for h in $HARNESS_ABLATED; do [ "$rung" = "$h" ] && SKIP=1; done
-
-    RRMA_PREFIX="$(echo "$rung" | tr -d 'a-z-')r$rep" \
-    RRMA_SKIP_PREFLIGHT=$SKIP \
-    timeout "${WALL_CAP_MIN}m" \
-      bash v4/outer-loop.sh "domains/$rung" $GENS $AGENTS $TURNS $MONITOR "$MODEL" \
-      >> "$HOME/${rung}-rep${rep}.log" 2>&1 || say "$rung rep$rep ended (timeout or stop)"
-
-    archive "$rung" "$rep"
-  done
-done
-
-say "DONE — all rungs archived to branch $BRANCH"
-say "Verify from the laptop:  git fetch origin && git log --oneline origin/$BRANCH"
+# Hand off to the protocol script. Its per-rep restore to the designed seed is what
+# makes the reps valid — the loop that used to live here reset workspace/ but not
+# the domain root, and run.sh promotes winners into the root, so every rep after a
+# win started from the answer (found by /sane on 2026-09-06). Never reimplement it.
+say "stage 6/6 — handing off to v4/ladder-rerun.sh"
+umask 077; printf 'export GH_TOKEN=%s\n' "$GH_TOKEN" > "$HOME/.rrma_env"; chmod 600 "$HOME/.rrma_env"
+export RRMA_RESULTS_BRANCH="$BRANCH" RRMA_MODEL="$MODEL" RRMA_LEAN_PROJECT="$LEAN_PROJECT"
+if [ "${RRMA_BOOTSTRAP_ONLY:-0}" = "1" ]; then
+  say "RRMA_BOOTSTRAP_ONLY=1 — box is ready; launch with: tmux new -s v3 'bash ~/researchRalph/v4/ladder-rerun.sh 2>&1 | tee ~/v3.log'"
+  exit 0
+fi
+exec bash "$HOME/researchRalph/v4/ladder-rerun.sh"
