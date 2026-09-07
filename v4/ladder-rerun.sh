@@ -3,6 +3,7 @@
 # 2026-09-06 rental (staged there as ~/runner3.sh; committed here so it survives the
 # box). Assumes rental-bootstrap.sh has run: Lean+Mathlib at ~/rrma-lean, claude
 # authenticated, repo cloned at ~/researchRalph, GH_TOKEN in ~/.rrma_env.
+# Env knobs: RRMA_RESULTS_BRANCH, RRMA_MODEL, RRMA_QUEUE, RRMA_SEED (see docs/LADDER-RERUN-PROTOCOL.md).
 #
 # What it guarantees per rep, and why (each item was a real failure on 2026-09-06):
 #   1. restore the rung to its DESIGNED seed (cc379c3) — run.sh promotes winners
@@ -22,9 +23,13 @@ set -uo pipefail
 export PATH="$HOME/.local/bin:$HOME/.elan/bin:$PATH"
 export RRMA_LEAN_PROJECT="$HOME/rrma-lean"
 WORK=~/rrma-work; ARCH=~/researchRalph
-SEED=cc379c3; BRANCH="rerun/reverse-ladder-20260906"
-MODEL="claude-haiku-4-5-20251001"; AGENTS=2; TURNS=200; MONITOR=10; GENS=1
-QUEUE="erdos-125-abl-08-desires:3:60 erdos-125-abl-09-learnings:3:60 erdos-125-abl-02-workspace:3:30 erdos-125-abl-07-program:3:30 erdos-125-abl-04-helpers:3:30 erdos-125-abl-06-l1:3:60 erdos-125-abl-05-l2:3:60 erdos-125-abl-03-theorem:3:60 erdos-125-abl-01-oracle:3:15"
+SEED="${RRMA_SEED:-cc379c3}"                      # the commit that created the 9 rungs
+BRANCH="${RRMA_RESULTS_BRANCH:-rerun/reverse-ladder-$(date -u +%Y%m%d)}"
+MODEL="${RRMA_MODEL:-claude-haiku-4-5-20251001}"  # the May ladder ran haiku
+AGENTS=2; TURNS=200; MONITOR=10; GENS=1
+# rung:reps:capMinutes, in informativeness order so a box that dies midway still
+# leaves the rungs that matter. Override with RRMA_QUEUE.
+QUEUE="${RRMA_QUEUE:-erdos-125-abl-08-desires:3:60 erdos-125-abl-09-learnings:3:60 erdos-125-abl-02-workspace:3:30 erdos-125-abl-07-program:3:30 erdos-125-abl-04-helpers:3:30 erdos-125-abl-06-l1:3:60 erdos-125-abl-05-l2:3:60 erdos-125-abl-03-theorem:3:60 erdos-125-abl-01-oracle:3:15}"
 STATUS=~/run_status.log; SUMMARY=$ARCH/rerun_summary.tsv
 say(){ echo "[v3 $(date -u +%H:%M:%S)] $*" | tee -a $STATUS; }
 
