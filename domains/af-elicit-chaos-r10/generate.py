@@ -20,7 +20,8 @@ VLLM_MODEL = os.environ.get("VLLM_MODEL", "google/gemma-3-27b")
 
 # --- Gemini API (instruct model) ---
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = "gemma-3-27b-it"
+# gemma-3-27b-it was retired from the API; original runs used it.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemma-4-31b-it")
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
 
 
